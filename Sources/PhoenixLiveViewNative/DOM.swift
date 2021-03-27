@@ -164,6 +164,10 @@ class DOM {
         return childNodes(element)
     }
     
+    static func componentID(_ element: Element)throws -> String {
+        return try element.attr(PHX_COMPONENT)
+    }
+    
     static func findStaticViews(_ elements: Elements)throws -> [String:String] {
         var staticViews: [String: String] = [:]
         let allViews = try all(elements, "[\(self.PHX_STATIC)]")
@@ -271,42 +275,42 @@ class DOM {
         return mutAcc
     }
 
-    // Diff Merging
-    
-    static func mergeDiff(rendered: [AnyHashable:Any], diff: [AnyHashable:Any])throws -> [AnyHashable:Any] {
-        var mutDiff = diff
-        var new: [AnyHashable:Any] = mutDiff.removeValue(forKey: COMPONENT_FRAGMENT)
-        
-        var mutRendered = try deepMerge(rendered, mutDiff)
-        
-        if new != nil {
-            var old = mutRendered[COMPONENT_FRAGMENT] ?? [AnyHashable: Any]
-            
-            var acc: [AnyHashable: Any] = new.reduce(old, { acc, entry in
-                let (cid, cdiff) = entry
-                var pointer = cdiff[STATIC_FRAGMENT] ?? false
-                var value: [AnyHashable: Any]
-                
-                if pointer && pointer as? Int {
-                    let target = findComponent(cdiff, old, new)
-                    cdiff.removeValue(forKey: STATIC_FRAGMENT)
-                    
-                    value = deepMerge(target, source)
-                } else {
-                    let target = old[cid] ?? [AnyHashable: Any]
-                    value = deepMerge(target, cdiff)
-                }
-                
-                acc[cid] = value
-                return acc
-            })
-            
-            mutRendered[PHX_COMPONENT] = acc
-            return rendered
-        } else {
-            return rendered
-        }
-    }
+//    // Diff Merging
+//
+//    static func mergeDiff(rendered: [AnyHashable:Any], diff: [AnyHashable:Any])throws -> [AnyHashable:Any] {
+//        var mutDiff = diff
+//        var new: [AnyHashable:Any] = mutDiff.removeValue(forKey: COMPONENT_FRAGMENT)
+//
+//        var mutRendered = try deepMerge(rendered, mutDiff)
+//
+//        if new != nil {
+//            var old = mutRendered[COMPONENT_FRAGMENT] ?? [AnyHashable: Any]
+//
+//            var acc: [AnyHashable: Any] = new.reduce(old, { acc, entry in
+//                let (cid, cdiff) = entry
+//                var pointer = cdiff[STATIC_FRAGMENT] ?? false
+//                var value: [AnyHashable: Any]
+//
+//                if pointer && pointer as? Int {
+//                    let target = findComponent(cdiff, old, new)
+//                    cdiff.removeValue(forKey: STATIC_FRAGMENT)
+//
+//                    value = deepMerge(target, source)
+//                } else {
+//                    let target = old[cid] ?? [AnyHashable: Any]
+//                    value = deepMerge(target, cdiff)
+//                }
+//
+//                acc[cid] = value
+//                return acc
+//            })
+//
+//            mutRendered[PHX_COMPONENT] = acc
+//            return rendered
+//        } else {
+//            return rendered
+//        }
+//    }
 //    
 //    static private func findComponent(component: Dictionary, old: Dictionary, new: Dictionary) {
 //        var cid = component[STATIC_FRAGMENT]

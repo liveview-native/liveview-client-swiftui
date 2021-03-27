@@ -260,6 +260,18 @@ final class DOMTests: XCTestCase {
         
     }
     
+    func testComponentID()throws {
+        let sample = """
+        <div data-phx-component="123"></div>
+        """
+        
+        let htmlTree = try DOM.parse(sample)
+        
+        let result = try DOM.componentID(htmlTree[0])
+        
+        XCTAssertEqual(result, "123")
+    }
+    
     func testFindStaticViews()throws {
         let sample = """
         <div id="foo" data-phx-static="abc">Foo
@@ -489,6 +501,7 @@ final class DOMTests: XCTestCase {
         ("testChildNodes", testChildNodes),
         ("testAttrs", testAttrs),
         ("testInnerHTML", testInnerHTML),
+        ("testComponentID", testComponentID),
         ("testfindStaticViews", testFindStaticViews),
         ("testFindLiveViews", testFindLiveViews),
         ("testDeepMerge", testDeepMerge),
