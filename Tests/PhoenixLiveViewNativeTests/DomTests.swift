@@ -486,6 +486,70 @@ final class DOMTests: XCTestCase {
         XCTAssertEqual(result[1].ownText(), "Foo")
         XCTAssertEqual(result.count, 2)
     }
+    
+    func testMergeDiff()throws {
+        let rendered: [AnyHashable:Any] = [
+            0: "http://www.example.com/flash-root",
+            1: "",
+            2: "",
+            3: 1,
+            4: "<div></div>",
+            5: [
+                0: "",
+                1: "",
+                2: "",
+                "s": ["<div id=\"", "\">\nstateless_component[",
+               "]:info\nstateless_component[", "]:error\n</div>\n"]
+            ],
+            "c": [
+                1: [
+                    0: "flash-component",
+                    1: "1",
+                    2: "ok!",
+                    3: "",
+                    "s": ["<div id=\"", "\" phx-target=\"",
+                 "\" phx-click=\"click\">\n<span phx-click=\"lv:clear-flash\">Clear all</span>\n<span phx-click=\"lv:clear-flash\" phx-value-key=\"info\">component[",
+                 "]:info</span>\n<span phx-click=\"lv:clear-flash\" phx-value-key=\"error\">component[",
+                 "]:error</span>\n</div>\n"]
+              ]
+            ],
+            "s": ["uri[", "]\nroot[", "]:info\nroot[", "]:error\n", "\nchild[", "]\n","\n"]
+          ]
+        
+        let diff: [AnyHashable:Any] = ["c": [1: [2: "ok!", 3: "oops!"]]]
+        
+        let result = try DOM.mergeDiff(rendered, diff)
+        
+        let expected: [AnyHashable:Any] = [
+            0: "http://www.example.com/flash-root",
+            1: "",
+            2: "",
+            3: 1,
+            4: "<div></div>",
+            5: [
+                0: "",
+                1: "",
+                2: "",
+                "s": ["<div id=\"", "\">\nstateless_component[",
+               "]:info\nstateless_component[", "]:error\n</div>\n"]
+            ],
+            "c": [
+                1: [
+                    0: "flash-component",
+                    1: "1",
+                    2: "ok!",
+                    3: "oops!",
+                    "s": ["<div id=\"", "\" phx-target=\"",
+                 "\" phx-click=\"click\">\n<span phx-click=\"lv:clear-flash\">Clear all</span>\n<span phx-click=\"lv:clear-flash\" phx-value-key=\"info\">component[",
+                 "]:info</span>\n<span phx-click=\"lv:clear-flash\" phx-value-key=\"error\">component[",
+                 "]:error</span>\n</div>\n"]
+              ]
+            ],
+            "s": ["uri[", "]\nroot[", "]:info\nroot[", "]:error\n", "\nchild[", "]\n","\n"]
+          ]
+        
+        compareNestedDictionaries(expected, result)
+    }
         
     func testDropCids()throws {
         let rendered: [AnyHashable:Any] = [
@@ -539,26 +603,24 @@ final class DOMTests: XCTestCase {
         }
         
         for (key, value) in expected {
-            let value1 = value
-            let value2 = actual[key]
-            let type1 = String.self
+            let expectedValue = value
+            let actualValue = actual[key]
 
-            if let dict1 = value1 as? [AnyHashable:Any], let dict2 = value2 as? [AnyHashable:Any] {
-                compareNestedDictionaries(dict1, dict2)
+            // This is terrible but it works and it only exists in the tests soooo... ¯\_(ツ)_/¯
+            if let expectedDict = expectedValue as? [AnyHashable:Any], let actualDict = actualValue as? [AnyHashable:Any] {
+                compareNestedDictionaries(expectedDict, actualDict)
                 continue
+            } else if let expectedStringArray = expectedValue as? Array<String>, let actualStringArray = actualValue as? Array<String> {
+                XCTAssertEqual(expectedStringArray, actualStringArray)
+            } else if let expectedIntArray = expectedValue as? Array<Int>, let actualIntArray = actualValue as? Array<Int> {
+                XCTAssertEqual(expectedIntArray, actualIntArray)
+            } else if let expectedString = expectedValue as? String, let actualString = actualValue as? String {
+                XCTAssertEqual(expectedString, actualString)
+            } else if let expectedInt = expectedValue as? Int, let actualInt = actualValue as? Int {
+                XCTAssertEqual(expectedInt, actualInt)
             } else {
-                isEqual(type1, value1, value2)
+                XCTFail()
             }
         }
-    }
-    
-    private func isEqual<T: Equatable>(_ type: T.Type, _ a: Any?, _ b: Any?) -> Void {
-        guard let a = a as? T, let b = b as? T else {
-            XCTFail()
-            return
-        }
-        
-        XCTAssertEqual(a, b)
-        return
     }
 }

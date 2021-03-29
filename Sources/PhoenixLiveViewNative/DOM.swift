@@ -14,10 +14,10 @@ class DOM {
         case notOneFound(String)
     }
     
-    static let PHX_COMPONENT: Any = "data-phx-component"
-    static let PHX_MAIN: Any = "data-phx-main"
-    static let PHX_SESSION: Any = "data-phx-session"
-    static let PHX_STATIC: Any = "data-phx-static"
+    static let PHX_COMPONENT: String = "data-phx-component"
+    static let PHX_MAIN: String = "data-phx-main"
+    static let PHX_SESSION: String = "data-phx-session"
+    static let PHX_STATIC: String = "data-phx-static"
 
     static let STATIC_FRAGMENT: AnyHashable = "s"
     static let COMPONENT_FRAGMENT: AnyHashable = "c"
@@ -165,16 +165,16 @@ class DOM {
     }
     
     static func componentID(_ element: Element)throws -> String {
-        return try element.attr(PHX_COMPONENT as! String)
+        return try element.attr(PHX_COMPONENT)
     }
     
     static func findStaticViews(_ elements: Elements)throws -> [String:String] {
         var staticViews: [String: String] = [:]
-        let allViews = try all(elements, "[\(self.PHX_STATIC)]")
+        let allViews = try all(elements, "[\(PHX_STATIC)]")
         
         for view in allViews {
             let key = try view.attr("id")
-            let value = try view.attr(PHX_STATIC as! String)
+            let value = try view.attr(PHX_STATIC)
             staticViews[key] = value
         }
         
@@ -183,13 +183,13 @@ class DOM {
     
     static func findLiveViews(_ elements: Elements)throws -> Array<(String, String, String?)> {
         var liveViews: [(String, String, String?)] = []
-        let allViews = try all(elements, "[\(self.PHX_SESSION)]")
+        let allViews = try all(elements, "[\(PHX_SESSION)]")
         
         for view in allViews {
             let id = try view.attr("id")
-            var dataStatic: String? = try view.attr(PHX_STATIC as! String)
-            let dataSession = try view.attr(PHX_SESSION as! String)
-            let dataMain = try view.attr(PHX_MAIN as! String)
+            var dataStatic: String? = try view.attr(PHX_STATIC)
+            let dataSession = try view.attr(PHX_SESSION)
+            let dataMain = try view.attr(PHX_MAIN)
             
             if dataStatic == nil || dataStatic == "" {
                 dataStatic = nil
@@ -280,60 +280,59 @@ class DOM {
 
     // Diff Merging
 
-//    static func mergeDiff(rendered: [AnyHashable:Any], diff: [AnyHashable:Any])throws -> [AnyHashable:Any] {
-//        var mutDiff = diff
-//        var new = mutDiff.removeValue(forKey: COMPONENT_FRAGMENT)
-//
-//        var mutRendered = try deepMerge(rendered, mutDiff)
-//
-//        if new != nil {
-//            var old = mutRendered[COMPONENT_FRAGMENT, default: [:]]
-//            let other = new as? [AnyHashable:Any]
-//
-//            var acc: [AnyHashable: Any] = other!.reduce(old) { (acc, entry ) -> [AnyHashable:Any] in
-//                let cid: String
-//                let cdiff: [AnyHashable:Any?]
-//                (cid, cdiff) = entry
-//                var pointer = cdiff[STATIC_FRAGMENT]
-//                var value: [AnyHashable: Any?]
-//
-//                if pointer != nil && pointer as? Int {
-//                    let target = findComponent(cdiff, old, new)
-//                    cdiff!.removeValue(forKey: STATIC_FRAGMENT)
-//
-//                    value = deepMerge(target, source)
-//                } else {
-//                    let target = old[cid] ?? [AnyHashable: Any]
-//                    value = deepMerge(target, cdiff)
-//                }
-//
-//                acc[cid] = value
-//                return acc
-//            } as! [AnyHashable : Any]
-//
-//
-//            mutRendered[PHX_COMPONENT] = acc
-//            return rendered
-//
-//        } else {
-//            return rendered
-//        }
-//    }
+    static func mergeDiff(_ rendered: [AnyHashable:Any], _ diff: [AnyHashable:Any])throws -> [AnyHashable:Any] {
+        var mutDiff: [AnyHashable:Any] = diff
+        let new: [AnyHashable:Any]? = mutDiff.removeValue(forKey: COMPONENT_FRAGMENT) as! [AnyHashable:Any]?
 
-//    static private func findComponent(_ component: [AnyHashable:Any], _ old: [AnyHashable:Any], _ new: [AnyHashable:Any]) -> [AnyHashable:Any] {
-//        guard var cid = component[STATIC_FRAGMENT] else {
-//            return component
-//        }
-//
-//        if cid > 0 {
-//            findComponent(new[cid], old, new)
-//        } else if cid < 0 {
-//            findComponent(old[-cid], old, new)
-//        } else {
-//            return component
-//        }
-//    }
-//    
+        var mutRendered: [AnyHashable:Any] = try deepMerge(rendered, mutDiff)
+
+        if new != nil {
+            let old: [AnyHashable:Any] = mutRendered[COMPONENT_FRAGMENT, default: [:]] as! [AnyHashable:Any]
+
+            let acc: [AnyHashable: Any] = try new!.reduce(old) { (acc, entry )throws -> [AnyHashable:Any] in
+                var mutAcc = acc
+                let cid: AnyHashable = entry.key
+                var cdiff: [AnyHashable:Any] = entry.value as! [AnyHashable:Any]
+                let pointer: Int? = cdiff[STATIC_FRAGMENT] as! Int?
+                var value: [AnyHashable:Any]
+
+                if pointer != nil {
+                    let target: [AnyHashable:Any] = findComponent(cdiff, old, new!)
+                    cdiff.removeValue(forKey: STATIC_FRAGMENT)
+
+                    value = try deepMerge(target, cdiff)
+                } else {
+                    let target: [AnyHashable:Any] = old[cid, default: [:]] as! [AnyHashable: Any]
+                    value = try deepMerge(target, cdiff)
+                }
+
+                mutAcc[cid] = value
+                return mutAcc
+            }
+
+
+            mutRendered[COMPONENT_FRAGMENT] = acc
+            return mutRendered
+
+        } else {
+            return rendered
+        }
+    }
+
+    static private func findComponent(_ component: [AnyHashable:Any], _ old: [AnyHashable:Any], _ new: [AnyHashable:Any]) -> [AnyHashable:Any] {
+        let cid: Int? = component[STATIC_FRAGMENT] as! Int?
+
+        if cid == nil {
+            return component
+        } else if cid! > 0 {
+            return findComponent(new[cid!] as! [AnyHashable:Any], old, new)
+        } else if cid! < 0 {
+            return findComponent(old[-cid!] as! [AnyHashable:Any], old, new)
+        } else {
+            return component
+        }
+    }
+    
     static func dropCids(_ rendered: [AnyHashable:Any], _ cids: Array<AnyHashable>) -> [AnyHashable:Any] {
         let components: [AnyHashable:Any] = (rendered[COMPONENT_FRAGMENT] as? [AnyHashable:Any])!
         var mutRendered = rendered
