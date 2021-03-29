@@ -572,6 +572,28 @@ final class DOMTests: XCTestCase {
         
         compareNestedDictionaries(expected, result)
     }
+    
+    func testComponentIDs()throws {
+        let sample = """
+        <div data-phx-main="true" data-phx-session="SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAAFHBoeC1GbkR3TXhTR1BHQTlid1JQZAAKcGFyZW50X3BpZGQAA25pbGQACHJvb3RfcGlkZAADbmlsZAAJcm9vdF92aWV3ZAAlRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LkZsYXNoTGl2ZWQABnJvdXRlcmQAIkVsaXhpci5QaG9lbml4LkxpdmVWaWV3VGVzdC5Sb3V0ZXJkAAdzZXNzaW9udAAAAABkAAR2aWV3ZAAlRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LkZsYXNoTGl2ZW4GABQHEoB4AWIAAVGA.BDGnjwPAeKzS5jNf5GtWoYx2nRMYWt_Lv_rglRhSUjQ" data-phx-static="SFMyNTY.g2gDaAJhBHQAAAADZAAKYXNzaWduX25ld2pkAAVmbGFzaHQAAAAAZAACaWRtAAAAFHBoeC1GbkR3TXhTR1BHQTlid1JQbgYAFAcSgHgBYgABUYA.V7O5lgauyk9vb1ZQbPieh3jpCjZ1CRG05dZAR-ldWKg" data-phx-view="LiveViewTest.FlashLive" id="phx-FnDwMxSGPGA9bwRP">uri[http://www.example.com/flash-root]
+        root[]:info
+        root[]:error
+        <div data-phx-component="1" id="flash-component" phx-target="1" phx-click="click"><span phx-click="lv:clear-flash">Clear all</span><span phx-click="lv:clear-flash" phx-value-key="info">component[]:info</span><span phx-click="lv:clear-flash" phx-value-key="error">component[]:error</span></div>
+        child[<div data-phx-parent-id="phx-FnDwMxSGPGA9bwRP" data-phx-session="SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAAC2ZsYXNoLWNoaWxkZAAKcGFyZW50X3BpZFhkAA1ub25vZGVAbm9ob3N0AAAB1gAAAAAAAAAAZAAIcm9vdF9waWRYZAANbm9ub2RlQG5vaG9zdAAAAdYAAAAAAAAAAGQACXJvb3Rfdmlld2QAJUVsaXhpci5QaG9lbml4LkxpdmVWaWV3VGVzdC5GbGFzaExpdmVkAAZyb3V0ZXJkACJFbGl4aXIuUGhvZW5peC5MaXZlVmlld1Rlc3QuUm91dGVyZAAHc2Vzc2lvbnQAAAAAZAAEdmlld2QAKkVsaXhpci5QaG9lbml4LkxpdmVWaWV3VGVzdC5GbGFzaENoaWxkTGl2ZW4GACMHEoB4AWIAAVGA.DEzDbUo6P7cBPByCHO5mo2wK-bxa2Ru_GX6_5ZUGkug" data-phx-static="" data-phx-view="LiveViewTest.FlashChildLive" id="flash-child"></div>]
+        <div id="">
+        stateless_component[]:info
+        stateless_component[]:error
+        </div></div>
+        """
+        
+        let htmlTree = try DOM.parse(sample)
+        
+        let result = try DOM.componentIDs("phx-FnDwMxSGPGA9bwRP", htmlTree)
+        
+        let expected: Array<AnyHashable> = [1]
+        
+        XCTAssertEqual(expected, result)
+    }
 
     static var allTests = [
         ("testParsing", testParsing),

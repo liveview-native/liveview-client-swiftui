@@ -119,8 +119,18 @@ class DOM {
         return element.tagName()
     }
     
-    static func attribute(_ element: Element, _ key: String)throws -> String {
-        return try element.attr(key)
+    static func attribute(_ element: Element, _ key: String)throws -> String? {
+        let attr = try element.attr(key)
+        
+        if attr == "" {
+            return nil
+        } else {
+            return attr
+        }
+    }
+    
+    static func attribute(_ other: String, _ key: String)throws -> String? {
+        return nil
     }
     
     static func toHTML(_ elements: Elements)throws -> String {
@@ -148,6 +158,10 @@ class DOM {
     
     static func childNodes(_ element: Element) -> Elements {
         return element.children()
+    }
+    
+    static func childNodes(_ string: String) -> Elements {
+        return Elements()
     }
     
     static func attrs(_ element: Element) -> Attributes {
@@ -341,22 +355,44 @@ class DOM {
         
         return mutRendered
     }
-//    
-//    static private func indifferentTypeCompare(
-//    
-//    static func renderDiff(rendered: Dictionary) {
-//        
+    
+//    static func renderDiff(rendered: [AnyHashable:Any])throws -> String {
+//
 //    }
-//    
+    
 //    static func patchID(id: String, htmlTree: Document, innerHtml: Element) {
 //        
 //    }
 //    
-//    static func componentIDs(id: String, htmlTree: Elements) {
-//        let element = byId(htmlTree, id)
-//        
-//        let children = element.children()
-//    }
+    static func componentIDs(_ id: String, _ htmlTree: Elements)throws -> Array<AnyHashable> {
+        let element = try byID(htmlTree, id)
+        
+        let children = childNodes(element)
+        
+        var cids: Array<AnyHashable> = []
+        
+        cids = try children.reduce(cids, traverseComponentIDs)
+        
+        return cids
+    }
+    
+    static private func traverseComponentIDs(_ cids: Array<AnyHashable>, _ element: Element)throws -> Array<AnyHashable> {
+        var mutCids: Array<AnyHashable> = cids
+        
+        let id: String? = try attribute(element, PHX_COMPONENT)
+        
+        if id != nil {
+            mutCids.insert(Int(id!), at: 0)
+        }
+        
+        if try attribute(element, PHX_STATIC) != nil {
+            return mutCids
+        } else {
+            let children = childNodes(element)
+            mutCids = try children.reduce(mutCids, traverseComponentIDs)
+            return mutCids
+        }
+    }
     
     static private func optionalByID(_ elements: Elements, _ id: String) -> Element? {
         do {
