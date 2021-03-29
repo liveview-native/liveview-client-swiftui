@@ -383,7 +383,7 @@ final class DOMTests: XCTestCase {
               ]
             ]
 
-        let expectedResult: [AnyHashable:Any] = [
+        let expected: [AnyHashable:Any] = [
             0: "foo",
             1: "oof",
             2: "rab",
@@ -400,7 +400,7 @@ final class DOMTests: XCTestCase {
         
         let result = try DOM.deepMerge(target, source)
         
-        compareNestedDictionaries(expectedResult, result)
+        compareNestedDictionaries(expected, result)
     }
     
     func testFilter()throws {
@@ -486,6 +486,28 @@ final class DOMTests: XCTestCase {
         XCTAssertEqual(result[1].ownText(), "Foo")
         XCTAssertEqual(result.count, 2)
     }
+        
+    func testDropCids()throws {
+        let rendered: [AnyHashable:Any] = [
+            "c": [
+                1: [0: "foo"],
+                2: [0: "bar"],
+                3: [0: "baz"]
+            ],
+        ]
+        
+        let cids: Array<AnyHashable> = [1,3]
+        
+        let result = DOM.dropCids(rendered, cids)
+        
+        let expected: [AnyHashable:Any] = [
+            "c": [
+                2: [0: "bar"]
+            ],
+        ]
+        
+        compareNestedDictionaries(expected, result)
+    }
 
     static var allTests = [
         ("testParsing", testParsing),
@@ -506,7 +528,8 @@ final class DOMTests: XCTestCase {
         ("testFindLiveViews", testFindLiveViews),
         ("testDeepMerge", testDeepMerge),
         ("testFilter", testFilter),
-        ("testReverseFilter", testReverseFilter)
+        ("testReverseFilter", testReverseFilter),
+        ("testDropCids", testDropCids)
     ]
     
     private func compareNestedDictionaries(_ expected: [AnyHashable:Any], _ actual: [AnyHashable:Any]) -> Void {
@@ -534,7 +557,7 @@ final class DOMTests: XCTestCase {
             XCTFail()
             return
         }
-
+        
         XCTAssertEqual(a, b)
         return
     }
