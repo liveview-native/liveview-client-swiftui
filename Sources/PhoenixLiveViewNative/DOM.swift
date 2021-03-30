@@ -303,29 +303,32 @@ class DOM {
         if new != nil {
             let old: [AnyHashable:Any] = mutRendered[COMPONENT_FRAGMENT, default: [:]] as! [AnyHashable:Any]
 
-            let acc: [AnyHashable: Any] = try new!.reduce(old) { (acc, entry )throws -> [AnyHashable:Any] in
-                var mutAcc = acc
+            let acc = try new!.reduce((old, [AnyHashable:Any]())) { (acc, entry )throws -> ([AnyHashable:Any], [AnyHashable:Any]) in
+                var mutAcc: [AnyHashable:Any]
+                var mutCache: [AnyHashable:Any]
+                (mutAcc, mutCache) = acc
                 let cid: AnyHashable = entry.key
-                var cdiff: [AnyHashable:Any] = entry.value as! [AnyHashable:Any]
-                let pointer: Int? = cdiff[STATIC_FRAGMENT] as! Int?
+                let cdiff: [AnyHashable:Any] = entry.value as! [AnyHashable:Any]
+//                let pointer: Int? = cdiff[STATIC_FRAGMENT] as! Int?
                 var value: [AnyHashable:Any]
+                
+                (value, mutCache) = try findComponent(cid, cdiff, old, new!, mutCache)
 
-                if pointer != nil {
-                    let target: [AnyHashable:Any] = findComponent(cdiff, old, new!)
-                    cdiff.removeValue(forKey: STATIC_FRAGMENT)
-
-                    value = try deepMerge(target, cdiff)
-                } else {
-                    let target: [AnyHashable:Any] = old[cid, default: [:]] as! [AnyHashable: Any]
-                    value = try deepMerge(target, cdiff)
-                }
+//                if pointer != nil {
+//                    let target: [AnyHashable:Any] = findComponent(cdiff, old, new!)
+//                    cdiff.removeValue(forKey: STATIC_FRAGMENT)
+//
+//                    value = try deepMerge(target, cdiff)
+//                } else {
+//                    let target: [AnyHashable:Any] = old[cid, default: [:]] as! [AnyHashable: Any]
+//                    value = try deepMerge(target, cdiff)
+//                }
 
                 mutAcc[cid] = value
-                return mutAcc
+                return (mutAcc, mutCache)
             }
 
-
-            mutRendered[COMPONENT_FRAGMENT] = acc
+            mutRendered[COMPONENT_FRAGMENT] = acc.0
             return mutRendered
 
         } else {
@@ -333,17 +336,27 @@ class DOM {
         }
     }
 
-    static private func findComponent(_ component: [AnyHashable:Any], _ old: [AnyHashable:Any], _ new: [AnyHashable:Any]) -> [AnyHashable:Any] {
-        let cid: Int? = component[STATIC_FRAGMENT] as! Int?
+    static private func findComponent(_ cid: AnyHashable, _ cdiff: [AnyHashable:Any], _ old: [AnyHashable:Any], _ new: [AnyHashable:Any], _ cache: [AnyHashable:Any])throws -> ([AnyHashable:Any], [AnyHashable:Any]) {
+        let cached: [AnyHashable:Any]? = cache[cid] as! [AnyHashable:Any]?
 
-        if cid == nil {
-            return component
-        } else if cid! > 0 {
-            return findComponent(new[cid!] as! [AnyHashable:Any], old, new)
-        } else if cid! < 0 {
-            return findComponent(old[-cid!] as! [AnyHashable:Any], old, new)
+        if cached != nil {
+            return (cached!, cache)
         } else {
-            return component
+            let entry: Int? = cdiff[STATIC_FRAGMENT] as! Int?
+            var mutCdiff: [AnyHashable:Any] = cdiff
+            
+            if entry != nil && entry! > 0 {
+                let res: [AnyHashable:Any]
+                let mutCache: [AnyHashable:Any]
+                (res, mutCache) = try findComponent(entry, new[entry] as! [AnyHashable:Any], old, new, cache)
+                mutCdiff.removeValue(forKey: PHX_STATIC)
+                return (try deepMerge(res, mutCdiff), mutCache)
+            } else if entry != nil && entry! < 0 {
+                mutCdiff.removeValue(forKey: PHX_STATIC)
+                return (try deepMerge(old[-entry!] as! [AnyHashable:Any], mutCdiff), cache)
+            } else {
+                return (try deepMerge(old[cid, default: [AnyHashable:Any]()] as! [AnyHashable:Any], mutCdiff), cache)
+            }
         }
     }
     

@@ -419,7 +419,7 @@ final class DOMTests: XCTestCase {
         
         var result = DOM.filter(htmlTree) { element in
             do {
-                return try DOM.attribute(element, "data-phx") != ""
+                return try DOM.attribute(element, "data-phx") != nil
             } catch {
                 return false
             }
@@ -434,7 +434,7 @@ final class DOMTests: XCTestCase {
         
         result = DOM.filter(htmlTree[0]) { element in
             do {
-                return try DOM.attribute(element, "data-phx") != ""
+                return try DOM.attribute(element, "data-phx") != nil
             } catch {
                 return false
             }
@@ -461,7 +461,7 @@ final class DOMTests: XCTestCase {
         
         var result = DOM.reverseFilter(htmlTree) { element in
             do {
-                return try DOM.attribute(element, "data-phx") != ""
+                return try DOM.attribute(element, "data-phx") != nil
             } catch {
                 return false
             }
@@ -476,7 +476,7 @@ final class DOMTests: XCTestCase {
         
         result = DOM.reverseFilter(htmlTree[0]) { element in
             do {
-                return try DOM.attribute(element, "data-phx") != ""
+                return try DOM.attribute(element, "data-phx") != nil
             } catch {
                 return false
             }
