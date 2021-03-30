@@ -309,20 +309,9 @@ class DOM {
                 (mutAcc, mutCache) = acc
                 let cid: AnyHashable = entry.key
                 let cdiff: [AnyHashable:Any] = entry.value as! [AnyHashable:Any]
-//                let pointer: Int? = cdiff[STATIC_FRAGMENT] as! Int?
                 var value: [AnyHashable:Any]
                 
                 (value, mutCache) = try findComponent(cid, cdiff, old, new!, mutCache)
-
-//                if pointer != nil {
-//                    let target: [AnyHashable:Any] = findComponent(cdiff, old, new!)
-//                    cdiff.removeValue(forKey: STATIC_FRAGMENT)
-//
-//                    value = try deepMerge(target, cdiff)
-//                } else {
-//                    let target: [AnyHashable:Any] = old[cid, default: [:]] as! [AnyHashable: Any]
-//                    value = try deepMerge(target, cdiff)
-//                }
 
                 mutAcc[cid] = value
                 return (mutAcc, mutCache)
