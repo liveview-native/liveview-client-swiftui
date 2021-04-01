@@ -66,22 +66,25 @@ class DOM {
         return values
     }
     
-    static func allValues(element: Element)throws -> [String: String] {
+    static func allValues(_ element: Element)throws -> [String: String] {
         let attributes = element.getAttributes()
 
         return try attributes!.reduce([:]) { acc, attribute in
             var mutAcc = acc
             let key = try valueKey(attribute.getKey())
-            let value = attribute.getValue()
+            
+            if key != nil {
+                let value = attribute.getValue()
 
-            mutAcc[key] = value
+                mutAcc[key!] = value
+            }
 
             return mutAcc
         }
     }
     
     // Extracts the correct appended value from the value key
-    static private func valueKey(_ key: String)throws -> String {
+    static private func valueKey(_ key: String)throws -> String? {
         let phxValue = "phx-value-"
         let value = "value"
         if key.hasPrefix(phxValue) {
@@ -91,7 +94,7 @@ class DOM {
         } else {
             // original LiveView code has `nil` but Swift doesn't seem to
             // play nice with interpolating `nil` so using emptry String
-            return ""
+            return nil
         }
     }
     

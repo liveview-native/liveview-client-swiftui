@@ -85,6 +85,16 @@ final class DOMTests: XCTestCase {
         XCTAssertEqual(result, ["abc", "ghi", "jkl"])
     }
     
+    func testAllValues()throws {
+        let sample = "<div foo=\"foo\" bar=\"bar\" phx-value-baz=\"baz\" value=\"123\"></div>"
+        
+        let htmlTree = try DOM.parse(sample)
+        
+        let actual = try DOM.allValues(htmlTree[0])
+        
+        XCTAssertEqual(["baz": "baz", "value": "123"], actual)
+    }
+    
     func testInspectHTML()throws {
         let sample = """
         <div class="foo">
