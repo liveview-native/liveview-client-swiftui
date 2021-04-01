@@ -127,7 +127,7 @@ final class DOMTests: XCTestCase {
         XCTAssertEqual(result, "    <div class=\"foo\">\n     Foo \n    <div class=\"baz\">\n     Baz\n    </div> \n   </div>\n    <div class=\"baz\">\n    Baz\n   </div>\n    <div class=\"bar\">\n    Bar\n   </div>\n")
     }
         
-    func testTagName()throws {
+    func testTag()throws {
         let sample = """
         <div class="foo">Foo</div>
         <text class="bar">Bar</text>
@@ -135,8 +135,8 @@ final class DOMTests: XCTestCase {
         
         let htmlTree = try DOM.parse(sample)
         
-        XCTAssertEqual(htmlTree[0].tagName(), "div")
-        XCTAssertEqual(htmlTree[1].tagName(), "text")
+        XCTAssertEqual(DOM.tag(htmlTree[0]), "div")
+        XCTAssertEqual(DOM.tag(htmlTree[1]), "text")
     }
     
     func testAttribute()throws {
@@ -611,7 +611,7 @@ final class DOMTests: XCTestCase {
         ("testMaybeOne", testMaybeOne),
         ("testAllAttributes", testAllAttributes),
         ("testInspectHTML", testInspectHTML),
-        ("testTagName", testTagName),
+        ("testTagName", testTag),
         ("testAttribute", testAttribute),
         ("testToHTML", testToHTML),
         ("testToText", testToText),
