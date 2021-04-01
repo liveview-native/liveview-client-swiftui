@@ -303,7 +303,7 @@ class DOM {
         if new != nil {
             let old: [AnyHashable:Any] = mutRendered[COMPONENT_FRAGMENT, default: [:]] as! [AnyHashable:Any]
 
-            let acc = try new!.reduce((old, [AnyHashable:Any]())) { (acc, entry )throws -> ([AnyHashable:Any], [AnyHashable:Any]) in
+            let acc = try new!.reduce((old, [AnyHashable:Any]())) { (acc, entry)throws -> ([AnyHashable:Any], [AnyHashable:Any]) in
                 var mutAcc: [AnyHashable:Any]
                 var mutCache: [AnyHashable:Any]
                 (mutAcc, mutCache) = acc
@@ -358,9 +358,32 @@ class DOM {
         return mutRendered
     }
     
-//    static func renderDiff(rendered: [AnyHashable:Any])throws -> String {
-//
+//    static func renderDiff(_ rendered: [AnyHashable:Any])throws -> Elements {
+//        let contents: Data = Diff.elementsToData(rendered) { (cid, contents)throws -> String in
+//            var html: String = Diff.dataToString(contents)
+//            var elements: Elements = parse(html)
+//            elements = traverseAndUpdate(elements) { (element)throws -> Void in
+//                injectCidAttr(element, cid)
+//            }
+//            
+//            return toHTML(element)
+//        }
+//        
+//        let html: String = Diff.dataToString(contents)
+//        let elements: Elements = try parse(html)
+//        return elements
 //    }
+//    
+//    static private func injectCidAttr(_ element: Element, _ cid: Int)throws -> Void {
+//        try element.attr(PHX_COMPONENT, String(cid))
+//    }
+    
+    static private func traverseAndUpdate(_ elements: Elements, _ closure: (_ element: Element)throws -> Void)throws -> Void {
+        for element in elements {
+            try closure(element)
+            try traverseAndUpdate(childNodes(element), closure)
+        }
+    }
     
 //    static func patchID(id: String, htmlTree: Document, innerHtml: Element) {
 //        
