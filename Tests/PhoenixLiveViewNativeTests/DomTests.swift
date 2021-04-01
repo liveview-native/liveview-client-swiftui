@@ -149,6 +149,9 @@ final class DOMTests: XCTestCase {
         
         XCTAssertEqual(try DOM.attribute(element, "data-phx-session"), "123456")
         XCTAssertEqual(try DOM.attribute(element, "data-phx-main"), "true")
+        
+        // if a string representation of the element is used
+        XCTAssertEqual(try DOM.attribute(sample, "data-phx-session"), nil)
     }
     
     func testToHTML()throws {
@@ -228,6 +231,10 @@ final class DOMTests: XCTestCase {
         element = htmlTree[1]
         children = DOM.childNodes(element)
         
+        XCTAssertEqual(children.count, 0)
+        
+        // if a string representation of the elements
+        children = DOM.childNodes(sample)
         XCTAssertEqual(children.count, 0)
     }
     
