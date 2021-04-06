@@ -374,45 +374,45 @@ final class DOMTests: XCTestCase {
     }
     
     func testDeepMerge()throws {
-        let target: [AnyHashable:Any] = [
-            0: "foo",
-            1: "",
-            3: [
-                1: [
-                    0: "bar"
+        let target: Payload = [
+            "0": "foo",
+            "1": "",
+            "3": [
+                "1": [
+                    "0": "bar"
                 ],
-                2: [
-                    0: "biz"
+                "2": [
+                    "0": "biz"
                 ]
               ]
             ]
 
-        let source: [AnyHashable:Any] = [
-            1: "oof",
-            2: "rab",
-            3: [
-                1: [
-                    0: "fib"
+        let source: Payload = [
+            "1": "oof",
+            "2": "rab",
+            "3": [
+                "1": [
+                    "0": "fib"
                 ],
-                2: "bif"
+                "2": "bif"
               ],
-            4: [
-                0: "zib"
+            "4": [
+                "0": "zib"
               ]
             ]
 
-        let expected: [AnyHashable:Any] = [
-            0: "foo",
-            1: "oof",
-            2: "rab",
-            3: [
-                1: [
-                    0: "fib"
+        let expected: Payload = [
+            "0": "foo",
+            "1": "oof",
+            "2": "rab",
+            "3": [
+                "1": [
+                    "0": "fib"
                     ],
-                2: "bif"
+                "2": "bif"
                 ],
-            4: [
-                0: "zib"
+            "4": [
+                "0": "zib"
             ]
         ]
         
@@ -506,25 +506,25 @@ final class DOMTests: XCTestCase {
     }
     
     func testMergeDiff()throws {
-        let rendered: [AnyHashable:Any] = [
-            0: "http://www.example.com/flash-root",
-            1: "",
-            2: "",
-            3: 1,
-            4: "<div></div>",
-            5: [
-                0: "",
-                1: "",
-                2: "",
+        let rendered: Payload = [
+            "0": "http://www.example.com/flash-root",
+            "1": "",
+            "2": "",
+            "3": 1,
+            "4": "<div></div>",
+            "5": [
+                "0": "",
+                "1": "",
+                "2": "",
                 "s": ["<div id=\"", "\">\nstateless_component[",
                "]:info\nstateless_component[", "]:error\n</div>\n"]
             ],
             "c": [
-                1: [
-                    0: "flash-component",
-                    1: "1",
-                    2: "ok!",
-                    3: "",
+                "1": [
+                    "0": "flash-component",
+                    "1": "1",
+                    "2": "ok!",
+                    "3": "",
                     "s": ["<div id=\"", "\" phx-target=\"",
                  "\" phx-click=\"click\">\n<span phx-click=\"lv:clear-flash\">Clear all</span>\n<span phx-click=\"lv:clear-flash\" phx-value-key=\"info\">component[",
                  "]:info</span>\n<span phx-click=\"lv:clear-flash\" phx-value-key=\"error\">component[",
@@ -534,29 +534,29 @@ final class DOMTests: XCTestCase {
             "s": ["uri[", "]\nroot[", "]:info\nroot[", "]:error\n", "\nchild[", "]\n","\n"]
           ]
         
-        let diff: [AnyHashable:Any] = ["c": [1: [2: "ok!", 3: "oops!"]]]
+        let diff: Payload = ["c": ["1": ["2": "ok!", "3": "oops!"]]]
         
         let result = try DOM.mergeDiff(rendered, diff)
         
-        let expected: [AnyHashable:Any] = [
-            0: "http://www.example.com/flash-root",
-            1: "",
-            2: "",
-            3: 1,
-            4: "<div></div>",
-            5: [
-                0: "",
-                1: "",
-                2: "",
+        let expected: Payload = [
+            "0": "http://www.example.com/flash-root",
+            "1": "",
+            "2": "",
+            "3": 1,
+            "4": "<div></div>",
+            "5": [
+                "0": "",
+                "1": "",
+                "2": "",
                 "s": ["<div id=\"", "\">\nstateless_component[",
                "]:info\nstateless_component[", "]:error\n</div>\n"]
             ],
             "c": [
-                1: [
-                    0: "flash-component",
-                    1: "1",
-                    2: "ok!",
-                    3: "oops!",
+                "1": [
+                    "0": "flash-component",
+                    "1": "1",
+                    "2": "ok!",
+                    "3": "oops!",
                     "s": ["<div id=\"", "\" phx-target=\"",
                  "\" phx-click=\"click\">\n<span phx-click=\"lv:clear-flash\">Clear all</span>\n<span phx-click=\"lv:clear-flash\" phx-value-key=\"info\">component[",
                  "]:info</span>\n<span phx-click=\"lv:clear-flash\" phx-value-key=\"error\">component[",
@@ -570,21 +570,21 @@ final class DOMTests: XCTestCase {
     }
         
     func testDropCids()throws {
-        let rendered: [AnyHashable:Any] = [
+        let rendered: Payload = [
             "c": [
-                1: [0: "foo"],
-                2: [0: "bar"],
-                3: [0: "baz"]
+                "1": ["0": "foo"],
+                "2": ["0": "bar"],
+                "3": ["0": "baz"]
             ],
         ]
         
-        let cids: Array<AnyHashable> = [1,3]
+        let cids: Array<Int> = [1,3]
         
         let result = DOM.dropCids(rendered, cids)
         
-        let expected: [AnyHashable:Any] = [
+        let expected: Payload = [
             "c": [
-                2: [0: "bar"]
+                "2": ["0": "bar"]
             ],
         ]
         
@@ -608,19 +608,19 @@ final class DOMTests: XCTestCase {
         
         let result = try DOM.componentIDs("phx-FnDwMxSGPGA9bwRP", htmlTree)
         
-        let expected: Array<AnyHashable> = [1]
+        let expected: Array<Int> = [1]
         
         XCTAssertEqual(expected, result)
     }
     
     func testRenderDiff()throws {
-        var sample: [AnyHashable:Any] = [
-            0: "",
-            1: [
+        var sample: Payload = [
+            "0": "",
+            "1": [
               "d": [["foo1.jpeg", "0", "nil", ""], ["foo2.jpeg", "0", "nil", ""]],
               "s": ["\n    lv:", ":", "%\n    channel:", "\n    ", "\n  "]
             ],
-            2: "<input data-phx-active-refs=\"1282,1346\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnLSu0zdGSgfdQhC\" id=\"phx-FnLSu0zdGSgfdQhC\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple></input>",
+            "2": "<input data-phx-active-refs=\"1282,1346\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnLSu0zdGSgfdQhC\" id=\"phx-FnLSu0zdGSgfdQhC\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple></input>",
             "s": ["", "\n<form phx-change=\"validate\" phx-submit=\"save\">\n  ", "\n  ",
              "\n  <button type=\"submit\">save</button>\n</form>\n"]
           ]
@@ -632,19 +632,19 @@ final class DOMTests: XCTestCase {
         XCTAssertEqual(expected, try DOM.toHTML(actual))
         
         sample = [
-            0: ["d": [[1], [2]], "s": ["\n    ", "\n  "]],
+            "0": ["d": [[1], [2]], "s": ["\n    ", "\n  "]],
             "c": [
-                1: [
-                    0: "",
-                    1: "upload0",
-                    2: "1",
-                    3: "",
-                    4: "<input data-phx-active-refs=\"\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnL7qteVzAAQNwdH\" id=\"phx-FnL7qteVzAAQNwdH\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple></input>",
+                "1": [
+                    "0": "",
+                    "1": "upload0",
+                    "2": "1",
+                    "3": "",
+                    "4": "<input data-phx-active-refs=\"\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnL7qteVzAAQNwdH\" id=\"phx-FnL7qteVzAAQNwdH\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple></input>",
                     "s": ["", "\n<form phx-change=\"validate\" id=\"",
                           "\" phx-submit=\"save\" phx-target=\"", "\">\n  ", "\n  ",
                           "\n  <button type=\"submit\">save</button>\n</form>\n"]
                     ],
-                2: ["s": ["loading...\n"]]
+                "2": ["s": ["loading...\n"]]
             ],
             "s": ["<div>\n  ", "\n</div>\n"]
         ]
@@ -679,7 +679,7 @@ final class DOMTests: XCTestCase {
         ("testDropCids", testDropCids)
     ]
     
-    private func compareNestedDictionaries(_ expected: [AnyHashable:Any], _ actual: [AnyHashable:Any]) -> Void {
+    private func compareNestedDictionaries(_ expected: Payload, _ actual: Payload) -> Void {
         if expected.count != actual.count {
             XCTFail("The two objects are not equal")
             return
@@ -690,7 +690,7 @@ final class DOMTests: XCTestCase {
             let actualValue = actual[key]
 
             // This is terrible but it works and it only exists in the tests soooo... ¯\_(ツ)_/¯
-            if let expectedDict = expectedValue as? [AnyHashable:Any], let actualDict = actualValue as? [AnyHashable:Any] {
+            if let expectedDict = expectedValue as? Payload, let actualDict = actualValue as? Payload {
                 compareNestedDictionaries(expectedDict, actualDict)
                 continue
             } else if let expectedStringArray = expectedValue as? Array<String>, let actualStringArray = actualValue as? Array<String> {

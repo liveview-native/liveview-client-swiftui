@@ -8,6 +8,8 @@
 import SwiftSoup
 import Foundation
 
+public typealias Payload = [String:Any]
+
 class DOM {
     
     enum ByIDError: Error {
@@ -19,8 +21,8 @@ class DOM {
     static let PHX_SESSION: String = "data-phx-session"
     static let PHX_STATIC: String = "data-phx-static"
 
-    static let STATIC_FRAGMENT: AnyHashable = "s"
-    static let COMPONENT_FRAGMENT: AnyHashable = "c"
+    static let STATIC_FRAGMENT: String = "s"
+    static let COMPONENT_FRAGMENT: String = "c"
     
     static func parse(_ html: String)throws -> Elements {
         let document = try SwiftSoup.parse(html)
@@ -240,11 +242,11 @@ class DOM {
         return liveViews
     }
     
-    static func deepMerge(_ target: [AnyHashable:Any], _ source: [AnyHashable:Any])throws -> [AnyHashable:Any] {
+    static func deepMerge(_ target: Payload, _ source: Payload)throws -> Payload {
         var mutTarget = target
         
         try mutTarget.merge(source) { (target, source) in
-            if let target = target as? [AnyHashable:Any], let source = source as? [AnyHashable:Any] {
+            if let target = target as? Payload, let source = source as? Payload {
                 return try deepMerge(target, source)
             } else {
                 return source
@@ -311,26 +313,26 @@ class DOM {
 
     // Diff Merging
 
-    static func mergeDiff(_ rendered: [AnyHashable:Any], _ diff: [AnyHashable:Any])throws -> [AnyHashable:Any] {
-        var mutDiff: [AnyHashable:Any] = diff
-        let new: [AnyHashable:Any]? = mutDiff.removeValue(forKey: COMPONENT_FRAGMENT) as! [AnyHashable:Any]?
+    static func mergeDiff(_ rendered: Payload, _ diff: Payload)throws -> Payload {
+        var mutDiff: Payload = diff
+        let new: Payload? = mutDiff.removeValue(forKey: COMPONENT_FRAGMENT) as! Payload?
 
-        var mutRendered: [AnyHashable:Any] = try deepMerge(rendered, mutDiff)
+        var mutRendered: Payload = try deepMerge(rendered, mutDiff)
 
         if new != nil {
-            let old: [AnyHashable:Any] = mutRendered[COMPONENT_FRAGMENT, default: [:]] as! [AnyHashable:Any]
+            let old: Payload = mutRendered[COMPONENT_FRAGMENT, default: [:]] as! Payload
 
-            let acc = try new!.reduce((old, [AnyHashable:Any]())) { (acc, entry)throws -> ([AnyHashable:Any], [AnyHashable:Any]) in
-                var mutAcc: [AnyHashable:Any]
-                var mutCache: [AnyHashable:Any]
+            let acc = try new!.reduce((old, Payload())) { (acc, entry)throws -> (Payload, Payload) in
+                var mutAcc: Payload
+                var mutCache: Payload
                 (mutAcc, mutCache) = acc
-                let cid: AnyHashable = entry.key
-                let cdiff: [AnyHashable:Any] = entry.value as! [AnyHashable:Any]
-                var value: [AnyHashable:Any]
+                let cid: Int = Int(entry.key)!
+                let cdiff: Payload = entry.value as! Payload
+                var value: Payload
                 
                 (value, mutCache) = try findComponent(cid, cdiff, old, new!, mutCache)
 
-                mutAcc[cid] = value
+                mutAcc[String(cid)] = value
                 return (mutAcc, mutCache)
             }
 
@@ -342,40 +344,48 @@ class DOM {
         }
     }
 
-    static private func findComponent(_ cid: AnyHashable, _ cdiff: [AnyHashable:Any], _ old: [AnyHashable:Any], _ new: [AnyHashable:Any], _ cache: [AnyHashable:Any])throws -> ([AnyHashable:Any], [AnyHashable:Any]) {
-        let cached: [AnyHashable:Any]? = cache[cid] as! [AnyHashable:Any]?
+    static private func findComponent(_ cid: Int, _ cdiff: Payload, _ old: Payload, _ new: Payload, _ cache: Payload)throws -> (Payload, Payload) {
+        let cached: Payload? = cache[String(cid)] as! Payload?
 
         if cached != nil {
             return (cached!, cache)
         } else {
             let entry: Int? = cdiff[STATIC_FRAGMENT] as! Int?
-            var mutCdiff: [AnyHashable:Any] = cdiff
+            var mutCdiff: Payload = cdiff
             
             if entry != nil && entry! > 0 {
-                let res: [AnyHashable:Any]
-                let mutCache: [AnyHashable:Any]
-                (res, mutCache) = try findComponent(entry, new[entry] as! [AnyHashable:Any], old, new, cache)
+                let res: Payload
+                let mutCache: Payload
+                (res, mutCache) = try findComponent(entry!, new[String(entry!)] as! Payload, old, new, cache)
                 mutCdiff.removeValue(forKey: PHX_STATIC)
                 return (try deepMerge(res, mutCdiff), mutCache)
             } else if entry != nil && entry! < 0 {
                 mutCdiff.removeValue(forKey: PHX_STATIC)
-                return (try deepMerge(old[-entry!] as! [AnyHashable:Any], mutCdiff), cache)
+                return (try deepMerge(old[String(-entry!)] as! Payload, mutCdiff), cache)
             } else {
-                return (try deepMerge(old[cid, default: [AnyHashable:Any]()] as! [AnyHashable:Any], mutCdiff), cache)
+                return (try deepMerge(old[String(cid), default: Payload()] as! Payload, mutCdiff), cache)
             }
         }
     }
     
-    static func dropCids(_ rendered: [AnyHashable:Any], _ cids: Array<AnyHashable>) -> [AnyHashable:Any] {
-        let components: [AnyHashable:Any] = (rendered[COMPONENT_FRAGMENT] as? [AnyHashable:Any])!
+    static func dropCids(_ rendered: Payload, _ cids: Array<Int>) -> Payload {
+        let components: Payload = (rendered[COMPONENT_FRAGMENT] as? Payload)!
         var mutRendered = rendered
         
-        mutRendered[COMPONENT_FRAGMENT] = components.filter {!cids.contains($0.key ) }
+        mutRendered[COMPONENT_FRAGMENT] = components.filter { (key, value) in
+            let intKey = Int(key)
+            
+            if intKey == nil {
+                return true
+            } else {
+                return !cids.contains(intKey!)
+            }
+        }
         
         return mutRendered
     }
     
-    static func renderDiff(_ rendered: [AnyHashable:Any])throws -> Elements {
+    static func renderDiff(_ rendered: Payload)throws -> Elements {
         let contents: Data = try Diff.toData(rendered) { (cid, contents)throws -> String in
             let html: String = Diff.dataToString(contents)
             let elements: Elements = try DOM.parse(html)
@@ -414,25 +424,25 @@ class DOM {
 //    }
 //
 
-    static func componentIDs(_ id: String, _ htmlTree: Elements)throws -> Array<AnyHashable> {
+    static func componentIDs(_ id: String, _ htmlTree: Elements)throws -> Array<Int> {
         let element = try byID(htmlTree, id)
         
         let children = childNodes(element)
         
-        var cids: Array<AnyHashable> = []
+        var cids: Array<Int> = []
         
         cids = try children.reduce(cids, traverseComponentIDs)
         
         return cids
     }
     
-    static private func traverseComponentIDs(_ cids: Array<AnyHashable>, _ element: Element)throws -> Array<AnyHashable> {
-        var mutCids: Array<AnyHashable> = cids
+    static private func traverseComponentIDs(_ cids: Array<Int>, _ element: Element)throws -> Array<Int> {
+        var mutCids: Array<Int> = cids
         
         let id: String? = try attribute(element, PHX_COMPONENT)
         
         if id != nil {
-            mutCids.insert(Int(id!), at: 0)
+            mutCids.insert(Int(id!)!, at: 0)
         }
         
         if try attribute(element, PHX_STATIC) != nil {

@@ -12,12 +12,12 @@ import SwiftSoup
 
 final class DiffTests: XCTestCase {
     func testToIODataWithSubtreesChain()throws {
-        let sample: [AnyHashable:Any] = [
-            0: ["d": [["1", 1], ["2", 2], ["3", 3]], "s": ["\n", ":", ""]],
+        let sample: Payload = [
+            "0": ["d": [["1", 1], ["2", 2], ["3", 3]], "s": ["\n", ":", ""]],
             "c": [
-                1: [0: [0: "index_1", "s": ["\nIF ", ""]], "s": ["", ""]],
-                2: [0: [0: "index_2", "s": ["\nELSE ", ""]], "s": 1],
-                3: [0: [0: "index_3"], "s": 2]
+                "1": ["0": ["0": "index_1", "s": ["\nIF ", ""]], "s": ["", ""]],
+                "2": ["0": ["0": "index_2", "s": ["\nELSE ", ""]], "s": 1],
+                "3": ["0": ["0": "index_3"], "s": 2]
             ],
             "s": ["<div>", "\n</div>\n"]
           ]
@@ -36,7 +36,7 @@ final class DiffTests: XCTestCase {
 //
 //    func testResolve()throws {
 //        let cid = 2
-//        let c: [AnyHashable:Any] = [
+//        let c: Payload = [
 //            1: [0: [0: "index_1", "s": ["\nIF ", ""]], "s": ["", ""]],
 //            2: [0: [0: "index_2", "s": ["\nELSE ", ""]], "s": 1],
 //            3: [0: [0: "index_3"], "s": 2]
@@ -44,7 +44,7 @@ final class DiffTests: XCTestCase {
 //
 //        let actual = try Diff.resolveComponentsXrefs(cid, c)
 //
-//        let expected: [AnyHashable:Any] = [
+//        let expected: Payload = [
 //            1: [0: [0: "index_1", "s": ["\nIF ", ""]], "s": ["", ""]],
 //            2: [0: [0: "index_2", "s": ["\nELSE ", ""]], "s": ["", ""]],
 //            3: [0: [0: "index_3"], "s": 2]
@@ -54,10 +54,10 @@ final class DiffTests: XCTestCase {
 //    }
 //
 //    func testDeepMerge()throws {
-//        let left: [AnyHashable:Any] = [0: [0: "index_1", "s": ["\nIF ", ""]], "s": ["", ""]]
-//        let right: [AnyHashable:Any] = [0: [0: "index_2", "s": ["\nELSE ", ""]]]
+//        let left: Payload = [0: [0: "index_1", "s": ["\nIF ", ""]], "s": ["", ""]]
+//        let right: Payload = [0: [0: "index_2", "s": ["\nELSE ", ""]]]
 //
-//        let expected: [AnyHashable:Any] = [0: [0: "index_2", "s": ["\nELSE ", ""]], "s": ["", ""]]
+//        let expected: Payload = [0: [0: "index_2", "s": ["\nELSE ", ""]], "s": ["", ""]]
 //
 //        let actual = try Diff.deepMerge(left, right)
 //
@@ -83,11 +83,11 @@ final class DiffTests: XCTestCase {
         ("testToIODataWithSubtreesChain", testToIODataWithSubtreesChain)
     ]
     
-    private func renderToString(_ diff: [AnyHashable:Any])throws -> String {
+    private func renderToString(_ diff: Payload)throws -> String {
         return Diff.dataToString(try Diff.toData(diff))
     }
     
-    private func compareNestedDictionaries(_ expected: [AnyHashable:Any], _ actual: [AnyHashable:Any]) -> Void {
+    private func compareNestedDictionaries(_ expected: Payload, _ actual: Payload) -> Void {
         if expected.count != actual.count {
             XCTFail("The two objects are not equal")
             return
@@ -98,7 +98,7 @@ final class DiffTests: XCTestCase {
             let actualValue = actual[key]
 
             // This is terrible but it works and it only exists in the tests soooo... ¯\_(ツ)_/¯
-            if let expectedDict = expectedValue as? [AnyHashable:Any], let actualDict = actualValue as? [AnyHashable:Any] {
+            if let expectedDict = expectedValue as? Payload, let actualDict = actualValue as? Payload {
                 compareNestedDictionaries(expectedDict, actualDict)
                 continue
             } else if let expectedStringArray = expectedValue as? Array<String>, let actualStringArray = actualValue as? Array<String> {
