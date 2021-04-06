@@ -136,11 +136,25 @@ class DOM {
         return nil
     }
     
+    // a custom elements -> html function
+    // that results in the RAW original text
+    // nodes without any imposed indentation that
+    // the standard elements.outerHtml func from
+    // SwiftSoup does
     static func toHTML(_ elements: Elements)throws -> String {
+        let document: Document = Document("")
+        document.outputSettings().prettyPrint(pretty: false)
+        for element in elements {
+            try document.appendChild(element)
+        }
+        
         return try elements.outerHtml()
     }
     
     static func toHTML(_ element: Element)throws -> String {
+        let document: Document = Document("")
+        document.outputSettings().prettyPrint(pretty: false)
+        try document.appendChild(element)
         return try element.outerHtml()
     }
     
@@ -361,37 +375,45 @@ class DOM {
         return mutRendered
     }
     
-//    static func renderDiff(_ rendered: [AnyHashable:Any])throws -> Elements {
-//        let contents: Data = Diff.elementsToData(rendered) { (cid, contents)throws -> String in
-//            var html: String = Diff.dataToString(contents)
-//            var elements: Elements = parse(html)
-//            elements = traverseAndUpdate(elements) { (element)throws -> Void in
-//                injectCidAttr(element, cid)
-//            }
-//            
-//            return toHTML(element)
-//        }
-//        
-//        let html: String = Diff.dataToString(contents)
-//        let elements: Elements = try parse(html)
-//        return elements
-//    }
-//    
-//    static private func injectCidAttr(_ element: Element, _ cid: Int)throws -> Void {
-//        try element.attr(PHX_COMPONENT, String(cid))
-//    }
-    
-    static private func traverseAndUpdate(_ elements: Elements, _ closure: (_ element: Element)throws -> Void)throws -> Void {
-        for element in elements {
-            try closure(element)
-            try traverseAndUpdate(childNodes(element), closure)
+    static func renderDiff(_ rendered: [AnyHashable:Any])throws -> Elements {
+        let contents: Data = try Diff.toData(rendered) { (cid, contents)throws -> String in
+            let html: String = Diff.dataToString(contents)
+            let elements: Elements = try DOM.parse(html)
+            
+            if elements.count == 0 {
+                // for now we assume that this could be a text node
+                // that is not parse-able by SwiftSoup
+                return html
+            }
+
+            for element in elements {
+                let tagName: String = DOM.tag(element)
+
+                switch tagName {
+                case "pi":
+                    break
+                case "comment":
+                    break
+                case "doctype":
+                    break
+                default:
+                    try element.attr(PHX_COMPONENT, String(cid))
+                }
+            }
+                        
+            return try toHTML(elements)
         }
+        
+        let html: String = Diff.dataToString(contents)
+        let elements: Elements = try parse(html)
+        return elements
     }
     
 //    static func patchID(id: String, htmlTree: Document, innerHtml: Element) {
 //        
 //    }
-//    
+//
+
     static func componentIDs(_ id: String, _ htmlTree: Elements)throws -> Array<AnyHashable> {
         let element = try byID(htmlTree, id)
         

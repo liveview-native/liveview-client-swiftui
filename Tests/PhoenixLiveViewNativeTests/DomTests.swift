@@ -96,35 +96,31 @@ final class DOMTests: XCTestCase {
     }
     
     func testInspectHTML()throws {
-        let sample = """
-        <div class="foo">
-            Foo
-            <div class="baz">Baz</div>
-        </div>
-        <div class="bar">Bar</div>
-        """
+        let sample = "<div class=\"foo\">\n  Foo\n  <div class=\"baz\">Baz</div>\n</div>\n<div class=\"bar\">\n  Bar\n</div>"
         
         // many of elements
         let htmlTree = try DOM.parse(sample)
         
         var result: String = try DOM.inspectHTML(htmlTree)
-        
-        XCTAssertEqual(result, "    <div class=\"foo\">\n     Foo \n    <div class=\"baz\">\n     Baz\n    </div> \n   </div>\n    <div class=\"bar\">\n    Bar\n   </div>\n")
+        var expected = "    <div class=\"foo\">\n     Foo\n     <div class=\"baz\">Baz</div>\n   </div>\n    <div class=\"bar\">\n     Bar\n   </div>\n"
+        XCTAssertEqual(result, expected)
         
         // single element
         let firstElement: Element = htmlTree[0]
-        
+
         result = try DOM.inspectHTML(firstElement)
+        expected = "    <div class=\"foo\">\n     Foo\n     <div class=\"baz\">Baz</div>\n   </div>\n"
 
-        XCTAssertEqual(result, "    <div class=\"foo\">\n     Foo \n    <div class=\"baz\">\n     Baz\n    </div> \n   </div>\n")
-        
+        XCTAssertEqual(result, expected)
+
         // elements form a select
-        
-        let all = try DOM.all(htmlTree, "div")
-        
-        result = try DOM.inspectHTML(all)
 
-        XCTAssertEqual(result, "    <div class=\"foo\">\n     Foo \n    <div class=\"baz\">\n     Baz\n    </div> \n   </div>\n    <div class=\"baz\">\n    Baz\n   </div>\n    <div class=\"bar\">\n    Bar\n   </div>\n")
+        let all = try DOM.all(htmlTree, "div")
+
+        result = try DOM.inspectHTML(all)
+        expected = "    <div class=\"foo\">\n     Foo\n     <div class=\"baz\">Baz</div>\n   </div>\n    <div class=\"baz\">Baz</div>\n    <div class=\"bar\">\n     Bar\n   </div>\n"
+
+        XCTAssertEqual(result, expected)
     }
         
     func testTag()throws {
@@ -155,16 +151,21 @@ final class DOMTests: XCTestCase {
     }
     
     func testToHTML()throws {
-        let sample = """
-        <div class="foo">Foo</div>
-        <div class="bar">Bar</div>
-        """
+        var sample = "<div><div class=\"foo\">Foo</div>\n\n<div class=\"bar\">Bar</div></div>"
         
-        let htmlTree = try DOM.parse(sample)
+        var htmlTree = try DOM.parse(sample)
         
-        let result: String = try DOM.toHTML(htmlTree)
+        var result: String = try DOM.toHTML(htmlTree)
         
-        XCTAssertEqual(result, "<div class=\"foo\">\n Foo\n</div>\n<div class=\"bar\">\n Bar\n</div>")
+        XCTAssertEqual(result, sample)
+        
+        sample = "<div class=\"foo\">Foo\n\n</div>"
+        
+        htmlTree = try DOM.parse(sample)
+        
+        result = try DOM.toHTML(htmlTree[0])
+        
+        XCTAssertEqual(result, sample)
     }
 
     func testToText()throws {
@@ -610,6 +611,49 @@ final class DOMTests: XCTestCase {
         let expected: Array<AnyHashable> = [1]
         
         XCTAssertEqual(expected, result)
+    }
+    
+    func testRenderDiff()throws {
+        var sample: [AnyHashable:Any] = [
+            0: "",
+            1: [
+              "d": [["foo1.jpeg", "0", "nil", ""], ["foo2.jpeg", "0", "nil", ""]],
+              "s": ["\n    lv:", ":", "%\n    channel:", "\n    ", "\n  "]
+            ],
+            2: "<input data-phx-active-refs=\"1282,1346\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnLSu0zdGSgfdQhC\" id=\"phx-FnLSu0zdGSgfdQhC\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple></input>",
+            "s": ["", "\n<form phx-change=\"validate\" phx-submit=\"save\">\n  ", "\n  ",
+             "\n  <button type=\"submit\">save</button>\n</form>\n"]
+          ]
+        
+        var actual: Elements = try DOM.renderDiff(sample)
+        
+        var expected = "<form phx-change=\"validate\" phx-submit=\"save\">\n  \n    lv:foo1.jpeg:0%\n    channel:nil\n    \n  \n    lv:foo2.jpeg:0%\n    channel:nil\n    \n  \n  <input data-phx-active-refs=\"1282,1346\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnLSu0zdGSgfdQhC\" id=\"phx-FnLSu0zdGSgfdQhC\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple>\n  <button type=\"submit\">save</button>\n</form>"
+                
+        XCTAssertEqual(expected, try DOM.toHTML(actual))
+        
+        sample = [
+            0: ["d": [[1], [2]], "s": ["\n    ", "\n  "]],
+            "c": [
+                1: [
+                    0: "",
+                    1: "upload0",
+                    2: "1",
+                    3: "",
+                    4: "<input data-phx-active-refs=\"\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnL7qteVzAAQNwdH\" id=\"phx-FnL7qteVzAAQNwdH\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple></input>",
+                    "s": ["", "\n<form phx-change=\"validate\" id=\"",
+                          "\" phx-submit=\"save\" phx-target=\"", "\">\n  ", "\n  ",
+                          "\n  <button type=\"submit\">save</button>\n</form>\n"]
+                    ],
+                2: ["s": ["loading...\n"]]
+            ],
+            "s": ["<div>\n  ", "\n</div>\n"]
+        ]
+        
+        actual = try DOM.renderDiff(sample)
+
+        expected = "<div>\n  \n    <form phx-change=\"validate\" id=\"upload0\" phx-submit=\"save\" phx-target=\"1\" data-phx-component=\"1\">\n  \n  <input data-phx-active-refs=\"\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnL7qteVzAAQNwdH\" id=\"phx-FnL7qteVzAAQNwdH\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple>\n  <button type=\"submit\">save</button>\n</form>\n  \n    loading...\n\n  \n</div>"
+
+        XCTAssertEqual(expected, try DOM.toHTML(actual))
     }
 
     static var allTests = [
