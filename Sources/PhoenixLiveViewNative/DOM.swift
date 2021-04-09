@@ -94,8 +94,6 @@ class DOM {
         } else if key == value {
             return value
         } else {
-            // original LiveView code has `nil` but Swift doesn't seem to
-            // play nice with interpolating `nil` so using emptry String
             return nil
         }
     }
@@ -172,6 +170,17 @@ class DOM {
           return element!
         default :
             throw ByIDError.notOneFound(message)
+        }
+    }
+    
+    static func byIDOptional(_ elements: Elements, _ id: String)throws -> Element? {
+        let (result, element, _) = try maybeOne(elements, "#\(id)")
+        
+        switch result {
+        case "ok":
+          return element!
+        default :
+            return nil
         }
     }
     
@@ -419,10 +428,43 @@ class DOM {
         return elements
     }
     
-//    static func patchID(id: String, htmlTree: Document, innerHtml: Element) {
-//        
-//    }
-//
+    static func patchID(_ id: String, _ htmlTree: Elements, _ innerHtml: Elements)throws -> (Elements, Array<Int>) {
+        let cidsBefore: Array<Int> = try componentIDs(id, htmlTree)
+
+        let phxUpdateTree: Elements = try walk(innerHtml) {(node) -> Node in
+            return try applyPhxUpdate(DOM.attribute(node as! Element, "phx-update"), htmlTree, node as! Element)
+        }
+        
+        let newHtml = try walk(htmlTree) { (node)throws -> Node in
+            let element = node as! Element
+            let elementID = try DOM.attribute(element, "id")
+            
+            if (elementID != nil && elementID! == id) {
+                let tag = Tag(DOM.tag(element))
+                let attributes: Attributes
+                
+                if let elementAttributes = element.getAttributes() {
+                    attributes = elementAttributes.copy() as! Attributes
+                } else {
+                    attributes = Attributes()
+                }
+                
+                let newElement = Element(tag, "", attributes)
+                
+                try newElement.addChildren(elementsToArrayNodes(phxUpdateTree))
+                return newElement
+            } else {
+                return element.copy() as! Node
+            }
+        }
+        
+        let cidsAfter: Array<Int> = try componentIDs(id, htmlTree)
+        
+        let returnCids: Array<Int> = cidsBefore.filter { !cidsAfter.contains($0) }
+        
+        return (newHtml, returnCids)
+    }
+
 
     static func componentIDs(_ id: String, _ htmlTree: Elements)throws -> Array<Int> {
         let element = try byID(htmlTree, id)
@@ -452,6 +494,168 @@ class DOM {
             mutCids = try children.reduce(mutCids, traverseComponentIDs)
             return mutCids
         }
+    }
+    
+    static private func applyPhxUpdate(_ type: String?, _ htmlTree: Elements, _ element: Element)throws -> Element {
+        if (type == nil || type! == "replace") {
+            return element
+        } else if (type! == "ignore") {
+            try verifyPhxUpdateId("ignore", try attribute(element, "id"), element)
+            return element
+        } else if (["append", "prepend"].contains(type!)) {
+            let id = try attribute(element, "id")
+            try verifyPhxUpdateId(type!, id, element)
+            let appendedChildren = element.children()
+            let childrenBefore = try applyPhxUpdateChildren(htmlTree, id!)
+            let existingIDs = try applyPhxUpdateChildrenID(type!, childrenBefore)
+            let newIDs = try applyPhxUpdateChildrenID(type!, element.children())
+            let contentChanged = newIDs != existingIDs
+
+            var dupIDs: Array<String> = []
+
+            if (contentChanged) {
+                dupIDs = newIDs.filter { existingIDs.contains($0) }
+            }
+
+            var updatedExistingChildren: Elements
+            var updatedAppendedChildren: Elements
+            
+            (updatedExistingChildren, updatedAppendedChildren) = try dupIDs.reduce((childrenBefore, appendedChildren)) { (acc, dupID)throws -> (Elements, Elements) in
+                let before = acc.0
+                let appended = acc.1
+                let patchedBefore = try walk(before) {(node)throws -> Node in
+                    let element = node as! Element
+                    let tagName = DOM.tag(element)
+                    let id = try DOM.attribute(element, "id")
+                    
+                    if (id != nil && id! == dupID) {
+                        let replacementElement = try DOM.byID(appended, dupID)
+                        let newElement = replacementElement.copy() as! Element
+                        try newElement.tagName(tagName)
+                        
+                        return newElement
+                    } else {
+                        return node
+                    }
+                }
+                
+                try appended.select("#\(dupID)").unwrap()
+                
+                return (patchedBefore, appended)
+            }
+            
+            let updatedExistingChildrenNodes = elementsToArrayNodes(updatedExistingChildren)
+            let updatedAppendedChildrenNodes = elementsToArrayNodes(updatedAppendedChildren)
+            
+            let tag = Tag(DOM.tag(element))
+            let attributes: Attributes
+            
+            if let elementAttributes = element.getAttributes() {
+                attributes = elementAttributes.copy() as! Attributes
+            } else {
+                attributes = Attributes()
+            }
+
+            let returnElement: Element = Element(tag, "", attributes)
+
+            if (contentChanged && type! == "append") {
+                try returnElement.addChildren(updatedExistingChildrenNodes)
+                try returnElement.addChildren(updatedAppendedChildrenNodes)
+            } else if (contentChanged && type! == "prepend") {
+                try returnElement.addChildren(updatedAppendedChildrenNodes)
+                try returnElement.addChildren(updatedExistingChildrenNodes)
+            } else {
+                try returnElement.addChildren(updatedAppendedChildrenNodes)
+            }
+            
+            return returnElement
+
+        } else {
+            fatalError("invalid phx-update value \(type!), expected one of \"replace\", \"append\", \"prepend\", \"ignore\"")
+        }
+    }
+    
+    static private func elementsToArrayNodes(_ elements: Elements) -> Array<Node> {
+        var arrayNodes = Array<Node>()
+        
+        for element in elements {
+            arrayNodes.append(element)
+        }
+        
+        return arrayNodes
+    }
+    
+    static private func verifyPhxUpdateId(_ type: String, _ id: String?, _ element: Element)throws -> Void {
+        if (id == nil || id! == "") {
+            let actual = try inspectHTML(element)
+            fatalError("setting phx-update to \(type) requires setting an ID on the container, got: \n\n \(actual)")
+        }
+    }
+    
+    static private func applyPhxUpdateChildren(_ elements: Elements, _ id: String)throws -> Elements {
+        let element: Element? = try byIDOptional(elements, id)
+        
+        if element == nil {
+            return Elements()
+        } else {
+            return element!.children()
+        }
+    }
+    
+    static private func applyPhxUpdateChildrenID(_ type: String, _ children: Elements)throws -> Array<String> {
+        return try children.reduce(Array<String>()) { (acc, child)throws -> Array<String> in
+            var mutAcc = acc
+            let id: String = try DOM.attribute(child, "ID")!
+            
+            mutAcc.append(id)
+            
+            return mutAcc
+        }
+    }
+    
+    static private func walk(_ elements: Elements, _ closure: (_ node: Node)throws -> Node)throws -> Elements {
+        let newElements = Elements()
+        
+        for element in elements {
+            let newElement: Element = try walk(element, closure) as! Element
+            newElements.add(newElement)
+        }
+
+        return newElements
+    }
+    
+
+    static private func walk(_ node: Node, _ closure: (_ node: Node)throws -> Node)throws -> Node {
+        let newNode: Node
+        
+        if node is TextNode {
+            newNode = node.copy() as! Node
+        } else {
+            let tagName: String = DOM.tag(node as! Element)
+
+            switch tagName {
+            case "pi":
+                newNode = node.copy() as! Node
+            case "comment":
+                newNode = node.copy() as! Node
+            case "doctype":
+                newNode = node.copy() as! Node
+            default:
+                newNode = try closure(node)
+            }
+        }
+        
+        var childNodes = newNode.childNodesCopy()
+        
+        for node in newNode.getChildNodes() {
+            try newNode.removeChild(node)
+        }
+        
+        childNodes = try childNodes.map { try walk($0, closure) }
+        
+        try newNode.addChildren(childNodes)
+        
+        return newNode
     }
     
     static private func optionalByID(_ elements: Elements, _ id: String) -> Element? {

@@ -655,6 +655,94 @@ final class DOMTests: XCTestCase {
 
         XCTAssertEqual(expected, try DOM.toHTML(actual))
     }
+    
+    // The following two test is a smoke test for complex private function testing.
+    // The corresponding private function needs to be made public to test them.
+
+//    func testApplyPhxUpdate()throws {
+//        var html: String
+//        var nodeHtml: String
+//        var expected: String
+//        var actual: Element
+//        var htmlTree: Elements
+//        var node: Element
+//        
+//        html = "<div data-phx-main=\"true\" data-phx-session=\"SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAAFHBoeC1Gbk51RnRIV1Z1aTY0dXZDZAAKcGFyZW50X3BpZGQAA25pbGQACHJvb3RfcGlkZAADbmlsZAAJcm9vdF92aWV3ZAAmRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LkFwcGVuZExpdmVkAAZyb3V0ZXJkACJFbGl4aXIuUGhvZW5peC5MaXZlVmlld1Rlc3QuUm91dGVyZAAHc2Vzc2lvbnQAAAAAZAAEdmlld2QAJkVsaXhpci5QaG9lbml4LkxpdmVWaWV3VGVzdC5BcHBlbmRMaXZlbgYAFArgqXgBYgABUYA.BAmyY_HqDUe9TwYEss4kJacDL0A39SdJzoh1f_fJ54I\" data-phx-static=\"SFMyNTY.g2gDaAJhBHQAAAADZAAKYXNzaWduX25ld2pkAAVmbGFzaHQAAAAAZAACaWRtAAAAFHBoeC1Gbk51RnRIV1Z1aTY0dXZDbgYAFQrgqXgBYgABUYA.o4G-3DLlpSfSd_6bw_mGhBkmKTBVNXJmKp7ODrCudrI\" data-phx-view=\"LiveViewTest.AppendLive\" id=\"phx-FnNuFtHWVui64uvC\"><div id=\"times\" phx-update=\"append\"><h1 id=\"title-ny\">NY</h1><div data-phx-parent-id=\"phx-FnNuFtHWVui64uvC\" data-phx-session=\"\" data-phx-static=\"SFMyNTY.g2gDaAJhBHQAAAADZAAKYXNzaWduX25ld2pkAAVmbGFzaHQAAAAAZAACaWRtAAAABXR6LW55bgYAFQrgqXgBYgABUYA.dJg1vfySPEtGjVlmAAJvQweS3WD7QlNhGCOqi493ENk\" data-phx-view=\"LiveViewTest.TZLive\" id=\"tz-ny\">time: 12:00 NY\n</div><h1 id=\"title-sf\">SF</h1><div data-phx-parent-id=\"phx-FnNuFtHWVui64uvC\" data-phx-session=\"\" data-phx-static=\"SFMyNTY.g2gDaAJhBHQAAAADZAAKYXNzaWduX25ld2pkAAVmbGFzaHQAAAAAZAACaWRtAAAABXR6LXNmbgYAFQrgqXgBYgABUYA.s9w-W5wLW5qyMHIGFGpA3egHfG6gU2dLA7ux5SW-mME\" data-phx-view=\"LiveViewTest.TZLive\" id=\"tz-sf\">time: 12:00 SF\n</div></div></div>"
+//        
+//        nodeHtml = "<div id=\"times\" phx-update=\"append\"><h1 id=\"title-ny\">NY</h1><div data-phx-parent-id=\"phx-FnNuFtHWVui64uvC\" data-phx-session=\"SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAABXR6LW55ZAAKcGFyZW50X3BpZFhkAA1ub25vZGVAbm9ob3N0AAAFjwAAAAAAAAAAZAAIcm9vdF9waWRYZAANbm9ub2RlQG5vaG9zdAAABY8AAAAAAAAAAGQACXJvb3Rfdmlld2QAJkVsaXhpci5QaG9lbml4LkxpdmVWaWV3VGVzdC5BcHBlbmRMaXZlZAAGcm91dGVyZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlJvdXRlcmQAB3Nlc3Npb250AAAAAW0AAAAEbmFtZW0AAAACTllkAAR2aWV3ZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlRaTGl2ZW4GABcK4Kl4AWIAAVGA.Q7FZ5JkESjjwr23B3pRr55gzJj96FaAuRqcfOlo6EWs\" data-phx-static=\"\" data-phx-view=\"LiveViewTest.TZLive\" id=\"tz-ny\"></div><h1 id=\"title-sf\">SF</h1><div data-phx-parent-id=\"phx-FnNuFtHWVui64uvC\" data-phx-session=\"SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAABXR6LXNmZAAKcGFyZW50X3BpZFhkAA1ub25vZGVAbm9ob3N0AAAFjwAAAAAAAAAAZAAIcm9vdF9waWRYZAANbm9ub2RlQG5vaG9zdAAABY8AAAAAAAAAAGQACXJvb3Rfdmlld2QAJkVsaXhpci5QaG9lbml4LkxpdmVWaWV3VGVzdC5BcHBlbmRMaXZlZAAGcm91dGVyZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlJvdXRlcmQAB3Nlc3Npb250AAAAAW0AAAAEbmFtZW0AAAACU0ZkAAR2aWV3ZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlRaTGl2ZW4GABcK4Kl4AWIAAVGA.7L1feuInJsOfcwTq8tf7LG-tBvTnbMems4mQ-lfFTnw\" data-phx-static=\"\" data-phx-view=\"LiveViewTest.TZLive\" id=\"tz-sf\"></div></div>"
+//        
+//        htmlTree = try DOM.parse(html)
+//        node = try DOM.parse(nodeHtml)[0]
+//        
+//        expected = "<div id=\"times\" phx-update=\"append\"><h1 id=\"title-ny\">NY</h1><div data-phx-parent-id=\"phx-FnNuFtHWVui64uvC\" data-phx-session=\"SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAABXR6LW55ZAAKcGFyZW50X3BpZFhkAA1ub25vZGVAbm9ob3N0AAAFjwAAAAAAAAAAZAAIcm9vdF9waWRYZAANbm9ub2RlQG5vaG9zdAAABY8AAAAAAAAAAGQACXJvb3Rfdmlld2QAJkVsaXhpci5QaG9lbml4LkxpdmVWaWV3VGVzdC5BcHBlbmRMaXZlZAAGcm91dGVyZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlJvdXRlcmQAB3Nlc3Npb250AAAAAW0AAAAEbmFtZW0AAAACTllkAAR2aWV3ZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlRaTGl2ZW4GABcK4Kl4AWIAAVGA.Q7FZ5JkESjjwr23B3pRr55gzJj96FaAuRqcfOlo6EWs\" data-phx-static=\"\" data-phx-view=\"LiveViewTest.TZLive\" id=\"tz-ny\"></div><h1 id=\"title-sf\">SF</h1><div data-phx-parent-id=\"phx-FnNuFtHWVui64uvC\" data-phx-session=\"SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAABXR6LXNmZAAKcGFyZW50X3BpZFhkAA1ub25vZGVAbm9ob3N0AAAFjwAAAAAAAAAAZAAIcm9vdF9waWRYZAANbm9ub2RlQG5vaG9zdAAABY8AAAAAAAAAAGQACXJvb3Rfdmlld2QAJkVsaXhpci5QaG9lbml4LkxpdmVWaWV3VGVzdC5BcHBlbmRMaXZlZAAGcm91dGVyZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlJvdXRlcmQAB3Nlc3Npb250AAAAAW0AAAAEbmFtZW0AAAACU0ZkAAR2aWV3ZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlRaTGl2ZW4GABcK4Kl4AWIAAVGA.7L1feuInJsOfcwTq8tf7LG-tBvTnbMems4mQ-lfFTnw\" data-phx-static=\"\" data-phx-view=\"LiveViewTest.TZLive\" id=\"tz-sf\"></div></div>"
+//        
+//        expected = try DOM.toHTML(node)
+//        
+//        actual = try DOM.applyPhxUpdate(nil, htmlTree, node)
+//        XCTAssertEqual(expected, try DOM.toHTML(actual))
+//        
+//        actual = try DOM.applyPhxUpdate("replace", htmlTree, node)
+//        XCTAssertEqual(expected, try DOM.toHTML(actual))
+//    }
+    
+    func testPatchID()throws {
+        var html: String
+        var innerHtml: String
+        var actual: String
+        var newHtml: Elements
+        
+        // updates deeply nested html
+        html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"foo\">Hello</div>\n<div id=\"list\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
+        innerHtml = "<div id=\"foo\">Hello World</div>\n<div id=\"list\">\n  <div id=\"2\" class=\"foo\">a</div>\n  <div id=\"3\">\n    <div id=\"5\">inner</div>\n  </div>\n  <div id=\"4\">a</div>\n</div>\n"
+                
+        (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
+
+        actual = try DOM.toHTML(newHtml)
+
+        XCTAssertTrue(!actual.contains("<div id=\"1\">a</div>"))
+        XCTAssertTrue(actual.contains("<div id=\"2\" class=\"foo\">a</div>"))
+        XCTAssertTrue(actual.contains("<div id=\"3\">\n    <div id=\"5\">inner</div>\n  </div>"))
+        XCTAssertTrue(actual.contains("<div id=\"4\">a</div>"))
+        
+        // inserts new elements when phx-update=append
+        
+        html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
+        innerHtml = "<div id=\"list\" phx-update=\"append\">\n  <div id=\"4\" class=\"foo\">a</div>\n</div>\n"
+        
+        (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
+        
+        actual = try DOM.toHTML(newHtml)
+        
+        XCTAssertTrue(actual.contains("<div id=\"1\">a</div>"))
+        XCTAssertTrue(actual.contains("<div id=\"2\">a</div>"))
+        XCTAssertTrue(actual.contains("<div id=\"3\">a</div><div id=\"4\" class=\"foo\">a</div>"))
+        
+        // inserts new elements when phx-update=prepend
+        
+        html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
+        innerHtml = "<div id=\"list\" phx-update=\"prepend\">\n  <div id=\"4\">a</div>\n</div>\n"
+
+        (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
+        
+        actual = try DOM.toHTML(newHtml)
+        
+        XCTAssertTrue(actual.contains("<div id=\"4\">a</div><div id=\"1\">a</div>"))
+        XCTAssertTrue(actual.contains("<div id=\"2\">a</div>"))
+        XCTAssertTrue(actual.contains("<div id=\"3\">a</div>"))
+        
+        // updates existing elements when phx-update=append
+        
+        html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
+        innerHtml = "<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\" class=\"foo\">b</div>\n  <div id=\"2\">b</div>\n</div>\n"
+        
+        (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
+        
+        actual = try DOM.toHTML(newHtml)
+        
+        XCTAssertTrue(actual.contains("<div id=\"1\" class=\"foo\">b</div>"))
+        XCTAssertTrue(actual.contains("<div id=\"2\">b</div>"))
+        XCTAssertTrue(actual.contains("<div id=\"3\">a</div>"))
+    }
 
     static var allTests = [
         ("testParsing", testParsing),
@@ -676,7 +764,10 @@ final class DOMTests: XCTestCase {
         ("testDeepMerge", testDeepMerge),
         ("testFilter", testFilter),
         ("testReverseFilter", testReverseFilter),
-        ("testDropCids", testDropCids)
+        ("testDropCids", testDropCids),
+        ("testComponentIDs", testComponentIDs),
+        ("testRenderDiff", testRenderDiff),
+        ("testPatchID", testPatchID)
     ]
     
     private func compareNestedDictionaries(_ expected: Payload, _ actual: Payload) -> Void {
