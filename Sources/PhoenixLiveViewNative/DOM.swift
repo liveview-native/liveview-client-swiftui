@@ -10,7 +10,7 @@ import Foundation
 
 public typealias Payload = [String:Any]
 
-class DOM {
+public class DOM {
     
     enum ByIDError: Error {
         case notOneFound(String)

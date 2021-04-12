@@ -8,7 +8,7 @@
 import SwiftSoup
 import Foundation
 
-class Diff {
+public class Diff {
     static let STATIC_FRAGMENT: String = "s"
     static let COMPONENT_FRAGMENT: String = "c"
     static let DYNAMICS_FRAGMENT: String = "d"
