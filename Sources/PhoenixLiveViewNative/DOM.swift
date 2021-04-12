@@ -24,16 +24,16 @@ public class DOM {
     static let STATIC_FRAGMENT: String = "s"
     static let COMPONENT_FRAGMENT: String = "c"
     
-    static func parse(_ html: String)throws -> Elements {
+    public static func parse(_ html: String)throws -> Elements {
         let document = try SwiftSoup.parse(html)
         return try document.select("body")[0].children()
     }
     
-    static func all(_ elements: Elements, _ selector: String)throws -> Elements {
+    public static func all(_ elements: Elements, _ selector: String)throws -> Elements {
         return try elements.select(selector)
     }
     
-    static func maybeOne(_ elements: Elements, _ selector: String, _ type: String = "selector")throws -> (String, Element?, String) {
+    public static func maybeOne(_ elements: Elements, _ selector: String, _ type: String = "selector")throws -> (String, Element?, String) {
         let elements = try all(elements, selector)
         let selectedSize = elements.count
         
@@ -50,7 +50,7 @@ public class DOM {
     
     // performance optimization is to reduce this to a single walk of the tree
     // to collect all of the attribute values for the given `name`
-    static func allAttributes(_ elements: Elements, _ key: String)throws -> Array<String> {
+    public static func allAttributes(_ elements: Elements, _ key: String)throws -> Array<String> {
         let parentElement = Element(Tag("div"), "")
         
         for element in elements {
@@ -68,7 +68,7 @@ public class DOM {
         return values
     }
     
-    static func allValues(_ element: Element)throws -> [String: String] {
+    public static func allValues(_ element: Element)throws -> [String: String] {
         let attributes = element.getAttributes()
 
         return try attributes!.reduce([:]) { acc, attribute in
@@ -86,7 +86,7 @@ public class DOM {
     }
     
     // Extracts the correct appended value from the value key
-    static private func valueKey(_ key: String)throws -> String? {
+    public static func valueKey(_ key: String)throws -> String? {
         let phxValue = "phx-value-"
         let value = "value"
         if key.hasPrefix(phxValue) {
@@ -98,7 +98,7 @@ public class DOM {
         }
     }
     
-    static func inspectHTML(_ elements: Elements)throws -> String {
+    public static func inspectHTML(_ elements: Elements)throws -> String {
         var html = ""
         
         for element in elements {
@@ -108,7 +108,7 @@ public class DOM {
         return html
     }
     
-    static func inspectHTML(_ element: Element)throws -> String {
+    public static func inspectHTML(_ element: Element)throws -> String {
         var html = "    "
         
         let elementHTML = try toHTML(element)
@@ -118,7 +118,7 @@ public class DOM {
         return html
     }
     
-    static func tag(_ element: Element) -> String {
+    public static func tag(_ element: Element) -> String {
         return element.tagName()
     }
     
@@ -132,7 +132,7 @@ public class DOM {
         }
     }
     
-    static func attribute(_ other: String, _ key: String)throws -> String? {
+    public static func attribute(_ other: String, _ key: String)throws -> String? {
         return nil
     }
     
@@ -141,7 +141,7 @@ public class DOM {
     // nodes without any imposed indentation that
     // the standard elements.outerHtml func from
     // SwiftSoup does
-    static func toHTML(_ elements: Elements)throws -> String {
+    public static func toHTML(_ elements: Elements)throws -> String {
         let document: Document = Document("")
         document.outputSettings().prettyPrint(pretty: false)
         for element in elements {
@@ -151,18 +151,18 @@ public class DOM {
         return try elements.outerHtml()
     }
     
-    static func toHTML(_ element: Element)throws -> String {
+    public static func toHTML(_ element: Element)throws -> String {
         let document: Document = Document("")
         document.outputSettings().prettyPrint(pretty: false)
         try document.appendChild(element)
         return try element.outerHtml()
     }
     
-    static func toText(_ elements: Elements)throws -> String {
+    public static func toText(_ elements: Elements)throws -> String {
         return try elements.text()
     }
     
-    static func byID(_ elements: Elements, _ id: String)throws -> Element {
+    public static func byID(_ elements: Elements, _ id: String)throws -> Element {
         let (result, element, message) = try maybeOne(elements, "#\(id)")
         
         switch result {
@@ -173,7 +173,7 @@ public class DOM {
         }
     }
     
-    static func byIDOptional(_ elements: Elements, _ id: String)throws -> Element? {
+    public static func byIDOptional(_ elements: Elements, _ id: String)throws -> Element? {
         let (result, element, _) = try maybeOne(elements, "#\(id)")
         
         switch result {
@@ -184,15 +184,15 @@ public class DOM {
         }
     }
     
-    static func childNodes(_ element: Element) -> Elements {
+    public static func childNodes(_ element: Element) -> Elements {
         return element.children()
     }
     
-    static func childNodes(_ string: String) -> Elements {
+    public static func childNodes(_ string: String) -> Elements {
         return Elements()
     }
     
-    static func attrs(_ element: Element) -> Attributes {
+    public static func attrs(_ element: Element) -> Attributes {
         guard let attributes = element.getAttributes() else {
             return Attributes()
         }
@@ -200,17 +200,17 @@ public class DOM {
         return attributes
     }
     
-    static func innerHTML(_ elements: Elements, _ id: String)throws -> Elements {
+    public static func innerHTML(_ elements: Elements, _ id: String)throws -> Elements {
         let element = try byID(elements, id)
         
         return childNodes(element)
     }
     
-    static func componentID(_ element: Element)throws -> String {
+    public static func componentID(_ element: Element)throws -> String {
         return try element.attr(PHX_COMPONENT)
     }
     
-    static func findStaticViews(_ elements: Elements)throws -> [String:String] {
+    public static func findStaticViews(_ elements: Elements)throws -> [String:String] {
         var staticViews: [String: String] = [:]
         let allViews = try all(elements, "[\(PHX_STATIC)]")
         
@@ -223,7 +223,7 @@ public class DOM {
         return staticViews
     }
     
-    static func findLiveViews(_ elements: Elements)throws -> Array<(String, String, String?)> {
+    public static func findLiveViews(_ elements: Elements)throws -> Array<(String, String, String?)> {
         var liveViews: [(String, String, String?)] = []
         let allViews = try all(elements, "[\(PHX_SESSION)]")
         
@@ -251,7 +251,7 @@ public class DOM {
         return liveViews
     }
     
-    static func deepMerge(_ target: Payload, _ source: Payload)throws -> Payload {
+    public static func deepMerge(_ target: Payload, _ source: Payload)throws -> Payload {
         var mutTarget = target
         
         try mutTarget.merge(source) { (target, source) in
@@ -265,19 +265,19 @@ public class DOM {
         return mutTarget
     }
 
-    static func filter(_ elements: Elements, _ closure: (_ element: Element)->Bool) -> Elements {
+    public static func filter(_ elements: Elements, _ closure: (_ element: Element)->Bool) -> Elements {
         return traverseAndAccumlate(elements, Elements(), closure)
     }
 
-    static func filter(_ element: Element, _ closure: (_ element: Element)->Bool) -> Elements {
+    public static func filter(_ element: Element, _ closure: (_ element: Element)->Bool) -> Elements {
         return traverseAndAccumlate(element, Elements(), closure)    }
 
-    static func reverseFilter(_ elements: Elements, _ closure: (_ element: Element)->Bool) -> Elements {
+    public static func reverseFilter(_ elements: Elements, _ closure: (_ element: Element)->Bool) -> Elements {
         let newElements = traverseAndAccumlate(elements, Elements(), closure)
         return reverseElements(newElements)
     }
 
-    static func reverseFilter(_ element: Element, _ closure: (_ element: Element)->Bool) -> Elements {
+    public static func reverseFilter(_ element: Element, _ closure: (_ element: Element)->Bool) -> Elements {
         let newElements = traverseAndAccumlate(element, Elements(), closure)
         return reverseElements(newElements)
     }
@@ -322,7 +322,7 @@ public class DOM {
 
     // Diff Merging
 
-    static func mergeDiff(_ rendered: Payload, _ diff: Payload)throws -> Payload {
+    public static func mergeDiff(_ rendered: Payload, _ diff: Payload)throws -> Payload {
         var mutDiff: Payload = diff
         let new: Payload? = mutDiff.removeValue(forKey: COMPONENT_FRAGMENT) as! Payload?
 
@@ -353,7 +353,7 @@ public class DOM {
         }
     }
 
-    static private func findComponent(_ cid: Int, _ cdiff: Payload, _ old: Payload, _ new: Payload, _ cache: Payload)throws -> (Payload, Payload) {
+    private static func findComponent(_ cid: Int, _ cdiff: Payload, _ old: Payload, _ new: Payload, _ cache: Payload)throws -> (Payload, Payload) {
         let cached: Payload? = cache[String(cid)] as! Payload?
 
         if cached != nil {
@@ -377,7 +377,7 @@ public class DOM {
         }
     }
     
-    static func dropCids(_ rendered: Payload, _ cids: Array<Int>) -> Payload {
+    public static func dropCids(_ rendered: Payload, _ cids: Array<Int>) -> Payload {
         let components: Payload = (rendered[COMPONENT_FRAGMENT] as? Payload)!
         var mutRendered = rendered
         
@@ -394,7 +394,7 @@ public class DOM {
         return mutRendered
     }
     
-    static func renderDiff(_ rendered: Payload)throws -> Elements {
+    public static func renderDiff(_ rendered: Payload)throws -> Elements {
         let contents: Data = try Diff.toData(rendered) { (cid, contents)throws -> String in
             let html: String = Diff.dataToString(contents)
             let elements: Elements = try DOM.parse(html)
@@ -428,7 +428,7 @@ public class DOM {
         return elements
     }
     
-    static func patchID(_ id: String, _ htmlTree: Elements, _ innerHtml: Elements)throws -> (Elements, Array<Int>) {
+    public static func patchID(_ id: String, _ htmlTree: Elements, _ innerHtml: Elements)throws -> (Elements, Array<Int>) {
         let cidsBefore: Array<Int> = try componentIDs(id, htmlTree)
 
         let phxUpdateTree: Elements = try walk(innerHtml) {(node) -> Node in
@@ -466,7 +466,7 @@ public class DOM {
     }
 
 
-    static func componentIDs(_ id: String, _ htmlTree: Elements)throws -> Array<Int> {
+    public static func componentIDs(_ id: String, _ htmlTree: Elements)throws -> Array<Int> {
         let element = try byID(htmlTree, id)
         
         let children = childNodes(element)
@@ -478,7 +478,7 @@ public class DOM {
         return cids
     }
     
-    static private func traverseComponentIDs(_ cids: Array<Int>, _ element: Element)throws -> Array<Int> {
+    private static func traverseComponentIDs(_ cids: Array<Int>, _ element: Element)throws -> Array<Int> {
         var mutCids: Array<Int> = cids
         
         let id: String? = try attribute(element, PHX_COMPONENT)
@@ -496,7 +496,7 @@ public class DOM {
         }
     }
     
-    static private func applyPhxUpdate(_ type: String?, _ htmlTree: Elements, _ element: Element)throws -> Element {
+    private static func applyPhxUpdate(_ type: String?, _ htmlTree: Elements, _ element: Element)throws -> Element {
         if (type == nil || type! == "replace") {
             return element
         } else if (type! == "ignore") {
@@ -575,7 +575,7 @@ public class DOM {
         }
     }
     
-    static private func elementsToArrayNodes(_ elements: Elements) -> Array<Node> {
+    private static func elementsToArrayNodes(_ elements: Elements) -> Array<Node> {
         var arrayNodes = Array<Node>()
         
         for element in elements {
@@ -585,14 +585,14 @@ public class DOM {
         return arrayNodes
     }
     
-    static private func verifyPhxUpdateId(_ type: String, _ id: String?, _ element: Element)throws -> Void {
+    private static func verifyPhxUpdateId(_ type: String, _ id: String?, _ element: Element)throws -> Void {
         if (id == nil || id! == "") {
             let actual = try inspectHTML(element)
             fatalError("setting phx-update to \(type) requires setting an ID on the container, got: \n\n \(actual)")
         }
     }
     
-    static private func applyPhxUpdateChildren(_ elements: Elements, _ id: String)throws -> Elements {
+    private static func applyPhxUpdateChildren(_ elements: Elements, _ id: String)throws -> Elements {
         let element: Element? = try byIDOptional(elements, id)
         
         if element == nil {
@@ -602,7 +602,7 @@ public class DOM {
         }
     }
     
-    static private func applyPhxUpdateChildrenID(_ type: String, _ children: Elements)throws -> Array<String> {
+    private static func applyPhxUpdateChildrenID(_ type: String, _ children: Elements)throws -> Array<String> {
         return try children.reduce(Array<String>()) { (acc, child)throws -> Array<String> in
             var mutAcc = acc
             let id: String = try DOM.attribute(child, "ID")!
@@ -613,7 +613,7 @@ public class DOM {
         }
     }
     
-    static private func walk(_ elements: Elements, _ closure: (_ node: Node)throws -> Node)throws -> Elements {
+    private static func walk(_ elements: Elements, _ closure: (_ node: Node)throws -> Node)throws -> Elements {
         let newElements = Elements()
         
         for element in elements {
@@ -625,7 +625,7 @@ public class DOM {
     }
     
 
-    static private func walk(_ node: Node, _ closure: (_ node: Node)throws -> Node)throws -> Node {
+    private static func walk(_ node: Node, _ closure: (_ node: Node)throws -> Node)throws -> Node {
         let newNode: Node
         
         if node is TextNode {
@@ -658,7 +658,7 @@ public class DOM {
         return newNode
     }
     
-    static private func optionalByID(_ elements: Elements, _ id: String) -> Element? {
+    private static func optionalByID(_ elements: Elements, _ id: String) -> Element? {
         do {
             let element: Element = try byID(elements, id)
             return element
