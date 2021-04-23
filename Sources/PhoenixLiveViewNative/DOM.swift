@@ -349,7 +349,7 @@ public class DOM {
             return mutRendered
 
         } else {
-            return rendered
+            return mutRendered
         }
     }
 

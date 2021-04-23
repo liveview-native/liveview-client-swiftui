@@ -506,7 +506,23 @@ final class DOMTests: XCTestCase {
     }
     
     func testMergeDiff()throws {
-        let rendered: Payload = [
+        var rendered: Payload = [
+            "0": "123",
+            "1": ["0": "123", "s": ["The value is: ", ""]],
+            "s": ["LIVEOVERRIDESTART-", "-", "-LIVEOVERRIDEEND\n"]
+          ]
+        var diff: Payload = ["0": "246", "1": ["0": "246"]]
+        
+        var result = try DOM.mergeDiff(rendered, diff)
+        var expected: Payload = [
+            "0": "246",
+            "1": ["0": "246", "s": ["The value is: ", ""]],
+            "s": ["LIVEOVERRIDESTART-", "-", "-LIVEOVERRIDEEND\n"]
+          ]
+        
+        compareNestedDictionaries(expected, result)
+
+        rendered = [
             "0": "http://www.example.com/flash-root",
             "1": "",
             "2": "",
@@ -534,11 +550,11 @@ final class DOMTests: XCTestCase {
             "s": ["uri[", "]\nroot[", "]:info\nroot[", "]:error\n", "\nchild[", "]\n","\n"]
           ]
         
-        let diff: Payload = ["c": ["1": ["2": "ok!", "3": "oops!"]]]
+        diff = ["c": ["1": ["2": "ok!", "3": "oops!"]]]
         
-        let result = try DOM.mergeDiff(rendered, diff)
+        result = try DOM.mergeDiff(rendered, diff)
         
-        let expected: Payload = [
+        expected = [
             "0": "http://www.example.com/flash-root",
             "1": "",
             "2": "",
