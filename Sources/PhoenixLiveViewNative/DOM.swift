@@ -1,6 +1,6 @@
 //
-//  DOM
-//  Phoenix LiveView Swift Client
+//  DOM.swift
+//  PhoenixLiveViewNative
 //
 //  Created by Brian Cardarella on 3/19/21.
 //
