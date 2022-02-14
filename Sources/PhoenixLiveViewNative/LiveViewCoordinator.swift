@@ -145,9 +145,11 @@ public class LiveViewCoordinator: ObservableObject {
                 print("LiveReload: error connecting to channel: \(msg.payload)")
             }
             self.liveReloadChannel!.on("assets_change") { [unowned self] _ in
-                print("LiveReload: assets changed, reloading")
-                // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
-                self.reconnect()
+                DispatchQueue.main.async {
+                    print("LiveReload: assets changed, reloading")
+                    // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
+                    self.reconnect()
+                }
             }
         }
     }
