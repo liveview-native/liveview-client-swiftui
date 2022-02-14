@@ -58,9 +58,9 @@ final class DOMTests: XCTestCase {
         XCTAssertEqual(element, nil)
 
         sample = """
-        "<div data-phx-main=\"true\" data-phx-session=\"SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAAFHBoeC1GbS1icW1JZ1hIZ0NmNFFDZAAKcGFyZW50X3BpZGQAA25pbGQACHJvb3RfcGlkZAADbmlsZAAJcm9vdF92aWV3ZAAtRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LldpdGhDb21wb25lbnRMaXZlZAAGcm91dGVyZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlJvdXRlcmQAB3Nlc3Npb250AAAAAGQABHZpZXdkAC1FbGl4aXIuUGhvZW5peC5MaXZlVmlld1Rlc3QuV2l0aENvbXBvbmVudExpdmVuBgDO0MBpeAFiAAFRgA.lWdk-lH-6vNUKyDdsUDYYQE5j6Mtuuc1cC16am1k3Ak\" data-phx-static=\"SFMyNTY.g2gDaAJhBHQAAAADZAAKYXNzaWduX25ld2pkAAVmbGFzaHQAAAAAZAACaWRtAAAAFHBoeC1GbS1icW1JZ1hIZ0NmNFFDbgYAztDAaXgBYgABUYA.EqK2S1Hpxe298NfuVbTBjBzSACIzmlRK1x0CHWjRDQs\" data-phx-view=\"LiveViewTest.WithComponentLive\" id=\"phx-Fm-bqmIgXHgCf4QC\">Redirect: none\n\n <div data-phx-component=\"1\" id=\"chris\" phx-target=\"#chris\" phx-click=\"transform\">\n chris says hi\n \n</div>
-          <div data-phx-component=\"2\" id=\"jose\" phx-target=\"#jose\" phx-click=\"transform\">\n jose says hi\n \n</div>
-        </div>"
+        <div data-phx-main="true" data-phx-session="SFMyNTY.g2gDaAJhBHQAAAAHZAACaWRtAAAAFHBoeC1GbS1icW1JZ1hIZ0NmNFFDZAAKcGFyZW50X3BpZGQAA25pbGQACHJvb3RfcGlkZAADbmlsZAAJcm9vdF92aWV3ZAAtRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LldpdGhDb21wb25lbnRMaXZlZAAGcm91dGVyZAAiRWxpeGlyLlBob2VuaXguTGl2ZVZpZXdUZXN0LlJvdXRlcmQAB3Nlc3Npb250AAAAAGQABHZpZXdkAC1FbGl4aXIuUGhvZW5peC5MaXZlVmlld1Rlc3QuV2l0aENvbXBvbmVudExpdmVuBgDO0MBpeAFiAAFRgA.lWdk-lH-6vNUKyDdsUDYYQE5j6Mtuuc1cC16am1k3Ak" data-phx-static="SFMyNTY.g2gDaAJhBHQAAAADZAAKYXNzaWduX25ld2pkAAVmbGFzaHQAAAAAZAACaWRtAAAAFHBoeC1GbS1icW1JZ1hIZ0NmNFFDbgYAztDAaXgBYgABUYA.EqK2S1Hpxe298NfuVbTBjBzSACIzmlRK1x0CHWjRDQs" data-phx-view="LiveViewTest.WithComponentLive" id="phx-Fm-bqmIgXHgCf4QC">Redirect: none\n\n <div data-phx-component="1" id="chris" phx-target="#chris" phx-click="transform">\n chris says hi\n \n</div>
+          <div data-phx-component="2" id="jose" phx-target="#jose" phx-click="transform">\n jose says hi\n \n</div>
+        </div>
         """
         
         htmlTree = try DOM.parse(sample)
