@@ -10,16 +10,16 @@ import SwiftSoup
 
 struct PhxNavigationView: View {
     private let element: Element
-    private let coordinator: LiveViewCoordinator
+    private let context: LiveContext
     
-    init(element: Element, coordinator: LiveViewCoordinator) {
+    init(element: Element, context: LiveContext) {
         self.element = element
-        self.coordinator = coordinator
+        self.context = context
     }
     
     var body: some View {
         NavigationView {
-            ViewTreeBuilder.fromElements(element.children(), coordinator: coordinator)
+            context.buildChildren(of: element)
             // todo: make this configurable
             .navigationBarTitleDisplayMode(.inline)
         }

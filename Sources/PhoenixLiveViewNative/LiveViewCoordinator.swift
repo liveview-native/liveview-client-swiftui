@@ -34,14 +34,18 @@ public class LiveViewCoordinator: ObservableObject {
     private var liveReloadSocket: Socket?
     private var liveReloadChannel: Channel?
     
+    internal let builder: ViewTreeBuilder
+    
     /// Creates a new coordinator.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter connectParams: A dictionary of parameters to send to the server for use when the LiveView is mounted.
-    public init(_ url: URL, connectParams: [String: Any] = [:]) {
+    /// - Parameter registry: The registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM.
+    public init(_ url: URL, connectParams: [String: Any] = [:], registry: LiveViewRegistry = .shared) {
         self.url = url
         self.connectParams = connectParams
         self.state = .notConnected
         self.urlSession = URLSession.shared
+        self.builder = ViewTreeBuilder(registry: registry)
     }
     
     /// Connects this coordinator to the LiveView channel.
@@ -89,7 +93,7 @@ public class LiveViewCoordinator: ObservableObject {
     }
     
     func viewTree() -> some View {
-        ViewTreeBuilder.fromElements(self.elements, coordinator: self)
+        builder.fromElements(self.elements, coordinator: self)
     }
     
     func pushWithReply(event: String, payload: Payload) {

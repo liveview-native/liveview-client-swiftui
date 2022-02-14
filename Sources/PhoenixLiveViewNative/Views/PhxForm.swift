@@ -10,7 +10,7 @@ import SwiftSoup
 
 struct PhxForm: View {
     private let element: Element
-    private let coordinator: LiveViewCoordinator
+    private let context: LiveContext
     private let id: String
     
     @EnvironmentObject private var liveViewModel: LiveViewModel
@@ -19,20 +19,20 @@ struct PhxForm: View {
         liveViewModel.getForm(elementID: id)
     }
     
-    init(element: Element, coordinator: LiveViewCoordinator) {
+    init(element: Element, context: LiveContext) {
         precondition(element.hasAttr("id"), "<form> must have an id")
         self.element = element
-        self.coordinator = coordinator
+        self.context = context
         self.id = try! element.attr("id")
     }
     
     var body: some View {
-        ViewTreeBuilder.fromElements(element.children(), context: .init(coordinator: coordinator, formModel: model))
+        context.with(formModel: model).buildChildren(of: element)
             .onChange(of: element, perform: { newValue in
                 model.updateFromElement(newValue)
             })
             .onAppear {
-                model.coordinator = coordinator
+                model.coordinator = context.coordinator
                 model.changeEvent = element.attrIfPresent("phx-change")
                 model.updateFromElement(element)
             }

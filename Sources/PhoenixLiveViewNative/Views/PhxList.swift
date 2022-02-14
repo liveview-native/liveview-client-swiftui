@@ -10,14 +10,12 @@ import SwiftSoup
 
 struct PhxList: View {
     private let element: Element
-    private let context: ViewTreeBuilder.Context
-    private let coordinator: LiveViewCoordinator
+    private let context: LiveContext
     private let deleteEvent: String?
     
-    init(element: Element, context: ViewTreeBuilder.Context, coordinator: LiveViewCoordinator) {
+    init(element: Element, context: LiveContext) {
         self.element = element
         self.context = context
-        self.coordinator = coordinator
         self.deleteEvent = element.attrIfPresent("phx-delete")
     }
     
@@ -43,7 +41,7 @@ struct PhxList: View {
                 "event": deleteEvent,
                 "value":meta
             ]
-            coordinator.pushWithReply(event: "event", payload: payload)
+            context.coordinator.pushWithReply(event: "event", payload: payload)
         }
     }
 }

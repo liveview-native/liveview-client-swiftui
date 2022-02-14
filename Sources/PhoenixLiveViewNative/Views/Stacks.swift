@@ -10,33 +10,33 @@ import SwiftSoup
 
 struct PhxHStack: View {
     var element: Element
-    var coordinator: LiveViewCoordinator
+    var context: LiveContext
     
     var body: some View {
         HStack {
-            ViewTreeBuilder.fromElements(element.children(), coordinator: coordinator)
+            context.buildChildren(of: element)
         }
     }
 }
 
 struct PhxVStack: View {
     var element: Element
-    var coordinator: LiveViewCoordinator
-    
+    var context: LiveContext
+
     var body: some View {
         VStack {
-            ViewTreeBuilder.fromElements(element.children(), coordinator: coordinator)
+            context.buildChildren(of: element)
         }
     }
 }
 
 struct PhxZStack: View {
     var element: Element
-    var coordinator: LiveViewCoordinator
-    
+    var context: LiveContext
+
     var body: some View {
         ZStack {
-            ViewTreeBuilder.fromElements(element.children(), coordinator: coordinator)
+            context.buildChildren(of: element)
         }
     }
 }

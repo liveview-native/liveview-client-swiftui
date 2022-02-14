@@ -9,17 +9,17 @@ import SwiftUI
 import SwiftSoup
 
 struct PhxScrollView: View {
-    private let element: Element
-    private let coordinator: LiveViewCoordinator
+    let element: Element
+    let context: LiveContext
     
-    init(element: Element, coordinator: LiveViewCoordinator) {
+    init(element: Element, context: LiveContext) {
         self.element = element
-        self.coordinator = coordinator
+        self.context = context
     }
     
     var body: some View {
         ScrollView {
-            ViewTreeBuilder.fromElements(element.children(), coordinator: coordinator)
+            context.buildChildren(of: element)
         }
     }
 }

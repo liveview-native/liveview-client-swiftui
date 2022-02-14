@@ -9,58 +9,15 @@ import Foundation
 import SwiftUI
 import SwiftSoup
 
-public class PhxViewRegistry {
-    public func lookup(_ name: String, _ element: Element, _ coordinator: LiveViewCoordinator) -> some View {
-        return lookup(name, element, coordinator, context: ViewTreeBuilder.Context(coordinator: coordinator))
-    }
-    
-    @ViewBuilder fileprivate func lookup(_ name: String, _ element: Element, _ coordinator: LiveViewCoordinator, context: ViewTreeBuilder.Context) -> some View {
-        switch normalizeName(name) {
-        case "textfield":
-            PhxTextField(element: element, coordinator: coordinator, context: context)
-        case "text":
-            PhxText(element: element, coordinator: coordinator)
-        case "hstack":
-            PhxHStack(element: element, coordinator: coordinator)
-        case "vstack":
-            PhxVStack(element: element, coordinator: coordinator)
-        case "zstack":
-            PhxZStack(element: element, coordinator: coordinator)
-        case "button":
-            PhxButton(element: element, coordinator: coordinator)
-        case "form":
-            PhxForm(element: element, coordinator: coordinator)
-        case "img":
-            PhxImage(element: element, coordinator: coordinator)
-        case "scroll":
-            PhxScrollView(element: element, coordinator: coordinator)
-        case "spacer":
-            Spacer()
-        case "navigation":
-            PhxNavigationView(element: element, coordinator: coordinator)
-        case "list":
-            PhxList(element: element, context: context, coordinator: coordinator)
-        case "roundrect":
-            PhxShape(element: element, shape: RoundedRectangle(from: element))
-        default:
-            // log here that view type cannot be found
-            EmptyView()
-        }
-    }
-    
-    private func normalizeName(_ name: String) -> String {
-        return name.lowercased()
-    }
-}
-
 struct ViewTreeBuilder {
-    static let registry = PhxViewRegistry()
+    let registry: LiveViewRegistry
     
-    public static func fromElements(_ elements: Elements, coordinator: LiveViewCoordinator) -> some View {
-        return fromElements(elements, context: Context(coordinator: coordinator))
+    func fromElements(_ elements: Elements, coordinator: LiveViewCoordinator) -> some View {
+        return fromElements(elements, context: LiveContext(coordinator: coordinator))
     }
     
-    @ViewBuilder static func fromElements(_ elements: Elements, context: Context) -> some View {
+    @ViewBuilder
+    func fromElements(_ elements: Elements, context: LiveContext) -> some View {
         let e = elements
         let c = context
         switch e.count {
@@ -91,33 +48,52 @@ struct ViewTreeBuilder {
         }
     }
     
-    /// alias for typing
-    fileprivate static func f(_ e: Element, _ c: Context) -> some View {
+    // alias for typing
+    fileprivate func f(_ e: Element, _ c: LiveContext) -> some View {
         return fromElement(e, context: c)
     }
     
-    public static func fromElement(_ element: Element, coordinator: LiveViewCoordinator) -> some View {
-        return fromElement(element, context: Context(coordinator: coordinator))
+    func fromElement(_ element: Element, coordinator: LiveViewCoordinator) -> some View {
+        return fromElement(element, context: LiveContext(coordinator: coordinator))
     }
     
-    fileprivate static func fromElement(_ element: Element, context: Context) -> some View {
+    fileprivate func fromElement(_ element: Element, context: LiveContext) -> some View {
         let tag = DOM.tag(element).lowercased()
 
         let view = registry.lookup(tag, element, context.coordinator, context: context)
         return view.commonModifiers(from: element)
     }
     
-    // todo: replace with @EnvironmentObject
-    struct Context {
-        let coordinator: LiveViewCoordinator
-        // @EnvironmentObject is not suitable for FormModel because views that need the form model don't
-        // necessarily want to re-render on every single change.
-        let formModel: FormModel?
-        
-        init(coordinator: LiveViewCoordinator, formModel: FormModel? = nil) {
-            self.coordinator = coordinator
-            self.formModel = formModel
-        }
+}
+/// The context provides information at initialization-time to views in a LiveView.
+public struct LiveContext {
+    /// The coordinator corresponding to the live view in which thie view is being constructed.
+    public let coordinator: LiveViewCoordinator
+    
+    // @EnvironmentObject is not suitable for FormModel because views that need the form model don't
+    // necessarily want to re-render on every single change.
+    /// The model of the nearest ancestor `<form>` element, or `nil` if there is no such element.
+    public let formModel: FormModel?
+    
+    init(coordinator: LiveViewCoordinator, formModel: FormModel? = nil) {
+        self.coordinator = coordinator
+        self.formModel = formModel
+    }
+    
+    func with(formModel: FormModel) -> LiveContext {
+        return LiveContext(coordinator: self.coordinator, formModel: formModel)
+    }
+    
+    /// Builds a view representing the given element in the current context.
+    ///
+    /// - Note: If you're building a custom container view, make sure to use ``buildChildren(of:)``. Calling this will cause a stack overflow.
+    public func buildElement(_ element: Element) -> some View {
+        return coordinator.builder.fromElement(element, context: self)
+    }
+    
+    /// Builds a view representing the children of the current element in the current context.
+    public func buildChildren(of element: Element) -> some View {
+        return coordinator.builder.fromElements(element.children(), context: self)
     }
 }
 
@@ -204,16 +180,16 @@ private extension View {
 
 struct ElementView: View {
     let element: Element
-    let context: ViewTreeBuilder.Context
+    let context: LiveContext
     
     var body: some View {
-        ViewTreeBuilder.fromElement(element, context: context)
+        context.coordinator.builder.fromElement(element, context: context)
     }
 }
 
 // not fileprivate because List needs ot use it so it has access to ForEach modifiers
 extension ForEach where Data == [(ElementView, String)], ID == String, Content == ElementView {
-    init(elements: Elements, context: ViewTreeBuilder.Context) {
+    init(elements: Elements, context: LiveContext) {
         let views = elements.map { (el) -> (ElementView, String) in
             precondition(el.hasAttr("id"), "element in parent with more than 10 children must have an id")
             // we need ElementView because we can't name the type returned from fromElement
