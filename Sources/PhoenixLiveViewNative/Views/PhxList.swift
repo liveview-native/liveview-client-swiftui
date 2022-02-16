@@ -41,7 +41,7 @@ struct PhxList: View {
                 "event": deleteEvent,
                 "value":meta
             ]
-            context.coordinator.pushWithReply(event: "event", payload: payload)
+            context.coordinator.pushEvent("event", payload: payload)
         }
     }
 }

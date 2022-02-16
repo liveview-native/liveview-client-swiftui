@@ -79,7 +79,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             "value": urlQueryEncodedData,
         ]
 
-        coordinator.pushWithReply(event: "event", payload: payload)
+        coordinator.pushEvent("event", payload: payload)
     }
     
     public var debugDescription: String {

@@ -38,7 +38,7 @@ struct PhxButton: View {
             "event": clickEvent,
             "value": element.buildPhxValuePayload(),
         ]
-        context.coordinator.pushWithReply(event: "event", payload: payload)
+        context.coordinator.pushEvent("event", payload: payload)
     }
     
 }

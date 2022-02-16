@@ -96,7 +96,10 @@ public class LiveViewCoordinator: ObservableObject {
         builder.fromElements(self.elements, coordinator: self)
     }
     
-    func pushWithReply(event: String, payload: Payload) {
+    /// Pushes a LiveView event with the given name and payload to the server.
+    ///
+    /// The client view tree will be updated automatically when the response is received.
+    public func pushEvent(_ event: String, payload: Payload) {
         self.channel.push(event, payload: payload, timeout: PUSH_TIMEOUT).receive("ok") { [weak self] reply in
             guard let self = self,
                   let diff = reply.payload["diff"] as? Payload else {
@@ -106,9 +109,6 @@ public class LiveViewCoordinator: ObservableObject {
             self.rendered = try! DOM.mergeDiff(self.rendered, diff)
             DispatchQueue.main.async {
                 self.elements = try! DOM.renderDiff(self.rendered)
-//                print("------------------- new elements: ---------------")
-//                print(try! self.elements.outerHtml())
-//                print("-------------------------------------------------")
             }
         }
     }
