@@ -495,9 +495,7 @@ public class DOM {
                     }
                 }
                 
-                try appended.select("#\(dupID)").unwrap()
-                
-                return (patchedBefore, appended)
+                return (patchedBefore, try appended.select(":not(#\(dupID)"))
             }
             
             let updatedExistingChildrenNodes = elementsToArrayNodes(updatedExistingChildren)

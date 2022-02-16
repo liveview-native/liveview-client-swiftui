@@ -640,28 +640,42 @@ final class DOMTests: XCTestCase {
 //        XCTAssertEqual(expected, try DOM.toHTML(actual))
 //    }
     
-    func testPatchID()throws {
-        var html: String
-        var innerHtml: String
-        var newHtml: Elements
-        
+    func testPatchID() throws {
         // updates deeply nested html
-        html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"foo\">Hello</div>\n<div id=\"list\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
-        innerHtml = "<div id=\"foo\">Hello World</div>\n<div id=\"list\">\n  <div id=\"2\" class=\"foo\">a</div>\n  <div id=\"3\">\n    <div id=\"5\">inner</div>\n  </div>\n  <div id=\"4\">a</div>\n</div>\n"
+        let html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"foo\">Hello</div>\n<div id=\"list\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
+        let innerHtml = "<div id=\"foo\">Hello World</div>\n<div id=\"list\">\n  <div id=\"2\" class=\"foo\">a</div>\n  <div id=\"3\">\n    <div id=\"5\">inner</div>\n  </div>\n  <div id=\"4\">a</div>\n</div>\n"
                 
-        (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
+        let (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
 
         XCTAssertTrue(try! newHtml.select("div#1").isEmpty())
         XCTAssertEqual(try! newHtml.select("div#2.foo").text(), "a")
         XCTAssertEqual(try! newHtml.select("div#3 > div#5").text(), "inner")
         XCTAssertEqual(try! newHtml.select("div#4").text(), "a")
+    }
+    
+    func testPatchUpdatePrepend() throws {
+        // inserts new elements when phx-update=prepend
+
+        let html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
+        let innerHtml = "<div id=\"list\" phx-update=\"prepend\">\n  <div id=\"4\">a</div>\n</div>\n"
+
+        let (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
         
+        let listChildren = try newHtml.select("#list").first()!.children()
+        XCTAssertEqual(listChildren.count, 4)
+        XCTAssertEqual(try listChildren[0].attr("id"), "4")
+        XCTAssertEqual(try listChildren[1].attr("id"), "1")
+        XCTAssertEqual(try listChildren[2].attr("id"), "2")
+        XCTAssertEqual(try listChildren[3].attr("id"), "3")
+    }
+        
+    func testPatchUpdateAppend() throws {
         // inserts new elements when phx-update=append
 
-        html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
-        innerHtml = "<div id=\"list\" phx-update=\"append\">\n  <div id=\"4\" class=\"foo\">a</div>\n</div>\n"
+        var html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
+        var innerHtml = "<div id=\"list\" phx-update=\"append\">\n  <div id=\"4\" class=\"foo\">a</div>\n</div>\n"
 
-        (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
+        var (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
 
         XCTAssertEqual(try! newHtml.select("div#1").text(), "a")
         XCTAssertEqual(try! newHtml.select("div#2").text(), "a")
@@ -669,19 +683,6 @@ final class DOMTests: XCTestCase {
         XCTAssertEqual(try! newHtml.select("div#4.foo").text(), "a")
         XCTAssertEqual(try! newHtml.select("div#3").first()!.nextSibling()!, try! newHtml.select("div#4.foo").first())
         
-        // inserts new elements when phx-update=prepend
-
-        html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
-        innerHtml = "<div id=\"list\" phx-update=\"prepend\">\n  <div id=\"4\">a</div>\n</div>\n"
-
-        (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
-        
-        XCTAssertEqual(try! newHtml.select("div#4").text(), "a")
-        XCTAssertEqual(try! newHtml.select("div#1").text(), "a")
-        XCTAssertEqual(try! newHtml.select("div#4").first()!.nextSibling(), try! newHtml.select("div#1").first())
-        XCTAssertEqual(try! newHtml.select("div#2").text(), "a")
-        XCTAssertEqual(try! newHtml.select("div#3").text(), "a")
-
         // updates existing elements when phx-update=append
 
         html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
@@ -689,9 +690,17 @@ final class DOMTests: XCTestCase {
 
         (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
         
-        XCTAssertEqual(try! newHtml.select("div#1.foo").first()!.text(), "b")
-        XCTAssertEqual(try! newHtml.select("div#2").first()!.text(), "b")
-        XCTAssertEqual(try! newHtml.select("div#3").text(), "a")
+        print(try! newHtml.outerHtml())
+        
+        let listChildren = try newHtml.select("#list").first()!.children()
+        XCTAssertEqual(listChildren.count, 3)
+        XCTAssertEqual(try listChildren[0].attr("id"), "1")
+        XCTAssertEqual(try listChildren[0].attr("class"), "foo")
+        XCTAssertEqual(try listChildren[0].text(), "b")
+        XCTAssertEqual(try listChildren[1].attr("id"), "2")
+        XCTAssertEqual(try listChildren[1].text(), "b")
+        XCTAssertEqual(try listChildren[2].attr("id"), "3")
+        XCTAssertEqual(try listChildren[2].text(), "a")
     }
 
     static var allTests = [
@@ -714,7 +723,9 @@ final class DOMTests: XCTestCase {
         ("testDropCids", testDropCids),
         ("testComponentIDs", testComponentIDs),
         ("testRenderDiff", testRenderDiff),
-        ("testPatchID", testPatchID)
+        ("testPatchID", testPatchID),
+        ("testPatchUpdatePrepend", testPatchUpdatePrepend),
+        ("testPatchUpdateAppend", testPatchUpdateAppend),
     ]
     
     private func compareNestedDictionaries(_ expected: Payload, _ actual: Payload) -> Void {
