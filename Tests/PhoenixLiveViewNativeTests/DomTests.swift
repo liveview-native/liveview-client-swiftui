@@ -95,34 +95,6 @@ final class DOMTests: XCTestCase {
         XCTAssertEqual(["baz": "baz", "value": "123"], actual)
     }
     
-    func testInspectHTML()throws {
-        let sample = "<div class=\"foo\">\n  Foo\n  <div class=\"baz\">Baz</div>\n</div>\n<div class=\"bar\">\n  Bar\n</div>"
-        
-        // many of elements
-        let htmlTree = try DOM.parse(sample)
-        
-        var result: String = try DOM.inspectHTML(htmlTree)
-        var expected = "    <div class=\"foo\">\n     Foo\n     <div class=\"baz\">Baz</div>\n   </div>\n    <div class=\"bar\">\n     Bar\n   </div>\n"
-        XCTAssertEqual(result, expected)
-        
-        // single element
-        let firstElement: Element = htmlTree[0]
-
-        result = try DOM.inspectHTML(firstElement)
-        expected = "    <div class=\"foo\">\n     Foo\n     <div class=\"baz\">Baz</div>\n   </div>\n"
-
-        XCTAssertEqual(result, expected)
-
-        // elements form a select
-
-        let all = try DOM.all(htmlTree, "div")
-
-        result = try DOM.inspectHTML(all)
-        expected = "    <div class=\"foo\">\n     Foo\n     <div class=\"baz\">Baz</div>\n   </div>\n    <div class=\"baz\">Baz</div>\n    <div class=\"bar\">\n     Bar\n   </div>\n"
-
-        XCTAssertEqual(result, expected)
-    }
-        
     func testTag()throws {
         let sample = """
         <div class="foo">Foo</div>
@@ -148,39 +120,6 @@ final class DOMTests: XCTestCase {
         
         // if a string representation of the element is used
         XCTAssertEqual(try DOM.attribute(sample, "data-phx-session"), nil)
-    }
-    
-    func testToHTML()throws {
-        var sample = "<div><div class=\"foo\">Foo</div>\n\n<div class=\"bar\">Bar</div></div>"
-        
-        var htmlTree = try DOM.parse(sample)
-        
-        var result: String = try DOM.toHTML(htmlTree)
-        
-        XCTAssertEqual(result, sample)
-        
-        sample = "<div class=\"foo\">Foo\n\n</div>"
-        
-        htmlTree = try DOM.parse(sample)
-        
-        result = try DOM.toHTML(htmlTree[0])
-        
-        XCTAssertEqual(result, sample)
-    }
-
-    func testToText()throws {
-        let sample = """
-        <div class="foo">Foo
-            <div class="biz">Biz</div>
-        </div>
-        <div class="bar">Bar</div>
-        """
-        
-        let htmlTree = try DOM.parse(sample)
-        
-        let result: String = try DOM.toText(htmlTree)
-        
-        XCTAssertEqual(result, "Foo Biz Bar")
     }
     
     func testByID() throws {
@@ -640,13 +579,13 @@ final class DOMTests: XCTestCase {
             "s": ["", "\n<form phx-change=\"validate\" phx-submit=\"save\">\n  ", "\n  ",
              "\n  <button type=\"submit\">save</button>\n</form>\n"]
           ]
-        
+
         var actual: Elements = try DOM.renderDiff(sample)
-        
-        var expected = "<form phx-change=\"validate\" phx-submit=\"save\">\n  \n    lv:foo1.jpeg:0%\n    channel:nil\n    \n  \n    lv:foo2.jpeg:0%\n    channel:nil\n    \n  \n  <input data-phx-active-refs=\"1282,1346\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnLSu0zdGSgfdQhC\" id=\"phx-FnLSu0zdGSgfdQhC\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple>\n  <button type=\"submit\">save</button>\n</form>"
-                
-        XCTAssertEqual(expected, try DOM.toHTML(actual))
-        
+
+        var expected = "<form phx-change=\"validate\" phx-submit=\"save\">\n  lv:foo1.jpeg:0% channel:nil lv:foo2.jpeg:0% channel:nil \n <input data-phx-active-refs=\"1282,1346\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnLSu0zdGSgfdQhC\" id=\"phx-FnLSu0zdGSgfdQhC\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple> \n <button type=\"submit\">save</button> \n</form>"
+
+        XCTAssertEqual(expected, try actual.outerHtml())
+
         sample = [
             "0": ["d": [[1], [2]], "s": ["\n    ", "\n  "]],
             "c": [
@@ -664,12 +603,12 @@ final class DOMTests: XCTestCase {
             ],
             "s": ["<div>\n  ", "\n</div>\n"]
         ]
-        
+
         actual = try DOM.renderDiff(sample)
 
-        expected = "<div>\n  \n    <form phx-change=\"validate\" id=\"upload0\" phx-submit=\"save\" phx-target=\"1\" data-phx-component=\"1\">\n  \n  <input data-phx-active-refs=\"\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnL7qteVzAAQNwdH\" id=\"phx-FnL7qteVzAAQNwdH\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple>\n  <button type=\"submit\">save</button>\n</form>\n  \n    loading...\n\n  \n</div>"
+        expected = "<div> \n <form phx-change=\"validate\" id=\"upload0\" phx-submit=\"save\" phx-target=\"1\" data-phx-component=\"1\"> \n  <input data-phx-active-refs=\"\" data-phx-done-refs=\"\" data-phx-preflighted-refs=\"\" data-phx-update=\"ignore\" data-phx-upload-ref=\"phx-FnL7qteVzAAQNwdH\" id=\"phx-FnL7qteVzAAQNwdH\" name=\"avatar\" phx-hook=\"Phoenix.LiveFileUpload\" type=\"file\" multiple> \n  <button type=\"submit\">save</button> \n </form> loading... \n</div>"
 
-        XCTAssertEqual(expected, try DOM.toHTML(actual))
+        XCTAssertEqual(expected, try actual.outerHtml())
     }
     
     // The following two test is a smoke test for complex private function testing.
@@ -704,7 +643,6 @@ final class DOMTests: XCTestCase {
     func testPatchID()throws {
         var html: String
         var innerHtml: String
-        var actual: String
         var newHtml: Elements
         
         // updates deeply nested html
@@ -713,51 +651,47 @@ final class DOMTests: XCTestCase {
                 
         (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
 
-        actual = try DOM.toHTML(newHtml)
-
-        XCTAssertTrue(!actual.contains("<div id=\"1\">a</div>"))
-        XCTAssertTrue(actual.contains("<div id=\"2\" class=\"foo\">a</div>"))
-        XCTAssertTrue(actual.contains("<div id=\"3\">\n    <div id=\"5\">inner</div>\n  </div>"))
-        XCTAssertTrue(actual.contains("<div id=\"4\">a</div>"))
+        XCTAssertTrue(try! newHtml.select("div#1").isEmpty())
+        XCTAssertEqual(try! newHtml.select("div#2.foo").text(), "a")
+        XCTAssertEqual(try! newHtml.select("div#3 > div#5").text(), "inner")
+        XCTAssertEqual(try! newHtml.select("div#4").text(), "a")
         
         // inserts new elements when phx-update=append
-        
+
         html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
         innerHtml = "<div id=\"list\" phx-update=\"append\">\n  <div id=\"4\" class=\"foo\">a</div>\n</div>\n"
-        
+
         (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
-        
-        actual = try DOM.toHTML(newHtml)
-        
-        XCTAssertTrue(actual.contains("<div id=\"1\">a</div>"))
-        XCTAssertTrue(actual.contains("<div id=\"2\">a</div>"))
-        XCTAssertTrue(actual.contains("<div id=\"3\">a</div><div id=\"4\" class=\"foo\">a</div>"))
+
+        XCTAssertEqual(try! newHtml.select("div#1").text(), "a")
+        XCTAssertEqual(try! newHtml.select("div#2").text(), "a")
+        XCTAssertEqual(try! newHtml.select("div#3").text(), "a")
+        XCTAssertEqual(try! newHtml.select("div#4.foo").text(), "a")
+        XCTAssertEqual(try! newHtml.select("div#3").first()!.nextSibling()!, try! newHtml.select("div#4.foo").first())
         
         // inserts new elements when phx-update=prepend
-        
+
         html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
         innerHtml = "<div id=\"list\" phx-update=\"prepend\">\n  <div id=\"4\">a</div>\n</div>\n"
 
         (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
         
-        actual = try DOM.toHTML(newHtml)
-        
-        XCTAssertTrue(actual.contains("<div id=\"4\">a</div><div id=\"1\">a</div>"))
-        XCTAssertTrue(actual.contains("<div id=\"2\">a</div>"))
-        XCTAssertTrue(actual.contains("<div id=\"3\">a</div>"))
-        
+        XCTAssertEqual(try! newHtml.select("div#4").text(), "a")
+        XCTAssertEqual(try! newHtml.select("div#1").text(), "a")
+        XCTAssertEqual(try! newHtml.select("div#4").first()!.nextSibling(), try! newHtml.select("div#1").first())
+        XCTAssertEqual(try! newHtml.select("div#2").text(), "a")
+        XCTAssertEqual(try! newHtml.select("div#3").text(), "a")
+
         // updates existing elements when phx-update=append
-        
+
         html = "<div data-phx-session=\"SESSIONMAIN\"\n               data-phx-view=\"789\"\n               data-phx-main=\"true\"\n               id=\"phx-458\">\n<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\">a</div>\n  <div id=\"2\">a</div>\n  <div id=\"3\">a</div>\n</div>\n</div>\n"
         innerHtml = "<div id=\"list\" phx-update=\"append\">\n  <div id=\"1\" class=\"foo\">b</div>\n  <div id=\"2\">b</div>\n</div>\n"
-        
+
         (newHtml, _) = try DOM.patchID("phx-458", try DOM.parse(html), try DOM.parse(innerHtml))
         
-        actual = try DOM.toHTML(newHtml)
-        
-        XCTAssertTrue(actual.contains("<div id=\"1\" class=\"foo\">b</div>"))
-        XCTAssertTrue(actual.contains("<div id=\"2\">b</div>"))
-        XCTAssertTrue(actual.contains("<div id=\"3\">a</div>"))
+        XCTAssertEqual(try! newHtml.select("div#1.foo").first()!.text(), "b")
+        XCTAssertEqual(try! newHtml.select("div#2").first()!.text(), "b")
+        XCTAssertEqual(try! newHtml.select("div#3").text(), "a")
     }
 
     static var allTests = [
@@ -765,11 +699,8 @@ final class DOMTests: XCTestCase {
         ("testAll", testAll),
         ("testMaybeOne", testMaybeOne),
         ("testAllAttributes", testAllAttributes),
-        ("testInspectHTML", testInspectHTML),
         ("testTagName", testTag),
         ("testAttribute", testAttribute),
-        ("testToHTML", testToHTML),
-        ("testToText", testToText),
         ("testByID", testByID),
         ("testChildNodes", testChildNodes),
         ("testAttrs", testAttrs),

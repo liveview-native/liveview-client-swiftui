@@ -40,10 +40,10 @@ public class DOM {
         if (selectedSize == 1) {
             return ("ok", elements[0], "")
         } else if selectedSize == 0 {
-            let message = "expected \(type) \(selector) to return a single element, but got none within: \n\n\(try inspectHTML(elements))"
+            let message = "expected \(type) \(selector) to return a single element, but got none within: \n\n\(try elements.outerHtml())"
             return ("error", nil, message)
         } else {
-            let message = "expected \(type) \(selector) to return a single element, but got \(selectedSize): \n\n\(try inspectHTML(elements))"
+            let message = "expected \(type) \(selector) to return a single element, but got \(selectedSize): \n\n\(try elements.outerHtml())"
             return ("error", nil, message)
         }
     }
@@ -98,25 +98,6 @@ public class DOM {
         }
     }
     
-    public static func inspectHTML(_ elements: Elements)throws -> String {
-        var html = ""
-        
-        for element in elements {
-            html += try inspectHTML(element)
-        }
-
-        return html
-    }
-    
-    public static func inspectHTML(_ element: Element)throws -> String {
-        var html = "    "
-        
-        let elementHTML = try toHTML(element)
-        html += elementHTML.replacingOccurrences(of: "\n", with: "\n   ")
-        html += "\n"
-        
-        return html
-    }
     
     public static func tag(_ element: Element) -> String {
         return element.tagName()
@@ -136,31 +117,6 @@ public class DOM {
         return nil
     }
     
-    // a custom elements -> html function
-    // that results in the RAW original text
-    // nodes without any imposed indentation that
-    // the standard elements.outerHtml func from
-    // SwiftSoup does
-    public static func toHTML(_ elements: Elements)throws -> String {
-        let document: Document = Document("")
-        document.outputSettings().prettyPrint(pretty: false)
-        for element in elements {
-            try document.appendChild(element)
-        }
-        
-        return try elements.outerHtml()
-    }
-    
-    public static func toHTML(_ element: Element)throws -> String {
-        let document: Document = Document("")
-        document.outputSettings().prettyPrint(pretty: false)
-        try document.appendChild(element)
-        return try element.outerHtml()
-    }
-    
-    public static func toText(_ elements: Elements)throws -> String {
-        return try elements.text()
-    }
     
     public static func byID(_ elements: Elements, _ id: String)throws -> Element {
         let (result, element, message) = try maybeOne(elements, "#\(id)")
@@ -266,14 +222,14 @@ public class DOM {
     }
 
     public static func filter(_ elements: Elements, _ closure: (_ element: Element)->Bool) -> Elements {
-        return traverseAndAccumlate(elements, Elements(), closure)
+        return traverseAndAccumulate(elements, Elements(), closure)
     }
 
     public static func filter(_ element: Element, _ closure: (_ element: Element)->Bool) -> Elements {
         return traverseAndAccumlate(element, Elements(), closure)    }
 
     public static func reverseFilter(_ elements: Elements, _ closure: (_ element: Element)->Bool) -> Elements {
-        let newElements = traverseAndAccumlate(elements, Elements(), closure)
+        let newElements = traverseAndAccumulate(elements, Elements(), closure)
         return reverseElements(newElements)
     }
 
@@ -298,7 +254,7 @@ public class DOM {
     // depth-first travelersal of the Node graph
     // TBD: maybe SwiftSoup's NodeTraversor can be used instead?
     
-    private static func traverseAndAccumlate(_ elements: Elements, _ acc: Elements, _ closure: (_ element: Element)->Bool) -> Elements {
+    private static func traverseAndAccumulate(_ elements: Elements, _ acc: Elements, _ closure: (_ element: Element)->Bool) -> Elements {
         var mutAcc = acc
         
         for child in elements {
@@ -315,7 +271,7 @@ public class DOM {
             mutAcc.add(element)
         }
         
-        mutAcc = traverseAndAccumlate(element.children(), mutAcc, closure)
+        mutAcc = traverseAndAccumulate(element.children(), mutAcc, closure)
         
         return mutAcc
     }
@@ -420,7 +376,7 @@ public class DOM {
                 }
             }
                         
-            return try toHTML(elements)
+            return try elements.outerHtml()
         }
         
         let html: String = Diff.dataToString(contents)
@@ -587,7 +543,7 @@ public class DOM {
     
     private static func verifyPhxUpdateId(_ type: String, _ id: String?, _ element: Element)throws -> Void {
         if (id == nil || id! == "") {
-            let actual = try inspectHTML(element)
+            let actual = try! element.outerHtml()
             fatalError("setting phx-update to \(type) requires setting an ID on the container, got: \n\n \(actual)")
         }
     }
