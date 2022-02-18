@@ -9,15 +9,15 @@ import Foundation
 import SwiftUI
 import SwiftSoup
 
-struct ViewTreeBuilder {
-    let registry: LiveViewRegistry
+struct ViewTreeBuilder<R: CustomRegistry> {
+    let customRegistry: R
     
-    func fromElements(_ elements: Elements, coordinator: LiveViewCoordinator) -> some View {
+    func fromElements(_ elements: Elements, coordinator: LiveViewCoordinator<R>) -> some View {
         return fromElements(elements, context: LiveContext(coordinator: coordinator))
     }
     
     @ViewBuilder
-    func fromElements(_ elements: Elements, context: LiveContext) -> some View {
+    func fromElements(_ elements: Elements, context: LiveContext<R>) -> some View {
         let e = elements
         let c = context
         switch e.count {
@@ -44,43 +44,50 @@ struct ViewTreeBuilder {
         case 10:
             TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(e[9], c)))
         default:
-            ForEach(elements: e, context: c)
+            forEach(elements: e, context: c)
         }
     }
     
     // alias for typing
-    fileprivate func f(_ e: Element, _ c: LiveContext) -> some View {
+    fileprivate func f(_ e: Element, _ c: LiveContext<R>) -> some View {
         return fromElement(e, context: c)
     }
     
-    func fromElement(_ element: Element, coordinator: LiveViewCoordinator) -> some View {
+    func fromElement(_ element: Element, coordinator: LiveViewCoordinator<R>) -> some View {
         return fromElement(element, context: LiveContext(coordinator: coordinator))
     }
     
-    fileprivate func fromElement(_ element: Element, context: LiveContext) -> some View {
+    @ViewBuilder
+    fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
         let tag = DOM.tag(element).lowercased()
 
-        let view = registry.lookup(tag, element, context.coordinator, context: context)
-        return view.commonModifiers(from: element)
+        
+        if customRegistry.supportedTagNames.contains(tag) {
+            customRegistry.lookup(tag, element: element, coordinator: context.coordinator, context: context)
+                .commonModifiers(from: element)
+        } else {
+            BuiltinRegistry.lookup(tag, element, context.coordinator, context: context)
+                .commonModifiers(from: element)
+        }
     }
     
 }
 /// The context provides information at initialization-time to views in a LiveView.
-public struct LiveContext {
+public struct LiveContext<R: CustomRegistry> {
     /// The coordinator corresponding to the live view in which thie view is being constructed.
-    public let coordinator: LiveViewCoordinator
+    public let coordinator: LiveViewCoordinator<R>
     
     // @EnvironmentObject is not suitable for FormModel because views that need the form model don't
     // necessarily want to re-render on every single change.
     /// The model of the nearest ancestor `<form>` element, or `nil` if there is no such element.
-    public let formModel: FormModel?
+    public let formModel: FormModel<R>?
     
-    init(coordinator: LiveViewCoordinator, formModel: FormModel? = nil) {
+    init(coordinator: LiveViewCoordinator<R>, formModel: FormModel<R>? = nil) {
         self.coordinator = coordinator
         self.formModel = formModel
     }
     
-    func with(formModel: FormModel) -> LiveContext {
+    func with(formModel: FormModel<R>) -> LiveContext<R> {
         return LiveContext(coordinator: self.coordinator, formModel: formModel)
     }
     
@@ -178,9 +185,9 @@ private extension View {
 
 }
 
-struct ElementView: View {
+struct ElementView<R: CustomRegistry>: View {
     let element: Element
-    let context: LiveContext
+    let context: LiveContext<R>
     
     var body: some View {
         context.coordinator.builder.fromElement(element, context: context)
@@ -188,13 +195,11 @@ struct ElementView: View {
 }
 
 // not fileprivate because List needs ot use it so it has access to ForEach modifiers
-extension ForEach where Data == [(ElementView, String)], ID == String, Content == ElementView {
-    init(elements: Elements, context: LiveContext) {
-        let views = elements.map { (el) -> (ElementView, String) in
-            precondition(el.hasAttr("id"), "element in parent with more than 10 children must have an id")
-            // we need ElementView because we can't name the type returned from fromElement
-            return (ElementView(element: el, context: context), try! el.attr("id"))
-        }
-        self.init(views, id: \.1, content: \.0)
+func forEach<R: CustomRegistry>(elements: Elements, context: LiveContext<R>) -> ForEach<[(ElementView<R>, String)], String, ElementView<R>> {
+    let views = elements.map { (el) -> (ElementView<R>, String) in
+        precondition(el.hasAttr("id"), "element in parent with more than 10 children must have an id")
+        // we need ElementView because we can't name the type returned from fromElement
+        return (ElementView(element: el, context: context), try! el.attr("id"))
     }
+    return ForEach(views, id: \.1, content: \.0)
 }

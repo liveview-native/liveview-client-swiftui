@@ -10,7 +10,6 @@ import SwiftSoup
 
 struct PhxText: View {
     var element: Element
-    var coordinator: LiveViewCoordinator
     
     var body: some View {
         Text(element.ownText())

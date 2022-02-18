@@ -8,13 +8,13 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxButton: View {
+struct PhxButton<R: CustomRegistry>: View {
     private let element: Element
-    private let context: LiveContext
+    private let context: LiveContext<R>
     private let clickEvent: String?
     private let disabled: Bool
     
-    init(element: Element, context: LiveContext) {
+    init(element: Element, context: LiveContext<R>) {
         self.element = element
         self.context = context
         self.clickEvent = element.attrIfPresent("phx-click")

@@ -12,15 +12,15 @@ import Combine
 /// The working-copy data model for a ``LiveView``.
 ///
 /// In a view in the LiveView tree, a model can be obtained using `@EnvironmentObject`.
-public class LiveViewModel: ObservableObject {
-    @Published private var forms = [String: FormModel]()
+public class LiveViewModel<R: CustomRegistry>: ObservableObject {
+    @Published private var forms = [String: FormModel<R>]()
     
     /// Get or create a ``FormModel`` for the `<form>` element with the given ID.
-    public func getForm(elementID id: String) -> FormModel {
+    public func getForm(elementID id: String) -> FormModel<R> {
         if let form = forms[id] {
             return form
         } else {
-            let model = FormModel(elementID: id)
+            let model = FormModel<R>(elementID: id)
             forms[id] = model
             return model
         }
@@ -45,10 +45,10 @@ public class LiveViewModel: ObservableObject {
 /// A form model stores the working copy of the data for a specific `<form>` element.
 ///
 /// To obtain a form model, use ``LiveViewModel/getForm(elementID:)``.
-public class FormModel: ObservableObject, CustomDebugStringConvertible {
+public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringConvertible {
     /// The value of the `id` attribute of the `<form>` element this model is for.
     public let elementID: String
-    var coordinator: LiveViewCoordinator!
+    var coordinator: LiveViewCoordinator<R>!
     var changeEvent: String?
     /// The form data for this form.
     @Published public var data = [String: String]()

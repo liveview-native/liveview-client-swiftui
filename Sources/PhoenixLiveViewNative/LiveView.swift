@@ -31,15 +31,15 @@ import SwiftUI
 /// }
 /// ```
 ///
-public struct LiveView: View {
+public struct LiveView<R: CustomRegistry>: View {
     // this is a @StateObject instead of @ObservedObject because changing which DOMWindows for a LiveView is not allowed
-    @StateObject private var coordinator: LiveViewCoordinator
-    @StateObject private var liveViewModel = LiveViewModel()
+    @StateObject private var coordinator: LiveViewCoordinator<R>
+    @StateObject private var liveViewModel = LiveViewModel<R>()
     
     /// Creates a new LiveView attached to the given coordinator.
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
-    public init(coordinator: LiveViewCoordinator) {
+    public init(coordinator: LiveViewCoordinator<R>) {
         self._coordinator = StateObject(wrappedValue: coordinator)
     }
 

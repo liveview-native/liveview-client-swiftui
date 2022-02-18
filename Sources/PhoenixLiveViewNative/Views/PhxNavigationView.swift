@@ -8,11 +8,11 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxNavigationView: View {
+struct PhxNavigationView<R: CustomRegistry>: View {
     private let element: Element
-    private let context: LiveContext
+    private let context: LiveContext<R>
     
-    init(element: Element, context: LiveContext) {
+    init(element: Element, context: LiveContext<R>) {
         self.element = element
         self.context = context
     }

@@ -8,9 +8,9 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxHStack: View {
+struct PhxHStack<R: CustomRegistry>: View {
     var element: Element
-    var context: LiveContext
+    var context: LiveContext<R>
     
     var body: some View {
         HStack {
@@ -19,9 +19,9 @@ struct PhxHStack: View {
     }
 }
 
-struct PhxVStack: View {
+struct PhxVStack<R: CustomRegistry>: View {
     var element: Element
-    var context: LiveContext
+    var context: LiveContext<R>
 
     var body: some View {
         VStack {
@@ -30,9 +30,9 @@ struct PhxVStack: View {
     }
 }
 
-struct PhxZStack: View {
+struct PhxZStack<R: CustomRegistry>: View {
     var element: Element
-    var context: LiveContext
+    var context: LiveContext<R>
 
     var body: some View {
         ZStack {

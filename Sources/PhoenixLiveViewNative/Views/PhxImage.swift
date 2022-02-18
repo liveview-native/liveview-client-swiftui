@@ -13,7 +13,7 @@ struct PhxImage: View {
     private let color: Color?
     private let scale: Image.Scale?
     
-    init(element: Element, coordinator: LiveViewCoordinator) {
+    init(element: Element) {
         if element.hasAttr("system-name") {
             self.image = Image(systemName: try! element.attr("system-name"))
         } else {

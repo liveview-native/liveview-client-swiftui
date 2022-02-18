@@ -8,12 +8,12 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxList: View {
+struct PhxList<R: CustomRegistry>: View {
     private let element: Element
-    private let context: LiveContext
+    private let context: LiveContext<R>
     private let deleteEvent: String?
     
-    init(element: Element, context: LiveContext) {
+    init(element: Element, context: LiveContext<R>) {
         self.element = element
         self.context = context
         self.deleteEvent = element.attrIfPresent("phx-delete")
@@ -21,7 +21,7 @@ struct PhxList: View {
     
     var body: some View {
         List {
-            ForEach(elements: element.children(), context: context)
+            forEach(elements: element.children(), context: context)
                 .onDelete(perform: onDeleteHandler)
         }
         .listStyle(from: element)

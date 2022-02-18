@@ -13,7 +13,7 @@ import SwiftPhoenixClient
 private var PUSH_TIMEOUT: Double = 30000
 
 /// The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.
-public class LiveViewCoordinator: ObservableObject {
+public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// The current state of the live view connection.
     @Published public private(set) var state: State = .notConnected
     
@@ -34,18 +34,26 @@ public class LiveViewCoordinator: ObservableObject {
     private var liveReloadSocket: Socket?
     private var liveReloadChannel: Channel?
     
-    internal let builder: ViewTreeBuilder
+    internal let builder: ViewTreeBuilder<R>
     
-    /// Creates a new coordinator.
+    /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter connectParams: A dictionary of parameters to send to the server for use when the LiveView is mounted.
-    /// - Parameter registry: The registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM.
-    public init(_ url: URL, connectParams: [String: Any] = [:], registry: LiveViewRegistry = .shared) {
+    /// - Parameter customRegistry: The registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM.
+    public init(_ url: URL, connectParams: [String: Any] = [:], customRegistry: R) {
         self.url = url
         self.connectParams = connectParams
         self.state = .notConnected
         self.urlSession = URLSession.shared
-        self.builder = ViewTreeBuilder(registry: registry)
+        self.builder = ViewTreeBuilder(customRegistry: customRegistry)
+    }
+    
+    /// Creates a new coordinator without a custom registry.
+    /// - Parameter url: The URL of the page to establish the connection to.
+    /// - Parameter connectParams: A dictionary of parameters to send to the server for use when the LiveView is mounted.
+    /// - Parameter customRegistry: The registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM.
+    public convenience init(_ url: URL, connectParams: [String: Any] = [:]) where R == EmptyRegistry {
+        self.init(url, connectParams: connectParams, customRegistry: EmptyRegistry())
     }
     
     /// Connects this coordinator to the LiveView channel.
