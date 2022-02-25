@@ -108,6 +108,8 @@ private extension View {
     func commonModifiers(from element: Element) -> some View {
         self
             .navigationTitle(from: element)
+        // todo: frame and then padding is not the same as padding and then frame, which should we do?
+            .frame(from: element)
             .padding(from: element)
             .listRowSeparator(from: element)
             .listRowInsets(from: element)
@@ -120,6 +122,18 @@ private extension View {
         } else {
             self
         }
+    }
+    
+    private func frame(from element: Element) -> some View {
+        var width: CGFloat?
+        var height: CGFloat?
+        if let s = element.attrIfPresent("frame-width"), let f = Double(s) {
+            width = f
+        }
+        if let s = element.attrIfPresent("frame-height"), let f = Double(s) {
+            height = f
+        }
+        return self.frame(width: width, height: height)
     }
     
     private func padding(from element: Element) -> some View {
