@@ -42,6 +42,8 @@ struct BuiltinRegistry {
             PhxNavigationView<R>(element: element, context: context)
         case "list":
             PhxList<R>(element: element, context: context)
+        case "rect":
+            PhxShape(element: element, shape: Rectangle())
         case "roundrect":
             PhxShape(element: element, shape: RoundedRectangle(from: element))
         default:
