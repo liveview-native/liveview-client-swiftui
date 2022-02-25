@@ -10,7 +10,11 @@ import SwiftUI
 private let colorRegex = try! NSRegularExpression(pattern: "^#[0-9a-f]{6}$", options: .caseInsensitive)
 
 extension Color {
-    init?(fromCSSHex string: String) {
+    public init?(fromCSSHex string: String?) {
+        guard let string = string else {
+            return nil
+        }
+
         // todo: named colors as well?
         if colorRegex.firstMatch(in: string, options: [], range: NSRange(location: 0, length: string.utf16.count)) != nil {
             let r = Int(string[string.index(string.startIndex, offsetBy: 1)..<string.index(string.startIndex, offsetBy: 3)], radix: 16)!
