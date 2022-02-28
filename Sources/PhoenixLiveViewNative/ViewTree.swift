@@ -59,15 +59,29 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     
     @ViewBuilder
     fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
-        let tag = DOM.tag(element).lowercased()
-
-        
-        if customRegistry.supportedTagNames.contains(tag) {
-            customRegistry.lookup(tag, element: element, coordinator: context.coordinator, context: context)
-                .commonModifiers(from: element)
+        if let attr = getApplicableCustomAttribute(element: element, context: context) {
+            let newContext = context.with(appliedCustomAttribute: attr.getKey())
+            customRegistry.applyCustomAttribute(attr, element: element, context: newContext)
         } else {
-            BuiltinRegistry.lookup(tag, element, context.coordinator, context: context)
-                .commonModifiers(from: element)
+            let tag = DOM.tag(element).lowercased()
+
+            if customRegistry.supportedTagNames.contains(tag) {
+                customRegistry.lookup(tag, element: element, coordinator: context.coordinator, context: context)
+                    .commonModifiers(from: element)
+            } else {
+                BuiltinRegistry.lookup(tag, element, context.coordinator, context: context)
+                    .commonModifiers(from: element)
+            }
+        }
+    }
+    
+    private func getApplicableCustomAttribute(element: Element, context: LiveContext<R>) -> Attribute? {
+        guard let attrs = element.getAttributes() else {
+            return nil
+        }
+        return attrs.first { attr in
+            let k = attr.getKey()
+            return customRegistry.supportedAttributes.contains(k.lowercased()) && !context.appliedCustomAttributes.contains(k)
         }
     }
     
@@ -80,7 +94,9 @@ public struct LiveContext<R: CustomRegistry> {
     // @EnvironmentObject is not suitable for FormModel because views that need the form model don't
     // necessarily want to re-render on every single change.
     /// The model of the nearest ancestor `<form>` element, or `nil` if there is no such element.
-    public let formModel: FormModel<R>?
+    public private(set) var formModel: FormModel<R>?
+    
+    private(set) var appliedCustomAttributes: [String] = []
     
     init(coordinator: LiveViewCoordinator<R>, formModel: FormModel<R>? = nil) {
         self.coordinator = coordinator
@@ -88,14 +104,24 @@ public struct LiveContext<R: CustomRegistry> {
     }
     
     func with(formModel: FormModel<R>) -> LiveContext<R> {
-        return LiveContext(coordinator: self.coordinator, formModel: formModel)
+        var copy = self
+        copy.formModel = formModel
+        return copy
+    }
+    
+    func with(appliedCustomAttribute attr: String) -> LiveContext<R> {
+        var copy = self
+        copy.appliedCustomAttributes.append(attr)
+        return copy
     }
     
     /// Builds a view representing the given element in the current context.
     ///
     /// - Note: If you're building a custom container view, make sure to use ``buildChildren(of:)``. Calling this will cause a stack overflow.
     public func buildElement(_ element: Element) -> some View {
-        return coordinator.builder.fromElement(element, context: self)
+        // can't use coordinator.builder.fromElement here, as it causes an infinitely recursive type when used with custom attributes
+        // so use ElementView to break the cycle
+        return ElementView(element: element, context: self)
     }
     
     /// Builds a view representing the children of the current element in the current context.
@@ -209,11 +235,10 @@ struct ElementView<R: CustomRegistry>: View {
 }
 
 // not fileprivate because List needs ot use it so it has access to ForEach modifiers
-func forEach<R: CustomRegistry>(elements: Elements, context: LiveContext<R>) -> ForEach<[(ElementView<R>, String)], String, ElementView<R>> {
-    let views = elements.map { (el) -> (ElementView<R>, String) in
+func forEach<R: CustomRegistry>(elements: Elements, context: LiveContext<R>) -> ForEach<[(Element, String)], String, ElementView<R>> {
+    let elements = elements.map { (el) -> (Element, String) in
         precondition(el.hasAttr("id"), "element in parent with more than 10 children must have an id")
-        // we need ElementView because we can't name the type returned from fromElement
-        return (ElementView(element: el, context: context), try! el.attr("id"))
+        return (el, try! el.attr("id"))
     }
-    return ForEach(views, id: \.1, content: \.0)
+    return ForEach(elements, id: \.1) { ElementView(element: $0.0, context: context) }
 }
