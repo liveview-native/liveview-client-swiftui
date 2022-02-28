@@ -21,7 +21,7 @@ struct PhxTextField<R: CustomRegistry>: View {
     @State private var value: String? = ""
     @State private var becomeFirstResponder = false
     
-    init(element: Element, coordinator: LiveViewCoordinator<R>, context: LiveContext<R>) {
+    init(element: Element, context: LiveContext<R>) {
         precondition(context.formModel != nil, "<textfield> cannot be used outside of a <form>")
         // throwing: .attr only throws if the given attribute name is empty
         self.label = try! element.attr("label")

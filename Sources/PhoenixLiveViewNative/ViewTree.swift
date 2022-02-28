@@ -66,10 +66,10 @@ struct ViewTreeBuilder<R: CustomRegistry> {
             let tag = DOM.tag(element).lowercased()
 
             if customRegistry.supportedTagNames.contains(tag) {
-                customRegistry.lookup(tag, element: element, coordinator: context.coordinator, context: context)
+                customRegistry.lookup(tag, element: element, context: context)
                     .commonModifiers(from: element)
             } else {
-                BuiltinRegistry.lookup(tag, element, context.coordinator, context: context)
+                BuiltinRegistry.lookup(tag, element, context: context)
                     .commonModifiers(from: element)
             }
         }

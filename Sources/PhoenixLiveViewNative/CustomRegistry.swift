@@ -37,7 +37,7 @@ public protocol CustomRegistry {
     /// - Parameter element: The element that a view should be created for.
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
-    func lookup(_ name: String, element: Element, coordinator: LiveViewCoordinator<Self>, context: LiveContext<Self>) -> V
+    func lookup(_ name: String, element: Element, context: LiveContext<Self>) -> V
     
     /// This method is called by LiveView Native when it encounters a custom attribute your registry has declared support for.
     ///
@@ -56,7 +56,7 @@ public struct EmptyRegistry: CustomRegistry {
     public let supportedTagNames: [String] = []
     public let supportedAttributes: [String] = []
     
-    public func lookup(_ name: String, element: Element, coordinator: LiveViewCoordinator<EmptyRegistry>, context: LiveContext<EmptyRegistry>) -> Never {
+    public func lookup(_ name: String, element: Element, context: LiveContext<EmptyRegistry>) -> Never {
         fatalError()
     }
     

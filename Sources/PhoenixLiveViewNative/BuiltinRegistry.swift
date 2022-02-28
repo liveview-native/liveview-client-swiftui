@@ -10,16 +10,11 @@ import SwiftSoup
 
 struct BuiltinRegistry {
     
-    // todo: remove me
-    static func lookup<R: CustomRegistry>(_ name: String, _ element: Element, _ coordinator: LiveViewCoordinator<R>) -> some View {
-        return lookup(name, element, coordinator, context: LiveContext(coordinator: coordinator))
-    }
-    
     @ViewBuilder
-    static func lookup<R: CustomRegistry>(_ name: String, _ element: Element, _ coordinator: LiveViewCoordinator<R>, context: LiveContext<R>) -> some View {
+    static func lookup<R: CustomRegistry>(_ name: String, _ element: Element, context: LiveContext<R>) -> some View {
         switch name {
         case "textfield":
-            PhxTextField<R>(element: element, coordinator: coordinator, context: context)
+            PhxTextField<R>(element: element, context: context)
         case "text":
             PhxText(element: element)
         case "hstack":
