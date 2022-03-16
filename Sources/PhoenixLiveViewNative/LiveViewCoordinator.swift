@@ -29,7 +29,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private var socket: Socket!
     private var channel: Channel!
     private var urlSession: URLSession
-    private var rendered: [String:Any]!
+    private var rendered: Root!
     private var liveReloadEnabled: Bool = false
     private var liveReloadSocket: Socket?
     private var liveReloadChannel: Channel?
@@ -78,6 +78,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                         self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
                         try self.extractDOMValues(elements)
                         self.connectSocket()
+                        // todo: should wait until socket as successfully opened before trying to connect the lv
                         self.connectLiveView()
                         
                         // todo: the initial html will be wrong if the LiveView is shared btwn native and web; should we ignore it altogether and wait for rendered upon socket connection?
@@ -109,14 +110,16 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// The client view tree will be updated automatically when the response is received.
     public func pushEvent(_ event: String, payload: Payload) {
         self.channel.push(event, payload: payload, timeout: PUSH_TIMEOUT).receive("ok") { [weak self] reply in
+            // todo: dedup with "diff" event handling
             guard let self = self,
-                  let diff = reply.payload["diff"] as? Payload else {
+                  let diffPayload = reply.payload["diff"] as? Payload,
+                  let diff = try? RootDiff(from: FragmentDecoder(data: diffPayload)) else {
                       return
                   }
-
-            self.rendered = try! DOM.mergeDiff(self.rendered, diff)
+            self.rendered = try! self.rendered.merge(with: diff)
+            let elements = try! DOM.parse(self.rendered.buildString())
             DispatchQueue.main.async {
-                self.elements = try! DOM.renderDiff(self.rendered)
+                self.elements = elements
             }
         }
     }
@@ -176,27 +179,23 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.channel = self.socket.channel("lv:\(self.phxID)", params: ["session": self.phxSession, "static": self.phxStatic, "url": url.absoluteString, "params": connectParams])
         self.channel.join()
             .receive("ok") { message in
-                self.rendered = (message.payload["rendered"] as! [String:Any])
+                let renderedPayload = (message.payload["rendered"] as! Payload)
+                // todo: what should happen if decoding or parsing fails?
+                self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
+                let elements = try! DOM.parse(self.rendered.buildString())
                 DispatchQueue.main.async {
-                    // todo: what should happen when renderDiff fails?
-                    self.elements = try! DOM.renderDiff(self.rendered)
+                    self.elements = elements
                 }
             }
             .receive("error") { message in print("Failed to join", message.payload) }
         self.channel.onError { (payload) in print("Error: ", payload) }
         self.channel.onClose { (payload) in print("Channel Closed") }
         self.channel.on("diff") { (message) in
-            do {
-                self.rendered = try DOM.mergeDiff(self.rendered, message.payload)
-                DispatchQueue.main.async {
-                    do {
-                        self.elements = try DOM.renderDiff(self.rendered)
-                    } catch {
-                        print("Error during render")
-                    }
-                }
-            } catch {
-                print("Error during merge!")
+            let diff = try! RootDiff(from: FragmentDecoder(data: message.payload))
+            self.rendered = try! self.rendered.merge(with: diff)
+            let elements = try! DOM.parse(self.rendered.buildString())
+            DispatchQueue.main.async {
+                self.elements = elements
             }
         }
     }

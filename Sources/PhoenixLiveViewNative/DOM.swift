@@ -25,7 +25,7 @@ public class DOM {
     static let COMPONENT_FRAGMENT: String = "c"
     
     public static func parse(_ html: String)throws -> Elements {
-        let document = try SwiftSoup.parse(html)
+        let document = try SwiftSoup.parseBodyFragment(html)
         return try document.select("body")[0].children()
     }
     
