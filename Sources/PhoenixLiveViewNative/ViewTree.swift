@@ -63,7 +63,7 @@ struct ViewTreeBuilder<R: CustomRegistry> {
             let newContext = context.with(appliedCustomAttribute: attr.getKey())
             customRegistry.applyCustomAttribute(attr, element: element, context: newContext)
         } else {
-            let tag = DOM.tag(element).lowercased()
+            let tag = element.tagName().lowercased()
 
             if customRegistry.supportedTagNames.contains(tag) {
                 customRegistry.lookup(tag, element: element, context: context)

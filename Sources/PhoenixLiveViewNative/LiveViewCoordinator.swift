@@ -117,7 +117,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                       return
                   }
             self.rendered = try! self.rendered.merge(with: diff)
-            let elements = try! DOM.parse(self.rendered.buildString())
+            let elements = try! self.parseDOM(html: self.rendered.buildString())
             DispatchQueue.main.async {
                 self.elements = elements
             }
@@ -182,7 +182,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 let renderedPayload = (message.payload["rendered"] as! Payload)
                 // todo: what should happen if decoding or parsing fails?
                 self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-                let elements = try! DOM.parse(self.rendered.buildString())
+                let elements = try! self.parseDOM(html: self.rendered.buildString())
                 DispatchQueue.main.async {
                     self.elements = elements
                 }
@@ -193,7 +193,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.channel.on("diff") { (message) in
             let diff = try! RootDiff(from: FragmentDecoder(data: message.payload))
             self.rendered = try! self.rendered.merge(with: diff)
-            let elements = try! DOM.parse(self.rendered.buildString())
+            let elements = try! self.parseDOM(html: self.rendered.buildString())
             DispatchQueue.main.async {
                 self.elements = elements
             }
@@ -223,6 +223,11 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
         
         task.resume()
+    }
+    
+    private func parseDOM(html: String) throws -> Elements {
+        let document = try SwiftSoup.parseBodyFragment(html)
+        return try document.select("body")[0].children()
     }
 }
 
