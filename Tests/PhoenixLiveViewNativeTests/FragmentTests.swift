@@ -542,5 +542,27 @@ class FragmentTests: XCTestCase {
             "before <div>n: 0, s: foo\nn: 0, s: bar\n</div> after"
         )
     }
+    
+    func testBuildStringWithNestedComprehensions() throws {
+        XCTAssertEqual(
+            Root(fragment: .comprehension(
+                dynamics: [
+                    [.fragment(.comprehension(dynamics: [[.string("0")], [.string("1")]], statics: .templateRef(0), templates: nil))],
+                    [.fragment(.comprehension(dynamics: [[.string("0")], [.string("1")]], statics: .templateRef(0), templates: nil))]
+                ], statics: .statics([
+                    "\n  ",
+                    "\n"
+                ]),
+                templates: [
+                    0: [
+                        "\n    ",
+                        "\n  "
+                    ]
+                ]),
+                 components: nil
+            ).buildString(),
+            "\n  \n    0\n  \n    1\n  \n\n  \n    0\n  \n    1\n  \n"
+        )
+    }
 
 }
