@@ -12,8 +12,8 @@ import SwiftSoup
 struct ViewTreeBuilder<R: CustomRegistry> {
     let customRegistry: R
     
-    func fromElements(_ elements: Elements, coordinator: LiveViewCoordinator<R>) -> some View {
-        return fromElements(elements, context: LiveContext(coordinator: coordinator))
+    func fromElements(_ elements: Elements, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
+        return fromElements(elements, context: LiveContext(coordinator: coordinator, url: url))
     }
     
     @ViewBuilder
@@ -53,10 +53,6 @@ struct ViewTreeBuilder<R: CustomRegistry> {
         return fromElement(e, context: c)
     }
     
-    func fromElement(_ element: Element, coordinator: LiveViewCoordinator<R>) -> some View {
-        return fromElement(element, context: LiveContext(coordinator: coordinator))
-    }
-    
     @ViewBuilder
     fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
         if let attr = getApplicableCustomAttribute(element: element, context: context) {
@@ -91,6 +87,9 @@ public struct LiveContext<R: CustomRegistry> {
     /// The coordinator corresponding to the live view in which thie view is being constructed.
     public let coordinator: LiveViewCoordinator<R>
     
+    /// The URL of the live view this context belongs to.
+    public let url: URL
+    
     // @EnvironmentObject is not suitable for FormModel because views that need the form model don't
     // necessarily want to re-render on every single change.
     /// The model of the nearest ancestor `<form>` element, or `nil` if there is no such element.
@@ -98,8 +97,9 @@ public struct LiveContext<R: CustomRegistry> {
     
     private(set) var appliedCustomAttributes: [String] = []
     
-    init(coordinator: LiveViewCoordinator<R>, formModel: FormModel<R>? = nil) {
+    init(coordinator: LiveViewCoordinator<R>, url: URL, formModel: FormModel<R>? = nil) {
         self.coordinator = coordinator
+        self.url = url
         self.formModel = formModel
     }
     

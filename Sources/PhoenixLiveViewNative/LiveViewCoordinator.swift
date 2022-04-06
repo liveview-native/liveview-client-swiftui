@@ -9,6 +9,7 @@ import Foundation
 import SwiftSoup
 import SwiftUI
 import SwiftPhoenixClient
+import Combine
 
 private var PUSH_TIMEOUT: Double = 30000
 
@@ -17,9 +18,14 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// The current state of the live view connection.
     @Published public private(set) var state: State = .notConnected
     
-    /// The base URL this live view is connected to.
-    public let url: URL
-    private let connectParams: [String: Any]
+    /// The first URL this live view was connected to.
+    public let initialURL: URL
+    /// The current URL this live view is connected to.
+    ///
+    /// - Note: If you need to use the URL in, e.g., a view with a custom action, you should generally prefer the context's ``LiveContext/url`` because `currentURL` will change upon live navigation and may not reflect the URL of the page your view is actually on.
+    public private(set) var currentURL: URL
+    internal let replaceRedirectSubject = PassthroughSubject<(URL, URL), Never>()
+    internal let config: LiveViewConfiguration
     private var phxSession: String = ""
     private var phxStatic: String = ""
     private var phxView: String = ""
@@ -38,11 +44,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
-    /// - Parameter connectParams: A dictionary of parameters to send to the server for use when the LiveView is mounted.
+    /// - Parameter config: The configuration for this coordinator.
     /// - Parameter customRegistry: The registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM.
-    public init(_ url: URL, connectParams: [String: Any] = [:], customRegistry: R) {
-        self.url = url
-        self.connectParams = connectParams
+    public init(_ url: URL, config: LiveViewConfiguration = .init(), customRegistry: R) {
+        self.initialURL = url
+        self.currentURL = url
+        self.config = config
         self.state = .notConnected
         self.urlSession = URLSession.shared
         self.builder = ViewTreeBuilder(customRegistry: customRegistry)
@@ -50,10 +57,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     /// Creates a new coordinator without a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
-    /// - Parameter connectParams: A dictionary of parameters to send to the server for use when the LiveView is mounted.
-    /// - Parameter customRegistry: The registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM.
-    public convenience init(_ url: URL, connectParams: [String: Any] = [:]) where R == EmptyRegistry {
-        self.init(url, connectParams: connectParams, customRegistry: EmptyRegistry())
+    /// - Parameter config: The configuration for this coordinator.
+    public convenience init(_ url: URL, config: LiveViewConfiguration = .init()) where R == EmptyRegistry {
+        self.init(url, config: config, customRegistry: EmptyRegistry())
     }
     
     /// Connects this coordinator to the LiveView channel.
@@ -101,8 +107,18 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         connect()
     }
     
+    func navigateTo(url: URL, replace: Bool = false) {
+        guard self.currentURL != url else { return }
+        let oldURL = self.currentURL
+        self.currentURL = url
+        reconnect()
+        if replace {
+            replaceRedirectSubject.send((oldURL, url))
+        }
+    }
+    
     func viewTree() -> some View {
-        builder.fromElements(self.elements, coordinator: self)
+        builder.fromElements(self.elements, coordinator: self, url: currentURL)
     }
     
     /// Pushes a LiveView event with the given name and payload to the server.
@@ -126,15 +142,15 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
 
     
     private func connectSocket() {
-        let cookies = HTTPCookieStorage.shared.cookies(for: self.url)
+        let cookies = HTTPCookieStorage.shared.cookies(for: self.currentURL)
         
         let configuration = URLSessionConfiguration.default
         for cookie in cookies! {
             configuration.httpCookieStorage!.setCookie(cookie)
         }
 
-        var wsEndpoint = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-        wsEndpoint.scheme = url.scheme == "https" ? "wss" : "ws"
+        var wsEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
+        wsEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
         wsEndpoint.path = "/live/websocket"
         self.socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
         socket!.onOpen { print("Socket Opened") }
@@ -146,8 +162,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         if liveReloadEnabled {
             print("LiveReload: attempting to connect...")
             
-            var liveReloadEndpoint = URLComponents(url: url, resolvingAgainstBaseURL: false)!
-            liveReloadEndpoint.scheme = url.scheme == "https" ? "wss" : "ws"
+            var liveReloadEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
+            liveReloadEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
             liveReloadEndpoint.path = "/phoenix/live_reload/socket"
             self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
                 URLSessionTransport(url: $0, configuration: configuration)
@@ -171,12 +187,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     // todo: don't use Any for the params
     private func connectLiveView() {
-        var connectParams = connectParams
+        var connectParams = config.connectParams?(currentURL) ?? [:]
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = self.phxCSRFToken
         connectParams["_native"] = true
         
-        self.channel = self.socket.channel("lv:\(self.phxID)", params: ["session": self.phxSession, "static": self.phxStatic, "url": url.absoluteString, "params": connectParams])
+        self.channel = self.socket.channel("lv:\(self.phxID)", params: ["session": self.phxSession, "static": self.phxStatic, "url": currentURL.absoluteString, "params": connectParams])
         self.channel.join()
             .receive("ok") { message in
                 let renderedPayload = (message.payload["rendered"] as! Payload)
@@ -209,7 +225,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     private func fetchDOM(_ completion: @escaping (Result<String, Error>) -> Void) {
-        let task = URLSession.shared.dataTask(with: self.url) { data, response, error in
+        let task = URLSession.shared.dataTask(with: self.currentURL) { data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
