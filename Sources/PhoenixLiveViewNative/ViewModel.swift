@@ -59,7 +59,7 @@ public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringCo
     }
     
     func updateFromElement(_ element: Element) {
-        try! element.traverse(self)
+        try! element.traverse(FormDataUpdater(model: self))
     }
     
     /// Sends a phx-change event (if configured) to the server with the current form data.
@@ -87,17 +87,18 @@ public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringCo
     }
 }
 
-// todo: use something else for NodeVisitor because we don't want this implementation detail to be public
-extension FormModel: NodeVisitor {
-    public func head(_ node: Node, _ depth: Int) throws {
+private struct FormDataUpdater<R: CustomRegistry>: NodeVisitor {
+    let model: FormModel<R>
+    
+    func head(_ node: Node, _ depth: Int) throws {
         if ["hidden", "textfield"].contains(node.nodeName().lowercased()),
            node.hasAttr("name"),
            node.hasAttr("value") {
-            data[try! node.attr("name")] = try! node.attr("value")
+            model.data[try! node.attr("name")] = try! node.attr("value")
         }
     }
     
-    public func tail(_ node: Node, _ depth: Int) throws {
+    func tail(_ node: Node, _ depth: Int) throws {
         // unused
     }
 }
