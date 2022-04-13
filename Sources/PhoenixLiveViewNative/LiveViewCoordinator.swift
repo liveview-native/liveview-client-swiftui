@@ -14,6 +14,7 @@ import Combine
 private var PUSH_TIMEOUT: Double = 30000
 
 /// The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.
+// todo: consider making this an actor, right now there are a number of potential race conditions
 public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// The current state of the live view connection.
     @Published public private(set) var state: State = .notConnected
@@ -73,27 +74,35 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         state = .connecting
         
         fetchDOM() { result in
-            // todo: parse html off the main thread
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let html):
-                    do {
-                        let doc = try SwiftSoup.parse(html)
-                        let elements = doc.body()!.children()
-                        self.phxCSRFToken = try! doc.select("meta[name=\"csrf-token\"]")[0].attr("content")
-                        self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
-                        try self.extractDOMValues(elements)
-                        self.connectSocket()
-                        // todo: should wait until socket as successfully opened before trying to connect the lv
-                        self.connectLiveView()
+            switch result {
+            case .success(let html):
+                do {
+                    let doc = try SwiftSoup.parse(html)
+                    let elements = doc.body()!.children()
+                    self.phxCSRFToken = try! doc.select("meta[name=\"csrf-token\"]")[0].attr("content")
+                    self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
+                    try self.extractDOMValues(elements)
+                    self.connectSocket()
+                    // todo: should wait until socket as successfully opened before trying to connect the lv
+                    self.connectLiveView()
                         
-                        // todo: the initial html will be wrong if the LiveView is shared btwn native and web; should we ignore it altogether and wait for rendered upon socket connection?
-                        self.elements = try elements.select("div[data-phx-main=\"true\"]")[0].children()
-                        self.state = .connected
-                    } catch {
-                        self.state = .connectionFailed(FetchError.attrParseError)
+                    DispatchQueue.main.async {
+                        do {
+                            // todo: the initial html will be wrong if the LiveView is shared btwn native and web; should we ignore it altogether and wait for rendered upon socket connection?
+//                            self.elements = try elements.select("div[data-phx-main=\"true\"]")[0].children()
+//                            self.state = .connected
+                        } catch {
+                            self.state = .connectionFailed(FetchError.initialParseError)
+                        }
                     }
-                case .failure(let error):
+                } catch {
+                    DispatchQueue.main.async {
+                        self.state = .connectionFailed(FetchError.initialParseError)
+                    }
+                }
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
                     self.state = .connectionFailed(error)
                 }
             }
@@ -126,14 +135,11 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// The client view tree will be updated automatically when the response is received.
     public func pushEvent(_ event: String, payload: Payload) {
         self.channel.push(event, payload: payload, timeout: PUSH_TIMEOUT).receive("ok") { [weak self] reply in
-            // todo: dedup with "diff" event handling
             guard let self = self,
                   let diffPayload = reply.payload["diff"] as? Payload,
-                  let diff = try? RootDiff(from: FragmentDecoder(data: diffPayload)) else {
+                  let elements = try? self.handleDiff(payload: diffPayload) else {
                       return
                   }
-            self.rendered = try! self.rendered.merge(with: diff)
-            let elements = try! self.parseDOM(html: self.rendered.buildString())
             DispatchQueue.main.async {
                 self.elements = elements
             }
@@ -207,9 +213,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.channel.onError { (payload) in print("Error: ", payload) }
         self.channel.onClose { (payload) in print("Channel Closed") }
         self.channel.on("diff") { (message) in
-            let diff = try! RootDiff(from: FragmentDecoder(data: message.payload))
-            self.rendered = try! self.rendered.merge(with: diff)
-            let elements = try! self.parseDOM(html: self.rendered.buildString())
+            let elements = try! self.handleDiff(payload: message.payload)
             DispatchQueue.main.async {
                 self.elements = elements
             }
@@ -245,6 +249,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         let document = try SwiftSoup.parseBodyFragment(html)
         return try document.select("body")[0].children()
     }
+    
+    private func handleDiff(payload: Payload) throws -> Elements {
+        let diff = try RootDiff(from: FragmentDecoder(data: payload))
+        self.rendered = try self.rendered.merge(with: diff)
+        return try self.parseDOM(html: self.rendered.buildString())
+    }
 }
 
 extension LiveViewCoordinator {
@@ -264,8 +274,8 @@ extension LiveViewCoordinator {
 
 extension LiveViewCoordinator {
     enum FetchError: Error {
-        case parseError
-        case attrParseError
+        /// An error encountered when parsing the initial HTML.
+        case initialParseError
         case other(URLResponse)
     }
 }
