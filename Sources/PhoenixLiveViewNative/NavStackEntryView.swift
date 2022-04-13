@@ -13,7 +13,7 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     @StateObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
     @State private var url: URL
-    @State private var state: ConnectionState = .notConnected
+    @State private var state: ConnectionState = .other(.notConnected)
     
     init(coordinator: LiveViewCoordinator<R>, url: URL) {
         self._coordinator = StateObject(wrappedValue: coordinator)
@@ -25,16 +25,23 @@ struct NavStackEntryView<R: CustomRegistry>: View {
             .environmentObject(liveViewModel)
             .onReceive(coordinator.$elements) { newValue in
                 // todo: things will go weird if the same url occurs multiple times in the navigation stack
-                if coordinator.currentURL == url {
-                    self.state = .connected(newValue)
+                if coordinator.currentURL == url,
+                   let elements = newValue {
+                    self.state = .connected(elements)
                     // todo: doing this every time the DOM changes is probably not efficient
-                    liveViewModel.pruneMissingForms(elements: newValue)
+                    liveViewModel.pruneMissingForms(elements: elements)
                 }
             }
             .onReceive(coordinator.$state) { newValue in
-                if coordinator.currentURL == url,
-                   case .connectionFailed(let error) = state {
-                    self.state = .connectionFailed(error)
+                if coordinator.currentURL == url {
+                    if case .connected(_) = state {
+                        // if we're already connected, we only want to remove the cached elements if there's been an error reconnecting
+                        if case .connectionFailed(_) = newValue {
+                            state = .other(newValue)
+                        }
+                    } else {
+                        state = .other(newValue)
+                    }
                 }
             }
             .onReceive(coordinator.replaceRedirectSubject) { (oldURL, newURL) in
@@ -47,25 +54,35 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     
     @ViewBuilder
     private var elementTree: some View {
-        // todo: make this customizable via the registry?
         switch state {
-        case .notConnected:
-            Text("Not Connected")
         case .connected(let elements):
             coordinator.builder.fromElements(elements, coordinator: coordinator, url: url)
-        case .connectionFailed(let error):
-            VStack {
-                Text("Connection Failed")
-                    .font(.subheadline)
-                Text(error.localizedDescription)
+        case .other(let lvState):
+            if R.self.LoadingView == Never.self {
+                let _ = print(lvState)
+                switch lvState {
+                case .connected:
+                    fatalError("unreachable")
+                case .notConnected:
+                    Text("Not Connected")
+                case .connecting:
+                    Text("Connecting")
+                case .connectionFailed(let error):
+                    VStack {
+                        Text("Connection Failed")
+                            .font(.subheadline)
+                        Text(error.localizedDescription)
+                    }
+                }
+            } else {
+                coordinator.builder.customRegistry.loadingView(for: url, state: lvState)
             }
         }
     }
     
     enum ConnectionState {
-        case notConnected
         case connected(Elements)
-        case connectionFailed(Error)
+        case other(LiveViewCoordinator<R>.State)
     }
     
 }

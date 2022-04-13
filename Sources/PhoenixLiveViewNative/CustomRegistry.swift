@@ -16,12 +16,16 @@ public typealias Attribute = SwiftSoup.Attribute
 public protocol CustomRegistry {
     /// The type of view this registry returns from .
     ///
-    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:coordinator:context:)`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)`` implementations and this will be inferred automatically.
     associatedtype V: View
     /// The type of view this registry produces for custom attributes.
     ///
     /// Generally, implementors will use an opaque return type on their ``applyCustomAttribute(_:element:context:)`` implementations and this will be inferred automatically.
     associatedtype Modified: View
+    /// The type of view this registry produces for loading views.
+    ///
+    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-2312e`` implementations and this will be inferred automatically.
+    associatedtype LoadingView: View
     
     /// The list of tag names that this custom registry can produce views for. All tag names should be lowercased.
     var supportedTagNames: [String] { get }
@@ -49,6 +53,21 @@ public protocol CustomRegistry {
     @ViewBuilder
     func applyCustomAttribute(_ attr: Attribute, element: Element, context: LiveContext<Self>) -> Modified
     
+    /// This method is called when it needs a view to display while connecting to the live view.
+    ///
+    /// If you do not implement this method, the framework provides a loading view which displays a simple text representation of the state.
+    ///
+    /// - Parameter url: The URL of the view being connected to.
+    /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveViewCoordinator/State-swift.enum/connected``.
+    @ViewBuilder
+    func loadingView(for url: URL, state: LiveViewCoordinator<Self>.State) -> LoadingView
+    
+}
+
+extension CustomRegistry where LoadingView == Never {
+    public func loadingView(for url: URL, state: LiveViewCoordinator<Self>.State) -> Never {
+        fatalError()
+    }
 }
 
 /// The empty registry is the default ``CustomRegistry`` implementation that does not provide any views or modifiers.

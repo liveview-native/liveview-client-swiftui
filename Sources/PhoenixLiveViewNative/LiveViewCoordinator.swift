@@ -32,7 +32,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private var phxView: String = ""
     private var phxID: String = ""
     private var phxCSRFToken: String = ""
-    @Published internal var elements: Elements = Elements()
+    @Published internal var elements: Elements? = nil
     private var socket: Socket!
     private var channel: Channel!
     private var urlSession: URLSession
@@ -72,6 +72,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
         
         state = .connecting
+        // in case we're reconnecting, reset the elements so nothing gets stale elements
+        elements = nil
         
         fetchDOM() { result in
             switch result {
@@ -86,15 +88,15 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     // todo: should wait until socket as successfully opened before trying to connect the lv
                     self.connectLiveView()
                         
-                    DispatchQueue.main.async {
-                        do {
-                            // todo: the initial html will be wrong if the LiveView is shared btwn native and web; should we ignore it altogether and wait for rendered upon socket connection?
+//                    DispatchQueue.main.async {
+//                        do {
+//                            // todo: the initial html will be wrong if the LiveView is shared btwn native and web; should we ignore it altogether and wait for rendered upon socket connection?
 //                            self.elements = try elements.select("div[data-phx-main=\"true\"]")[0].children()
 //                            self.state = .connected
-                        } catch {
-                            self.state = .connectionFailed(FetchError.initialParseError)
-                        }
-                    }
+//                        } catch {
+//                            self.state = .connectionFailed(FetchError.initialParseError)
+//                        }
+//                    }
                 } catch {
                     DispatchQueue.main.async {
                         self.state = .connectionFailed(FetchError.initialParseError)
@@ -126,13 +128,17 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
+    @ViewBuilder
     func viewTree() -> some View {
-        builder.fromElements(self.elements, coordinator: self, url: currentURL)
+        if let elements = elements {
+            builder.fromElements(elements, coordinator: self, url: currentURL)
+        }
     }
     
     /// Pushes a LiveView event with the given name and payload to the server.
     ///
     /// The client view tree will be updated automatically when the response is received.
+    // todo: this should provide a completion handler
     public func pushEvent(_ event: String, payload: Payload) {
         self.channel.push(event, payload: payload, timeout: PUSH_TIMEOUT).receive("ok") { [weak self] reply in
             guard let self = self,
