@@ -10,8 +10,6 @@ import SwiftUI
 import SwiftSoup
 
 struct ViewTreeBuilder<R: CustomRegistry> {
-    let customRegistry: R
-    
     func fromElements(_ elements: Elements, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
         return fromElements(elements, context: LiveContext(coordinator: coordinator, url: url))
     }
@@ -57,12 +55,12 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
         if let attr = getApplicableCustomAttribute(element: element, context: context) {
             let newContext = context.with(appliedCustomAttribute: attr.getKey())
-            customRegistry.applyCustomAttribute(attr, element: element, context: newContext)
+            R.applyCustomAttribute(attr, element: element, context: newContext)
         } else {
             let tag = element.tagName().lowercased()
 
-            if customRegistry.supportedTagNames.contains(tag) {
-                customRegistry.lookup(tag, element: element, context: context)
+            if R.supportedTagNames.contains(tag) {
+                R.lookup(tag, element: element, context: context)
                     .commonModifiers(from: element)
             } else {
                 BuiltinRegistry.lookup(tag, element, context: context)
@@ -77,7 +75,7 @@ struct ViewTreeBuilder<R: CustomRegistry> {
         }
         return attrs.first { attr in
             let k = attr.getKey()
-            return customRegistry.supportedAttributes.contains(k.lowercased()) && !context.appliedCustomAttributes.contains(k)
+            return R.supportedAttributes.contains(k.lowercased()) && !context.appliedCustomAttributes.contains(k)
         }
     }
     

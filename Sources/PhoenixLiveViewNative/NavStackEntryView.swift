@@ -75,7 +75,7 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                     }
                 }
             } else {
-                coordinator.builder.customRegistry.loadingView(for: url, state: lvState)
+                R.loadingView(for: url, state: lvState)
             }
         }
     }

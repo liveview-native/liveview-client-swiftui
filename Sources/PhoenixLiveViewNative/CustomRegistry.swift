@@ -28,10 +28,10 @@ public protocol CustomRegistry {
     associatedtype LoadingView: View
     
     /// The list of tag names that this custom registry can produce views for. All tag names should be lowercased.
-    var supportedTagNames: [String] { get }
+    static var supportedTagNames: [String] { get }
     
     ///  The list of attribute names that this custom registry can produce views for. All attribute names should be lowercased.
-    var supportedAttributes: [String] { get }
+    static var supportedAttributes: [String] { get }
     
     /// This method is called by LiveView Native when it needs to construct a custom view.
     ///
@@ -41,7 +41,7 @@ public protocol CustomRegistry {
     /// - Parameter element: The element that a view should be created for.
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
-    func lookup(_ name: String, element: Element, context: LiveContext<Self>) -> V
+    static func lookup(_ name: String, element: Element, context: LiveContext<Self>) -> V
     
     /// This method is called by LiveView Native when it encounters a custom attribute your registry has declared support for.
     ///
@@ -51,7 +51,7 @@ public protocol CustomRegistry {
     /// - Parameter element: The element on which the attribute is present.
     /// - Parameter context: The live context in which the view is being built.
     @ViewBuilder
-    func applyCustomAttribute(_ attr: Attribute, element: Element, context: LiveContext<Self>) -> Modified
+    static func applyCustomAttribute(_ attr: Attribute, element: Element, context: LiveContext<Self>) -> Modified
     
     /// This method is called when it needs a view to display while connecting to the live view.
     ///
@@ -60,26 +60,26 @@ public protocol CustomRegistry {
     /// - Parameter url: The URL of the view being connected to.
     /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveViewCoordinator/State-swift.enum/connected``.
     @ViewBuilder
-    func loadingView(for url: URL, state: LiveViewCoordinator<Self>.State) -> LoadingView
+    static func loadingView(for url: URL, state: LiveViewCoordinator<Self>.State) -> LoadingView
     
 }
 
 extension CustomRegistry where LoadingView == Never {
-    public func loadingView(for url: URL, state: LiveViewCoordinator<Self>.State) -> Never {
+    public static func loadingView(for url: URL, state: LiveViewCoordinator<Self>.State) -> Never {
         fatalError()
     }
 }
 
 /// The empty registry is the default ``CustomRegistry`` implementation that does not provide any views or modifiers.
 public struct EmptyRegistry: CustomRegistry {
-    public let supportedTagNames: [String] = []
-    public let supportedAttributes: [String] = []
+    public static let supportedTagNames: [String] = []
+    public static let supportedAttributes: [String] = []
     
-    public func lookup(_ name: String, element: Element, context: LiveContext<EmptyRegistry>) -> Never {
+    public static func lookup(_ name: String, element: Element, context: LiveContext<EmptyRegistry>) -> Never {
         fatalError()
     }
     
-    public func applyCustomAttribute(_ attr: Attribute, element: Element, context: LiveContext<EmptyRegistry>) -> Never {
+    public static func applyCustomAttribute(_ attr: Attribute, element: Element, context: LiveContext<EmptyRegistry>) -> Never {
         fatalError()
     }
 }
