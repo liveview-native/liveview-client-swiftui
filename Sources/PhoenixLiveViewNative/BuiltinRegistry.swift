@@ -39,6 +39,8 @@ struct BuiltinRegistry {
             PhxNavigationView<R>(element: element, context: context)
         case "navigationlink":
             PhxNavigationLink(element: element, context: context)
+        case "hero":
+            PhxHeroView(element: element, context: context)
         case "list":
             PhxList<R>(element: element, context: context)
         case "rect":

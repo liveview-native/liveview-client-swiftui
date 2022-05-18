@@ -212,6 +212,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
                 let elements = try! self.parseDOM(html: self.rendered.buildString())
                 DispatchQueue.main.async {
+                    self.state = .connected
                     self.elements = elements
                 }
             }
