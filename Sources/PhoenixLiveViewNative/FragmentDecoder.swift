@@ -289,7 +289,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: String.Type) throws -> String {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(String.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let s = value[currentIndex] as? String else {
             throw typeMismatch(String.self)
@@ -300,7 +300,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: Double.Type) throws -> Double {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(Double.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -311,7 +311,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: Float.Type) throws -> Float {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(Float.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -322,7 +322,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: Int.Type) throws -> Int {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(Int.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -333,7 +333,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: Int8.Type) throws -> Int8 {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(Int8.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -344,7 +344,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: Int16.Type) throws -> Int16 {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(Int16.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -355,7 +355,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: Int32.Type) throws -> Int32 {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(Int32.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -366,7 +366,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: Int64.Type) throws -> Int64 {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(Int64.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -377,7 +377,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: UInt.Type) throws -> UInt {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(UInt.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -388,7 +388,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: UInt8.Type) throws -> UInt8 {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(UInt8.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -399,7 +399,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: UInt16.Type) throws -> UInt16 {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(UInt16.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -410,7 +410,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: UInt32.Type) throws -> UInt32 {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(UInt32.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -421,7 +421,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode(_ type: UInt64.Type) throws -> UInt64 {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(UInt64.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let num = value[currentIndex] as? NSNumber else {
             throw typeMismatch(NSNumber.self)
@@ -432,7 +432,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func decode<T>(_ type: T.Type) throws -> T where T : Decodable {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound(T.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         let value = value[currentIndex]
         currentIndex += 1
@@ -441,7 +441,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound([String: Any].self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let dict = value[currentIndex] as? [String: Any] else {
             throw DecodingError.typeMismatch([String: Any].self, .init(codingPath: codingPath, debugDescription: "expected [String: Any]"))
@@ -452,7 +452,7 @@ struct UnkeyedFragmentDecodingContainer: UnkeyedDecodingContainer {
     
     mutating func nestedUnkeyedContainer() throws -> UnkeyedDecodingContainer {
         guard !isAtEnd else {
-            throw DecodingError.valueNotFound(Bool.self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
+            throw DecodingError.valueNotFound([Any].self, .init(codingPath: codingPath, debugDescription: "unkeyed container reached end"))
         }
         guard let array = value[currentIndex] as? [Any] else {
             throw DecodingError.typeMismatch([Any].self, .init(codingPath: codingPath, debugDescription: "expected [Any]"))
