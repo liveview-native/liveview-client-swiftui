@@ -33,10 +33,6 @@ struct BuiltinRegistry {
             PhxScrollView<R>(element: element, context: context)
         case "spacer":
             Spacer()
-        case "navigationview":
-            // todo: consider removing this, using a nav view for the purposes of actual navigation requires
-            // configuring the LiveView appropriately which then creates the NavigationView itself
-            PhxNavigationView<R>(element: element, context: context)
         case "navigationlink":
             PhxNavigationLink(element: element, context: context)
         case "hero":
