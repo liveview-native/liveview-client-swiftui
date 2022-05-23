@@ -33,8 +33,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private var phxID: String = ""
     private var phxCSRFToken: String = ""
     @Published internal var elements: Elements? = nil
-    private var socket: Socket!
-    private var channel: Channel!
+    private var socket: Socket?
+    private var channel: Channel?
     private var urlSession: URLSession
     private var rendered: Root!
     private var liveReloadEnabled: Bool = false
@@ -89,10 +89,14 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     self.phxCSRFToken = try! doc.select("meta[name=\"csrf-token\"]")[0].attr("content")
                     self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
                     try self.extractDOMValues(elements)
-                    self.connectSocket() {
-                        guard self.currentURL == url else {
-                            return
+                    if self.socket == nil {
+                        self.connectSocket() {
+                            guard self.currentURL == url else {
+                                return
+                            }
+                            self.connectLiveView()
                         }
+                    } else {
                         self.connectLiveView()
                     }
                         
@@ -121,10 +125,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     private func reconnect() {
         state = .notConnected
-        // todo: we might be able to just connect to a new channel without closing/reopening the socket
-        socket?.disconnect()
         channel = nil
-        liveReloadSocket?.disconnect()
         liveReloadChannel = nil
         connect()
     }
@@ -151,7 +152,11 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// The client view tree will be updated automatically when the response is received.
     // todo: this should provide a completion handler
     public func pushEvent(_ event: String, payload: Payload) {
-        self.channel.push(event, payload: payload, timeout: PUSH_TIMEOUT).receive("ok") { [weak self] reply in
+        guard let channel = channel else {
+            return
+        }
+
+        channel.push(event, payload: payload, timeout: PUSH_TIMEOUT).receive("ok") { [weak self] reply in
             guard let self = self,
                   let diffPayload = reply.payload["diff"] as? Payload,
                   let elements = try? self.handleDiff(payload: diffPayload) else {
@@ -213,6 +218,10 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     // todo: don't use Any for the params
     private func connectLiveView() {
+        guard let socket = socket else {
+            return
+        }
+
         var connectParams = config.connectParams?(currentURL) ?? [:]
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = self.phxCSRFToken
@@ -220,8 +229,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         
         let url = self.currentURL
         
-        self.channel = self.socket.channel("lv:\(self.phxID)", params: ["session": self.phxSession, "static": self.phxStatic, "url": currentURL.absoluteString, "params": connectParams])
-        self.channel.join()
+        let channel = socket.channel("lv:\(self.phxID)", params: ["session": self.phxSession, "static": self.phxStatic, "url": currentURL.absoluteString, "params": connectParams])
+        self.channel = channel
+        channel.join()
             .receive("ok") { message in
                 guard self.currentURL == url else {
                     return
@@ -236,9 +246,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 }
             }
             .receive("error") { message in print("Failed to join", message.payload) }
-        self.channel.onError { (payload) in print("Error: ", payload) }
-        self.channel.onClose { (payload) in print("Channel Closed") }
-        self.channel.on("diff") { (message) in
+        channel.onError { (payload) in print("Error: ", payload) }
+        channel.onClose { (payload) in print("Channel Closed") }
+        channel.on("diff") { (message) in
             guard self.currentURL == url else {
                 return
             }
