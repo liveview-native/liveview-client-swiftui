@@ -75,7 +75,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         // in case we're reconnecting, reset the elements so nothing gets stale elements
         elements = nil
         
+        let url = self.currentURL
+        
         fetchDOM() { result in
+            guard self.currentURL == url else {
+                return
+            }
             switch result {
             case .success(let html):
                 do {
@@ -84,9 +89,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     self.phxCSRFToken = try! doc.select("meta[name=\"csrf-token\"]")[0].attr("content")
                     self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
                     try self.extractDOMValues(elements)
-                    self.connectSocket()
-                    // todo: should wait until socket as successfully opened before trying to connect the lv
-                    self.connectLiveView()
+                    self.connectSocket() {
+                        guard self.currentURL == url else {
+                            return
+                        }
+                        self.connectLiveView()
+                    }
                         
 //                    DispatchQueue.main.async {
 //                        do {
@@ -113,8 +121,11 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     private func reconnect() {
         state = .notConnected
+        // todo: we might be able to just connect to a new channel without closing/reopening the socket
         socket?.disconnect()
+        channel = nil
         liveReloadSocket?.disconnect()
+        liveReloadChannel = nil
         connect()
     }
     
@@ -153,7 +164,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
 
     
-    private func connectSocket() {
+    private func connectSocket(completion: @escaping () -> Void) {
         let cookies = HTTPCookieStorage.shared.cookies(for: self.currentURL)
         
         let configuration = URLSessionConfiguration.default
@@ -165,7 +176,10 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         wsEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
         wsEndpoint.path = "/live/websocket"
         self.socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
-        socket!.onOpen { print("Socket Opened") }
+        socket!.onOpen {
+            print("Socket Opened")
+            completion()
+        }
         socket!.onClose { print("Socket Closed") }
         socket!.onError { (error) in print("Socket Error", error) }
         socket!.logger = { message in print("LOG:", message) }
@@ -204,9 +218,14 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         connectParams["_csrf_token"] = self.phxCSRFToken
         connectParams["_native"] = true
         
+        let url = self.currentURL
+        
         self.channel = self.socket.channel("lv:\(self.phxID)", params: ["session": self.phxSession, "static": self.phxStatic, "url": currentURL.absoluteString, "params": connectParams])
         self.channel.join()
             .receive("ok") { message in
+                guard self.currentURL == url else {
+                    return
+                }
                 let renderedPayload = (message.payload["rendered"] as! Payload)
                 // todo: what should happen if decoding or parsing fails?
                 self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
@@ -220,6 +239,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.channel.onError { (payload) in print("Error: ", payload) }
         self.channel.onClose { (payload) in print("Channel Closed") }
         self.channel.on("diff") { (message) in
+            guard self.currentURL == url else {
+                return
+            }
             let elements = try! self.handleDiff(payload: message.payload)
             DispatchQueue.main.async {
                 self.elements = elements
