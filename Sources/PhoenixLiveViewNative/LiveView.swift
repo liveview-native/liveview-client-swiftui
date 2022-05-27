@@ -44,9 +44,11 @@ public struct LiveView<R: CustomRegistry>: View {
             .introspectNavigationController { navigationController in
                 // if SwiftUI in the future starts using the delegate, we don't want to override it
                 // the custom transition will stop working, but at least it'll fail gracefully
-                if navigationController.delegate == nil {
-                    navigationController.delegate = navAnimationCoordinator
+                guard navigationController.delegate == nil else {
+                    return
                 }
+                navigationController.delegate = navAnimationCoordinator
+                navigationController.interactivePopGestureRecognizer?.addTarget(navAnimationCoordinator, action: #selector(NavAnimationCoordinator.interactivePopRecognized))
             }
             .overlay {
                 if navAnimationCoordinator.state.isAnimating,
@@ -59,8 +61,7 @@ public struct LiveView<R: CustomRegistry>: View {
                             // so, we wrap the view in a GeometryReader, but don't actually use the proxy
                             .offset(x: navAnimationCoordinator.currentRect.minX, y: navAnimationCoordinator.currentRect.minY)
                             .allowsHitTesting(false)
-                            // 0.35 seconds is as close as I can get to the builtin nav transition duration
-                            .animation(.easeOut(duration: 0.35), value: navAnimationCoordinator.currentRect)
+                            .animation(navAnimationCoordinator.state.animation, value: navAnimationCoordinator.currentRect)
                     }
                     .edgesIgnoringSafeArea(.all)
                 }

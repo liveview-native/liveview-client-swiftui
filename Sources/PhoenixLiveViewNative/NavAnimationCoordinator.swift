@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, ObservableObject {
     var sourceRect: CGRect = .zero {
@@ -35,15 +36,17 @@ class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, Observa
             return
         }
         
-        if navigationController.viewControllers.count > currentVCCount {
-            state = .animatingForward
-            // we can't just set currentRect here because the destination view may not have been laid-out,
-            // so we don't have a destRect to use
-        } else {
-            state = .animatingBackward
-            // need to delay 1 runloop iteration otherwise SwiftUI doesn't detect the change
-            DispatchQueue.main.async {
-                self.currentRect = self.sourceRect
+        if state != .interactive {
+            if navigationController.viewControllers.count > currentVCCount {
+                state = .animatingForward
+                // we can't just set currentRect here because the destination view may not have been laid-out,
+                // so we don't have a destRect to use
+            } else {
+                state = .animatingBackward
+                // need to delay 1 runloop iteration otherwise SwiftUI doesn't detect the change
+                DispatchQueue.main.async {
+                    self.currentRect = self.sourceRect
+                }
             }
         }
         
@@ -54,17 +57,39 @@ class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, Observa
         state = .idle
     }
     
-    enum State {
+    @objc func interactivePopRecognized(_ recognizer: UIGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            state = .interactive
+        case .ended:
+            state = .idle
+        default:
+            break
+        }
+    }
+    
+    enum State: Equatable {
         case idle
         case animatingForward
         case animatingBackward
+        case interactive
         
         var isAnimating: Bool {
             switch self {
-            case .idle:
+            case .idle, .interactive:
                 return false
             case .animatingForward, .animatingBackward:
                 return true
+            }
+        }
+        
+        var animation: Animation? {
+            switch self {
+            case .idle, .interactive:
+                return nil
+            case .animatingForward, .animatingBackward:
+                // 0.35 seconds is as close as I can get to the builtin nav transition duration
+                return .easeOut(duration: 0.35)
             }
         }
     }
