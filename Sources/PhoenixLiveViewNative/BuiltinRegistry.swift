@@ -28,7 +28,7 @@ struct BuiltinRegistry {
         case "form":
             PhxForm<R>(element: element, context: context)
         case "img":
-            PhxImage(element: element)
+            PhxImage(element: element, context: context)
         case "scroll":
             PhxScrollView<R>(element: element, context: context)
         case "spacer":

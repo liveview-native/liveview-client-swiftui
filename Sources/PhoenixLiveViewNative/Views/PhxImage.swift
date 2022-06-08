@@ -8,49 +8,92 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxImage: View {
-    private let image: Image
-    private let color: Color?
-    private let scale: Image.Scale?
+struct PhxImage<R: CustomRegistry>: View {
+    private let context: LiveContext<R>
+    private let mode: Mode
+    private let symbolColor: Color?
+    private let symbolScale: Image.Scale?
+    private let scale: CGFloat?
     
-    init(element: Element) {
+    init(element: Element, context: LiveContext<R>) {
+        self.context = context
         if element.hasAttr("system-name") {
-            self.image = Image(systemName: try! element.attr("system-name"))
+            self.mode = .symbol(try! element.attr("system-name"))
+        } else if element.hasAttr("name") {
+            self.mode = .asset(try! element.attr("name"))
+        } else if element.hasAttr("src") {
+            let url = URL(string: try! element.attr("src"), relativeTo: context.url)!
+            self.mode = .remote(url)
         } else {
-            preconditionFailure("<img> must have system-name attribute")
+            preconditionFailure("<img> must have system-name, name, or src attribute")
         }
         if let attr = element.attrIfPresent("symbol-color") {
-            color = Color(fromCSSHex: attr)
+            symbolColor = Color(fromCSSHex: attr)
         } else {
-            color = nil
+            symbolColor = nil
         }
         if let attr = element.attrIfPresent("symbol-scale") {
             switch attr {
             case "small":
-                scale = .small
+                symbolScale = .small
             case "medium":
-                scale = .medium
+                symbolScale = .medium
             case "large":
-                scale = .large
+                symbolScale = .large
             default:
                 fatalError("invalid value '\(attr)' for symbol-scale")
             }
+        } else {
+            symbolScale = nil
+        }
+        if let attr = element.attrIfPresent("scale"),
+           let d = Double(attr) {
+            scale = d
         } else {
             scale = nil
         }
     }
     
     var body: some View {
-        scaledImage
-            .foregroundColor(color)
+        switch mode {
+        case .symbol(let name):
+            Image(systemName: name)
+                .scaledIfPresent(scale: symbolScale)
+                .foregroundColor(symbolColor)
+        case .asset(let name):
+            Image(name)
+                // todo: this probably only works for symbols
+                .scaledIfPresent(scale: symbolScale)
+                .foregroundColor(symbolColor)
+        case .remote(let url):
+            // todo: do we want to customize the loading state for this
+            // todo: this will use URLCache.shared by default, do we want to customize that?
+            AsyncImage(url: url, scale: scale ?? 1) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+            } placeholder: {
+                ProgressView().progressViewStyle(.circular)
+            }
+        }
     }
-    
+}
+
+extension PhxImage {
+    enum Mode {
+        case symbol(String)
+        case asset(String)
+        case remote(URL)
+    }
+}
+
+fileprivate extension Image {
     @ViewBuilder
-    private var scaledImage: some View {
+    func scaledIfPresent(scale: Image.Scale?) -> some View {
         if let scale = scale {
-            image.imageScale(scale)
+            self.imageScale(scale)
         } else {
-            image
+            self
         }
     }
 }
