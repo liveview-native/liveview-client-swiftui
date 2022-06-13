@@ -55,7 +55,7 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
         if let attr = getApplicableCustomAttribute(element: element, context: context) {
             let newContext = context.with(appliedCustomAttribute: attr.getKey())
-            R.applyCustomAttribute(attr, element: element, context: newContext)
+            AnyView(R.applyCustomAttribute(attr, element: element, context: newContext))
         } else {
             let tag = element.tagName().lowercased()
 
