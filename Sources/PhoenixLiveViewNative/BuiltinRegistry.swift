@@ -34,7 +34,11 @@ struct BuiltinRegistry {
         case "spacer":
             Spacer()
         case "navigationlink":
-            PhxNavigationLink(element: element, context: context)
+            if #available(iOS 16.0, *) {
+                PhxModernNavigationLink(element: element, context: context)
+            } else {
+                PhxNavigationLink(element: element, context: context)
+            }
         case "hero":
             PhxHeroView(element: element, context: context)
         case "list":

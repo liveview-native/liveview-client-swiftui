@@ -8,6 +8,8 @@
 import UIKit
 import SwiftUI
 
+private let animationDuration: TimeInterval = 0.35
+
 class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, ObservableObject {
     var sourceRect: CGRect = .zero {
         didSet {
@@ -20,6 +22,9 @@ class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, Observa
     }
     var destRect: CGRect = .zero {
         didSet {
+            guard !destRect.isEmpty else {
+                return
+            }
             if case .animatingForward = state {
                 currentRect = destRect
             }
@@ -30,6 +35,9 @@ class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, Observa
     @Published var state: State = .idle
     @Published var currentRect: CGRect = .zero
     private var currentVCCount = 0
+    
+    // @available(iOS 16.0, *)
+    @Published var navigationPath: [URL] = []
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         guard sourceRect != .zero, sourceElement != nil else {
@@ -89,7 +97,7 @@ class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, Observa
                 return nil
             case .animatingForward, .animatingBackward:
                 // 0.35 seconds is as close as I can get to the builtin nav transition duration
-                return .easeOut(duration: 0.35)
+                return .easeOut(duration: animationDuration)
             }
         }
     }

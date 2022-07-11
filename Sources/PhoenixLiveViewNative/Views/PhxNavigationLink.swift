@@ -35,8 +35,10 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
                         NavStackEntryView(coordinator: context.coordinator, url: URL(string: linkOpts.href, relativeTo: context.url)!)
                             .environmentObject(animationCoordinator)
                             .onPreferenceChange(HeroViewDestKey.self) { newDest in
-                                animationCoordinator.destRect = newDest?.globalFrame ?? .zero
-                                animationCoordinator.destElement = newDest?.element
+                                if let newDest {
+                                    animationCoordinator.destRect = newDest.globalFrame
+                                    animationCoordinator.destElement = newDest.element
+                                }
                             }
                     } label: {
                         // empty, we use a Button to display the link so that we can delay the navigation after the tap
@@ -114,7 +116,7 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
     }
 }
 
-private struct LinkOptions {
+struct LinkOptions {
     let kind: LinkKind
     let state: LinkState
     let href: String
@@ -131,16 +133,16 @@ private struct LinkOptions {
     }
 }
 
-private enum LinkKind: String {
+enum LinkKind: String {
     case redirect
 }
 
-private enum LinkState: String {
+enum LinkState: String {
     case push
     case replace
 }
 
-private extension LiveViewConfiguration.NavigationMode {
+extension LiveViewConfiguration.NavigationMode {
     func supportsLinkState(_ state: LinkState) -> Bool {
         switch self {
         case .disabled:

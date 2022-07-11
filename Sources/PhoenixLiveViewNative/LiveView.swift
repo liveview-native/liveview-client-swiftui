@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Introspect
+import LVNObjC
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
@@ -16,6 +17,8 @@ public struct LiveView<R: CustomRegistry>: View {
     private let coordinator: LiveViewCoordinator<R>
     @State private var hasAppeared = false
     @StateObject private var navAnimationCoordinator = NavAnimationCoordinator()
+    @State private var hasSetupNavigationControllerDelegate = false
+    @State private var navigationControllerDelegateProxy: ProxyingNavigationControllerDelegate?
     
     /// Creates a new LiveView attached to the given coordinator.
     ///
@@ -37,17 +40,21 @@ public struct LiveView<R: CustomRegistry>: View {
     @ViewBuilder
     private var rootNavEntry: some View {
         if case .enabled = coordinator.config.navigationMode {
-            NavigationView {
-                NavStackEntryView(coordinator: coordinator, url: coordinator.initialURL)
-                    .environmentObject(navAnimationCoordinator)
-            }
+            navigationViewOrStack
             .introspectNavigationController { navigationController in
-                // if SwiftUI in the future starts using the delegate, we don't want to override it
-                // the custom transition will stop working, but at least it'll fail gracefully
-                guard navigationController.delegate == nil else {
+                guard !hasSetupNavigationControllerDelegate else {
                     return
                 }
-                navigationController.delegate = navAnimationCoordinator
+                hasSetupNavigationControllerDelegate = true
+                
+                if let existing = navigationController.delegate {
+                    let proxy = ProxyingNavigationControllerDelegate(first: navAnimationCoordinator, second: existing)
+                    self.navigationControllerDelegateProxy = proxy
+                    navigationController.delegate = proxy
+                } else {
+                    navigationController.delegate = navAnimationCoordinator
+                }
+                
                 navigationController.interactivePopGestureRecognizer?.addTarget(navAnimationCoordinator, action: #selector(NavAnimationCoordinator.interactivePopRecognized))
             }
             .overlay {
@@ -69,6 +76,34 @@ public struct LiveView<R: CustomRegistry>: View {
         } else {
             NavStackEntryView(coordinator: coordinator, url: coordinator.initialURL)
         }
+    }
+    
+    @ViewBuilder
+    private var navigationViewOrStack: some View {
+        if #available(iOS 16.0, *) {
+            NavigationStack(path: $navAnimationCoordinator.navigationPath) {
+                navigationRoot
+                    .navigationDestination(for: URL.self) { url in
+                        NavStackEntryView(coordinator: coordinator, url: url)
+                            .environmentObject(navAnimationCoordinator)
+                            .onPreferenceChange(HeroViewDestKey.self) { newDest in
+                                if let newDest {
+                                    navAnimationCoordinator.destRect = newDest.globalFrame
+                                    navAnimationCoordinator.destElement = newDest.element
+                                }
+                            }
+                    }
+            }
+        } else {
+            NavigationView {
+                navigationRoot
+            }
+        }
+    }
+    
+    private var navigationRoot: some View {
+        NavStackEntryView(coordinator: coordinator, url: coordinator.initialURL)
+            .environmentObject(navAnimationCoordinator)
     }
     
 }

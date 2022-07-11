@@ -12,6 +12,7 @@ struct PhxHeroView<R: CustomRegistry>: View {
     private let context: LiveContext<R>
     private let kind: Kind
     @EnvironmentObject private var animationCoordinator: NavAnimationCoordinator
+    @State private var globalFrame: CGRect?
     
     init(element: Element, context: LiveContext<R>) {
         self.element = element
@@ -33,16 +34,14 @@ struct PhxHeroView<R: CustomRegistry>: View {
     }
     
     var body: some View {
-        context.buildChildren(of: element)
+        withFramePreference(context.buildChildren(of: element))
             .background {
-                GeometryReader { proxy in
-                    let frameAndElement = FrameAndElement(globalFrame: proxy.frame(in: .global), element: element)
-                    if kind == .source {
-                        Color.clear
-                            .preference(key: HeroViewSourceKey.self, value: frameAndElement)
-                    } else {
-                        Color.clear
-                            .preference(key: HeroViewDestKey.self, value: frameAndElement)
+                // can't use GeometryReader because on iOS 16, it returns the wrong frame in the global coordinate space during the navigation transition
+                GlobalGeometryReader {
+                    // when animating, don't update the source's position because the builtin navigation transition
+                    // alters the position in window-space of the source but we want to keep the original, unaltered pos
+                    if kind != .source || !animationCoordinator.state.isAnimating {
+                        self.globalFrame = $0
                     }
                 }
             }
@@ -51,6 +50,39 @@ struct PhxHeroView<R: CustomRegistry>: View {
     
     private enum Kind {
         case source, destination
+    }
+    
+    @ViewBuilder
+    func withFramePreference(_ content: some View) -> some View {
+        if kind == .source {
+            content.preference(key: HeroViewSourceKey.self, value: FrameAndElement(globalFrame: globalFrame ?? .zero, element: element))
+        } else {
+            content.preference(key: HeroViewDestKey.self, value: FrameAndElement(globalFrame: globalFrame ?? .zero, element: element))
+        }
+    }
+}
+
+private struct GlobalGeometryReader: UIViewRepresentable {
+    typealias UIViewType = View
+    
+    let callback: (CGRect) -> Void
+    
+    func makeUIView(context: Context) -> View {
+        return View()
+    }
+    
+    func updateUIView(_ uiView: View, context: Context) {
+        uiView.callback = callback
+    }
+    
+    class View: UIView {
+        var callback: ((CGRect) -> Void)? = nil
+        
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            
+            callback?(self.convert(bounds, to: nil))
+        }
     }
 }
 

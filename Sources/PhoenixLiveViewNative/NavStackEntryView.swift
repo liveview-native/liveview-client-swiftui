@@ -21,35 +21,38 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     }
     
     var body: some View {
-        elementTree
-            .environmentObject(liveViewModel)
-            .onReceive(coordinator.$elements) { newValue in
-                // todo: things will go weird if the same url occurs multiple times in the navigation stack
-                if coordinator.currentURL == url,
-                   let elements = newValue {
-                    self.state = .connected(elements)
-                    // todo: doing this every time the DOM changes is probably not efficient
-                    liveViewModel.pruneMissingForms(elements: elements)
-                }
-            }
-            .onReceive(coordinator.$state) { newValue in
-                if coordinator.currentURL == url {
-                    if case .connected(_) = state {
-                        // if we're already connected, we only want to remove the cached elements if there's been an error reconnecting
-                        if case .connectionFailed(_) = newValue {
-                            state = .other(newValue)
-                        }
-                    } else {
-                        state = .other(newValue)
+        // TODO: the ZStack is a workaround for an iOS 16 beta bug, check back before release to see if it's still needed
+        ZStack {
+            elementTree
+                .environmentObject(liveViewModel)
+                .onReceive(coordinator.$elements) { newValue in
+                    // todo: things will go weird if the same url occurs multiple times in the navigation stack
+                    if coordinator.currentURL == url,
+                       let elements = newValue {
+                        self.state = .connected(elements)
+                        // todo: doing this every time the DOM changes is probably not efficient
+                        liveViewModel.pruneMissingForms(elements: elements)
                     }
                 }
-            }
-            .onReceive(coordinator.replaceRedirectSubject) { (oldURL, newURL) in
-                // when the page is redirected, we need to update this view's url so it receives elements from the new page
-                if oldURL == url {
-                    self.url = newURL
+                .onReceive(coordinator.$state) { newValue in
+                    if coordinator.currentURL == url {
+                        if case .connected(_) = state {
+                            // if we're already connected, we only want to remove the cached elements if there's been an error reconnecting
+                            if case .connectionFailed(_) = newValue {
+                                state = .other(newValue)
+                            }
+                        } else {
+                            state = .other(newValue)
+                        }
+                    }
                 }
-            }
+                .onReceive(coordinator.replaceRedirectSubject) { (oldURL, newURL) in
+                    // when the page is redirected, we need to update this view's url so it receives elements from the new page
+                    if oldURL == url {
+                        self.url = newURL
+                    }
+                }
+        }
     }
     
     @ViewBuilder

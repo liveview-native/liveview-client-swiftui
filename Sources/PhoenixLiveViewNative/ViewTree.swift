@@ -233,9 +233,9 @@ struct ElementView<R: CustomRegistry>: View {
 }
 
 // not fileprivate because List needs ot use it so it has access to ForEach modifiers
-func forEach<R: CustomRegistry>(elements: Elements, context: LiveContext<R>) -> ForEach<[(Element, String)], String, ElementView<R>> {
+func forEach<R: CustomRegistry>(elements: Elements, context: LiveContext<R>) -> ForEach<[(Element, String)], String, some View> {
     let elements = elements.map { (el) -> (Element, String) in
-        precondition(el.hasAttr("id"), "element in parent with more than 10 children must have an id")
+        precondition(el.hasAttr("id"), "element in list or parent with more than 10 children must have an id")
         return (el, try! el.attr("id"))
     }
     return ForEach(elements, id: \.1) { ElementView(element: $0.0, context: context) }
