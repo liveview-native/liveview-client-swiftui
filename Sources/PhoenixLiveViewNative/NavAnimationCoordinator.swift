@@ -35,6 +35,7 @@ class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, Observa
     @Published var state: State = .idle
     @Published var currentRect: CGRect = .zero
     private var currentVCCount = 0
+    private var didInteractivePopReachHalfwayPoint = false
     
     // @available(iOS 16.0, *)
     @Published var navigationPath: [URL] = []
@@ -66,11 +67,68 @@ class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, Observa
     }
     
     @objc func interactivePopRecognized(_ recognizer: UIGestureRecognizer) {
+        // UINavigationController.interactivePopGestureRecognizer is only specified to be a UIGestureRecognizer
+        // it's observably a pan recognizer, but we're defensive about it just in case
+        guard let recognizer = recognizer as? UIPanGestureRecognizer,
+              let view = recognizer.view else {
+            return
+        }
         switch recognizer.state {
         case .began:
             state = .interactive
+            didInteractivePopReachHalfwayPoint = false
+        case .changed:
+            // progress >= 0.475 seems to be the threshold for completing
+            let progress = max(0, recognizer.translation(in: view).x / view.bounds.width)
+            if progress > 0.5 {
+                didInteractivePopReachHalfwayPoint = true
+            }
+            let animationCompletion = 1 - progress
+            let deltaX = (destRect.minX) - sourceRect.minX
+            let deltaY = destRect.minY - sourceRect.minY
+            let deltaWidth = destRect.width - sourceRect.width
+            let deltaHeight = destRect.height - sourceRect.height
+            currentRect = CGRect(x: sourceRect.minX + deltaX * animationCompletion, y: sourceRect.minY + deltaY * animationCompletion, width: sourceRect.width + deltaWidth * animationCompletion, height: sourceRect.height + deltaHeight * animationCompletion)
         case .ended:
-            state = .idle
+            let velocity = recognizer.velocity(in: view)
+            let translation = recognizer.translation(in: view)
+            let progress = max(0, translation.x / view.bounds.width)
+            var willPop = false
+            // there are some funky heuristics going on in uikit, and this is the best i can approximate them
+            // this works in almost all circumstances (i need to be deliberately trying to get a discrepancy
+            // between what this logic predicts and what uikit actually does)
+            if progress < 0.25 {
+                if didInteractivePopReachHalfwayPoint {
+                    if velocity.x > 0 {
+                        willPop = true
+                    } else {
+                        willPop = false
+                    }
+                } else {
+                    if velocity.x > 200 {
+                        willPop = true
+                    } else {
+                        willPop = false
+                    }
+                }
+            } else if progress < 0.5 {
+                if velocity.x > 200 {
+                    willPop = true
+                } else {
+                    willPop = false
+                }
+            } else {
+                if velocity.x < -150 {
+                    willPop = false
+                } else {
+                    willPop = true
+                }
+            }
+            currentRect = willPop ? sourceRect : destRect
+            state = .finishingInteractive
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(160)) {
+                self.state = .idle
+            }
         default:
             break
         }
@@ -81,23 +139,28 @@ class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, Observa
         case animatingForward
         case animatingBackward
         case interactive
+        case finishingInteractive
         
         var isAnimating: Bool {
             switch self {
-            case .idle, .interactive:
+            case .idle:
                 return false
-            case .animatingForward, .animatingBackward:
+            case .animatingForward, .animatingBackward, .interactive, .finishingInteractive:
                 return true
             }
         }
         
         var animation: Animation? {
             switch self {
-            case .idle, .interactive:
+            case .idle:
                 return nil
+            case .interactive:
+                return .linear(duration: 0.05)
             case .animatingForward, .animatingBackward:
                 // 0.35 seconds is as close as I can get to the builtin nav transition duration
                 return .easeOut(duration: animationDuration)
+            case .finishingInteractive:
+                return .easeOut(duration: 0.15)
             }
         }
     }
