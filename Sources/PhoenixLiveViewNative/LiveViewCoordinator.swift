@@ -14,7 +14,7 @@ import Combine
 private var PUSH_TIMEOUT: Double = 30000
 
 /// The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.
-// todo: consider making this an actor, right now there are a number of potential race conditions
+@MainActor
 public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// The current state of the live view connection.
     @Published public private(set) var state: State = .notConnected
@@ -43,6 +43,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     internal let builder: ViewTreeBuilder<R>
     
+    private var currentConnectionToken: ConnectionAttemptToken?
+    private var currentConnectionTask: Task<Void, Error>?
+    
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
@@ -66,7 +69,20 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// Connects this coordinator to the LiveView channel.
     ///
     /// This function is a no-op unless ``state-swift.property`` is ``State-swift.enum/notConnected``.
-    public func connect() {
+    public func connect() async {
+        guard case .notConnected = state else {
+            return
+        }
+        
+        currentConnectionTask?.cancel()
+        let token = ConnectionAttemptToken()
+        currentConnectionToken = token
+        do {
+            try await self.doConnect(token: token)
+        } catch {}
+    }
+    
+    private func doConnect(token: ConnectionAttemptToken) async throws {
         guard case .notConnected = state else {
             return
         }
@@ -75,66 +91,59 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         // in case we're reconnecting, reset the elements so nothing gets stale elements
         elements = nil
         
-        let url = self.currentURL
+        let html: String
+        do {
+            html = try await fetchDOM()
+        } catch {
+            state = .connectionFailed(error)
+            return
+        }
         
-        fetchDOM() { result in
-            guard self.currentURL == url else {
+        guard self.currentConnectionToken === token else {
+            throw CancellationError()
+        }
+        
+        do {
+            let doc = try SwiftSoup.parse(html)
+            let elements = doc.body()!.children()
+            
+            // TODO: index can panic
+            self.phxCSRFToken = try! doc.select("meta[name=\"csrf-token\"]")[0].attr("content")
+            self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
+            try self.extractDOMValues(elements)
+        } catch {
+            self.state = .connectionFailed(FetchError.initialParseError)
+            return
+        }
+        
+        if socket == nil {
+            do {
+                try await self.connectSocket()
+            } catch {
+                self.state = .connectionFailed(error)
                 return
             }
-            switch result {
-            case .success(let html):
-                do {
-                    let doc = try SwiftSoup.parse(html)
-                    let elements = doc.body()!.children()
-                    self.phxCSRFToken = try! doc.select("meta[name=\"csrf-token\"]")[0].attr("content")
-                    self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
-                    try self.extractDOMValues(elements)
-                    if self.socket == nil {
-                        self.connectSocket() {
-                            guard self.currentURL == url else {
-                                return
-                            }
-                            self.connectLiveView()
-                        }
-                    } else {
-                        self.connectLiveView()
-                    }
-                        
-//                    DispatchQueue.main.async {
-//                        do {
-//                            // todo: the initial html will be wrong if the LiveView is shared btwn native and web; should we ignore it altogether and wait for rendered upon socket connection?
-//                            self.elements = try elements.select("div[data-phx-main=\"true\"]")[0].children()
-//                            self.state = .connected
-//                        } catch {
-//                            self.state = .connectionFailed(FetchError.initialParseError)
-//                        }
-//                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        self.state = .connectionFailed(FetchError.initialParseError)
-                    }
-                }
-                
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self.state = .connectionFailed(error)
-                }
-            }
         }
+        
+        guard self.currentConnectionToken === token else {
+            throw CancellationError()
+        }
+        
+        try await self.connectLiveView(token: token)
     }
     
-    private func reconnect() {
+    private func reconnect() async {
         state = .notConnected
         channel = nil
         liveReloadChannel = nil
-        connect()
+        await connect()
     }
     
-    func navigateTo(url: URL, replace: Bool = false) {
+    func navigateTo(url: URL, replace: Bool = false) async {
         guard self.currentURL != url else { return }
         let oldURL = self.currentURL
         self.currentURL = url
-        reconnect()
+        await reconnect()
         if replace {
             replaceRedirectSubject.send((oldURL, url))
         }
@@ -168,98 +177,126 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
 
-    
-    private func connectSocket(completion: @escaping () -> Void) {
+    private func connectSocket() async throws {
         let cookies = HTTPCookieStorage.shared.cookies(for: self.currentURL)
         
         let configuration = URLSessionConfiguration.default
         for cookie in cookies! {
             configuration.httpCookieStorage!.setCookie(cookie)
         }
-
-        var wsEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
-        wsEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
-        wsEndpoint.path = "/live/websocket"
-        self.socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
-        socket!.onOpen {
-            print("Socket Opened")
-            completion()
+    
+        try await withCheckedThrowingContinuation { continuation in
+            var wsEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
+            wsEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
+            wsEndpoint.path = "/live/websocket"
+            self.socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
+            socket!.onOpen {
+                print("Socket Opened")
+                continuation.resume()
+            }
+            socket!.onClose { print("Socket Closed") }
+            socket!.onError { (error) in
+                print("Socket Error", error)
+                // TODO: can this be called multiple times? if so, we shouldn't resume the continuation here
+                continuation.resume(with: .failure(error))
+            }
+            socket!.logger = { message in print("LOG:", message) }
+            socket!.connect()
         }
-        socket!.onClose { print("Socket Closed") }
-        socket!.onError { (error) in print("Socket Error", error) }
-        socket!.logger = { message in print("LOG:", message) }
-        socket!.connect()
         
         if liveReloadEnabled {
-            print("LiveReload: attempting to connect...")
-            
-            var liveReloadEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
-            liveReloadEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
-            liveReloadEndpoint.path = "/phoenix/live_reload/socket"
-            self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
-                URLSessionTransport(url: $0, configuration: configuration)
-            })
-            liveReloadSocket!.connect()
-            self.liveReloadChannel = liveReloadSocket!.channel("phoenix:live_reload")
-            self.liveReloadChannel!.join().receive("ok") { msg in
-                print("LiveReload: connected to channel")
-            }.receive("error") { msg in
-                print("LiveReload: error connecting to channel: \(msg.payload)")
+            Task {
+                await self.connectLiveReloadSocket(urlSessionConfiguration: configuration)
             }
-            self.liveReloadChannel!.on("assets_change") { [unowned self] _ in
-                DispatchQueue.main.async {
-                    print("LiveReload: assets changed, reloading")
+        }
+    }
+    
+    private func connectLiveReloadSocket(urlSessionConfiguration: URLSessionConfiguration) async {
+        print("LiveReload: attempting to connect...")
+
+        var liveReloadEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
+        liveReloadEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
+        liveReloadEndpoint.path = "/phoenix/live_reload/socket"
+        self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
+            URLSessionTransport(url: $0, configuration: urlSessionConfiguration)
+        })
+        liveReloadSocket!.connect()
+        self.liveReloadChannel = liveReloadSocket!.channel("phoenix:live_reload")
+        self.liveReloadChannel!.join().receive("ok") { msg in
+            print("LiveReload: connected to channel")
+        }.receive("error") { msg in
+            print("LiveReload: error connecting to channel: \(msg.payload)")
+        }
+        self.liveReloadChannel!.on("assets_change") { [unowned self] _ in
+            DispatchQueue.main.async {
+                print("LiveReload: assets changed, reloading")
+                Task {
                     // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
-                    self.reconnect()
+                    await self.reconnect()
                 }
             }
         }
     }
     
     // todo: don't use Any for the params
-    private func connectLiveView() {
+    private func connectLiveView(token: ConnectionAttemptToken) async throws {
         guard let socket = socket else {
             return
         }
-
+        
         var connectParams = config.connectParams?(currentURL) ?? [:]
         connectParams["_mounts"] = 0
-        connectParams["_csrf_token"] = self.phxCSRFToken
+        connectParams["_csrf_token"] = phxCSRFToken
         connectParams["_native"] = true
         
-        let url = self.currentURL
+        let params: Payload = [
+            "session": phxSession,
+            "static": phxStatic,
+            "url": currentURL.absoluteString,
+            "params": connectParams,
+        ]
         
-        let channel = socket.channel("lv:\(self.phxID)", params: ["session": self.phxSession, "static": self.phxStatic, "url": currentURL.absoluteString, "params": connectParams])
+        let channel = socket.channel("lv:\(self.phxID)", params: params)
         self.channel = channel
-        channel.join()
-            .receive("ok") { message in
-                guard self.currentURL == url else {
-                    return
-                }
-                let renderedPayload = (message.payload["rendered"] as! Payload)
-                // todo: what should happen if decoding or parsing fails?
-                self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-                let elements = try! self.parseDOM(html: self.rendered.buildString())
-                DispatchQueue.main.async {
-                    self.state = .connected
-                    self.elements = elements
-                }
-            }
-            .receive("error") { message in print("Failed to join", message.payload) }
-        channel.onError { (payload) in print("Error: ", payload) }
-        channel.onClose { (payload) in print("Channel Closed") }
-        channel.on("diff") { (message) in
-            guard self.currentURL == url else {
+        channel.onError { message in
+            print("Error: ", message)
+        }
+        channel.onClose { message in
+            print("Channel Closed")
+        }
+        channel.on("diff") { message in
+            guard self.currentConnectionToken === token else {
                 return
             }
-            let elements = try! self.handleDiff(payload: message.payload)
-            DispatchQueue.main.async {
-                self.elements = elements
-            }
+            self.elements = try! self.handleDiff(payload: message.payload)
+        }
+        
+        // the let _: Void is necessary because otherwise the return type can't be inferred
+        let _: Void = try await withCheckedThrowingContinuation { continuation in
+            channel.join()
+                .receive("ok") { message in
+                    guard self.currentConnectionToken === token else {
+                        continuation.resume(throwing: CancellationError())
+                        return
+                    }
+                    let renderedPayload = (message.payload["rendered"] as! Payload)
+                    // todo: what should happen if decoding or parsing fails?
+                    Task {
+                        self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
+                        let elements = try! self.parseDOM(html: self.rendered.buildString())
+                        self.state = .connected
+                        self.elements = elements
+                        continuation.resume()
+                    }
+                }
+                .receive("error") { message in
+                    continuation.resume(throwing: FetchError.joinError(message))
+                }
         }
     }
     
     private func extractDOMValues(_ elements: Elements)throws -> Void {
+        // TODO: index can panic
         let mainDiv = try elements.select("div[data-phx-main=\"true\"]")[0]
         self.phxSession = try mainDiv.attr("data-phx-session")
         self.phxStatic = try mainDiv.attr("data-phx-static")
@@ -267,21 +304,14 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.phxID = try mainDiv.attr("id")
     }
     
-    private func fetchDOM(_ completion: @escaping (Result<String, Error>) -> Void) {
-        let task = URLSession.shared.dataTask(with: self.currentURL) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            if let data = data, let html = String(data: data, encoding: .utf8) {
-                completion(.success(html))
-            } else {
-                completion(.failure(FetchError.other(response!)))
-            }
+    private func fetchDOM() async throws -> String {
+        let (data, resp) = try await urlSession.data(from: currentURL)
+        if (resp as! HTTPURLResponse).statusCode == 200,
+           let html = String(data: data, encoding: .utf8) {
+            return html
+        } else {
+            throw FetchError.other(resp)
         }
-        
-        task.resume()
     }
     
     private func parseDOM(html: String) throws -> Elements {
@@ -316,5 +346,21 @@ extension LiveViewCoordinator {
         /// An error encountered when parsing the initial HTML.
         case initialParseError
         case other(URLResponse)
+        case joinError(Message)
     }
+}
+
+extension LiveViewCoordinator {
+    /// This token represents an individual attempt at connecting to a particular Live View.
+    ///
+    /// If a new navigation/connection attempt interrupts an in-progress one, the token allows
+    /// dangling completion handlers to detect that they've been preempted and cancel themselves.
+    ///
+    /// The URL cannot be used for this purpose, because the previous and new URLs may be the same
+    /// (e.g., due to live reload).
+    ///
+    /// This class deliberately does not implement `Equatable` and reference equality (`===`) is used to
+    /// check token validatity. A token is constructed at the beginning of a connection attempt, set as the coordinator's
+    /// current token, and compared to the then-current one in asynchronous callbacks.
+    class ConnectionAttemptToken {}
 }

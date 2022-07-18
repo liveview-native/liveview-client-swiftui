@@ -29,10 +29,11 @@ public struct LiveView<R: CustomRegistry>: View {
 
     public var body: some View {
         rootNavEntry
-            .onAppear {
+            .task {
+                // TODO: the hasAppeared check may not be necessary with .task
                 if !hasAppeared {
                     hasAppeared = true
-                    coordinator.connect()
+                    await coordinator.connect()
                 }
             }
     }

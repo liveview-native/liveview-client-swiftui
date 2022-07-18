@@ -59,14 +59,18 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
                         animationCoordinator.sourceElement = source?.element
                     } else {
                         // became inactive, so we're returning to the previous page (i.e., the page this link is on)
-                        context.coordinator.navigateTo(url: context.url)
+                        Task {
+                            await context.coordinator.navigateTo(url: context.url)
+                        }
                     }
                 })
                 
             case .replace:
                 Button {
                     let newURL = URL(string: linkOpts.href, relativeTo: context.url)!
-                    context.coordinator.navigateTo(url: newURL, replace: true)
+                    Task {
+                        await context.coordinator.navigateTo(url: newURL, replace: true)
+                    }
                 } label: {
                     context.buildChildren(of: element)
                 }
@@ -83,7 +87,9 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
             return
         }
         // start the navigation process and connect to the dest live view
-        context.coordinator.navigateTo(url: URL(string: linkOpts.href, relativeTo: context.url)!)
+        Task {
+            await context.coordinator.navigateTo(url: URL(string: linkOpts.href, relativeTo: context.url)!)
+        }
         
         // if there's no animation source, we trigger the navigation immediately so that it feels more responsive
         guard source != nil else {

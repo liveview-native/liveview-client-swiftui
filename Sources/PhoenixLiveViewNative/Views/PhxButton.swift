@@ -29,6 +29,7 @@ struct PhxButton<R: CustomRegistry>: View {
         .disabled(disabled)
     }
     
+    @MainActor
     private func handleClick() {
         guard let clickEvent = clickEvent else {
             return

@@ -29,7 +29,11 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
     var body: some View {
         if let linkOpts = linkOpts,
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
-            Button(action: activateNavigationLink) {
+            Button {
+                Task {
+                    await activateNavigationLink()
+                }
+            } label: {
                 context.buildChildren(of: element)
                     .onPreferenceChange(HeroViewSourceKey.self) { newSource in
                         source = newSource
@@ -41,13 +45,13 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
         }
     }
     
-    private func activateNavigationLink() {
+    private func activateNavigationLink() async {
         guard let linkOpts = linkOpts else {
             return
         }
         
         let dest = URL(string: linkOpts.href, relativeTo: context.url)!
-        context.coordinator.navigateTo(url: dest, replace: linkOpts.state == .replace)
+        await context.coordinator.navigateTo(url: dest, replace: linkOpts.state == .replace)
         
         switch linkOpts.state {
         case .replace:
