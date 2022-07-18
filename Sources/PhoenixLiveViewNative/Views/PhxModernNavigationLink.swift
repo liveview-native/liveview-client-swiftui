@@ -16,7 +16,7 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
     private let linkOpts: LinkOptions?
     @EnvironmentObject private var navCoordinator: NavAnimationCoordinator
     @State private var source: HeroViewSourceKey.Value = nil
-    @State private var coordinatorStateCancellable: AnyCancellable?
+    @State private var doNavigationCancellable: AnyCancellable?
     
     init(element: Element, context: LiveContext<R>) {
         self.element = element
@@ -29,11 +29,7 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
     var body: some View {
         if let linkOpts = linkOpts,
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
-            Button {
-                Task {
-                    await activateNavigationLink()
-                }
-            } label: {
+            Button(action: activateNavigationLink) {
                 context.buildChildren(of: element)
                     .onPreferenceChange(HeroViewSourceKey.self) { newSource in
                         source = newSource
@@ -45,17 +41,19 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
         }
     }
     
-    private func activateNavigationLink() async {
+    private func activateNavigationLink() {
         guard let linkOpts = linkOpts else {
             return
         }
         
         let dest = URL(string: linkOpts.href, relativeTo: context.url)!
-        await context.coordinator.navigateTo(url: dest, replace: linkOpts.state == .replace)
         
         switch linkOpts.state {
         case .replace:
             navCoordinator.navigationPath[navCoordinator.navigationPath.count - 1] = dest
+            Task {
+                await context.coordinator.navigateTo(url: dest, replace: true)
+            }
             
         case .push:
             func doPushNavigation() {
@@ -66,30 +64,30 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
             
             // if there's no animation source, we trigger the navigation immediately so that it feels more responsive
             guard source != nil else {
+                Task {
+                    await context.coordinator.navigateTo(url: dest, replace: false)
+                }
                 doPushNavigation()
                 return
             }
             
-            // if connecting is too slow, navigate immediately without the custom animation
-            let triggerNavigationWorkItem = DispatchWorkItem {
-                doPushNavigation()
-                // cancel the connection state subscription
-                coordinatorStateCancellable = nil
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: triggerNavigationWorkItem)
-            
-            coordinatorStateCancellable = context.coordinator.$state
-                .sink { newState in
-                    if case .connecting = newState {
-                    } else {
-                        // once we connect to the destination, if we haven't been cancelled (it's been <150ms), navigate
-                        doPushNavigation()
-                        // cancel the delayed navigationj
-                        triggerNavigationWorkItem.cancel()
-                        // after connecting, we don't need to listen for further state changes
-                        coordinatorStateCancellable = nil
-                    }
+            let subject = PassthroughSubject<Void, Never>()
+            doNavigationCancellable = subject
+                // whichever happens first, connection or timeout, do the navigation
+                .first()
+                .sink { _ in
+                    doPushNavigation()
                 }
+            
+            Task {
+                await context.coordinator.navigateTo(url: dest, replace: false)
+                subject.send()
+            }
+            
+            // if connecting is too slow, navigate immediately without the custom animation
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150)) {
+                subject.send()
+            }
         }
     }
     

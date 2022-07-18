@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+@available(iOS, obsoleted: 16.0)
 struct PhxNavigationLink<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
@@ -86,39 +87,35 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
               linkOpts.state == .push else {
             return
         }
-        // start the navigation process and connect to the dest live view
-        Task {
-            await context.coordinator.navigateTo(url: URL(string: linkOpts.href, relativeTo: context.url)!)
-        }
+        
+        let dest = URL(string: linkOpts.href, relativeTo: context.url)!
         
         // if there's no animation source, we trigger the navigation immediately so that it feels more responsive
         guard source != nil else {
+            Task {
+                await context.coordinator.navigateTo(url: dest, replace: false)
+            }
             isActive = true
             return
         }
         
-        // if connecting is too slow, navigate immediately without the custom animation
-        let triggerNavigationWorkItem = DispatchWorkItem {
-            isActive = true
-            // cancel the connection state subscription
-            coordinatorStateCancellable = nil
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: triggerNavigationWorkItem)
         
-        coordinatorStateCancellable = context.coordinator.$state
-            .sink { newState in
-                // todo: double check that the coordinator's new url is the expected one
-                // :S
-                if case .connecting = newState {
-                } else {
-                    // once we connect to the destination, if we haven't been cancelled (it's been <150ms), navigate
-                    isActive = true
-                    // cancel the delayed navigation
-                    triggerNavigationWorkItem.cancel()
-                    // after connecting, we don't need to listen for further state changes
-                    coordinatorStateCancellable = nil
-                }
+        let subject = PassthroughSubject<Void, Never>()
+        coordinatorStateCancellable = subject
+            .first()
+            .sink { _ in
+                isActive = true
             }
+        
+        Task {
+            await context.coordinator.navigateTo(url: dest, replace: false)
+            subject.send()
+        }
+        
+        // if connecting is too slow, navigate immediately without the custom animation
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150)) {
+            subject.send()
+        }
     }
 }
 

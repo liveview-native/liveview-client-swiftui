@@ -143,10 +143,10 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         guard self.currentURL != url else { return }
         let oldURL = self.currentURL
         self.currentURL = url
-        await reconnect()
         if replace {
             replaceRedirectSubject.send((oldURL, url))
         }
+        await reconnect()
     }
     
     @ViewBuilder
