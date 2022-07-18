@@ -10,8 +10,11 @@ import SwiftSoup
 import SwiftUI
 import SwiftPhoenixClient
 import Combine
+import OSLog
 
 private var PUSH_TIMEOUT: Double = 30000
+
+private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoordinator")
 
 /// The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.
 @MainActor
@@ -25,24 +28,30 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     ///
     /// - Note: If you need to use the URL in, e.g., a view with a custom action, you should generally prefer the context's ``LiveContext/url`` because `currentURL` will change upon live navigation and may not reflect the URL of the page your view is actually on.
     public private(set) var currentURL: URL
-    internal let replaceRedirectSubject = PassthroughSubject<(URL, URL), Never>()
+    
     internal let config: LiveViewConfiguration
+    
+    // Values extracted from the DOM
     private var phxSession: String = ""
     private var phxStatic: String = ""
     private var phxView: String = ""
     private var phxID: String = ""
     private var phxCSRFToken: String = ""
-    @Published internal var elements: Elements? = nil
+    
+    // Socket connection
     private var socket: Socket?
     private var channel: Channel?
-    private var urlSession: URLSession
+    
+    @Published internal var elements: Elements? = nil
     private var rendered: Root!
+    
     private var liveReloadEnabled: Bool = false
     private var liveReloadSocket: Socket?
     private var liveReloadChannel: Channel?
     
-    internal let builder: ViewTreeBuilder<R>
+    internal let builder = ViewTreeBuilder<R>()
     
+    internal let replaceRedirectSubject = PassthroughSubject<(URL, URL), Never>()
     private var currentConnectionToken: ConnectionAttemptToken?
     private var currentConnectionTask: Task<Void, Error>?
     
@@ -55,8 +64,6 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.currentURL = url
         self.config = config
         self.state = .notConnected
-        self.urlSession = URLSession.shared
-        self.builder = ViewTreeBuilder()
     }
     
     /// Creates a new coordinator without a custom registry.
@@ -69,11 +76,14 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// Connects this coordinator to the LiveView channel.
     ///
     /// This function is a no-op unless ``state-swift.property`` is ``State-swift.enum/notConnected``.
+    ///
+    /// This is an async function which completes when the connection has been established or failed.
     public func connect() async {
         guard case .notConnected = state else {
             return
         }
         
+        // TODO: cancellation and our token system might not both be necessary
         currentConnectionTask?.cancel()
         let token = ConnectionAttemptToken()
         currentConnectionToken = token
@@ -99,6 +109,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             return
         }
         
+        try Task.checkCancellation()
         guard self.currentConnectionToken === token else {
             throw CancellationError()
         }
@@ -125,6 +136,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             }
         }
         
+        try Task.checkCancellation()
         guard self.currentConnectionToken === token else {
             throw CancellationError()
         }
@@ -176,11 +188,41 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             }
         }
     }
+    
+    private func fetchDOM() async throws -> String {
+        let (data, resp) = try await config.urlSession.data(from: currentURL)
+        if (resp as! HTTPURLResponse).statusCode == 200,
+           let html = String(data: data, encoding: .utf8) {
+            return html
+        } else {
+            throw FetchError.other(resp)
+        }
+    }
+    
+    private func extractDOMValues(_ elements: Elements)throws -> Void {
+        // TODO: index can panic
+        let mainDiv = try elements.select("div[data-phx-main=\"true\"]")[0]
+        self.phxSession = try mainDiv.attr("data-phx-session")
+        self.phxStatic = try mainDiv.attr("data-phx-static")
+        self.phxView = try mainDiv.attr("data-phx-view")
+        self.phxID = try mainDiv.attr("id")
+    }
+    
+    private func handleDiff(payload: Payload) throws -> Elements {
+        let diff = try RootDiff(from: FragmentDecoder(data: payload))
+        self.rendered = try self.rendered.merge(with: diff)
+        return try self.parseDOM(html: self.rendered.buildString())
+    }
+    
+    private nonisolated func parseDOM(html: String) throws -> Elements {
+        let document = try SwiftSoup.parseBodyFragment(html)
+        return try document.select("body")[0].children()
+    }
 
     private func connectSocket() async throws {
         let cookies = HTTPCookieStorage.shared.cookies(for: self.currentURL)
         
-        let configuration = URLSessionConfiguration.default
+        let configuration = config.urlSession.configuration
         for cookie in cookies! {
             configuration.httpCookieStorage!.setCookie(cookie)
         }
@@ -191,16 +233,16 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             wsEndpoint.path = "/live/websocket"
             self.socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
             socket!.onOpen {
-                print("Socket Opened")
+                logger.debug("[Socket] Opened")
                 continuation.resume()
             }
-            socket!.onClose { print("Socket Closed") }
+            socket!.onClose { logger.debug("[Socket] Closed") }
             socket!.onError { (error) in
-                print("Socket Error", error)
+                logger.error("[Socket] Error: \(error)")
                 // TODO: can this be called multiple times? if so, we shouldn't resume the continuation here
                 continuation.resume(with: .failure(error))
             }
-            socket!.logger = { message in print("LOG:", message) }
+            socket!.logger = { message in logger.debug("[Socket] \(message)") }
             socket!.connect()
         }
         
@@ -212,7 +254,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     private func connectLiveReloadSocket(urlSessionConfiguration: URLSessionConfiguration) async {
-        print("LiveReload: attempting to connect...")
+        logger.debug("[LiveReload] attempting to connect...")
 
         var liveReloadEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
         liveReloadEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
@@ -223,17 +265,15 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         liveReloadSocket!.connect()
         self.liveReloadChannel = liveReloadSocket!.channel("phoenix:live_reload")
         self.liveReloadChannel!.join().receive("ok") { msg in
-            print("LiveReload: connected to channel")
+            logger.debug("[LiveReload] connected to channel")
         }.receive("error") { msg in
-            print("LiveReload: error connecting to channel: \(msg.payload)")
+            logger.debug("[LiveReload] error connecting to channel: \(msg.payload)")
         }
         self.liveReloadChannel!.on("assets_change") { [unowned self] _ in
-            DispatchQueue.main.async {
-                print("LiveReload: assets changed, reloading")
-                Task {
-                    // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
-                    await self.reconnect()
-                }
+            logger.debug("[LiveReload] assets changed, reloading")
+            Task {
+                // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
+                await self.reconnect()
             }
         }
     }
@@ -259,10 +299,10 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         let channel = socket.channel("lv:\(self.phxID)", params: params)
         self.channel = channel
         channel.onError { message in
-            print("Error: ", message)
+            logger.error("[Channel] Error: \(String(describing: message))")
         }
         channel.onClose { message in
-            print("Channel Closed")
+            print("[Channel] Closed")
         }
         channel.on("diff") { message in
             guard self.currentConnectionToken === token else {
@@ -293,36 +333,6 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     continuation.resume(throwing: FetchError.joinError(message))
                 }
         }
-    }
-    
-    private func extractDOMValues(_ elements: Elements)throws -> Void {
-        // TODO: index can panic
-        let mainDiv = try elements.select("div[data-phx-main=\"true\"]")[0]
-        self.phxSession = try mainDiv.attr("data-phx-session")
-        self.phxStatic = try mainDiv.attr("data-phx-static")
-        self.phxView = try mainDiv.attr("data-phx-view")
-        self.phxID = try mainDiv.attr("id")
-    }
-    
-    private func fetchDOM() async throws -> String {
-        let (data, resp) = try await urlSession.data(from: currentURL)
-        if (resp as! HTTPURLResponse).statusCode == 200,
-           let html = String(data: data, encoding: .utf8) {
-            return html
-        } else {
-            throw FetchError.other(resp)
-        }
-    }
-    
-    private func parseDOM(html: String) throws -> Elements {
-        let document = try SwiftSoup.parseBodyFragment(html)
-        return try document.select("body")[0].children()
-    }
-    
-    private func handleDiff(payload: Payload) throws -> Elements {
-        let diff = try RootDiff(from: FragmentDecoder(data: payload))
-        self.rendered = try self.rendered.merge(with: diff)
-        return try self.parseDOM(html: self.rendered.buildString())
     }
 }
 

@@ -20,6 +20,9 @@ public struct LiveViewConfiguration {
     /// By default, no connection params are provided.
     public var connectParams: ((URL) -> [String: Any])? = nil
     
+    /// The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.
+    public var urlSession: URLSession = .shared
+    
     public init() {
     }
     
