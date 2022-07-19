@@ -53,7 +53,7 @@ struct PhxHeroView<R: CustomRegistry>: View {
     }
     
     @ViewBuilder
-    func withFramePreference(_ content: some View) -> some View {
+    func withFramePreference<V: View>(_ content: V) -> some View {
         if kind == .source {
             content.preference(key: HeroViewSourceKey.self, value: FrameAndElement(globalFrame: globalFrame ?? .zero, element: element))
         } else {

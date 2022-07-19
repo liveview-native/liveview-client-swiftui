@@ -81,6 +81,7 @@ public struct LiveView<R: CustomRegistry>: View {
     
     @ViewBuilder
     private var navigationViewOrStack: some View {
+#if compiler(>=5.7)
         if #available(iOS 16.0, *) {
             NavigationStack(path: $navAnimationCoordinator.navigationPath) {
                 navigationRoot
@@ -100,6 +101,11 @@ public struct LiveView<R: CustomRegistry>: View {
                 navigationRoot
             }
         }
+#else
+        NavigationView {
+            navigationRoot
+        }
+#endif
     }
     
     private var navigationRoot: some View {

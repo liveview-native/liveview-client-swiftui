@@ -227,7 +227,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             configuration.httpCookieStorage!.setCookie(cookie)
         }
     
-        try await withCheckedThrowingContinuation { continuation in
+        let _: Void = try await withCheckedThrowingContinuation { continuation in
             var wsEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
             wsEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
             wsEndpoint.path = "/live/websocket"
@@ -238,7 +238,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             }
             socket!.onClose { logger.debug("[Socket] Closed") }
             socket!.onError { (error) in
-                logger.error("[Socket] Error: \(error)")
+                logger.error("[Socket] Error: \(String(describing: error))")
                 // TODO: can this be called multiple times? if so, we shouldn't resume the continuation here
                 continuation.resume(with: .failure(error))
             }

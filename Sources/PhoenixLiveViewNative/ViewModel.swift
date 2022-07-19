@@ -63,6 +63,7 @@ public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringCo
     }
     
     /// Sends a phx-change event (if configured) to the server with the current form data.
+    @MainActor
     public func sendChangeEvent() {
         guard let changeEvent = changeEvent else {
             return

@@ -36,7 +36,7 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
                         NavStackEntryView(coordinator: context.coordinator, url: URL(string: linkOpts.href, relativeTo: context.url)!)
                             .environmentObject(animationCoordinator)
                             .onPreferenceChange(HeroViewDestKey.self) { newDest in
-                                if let newDest {
+                                if let newDest = newDest {
                                     animationCoordinator.destRect = newDest.globalFrame
                                     animationCoordinator.destElement = newDest.element
                                 }

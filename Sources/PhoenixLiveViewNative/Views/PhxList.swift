@@ -27,7 +27,7 @@ struct PhxList<R: CustomRegistry>: View {
         .listStyle(from: element)
     }
     
-    private var onDeleteHandler: ((IndexSet) -> Void)? {
+    private var onDeleteHandler: (@MainActor (IndexSet) -> Void)? {
         guard let deleteEvent = deleteEvent else {
             return nil
         }
