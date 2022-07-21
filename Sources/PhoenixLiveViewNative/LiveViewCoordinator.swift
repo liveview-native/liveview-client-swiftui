@@ -170,22 +170,48 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     /// Pushes a LiveView event with the given name and payload to the server.
     ///
+    /// This is an asynchronous function that completes when the server finishes processing the event and returns a response.
     /// The client view tree will be updated automatically when the response is received.
-    // todo: this should provide a completion handler
-    public func pushEvent(_ event: String, payload: Payload) {
+    ///
+    /// - Parameter type: The type of event that is being sent (e.g., `click` or `form`). Note: this is not currently used by the LiveView backend.
+    /// - Parameter event: The name of the LiveView event handler that the event is being dispatched to.
+    /// - Parameter value: The event value to provide to the backend event handler. The value _must_ be  serializable using ``JSONSerialization``.
+    /// - Throws: `FetchError.eventError` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
+    public func pushEvent(type: String, event: String, value: Any) async throws {
+        // isValidJSONObject only accepts objects, but we want to check that the value can be serialized as a field of an object
+        precondition(JSONSerialization.isValidJSONObject(["a": value]))
+        try await doPushEvent("event", payload: [
+            "type": type,
+            "event": event,
+            "value": value,
+        ])
+    }
+    
+    internal func doPushEvent(_ event: String, payload: Payload) async throws {
         guard let channel = channel else {
             return
         }
+        
+        let token = self.currentConnectionToken
 
-        channel.push(event, payload: payload, timeout: PUSH_TIMEOUT).receive("ok") { [weak self] reply in
-            guard let self = self,
-                  let diffPayload = reply.payload["diff"] as? Payload,
-                  let elements = try? self.handleDiff(payload: diffPayload) else {
-                      return
-                  }
-            DispatchQueue.main.async {
-                self.elements = elements
-            }
+        let diffPayload = try await withCheckedThrowingContinuation({ continuation in
+            channel.push(event, payload: payload, timeout: PUSH_TIMEOUT)
+                .receive("ok") { reply in
+                    continuation.resume(returning: reply.payload["diff"] as? Payload)
+                }
+                .receive("error") { message in
+                    continuation.resume(throwing: FetchError.eventError(message))
+                }
+        })
+        
+        guard currentConnectionToken === token else {
+            // TODO: maybe this should just silently fail?
+            throw CancellationError()
+        }
+        
+        if let diffPayload = diffPayload,
+           let elements = try? self.handleDiff(payload: diffPayload) {
+            self.elements = elements
         }
     }
     
@@ -357,6 +383,7 @@ extension LiveViewCoordinator {
         case initialParseError
         case other(URLResponse)
         case joinError(Message)
+        case eventError(Message)
     }
 }
 

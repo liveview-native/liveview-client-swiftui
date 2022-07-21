@@ -63,8 +63,12 @@ public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringCo
     }
     
     /// Sends a phx-change event (if configured) to the server with the current form data.
+    ///
+    /// This method has no effect if the `<form>` does not have a `phx-change` event configured.
+    ///
+    /// See ``LiveViewCoordinator/pushEvent(type:event:value:)`` for more information.
     @MainActor
-    public func sendChangeEvent() {
+    public func sendChangeEvent() async throws {
         guard let changeEvent = changeEvent else {
             return
         }
@@ -74,13 +78,7 @@ public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringCo
             "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)=\(v.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
         }.joined(separator: "&")
 
-        let payload: Payload = [
-            "type": "form",
-            "event": changeEvent,
-            "value": urlQueryEncodedData,
-        ]
-
-        coordinator.pushEvent("event", payload: payload)
+        try await coordinator.pushEvent(type: "form", event: changeEvent, value: urlQueryEncodedData)
     }
     
     public var debugDescription: String {

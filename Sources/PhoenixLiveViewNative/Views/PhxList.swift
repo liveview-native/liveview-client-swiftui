@@ -27,7 +27,7 @@ struct PhxList<R: CustomRegistry>: View {
         .listStyle(from: element)
     }
     
-    private var onDeleteHandler: (@MainActor (IndexSet) -> Void)? {
+    private var onDeleteHandler: ((IndexSet) -> Void)? {
         guard let deleteEvent = deleteEvent else {
             return nil
         }
@@ -35,13 +35,10 @@ struct PhxList<R: CustomRegistry>: View {
             var meta = element.buildPhxValuePayload()
             // todo: what about multiple indicies?
             meta["index"] = indices.first!
-            let payload: Payload = [
-                // todo: should this have it's own type?
-                "type": "click",
-                "event": deleteEvent,
-                "value":meta
-            ]
-            context.coordinator.pushEvent("event", payload: payload)
+            Task { [meta] in
+                // todo: should this have its own type?
+                try await context.coordinator.pushEvent(type: "click", event: deleteEvent, value: meta)
+            }
         }
     }
 }

@@ -29,17 +29,13 @@ struct PhxButton<R: CustomRegistry>: View {
         .disabled(disabled)
     }
     
-    @MainActor
     private func handleClick() {
         guard let clickEvent = clickEvent else {
             return
         }
-        let payload: Payload = [
-            "type": "click",
-            "event": clickEvent,
-            "value": element.buildPhxValuePayload(),
-        ]
-        context.coordinator.pushEvent("event", payload: payload)
+        Task {
+            try await context.coordinator.pushEvent(type: "click", event: clickEvent, value: element.buildPhxValuePayload())
+        }
     }
     
 }

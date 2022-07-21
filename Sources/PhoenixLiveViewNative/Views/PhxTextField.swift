@@ -132,7 +132,9 @@ fileprivate struct PhxWrappedTextField<R: CustomRegistry>: UIViewRepresentable {
             // so that when we send a change event, it uses the newest value.
             formModel.data[name] = textField.text
             // todo: should change events be debounced?
-            formModel.sendChangeEvent()
+            Task {
+                try await formModel.sendChangeEvent()
+            }
         }
         
         func textFieldDidBeginEditing(_ textField: UITextField) {
