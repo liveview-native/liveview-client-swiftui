@@ -27,9 +27,9 @@ struct BuiltinRegistry {
             PhxButton<R>(element: element, context: context)
         case "form":
             PhxForm<R>(element: element, context: context)
-        case "img":
+        case "image":
             PhxImage(element: element, context: context)
-        case "scroll":
+        case "scrollview":
             PhxScrollView<R>(element: element, context: context)
         case "spacer":
             Spacer()
@@ -43,9 +43,9 @@ struct BuiltinRegistry {
             PhxHeroView(element: element, context: context)
         case "list":
             PhxList<R>(element: element, context: context)
-        case "rect":
+        case "rectangle":
             PhxShape(element: element, shape: Rectangle())
-        case "roundrect":
+        case "roundedrectangle":
             PhxShape(element: element, shape: RoundedRectangle(from: element))
         default:
             // log here that view type cannot be found
