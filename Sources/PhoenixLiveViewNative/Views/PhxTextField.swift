@@ -14,7 +14,7 @@ struct PhxTextField<R: CustomRegistry>: View {
     private let placeholder: String?
     private let borderStyle: UITextField.BorderStyle
     private let clearButtonMode: UITextField.ViewMode
-    private let formModel: FormModel<R>
+    private let formModel: FormModel
     // We use a separate @State for the text field value and keep it in sync with the FormModel manually
     // because using @ObservedObject on the form model causes every text field to re-render unnecessarily
     // whenever any form data changes.
@@ -67,9 +67,9 @@ struct PhxTextField<R: CustomRegistry>: View {
 }
 
 // We need to wrap UITextField ourselves so we can call becomeFirstResponder directly.
-fileprivate struct PhxWrappedTextField<R: CustomRegistry>: UIViewRepresentable {
+fileprivate struct PhxWrappedTextField: UIViewRepresentable {
     typealias UIViewType = UITextField
-    private let formModel: FormModel<R>
+    private let formModel: FormModel
     private let name: String
     private let placeholder: String?
     private let borderStyle: UITextField.BorderStyle
@@ -77,7 +77,7 @@ fileprivate struct PhxWrappedTextField<R: CustomRegistry>: UIViewRepresentable {
     @Binding private var value: String?
     @Binding private var becomeFirstResponder: Bool
     
-    init(formModel: FormModel<R>, name: String, placeholder: String?, borderStyle: UITextField.BorderStyle, clearButtonMode: UITextField.ViewMode, value: Binding<String?>, becomeFirstResponder: Binding<Bool>) {
+    init(formModel: FormModel, name: String, placeholder: String?, borderStyle: UITextField.BorderStyle, clearButtonMode: UITextField.ViewMode, value: Binding<String?>, becomeFirstResponder: Binding<Bool>) {
         self.formModel = formModel
         self.name = name
         self.placeholder = placeholder
@@ -118,10 +118,10 @@ fileprivate struct PhxWrappedTextField<R: CustomRegistry>: UIViewRepresentable {
     
     class Coordinator: NSObject, UITextFieldDelegate {
         @Binding var value: String?
-        let formModel: FormModel<R>!
+        let formModel: FormModel!
         let name: String
         
-        init(formModel: FormModel<R>, name: String, value: Binding<String?>) {
+        init(formModel: FormModel, name: String, value: Binding<String?>) {
             self._value = value
             self.formModel = formModel
             self.name = name

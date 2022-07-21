@@ -13,14 +13,14 @@ import Combine
 ///
 /// In a view in the LiveView tree, a model can be obtained using `@EnvironmentObject`.
 public class LiveViewModel<R: CustomRegistry>: ObservableObject {
-    @Published private var forms = [String: FormModel<R>]()
+    @Published private var forms = [String: FormModel]()
     
     /// Get or create a ``FormModel`` for the `<form>` element with the given ID.
-    public func getForm(elementID id: String) -> FormModel<R> {
+    public func getForm(elementID id: String) -> FormModel {
         if let form = forms[id] {
             return form
         } else {
-            let model = FormModel<R>(elementID: id)
+            let model = FormModel(elementID: id)
             forms[id] = model
             return model
         }
@@ -45,10 +45,10 @@ public class LiveViewModel<R: CustomRegistry>: ObservableObject {
 /// A form model stores the working copy of the data for a specific `<form>` element.
 ///
 /// To obtain a form model, use ``LiveViewModel/getForm(elementID:)``.
-public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringConvertible {
+public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// The value of the `id` attribute of the `<form>` element this model is for.
     public let elementID: String
-    var coordinator: LiveViewCoordinator<R>!
+    var pushEventImpl: ((String, String, Any) async throws -> Void)!
     var changeEvent: String?
     /// The form data for this form.
     @Published public var data = [String: String]()
@@ -78,7 +78,7 @@ public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringCo
             "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)=\(v.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
         }.joined(separator: "&")
 
-        try await coordinator.pushEvent(type: "form", event: changeEvent, value: urlQueryEncodedData)
+        try await pushEventImpl("form", changeEvent, urlQueryEncodedData)
     }
     
     public var debugDescription: String {
@@ -86,8 +86,8 @@ public class FormModel<R: CustomRegistry>: ObservableObject, CustomDebugStringCo
     }
 }
 
-private struct FormDataUpdater<R: CustomRegistry>: NodeVisitor {
-    let model: FormModel<R>
+private struct FormDataUpdater: NodeVisitor {
+    let model: FormModel
     
     func head(_ node: Node, _ depth: Int) throws {
         if ["hidden", "textfield"].contains(node.nodeName().lowercased()),

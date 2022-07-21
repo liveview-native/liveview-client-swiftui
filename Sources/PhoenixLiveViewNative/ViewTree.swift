@@ -91,17 +91,17 @@ public struct LiveContext<R: CustomRegistry> {
     // @EnvironmentObject is not suitable for FormModel because views that need the form model don't
     // necessarily want to re-render on every single change.
     /// The model of the nearest ancestor `<form>` element, or `nil` if there is no such element.
-    public private(set) var formModel: FormModel<R>?
+    public private(set) var formModel: FormModel?
     
     private(set) var appliedCustomAttributes: [String] = []
     
-    init(coordinator: LiveViewCoordinator<R>, url: URL, formModel: FormModel<R>? = nil) {
+    init(coordinator: LiveViewCoordinator<R>, url: URL, formModel: FormModel? = nil) {
         self.coordinator = coordinator
         self.url = url
         self.formModel = formModel
     }
     
-    func with(formModel: FormModel<R>) -> LiveContext<R> {
+    func with(formModel: FormModel) -> LiveContext<R> {
         var copy = self
         copy.formModel = formModel
         return copy

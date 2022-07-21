@@ -15,7 +15,7 @@ struct PhxForm<R: CustomRegistry>: View {
     
     @EnvironmentObject private var liveViewModel: LiveViewModel<R>
     
-    private var model: FormModel<R> {
+    private var model: FormModel {
         liveViewModel.getForm(elementID: id)
     }
     
@@ -32,7 +32,7 @@ struct PhxForm<R: CustomRegistry>: View {
                 model.updateFromElement(newValue)
             })
             .onAppear {
-                model.coordinator = context.coordinator
+                model.pushEventImpl = context.coordinator.pushEvent
                 model.changeEvent = element.attrIfPresent("phx-change")
                 model.updateFromElement(element)
             }
