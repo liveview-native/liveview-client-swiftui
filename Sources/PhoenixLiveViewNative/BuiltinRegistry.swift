@@ -29,6 +29,8 @@ struct BuiltinRegistry {
             PhxForm<R>(element: element, context: context)
         case "image":
             PhxImage(element: element, context: context)
+        case "asyncimage":
+            PhxAsyncImage(element: element, context: context)
         case "scrollview":
             PhxScrollView<R>(element: element, context: context)
         case "spacer":

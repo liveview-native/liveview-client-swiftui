@@ -8,24 +8,18 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxImage<R: CustomRegistry>: View {
-    private let context: LiveContext<R>
+struct PhxImage: View {
     private let mode: Mode
     private let symbolColor: Color?
     private let symbolScale: Image.Scale?
-    private let scale: CGFloat?
     
-    init(element: Element, context: LiveContext<R>) {
-        self.context = context
+    init<R: CustomRegistry>(element: Element, context: LiveContext<R>) {
         if element.hasAttr("system-name") {
             self.mode = .symbol(try! element.attr("system-name"))
         } else if element.hasAttr("name") {
             self.mode = .asset(try! element.attr("name"))
-        } else if element.hasAttr("src") {
-            let url = URL(string: try! element.attr("src"), relativeTo: context.url)!
-            self.mode = .remote(url)
         } else {
-            preconditionFailure("<img> must have system-name, name, or src attribute")
+            preconditionFailure("<image> must have system-name or name")
         }
         if let attr = element.attrIfPresent("symbol-color") {
             symbolColor = Color(fromCSSHex: attr)
@@ -46,12 +40,6 @@ struct PhxImage<R: CustomRegistry>: View {
         } else {
             symbolScale = nil
         }
-        if let attr = element.attrIfPresent("scale"),
-           let d = Double(attr) {
-            scale = d
-        } else {
-            scale = nil
-        }
     }
     
     var body: some View {
@@ -65,16 +53,6 @@ struct PhxImage<R: CustomRegistry>: View {
                 // todo: this probably only works for symbols
                 .scaledIfPresent(scale: symbolScale)
                 .foregroundColor(symbolColor)
-        case .remote(let url):
-            // todo: do we want to customize the loading state for this
-            // todo: this will use URLCache.shared by default, do we want to customize that?
-            AsyncImage(url: url, scale: scale ?? 1) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-            } placeholder: {
-                ProgressView().progressViewStyle(.circular)
-            }
         }
     }
 }
@@ -83,7 +61,6 @@ extension PhxImage {
     enum Mode {
         case symbol(String)
         case asset(String)
-        case remote(URL)
     }
 }
 
