@@ -24,7 +24,7 @@ public protocol CustomRegistry {
     associatedtype Modified: View
     /// The type of view this registry produces for loading views.
     ///
-    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-2312e`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-vg2v`` implementations and this will be inferred automatically.
     associatedtype LoadingView: View
     
     /// The list of tag names that this custom registry can produce views for. All tag names should be lowercased.
