@@ -28,6 +28,7 @@ struct PhxForm<R: CustomRegistry>: View {
     
     var body: some View {
         context.with(formModel: model).buildChildren(of: element)
+            .environment(\.formModel, model)
             .onChange(of: element, perform: { newValue in
                 model.updateFromElement(newValue)
             })

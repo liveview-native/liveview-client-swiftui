@@ -7,13 +7,15 @@
 
 import SwiftSoup
 
-extension Element {
+extension Node {
     public func attrIfPresent(_ attr: String) -> String? {
         precondition(!attr.isEmpty)
         // try! is safe here, attr only throws if the param is empty
         return hasAttr(attr) ? try! self.attr(attr) : nil
     }
-    
+}
+
+extension Element {
     func buildPhxValuePayload() -> Payload {
         guard let attributes = getAttributes() else {
             return [:]

@@ -15,10 +15,7 @@ struct PhxTextField<R: CustomRegistry>: View {
     private let borderStyle: UITextField.BorderStyle
     private let clearButtonMode: UITextField.ViewMode
     private let formModel: FormModel
-    // We use a separate @State for the text field value and keep it in sync with the FormModel manually
-    // because using @ObservedObject on the form model causes every text field to re-render unnecessarily
-    // whenever any form data changes.
-    @State private var value: String? = ""
+    @FormState private var value: String?
     @State private var becomeFirstResponder = false
     
     init(element: Element, context: LiveContext<R>) {
@@ -52,11 +49,6 @@ struct PhxTextField<R: CustomRegistry>: View {
     var body: some View {
         return PhxWrappedTextField(formModel: formModel, name: name, placeholder: placeholder, borderStyle: borderStyle, clearButtonMode: clearButtonMode, value: $value, becomeFirstResponder: $becomeFirstResponder)
             .frame(height: 44)
-            .onReceive(formModel.$data) { newData in
-                if newData[name] != value {
-                    value = newData[name]
-                }
-            }
             .onAppear {
                 // If the DOM changes, the text field can get re-created and destroyed even though
                 if formModel.focusedFieldName == name {
@@ -128,9 +120,7 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
         }
         
         @objc func editingChanged(_ textField: UITextField) {
-            // Set the new value directly on the model (it will propogate down to the wrapped binding)
-            // so that when we send a change event, it uses the newest value.
-            formModel.data[name] = textField.text
+            value = textField.text
             // todo: should change events be debounced?
             Task {
                 try await formModel.sendChangeEvent()

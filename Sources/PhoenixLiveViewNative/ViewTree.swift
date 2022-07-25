@@ -57,15 +57,9 @@ struct ViewTreeBuilder<R: CustomRegistry> {
             let newContext = context.with(appliedCustomAttribute: attr.getKey())
             AnyView(R.applyCustomAttribute(attr, element: element, context: newContext))
         } else {
-            let tag = element.tagName().lowercased()
-
-            if R.supportedTagNames.contains(tag) {
-                R.lookup(tag, element: element, context: context)
-                    .commonModifiers(from: element)
-            } else {
-                BuiltinRegistry.lookup(tag, element, context: context)
-                    .commonModifiers(from: element)
-            }
+            createElement(element, context: context)
+                .commonModifiers(from: element)
+                .environment(\.element, element)
         }
     }
     
@@ -76,6 +70,17 @@ struct ViewTreeBuilder<R: CustomRegistry> {
         return attrs.first { attr in
             let k = attr.getKey()
             return R.supportedAttributes.contains(k.lowercased()) && !context.appliedCustomAttributes.contains(k)
+        }
+    }
+    
+    @ViewBuilder
+    private func createElement(_ element: Element, context: LiveContext<R>) -> some View {
+        let tag = element.tagName().lowercased()
+        
+        if R.supportedTagNames.contains(tag) {
+            R.lookup(tag, element: element, context: context)
+        } else {
+            BuiltinRegistry.lookup(tag, element, context: context)
         }
     }
     

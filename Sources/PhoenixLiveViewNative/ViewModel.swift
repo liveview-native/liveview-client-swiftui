@@ -51,8 +51,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     var pushEventImpl: ((String, String, Any) async throws -> Void)!
     var changeEvent: String?
     /// The form data for this form.
-    @Published public var data = [String: String]()
+    @Published internal private(set) var data = [String: any FormValue]()
     var focusedFieldName: String?
+    var formFieldWillChange = PassthroughSubject<String, Never>()
     
     init(elementID: String) {
         self.elementID = elementID
@@ -72,10 +73,10 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         guard let changeEvent = changeEvent else {
             return
         }
-
+        
         let urlQueryEncodedData = data.map { k, v in
             // todo: in what cases does addingPercentEncoding return nil? do we care?
-            "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)=\(v.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
+            "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)=\(v.formValue.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
         }.joined(separator: "&")
 
         try await pushEventImpl("form", changeEvent, urlQueryEncodedData)
@@ -84,16 +85,68 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     public var debugDescription: String {
         return "FormModel(\(elementID))"
     }
+    
+    /// Access the stored value, if there is one, for the form field of the given name.
+    ///
+    /// Setting a field to `nil` removes it.
+    public subscript(name: String) -> (any FormValue)? {
+        get {
+            data[name]
+        }
+        set(newValue) {
+            if let existing = data[name],
+               let newValue = newValue {
+                if !existing.isEqual(to: newValue) {
+                    formFieldWillChange.send(name)
+                }
+            } else if data[name] != nil || newValue != nil {
+                // something -> nil or nil -> something
+                formFieldWillChange.send(name)
+            } else {
+                // nothing to do
+                return
+            }
+            data[name] = newValue
+        }
+    }
+    
+}
+
+/// A form value is any type that can be stored in a ``FormModel``. This protocol defines the requirements for converting to/from the serialized form data representation.
+public protocol FormValue: Equatable {
+    /// Converts the value from this type to the string representation.
+    var formValue: String { get }
+    
+    /// Converts the value from the string representation to this type.
+    init(formValue: String)
+}
+
+extension FormValue {
+    func isEqual<T>(to other: T) -> Bool {
+        guard let other = other as? Self else {
+            return false
+        }
+        return self == other
+    }
+}
+
+extension String: FormValue {
+    public var formValue: String { self }
+    
+    public init(formValue: String) {
+        self = formValue
+    }
 }
 
 private struct FormDataUpdater: NodeVisitor {
     let model: FormModel
     
     func head(_ node: Node, _ depth: Int) throws {
+        // TODO: should this cover all elements?
         if ["hidden", "textfield"].contains(node.nodeName().lowercased()),
-           node.hasAttr("name"),
-           node.hasAttr("value") {
-            model.data[try! node.attr("name")] = try! node.attr("value")
+           let name = node.attrIfPresent("name"),
+           let value = node.attrIfPresent("value") {
+            model[name] = value
         }
     }
     
