@@ -88,7 +88,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         currentConnectionToken = token
         do {
             try await self.doConnect(token: token)
-        } catch {}
+        } catch {
+            // doConnect only throws CancellationErrors, which we swallow
+        }
     }
     
     private func doConnect(token: ConnectionAttemptToken) async throws {
@@ -103,7 +105,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         let html: String
         do {
             html = try await fetchDOM()
-        } catch {
+        } catch let error as Error {
             state = .connectionFailed(error)
             return
         }
@@ -122,14 +124,14 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
             try self.extractDOMValues(elements)
         } catch {
-            self.state = .connectionFailed(FetchError.initialParseError)
+            self.state = .connectionFailed(Error.initialParseError)
             return
         }
         
         if socket == nil {
             do {
                 try await self.connectSocket()
-            } catch {
+            } catch let error as Error {
                 self.state = .connectionFailed(error)
                 return
             }
@@ -140,7 +142,11 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             throw CancellationError()
         }
         
-        try await self.connectLiveView(token: token)
+        do {
+            try await self.connectLiveView(token: token)
+        } catch let error as Error {
+            self.state = .connectionFailed(error)
+        }
     }
     
     private func reconnect() async {
@@ -199,7 +205,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     continuation.resume(returning: reply.payload["diff"] as? Payload)
                 }
                 .receive("error") { message in
-                    continuation.resume(throwing: FetchError.eventError(message))
+                    continuation.resume(throwing: Error.eventError(message))
                 }
         })
         
@@ -220,7 +226,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
            let html = String(data: data, encoding: .utf8) {
             return html
         } else {
-            throw FetchError.other(resp)
+            throw Error.other(resp)
         }
     }
     
@@ -265,7 +271,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             socket!.onError { (error) in
                 logger.error("[Socket] Error: \(String(describing: error))")
                 // TODO: can this be called multiple times? if so, we shouldn't resume the continuation here
-                continuation.resume(with: .failure(error))
+                continuation.resume(throwing: Error.socketError(error))
             }
             socket!.logger = { message in logger.debug("[Socket] \(message)") }
             socket!.connect()
@@ -360,7 +366,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     // leave the channel, otherwise the it'll continue retrying indefinitely
                     // we want to control the retry behavior ourselves, so just leave the channel
                     channel.leave()
-                    continuation.resume(throwing: FetchError.joinError(message))
+                    continuation.resume(throwing: Error.joinError(message))
                 }
         }
     }
@@ -382,12 +388,28 @@ extension LiveViewCoordinator {
 }
 
 extension LiveViewCoordinator {
-    enum FetchError: Error {
+    public enum Error: Swift.Error {
         /// An error encountered when parsing the initial HTML.
         case initialParseError
         case other(URLResponse)
+        case socketError(Swift.Error)
         case joinError(Message)
         case eventError(Message)
+        
+        var localizedDescription: String {
+            switch self {
+            case .initialParseError:
+                return "initialParseError"
+            case .other(let resp):
+                return "other(\(resp))"
+            case .socketError(let error):
+                return "socketError(\(error))"
+            case .joinError(let message):
+                return "joinError(\(message.payload))"
+            case .eventError(let message):
+                return "eventError(\(message.payload))"
+            }
+        }
     }
 }
 
