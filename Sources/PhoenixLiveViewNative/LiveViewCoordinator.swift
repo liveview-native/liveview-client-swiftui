@@ -59,17 +59,16 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
     /// - Parameter customRegistryType: The type of the registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM. This can generally be inferred automatically.
-    public init(_ url: URL, config: LiveViewConfiguration = .init(), customRegistryType: R.Type = R.self) {
+    public nonisolated init(_ url: URL, config: LiveViewConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.initialURL = url
         self.currentURL = url
         self.config = config
-        self.state = .notConnected
     }
     
     /// Creates a new coordinator without a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
-    public convenience init(_ url: URL, config: LiveViewConfiguration = .init()) where R == EmptyRegistry {
+    public nonisolated convenience init(_ url: URL, config: LiveViewConfiguration = .init()) where R == EmptyRegistry {
         self.init(url, config: config, customRegistryType: EmptyRegistry.self)
     }
     
@@ -334,7 +333,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             guard self.currentConnectionToken === token else {
                 return
             }
-            self.elements = try! self.handleDiff(payload: message.payload)
+            Task { @MainActor in
+                self.elements = try! self.handleDiff(payload: message.payload)
+            }
         }
         
         // the let _: Void is necessary because otherwise the return type can't be inferred
