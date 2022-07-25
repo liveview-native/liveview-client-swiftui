@@ -357,6 +357,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     }
                 }
                 .receive("error") { message in
+                    // leave the channel, otherwise the it'll continue retrying indefinitely
+                    // we want to control the retry behavior ourselves, so just leave the channel
+                    channel.leave()
                     continuation.resume(throwing: FetchError.joinError(message))
                 }
         }
