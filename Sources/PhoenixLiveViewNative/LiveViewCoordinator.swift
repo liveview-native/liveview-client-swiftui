@@ -117,12 +117,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         
         do {
             let doc = try SwiftSoup.parse(html)
-            let elements = doc.body()!.children()
-            
-            // TODO: index can panic
-            self.phxCSRFToken = try! doc.select("meta[name=\"csrf-token\"]")[0].attr("content")
-            self.liveReloadEnabled = !(try! doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
-            try self.extractDOMValues(elements)
+            try self.extractDOMValues(doc)
         } catch {
             self.state = .connectionFailed(Error.initialParseError)
             return
@@ -230,9 +225,19 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
-    private func extractDOMValues(_ elements: Elements)throws -> Void {
-        // TODO: index can panic
-        let mainDiv = try elements.select("div[data-phx-main=\"true\"]")[0]
+    private func extractDOMValues(_ doc: Document) throws -> Void {
+        let metaRes = try doc.select("meta[name=\"csrf-token\"]")
+        guard !metaRes.isEmpty() else {
+            throw Error.initialParseError
+        }
+        self.phxCSRFToken = try metaRes[0].attr("content")
+        self.liveReloadEnabled = !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
+        
+        let mainDivRes = try doc.select("div[data-phx-main=\"true\"]")
+        guard !mainDivRes.isEmpty() else {
+            throw Error.initialParseError
+        }
+        let mainDiv = mainDivRes[0]
         self.phxSession = try mainDiv.attr("data-phx-session")
         self.phxStatic = try mainDiv.attr("data-phx-static")
         self.phxView = try mainDiv.attr("data-phx-view")
