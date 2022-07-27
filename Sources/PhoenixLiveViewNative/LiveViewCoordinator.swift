@@ -345,7 +345,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             logger.error("[Channel] Error: \(String(describing: message))")
         }
         channel.onClose { message in
-            print("[Channel] Closed")
+            logger.info("[Channel] Closed")
         }
         channel.on("diff") { message in
             guard self.currentConnectionToken === token else {

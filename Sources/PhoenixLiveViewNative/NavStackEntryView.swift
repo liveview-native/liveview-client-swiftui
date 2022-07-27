@@ -62,7 +62,6 @@ struct NavStackEntryView<R: CustomRegistry>: View {
             coordinator.builder.fromElements(elements, coordinator: coordinator, url: url)
         case .other(let lvState):
             if R.self.LoadingView == Never.self {
-                let _ = print(lvState)
                 switch lvState {
                 case .connected:
                     fatalError("unreachable")
