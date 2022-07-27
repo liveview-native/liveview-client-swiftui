@@ -216,12 +216,19 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     private func fetchDOM() async throws -> String {
-        let (data, resp) = try await config.urlSession.data(from: currentURL)
+        let data: Data
+        let resp: URLResponse
+        do {
+            (data, resp) = try await config.urlSession.data(from: currentURL)
+        } catch {
+            throw Error.initialFetchError(error)
+        }
+            
         if (resp as! HTTPURLResponse).statusCode == 200,
            let html = String(data: data, encoding: .utf8) {
             return html
         } else {
-            throw Error.other(resp)
+            throw Error.initialFetchUnexpectedResponse(resp)
         }
     }
     
@@ -349,8 +356,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             }
         }
         
-        // the let _: Void is necessary because otherwise the return type can't be inferred
-        let _: Void = try await withCheckedThrowingContinuation { continuation in
+        let renderedPayload: Payload = try await withCheckedThrowingContinuation { continuation in
             channel.join()
                 .receive("ok") { message in
                     guard self.currentConnectionToken === token else {
@@ -358,14 +364,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                         return
                     }
                     let renderedPayload = (message.payload["rendered"] as! Payload)
-                    // todo: what should happen if decoding or parsing fails?
-                    Task {
-                        self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-                        let elements = try! self.parseDOM(html: self.rendered.buildString())
-                        self.state = .connected
-                        self.elements = elements
-                        continuation.resume()
-                    }
+                    continuation.resume(returning: renderedPayload)
                 }
                 .receive("error") { message in
                     // leave the channel, otherwise the it'll continue retrying indefinitely
@@ -374,6 +373,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     continuation.resume(throwing: Error.joinError(message))
                 }
         }
+        
+        // todo: what should happen if decoding or parsing fails?
+        self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
+        let elements = try! self.parseDOM(html: self.rendered.buildString())
+        self.state = .connected
+        self.elements = elements
     }
 }
 
@@ -394,19 +399,22 @@ extension LiveViewCoordinator {
 
 extension LiveViewCoordinator {
     public enum Error: Swift.Error {
+        case initialFetchError(Swift.Error)
+        case initialFetchUnexpectedResponse(URLResponse)
         /// An error encountered when parsing the initial HTML.
         case initialParseError
-        case other(URLResponse)
         case socketError(Swift.Error)
         case joinError(Message)
         case eventError(Message)
         
         var localizedDescription: String {
             switch self {
+            case .initialFetchError(let error):
+                return "initialFetchError(\(error))"
+            case .initialFetchUnexpectedResponse(let resp):
+                return "initialFetchUnexpectedResponse(\(resp))"
             case .initialParseError:
                 return "initialParseError"
-            case .other(let resp):
-                return "other(\(resp))"
             case .socketError(let error):
                 return "socketError(\(error))"
             case .joinError(let message):
