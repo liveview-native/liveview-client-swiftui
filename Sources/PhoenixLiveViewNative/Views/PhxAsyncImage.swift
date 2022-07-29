@@ -10,6 +10,7 @@ import SwiftUI
 struct PhxAsyncImage: View {
     private let url: URL?
     private let scale: Double?
+    private let contentMode: ContentMode
     
     init<R: CustomRegistry>(element: Element, context: LiveContext<R>) {
         self.url = URL(string: try! element.attr("src"), relativeTo: context.url)
@@ -18,6 +19,12 @@ struct PhxAsyncImage: View {
             self.scale = f
         } else {
             self.scale = nil
+        }
+        switch element.attrIfPresent("content-mode") {
+        case "fill":
+            self.contentMode = .fill
+        default:
+            self.contentMode = .fit
         }
     }
     
@@ -29,6 +36,7 @@ struct PhxAsyncImage: View {
             case .success(let image):
                 image
                     .resizable()
+                    .aspectRatio(contentMode: contentMode)
                     // when using an AsyncImage in the hero transition overlay, it never resolves to the actual image
                     // so when the source AsyncImage resolves, we use a preference to communicate the resulting
                     // Image up to the overlay view, in case it needs to be used
