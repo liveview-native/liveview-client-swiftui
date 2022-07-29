@@ -16,7 +16,7 @@ import LVNObjC
 public struct LiveView<R: CustomRegistry>: View {
     private let coordinator: LiveViewCoordinator<R>
     @State private var hasAppeared = false
-    @StateObject private var navAnimationCoordinator = NavAnimationCoordinator()
+    @StateObject private var navigationCoordinator = NavigationCoordinator()
     @State private var hasSetupNavigationControllerDelegate = false
     @State private var navigationControllerDelegateProxy: ProxyingNavigationControllerDelegate?
     
@@ -49,27 +49,27 @@ public struct LiveView<R: CustomRegistry>: View {
                 hasSetupNavigationControllerDelegate = true
                 
                 if let existing = navigationController.delegate {
-                    let proxy = ProxyingNavigationControllerDelegate(first: navAnimationCoordinator, second: existing)
+                    let proxy = ProxyingNavigationControllerDelegate(first: navigationCoordinator, second: existing)
                     self.navigationControllerDelegateProxy = proxy
                     navigationController.delegate = proxy
                 } else {
-                    navigationController.delegate = navAnimationCoordinator
+                    navigationController.delegate = navigationCoordinator
                 }
                 
-                navigationController.interactivePopGestureRecognizer?.addTarget(navAnimationCoordinator, action: #selector(NavAnimationCoordinator.interactivePopRecognized))
+                navigationController.interactivePopGestureRecognizer?.addTarget(navigationCoordinator, action: #selector(NavigationCoordinator.interactivePopRecognized))
             }
             .overlay {
-                if navAnimationCoordinator.state.isAnimating,
+                if navigationCoordinator.state.isAnimating,
                    !UIAccessibility.prefersCrossFadeTransitions {
                     GeometryReader { _ in
-                        coordinator.builder.fromElements(navAnimationCoordinator.sourceElement!.children(), coordinator: coordinator, url: coordinator.currentURL)
-                            .frame(width: navAnimationCoordinator.currentRect.width, height: navAnimationCoordinator.currentRect.height)
+                        coordinator.builder.fromElements(navigationCoordinator.sourceElement!.children(), coordinator: coordinator, url: coordinator.currentURL)
+                            .frame(width: navigationCoordinator.currentRect.width, height: navigationCoordinator.currentRect.height)
                             // if we use the GeometryReader, the offset is with respect to the global origin,
                             // if not, it's with respect to the center of the screen.
                             // so, we wrap the view in a GeometryReader, but don't actually use the proxy
-                            .offset(x: navAnimationCoordinator.currentRect.minX, y: navAnimationCoordinator.currentRect.minY)
+                            .offset(x: navigationCoordinator.currentRect.minX, y: navigationCoordinator.currentRect.minY)
                             .allowsHitTesting(false)
-                            .animation(navAnimationCoordinator.state.animation, value: navAnimationCoordinator.currentRect)
+                            .animation(navigationCoordinator.state.animation, value: navigationCoordinator.currentRect)
                     }
                     .edgesIgnoringSafeArea(.all)
                 }
@@ -83,20 +83,20 @@ public struct LiveView<R: CustomRegistry>: View {
     private var navigationViewOrStack: some View {
 #if compiler(>=5.7)
         if #available(iOS 16.0, *) {
-            NavigationStack(path: $navAnimationCoordinator.navigationPath) {
+            NavigationStack(path: $navigationCoordinator.navigationPath) {
                 navigationRoot
                     .navigationDestination(for: URL.self) { url in
                         NavStackEntryView(coordinator: coordinator, url: url)
-                            .environmentObject(navAnimationCoordinator)
+                            .environmentObject(navigationCoordinator)
                             .onPreferenceChange(HeroViewDestKey.self) { newDest in
                                 if let newDest {
-                                    navAnimationCoordinator.destRect = newDest.globalFrame
-                                    navAnimationCoordinator.destElement = newDest.element
+                                    navigationCoordinator.destRect = newDest.globalFrame
+                                    navigationCoordinator.destElement = newDest.element
                                 }
                             }
                     }
             }
-            .onReceive(navAnimationCoordinator.$navigationPath.zip(navAnimationCoordinator.$navigationPath.dropFirst())) { (oldValue, newValue) in
+            .onReceive(navigationCoordinator.$navigationPath.zip(navigationCoordinator.$navigationPath.dropFirst())) { (oldValue, newValue) in
                 // when navigating backwards, we need to reconnect to the old page
                 // this is done here, because PhxModernNavigationLink does't know when it's popped
                 // navigating forward is handled by the link, in order to do the hero transition
@@ -121,7 +121,7 @@ public struct LiveView<R: CustomRegistry>: View {
     
     private var navigationRoot: some View {
         NavStackEntryView(coordinator: coordinator, url: coordinator.initialURL)
-            .environmentObject(navAnimationCoordinator)
+            .environmentObject(navigationCoordinator)
     }
     
 }

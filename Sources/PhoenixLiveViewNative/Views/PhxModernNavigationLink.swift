@@ -14,7 +14,7 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
     private let context: LiveContext<R>
     private let disabled: Bool
     private let linkOpts: LinkOptions?
-    @EnvironmentObject private var navCoordinator: NavAnimationCoordinator
+    @EnvironmentObject private var navCoordinator: NavigationCoordinator
     @State private var source: HeroViewSourceKey.Value = nil
     @State private var doNavigationCancellable: AnyCancellable?
     

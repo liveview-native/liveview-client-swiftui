@@ -11,7 +11,7 @@ struct PhxHeroView<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let kind: Kind
-    @EnvironmentObject private var animationCoordinator: NavAnimationCoordinator
+    @EnvironmentObject private var navCoordinator: NavigationCoordinator
     @State private var globalFrame: CGRect?
     
     init(element: Element, context: LiveContext<R>) {
@@ -27,9 +27,9 @@ struct PhxHeroView<R: CustomRegistry>: View {
         // only hide when we're the hero view being animated to/from
         switch kind {
         case .destination:
-            return animationCoordinator.destElement == element
+            return navCoordinator.destElement == element
         case .source:
-            return animationCoordinator.sourceElement == element
+            return navCoordinator.sourceElement == element
         }
     }
     
@@ -40,12 +40,12 @@ struct PhxHeroView<R: CustomRegistry>: View {
                 GlobalGeometryReader {
                     // when animating, don't update the source's position because the builtin navigation transition
                     // alters the position in window-space of the source but we want to keep the original, unaltered pos
-                    if kind != .source || !animationCoordinator.state.isAnimating {
+                    if kind != .source || !navCoordinator.state.isAnimating {
                         self.globalFrame = $0
                     }
                 }
             }
-            .opacity(animationCoordinator.state.isAnimating && hidesDuringAnimation ? 0 : 1)
+            .opacity(navCoordinator.state.isAnimating && hidesDuringAnimation ? 0 : 1)
     }
     
     private enum Kind {

@@ -1,5 +1,5 @@
 //
-//  NavAnimationCoordinator.swift
+//  NavigationCoordinator.swift
 //  PhoenixLiveViewNative
 //
 //  Created by Shadowfacts on 5/16/22.
@@ -10,7 +10,7 @@ import SwiftUI
 
 private let animationDuration: TimeInterval = 0.35
 
-class NavAnimationCoordinator: NSObject, UINavigationControllerDelegate, ObservableObject {
+class NavigationCoordinator: NSObject, UINavigationControllerDelegate, ObservableObject {
     var sourceRect: CGRect = .zero {
         didSet {
             // while we're animating, don't update the currentRect otherwise it starts animating back

@@ -15,7 +15,7 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
     private let disabled: Bool
     private let linkOpts: LinkOptions?
     @State private var isActive = false
-    @EnvironmentObject private var animationCoordinator: NavAnimationCoordinator
+    @EnvironmentObject private var navCoordinator: NavigationCoordinator
     @State private var source: HeroViewSourceKey.Value = nil
     @State private var coordinatorStateCancellable: AnyCancellable?
     
@@ -34,11 +34,11 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
                 ZStack {
                     NavigationLink(isActive: $isActive) {
                         NavStackEntryView(coordinator: context.coordinator, url: URL(string: linkOpts.href, relativeTo: context.url)!)
-                            .environmentObject(animationCoordinator)
+                            .environmentObject(navCoordinator)
                             .onPreferenceChange(HeroViewDestKey.self) { newDest in
                                 if let newDest = newDest {
-                                    animationCoordinator.destRect = newDest.globalFrame
-                                    animationCoordinator.destElement = newDest.element
+                                    navCoordinator.destRect = newDest.globalFrame
+                                    navCoordinator.destElement = newDest.element
                                 }
                             }
                     } label: {
@@ -56,8 +56,8 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
                 .onChange(of: isActive, perform: { newValue in
                     if newValue {
                         // we don't trigger the navigation when we become active; it's handled by the button action
-                        animationCoordinator.sourceRect = source?.globalFrame ?? .zero
-                        animationCoordinator.sourceElement = source?.element
+                        navCoordinator.sourceRect = source?.globalFrame ?? .zero
+                        navCoordinator.sourceElement = source?.element
                     } else {
                         // became inactive, so we're returning to the previous page (i.e., the page this link is on)
                         Task {
