@@ -118,7 +118,7 @@ public protocol FormValue: Equatable {
     var formValue: String { get }
     
     /// Converts the value from the string representation to this type.
-    init(formValue: String)
+    init?(formValue: String)
 }
 
 extension FormValue {
