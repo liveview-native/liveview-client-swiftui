@@ -16,6 +16,7 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
     private let linkOpts: LinkOptions?
     @EnvironmentObject private var navCoordinator: NavigationCoordinator
     @State private var source: HeroViewSourceKey.Value = nil
+    @State private var overrideView: HeroViewOverrideKey.Value = nil
     @State private var doNavigationCancellable: AnyCancellable?
     
     init(element: Element, context: LiveContext<R>) {
@@ -33,6 +34,9 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
                 context.buildChildren(of: element)
                     .onPreferenceChange(HeroViewSourceKey.self) { newSource in
                         source = newSource
+                    }
+                    .onPreferenceChange(HeroViewOverrideKey.self) { newOverrideView in
+                        overrideView = newOverrideView
                     }
             }
             .disabled(disabled)
@@ -59,6 +63,7 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
             func doPushNavigation() {
                 navCoordinator.sourceRect = source?.globalFrame ?? .zero
                 navCoordinator.sourceElement = source?.element
+                navCoordinator.overrideOverlayImage = overrideView
                 navCoordinator.navigationPath.append(dest)
             }
             

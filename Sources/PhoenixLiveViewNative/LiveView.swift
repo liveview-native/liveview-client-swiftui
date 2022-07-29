@@ -62,7 +62,7 @@ public struct LiveView<R: CustomRegistry>: View {
                 if navigationCoordinator.state.isAnimating,
                    !UIAccessibility.prefersCrossFadeTransitions {
                     GeometryReader { _ in
-                        coordinator.builder.fromElements(navigationCoordinator.sourceElement!.children(), coordinator: coordinator, url: coordinator.currentURL)
+                        navHeroOverlayView
                             .frame(width: navigationCoordinator.currentRect.width, height: navigationCoordinator.currentRect.height)
                             // if we use the GeometryReader, the offset is with respect to the global origin,
                             // if not, it's with respect to the center of the screen.
@@ -76,6 +76,17 @@ public struct LiveView<R: CustomRegistry>: View {
             }
         } else {
             NavStackEntryView(coordinator: coordinator, url: coordinator.initialURL)
+        }
+    }
+    
+    @ViewBuilder
+    private var navHeroOverlayView: some View {
+        // some views (AsyncImage) don't work properly when used in the animation
+        // so they can be overriden with a preference
+        if let overrideImage = navigationCoordinator.overrideOverlayImage {
+            overrideImage
+        } else {
+            coordinator.builder.fromElements(navigationCoordinator.sourceElement!.children(), coordinator: coordinator, url: coordinator.currentURL)
         }
     }
     

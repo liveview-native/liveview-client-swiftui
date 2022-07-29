@@ -24,12 +24,22 @@ struct PhxAsyncImage: View {
     var body: some View {
         // todo: do we want to customize the loading state for this
         // todo: this will use URLCache.shared by default, do we want to customize that?
-        AsyncImage(url: url, scale: scale ?? 1) { image in
-            image
-                .resizable()
-                .scaledToFit()
-        } placeholder: {
-            ProgressView().progressViewStyle(.circular)
+        AsyncImage(url: url, scale: scale ?? 1, transaction: Transaction(animation: .default)) { phase in
+            switch phase {
+            case .success(let image):
+                image
+                    .resizable()
+                    // when using an AsyncImage in the hero transition overlay, it never resolves to the actual image
+                    // so when the source AsyncImage resolves, we use a preference to communicate the resulting
+                    // Image up to the overlay view, in case it needs to be used
+                    .preference(key: HeroViewOverrideKey.self, value: image.resizable())
+            case .failure(let error):
+                Text(error.localizedDescription)
+            case .empty:
+                ProgressView().progressViewStyle(.circular)
+            @unknown default:
+                EmptyView()
+            }
         }
     }
 }

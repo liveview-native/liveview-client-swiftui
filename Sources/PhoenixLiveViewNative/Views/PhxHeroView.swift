@@ -86,6 +86,16 @@ private struct GlobalGeometryReader: UIViewRepresentable {
     }
 }
 
+struct HeroViewOverrideKey: PreferenceKey {
+    typealias Value = Image?
+    
+    static var defaultValue: Value = nil
+    
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value = nextValue()
+    }
+}
+
 struct HeroViewSourceKey: PreferenceKey {
     typealias Value = FrameAndElement?
     
