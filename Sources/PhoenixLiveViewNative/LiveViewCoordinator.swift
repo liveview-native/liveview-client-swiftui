@@ -98,6 +98,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             return
         }
         
+        logger.debug("Connecting to \(self.currentURL.absoluteString)")
+        
         state = .connecting
         // in case we're reconnecting, reset the elements so nothing gets stale elements
         elements = nil

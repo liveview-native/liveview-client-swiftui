@@ -96,6 +96,17 @@ public struct LiveView<R: CustomRegistry>: View {
                             }
                     }
             }
+            .onReceive(navAnimationCoordinator.$navigationPath.zip(navAnimationCoordinator.$navigationPath.dropFirst())) { (oldValue, newValue) in
+                // when navigating backwards, we need to reconnect to the old page
+                // this is done here, because PhxModernNavigationLink does't know when it's popped
+                // navigating forward is handled by the link, in order to do the hero transition
+                if oldValue.count > newValue.count {
+                    let dest = newValue.last ?? coordinator.initialURL
+                    Task {
+                        await coordinator.navigateTo(url: dest)
+                    }
+                }
+            }
         } else {
             NavigationView {
                 navigationRoot
