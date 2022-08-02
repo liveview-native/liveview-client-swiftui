@@ -37,7 +37,7 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
                             .environmentObject(navCoordinator)
                             .onPreferenceChange(HeroViewDestKey.self) { newDest in
                                 if let newDest = newDest {
-                                    navCoordinator.destRect = newDest.globalFrame
+                                    navCoordinator.destRect = newDest.frameProvider()
                                     navCoordinator.destElement = newDest.element
                                 }
                             }
@@ -56,7 +56,7 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
                 .onChange(of: isActive, perform: { newValue in
                     if newValue {
                         // we don't trigger the navigation when we become active; it's handled by the button action
-                        navCoordinator.sourceRect = source?.globalFrame ?? .zero
+                        navCoordinator.sourceRect = source?.frameProvider() ?? .zero
                         navCoordinator.sourceElement = source?.element
                     } else {
                         // became inactive, so we're returning to the previous page (i.e., the page this link is on)

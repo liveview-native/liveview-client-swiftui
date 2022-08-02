@@ -12,7 +12,7 @@ struct PhxHeroView<R: CustomRegistry>: View {
     private let context: LiveContext<R>
     private let kind: Kind
     @EnvironmentObject private var navCoordinator: NavigationCoordinator
-    @State private var globalFrame: CGRect?
+    @State private var frameProvider: (() -> CGRect, UUID)?
     
     init(element: Element, context: LiveContext<R>) {
         self.element = element
@@ -41,7 +41,7 @@ struct PhxHeroView<R: CustomRegistry>: View {
                     // when animating, don't update the source's position because the builtin navigation transition
                     // alters the position in window-space of the source but we want to keep the original, unaltered pos
                     if kind != .source || !navCoordinator.state.isAnimating {
-                        self.globalFrame = $0
+                        self.frameProvider = $0
                     }
                 }
             }
@@ -54,35 +54,34 @@ struct PhxHeroView<R: CustomRegistry>: View {
     
     @ViewBuilder
     func withFramePreference<V: View>(_ content: V) -> some View {
+        let frameAndElement = FrameAndElement(element: element, frameProvider: frameProvider?.0 ?? { .zero }, id: frameProvider?.1 ?? UUID())
         if kind == .source {
-            content.preference(key: HeroViewSourceKey.self, value: FrameAndElement(globalFrame: globalFrame ?? .zero, element: element))
+            content.preference(key: HeroViewSourceKey.self, value: frameAndElement)
         } else {
-            content.preference(key: HeroViewDestKey.self, value: FrameAndElement(globalFrame: globalFrame ?? .zero, element: element))
+            content.preference(key: HeroViewDestKey.self, value: frameAndElement)
         }
     }
 }
 
 private struct GlobalGeometryReader: UIViewRepresentable {
-    typealias UIViewType = View
+    typealias UIViewType = UIView
     
-    let callback: (CGRect) -> Void
+    let callback: ((() -> CGRect, UUID)) -> Void
     
-    func makeUIView(context: Context) -> View {
-        return View()
-    }
-    
-    func updateUIView(_ uiView: View, context: Context) {
-        uiView.callback = callback
-    }
-    
-    class View: UIView {
-        var callback: ((CGRect) -> Void)? = nil
-        
-        override func layoutSubviews() {
-            super.layoutSubviews()
-            
-            callback?(self.convert(bounds, to: nil))
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            callback(({ [weak view] in
+                guard let view = view else {
+                    return .zero
+                }
+                return view.convert(view.bounds, to: nil)
+            }, UUID()))
         }
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {
     }
 }
 
@@ -117,6 +116,11 @@ struct HeroViewDestKey: PreferenceKey {
 }
 
 struct FrameAndElement: Equatable {
-    let globalFrame: CGRect
     let element: Element
+    let frameProvider: () -> CGRect
+    let id: UUID
+    
+    static func ==(lhs: FrameAndElement, rhs: FrameAndElement) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

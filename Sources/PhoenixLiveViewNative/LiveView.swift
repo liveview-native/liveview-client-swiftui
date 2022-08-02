@@ -101,7 +101,7 @@ public struct LiveView<R: CustomRegistry>: View {
                             .environmentObject(navigationCoordinator)
                             .onPreferenceChange(HeroViewDestKey.self) { newDest in
                                 if let newDest {
-                                    navigationCoordinator.destRect = newDest.globalFrame
+                                    navigationCoordinator.destRect = newDest.frameProvider()
                                     navigationCoordinator.destElement = newDest.element
                                 }
                             }

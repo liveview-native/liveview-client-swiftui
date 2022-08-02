@@ -61,7 +61,7 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
             
         case .push:
             func doPushNavigation() {
-                navCoordinator.sourceRect = source?.globalFrame ?? .zero
+                navCoordinator.sourceRect = source?.frameProvider() ?? .zero
                 navCoordinator.sourceElement = source?.element
                 navCoordinator.overrideOverlayImage = overrideView
                 navCoordinator.navigationPath.append(dest)
