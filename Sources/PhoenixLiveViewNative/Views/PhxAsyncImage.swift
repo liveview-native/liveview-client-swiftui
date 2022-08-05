@@ -34,13 +34,12 @@ struct PhxAsyncImage: View {
         AsyncImage(url: url, scale: scale ?? 1, transaction: Transaction(animation: .default)) { phase in
             switch phase {
             case .success(let image):
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: contentMode)
+                let configured = configureImage(image)
+                configured
                     // when using an AsyncImage in the hero transition overlay, it never resolves to the actual image
                     // so when the source AsyncImage resolves, we use a preference to communicate the resulting
                     // Image up to the overlay view, in case it needs to be used
-                    .preference(key: HeroViewOverrideKey.self, value: image.resizable())
+                    .preference(key: HeroViewOverrideKey.self, value: HeroViewOverride(configured))
             case .failure(let error):
                 Text(error.localizedDescription)
             case .empty:
@@ -49,5 +48,11 @@ struct PhxAsyncImage: View {
                 EmptyView()
             }
         }
+    }
+    
+    private func configureImage(_ image: Image) -> some View {
+        image
+            .resizable()
+            .aspectRatio(contentMode: contentMode)
     }
 }

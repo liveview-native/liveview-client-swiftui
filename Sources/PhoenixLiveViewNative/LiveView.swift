@@ -64,6 +64,7 @@ public struct LiveView<R: CustomRegistry>: View {
                     GeometryReader { _ in
                         navHeroOverlayView
                             .frame(width: navigationCoordinator.currentRect.width, height: navigationCoordinator.currentRect.height)
+                            .clipped()
                             // if we use the GeometryReader, the offset is with respect to the global origin,
                             // if not, it's with respect to the center of the screen.
                             // so, we wrap the view in a GeometryReader, but don't actually use the proxy
@@ -83,8 +84,8 @@ public struct LiveView<R: CustomRegistry>: View {
     private var navHeroOverlayView: some View {
         // some views (AsyncImage) don't work properly when used in the animation
         // so they can be overriden with a preference
-        if let overrideImage = navigationCoordinator.overrideOverlayImage {
-            overrideImage
+        if let overrideView = navigationCoordinator.overrideOverlayView {
+            overrideView
         } else {
             coordinator.builder.fromElements(navigationCoordinator.sourceElement!.children(), coordinator: coordinator, url: coordinator.currentURL)
         }

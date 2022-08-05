@@ -85,8 +85,22 @@ private struct GlobalGeometryReader: UIViewRepresentable {
     }
 }
 
+struct HeroViewOverride: Equatable {
+    let view: AnyView
+    let id: UUID
+    
+    init(_ view: some View) {
+        self.view = AnyView(view)
+        self.id = UUID()
+    }
+    
+    static func ==(lhs: HeroViewOverride, rhs: HeroViewOverride) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
 struct HeroViewOverrideKey: PreferenceKey {
-    typealias Value = Image?
+    typealias Value = HeroViewOverride?
     
     static var defaultValue: Value = nil
     
