@@ -332,7 +332,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         var connectParams = config.connectParams?(currentURL) ?? [:]
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = phxCSRFToken
-        connectParams["_native"] = true
+        connectParams["_platform"] = "ios"
         
         let params: Payload = [
             "session": phxSession,
