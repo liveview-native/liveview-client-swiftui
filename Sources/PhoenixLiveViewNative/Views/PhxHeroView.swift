@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct PhxHeroView<R: CustomRegistry>: View {
+/// `<phx-hero>`, wraps the source and destination elements that are used for the hero transition when navigating.
+public struct PhxHeroView<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let kind: Kind
@@ -33,7 +34,7 @@ struct PhxHeroView<R: CustomRegistry>: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         withFramePreference(context.buildChildren(of: element))
             .background {
                 // can't use GeometryReader because on iOS 16, it returns the wrong frame in the global coordinate space during the navigation transition

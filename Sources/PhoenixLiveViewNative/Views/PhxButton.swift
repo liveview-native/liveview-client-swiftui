@@ -8,7 +8,8 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxButton<R: CustomRegistry>: View {
+/// `<button>`, a tappable element.
+public struct PhxButton<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let clickEvent: String?
@@ -21,7 +22,7 @@ struct PhxButton<R: CustomRegistry>: View {
         self.disabled = element.hasAttr("disabled")
     }
     
-    var body: some View {
+    public var body: some View {
         Button(action: self.handleClick) {
             context.buildChildren(of: element)
         }

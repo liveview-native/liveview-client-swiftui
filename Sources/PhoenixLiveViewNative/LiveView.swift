@@ -12,7 +12,17 @@ import LVNObjC
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
-/// By default, a `LiveView` attempts to connect immediately when it appears. While in states other than ``LiveViewCoordinator/State-swift.enum/connected``, this view only provides a basic text description of the state.
+/// The `LiveView` attempts to connect immediately when it appears.
+///
+/// While in states other than ``LiveViewCoordinator/State-swift.enum/connected``, this view only provides a basic text description of the state. The loading view can be customized with a custom registry and the ``CustomRegistry/loadingView(for:state:)-vg2v`` method.
+///
+/// ## Topics
+/// ### Creating a LiveView
+/// - ``init(coordinator:)``
+/// ### Supporting Types
+/// - ``body``
+/// ### See Also
+/// - ``LiveViewModel``
 public struct LiveView<R: CustomRegistry>: View {
     private let coordinator: LiveViewCoordinator<R>
     @State private var hasAppeared = false

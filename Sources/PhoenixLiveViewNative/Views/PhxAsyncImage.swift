@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct PhxAsyncImage: View {
+/// `<asyncimage>`, displays images loaded from a remote URL.
+public struct PhxAsyncImage: View {
     private let url: URL?
     private let scale: Double?
     private let contentMode: ContentMode
@@ -28,7 +29,7 @@ struct PhxAsyncImage: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         // todo: do we want to customize the loading state for this
         // todo: this will use URLCache.shared by default, do we want to customize that?
         AsyncImage(url: url, scale: scale ?? 1, transaction: Transaction(animation: .default)) { phase in

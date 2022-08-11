@@ -44,7 +44,7 @@ public class LiveViewModel<R: CustomRegistry>: ObservableObject {
 
 /// A form model stores the working copy of the data for a specific `<form>` element.
 ///
-/// To obtain a form model, use ``LiveViewModel/getForm(elementID:)``.
+/// To obtain a form model, use ``LiveViewModel/getForm(elementID:)`` or the `\.formModel` environment key.
 public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// The value of the `id` attribute of the `<form>` element this model is for.
     public let elementID: String

@@ -25,8 +25,6 @@ struct BuiltinRegistry {
             PhxZStack<R>(element: element, context: context)
         case "button":
             PhxButton<R>(element: element, context: context)
-        case "form":
-            PhxForm<R>(element: element, context: context)
         case "image":
             PhxImage(element: element, context: context)
         case "asyncimage":
@@ -41,14 +39,17 @@ struct BuiltinRegistry {
             } else {
                 PhxNavigationLink(element: element, context: context)
             }
-        case "hero":
-            PhxHeroView(element: element, context: context)
         case "list":
             PhxList<R>(element: element, context: context)
         case "rectangle":
             PhxShape(element: element, shape: Rectangle())
         case "roundedrectangle":
             PhxShape(element: element, shape: RoundedRectangle(from: element))
+            
+        case "phx-form":
+            PhxForm<R>(element: element, context: context)
+        case "phx-hero":
+            PhxHeroView(element: element, context: context)
         default:
             // log here that view type cannot be found
             EmptyView()

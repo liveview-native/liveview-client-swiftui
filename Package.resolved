@@ -1,34 +1,32 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "SwiftPhoenixClient",
-        "repositoryURL": "https://github.com/davidstump/SwiftPhoenixClient.git",
-        "state": {
-          "branch": null,
-          "revision": "613989bf2e562d8a851ea83741681c3439353b45",
-          "version": "5.0.0"
-        }
-      },
-      {
-        "package": "SwiftSoup",
-        "repositoryURL": "https://github.com/scinfu/SwiftSoup.git",
-        "state": {
-          "branch": null,
-          "revision": "774dc9c7213085db8aa59595e27c1cd22e428904",
-          "version": "2.3.2"
-        }
-      },
-      {
-        "package": "Introspect",
-        "repositoryURL": "https://github.com/siteline/SwiftUI-Introspect.git",
-        "state": {
-          "branch": null,
-          "revision": "f2616860a41f9d9932da412a8978fec79c06fe24",
-          "version": "0.1.4"
-        }
+  "pins" : [
+    {
+      "identity" : "swiftphoenixclient",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/davidstump/SwiftPhoenixClient.git",
+      "state" : {
+        "revision" : "613989bf2e562d8a851ea83741681c3439353b45",
+        "version" : "5.0.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup.git",
+      "state" : {
+        "revision" : "6778575285177365cbad3e5b8a72f2a20583cfec",
+        "version" : "2.4.3"
+      }
+    },
+    {
+      "identity" : "swiftui-introspect",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/siteline/SwiftUI-Introspect.git",
+      "state" : {
+        "revision" : "f2616860a41f9d9932da412a8978fec79c06fe24",
+        "version" : "0.1.4"
+      }
+    }
+  ],
+  "version" : 2
 }

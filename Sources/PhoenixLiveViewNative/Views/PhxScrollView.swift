@@ -8,7 +8,8 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxScrollView<R: CustomRegistry>: View {
+/// `<scrollview>`, allows its content to be scrolled if it's larger than the available space.
+public struct PhxScrollView<R: CustomRegistry>: View {
     let element: Element
     let context: LiveContext<R>
     
@@ -17,7 +18,7 @@ struct PhxScrollView<R: CustomRegistry>: View {
         self.context = context
     }
     
-    var body: some View {
+    public var body: some View {
         ScrollView {
             context.buildChildren(of: element)
         }

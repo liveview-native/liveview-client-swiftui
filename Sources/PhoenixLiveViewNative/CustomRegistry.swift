@@ -13,6 +13,18 @@ public typealias Element = SwiftSoup.Element
 public typealias Attribute = SwiftSoup.Attribute
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
+///
+/// ## Topics
+/// ### Custom Tags
+/// - ``CustomRegistry/supportedTagNames``
+/// - ``CustomRegistry/lookup(_:element:context:)``
+/// ### Custom Attributes
+/// - ``CustomRegistry/supportedAttributes``
+/// - ``CustomRegistry/applyCustomAttribute(_:element:context:)``
+/// ### Customizing the Loading View
+/// - ``CustomRegistry/loadingView(for:state:)-vg2v``
+/// ### See Also
+/// - ``EmptyRegistry``
 public protocol CustomRegistry {
     /// The type of view this registry returns from .
     ///
@@ -71,7 +83,9 @@ extension CustomRegistry where LoadingView == Never {
 }
 
 /// The empty registry is the default ``CustomRegistry`` implementation that does not provide any views or modifiers.
-public struct EmptyRegistry: CustomRegistry {
+public struct EmptyRegistry {
+}
+extension EmptyRegistry: CustomRegistry {
     public static let supportedTagNames: [String] = []
     public static let supportedAttributes: [String] = []
     

@@ -23,6 +23,7 @@ public struct LiveViewConfiguration {
     /// The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.
     public var urlSession: URLSession = .shared
     
+    /// Constructs a default, empty configuration.
     public init() {
     }
     

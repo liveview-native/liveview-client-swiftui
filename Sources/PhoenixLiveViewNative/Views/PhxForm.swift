@@ -8,7 +8,8 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxForm<R: CustomRegistry>: View {
+/// `<phx-form>`, a container for form elements.
+public struct PhxForm<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let id: String
@@ -26,7 +27,7 @@ struct PhxForm<R: CustomRegistry>: View {
         self.id = try! element.attr("id")
     }
     
-    var body: some View {
+    public var body: some View {
         context.with(formModel: model).buildChildren(of: element)
             .environment(\.formModel, model)
             .onChange(of: element, perform: { newValue in

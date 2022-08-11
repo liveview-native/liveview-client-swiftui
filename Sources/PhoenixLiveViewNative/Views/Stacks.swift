@@ -8,33 +8,36 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxHStack<R: CustomRegistry>: View {
+/// `<hstack>`, lays out children in a horizontal line.
+public struct PhxHStack<R: CustomRegistry>: View {
     var element: Element
     var context: LiveContext<R>
     
-    var body: some View {
+    public var body: some View {
         HStack {
             context.buildChildren(of: element)
         }
     }
 }
 
-struct PhxVStack<R: CustomRegistry>: View {
+/// `<vstack>`, lays out children in a vertical line
+public struct PhxVStack<R: CustomRegistry>: View {
     var element: Element
     var context: LiveContext<R>
 
-    var body: some View {
+    public var body: some View {
         VStack {
             context.buildChildren(of: element)
         }
     }
 }
 
-struct PhxZStack<R: CustomRegistry>: View {
+/// `<zstack>`, lays out children on top of each other, from back to front.
+public struct PhxZStack<R: CustomRegistry>: View {
     var element: Element
     var context: LiveContext<R>
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             context.buildChildren(of: element)
         }

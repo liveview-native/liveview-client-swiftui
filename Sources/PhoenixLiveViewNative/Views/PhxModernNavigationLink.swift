@@ -8,8 +8,9 @@
 import SwiftUI
 import Combine
 
+/// `<navigationlink>`, links to another live view page.
 @available(iOS 16.0, *)
-struct PhxModernNavigationLink<R: CustomRegistry>: View {
+public struct PhxModernNavigationLink<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let disabled: Bool
@@ -27,7 +28,7 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
     }
     
     @ViewBuilder
-    var body: some View {
+    public var body: some View {
         if let linkOpts = linkOpts,
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
             Button(action: activateNavigationLink) {

@@ -8,7 +8,8 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxTextField<R: CustomRegistry>: View {
+/// `<textfield>`, a text field form element (must be contained inside a `<form>`).
+public struct PhxTextField<R: CustomRegistry>: View {
     private let label: String
     private let name: String
     private let placeholder: String?
@@ -46,8 +47,9 @@ struct PhxTextField<R: CustomRegistry>: View {
         self.formModel = context.formModel!
     }
     
-    var body: some View {
+    public var body: some View {
         return PhxWrappedTextField(formModel: formModel, name: name, placeholder: placeholder, borderStyle: borderStyle, clearButtonMode: clearButtonMode, value: $value, becomeFirstResponder: $becomeFirstResponder)
+            .background(Color.random)
             .frame(height: 44)
             .onAppear {
                 // If the DOM changes, the text field can get re-created and destroyed even though
@@ -55,6 +57,12 @@ struct PhxTextField<R: CustomRegistry>: View {
                     becomeFirstResponder = true
                 }
             }
+    }
+}
+
+private extension Color {
+    static var random: Color {
+        [.red, .green, .blue, .brown, .yellow, .purple, .gray].randomElement()!
     }
 }
 

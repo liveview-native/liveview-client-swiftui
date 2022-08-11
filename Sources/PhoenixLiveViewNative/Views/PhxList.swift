@@ -8,7 +8,8 @@
 import SwiftUI
 import SwiftSoup
 
-struct PhxList<R: CustomRegistry>: View {
+/// `<list>`, arranges its children in a vertically scrolling list.
+public struct PhxList<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let deleteEvent: String?
@@ -19,7 +20,7 @@ struct PhxList<R: CustomRegistry>: View {
         self.deleteEvent = element.attrIfPresent("phx-delete")
     }
     
-    var body: some View {
+    public var body: some View {
         List {
             forEach(elements: element.children(), context: context)
                 .onDelete(perform: onDeleteHandler)
