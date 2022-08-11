@@ -1,0 +1,14 @@
+<list nav-title="Cats!">
+  <%= for {name, favorite} <- @cats_and_favorites do %>
+    <navigationlink id={name} data-phx-link="redirect" data-phx-link-state="push" data-phx-href={Routes.live_path(@socket, LvnTutorialWeb.CatLive, name)}>
+      <hstack>
+        <asyncimage src={"/images/cats/#{name}.jpg"} frame-width="100" frame-height="100" />
+        <text><%= name %></text>
+        <spacer />
+        <button phx-click="toggle-favorite" phx-value-name={name}>
+          <image system-name={if favorite, do: "star.fill", else: "star"} symbol-color={if favorite, do: "#f3c51a", else: "#000000"} />
+        </button>
+      </hstack>
+    </navigationlink>
+  <% end %>
+</list>

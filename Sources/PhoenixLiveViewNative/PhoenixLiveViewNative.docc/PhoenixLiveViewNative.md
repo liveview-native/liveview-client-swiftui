@@ -10,7 +10,7 @@
 
 ### Essentials
 
-- <doc:PhoenixLiveViewNative>
+- <doc:YourFirstApp>
 - <doc:GettingStarted>
 - ``LiveView``
 - ``LiveViewCoordinator``
