@@ -5,4 +5,4 @@
 xcuserdata/
 .swiftpm
 docc_build/
-docc_out/
+docs/
