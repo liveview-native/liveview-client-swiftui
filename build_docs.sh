@@ -10,10 +10,8 @@ if [ ! -d docs ]; then
 	git worktree add docs docs
 fi
 
-# remove any stale files
-rm -rf docs/*
-
-xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/PhoenixLiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui
+# pretty print json so that everything's in a stable order and doesn't produce massive diffs every time
+DOCC_JSON_PRETTY_PRINT="YES" xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/PhoenixLiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui
 
 # add index page to root with redirect to package docs
 cat > docs/index.html << EOF
