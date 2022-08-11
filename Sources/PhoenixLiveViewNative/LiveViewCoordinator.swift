@@ -212,7 +212,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
         
         if let diffPayload = diffPayload,
-           let elements = try? self.handleDiff(payload: diffPayload) {
+           let elements = try? self.handleDiff(payload: diffPayload, baseURL: self.currentURL) {
             self.elements = elements
         }
     }
@@ -253,15 +253,17 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.phxID = try mainDiv.attr("id")
     }
     
-    private func handleDiff(payload: Payload) throws -> Elements {
+    private func handleDiff(payload: Payload, baseURL: URL) throws -> Elements {
         let diff = try RootDiff(from: FragmentDecoder(data: payload))
         self.rendered = try self.rendered.merge(with: diff)
-        return try self.parseDOM(html: self.rendered.buildString())
+        return try self.parseDOM(html: self.rendered.buildString(), baseURL: baseURL)
     }
     
-    private nonisolated func parseDOM(html: String) throws -> Elements {
-        let document = try SwiftSoup.parseBodyFragment(html)
-        return try document.select("body")[0].children()
+    private nonisolated func parseDOM(html: String, baseURL: URL) throws -> Elements {
+        // we parse the DOM as XML rather than HTML, because we don't want it to apply browser-specific HTML transformations
+        // such as <image> -> <img>
+        let document = try Parser.xmlParser().parseInput(html, baseURL.absoluteString)
+        return document.children()
     }
 
     private func connectSocket() async throws {
@@ -354,7 +356,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 return
             }
             Task { @MainActor in
-                self.elements = try! self.handleDiff(payload: message.payload)
+                self.elements = try! self.handleDiff(payload: message.payload, baseURL: self.currentURL)
             }
         }
         
@@ -378,7 +380,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-        let elements = try! self.parseDOM(html: self.rendered.buildString())
+        let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
         self.state = .connected
         self.elements = elements
     }
