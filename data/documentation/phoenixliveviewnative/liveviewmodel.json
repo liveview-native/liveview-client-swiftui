@@ -1,0 +1,445 @@
+{
+  "abstract": [
+    {
+      "text": "The working-copy data model for a ",
+      "type": "text"
+    },
+    {
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView",
+      "isActive": true,
+      "type": "reference"
+    },
+    {
+      "text": ".",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:21PhoenixLiveViewNative0bC5ModelC",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "class"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "LiveViewModel"
+      }
+    ],
+    "modules": [
+      {
+        "name": "PhoenixLiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "LiveViewModel"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Class",
+    "symbolKind": "class",
+    "title": "LiveViewModel"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "class"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "LiveViewModel"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "genericParameter",
+              "text": "R"
+            },
+            {
+              "kind": "text",
+              "text": "> "
+            },
+            {
+              "kind": "keyword",
+              "text": "where"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "R"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:21PhoenixLiveViewNative14CustomRegistryP",
+              "text": "CustomRegistry"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "In a view in the LiveView tree, a model can be obtained using ",
+              "type": "text"
+            },
+            {
+              "code": "@EnvironmentObject",
+              "type": "codeVoice"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://PhoenixLiveViewNative/7Combine16ObservableObjectP": {
+      "identifier": "doc://PhoenixLiveViewNative/7Combine16ObservableObjectP",
+      "title": "Combine.ObservableObject",
+      "type": "unresolvable"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "PhoenixLiveViewNative",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/customregistry"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel": {
+      "abstract": [
+        {
+          "text": "A form model stores the working copy of the data for a specific ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormModel",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formmodel"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView": {
+      "abstract": [
+        {
+          "text": "The SwiftUI root view for a Phoenix LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveView",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveview"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel": {
+      "abstract": [
+        {
+          "text": "The working-copy data model for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewModel"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewModel",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveviewmodel"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel/ObservableObject-Implementations": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel/ObservableObject-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "ObservableObject Implementations",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveviewmodel/observableobject-implementations"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel/getForm(elementID:)": {
+      "abstract": [
+        {
+          "text": "Get or create a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " for the ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element with the given ID.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "getForm"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "elementID"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative9FormModelC",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel/getForm(elementID:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "getForm(elementID:)",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveviewmodel/getform(elementid:)"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/7Combine16ObservableObjectP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel/getForm(elementID:)"
+      ],
+      "title": "Instance Methods"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewModel/ObservableObject-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/phoenixliveviewnative/liveviewmodel"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,686 @@
+{
+  "abstract": [
+    {
+      "text": "A property wrapper that stores its data in the ",
+      "type": "text"
+    },
+    {
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+      "isActive": true,
+      "type": "reference"
+    },
+    {
+      "text": " of the nearest parent ",
+      "type": "text"
+    },
+    {
+      "code": "<form>",
+      "type": "codeVoice"
+    },
+    {
+      "text": " element.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:21PhoenixLiveViewNative9FormStateV",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "struct"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "FormState"
+      }
+    ],
+    "modules": [
+      {
+        "name": "PhoenixLiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "FormState"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Structure",
+    "symbolKind": "struct",
+    "title": "FormState"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "attribute",
+              "text": "@propertyWrapper"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "struct"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "FormState"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "genericParameter",
+              "text": "Value"
+            },
+            {
+              "kind": "text",
+              "text": "> "
+            },
+            {
+              "kind": "keyword",
+              "text": "where"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "Value"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:21PhoenixLiveViewNative9FormValueP",
+              "text": "FormValue"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "code": "@FormState",
+              "type": "codeVoice"
+            },
+            {
+              "text": " represents the data that is considered the “value” of a form element (such as the string in a text field, or the state of a checkbox).",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "Additional data that’s tied to the form element but is not the primary value should use SwiftUI’s  ",
+              "type": "text"
+            },
+            {
+              "code": "@State",
+              "type": "codeVoice"
+            },
+            {
+              "text": " property wrapper.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The key used in the form model for this data is the ",
+              "type": "text"
+            },
+            {
+              "code": "name",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute of the element this property wrapper is placed on. The property wrapper will",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "pull the element name from the nearest parent view that corresponds to a DOM element. The framework uses the ",
+              "type": "text"
+            },
+            {
+              "code": "\\.element",
+              "type": "codeVoice"
+            },
+            {
+              "text": " SwiftUI environment",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "key to determine which element the view belongs to.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "To use this property wrapper, the wrapped type must be an optional and the inner type must implement ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "to define how it’s converted to/from the serialized form data representation.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "anchor": "Example",
+          "level": 2,
+          "text": "Example",
+          "type": "heading"
+        },
+        {
+          "code": [
+            "struct IntField: View {",
+            "    @FormState private var value: Int?",
+            "",
+            "    init(element: Element, context: LiveContext<some CustomRegistry>) {",
+            "    }",
+            "",
+            "    var body: some View {",
+            "        TextField(\"My number\", value: $value, format: .number)",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://PhoenixLiveViewNative/7SwiftUI15DynamicPropertyP": {
+      "identifier": "doc://PhoenixLiveViewNative/7SwiftUI15DynamicPropertyP",
+      "title": "SwiftUI.DynamicProperty",
+      "type": "unresolvable"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "PhoenixLiveViewNative",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormControls": {
+      "abstract": [
+        {
+          "text": "See how to build custom form controls that integrate with the form data model and events.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormControls",
+      "kind": "article",
+      "role": "article",
+      "title": "Building Form Controls",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formcontrols"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel": {
+      "abstract": [
+        {
+          "text": "A form model stores the working copy of the data for a specific ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormModel",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formmodel"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState": {
+      "abstract": [
+        {
+          "text": "A property wrapper that stores its data in the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " of the nearest parent ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormState",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/DynamicProperty-Implementations": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/DynamicProperty-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "DynamicProperty Implementations",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate/dynamicproperty-implementations"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/init()": {
+      "abstract": [
+        {
+          "text": "Convenience initializer that creates a ",
+          "type": "text"
+        },
+        {
+          "code": "FormState",
+          "type": "codeVoice"
+        },
+        {
+          "text": " property wrapper with ",
+          "type": "text"
+        },
+        {
+          "code": "nil",
+          "type": "codeVoice"
+        },
+        {
+          "text": " as its default value.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "()"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/init()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init()",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate/init()"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/init(default:)": {
+      "abstract": [
+        {
+          "text": "Creates a ",
+          "type": "text"
+        },
+        {
+          "code": "FormState",
+          "type": "codeVoice"
+        },
+        {
+          "text": " property wrapper with a default value that will be used when the form model does not have a value, or it has a value that cannot be converted to the ",
+          "type": "text"
+        },
+        {
+          "code": "Value",
+          "type": "codeVoice"
+        },
+        {
+          "text": " type.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "default"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative9FormStateV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/init(default:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init(default:)",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate/init(default:)"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/projectedValue": {
+      "abstract": [
+        {
+          "text": "A binding that is backed by the form model that can be used as the storage for other views or controls.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "projectedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI7BindingV",
+          "text": "Binding"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative9FormStateV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/projectedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "projectedValue",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate/projectedvalue"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/wrappedValue": {
+      "abstract": [
+        {
+          "text": "The value stored by the form model.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative9FormStateV5Valuexmfp",
+          "text": "Value"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/wrappedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "wrappedValue",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate/wrappedvalue"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue": {
+      "abstract": [
+        {
+          "text": "A form value is any type that can be stored in a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormValue",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formvalue"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/7SwiftUI15DynamicPropertyP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormControls",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel"
+      ],
+      "title": "Form Controls"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/init()",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/init(default:)"
+      ],
+      "title": "Initializers"
+    },
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/projectedValue",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/wrappedValue"
+      ],
+      "title": "Instance Properties"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/DynamicProperty-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/phoenixliveviewnative/formstate"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

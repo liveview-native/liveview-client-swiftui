@@ -1,0 +1,570 @@
+{
+  "abstract": [
+    {
+      "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "PhoenixLiveViewNative"
+      }
+    ],
+    "role": "collectionGroup",
+    "title": "Supported Elements"
+  },
+  "references": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "PhoenixLiveViewNative",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AsyncImage": {
+      "abstract": [
+        {
+          "code": "<asyncimage>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays images loaded from a remote URL.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AsyncImage",
+      "kind": "article",
+      "role": "article",
+      "title": "AsyncImage",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/asyncimage"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button": {
+      "abstract": [
+        {
+          "code": "<button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a tappable element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button",
+      "kind": "article",
+      "role": "article",
+      "title": "Button",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/button"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/GettingStarted": {
+      "abstract": [
+        {
+          "text": "See how to quickly get up and running displaying a LiveView in your app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/GettingStarted",
+      "kind": "article",
+      "role": "article",
+      "title": "Getting Started",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/gettingstarted"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/HStack": {
+      "abstract": [
+        {
+          "code": "<hstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children in a horizontal line.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/HStack",
+      "kind": "article",
+      "role": "article",
+      "title": "HStack",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/hstack"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Hero": {
+      "abstract": [
+        {
+          "code": "<phx-hero>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", wraps the source and destination elements that are used for the hero transition when navigating.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Hero",
+      "kind": "article",
+      "role": "article",
+      "title": "Hero",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/hero"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Image": {
+      "abstract": [
+        {
+          "code": "<image>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays SF Symbols or images from your app’s asset catalog.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Image",
+      "kind": "article",
+      "role": "article",
+      "title": "Image",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/image"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/List": {
+      "abstract": [
+        {
+          "code": "<list>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", arranges its children in a vertically scrolling list.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/List",
+      "kind": "article",
+      "role": "article",
+      "title": "List",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/list"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView": {
+      "abstract": [
+        {
+          "text": "The SwiftUI root view for a Phoenix LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveView",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveview"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration": {
+      "abstract": [
+        {
+          "text": "An object that configures the behavior of a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewConfiguration"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewConfiguration"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewConfiguration",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveviewconfiguration"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewCoordinator",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveviewcoordinator"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/NavigationLink": {
+      "abstract": [
+        {
+          "code": "<navigationlink>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", links to another live view page.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/NavigationLink",
+      "kind": "article",
+      "role": "article",
+      "title": "NavigationLink",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/navigationlink"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxForm": {
+      "abstract": [
+        {
+          "code": "<phx-form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a container for form elements.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxForm",
+      "kind": "article",
+      "role": "article",
+      "title": "PhxForm",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/phxform"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxSubmitButton": {
+      "abstract": [
+        {
+          "code": "<phx-submit-button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", special button that triggers submission of the form it’s contained in when pressed.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxSubmitButton",
+      "kind": "article",
+      "role": "article",
+      "title": "PhxSubmitButton",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/phxsubmitbutton"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Rectangle": {
+      "abstract": [
+        {
+          "code": "<rectangle>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a rectangle shape.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Rectangle",
+      "kind": "article",
+      "role": "article",
+      "title": "Rectangle",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/rectangle"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/RoundedRectangle": {
+      "abstract": [
+        {
+          "code": "<roundedrectangle>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a rectangle shape with rounded corners.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/RoundedRectangle",
+      "kind": "article",
+      "role": "article",
+      "title": "RoundedRectangle",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/roundedrectangle"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ScrollView": {
+      "abstract": [
+        {
+          "code": "<scrollview>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", allows its content to be scrolled if it’s larger than the available space.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ScrollView",
+      "kind": "article",
+      "role": "article",
+      "title": "ScrollView",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/scrollview"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Spacer": {
+      "abstract": [
+        {
+          "code": "<spacer>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", an empty view that can grow to take up as much space as needed.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Spacer",
+      "kind": "article",
+      "role": "article",
+      "title": "Spacer",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/spacer"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedAttributes": {
+      "abstract": [
+        {
+          "text": "Common attributes supported by all DOM elements.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedAttributes",
+      "kind": "article",
+      "role": "article",
+      "title": "Supported Attributes",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/supportedattributes"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Text": {
+      "abstract": [
+        {
+          "code": "<text>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays text.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Text",
+      "kind": "article",
+      "role": "article",
+      "title": "Text",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/text"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/TextField": {
+      "abstract": [
+        {
+          "code": "<textfield>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a text field form element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/TextField",
+      "kind": "article",
+      "role": "article",
+      "title": "TextField",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/textfield"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/VStack": {
+      "abstract": [
+        {
+          "code": "<vstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children in a vertical line",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/VStack",
+      "kind": "article",
+      "role": "article",
+      "title": "VStack",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/vstack"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ZStack": {
+      "abstract": [
+        {
+          "code": "<zstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children on top of each other, from back to front.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ZStack",
+      "kind": "article",
+      "role": "article",
+      "title": "ZStack",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/zstack"
+    },
+    "doc://PhoenixLiveViewNative/tutorials/YourFirstApp": {
+      "abstract": [
+        {
+          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/tutorials/YourFirstApp",
+      "kind": "overview",
+      "role": "overview",
+      "title": "Your First LiveViewNative App",
+      "type": "topic",
+      "url": "/tutorials/yourfirstapp"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/tutorials/YourFirstApp",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/GettingStarted",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedAttributes"
+      ],
+      "title": "Essentials"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/HStack",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/VStack",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ZStack",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Spacer",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ScrollView",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/List"
+      ],
+      "title": "Layout"
+    },
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Text",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Image",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AsyncImage",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/NavigationLink",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Hero",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button"
+      ],
+      "title": "Content"
+    },
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxForm",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/TextField",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxSubmitButton"
+      ],
+      "title": "Forms"
+    },
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Rectangle",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/RoundedRectangle"
+      ],
+      "title": "Shapes"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/phoenixliveviewnative/supportedelements"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

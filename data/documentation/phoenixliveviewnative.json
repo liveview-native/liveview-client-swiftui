@@ -1,0 +1,654 @@
+{
+  "hierarchy": {
+    "paths": [
+      []
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "PhoenixLiveViewNative",
+    "modules": [
+      {
+        "name": "PhoenixLiveViewNative"
+      }
+    ],
+    "role": "collection",
+    "roleHeading": "Framework",
+    "symbolKind": "module",
+    "title": "PhoenixLiveViewNative"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "PhoenixLiveViewNative",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomAttribute": {
+      "abstract": [
+        {
+          "text": "Use the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " protocol to define how custom attributes in the DOM are handled.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomAttribute",
+      "kind": "article",
+      "role": "article",
+      "title": "Adding Custom Attributes",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/addcustomattribute"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomElement": {
+      "abstract": [
+        {
+          "text": "Use the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " protocol to define how DOM elements are converted to SwiftUI views.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomElement",
+      "kind": "article",
+      "role": "article",
+      "title": "Adding Custom Elements",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/addcustomelement"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AnyFormValue": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "typealias"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "AnyFormValue"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AnyFormValue",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "AnyFormValue"
+        }
+      ],
+      "role": "symbol",
+      "title": "AnyFormValue",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/anyformvalue"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Attribute": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "typealias"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Attribute"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Attribute",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Attribute"
+        }
+      ],
+      "role": "symbol",
+      "title": "Attribute",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/attribute"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/customregistry"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Element": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "typealias"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Element"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Element",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Element"
+        }
+      ],
+      "role": "symbol",
+      "title": "Element",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/element"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormControls": {
+      "abstract": [
+        {
+          "text": "See how to build custom form controls that integrate with the form data model and events.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormControls",
+      "kind": "article",
+      "role": "article",
+      "title": "Building Form Controls",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formcontrols"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel": {
+      "abstract": [
+        {
+          "text": "A form model stores the working copy of the data for a specific ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormModel",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formmodel"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState": {
+      "abstract": [
+        {
+          "text": "A property wrapper that stores its data in the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " of the nearest parent ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormState",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue": {
+      "abstract": [
+        {
+          "text": "A form value is any type that can be stored in a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormValue",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formvalue"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/GettingStarted": {
+      "abstract": [
+        {
+          "text": "See how to quickly get up and running displaying a LiveView in your app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/GettingStarted",
+      "kind": "article",
+      "role": "article",
+      "title": "Getting Started",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/gettingstarted"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveContext": {
+      "abstract": [
+        {
+          "text": "The context provides information at initialization-time to views in a LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveContext",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveContext",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/livecontext"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView": {
+      "abstract": [
+        {
+          "text": "The SwiftUI root view for a Phoenix LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveView",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveview"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration": {
+      "abstract": [
+        {
+          "text": "An object that configures the behavior of a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewConfiguration"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewConfiguration"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewConfiguration",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveviewconfiguration"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewCoordinator",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveviewcoordinator"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Payload": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "typealias"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Payload"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Payload",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Payload"
+        }
+      ],
+      "role": "symbol",
+      "title": "Payload",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/payload"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedAttributes": {
+      "abstract": [
+        {
+          "text": "Common attributes supported by all DOM elements.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedAttributes",
+      "kind": "article",
+      "role": "article",
+      "title": "Supported Attributes",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/supportedattributes"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/supportedelements"
+    },
+    "doc://PhoenixLiveViewNative/tutorials/YourFirstApp": {
+      "abstract": [
+        {
+          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/tutorials/YourFirstApp",
+      "kind": "overview",
+      "role": "overview",
+      "title": "Your First LiveViewNative App",
+      "type": "topic",
+      "url": "/tutorials/yourfirstapp"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/tutorials/YourFirstApp",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/GettingStarted",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedAttributes"
+      ],
+      "title": "Essentials"
+    },
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomElement",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomAttribute",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveContext"
+      ],
+      "title": "Custom DOM Elements and Attributes"
+    },
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormControls",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel"
+      ],
+      "title": "Form Controls"
+    },
+    {
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AnyFormValue",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Attribute",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Element",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Payload"
+      ],
+      "title": "Type Aliases"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/phoenixliveviewnative"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

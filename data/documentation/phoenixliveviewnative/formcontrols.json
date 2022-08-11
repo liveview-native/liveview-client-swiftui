@@ -1,0 +1,503 @@
+{
+  "abstract": [
+    {
+      "text": "See how to build custom form controls that integrate with the form data model and events.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormControls"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "PhoenixLiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "Building Form Controls"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Implement the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " protocol on the type that will represent the value of your form control. This protocol defines how values are converted to and from the string representation that’s stored in the form model and sent to the server.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "For example, if you’re building a custom toggle switch, implement it on ",
+              "type": "text"
+            },
+            {
+              "code": "Bool",
+              "type": "codeVoice"
+            },
+            {
+              "text": ":",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "extension Bool: FormValue {",
+            "    public var formValue: String {",
+            "        self ? \"true\" : \"false\"",
+            "    }",
+            "    ",
+            "    public init?(formValue: String) {",
+            "        self = formValue == \"true\"",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Then, in your view, add a property with the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " property wrapper and use it as you would a normal SwiftUI ",
+              "type": "text"
+            },
+            {
+              "code": "@State",
+              "type": "codeVoice"
+            },
+            {
+              "text": " property.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MicToggle: View {",
+            "    @FormState(default: false) var value: Bool",
+            "    ",
+            "    var body: some View {",
+            "        Button {",
+            "            value.toggle()",
+            "        } label: {",
+            "            Image(systemName: value ? \"mic.fill\" : \"mic.slash\")",
+            "        }",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "If the SwiftUI control you’re wrapping requires a ",
+              "type": "text"
+            },
+            {
+              "code": "Binding",
+              "type": "codeVoice"
+            },
+            {
+              "text": ", you can use the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/projectedValue",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " property accessed with the ",
+              "type": "text"
+            },
+            {
+              "code": "$",
+              "type": "codeVoice"
+            },
+            {
+              "text": " prefix to retrieve one:",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MicToggle: View {",
+            "    @FormState(default: false) var value: Bool",
+            "    ",
+            "    var body: some View {",
+            "        Toggle(isOn: $value) {",
+            "            Text(value ? \"Mic On\" : \"Mic Off\")",
+            "        }",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Use this view in your LiveView view tree using the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " (see ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomElement",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ") inside of a ",
+              "type": "text"
+            },
+            {
+              "code": "<phx-form>",
+              "type": "codeVoice"
+            },
+            {
+              "text": " element. It will participate in the form model automatically, and its value will be sent whenever change or submit events are triggered on the form.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "PhoenixLiveViewNative",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomElement": {
+      "abstract": [
+        {
+          "text": "Use the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " protocol to define how DOM elements are converted to SwiftUI views.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AddCustomElement",
+      "kind": "article",
+      "role": "article",
+      "title": "Adding Custom Elements",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/addcustomelement"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/customregistry"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel": {
+      "abstract": [
+        {
+          "text": "A form model stores the working copy of the data for a specific ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormModel",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formmodel"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState": {
+      "abstract": [
+        {
+          "text": "A property wrapper that stores its data in the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " of the nearest parent ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormState",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/projectedValue": {
+      "abstract": [
+        {
+          "text": "A binding that is backed by the form model that can be used as the storage for other views or controls.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "projectedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI7BindingV",
+          "text": "Binding"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative9FormStateV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState/projectedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "projectedValue",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formstate/projectedvalue"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue": {
+      "abstract": [
+        {
+          "text": "A form value is any type that can be stored in a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormValue",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/formvalue"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormState",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormValue",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/FormModel"
+      ],
+      "title": "Form Controls"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/phoenixliveviewnative/formcontrols"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

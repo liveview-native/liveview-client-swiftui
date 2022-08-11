@@ -1,0 +1,356 @@
+{
+  "abstract": [
+    {
+      "code": "<navigationlink>",
+      "type": "codeVoice"
+    },
+    {
+      "text": ", links to another live view page.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/NavigationLink"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "PhoenixLiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "NavigationLink"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Attributes",
+          "level": 2,
+          "text": "Attributes",
+          "type": "heading"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "data-phx-link",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": Must be ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "redirect",
+                      "type": "codeVoice"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "data-phx-link-state",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": How the link is presented. See ",
+                      "type": "text"
+                    },
+                    {
+                      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration/navigationMode-swift.property",
+                      "isActive": true,
+                      "type": "reference"
+                    },
+                    {
+                      "text": ".",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "push",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ": A new view is pushed onto the navigation stack",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "replace",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ": The current view is replaced.",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "unorderedList"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "data-phx-href",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": The link destination.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "disabled",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": If present, the link is disabled.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ],
+          "type": "unorderedList"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "PhoenixLiveViewNative",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AsyncImage": {
+      "abstract": [
+        {
+          "code": "<asyncimage>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays images loaded from a remote URL.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AsyncImage",
+      "kind": "article",
+      "role": "article",
+      "title": "AsyncImage",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/asyncimage"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button": {
+      "abstract": [
+        {
+          "code": "<button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a tappable element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button",
+      "kind": "article",
+      "role": "article",
+      "title": "Button",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/button"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Hero": {
+      "abstract": [
+        {
+          "code": "<phx-hero>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", wraps the source and destination elements that are used for the hero transition when navigating.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Hero",
+      "kind": "article",
+      "role": "article",
+      "title": "Hero",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/hero"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Image": {
+      "abstract": [
+        {
+          "code": "<image>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays SF Symbols or images from your app’s asset catalog.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Image",
+      "kind": "article",
+      "role": "article",
+      "title": "Image",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/image"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration/navigationMode-swift.property": {
+      "abstract": [
+        {
+          "text": "Whether this coordinators allows its live view to navigate.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "navigationMode"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative0bC13ConfigurationV14NavigationModeO",
+          "text": "NavigationMode"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewConfiguration/navigationMode-swift.property",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "navigationMode",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveviewconfiguration/navigationmode-swift.property"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/supportedelements"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Text": {
+      "abstract": [
+        {
+          "code": "<text>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays text.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Text",
+      "kind": "article",
+      "role": "article",
+      "title": "Text",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/text"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Text",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Image",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/AsyncImage",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Hero",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button"
+      ],
+      "title": "Content"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/phoenixliveviewnative/navigationlink"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "features": {
+    "docs": {}
+  },
+  "meta": {},
+  "theme": {
+    "code": {
+      "indentationWidth": 4
+    },
+    "colors": {
+      "article-background": "",
+      "button": {
+        "dark": {
+          "background": "",
+          "backgroundActive": "",
+          "backgroundHover": ""
+        },
+        "light": {
+          "background": "",
+          "backgroundActive": "",
+          "backgroundHover": ""
+        },
+        "text": ""
+      },
+      "generic-modal-background": "",
+      "grid": "",
+      "header-text": "",
+      "link": null,
+      "loading-placeholder": {
+        "background": ""
+      },
+      "not-found": {
+        "input-border": ""
+      },
+      "runtime-preview": {
+        "text": ""
+      },
+      "secondary-label": "",
+      "svg-icon": {
+        "fill-dark": "",
+        "fill-light": ""
+      },
+      "tabnav-item": {
+        "border-color": ""
+      },
+      "text": "",
+      "text-background": ""
+    },
+    "style": {
+      "button": {
+        "borderRadius": null
+      }
+    },
+    "typography": {
+      "html-font": ""
+    }
+  }
+}

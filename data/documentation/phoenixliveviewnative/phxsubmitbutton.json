@@ -1,0 +1,250 @@
+{
+  "abstract": [
+    {
+      "code": "<phx-submit-button>",
+      "type": "codeVoice"
+    },
+    {
+      "text": ", special button that triggers submission of the form it’s contained in when pressed.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxSubmitButton"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "PhoenixLiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "PhxSubmitButton"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Attributes",
+          "level": 2,
+          "text": "Attributes",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The submit button also supports all the attributes of ",
+              "type": "text"
+            },
+            {
+              "code": "<button>",
+              "type": "codeVoice"
+            },
+            {
+              "text": " (see ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ") except ",
+              "type": "text"
+            },
+            {
+              "code": "phx-click",
+              "type": "codeVoice"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "after-submit",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": What builtin action (if any) to perform after the form is submitted.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "none",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": " (default)",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "clear",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ": Clears the form data",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "unorderedList"
+                }
+              ]
+            }
+          ],
+          "type": "unorderedList"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "PhoenixLiveViewNative",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button": {
+      "abstract": [
+        {
+          "code": "<button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a tappable element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Button",
+      "kind": "article",
+      "role": "article",
+      "title": "Button",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/button"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxForm": {
+      "abstract": [
+        {
+          "code": "<phx-form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a container for form elements.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxForm",
+      "kind": "article",
+      "role": "article",
+      "title": "PhxForm",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/phxform"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/supportedelements"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/TextField": {
+      "abstract": [
+        {
+          "code": "<textfield>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a text field form element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/TextField",
+      "kind": "article",
+      "role": "article",
+      "title": "TextField",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/textfield"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/PhxForm",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/TextField"
+      ],
+      "title": "Forms"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/phoenixliveviewnative/phxsubmitbutton"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

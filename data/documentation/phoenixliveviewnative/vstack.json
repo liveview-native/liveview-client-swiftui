@@ -1,0 +1,264 @@
+{
+  "abstract": [
+    {
+      "code": "<vstack>",
+      "type": "codeVoice"
+    },
+    {
+      "text": ", lays out children in a vertical line",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/VStack"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "PhoenixLiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "VStack"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Attributes",
+          "level": 2,
+          "text": "Attributes",
+          "type": "heading"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "alignment",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": How children are aligned horizontally within the stack.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "center",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": " (default)",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "leading",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "trailing",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "unorderedList"
+                }
+              ]
+            }
+          ],
+          "type": "unorderedList"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "PhoenixLiveViewNative",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/HStack": {
+      "abstract": [
+        {
+          "code": "<hstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children in a horizontal line.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/HStack",
+      "kind": "article",
+      "role": "article",
+      "title": "HStack",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/hstack"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/List": {
+      "abstract": [
+        {
+          "code": "<list>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", arranges its children in a vertically scrolling list.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/List",
+      "kind": "article",
+      "role": "article",
+      "title": "List",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/list"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ScrollView": {
+      "abstract": [
+        {
+          "code": "<scrollview>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", allows its content to be scrolled if it’s larger than the available space.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ScrollView",
+      "kind": "article",
+      "role": "article",
+      "title": "ScrollView",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/scrollview"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Spacer": {
+      "abstract": [
+        {
+          "code": "<spacer>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", an empty view that can grow to take up as much space as needed.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Spacer",
+      "kind": "article",
+      "role": "article",
+      "title": "Spacer",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/spacer"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/supportedelements"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ZStack": {
+      "abstract": [
+        {
+          "code": "<zstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children on top of each other, from back to front.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ZStack",
+      "kind": "article",
+      "role": "article",
+      "title": "ZStack",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/zstack"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/HStack",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ZStack",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/Spacer",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/ScrollView",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/List"
+      ],
+      "title": "Layout"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/phoenixliveviewnative/vstack"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}
