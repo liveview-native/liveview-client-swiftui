@@ -1,5 +1,5 @@
 @Tutorial(time: 30, projectFiles: "cats.zip") {
-    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/")
+    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
     @Intro(title: "Your First LiveView") {
         In this tutorial, you'll build a simple LiveView app to show a list of cute cats.

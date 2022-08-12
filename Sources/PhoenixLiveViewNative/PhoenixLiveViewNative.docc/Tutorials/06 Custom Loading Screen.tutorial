@@ -1,5 +1,5 @@
 @Tutorial(time: 30) {
-    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/")
+    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
     @Intro(title: "Style the Loading Screen to Match Your App") {
         <#text#>

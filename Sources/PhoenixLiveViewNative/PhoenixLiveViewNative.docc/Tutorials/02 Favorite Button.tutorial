@@ -1,5 +1,5 @@
 @Tutorial(time: 30) {
-    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/")
+    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
     @Intro(title: "Storing User Favorites") {
         Now that you've built a simple app to display a list, let's add a bit of interactivity. To each list row, we'll add a favorite button that can be used to pin cats to the top of the list.

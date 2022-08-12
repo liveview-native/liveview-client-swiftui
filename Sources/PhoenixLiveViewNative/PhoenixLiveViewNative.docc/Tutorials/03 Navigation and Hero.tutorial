@@ -1,5 +1,5 @@
 @Tutorial(time: 30) {
-    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/")
+    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
     @Intro(title: "Navigation and Hero Transition") {
         The list of cats is great, but the images are a little small. Let's add a detail view so we can see them nice and big!
