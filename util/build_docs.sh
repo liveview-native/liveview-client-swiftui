@@ -10,8 +10,7 @@ if [ ! -d docs ]; then
 	git worktree add docs docs
 fi
 
-# pretty print json so that everything's in a stable order and doesn't produce massive diffs every time
-DOCC_JSON_PRETTY_PRINT="YES" xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/PhoenixLiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui
+xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/PhoenixLiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui
 
 # add index page to root with redirect to package docs
 cat > docs/index.html << EOF
@@ -24,5 +23,17 @@ cat > docs/index.html << EOF
 </body>
 </html>
 EOF
+
+
+# xcodebuild docbuild does not respect DOCC_JSON_PRETTYPRINT for some reason
+# so we re-format everything into a stable order as to not produce massive git diffs
+# for every change
+echo "Sorting JSON..."
+
+pushd util/sort_json
+cargo build --release
+popd
+./util/sort_json/target/release/sort_json docs
+
 
 echo -e "\x1B[1mDocs updated, commit the result in the docs/ directory.\x1B[0m"
