@@ -34,7 +34,7 @@
             @Step {
                 For now, all that we need in the live view is our list of cats and a mount handler to assign it to the socket, so the list is accessible from the template later.
                 
-                Make sure to download the project files for this tutorial and copy the `cats` folder into the `priv/static/images` folder of your Phoenix project.
+                Make sure to download the [project files](https://liveviewnative.github.io/liveview-client-swiftui/downloads/cats.zip) for this tutorial and copy the `cats` folder into the `priv/static/images` folder of your Phoenix project.
                 
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 01-01-03-cats_list_live.ex)
             }
