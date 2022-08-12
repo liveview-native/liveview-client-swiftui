@@ -20,21 +20,35 @@
             }
             
             @Step {
+                Then, open the `application.ex` file.
+                
+                @Code(name: "lib/lvn_tutorial/application.ex", file: 02-01-02-application.ex)
+            }
+            
+            @Step {
+                Add the favorites store GenServer to the supervision tree. 
+                
+                Once you've done that, restart the Phoenix project so that the GenServer is started.
+                
+                @Code(name: "lib/lvn_tutorial/application.ex", file: 02-01-03-application.ex)
+            }
+            
+            @Step {
                 Open the `cats_list_live.ex` file.
                 
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-02-initial.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-04-initial.ex)
             }
             
             @Step {
                 Let's add a new function called `get_cats_and_favorites` that builds a sorted list of cats and their favorite status, pulling from the GenServer we created before.
                 
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-03-build-list.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-05-build-list.ex)
             }
             
             @Step {
                 Then, we'll assign the result of that function to `cats_and_favorites` in the `mount` callback so we can use it in the template.
                 
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-04-assign.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-06-assign.ex)
             }
         }
     }
