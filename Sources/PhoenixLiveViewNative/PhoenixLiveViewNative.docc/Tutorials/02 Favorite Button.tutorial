@@ -74,7 +74,7 @@
             }
             
             @Step {
-                In the event handler, we'll update the favorited state of the cat at the given index and the re-sort the list and assign it back to the socket.
+                In the event handler, we'll update the favorite state of the cat at the given index and the re-sort the list and assign it back to the socket.
                 
                 LiveView on the backend will automatically re-render the template and send an update to the client which will display it.
                 
