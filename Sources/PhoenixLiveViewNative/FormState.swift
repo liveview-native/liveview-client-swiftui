@@ -54,7 +54,15 @@ public struct FormState<Value: FormValue> {
             guard let name = name else {
                 fatalError("Cannot access @FormState outisde of an element with a name attribute")
             }
+            #if compiler(>=5.7)
             return formModel[name] as? Value
+            #else
+            if let existing = formModel[name] {
+                return Value(formValue: existing.formValue)
+            } else {
+                return nil
+            }
+            #endif
         }
         nonmutating set {
             guard let formModel = formModel else {
@@ -63,7 +71,15 @@ public struct FormState<Value: FormValue> {
             guard let name = name else {
                 fatalError("Cannot access @FormState outisde of an element with a name attribute")
             }
+            #if compiler(>=5.7)
             formModel[name] = newValue
+            #else
+            if let newValue = newValue {
+                formModel[name] = AnyFormValue(erasing: newValue)
+            } else {
+                formModel[name] = nil
+            }
+            #endif
         }
     }
     

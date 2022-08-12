@@ -51,7 +51,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     var pushEventImpl: ((String, String, Any) async throws -> Void)!
     var changeEvent: String?
     /// The form data for this form.
-    @Published internal private(set) var data = [String: any FormValue]()
+    @Published internal private(set) var data = [String: AnyFormValue]()
     var focusedFieldName: String?
     var formFieldWillChange = PassthroughSubject<String, Never>()
     
@@ -89,9 +89,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// Access the stored value, if there is one, for the form field of the given name.
     ///
     /// Setting a field to `nil` removes it.
-    public subscript(name: String) -> (any FormValue)? {
+    public subscript(name: String) -> AnyFormValue? {
         get {
-            data[name]
+            return data[name]
         }
         set(newValue) {
             if let existing = data[name],
@@ -138,6 +138,22 @@ extension String: FormValue {
     }
 }
 
+#if compiler(>=5.7)
+public typealias AnyFormValue = any FormValue
+#else
+public struct AnyFormValue: FormValue, Equatable {
+    public let formValue: String
+    
+    public init?(formValue: String) {
+        self.formValue = formValue
+    }
+    
+    init<V: FormValue>(erasing value: V) {
+        self.formValue = value.formValue
+    }
+}
+#endif
+
 private struct FormDataUpdater: NodeVisitor {
     let model: FormModel
     
@@ -146,7 +162,11 @@ private struct FormDataUpdater: NodeVisitor {
         if ["hidden", "textfield"].contains(node.nodeName().lowercased()),
            let name = node.attrIfPresent("name"),
            let value = node.attrIfPresent("value") {
+            #if compiler(>=5.7)
             model[name] = value
+            #else
+            model[name] = AnyFormValue(erasing: value)
+            #endif
         }
     }
     
