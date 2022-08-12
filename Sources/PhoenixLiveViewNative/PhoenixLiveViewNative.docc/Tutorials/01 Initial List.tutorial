@@ -72,6 +72,8 @@
             @Step {
                 Make sure to select Swift as the language and SwiftUI as the interface.
                 
+                If you haven't used Xcode before, you may see an "Add Team" button. You can sign in with your Apple ID to test on your own devices, but you don't need to sign in to develop or use the iOS Simulator.
+                
                 @Image(source: 01-02-02-create-project.png, alt: "The New Project options dialog for a project named LVNTutorial using Swift, SwiftUI, and without Core Data or tests.")
             }
             
