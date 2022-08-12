@@ -30,7 +30,7 @@ The coordinator can be configured with a number of different options. To customi
 
 ```swift
 struct ContentView: View {
-    @State private var coordinator = {
+    @State private var coordinator: LiveViewCoordinator<EmptyRegistry> = {
         var config = LiveViewConfiguration()
         config.navigationMode = .enabled
         return LiveViewCoordinator(URL(string: "http://localhost:4000/")!, config: config)
