@@ -90,7 +90,7 @@ struct HeroViewOverride: Equatable {
     let view: AnyView
     let id: UUID
     
-    init(_ view: some View) {
+    init<V: View>(_ view: V) {
         self.view = AnyView(view)
         self.id = UUID()
     }
