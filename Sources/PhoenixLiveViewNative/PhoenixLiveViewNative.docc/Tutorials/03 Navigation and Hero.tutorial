@@ -50,6 +50,12 @@
             }
             
             @Step {
+                Open the `cats_list_live.ios.heex` file.
+                
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-04-button-click.ios.heex)
+            }
+            
+            @Step {
                 With the configuration updated, you can add a `nav-title` attribute to the list template.
                 
                 After re-running the iOS app from Xcode (required because the Swift code changed), you should see your new navigation bar and title.
