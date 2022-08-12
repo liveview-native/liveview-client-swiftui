@@ -10,9 +10,15 @@
     @Section(title: "Building the Backend") {
         Before we start the native frontend, we'll build a simple backend to serve the data.
         
+        Make sure you have all the prerequisites installed:
+        - [Xcode](https://developer.apple.com/download/applications/) 13.3 or newer
+        - [Elixir](https://elixir-lang.org/install.html) 1.12 or newer
+        - [Phoenix](https://www.phoenixframework.org/)
+            - Run `mix archive.install hex phx_new`
+        
         @Steps {
             @Step {
-                On the command line, create a new Phoenix project.
+                On the command line, create a new Phoenix project and then open the created `lvn_tutorial` directory in your text editor of choice.
                 
                 For this project, we don't need most of the usual dependencies Phoenix includes, so we pass the command line flags to omit them.
                 
