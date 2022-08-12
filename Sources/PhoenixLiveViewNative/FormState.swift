@@ -54,15 +54,17 @@ public struct FormState<Value: FormValue> {
             guard let name = name else {
                 fatalError("Cannot access @FormState outisde of an element with a name attribute")
             }
-            #if compiler(>=5.7)
-            return formModel[name] as? Value
-            #else
             if let existing = formModel[name] {
+                // if it's already the correct type, just return it
+                // otherwise, try to convert
+                #if compiler(>=5.7)
+                return existing as? Value ?? Value(formValue: existing.formValue)
+                #else
                 return Value(formValue: existing.formValue)
+                #endif
             } else {
                 return nil
             }
-            #endif
         }
         nonmutating set {
             guard let formModel = formModel else {

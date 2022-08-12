@@ -128,6 +128,10 @@ extension FormValue {
         }
         return self == other
     }
+    
+    func createNew(formValue: String) -> Self? {
+        return Self(formValue: formValue)
+    }
 }
 
 extension String: FormValue {
@@ -163,7 +167,13 @@ private struct FormDataUpdater: NodeVisitor {
            let name = node.attrIfPresent("name"),
            let value = node.attrIfPresent("value") {
             #if compiler(>=5.7)
-            model[name] = value
+            // if we have an existing value, try to convert it to the same type
+            if let existing = model[name],
+               let converted = existing.createNew(formValue: value) {
+                model[name] = converted
+            } else {
+                model[name] = value
+            }
             #else
             model[name] = AnyFormValue(erasing: value)
             #endif
