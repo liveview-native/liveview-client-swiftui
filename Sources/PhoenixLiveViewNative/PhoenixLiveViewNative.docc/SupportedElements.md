@@ -13,7 +13,7 @@ LiveViewNative supports DOM elements similar to but distinct from their Web coun
 - ``PhxHStack``
 - ``PhxVStack``
 - ``PhxZStack``
-- `<spacer>`
+- ``PhxSpacer``
 - ``PhxScrollView``
 - ``PhxList``
 

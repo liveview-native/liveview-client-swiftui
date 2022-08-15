@@ -32,7 +32,7 @@ struct BuiltinRegistry {
         case "scrollview":
             PhxScrollView<R>(element: element, context: context)
         case "spacer":
-            Spacer()
+            PhxSpacer(element: element)
         case "navigationlink":
             if #available(iOS 16.0, *) {
                 PhxModernNavigationLink(element: element, context: context)
