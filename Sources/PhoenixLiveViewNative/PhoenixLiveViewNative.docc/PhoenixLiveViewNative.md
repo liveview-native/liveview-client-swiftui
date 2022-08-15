@@ -21,6 +21,7 @@
 ### Custom DOM Elements and Attributes
 
 - <doc:AddCustomElement>
+- <doc:AddCustomAttribute>
 - ``CustomRegistry``
 - ``LiveContext``
 - ``FormState``

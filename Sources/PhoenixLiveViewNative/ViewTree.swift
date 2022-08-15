@@ -53,9 +53,9 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     
     @ViewBuilder
     fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
-        if let attr = getApplicableCustomAttribute(element: element, context: context) {
-            let newContext = context.with(appliedCustomAttribute: attr.getKey())
-            AnyView(R.applyCustomAttribute(attr, element: element, context: newContext))
+        if let (name, attr) = getApplicableCustomAttribute(element: element, context: context) {
+            let newContext = context.with(appliedCustomAttribute: name)
+            AnyView(R.applyCustomAttribute(name, value: attr.getValue(), element: element, context: newContext))
         } else {
             createElement(element, context: context)
                 .commonModifiers(from: element)
@@ -63,22 +63,25 @@ struct ViewTreeBuilder<R: CustomRegistry> {
         }
     }
     
-    private func getApplicableCustomAttribute(element: Element, context: LiveContext<R>) -> Attribute? {
+    private func getApplicableCustomAttribute(element: Element, context: LiveContext<R>) -> (R.AttributeName, Attribute)? {
         guard let attrs = element.getAttributes() else {
             return nil
         }
-        return attrs.first { attr in
-            let k = attr.getKey()
-            return R.supportedAttributes.contains(k.lowercased()) && !context.appliedCustomAttributes.contains(k)
+        for attr in attrs {
+            if let name = R.AttributeName(rawValue: attr.getKey().lowercased()),
+               !context.appliedCustomAttributes.contains(name) {
+                return (name, attr)
+            }
         }
+        return nil
     }
     
     @ViewBuilder
     private func createElement(_ element: Element, context: LiveContext<R>) -> some View {
         let tag = element.tagName().lowercased()
         
-        if R.supportedTagNames.contains(tag) {
-            R.lookup(tag, element: element, context: context)
+        if let tagName = R.TagName(rawValue: tag) {
+            R.lookup(tagName, element: element, context: context)
         } else {
             BuiltinRegistry.lookup(tag, element, context: context)
         }
@@ -98,7 +101,7 @@ public struct LiveContext<R: CustomRegistry> {
     /// The model of the nearest ancestor `<form>` element, or `nil` if there is no such element.
     public private(set) var formModel: FormModel?
     
-    private(set) var appliedCustomAttributes: [String] = []
+    private(set) var appliedCustomAttributes: [R.AttributeName] = []
     
     init(coordinator: LiveViewCoordinator<R>, url: URL, formModel: FormModel? = nil) {
         self.coordinator = coordinator
@@ -112,9 +115,9 @@ public struct LiveContext<R: CustomRegistry> {
         return copy
     }
     
-    func with(appliedCustomAttribute attr: String) -> LiveContext<R> {
+    func with(appliedCustomAttribute name: R.AttributeName) -> LiveContext<R> {
         var copy = self
-        copy.appliedCustomAttributes.append(attr)
+        copy.appliedCustomAttributes.append(name)
         return copy
     }
     
