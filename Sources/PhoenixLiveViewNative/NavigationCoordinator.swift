@@ -77,9 +77,14 @@ class NavigationCoordinator: NSObject, UINavigationControllerDelegate, Observabl
         }
         switch recognizer.state {
         case .began:
-            state = .interactive
-            didInteractivePopReachHalfwayPoint = false
+            if sourceElement != nil && destElement != nil {
+                state = .interactive
+                didInteractivePopReachHalfwayPoint = false
+            }
         case .changed:
+            guard state == .interactive else {
+                return
+            }
             // progress >= 0.475 seems to be the threshold for completing
             let progress = max(0, recognizer.translation(in: view).x / view.bounds.width)
             if progress > 0.5 {
@@ -92,6 +97,9 @@ class NavigationCoordinator: NSObject, UINavigationControllerDelegate, Observabl
             let deltaHeight = destRect.height - sourceRect.height
             currentRect = CGRect(x: sourceRect.minX + deltaX * animationCompletion, y: sourceRect.minY + deltaY * animationCompletion, width: sourceRect.width + deltaWidth * animationCompletion, height: sourceRect.height + deltaHeight * animationCompletion)
         case .ended:
+            guard state == .interactive else {
+                return
+            }
             let velocity = recognizer.velocity(in: view)
             let translation = recognizer.translation(in: view)
             let progress = max(0, translation.x / view.bounds.width)
