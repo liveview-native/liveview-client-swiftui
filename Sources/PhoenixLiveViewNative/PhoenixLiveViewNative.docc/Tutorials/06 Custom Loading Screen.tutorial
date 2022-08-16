@@ -2,29 +2,47 @@
     @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
     @Intro(title: "Style the Loading Screen to Match Your App") {
-        <#text#>
+        Add a more interesting loading screen that matches the style of your app.
         
-        @Image(source: <#file#>, alt: "<#accessible description#>")
+        @Image(source: 06-00-intro-header.png, alt: "A circle of cat emojis.")
     }
     
-    @Section(title: "<#text#>") {
-        @ContentAndMedia {
-            <#text#>
-            
-            @Image(source: <#file#>, alt: "<#accessible description#>")
-        }
+    @Section(title: "Add the Loading View") {
+        Add the loading view and update the registry.
         
         @Steps {
             @Step {
-                <#text#>
+                Add a `MyLoadingView` SwiftUI view. This view is what will be displayed while the live view is connecting.
                 
-                @Image(source: <#file#>, alt: "<#accessible description#>")
+                @Code(name: "MyLoadingView.swift", file: 06-01-01-loadingview.swift)
             }
             
             @Step {
-                <#text#>
+                Open your custom registry implementation.
                 
-                @Code(name: "<#display name#>", file: <#filename.swift#>)
+                @Code(name: "MyRegistry.swift", file: 05-02-02-apply.swift)
+            }
+            
+            @Step {
+                Implement the `loadingView(for:state:)` method.
+                
+                @Code(name: "MyRegistry.swift", file: 06-01-02-registry.swift)
+            }
+            
+            @Step {
+                In the method, check if the the live view is in an error state, and if so, display an error message.
+                
+                @Code(name: "MyRegistry.swift", file: 06-01-03-error.swift)
+            }
+            
+            @Step {
+                Finally, if there isn't an error, display the custom loading view.
+                
+                With that, you can relaunch your app and see the loading view in action. If it's loading too quickly for you to see it, you can add a `Process.sleep(1000)` call to the `mount` callback of the list live view on the backend—just don't forget to remove it!
+                
+                @Code(name: "MyRegistry.swift", file: 06-01-04-registry.swift) {
+                    @Video(source: 06-01-05-loading.mp4, poster: 06-01-06-loading-poster.png)
+                }
             }
         }
     }
