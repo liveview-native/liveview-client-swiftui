@@ -24,6 +24,9 @@
 - <doc:AddCustomAttribute>
 - ``CustomRegistry``
 - ``LiveContext``
+
+### Form Controls
+- <doc:FormControls>
 - ``FormState``
 - ``FormValue``
 - ``FormModel``

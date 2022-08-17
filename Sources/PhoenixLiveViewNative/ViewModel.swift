@@ -134,6 +134,20 @@ extension FormValue {
     }
 }
 
+extension Optional: FormValue where Wrapped: FormValue {
+    public var formValue: String {
+        if let value = self {
+            return value.formValue
+        } else {
+            return ""
+        }
+    }
+    
+    public init?(formValue: String) {
+        self = Wrapped(formValue: formValue)
+    }
+}
+
 extension String: FormValue {
     public var formValue: String { self }
     

@@ -11,12 +11,16 @@ import Combine
 /// A property wrapper that stores its data in the ``FormModel`` of the nearest parent `<form>` element.
 ///
 /// `@FormState` represents the data that is considered the "value" of a form element (such as the string in a text field, or the state of a checkbox).
-/// Additional data that's tied to the form element but is not the primary value should use SwiftUI's  ``State`` property wrapper.
+/// Additional data that's tied to the form element but is not the primary value should use SwiftUI's  `@State` property wrapper.
+///
+/// The key used in the form model for this data is the `name` attribute of the element this property wrapper is placed on. The property wrapper will
+/// pull the element name from the nearest parent view that corresponds to a DOM element. The framework uses the `\.element` SwiftUI environment
+/// key to determine which element the view belongs to.
 ///
 /// To use this property wrapper, the wrapped type must be an optional and the inner type must implement ``FormValue``
 /// to define how it's converted to/from the serialized form data representation.
 ///
-/// For example:
+/// ## Example
 /// ```swift
 /// struct IntField: View {
 ///     @FormState private var value: Int?
@@ -25,12 +29,13 @@ import Combine
 ///     }
 ///
 ///     var body: some View {
-///         TextField("My number", value: _value.projectedValue(withDefault: 0), format: .number)
+///         TextField("My number", value: $value, format: .number)
 ///     }
 /// }
 /// ```
 @propertyWrapper
 public struct FormState<Value: FormValue> {
+    private let defaultValue: Value
     @StateObject private var observer = FormValueObserver()
     @State private var observerCancellable: AnyCancellable?
     
@@ -40,13 +45,44 @@ public struct FormState<Value: FormValue> {
     // re-parse the DOM. instead, use an extension on Optional<Element> to get the name with the keypath
     @Environment(\.element.name) private var name: String?
     
-    public init() {
+    /// Creates a `FormState` property wrapper with a default value that will be used when the form model does not have a value, or it has a value that cannot be converted to the `Value` type.
+    ///
+    /// ```swift
+    /// struct MyView: View {
+    ///     @FormState(default: 0) var value: Int
+    ///     var body: some View {
+    ///         Text("Hello")
+    ///             .onAppear {
+    ///                 print(value) // prints "0"
+    ///             }
+    ///     }
+    /// }
+    /// ```
+    public init(default: Value) {
+        self.defaultValue = `default`
+    }
+    
+    /// Convenience initializer that creates a `FormState` property wrapper with `nil` as its default value.
+    ///
+    /// ```swift
+    /// struct MyView: View {
+    ///     @FormState var value: Int?
+    ///     var body: some View {
+    ///         Text("Hello")
+    ///             .onAppear {
+    ///                 print(value) // prints "nil"
+    ///             }
+    ///     }
+    /// }
+    /// ```
+    public init() where Value: ExpressibleByNilLiteral {
+        self.init(default: nil)
     }
     
     /// The value stored by the form model.
     ///
-    /// This is always optional because the form may not yet have a value for this element, or may have a value of the wrong type.
-    public var wrappedValue: Value? {
+    /// If the form model does not have a value, or it has a value that cannot be converted to the `Value` type, the default value provided at initialization will be used.
+    public var wrappedValue: Value {
         get {
             guard let formModel = formModel else {
                 fatalError("Cannot access @FormState without form model. Are you using it outside of a <form>?")
@@ -58,12 +94,12 @@ public struct FormState<Value: FormValue> {
                 // if it's already the correct type, just return it
                 // otherwise, try to convert
                 #if compiler(>=5.7)
-                return existing as? Value ?? Value(formValue: existing.formValue)
+                return existing as? Value ?? Value(formValue: existing.formValue) ?? defaultValue
                 #else
-                return Value(formValue: existing.formValue)
+                return Value(formValue: existing.formValue) ?? defaultValue
                 #endif
             } else {
-                return nil
+                return defaultValue
             }
         }
         nonmutating set {
@@ -86,22 +122,13 @@ public struct FormState<Value: FormValue> {
     }
     
     /// A binding that is backed by the form model that can be used as the storage for other views or controls.
-    public var projectedValue: Binding<Value?> {
+    ///
+    /// Access this binding with the a dollar sign prefix. If a property is declared as `@FormState var value`, then the project value binding can be accessed as `$value`.
+    ///
+    /// If the form model does not have a value, or it has a value that cannot be converted to the `Value` type, the default value provided at initialization will be used when reading the binding.
+    public var projectedValue: Binding<Value> {
         Binding {
             return wrappedValue
-        } set: { newValue in
-            wrappedValue = newValue
-        }
-    }
-    
-    /// Creates a binding to this form field's value that falls back to a default value.
-    ///
-    /// This is useful for SwiftUI views that expect non-optional bindings, such as ``TextField``.
-    ///
-    /// - Note: The default value, if used, is **not** stored in the form model and thus is not serialized when sending form events to the backend.
-    public func projectedValue(withDefault default: Value) -> Binding<Value> {
-        Binding {
-            return wrappedValue ?? `default`
         } set: { newValue in
             wrappedValue = newValue
         }
