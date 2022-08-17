@@ -13,7 +13,7 @@ public struct PhxHeroView<R: CustomRegistry>: View {
     private let context: LiveContext<R>
     private let kind: Kind
     @EnvironmentObject private var navCoordinator: NavigationCoordinator
-    @State private var frameProvider: (() -> CGRect, UUID)?
+    @State private var frameProvider: FrameProvider?
     
     init(element: Element, context: LiveContext<R>) {
         self.element = element
@@ -55,11 +55,15 @@ public struct PhxHeroView<R: CustomRegistry>: View {
     
     @ViewBuilder
     func withFramePreference<V: View>(_ content: V) -> some View {
-        let frameAndElement = FrameAndElement(element: element, frameProvider: frameProvider?.0 ?? { .zero }, id: frameProvider?.1 ?? UUID())
-        if kind == .source {
-            content.preference(key: HeroViewSourceKey.self, value: frameAndElement)
+        if let frameProvider = frameProvider {
+            let frameAndElement = FrameAndElement(element: element, frameProvider: frameProvider)
+            if kind == .source {
+                content.preference(key: HeroViewSourceKey.self, value: frameAndElement)
+            } else {
+                content.preference(key: HeroViewDestKey.self, value: frameAndElement)
+            }
         } else {
-            content.preference(key: HeroViewDestKey.self, value: frameAndElement)
+            content
         }
     }
 }
@@ -67,17 +71,18 @@ public struct PhxHeroView<R: CustomRegistry>: View {
 private struct GlobalGeometryReader: UIViewRepresentable {
     typealias UIViewType = UIView
     
-    let callback: ((() -> CGRect, UUID)) -> Void
+    let callback: (FrameProvider?) -> Void
     
     func makeUIView(context: Context) -> UIView {
         let view = UIView()
         DispatchQueue.main.async {
-            callback(({ [weak view] in
+            let provider = FrameProvider { [weak view] in
                 guard let view = view else {
                     return .zero
                 }
                 return view.convert(view.bounds, to: nil)
-            }, UUID()))
+            }
+            callback(provider)
         }
         return view
     }
@@ -132,10 +137,23 @@ struct HeroViewDestKey: PreferenceKey {
 
 struct FrameAndElement: Equatable {
     let element: Element
-    let frameProvider: () -> CGRect
+    let frameProvider: FrameProvider
+}
+
+struct FrameProvider: Equatable {
+    let provider: () -> CGRect
     let id: UUID
     
-    static func ==(lhs: FrameAndElement, rhs: FrameAndElement) -> Bool {
+    init(_ provider: @escaping () -> CGRect) {
+        self.provider = provider
+        self.id = UUID()
+    }
+    
+    func callAsFunction() -> CGRect {
+        return provider()
+    }
+    
+    static func ==(lhs: FrameProvider, rhs: FrameProvider) -> Bool {
         return lhs.id == rhs.id
     }
 }

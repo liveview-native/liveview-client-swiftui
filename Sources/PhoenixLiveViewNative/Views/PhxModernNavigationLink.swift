@@ -73,6 +73,8 @@ public struct PhxModernNavigationLink<R: CustomRegistry>: View {
                 Task {
                     await context.coordinator.navigateTo(url: dest, replace: false)
                 }
+                // TODO: when this happens, swiftui warns that publishing changes from within a view update is not allowed
+                // even though this is happening in a button action, not sure why
                 doPushNavigation()
                 return
             }
