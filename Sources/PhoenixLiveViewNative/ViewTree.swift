@@ -185,10 +185,14 @@ private extension View {
             alignment = .bottom
         case "bottom-trailing":
             alignment = .bottomTrailing
+#if compiler(>=5.7)
+        // although these are marked as being available back to iOS 13, they were only made public in Xcode 14
+        // so we only compile them if the user's Xcode version is new enough
         case "leading-last-text-baseline":
             alignment = .leadingLastTextBaseline
         case "trailing-last-text-baseline":
             alignment = .trailingLastTextBaseline
+#endif
         default:
             alignment = .center
         }
