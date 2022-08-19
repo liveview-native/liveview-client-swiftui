@@ -13,7 +13,7 @@ import Combine
 ///
 /// In a view in the LiveView tree, a model can be obtained using `@EnvironmentObject`.
 public class LiveViewModel<R: CustomRegistry>: ObservableObject {
-    @Published private var forms = [String: FormModel]()
+    private var forms = [String: FormModel]()
     
     /// Get or create a ``FormModel`` for the `<form>` element with the given ID.
     public func getForm(elementID id: String) -> FormModel {
@@ -26,12 +26,12 @@ public class LiveViewModel<R: CustomRegistry>: ObservableObject {
         }
     }
     
-    /// Removes form models that don't have corresponding `<form>` tags in the DOM.
+    /// Removes form models that don't have corresponding `<phx-form>` tags in the DOM.
     func pruneMissingForms(elements: Elements) {
         var formIDs = Set<String>()
         var toVisit = Array(elements)
         while let el = toVisit.popLast() {
-            if el.tagName().lowercased() == "form" {
+            if el.tagName().lowercased() == "phx-form" {
                 formIDs.insert(el.id())
             }
             toVisit.append(contentsOf: el.children())
@@ -83,7 +83,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
     
     public var debugDescription: String {
-        return "FormModel(\(elementID))"
+        return "FormModel(element: #\(elementID), id: \(ObjectIdentifier(self))"
     }
     
     /// Access the stored value, if there is one, for the form field of the given name.
