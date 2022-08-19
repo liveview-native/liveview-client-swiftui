@@ -112,11 +112,7 @@ public struct FormState<Value: FormValue> {
             #if compiler(>=5.7)
             formModel[name] = newValue
             #else
-            if let newValue = newValue {
-                formModel[name] = AnyFormValue(erasing: newValue)
-            } else {
-                formModel[name] = nil
-            }
+            formModel[name] = AnyFormValue(erasing: newValue)
             #endif
         }
     }
