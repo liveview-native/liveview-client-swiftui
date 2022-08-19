@@ -34,7 +34,7 @@
             }
             
             @Step {
-                In the `lookup` method, we'll construct a `FullWidthView`, passing in the `element` and `context` parameters of the lookup method.
+                In the `lookup` method, we'll construct a `CatRatingView`, passing in the `element` and `context` parameters of the lookup method. This will cause a compiler error, but don't worry; in Section 3, we'll implement the view and resolve it.
                 
                 The `element` is the DOM element that your view is being constructed from, and the `context` is a ``LiveContext`` struct containing additional information about the context in which the element is being used.
                 
