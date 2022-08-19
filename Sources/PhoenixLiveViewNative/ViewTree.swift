@@ -159,13 +159,40 @@ private extension View {
     private func frame(from element: Element) -> some View {
         var width: CGFloat?
         var height: CGFloat?
+        var alignment: Alignment
         if let s = element.attrIfPresent("frame-width"), let f = Double(s) {
             width = f
         }
         if let s = element.attrIfPresent("frame-height"), let f = Double(s) {
             height = f
         }
-        return self.frame(width: width, height: height)
+        switch element.attrIfPresent("frame-alignment") {
+        case "top-leading":
+            alignment = .topLeading
+        case "top":
+            alignment = .top
+        case "top-trailing":
+            alignment = .topTrailing
+        case "leading":
+            alignment = .leading
+        case "center":
+            alignment = .center
+        case "trailing":
+            alignment = .trailing
+        case "bottom-leading":
+            alignment = .bottomTrailing
+        case "bottom":
+            alignment = .bottom
+        case "bottom-trailing":
+            alignment = .bottomTrailing
+        case "leading-last-text-baseline":
+            alignment = .leadingLastTextBaseline
+        case "trailing-last-text-baseline":
+            alignment = .trailingLastTextBaseline
+        default:
+            alignment = .center
+        }
+        return self.frame(width: width, height: height, alignment: alignment)
     }
     
     private func padding(from element: Element) -> some View {
