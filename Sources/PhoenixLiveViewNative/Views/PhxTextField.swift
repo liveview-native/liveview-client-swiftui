@@ -49,7 +49,6 @@ public struct PhxTextField<R: CustomRegistry>: View {
     
     public var body: some View {
         return PhxWrappedTextField(formModel: formModel, name: name, placeholder: placeholder, borderStyle: borderStyle, clearButtonMode: clearButtonMode, value: $value, becomeFirstResponder: $becomeFirstResponder)
-            .background(Color.random)
             .frame(height: 44)
             .onAppear {
                 // If the DOM changes, the text field can get re-created and destroyed even though
@@ -57,12 +56,6 @@ public struct PhxTextField<R: CustomRegistry>: View {
                     becomeFirstResponder = true
                 }
             }
-    }
-}
-
-private extension Color {
-    static var random: Color {
-        [.red, .green, .blue, .brown, .yellow, .purple, .gray].randomElement()!
     }
 }
 
