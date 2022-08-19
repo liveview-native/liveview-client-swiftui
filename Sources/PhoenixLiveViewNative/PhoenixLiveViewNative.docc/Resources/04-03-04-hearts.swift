@@ -23,11 +23,11 @@ struct CatRatingView: View {
     
     var body: some View {
         HStack(spacing: 4) {
-            ForEach(0..<effectiveScore, id: \.self) { _ in
+            ForEach(0..<effectiveScore, id: \.self) { index in
                 Image(systemName: "heart.fill")
                     .foregroundColor(.red)
             }
-            ForEach(effectiveScore..<5, id: \.self) { _ in
+            ForEach(effectiveScore..<5, id: \.self) { index in
                 Image(systemName: "heart")
             }
         }

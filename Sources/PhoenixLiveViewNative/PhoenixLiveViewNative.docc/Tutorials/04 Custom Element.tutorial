@@ -114,7 +114,7 @@
             }
             
             @Step {
-                We'll add a `TapGesture` and `DragGesture` to allow the user to either tap on a heart or to drag their finger across the row to set the score.
+                We'll add a `DragGesture` to the row and tap gestures to the individual hearts to allow the user to either tap on a heart or to drag their finger across the row to set the score.
                 
                 The desired score is calculated by looking at the X position of the tap/drag relative to the full width of the view, and converting that into a number from 0 through 5.
                 
