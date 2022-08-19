@@ -1,7 +1,7 @@
 @Tutorial(time: 30) {
     @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
-    @Intro(title: "Navigation and Hero Transition") {
+    @Intro(title: "Navigation and Detail View") {
         The list of cats is great, but the images are a little small. Let's add a detail view so we can see them nice and big!
         
         @Image(source: 03-00-intro-header.png, alt: "The app with the detail view showing Jorts the cat.")
@@ -77,11 +77,11 @@
         }
     }
     
-    @Section(title: "The Hero Transition") {
-        Now that navigation is working, let's add a cool transition when navigating into the detail view.
-        
-        @Steps {
-            
-        }
-    }
+<!--    @Section(title: "The Hero Transition") {-->
+<!--        Now that navigation is working, let's add a cool transition when navigating into the detail view.-->
+<!--        -->
+<!--        @Steps {-->
+<!--            -->
+<!--        }-->
+<!--    }-->
 }
