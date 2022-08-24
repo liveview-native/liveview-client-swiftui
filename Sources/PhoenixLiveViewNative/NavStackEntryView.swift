@@ -12,6 +12,7 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     // this is a @StateObject instead of @ObservedObject because changing which DOMWindows for a LiveView is not allowed
     @StateObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
+    // TODO: once we target iOS 16 only, this should be non-State and only come from the navigationDestination that creates this view
     @State private var url: URL
     @State private var state: ConnectionState = .other(.notConnected)
     

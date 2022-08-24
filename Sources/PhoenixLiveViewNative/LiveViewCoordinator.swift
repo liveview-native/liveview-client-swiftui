@@ -55,6 +55,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private var currentConnectionToken: ConnectionAttemptToken?
     private var currentConnectionTask: Task<Void, Error>?
     
+    private var eventHandlers: [String: (Payload) -> Void] = [:]
+    
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
@@ -157,10 +159,16 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         guard self.currentURL != url else { return }
         let oldURL = self.currentURL
         self.currentURL = url
+        // TODO: once we only target iOS 16+, remove replaceRedirectSubject. the NavigationCoordinator's url array will be the sole source of truth, and NavStackEntryViews will get their URLs from that
         if replace {
             replaceRedirectSubject.send((oldURL, url))
         }
         await reconnect()
+    }
+    
+    @_spi(NarwinChat)
+    public func replaceTopNavigationEntry(with url: URL) async {
+        await navigateTo(url: url, replace: true)
     }
     
     @ViewBuilder
@@ -254,6 +262,17 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     private func handleDiff(payload: Payload, baseURL: URL) throws -> Elements {
+        if config.eventHandlersEnabled,
+           let events = payload["e"] as? [[Any]] {
+            for event in events {
+                guard let name = event[0] as? String,
+                      let value = event[1] as? Payload,
+                      let handler = eventHandlers[name] else {
+                    continue
+                }
+                handler(value)
+            }
+        }
         let diff = try RootDiff(from: FragmentDecoder(data: payload))
         self.rendered = try self.rendered.merge(with: diff)
         return try self.parseDOM(html: self.rendered.buildString(), baseURL: baseURL)
@@ -374,7 +393,16 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     // leave the channel, otherwise the it'll continue retrying indefinitely
                     // we want to control the retry behavior ourselves, so just leave the channel
                     channel.leave()
-                    continuation.resume(throwing: Error.joinError(message))
+                    if self.config.liveRedirectsEnabled,
+                       let redirect = message.payload["live_redirect"] as? Payload,
+                       let dest = redirect["to"] as? String {
+                        Task {
+                            await self.replaceTopNavigationEntry(with: URL(string: dest, relativeTo: self.currentURL)!)
+                        }
+                        continuation.resume(throwing: CancellationError())
+                    } else {
+                        continuation.resume(throwing: Error.joinError(message))
+                    }
                 }
         }
         
@@ -383,6 +411,13 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
         self.state = .connected
         self.elements = elements
+    }
+    
+    // Non-final API, for internal use only.
+    @_spi(NarwinChat)
+    public func handleEvent(_ name: String, handler: @escaping (Payload) -> Void) {
+        precondition(!eventHandlers.keys.contains(name))
+        eventHandlers[name] = handler
     }
 }
 
