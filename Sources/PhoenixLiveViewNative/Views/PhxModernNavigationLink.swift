@@ -31,7 +31,9 @@ public struct PhxModernNavigationLink<R: CustomRegistry>: View {
     public var body: some View {
         if let linkOpts = linkOpts,
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
-            Button(action: activateNavigationLink) {
+            Button{
+                activateNavigationLink()
+            } label: {
                 context.buildChildren(of: element)
                     .onPreferenceChange(HeroViewSourceKey.self) { newSource in
                         source = newSource

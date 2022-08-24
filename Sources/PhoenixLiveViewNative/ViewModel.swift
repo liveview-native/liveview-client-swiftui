@@ -129,6 +129,13 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
     }
     
+    internal func clear() {
+        for field in data.keys {
+            formFieldWillChange.send(field)
+        }
+        data = [:]
+    }
+    
 }
 
 /// A form value is any type that can be stored in a ``FormModel``. This protocol defines the requirements for converting to/from the serialized form data representation.
