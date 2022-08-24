@@ -122,7 +122,8 @@ private struct TextFieldConfiguration {
     let autocorrectionType: UITextAutocorrectionType
     let autocapitalizationType: UITextAutocapitalizationType
     let keyboardType: UIKeyboardType
-    
+    let isSecureTextEntry: Bool
+
     init(element: Element) {
         self.placeholder = element.attrIfPresent("placeholder")
         switch element.attrIfPresent("border-style") {
@@ -191,6 +192,16 @@ private struct TextFieldConfiguration {
         default:
             fatalError("Invalid value '\(element.attrIfPresent("keyboard")!)' for keyboard attribute on <textfield>")
         }
+        switch element.attrIfPresent("is-secure-text-entry") {
+        case nil, "default":
+            isSecureTextEntry = false
+        case "no":
+            isSecureTextEntry = false
+        case "yes":
+            isSecureTextEntry = true
+        default:
+            fatalError("Invalid value '\(element.attrIfPresent("is-secure-text-entry")!)' for is-secure-text-entry attribute on <textfield>")
+        }
     }
     
     func apply(to view: UITextField) {
@@ -200,5 +211,6 @@ private struct TextFieldConfiguration {
         view.autocorrectionType = autocorrectionType
         view.autocapitalizationType = autocapitalizationType
         view.keyboardType = keyboardType
+        view.isSecureTextEntry = isSecureTextEntry
     }
 }
