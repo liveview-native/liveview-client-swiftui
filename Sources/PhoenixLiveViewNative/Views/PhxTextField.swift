@@ -69,6 +69,7 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
     func updateUIView(_ uiView: UITextField, context: Context) {
         uiView.text = value
         config.apply(to: uiView)
+        context.coordinator.value = _value
         if becomeFirstResponder {
             DispatchQueue.main.async {
                 // becoming first responder immediately breaks some internal autocorrect thing, so we wait until the next runloop iteration
@@ -84,18 +85,18 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, UITextFieldDelegate {
-        @Binding var value: String?
+        var value: Binding<String?>
         let formModel: FormModel!
         let name: String
         
         init(formModel: FormModel, name: String, value: Binding<String?>) {
-            self._value = value
+            self.value = value
             self.formModel = formModel
             self.name = name
         }
         
         @objc func editingChanged(_ textField: UITextField) {
-            value = textField.text
+            value.wrappedValue = textField.text
             // todo: should change events be debounced?
             Task {
                 try await formModel.sendChangeEvent()
