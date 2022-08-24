@@ -159,12 +159,20 @@ private extension View {
     private func frame(from element: Element) -> some View {
         var width: CGFloat?
         var height: CGFloat?
+        var maxWidth: CGFloat?
+        var maxHeight: CGFloat?
         var alignment: Alignment
         if let s = element.attrIfPresent("frame-width"), let f = Double(s) {
             width = f
         }
         if let s = element.attrIfPresent("frame-height"), let f = Double(s) {
             height = f
+        }
+        if element.attrIfPresent("frame-max-width") == "infinity" {
+            maxWidth = .infinity
+        }
+        if element.attrIfPresent("frame-max-height") == "infinity" {
+            maxHeight = .infinity
         }
         switch element.attrIfPresent("frame-alignment") {
         case "top-leading":
@@ -196,7 +204,9 @@ private extension View {
         default:
             alignment = .center
         }
-        return self.frame(width: width, height: height, alignment: alignment)
+        return self
+            .frame(width: width, height: height)
+            .frame(maxWidth: maxWidth, maxHeight: maxHeight, alignment: alignment)
     }
     
     private func padding(from element: Element) -> some View {
