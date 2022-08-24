@@ -50,6 +50,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     public let elementID: String
     var pushEventImpl: ((String, String, Any) async throws -> Void)!
     var changeEvent: String?
+    var submitEvent: String?
     /// The form data for this form.
     @Published internal private(set) var data = [String: AnyFormValue]()
     var focusedFieldName: String?
@@ -60,6 +61,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
     
     func updateFromElement(_ element: Element) {
+        changeEvent = element.attrIfPresent("phx-change")
+        submitEvent = element.attrIfPresent("phx-submit")
+        
         try! element.traverse(FormDataUpdater(model: self))
     }
     
@@ -70,16 +74,31 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:)`` for more information.
     @MainActor
     public func sendChangeEvent() async throws {
-        guard let changeEvent = changeEvent else {
-            return
+        if let changeEvent = changeEvent {
+            try await pushFormEvent(changeEvent)
         }
-        
+    }
+    
+    /// Sends a phx-submit event (if configured) to the server with the current form data.
+    ///
+    /// This method has no effect if the `<form>` does not have a `phx-submit` event configured.
+    ///
+    /// See ``LiveViewCoordinator/pushEvent(type:event:value:)`` for more information.
+    @MainActor
+    public func sendSubmitEvent() async throws {
+        if let submitEvent = submitEvent {
+            try await pushFormEvent(submitEvent)
+        }
+    }
+    
+    @MainActor
+    private func pushFormEvent(_ event: String) async throws {
         let urlQueryEncodedData = data.map { k, v in
             // todo: in what cases does addingPercentEncoding return nil? do we care?
             "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)=\(v.formValue.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
         }.joined(separator: "&")
 
-        try await pushEventImpl("form", changeEvent, urlQueryEncodedData)
+        try await pushEventImpl("form", event, urlQueryEncodedData)
     }
     
     public var debugDescription: String {

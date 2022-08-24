@@ -50,6 +50,8 @@ struct BuiltinRegistry {
             PhxForm<R>(element: element, context: context)
         case "phx-hero":
             PhxHeroView(element: element, context: context)
+        case "phx-submit-button":
+            PhxSubmitButton(element: element, context: context)
         default:
             // log here that view type cannot be found
             EmptyView()

@@ -35,7 +35,6 @@ public struct PhxForm<R: CustomRegistry>: View {
             })
             .onAppear {
                 model.pushEventImpl = context.coordinator.pushEvent
-                model.changeEvent = element.attrIfPresent("phx-change")
                 model.updateFromElement(element)
             }
     }
