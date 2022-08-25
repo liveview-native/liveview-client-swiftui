@@ -33,7 +33,7 @@ public struct PhxModernNavigationLink<R: CustomRegistry>: View {
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
             ZStack {
                 // need a NavigationLink present to display the disclosure indicator
-                NavigationLink { EmptyView() } label: { EmptyView() }
+                NavigationLink(isActive: .constant(false)) { EmptyView() } label: { EmptyView() }
                 
                 Button{
                     activateNavigationLink()
