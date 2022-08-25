@@ -154,7 +154,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         channel = nil
 }
     
-    private func reconnect() async {
+    @_spi(NarwinChat)
+    public func reconnect() async {
         disconnect()
         await connect()
     }
