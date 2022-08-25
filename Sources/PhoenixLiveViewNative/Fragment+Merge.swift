@@ -37,15 +37,28 @@ extension Fragment {
         case let (.regular(children: currentChildren, statics: currentStatics), .updateRegular(children: childrenDiffs)):
             let newChildren = try currentChildren.merge(with: childrenDiffs)
             return .regular(children: newChildren, statics: currentStatics)
-        case let (.comprehension(dynamics: _, statics: currentStatics, templates: currentTemplates), .updateComprehension(dynamics: dynamicDiffs)):
+        case let (.comprehension(dynamics: _, statics: currentStatics, templates: currentTemplates), .updateComprehension(dynamics: dynamicDiffs, templates: newTemplates)):
             // todo: double check that dynamics in diff always completely replace existing dynamics
             let newDynamics = try dynamicDiffs.map {
                 try $0.map { try $0.toNewChild() }
             }
-            return .comprehension(dynamics: newDynamics, statics: currentStatics, templates: currentTemplates)
+            return .comprehension(dynamics: newDynamics, statics: currentStatics, templates: currentTemplates.merge(with: newTemplates))
         default:
             throw MergeError.fragmentTypeMismatch
         }
+    }
+}
+
+extension Optional where Wrapped == Templates {
+    func merge(with newTemplates: Templates?) -> Templates? {
+        guard let self = self else {
+            return newTemplates
+        }
+        guard let newTemplates = newTemplates else {
+            return self
+        }
+        // todo: not clear whether keeping the old ones is the right behavior, or whether they should be overwritten entirely
+        return Templates(templates: self.templates.merging(newTemplates.templates, uniquingKeysWith: { old, new in new }))
     }
 }
 

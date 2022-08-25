@@ -33,9 +33,8 @@ struct RootDiff: Decodable, Equatable {
 enum FragmentDiff: Decodable, Equatable {
     case replaceCurrent(Fragment)
     case updateRegular(children: [Int: ChildDiff])
-    // todo: double check this can't have templates
     // note: when updating a comprehension, all dynamics are always sent
-    case updateComprehension(dynamics: [[ChildDiff]])
+    case updateComprehension(dynamics: [[ChildDiff]], templates: Templates?)
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Fragment.CodingKeys.self)
@@ -45,9 +44,8 @@ enum FragmentDiff: Decodable, Equatable {
             self = .replaceCurrent(try decoder.singleValueContainer().decode(Fragment.self))
         } else if container.contains(.dynamics) {
             let dynamics = try container.decode([[ChildDiff]].self, forKey: .dynamics)
-            // todo
-            assert(!container.contains(.templates))
-            self = .updateComprehension(dynamics: dynamics)
+            let templates = try container.decodeIfPresent(Templates.self, forKey: .templates)
+            self = .updateComprehension(dynamics: dynamics, templates: templates)
         } else {
             let children = try container.allKeys
                 .filter(\.isChild)
