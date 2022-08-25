@@ -148,10 +148,14 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
-    private func reconnect() async {
+    private func disconnect() {
         state = .notConnected
+        channel?.leave()
         channel = nil
-        liveReloadChannel = nil
+}
+    
+    private func reconnect() async {
+        disconnect()
         await connect()
     }
     
