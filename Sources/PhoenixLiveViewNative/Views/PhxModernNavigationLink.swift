@@ -31,18 +31,23 @@ public struct PhxModernNavigationLink<R: CustomRegistry>: View {
     public var body: some View {
         if let linkOpts = linkOpts,
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
-            Button{
-                activateNavigationLink()
-            } label: {
-                context.buildChildren(of: element)
-                    .onPreferenceChange(HeroViewSourceKey.self) { newSource in
-                        source = newSource
-                    }
-                    .onPreferenceChange(HeroViewOverrideKey.self) { newOverrideView in
-                        overrideView = newOverrideView
-                    }
+            ZStack {
+                // need a NavigationLink present to display the disclosure indicator
+                NavigationLink { EmptyView() } label: { EmptyView() }
+                
+                Button{
+                    activateNavigationLink()
+                } label: {
+                    context.buildChildren(of: element)
+                        .onPreferenceChange(HeroViewSourceKey.self) { newSource in
+                            source = newSource
+                        }
+                        .onPreferenceChange(HeroViewOverrideKey.self) { newOverrideView in
+                            overrideView = newOverrideView
+                        }
+                }
+                .disabled(disabled)
             }
-            .disabled(disabled)
         } else {
             // if there are no link options, or the coordinator doesn't support the required navigation, we don't show anything
         }
