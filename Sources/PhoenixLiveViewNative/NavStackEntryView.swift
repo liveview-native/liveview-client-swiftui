@@ -35,15 +35,16 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                         liveViewModel.pruneMissingForms(elements: elements)
                     }
                 }
-                .onReceive(coordinator.$state) { newValue in
+                .onReceive(coordinator.$internalState) { newValue in
                     if coordinator.currentURL == url {
+                        let newState = newValue.publicState
                         if case .connected(_) = state {
                             // if we're already connected, we only want to remove the cached elements if there's been an error reconnecting
-                            if case .connectionFailed(_) = newValue {
-                                state = .other(newValue)
+                            if case .connectionFailed(_) = newState {
+                                state = .other(newState)
                             }
                         } else {
-                            state = .other(newValue)
+                            state = .other(newState)
                         }
                     }
                 }

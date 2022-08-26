@@ -19,8 +19,11 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 /// The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.
 @MainActor
 public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
+    @Published internal private(set) var internalState: InternalState = .notConnected(reconnectAutomatically: false)
     /// The current state of the live view connection.
-    @Published public private(set) var state: State = .notConnected
+    public var state: State {
+        internalState.publicState
+    }
     
     /// The first URL this live view was connected to.
     public let initialURL: URL
@@ -102,7 +105,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         
         logger.debug("Connecting to \(self.currentURL.absoluteString)")
         
-        state = .connecting
+        internalState = .startingConnection
         // in case we're reconnecting, reset the elements so nothing gets stale elements
         elements = nil
         
@@ -110,7 +113,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         do {
             html = try await fetchDOM()
         } catch let error as Error {
-            state = .connectionFailed(error)
+            internalState = .connectionFailed(error)
             return
         }
         
@@ -123,7 +126,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             let doc = try SwiftSoup.parse(html)
             try self.extractDOMValues(doc)
         } catch {
-            self.state = .connectionFailed(Error.initialParseError)
+            internalState = .connectionFailed(Error.initialParseError)
             return
         }
         
@@ -131,7 +134,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             do {
                 try await self.connectSocket()
             } catch let error as Error {
-                self.state = .connectionFailed(error)
+                internalState = .connectionFailed(error)
                 return
             }
         }
@@ -144,12 +147,13 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         do {
             try await self.connectLiveView(token: token)
         } catch let error as Error {
-            self.state = .connectionFailed(error)
+            internalState = .connectionFailed(error)
         }
     }
     
     private func disconnect() {
-        state = .notConnected
+        // when deliberately disconnect, don't let pending connections continue
+        internalState = .notConnected(reconnectAutomatically: false)
         channel?.leave()
         channel = nil
 }
@@ -299,22 +303,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     
         let _: Void = try await withCheckedThrowingContinuation { continuation in
-            var wsEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
-            wsEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
-            wsEndpoint.path = "/live/websocket"
-            self.socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
-            socket!.onOpen {
-                logger.debug("[Socket] Opened")
-                continuation.resume()
-            }
-            socket!.onClose { logger.debug("[Socket] Closed") }
-            socket!.onError { (error) in
-                logger.error("[Socket] Error: \(String(describing: error))")
-                // TODO: can this be called multiple times? if so, we shouldn't resume the continuation here
-                continuation.resume(throwing: Error.socketError(error))
-            }
-            socket!.logger = { message in logger.debug("[Socket] \(message)") }
-            socket!.connect()
+            self.internalState = .awaitingSocketConnection(continuation)
+            doConnectSocket(urlSessionConfiguration: configuration)
         }
         
         if liveReloadEnabled {
@@ -322,6 +312,39 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 await self.connectLiveReloadSocket(urlSessionConfiguration: configuration)
             }
         }
+    }
+    
+    private func doConnectSocket(urlSessionConfiguration config: URLSessionConfiguration) {
+        var wsEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
+        wsEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
+        wsEndpoint.path = "/live/websocket"
+        let socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: config) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
+        self.socket = socket
+        socket.onOpen { [weak self] in
+            guard let self = self else {
+                socket.disconnect()
+                return
+            }
+            logger.debug("[Socket] Opened")
+            if case .awaitingSocketConnection(let continuation) = self.internalState {
+                continuation.resume()
+            }
+        }
+        socket.onClose { logger.debug("[Socket] Closed") }
+        socket.onError { [weak self] (error) in
+            guard let self = self else {
+                socket.disconnect()
+                return
+            }
+            logger.error("[Socket] Error: \(String(describing: error))")
+            if case .awaitingSocketConnection(let continuation) = self.internalState {
+                continuation.resume(throwing: Error.socketError(error))
+            } else {
+                self.internalState = .connectionFailed(.socketError(error))
+            }
+        }
+        socket.logger = { message in logger.debug("[Socket] \(message)") }
+        socket.connect()
     }
     
     private func connectLiveReloadSocket(urlSessionConfiguration: URLSessionConfiguration) async {
@@ -377,6 +400,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
         channel.on("diff") { message in
             guard self.currentConnectionToken === token else {
+                // if we've received a message for a now-stale connection, leave its channel
+                channel.leave()
                 return
             }
             Task { @MainActor in
@@ -385,36 +410,80 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
         
         let renderedPayload: Payload = try await withCheckedThrowingContinuation { continuation in
-            channel.join()
-                .receive("ok") { message in
-                    guard self.currentConnectionToken === token else {
-                        continuation.resume(throwing: CancellationError())
-                        return
-                    }
-                    let renderedPayload = (message.payload["rendered"] as! Payload)
-                    continuation.resume(returning: renderedPayload)
-                }
-                .receive("error") { message in
-                    // leave the channel, otherwise the it'll continue retrying indefinitely
-                    // we want to control the retry behavior ourselves, so just leave the channel
-                    channel.leave()
-                    if self.config.liveRedirectsEnabled,
-                       let redirect = message.payload["live_redirect"] as? Payload,
-                       let dest = redirect["to"] as? String {
-                        Task {
-                            await self.replaceTopNavigationEntry(with: URL(string: dest, relativeTo: self.currentURL)!)
-                        }
-                        continuation.resume(throwing: CancellationError())
-                    } else {
-                        continuation.resume(throwing: Error.joinError(message))
-                    }
-                }
+            self.internalState = .awaitingJoinResponse(continuation)
+            setupChannelJoinHandlers(channel: channel, token: token)
         }
         
+        handleJoinPayload(renderedPayload: renderedPayload)
+    }
+    
+    private func setupChannelJoinHandlers(channel: Channel, token: ConnectionAttemptToken) {
+        channel.join()
+            .receive("ok") { [weak self] message in
+                guard let self = self,
+                      self.currentConnectionToken === token else {
+                    // leave the channel so we don't get any more messages/automatic rejoins
+                    channel.leave()
+                    if case .awaitingJoinResponse(let continuation) = self?.internalState {
+                        continuation.resume(throwing: CancellationError())
+                    }
+                    return
+                }
+                let renderedPayload = (message.payload["rendered"] as! Payload)
+                if case .awaitingJoinResponse(let continuation) = self.internalState {
+                    // if we're in the state of attempting to establish the initial connection, resume the async task
+                    continuation.resume(returning: renderedPayload)
+                } else if self.internalState.reconnectAutomatically {
+                    // if we're in a state where, e.g., a previous attempt failed, but an automatic rejoin attempt succeeds, finish the join
+                    self.handleJoinPayload(renderedPayload: renderedPayload)
+                } else {
+                    // if we've received a message but don't have anything to do with it,
+                    // assume that that will continue to be the case, and leave the channel to prevent future messages
+                    channel.leave()
+                }
+            }
+            .receive("error") { [weak self] message in
+                // TODO: reconsider this behavior, web tries to automatically rejoin, and we do to when an error is encountered after a successful join
+                // leave the channel, otherwise the it'll continue retrying indefinitely
+                // we want to control the retry behavior ourselves, so just leave the channel
+                channel.leave()
+                
+                guard let self = self,
+                      self.currentConnectionToken === token else {
+                    if case .awaitingJoinResponse(let continuation) = self?.internalState {
+                        continuation.resume(throwing: CancellationError())
+                    }
+                    return
+                }
+                
+                if self.config.liveRedirectsEnabled,
+                   let redirect = message.payload["live_redirect"] as? Payload,
+                   let dest = redirect["to"] as? String {
+                    // TODO: rather than kicking off a new task, we should continue the existing one with the redirect
+                    Task {
+                        await self.replaceTopNavigationEntry(with: URL(string: dest, relativeTo: self.currentURL)!)
+                    }
+                    if case .awaitingJoinResponse(let continuation) = self.internalState {
+                        continuation.resume(throwing: CancellationError())
+                    }
+                } else {
+                    if case .awaitingJoinResponse(let continuation) = self.internalState {
+                        continuation.resume(throwing: Error.joinError(message))
+                    } else if self.internalState.reconnectAutomatically {
+                        // TODO: reconnectAutomatically is a bit of a misnomer here,
+                        Task { @MainActor in
+                            self.internalState = .connectionFailed(.joinError(message))
+                        }
+                    }
+                }
+            }
+    }
+    
+    private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
         let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
-        self.state = .connected
+        self.internalState = .connected
         self.elements = elements
     }
     
@@ -427,6 +496,45 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
 }
 
 extension LiveViewCoordinator {
+    // The internal state enum stores more details associated with particular states but that we don't want publicly exposed.
+    enum InternalState {
+        case notConnected(reconnectAutomatically: Bool)
+        case startingConnection
+        case awaitingSocketConnection(CheckedContinuation<Void, Swift.Error>)
+        case awaitingJoinResponse(CheckedContinuation<Payload, Swift.Error>)
+        case connected
+        case connectionFailed(Error)
+        
+        var publicState: State {
+            switch self {
+            case .notConnected(reconnectAutomatically: _):
+                return .notConnected
+            case .startingConnection, .awaitingSocketConnection(_), .awaitingJoinResponse(_):
+                return .connecting
+            case .connected:
+                return .connected
+            case .connectionFailed(let error):
+                return .connectionFailed(error)
+            }
+        }
+        
+        var reconnectAutomatically: Bool {
+            switch self {
+            case .notConnected(reconnectAutomatically: let b):
+                return b
+            case .startingConnection, .awaitingSocketConnection(_), .awaitingJoinResponse(_):
+                // connection attempt tokens should make this unreachable, but just in case
+                return false
+            case .connected:
+                //
+                return false
+            case .connectionFailed(_):
+                // if we've previously encountered and error, and SwiftPhoenixClient automatically tries to rejoin the channel
+                // and it succeeds, we accept the join
+                return true
+            }
+        }
+    }
     /// The live view connection state.
     public enum State {
         /// The coordinator has not yet connected to the live view.
