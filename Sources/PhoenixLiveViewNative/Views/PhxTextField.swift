@@ -123,7 +123,8 @@ private struct TextFieldConfiguration {
     let autocapitalizationType: UITextAutocapitalizationType
     let keyboardType: UIKeyboardType
     let isSecureTextEntry: Bool
-
+    let returnKeyType: UIReturnKeyType
+    
     init(element: Element) {
         self.placeholder = element.attrIfPresent("placeholder")
         switch element.attrIfPresent("border-style") {
@@ -202,6 +203,34 @@ private struct TextFieldConfiguration {
         default:
             fatalError("Invalid value '\(element.attrIfPresent("is-secure-text-entry")!)' for is-secure-text-entry attribute on <textfield>")
         }
+        switch element.attrIfPresent("return-key-type") {
+        case nil, "default":
+            returnKeyType = .default
+        case "go":
+            returnKeyType = .go
+        case "google":
+            returnKeyType = .google
+        case "join":
+            returnKeyType = .join
+        case "next":
+            returnKeyType = .next
+        case "route":
+            returnKeyType = .route
+        case "search":
+            returnKeyType = .search
+        case "send":
+            returnKeyType = .send
+        case "yahoo":
+            returnKeyType = .yahoo
+        case "done":
+            returnKeyType = .done
+        case "emergency-call":
+            returnKeyType = .emergencyCall
+        case "continue":
+            returnKeyType = .continue
+        default:
+            fatalError("Invalid value '\(element.attrIfPresent("return-key-type")!)' for return-key-type attribute on <textfield>")
+        }
     }
     
     func apply(to view: UITextField) {
@@ -212,5 +241,6 @@ private struct TextFieldConfiguration {
         view.autocapitalizationType = autocapitalizationType
         view.keyboardType = keyboardType
         view.isSecureTextEntry = isSecureTextEntry
+        view.returnKeyType = returnKeyType
     }
 }
