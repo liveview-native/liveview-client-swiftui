@@ -85,7 +85,7 @@ public struct FormState<Value: FormValue> {
     public var wrappedValue: Value {
         get {
             guard let formModel = formModel else {
-                fatalError("Cannot access @FormState without form model. Are you using it outside of a <form>?")
+                fatalError("Cannot access @FormState without form model. Are you using it outside of a <phx-form>?")
             }
             guard let name = name else {
                 fatalError("Cannot access @FormState outisde of an element with a name attribute")
@@ -104,7 +104,7 @@ public struct FormState<Value: FormValue> {
         }
         nonmutating set {
             guard let formModel = formModel else {
-                fatalError("Cannot access @FormState without form model. Are you using it outside of a <form>?")
+                fatalError("Cannot access @FormState without form model. Are you using it outside of a <phx-form>?")
             }
             guard let name = name else {
                 fatalError("Cannot access @FormState outisde of an element with a name attribute")
@@ -119,7 +119,7 @@ public struct FormState<Value: FormValue> {
     
     /// A binding that is backed by the form model that can be used as the storage for other views or controls.
     ///
-    /// Access this binding with the a dollar sign prefix. If a property is declared as `@FormState var value`, then the project value binding can be accessed as `$value`.
+    /// Access this binding with a dollar sign prefix. If a property is declared as `@FormState var value`, then the project value binding can be accessed as `$value`.
     ///
     /// If the form model does not have a value, or it has a value that cannot be converted to the `Value` type, the default value provided at initialization will be used when reading the binding.
     public var projectedValue: Binding<Value> {

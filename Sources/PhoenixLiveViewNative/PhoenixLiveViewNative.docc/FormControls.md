@@ -35,3 +35,19 @@ struct MicToggle: View {
     }
 }
 ```
+
+If the SwiftUI control you're wrapping requires a `Binding`, you can use the ``FormState/projectedValue`` property accessed with the `$` prefix to retrieve one:
+
+```swift
+struct MicToggle: View {
+    @FormState(default: false) var value: Bool
+    
+    var body: some View {
+        Toggle(isOn: $value) {
+            Text(value ? "Mic On" : "Mic Off")
+        }
+    }
+}
+```
+
+Use this view in your LiveView view tree using the ``CustomRegistry`` (see <doc:AddCustomElement>) inside of a `<phx-form>` element. It will participate in the form model automatically, and its value will be sent whenever change or submit events are triggered on the form.

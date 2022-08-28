@@ -30,6 +30,7 @@ LiveViewNative supports DOM elements similar to but distinct from their Web coun
 
 - ``PhxForm``
 - ``PhxTextField``
+- ``PhxSubmitButton``
 
 ### Shapes
 
