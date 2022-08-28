@@ -47,6 +47,7 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
     private let config: TextFieldConfiguration
     @Binding private var value: String?
     @Binding private var becomeFirstResponder: Bool
+    @Environment(\.textFieldPrimaryAction) private var primaryAction: (() -> Void)?
     
     init(formModel: FormModel, name: String, config: TextFieldConfiguration, value: Binding<String?>, becomeFirstResponder: Binding<Bool>) {
         self.formModel = formModel
@@ -60,6 +61,7 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
         let field = UITextField()
         field.backgroundColor = .clear
         field.addTarget(context.coordinator, action: #selector(Coordinator.editingChanged), for: .editingChanged)
+        field.addTarget(context.coordinator, action: #selector(Coordinator.onPrimaryAction), for: .primaryActionTriggered)
         field.delegate = context.coordinator
         // prevent text field from expanding off the screen
         field.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -70,6 +72,7 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
         uiView.text = value
         config.apply(to: uiView)
         context.coordinator.value = _value
+        context.coordinator.primaryAction = primaryAction
         if becomeFirstResponder {
             DispatchQueue.main.async {
                 // becoming first responder immediately breaks some internal autocorrect thing, so we wait until the next runloop iteration
@@ -86,6 +89,7 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
     
     class Coordinator: NSObject, UITextFieldDelegate {
         var value: Binding<String?>
+        var primaryAction: (() -> Void)? = nil
         let formModel: FormModel!
         let name: String
         
@@ -111,6 +115,10 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
         
         func textFieldDidEndEditing(_ textField: UITextField) {
             formModel.focusedFieldName = nil
+        }
+        
+        @objc func onPrimaryAction() {
+            primaryAction?()
         }
     }
 }

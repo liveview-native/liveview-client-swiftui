@@ -16,6 +16,10 @@ private struct ElementKey: EnvironmentKey {
     static let defaultValue: Element? = nil
 }
 
+private struct TextFieldPrimaryActionKey: EnvironmentKey {
+    public static var defaultValue: (() -> Void)? = nil
+}
+
 extension EnvironmentValues {
     /// The model for the nearest ancestor `<form>` element (or `nil`, if there is no such element).
     public var formModel: FormModel? {
@@ -27,5 +31,10 @@ extension EnvironmentValues {
     public var element: Element? {
         get { self[ElementKey.self] }
         set { self[ElementKey.self] = newValue }
+    }
+    
+    @_spi(NarwinChat) public var textFieldPrimaryAction: (() -> Void)? {
+        get { self[TextFieldPrimaryActionKey.self] }
+        set { self[TextFieldPrimaryActionKey.self] = newValue }
     }
 }
