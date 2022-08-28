@@ -129,7 +129,8 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
     }
     
-    internal func clear() {
+    /// Clears all data in this form.
+    public func clear() {
         for field in data.keys {
             formFieldWillChange.send(field)
         }
