@@ -213,10 +213,10 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         
         let token = self.currentConnectionToken
 
-        let diffPayload = try await withCheckedThrowingContinuation({ continuation in
+        let replyPayload = try await withCheckedThrowingContinuation({ continuation in
             channel.push(event, payload: payload, timeout: PUSH_TIMEOUT)
                 .receive("ok") { reply in
-                    continuation.resume(returning: reply.payload["diff"] as? Payload)
+                    continuation.resume(returning: reply.payload)
                 }
                 .receive("error") { message in
                     continuation.resume(throwing: Error.eventError(message))
@@ -228,9 +228,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             throw CancellationError()
         }
         
-        if let diffPayload = diffPayload,
+        if let diffPayload = replyPayload["diff"] as? Payload,
            let elements = try? self.handleDiff(payload: diffPayload, baseURL: self.currentURL) {
             self.elements = elements
+        } else if config.liveRedirectsEnabled,
+                  let liveRedirect = replyPayload["live_redirect"] as? Payload {
+            self.handleLiveRedirect(liveRedirect)
         }
     }
     
@@ -457,15 +460,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 }
                 
                 if self.config.liveRedirectsEnabled,
-                   let redirect = message.payload["live_redirect"] as? Payload,
-                   let dest = redirect["to"] as? String {
-                    // TODO: rather than kicking off a new task, we should continue the existing one with the redirect
-                    Task {
-                        await self.replaceTopNavigationEntry(with: URL(string: dest, relativeTo: self.currentURL)!)
-                    }
-                    if case .awaitingJoinResponse(let continuation) = self.internalState {
-                        continuation.resume(throwing: CancellationError())
-                    }
+                   let redirect = message.payload["live_redirect"] as? Payload {
+                    self.handleLiveRedirect(redirect)
                 } else {
                     if case .awaitingJoinResponse(let continuation) = self.internalState {
                         continuation.resume(throwing: Error.joinError(message))
@@ -485,6 +481,19 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
         self.internalState = .connected
         self.elements = elements
+    }
+    
+    private func handleLiveRedirect(_ payload: Payload) {
+        guard let dest = payload["to"] as? String else {
+            return
+        }
+        // TODO: rather than kicking off a new task, we should continue the existing one with the redirect
+        Task {
+            await self.replaceTopNavigationEntry(with: URL(string: dest, relativeTo: self.currentURL)!)
+        }
+        if case .awaitingJoinResponse(let continuation) = self.internalState {
+            continuation.resume(throwing: CancellationError())
+        }
     }
     
     // Non-final API, for internal use only.
