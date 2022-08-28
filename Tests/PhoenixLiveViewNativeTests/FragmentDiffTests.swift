@@ -55,6 +55,35 @@ class FragmentDiffTests: XCTestCase {
             "d": [
                 ["foo", 1],
                 ["bar", 1]
+            ],
+            "p": {
+                "0": [
+                    "\\n    bar ",
+                    "\\n  "
+                ]
+            },
+        }
+        """.data(using: .utf8)!
+        XCTAssertEqual(
+            try decoder.decode(FragmentDiff.self, from: data),
+            .updateComprehension(dynamics: [
+                [.string("foo"), .componentID(1)],
+                [.string("bar"), .componentID(1)],
+            ], templates: [
+                0: [
+                    "\n    bar ",
+                    "\n  "
+                ]
+            ])
+        )
+    }
+    
+    func testDecodeComprehensionWithTemplates() throws {
+        let data = """
+        {
+            "d": [
+                ["foo", 1],
+                ["bar", 1]
             ]
         }
         """.data(using: .utf8)!
@@ -63,7 +92,7 @@ class FragmentDiffTests: XCTestCase {
             .updateComprehension(dynamics: [
                 [.string("foo"), .componentID(1)],
                 [.string("bar"), .componentID(1)],
-            ])
+            ], templates: nil)
         )
     }
     
@@ -104,7 +133,7 @@ class FragmentDiffTests: XCTestCase {
                         0: .fragment(.updateComprehension(dynamics: [
                             [.string("0"), .string("foo")],
                             [.string("1"), .string("bar")],
-                        ]))
+                        ], templates: nil))
                     ])
                 ]
             )

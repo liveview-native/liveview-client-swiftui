@@ -62,7 +62,7 @@ class Fragment_MergeTests: XCTestCase {
         let diff = FragmentDiff.updateComprehension(dynamics: [
             [.string("b"), .string("foo")],
             [.string("b"), .string("bar")],
-        ])
+        ], templates: nil)
         XCTAssertEqual(
             try current.merge(with: diff),
             .comprehension(dynamics: [
@@ -73,6 +73,40 @@ class Fragment_MergeTests: XCTestCase {
                 "2",
                 "3"
             ], templates: nil)
+        )
+    }
+    
+    func testUpdateComprehensionWithTemplates() throws {
+        let current = Fragment.comprehension(dynamics: [
+            [.string("a"), .string("foo")],
+            [.string("a"), .string("bar")],
+        ], statics: [
+            "1",
+            "2",
+            "3"
+        ], templates: [
+            0: ["a", "b"],
+        ])
+        let diff = FragmentDiff.updateComprehension(dynamics: [
+            [.string("b"), .string("foo")],
+            [.string("b"), .string("bar")],
+        ], templates: [
+            1: ["c"]
+        ])
+        XCTAssertEqual(
+            try current.merge(with: diff),
+            .comprehension(dynamics: [
+                [.string("b"), .string("foo")],
+                [.string("b"), .string("bar")],
+            ], statics: [
+                "1",
+                "2",
+                "3"
+            ], templates: [
+                // TODO: I'm not entirely certain merging this is the correct behavior, or if existing templates should be overwritten
+                0: ["a", "b"],
+                1: ["c"]
+            ])
         )
     }
     
@@ -243,7 +277,7 @@ class Fragment_MergeTests: XCTestCase {
         ])
         let diff = FragmentDiff.updateComprehension(dynamics: [
             [.string("a"), .string("b")]
-        ])
+        ], templates: nil)
         XCTAssertThrowsError(try current.merge(with: diff)) { error in
             XCTAssertEqual(error as! MergeError, MergeError.fragmentTypeMismatch)
         }
