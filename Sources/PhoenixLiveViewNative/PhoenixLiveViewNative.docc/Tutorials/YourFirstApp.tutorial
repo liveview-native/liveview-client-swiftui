@@ -25,4 +25,15 @@
         @TutorialReference(tutorial: "doc:05-Custom-Attribute")
         @TutorialReference(tutorial: "doc:06-Custom-Loading-Screen")
     }
+    
+    @Resources {
+        More resources for using LiveView Native.
+        
+        @SampleCode(destination: "https://github.com/liveviewnative/ios-tutorial") {
+            Find the full sample code for the project you'll build in this tutorial.
+            
+            - [The completed project](https://github.com/liveviewnative/ios-tutorial)
+            - [View the full project after each section](https://github.com/liveviewnative/ios-tutorial/commits/main)
+        }
+    }
 }
