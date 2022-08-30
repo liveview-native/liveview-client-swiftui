@@ -54,7 +54,7 @@
             @Step {
                 Lastly, we need to tweak the `live.html.heex` layout to remove the extraneous HTML that the native frontend doesn't need.
                 
-                @Code(name: "lib/lvn_tutorial_web/templates/layouts/live.html.heex", file: 01-01-06-live-template.html.heex)
+                @Code(name: "lib/lvn_tutorial_web/templates/layout/live.html.heex", file: 01-01-06-live-template.html.heex)
             }
         }
     }
