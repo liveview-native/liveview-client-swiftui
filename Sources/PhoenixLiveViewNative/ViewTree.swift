@@ -167,34 +167,9 @@ private extension View {
         if let s = element.attrIfPresent("frame-height"), let f = Double(s) {
             height = f
         }
-        switch element.attrIfPresent("frame-alignment") {
-        case "top-leading":
-            alignment = .topLeading
-        case "top":
-            alignment = .top
-        case "top-trailing":
-            alignment = .topTrailing
-        case "leading":
-            alignment = .leading
-        case "center":
-            alignment = .center
-        case "trailing":
-            alignment = .trailing
-        case "bottom-leading":
-            alignment = .bottomTrailing
-        case "bottom":
-            alignment = .bottom
-        case "bottom-trailing":
-            alignment = .bottomTrailing
-#if compiler(>=5.7)
-        // although these are marked as being available back to iOS 13, they were only made public in Xcode 14
-        // so we only compile them if the user's Xcode version is new enough
-        case "leading-last-text-baseline":
-            alignment = .leadingLastTextBaseline
-        case "trailing-last-text-baseline":
-            alignment = .trailingLastTextBaseline
-#endif
-        default:
+        if let s = element.attrIfPresent("frame-alignment"), let a = Alignment(string: s) {
+            alignment = a
+        } else {
             alignment = .center
         }
         return self.frame(width: width, height: height, alignment: alignment)
