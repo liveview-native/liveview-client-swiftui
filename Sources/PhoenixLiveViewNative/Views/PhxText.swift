@@ -8,8 +8,7 @@
 import SwiftUI
 import SwiftSoup
 
-/// `<text>`, displays text.
-public struct PhxText: View {
+struct PhxText: View {
     var element: Element
     
     public var body: some View {

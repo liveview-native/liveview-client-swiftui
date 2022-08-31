@@ -8,8 +8,7 @@
 import SwiftUI
 import SwiftSoup
 
-/// `<phx-form>`, a container for form elements.
-public struct PhxForm<R: CustomRegistry>: View {
+struct PhxForm<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let id: String

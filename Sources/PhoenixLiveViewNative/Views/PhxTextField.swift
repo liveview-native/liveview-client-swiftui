@@ -8,9 +8,7 @@
 import SwiftUI
 import SwiftSoup
 
-/// `<textfield>`, a text field form element (must be contained inside a `<form>`).
-public struct PhxTextField<R: CustomRegistry>: View {
-    private let label: String
+struct PhxTextField<R: CustomRegistry>: View {
     private let name: String
     private let config: TextFieldConfiguration
     private let formModel: FormModel
@@ -20,7 +18,6 @@ public struct PhxTextField<R: CustomRegistry>: View {
     init(element: Element, context: LiveContext<R>) {
         precondition(context.formModel != nil, "<textfield> cannot be used outside of a <form>")
         // throwing: .attr only throws if the given attribute name is empty
-        self.label = try! element.attr("label")
         self.name = try! element.attr("name")
         self.config = TextFieldConfiguration(element: element)
         precondition(!name.isEmpty, "<textfield> must have name")

@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// `<zstack>`, lays out children on top of each other, from back to front.
-public struct PhxZStack<R: CustomRegistry>: View {
+struct PhxZStack<R: CustomRegistry>: View {
     var element: Element
     var context: LiveContext<R>
 

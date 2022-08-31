@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// `<phx-hero>`, wraps the source and destination elements that are used for the hero transition when navigating.
-public struct PhxHeroView<R: CustomRegistry>: View {
+struct PhxHeroView<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let kind: Kind

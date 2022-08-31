@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// `<hstack>`, lays out children in a horizontal line.
-public struct PhxHStack<R: CustomRegistry>: View {
+struct PhxHStack<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let alignment: VerticalAlignment

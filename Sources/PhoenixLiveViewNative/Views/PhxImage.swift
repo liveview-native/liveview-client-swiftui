@@ -8,8 +8,7 @@
 import SwiftUI
 import SwiftSoup
 
-/// `<image>`, displays SF Symbols or images from your app's asset catalog.
-public struct PhxImage: View {
+struct PhxImage: View {
     private let mode: Mode
     private let symbolColor: Color?
     private let symbolScale: Image.Scale?

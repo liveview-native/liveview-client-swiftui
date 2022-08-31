@@ -8,8 +8,7 @@
 import SwiftUI
 import SwiftSoup
 
-/// `<button>`, a tappable element.
-public struct PhxButton<R: CustomRegistry>: View {
+struct PhxButton<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let clickEvent: String?

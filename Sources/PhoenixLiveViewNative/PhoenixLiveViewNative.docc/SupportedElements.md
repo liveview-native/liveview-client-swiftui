@@ -2,37 +2,33 @@
 
 LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.
 
-## Overview
-
-<!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
-
 ## Topics
 
 ### Layout
 
-- ``PhxHStack``
-- ``PhxVStack``
-- ``PhxZStack``
-- ``PhxSpacer``
-- ``PhxScrollView``
-- ``PhxList``
+- <doc:HStack>
+- <doc:VStack>
+- <doc:ZStack>
+- <doc:Spacer>
+- <doc:ScrollView>
+- <doc:List>
 
 ### Content
 
-- ``PhxText``
-- ``PhxImage``
-- ``PhxAsyncImage``
-- ``PhxModernNavigationLink``
-- ``PhxHeroView``
-- ``PhxButton``
+- <doc:Text>
+- <doc:Image>
+- <doc:AsyncImage>
+- <doc:NavigationLink>
+- <doc:Hero>
+- <doc:Button>
 
 ### Forms
 
-- ``PhxForm``
-- ``PhxTextField``
-- ``PhxSubmitButton``
+- <doc:PhxForm>
+- <doc:TextField>
+- <doc:PhxSubmitButton>
 
 ### Shapes
 
-- `<rectangle>`
-- `<roundedrectangle>`
+- <doc:Rectangle>
+- <doc:RoundedRectangle>

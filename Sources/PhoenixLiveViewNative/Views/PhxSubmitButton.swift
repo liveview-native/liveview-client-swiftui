@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// `<phx-submit-button>`, special button that triggers submission of the form it's contained in when pressed.
-public struct PhxSubmitButton<R: CustomRegistry>: View {
+struct PhxSubmitButton<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let formModel: FormModel

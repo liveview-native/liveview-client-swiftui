@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// `<spacer>`, an empty view that can grow to take up as much space as needed.
-public struct PhxSpacer: View {
+struct PhxSpacer: View {
     let minLength: CGFloat?
     
     init(element: Element) {

@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// `<asyncimage>`, displays images loaded from a remote URL.
-public struct PhxAsyncImage: View {
+struct PhxAsyncImage: View {
     private let url: URL?
     private let scale: Double?
     private let contentMode: ContentMode

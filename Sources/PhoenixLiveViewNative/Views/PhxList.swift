@@ -8,8 +8,7 @@
 import SwiftUI
 import SwiftSoup
 
-/// `<list>`, arranges its children in a vertically scrolling list.
-public struct PhxList<R: CustomRegistry>: View {
+struct PhxList<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let deleteEvent: String?
