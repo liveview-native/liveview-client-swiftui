@@ -145,6 +145,7 @@ private extension View {
             .padding(from: element)
             .listRowSeparator(from: element)
             .listRowInsets(from: element)
+            .tint(from: element)
     }
     
     @ViewBuilder
@@ -258,6 +259,14 @@ private extension View {
             insets!.trailing = d
         }
         return self.listRowInsets(insets)
+    }
+    
+    private func tint(from element: Element) -> some View {
+        if let color = Color(fromNamedOrCSSHex: element.attrIfPresent("tint")) {
+            return self.tint(color)
+        } else {
+            return self.tint(nil)
+        }
     }
 
 }
