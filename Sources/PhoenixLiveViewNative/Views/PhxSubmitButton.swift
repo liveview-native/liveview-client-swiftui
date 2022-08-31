@@ -12,13 +12,11 @@ public struct PhxSubmitButton<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let formModel: FormModel
-    private let disabled: Bool
     private let afterSubmit: AfterSubmitAction
     
     init(element: Element, context: LiveContext<R>) {
         self.element = element
         self.context = context
-        self.disabled = element.hasAttr("disabled")
         if let formModel = context.formModel {
             self.formModel = formModel
         } else {
@@ -32,7 +30,7 @@ public struct PhxSubmitButton<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        Button {
+        PhxButton(element: element, context: context) {
             Task {
                 do {
                     try await formModel.sendSubmitEvent()
@@ -41,10 +39,7 @@ public struct PhxSubmitButton<R: CustomRegistry>: View {
                     // todo: error handling
                 }
             }
-        } label: {
-            context.buildChildren(of: element)
         }
-        .disabled(disabled)
     }
     
     private func doAfterSubmitAction() {

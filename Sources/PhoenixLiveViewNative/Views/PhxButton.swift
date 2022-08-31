@@ -13,13 +13,16 @@ public struct PhxButton<R: CustomRegistry>: View {
     private let element: Element
     private let context: LiveContext<R>
     private let clickEvent: String?
+    // used internaly by PhxSubmitButton
+    private let action: (() -> Void)?
     private let buttonStyle: PhxButtonStyle
     private let disabled: Bool
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: Element, context: LiveContext<R>, action: (() -> Void)?) {
         self.element = element
         self.context = context
         self.clickEvent = element.attrIfPresent("phx-click")
+        self.action = action
         self.disabled = element.hasAttr("disabled")
         if let s = element.attrIfPresent("button-style"),
            let style = PhxButtonStyle(rawValue: s) {
@@ -38,6 +41,10 @@ public struct PhxButton<R: CustomRegistry>: View {
     }
     
     private func handleClick() {
+        if let action = action {
+            action()
+            return
+        }
         guard let clickEvent = clickEvent else {
             return
         }

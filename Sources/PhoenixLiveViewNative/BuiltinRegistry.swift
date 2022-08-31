@@ -24,7 +24,7 @@ struct BuiltinRegistry {
         case "zstack":
             PhxZStack<R>(element: element, context: context)
         case "button":
-            PhxButton<R>(element: element, context: context)
+            PhxButton<R>(element: element, context: context, action: nil)
         case "image":
             PhxImage(element: element, context: context)
         case "asyncimage":
