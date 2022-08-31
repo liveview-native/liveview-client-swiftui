@@ -18,9 +18,9 @@ struct PhxShape<S: Shape>: View {
     }
     
     var body: some View {
-        if let s = element.attrIfPresent("fill-color"), let color = Color(fromCSSHex: s) {
+        if let s = element.attrIfPresent("fill-color"), let color = Color(fromNamedOrCSSHex: s) {
             shape.fill(color)
-        } else if let s = element.attrIfPresent("stroke-color"), let color = Color(fromCSSHex: s) {
+        } else if let s = element.attrIfPresent("stroke-color"), let color = Color(fromNamedOrCSSHex: s) {
             shape.stroke(color)
         } else {
             shape

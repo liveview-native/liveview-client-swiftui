@@ -23,7 +23,7 @@ public struct PhxImage: View {
             preconditionFailure("<image> must have system-name or name")
         }
         if let attr = element.attrIfPresent("symbol-color") {
-            symbolColor = Color(fromCSSHex: attr)
+            symbolColor = Color(fromNamedOrCSSHex: attr)
         } else {
             symbolColor = nil
         }

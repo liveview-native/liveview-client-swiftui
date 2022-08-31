@@ -73,7 +73,7 @@ public struct PhxText: View {
     
     private var textColor: Color? {
         if let attr = element.attrIfPresent("color"),
-           let color = Color(fromCSSHex: attr) {
+           let color = Color(fromNamedOrCSSHex: attr) {
             return color
         } else {
             return nil
