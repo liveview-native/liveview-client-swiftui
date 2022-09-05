@@ -16,7 +16,7 @@ public typealias Attribute = SwiftSoup.Attribute
 ///
 /// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-vg2v`` method.
 ///
-/// To sue your custom registry implementation, provide it as the generic parameter for the ``LiveViewCoordinator`` you construct:
+/// To use your custom registry implementation, provide it as the generic parameter for the ``LiveViewCoordinator`` you construct:
 ///
 /// ```swift
 /// struct ContentView: View {
