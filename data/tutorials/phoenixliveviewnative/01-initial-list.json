@@ -323,7 +323,7 @@
       ]
     },
     "01-02-03-add-package.png": {
-      "alt": "The Package Dependencies tab of the Xcode project with the plus button highlighted.",
+      "alt": "The Add Package window in Xcode with the search field, dependency rule, and Add button highlighted.",
       "identifier": "01-02-03-add-package.png",
       "type": "image",
       "variants": [

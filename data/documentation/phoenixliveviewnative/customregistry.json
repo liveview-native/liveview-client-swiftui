@@ -106,7 +106,7 @@
         {
           "inlineContent": [
             {
-              "text": "To sue your custom registry implementation, provide it as the generic parameter for the ",
+              "text": "To use your custom registry implementation, provide it as the generic parameter for the ",
               "type": "text"
             },
             {
