@@ -52,32 +52,11 @@ struct ViewTreeBuilder<R: CustomRegistry> {
         return fromElement(e, context: c)
     }
     
-//    @ViewBuilder
     fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
         let attrs = element.getAttributes()?.asList() ?? []
         return createElement(element, context: context)
-            .applyAttributes(attrs, context: context)
-//        if let (name, attr) = getApplicableCustomAttribute(element: element, context: context) {
-//            let newContext = context.with(appliedCustomAttribute: name)
-//            AnyView(R.applyCustomAttribute(name, value: attr.getValue(), element: element, context: newContext))
-//        } else {
-//            createElement(element, context: context)
-//                .commonModifiers(from: element)
-//                .environment(\.element, element)
-//        }
-    }
-    
-    private func getApplicableCustomAttribute(element: Element, context: LiveContext<R>) -> (R.AttributeName, Attribute)? {
-        guard let attrs = element.getAttributes() else {
-            return nil
-        }
-        for attr in attrs {
-            if let name = R.AttributeName(rawValue: attr.getKey().lowercased()),
-               !context.appliedCustomAttributes.contains(name) {
-                return (name, attr)
-            }
-        }
-        return nil
+            .applyAttributes(attrs, element: element, context: context)
+            .environment(\.element, element)
     }
     
     @ViewBuilder
@@ -97,6 +76,7 @@ struct ViewTreeBuilder<R: CustomRegistry> {
 private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
     let parent: Parent
     let attributes: [Attribute]
+    let element: Element
     let context: LiveContext<R>
     
     var body: some View {
@@ -104,31 +84,30 @@ private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
         let remaining = Array(attributes[1...])
         parent
             // force-unwrap is okay, this view is never  constructed with an empty slice
-            .applyAttribute(attributes.first!, context: context)
-            .applyAttributes(remaining, context: context)
+            .applyAttribute(attributes.first!, element: element, context: context)
+            .applyAttributes(remaining, element: element, context: context)
     }
 }
 
 private extension View {
     @ViewBuilder
-    func applyAttributes(_ attributes: [Attribute], context: LiveContext<some CustomRegistry>) -> some View {
+    func applyAttributes(_ attributes: [Attribute], element: Element, context: LiveContext<some CustomRegistry>) -> some View {
         if attributes.isEmpty {
             self
         } else {
-            AttributeApplicator(parent: self, attributes: attributes, context: context)
+            AttributeApplicator(parent: self, attributes: attributes, element: element, context: context)
         }
     }
     
-    @ViewBuilder
-    func applyAttribute(_ attribute: Attribute, context: LiveContext<some CustomRegistry>) -> some View {
+    func applyAttribute<R: CustomRegistry>(_ attribute: Attribute, element: Element, context: LiveContext<R>) -> some View {
+        // EmptyModifier is used if the attribute is not recognized as builtin or custom modifier
+        var modifier: any ViewModifier = EmptyModifier()
         if let name = BuiltinRegistry.AttributeName(rawValue: attribute.getKey()) {
-            BuiltinRegistry.applyModifier(attribute: name, value: attribute.getValue(), context: context)
-                .apply(to: self)
-        } else {
-            // TODO: custom
-            // attributes not recognized as builtin or custom modifiers are ignored (they may be handled by the element view itself)
-            self
+            modifier = BuiltinRegistry.applyModifier(attribute: name, value: attribute.getValue(), context: context)
+        } else if let name = R.AttributeName(rawValue: attribute.getKey()) {
+            modifier = R.lookupModifier(name, value: attribute.getValue(), element: element, context: context)
         }
+        return modifier.apply(to: self)
     }
     
     func commonModifiers(from element: Element) -> some View {

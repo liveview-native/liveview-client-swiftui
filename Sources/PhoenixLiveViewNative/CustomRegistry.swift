@@ -30,7 +30,7 @@ public typealias Attribute = SwiftSoup.Attribute
 /// - ``lookup(_:element:context:)-2rzrl``
 /// ### Custom Attributes
 /// - ``AttributeName``
-/// - ``applyCustomAttribute(_:value:element:context:)-4fh1q``
+/// - ``lookupModifier(_:value:element:context:)-9qdm4``
 /// ### Customizing the Loading View
 /// - ``loadingView(for:state:)-vg2v``
 /// ### See Also
@@ -59,12 +59,12 @@ public protocol CustomRegistry {
     associatedtype TagName: RawRepresentable where TagName.RawValue == String
     /// A type represnting the attribute names that this registry can handle.
     ///
-    /// The attribute name type must be `RawRepresentable` and `Equatable` and its raw values must be strings. All raw value strings must be lowercased, otherwise the framework will not be able to construct your attribute types from strings in the DOM.
+    /// The attribute name type must be `RawRepresentable` and its raw values must be strings. All raw value strings must be lowercased, otherwise the framework will not be able to construct your attribute types from strings in the DOM.
     ///
     /// Generally, this is an enum which declares variants for the support attributes:
     /// ```swift
     /// struct MyRegistry: CustomRegistry {
-    ///     enum AttributeName: String, Equatable {
+    ///     enum AttributeName: String {
     ///         case foo
     ///         case barBaz = "bar-baz"
     ///     }
@@ -77,15 +77,11 @@ public protocol CustomRegistry {
     ///     typealias AttributeName = EmptyRegistry.None
     /// }
     /// ```
-    associatedtype AttributeName: RawRepresentable, Equatable where AttributeName.RawValue == String
+    associatedtype AttributeName: RawRepresentable where AttributeName.RawValue == String
     /// The type of view this registry returns from the `lookup` method.
     ///
     /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-2rzrl`` implementations and this will be inferred automatically.
     associatedtype CustomView: View
-    /// The type of view this registry produces for custom attributes.
-    ///
-    /// Generally, implementors will use an opaque return type on their ``applyCustomAttribute(_:value:element:context:)-4fh1q`` implementations and this will be inferred automatically.
-    associatedtype Modified: View
     /// The type of view this registry produces for loading views.
     ///
     /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-vg2v`` implementations and this will be inferred automatically.
@@ -103,16 +99,14 @@ public protocol CustomRegistry {
     
     /// This method is called by LiveView Native when it encounters a custom attribute your registry has declared support for.
     ///
-    /// Use ``LiveContext/buildElement(_:)`` to create the view you are going to modify.
-    ///
     /// If your custom registry does not support any attributes, you can set the `AttributeName` type alias to ``EmptyRegistry/None`` and omit this method.
     ///
     /// - Parameter name: The name of the attribute.
     /// - Parameter value: The value of the attribute. If no value is provided in the DOM, an empty string will be used as the value.
     /// - Parameter element: The element on which the attribute is present.
     /// - Parameter context: The live context in which the view is being built.
-    @ViewBuilder
-    static func applyCustomAttribute(_ name: AttributeName, value: String, element: Element, context: LiveContext<Self>) -> Modified
+    /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
+    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<Self>) -> any ViewModifier
     
     /// This method is called when it needs a view to display while connecting to the live view.
     ///
@@ -136,7 +130,7 @@ public struct EmptyRegistry {
 }
 extension EmptyRegistry: CustomRegistry {
     /// A type that can be used as ``CustomRegistry/TagName`` or ``CustomRegistry/AttributeName`` for registries which don't support any custom tags or attributes.
-    public struct None: RawRepresentable, Equatable {
+    public struct None: RawRepresentable {
         public typealias RawValue = String
         public var rawValue: String
         
@@ -154,9 +148,9 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
         fatalError()
     }
 }
-extension CustomRegistry where AttributeName == EmptyRegistry.None, Modified == Never {
-    /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/AttributeName`` type alias, this implementation will be used.
-    public static func applyCustomAttribute(_ name: AttributeName, value: String, element: Element, context: LiveContext<Self>) -> Never {
+extension CustomRegistry where AttributeName == EmptyRegistry.None {
+    /// A default implementation that does not provide any custom attributes. If you omit the ``CustomRegistry/AttributeName`` type alias, this implementation will be used.
+    public static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<Self>) -> any ViewModifier {
         fatalError()
     }
 }
