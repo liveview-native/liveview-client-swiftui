@@ -57,4 +57,19 @@ struct BuiltinRegistry {
             EmptyView()
         }
     }
+    
+    static let builtinModifiers: [String] = [
+        "frame"
+    ]
+    
+    @ViewBuilder
+    static func applyModifier(to view: some View, attribute name: String, value: String, context: LiveContext<some CustomRegistry>) -> some View {
+        switch name {
+        case "frame":
+            view.frame(width: 50)
+//            return FrameModifier(
+        default:
+            fatalError()
+        }
+    }
 }

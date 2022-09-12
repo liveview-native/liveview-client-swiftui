@@ -47,20 +47,24 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     }
     
     // alias for typing
+    @inline(__always)
     fileprivate func f(_ e: Element, _ c: LiveContext<R>) -> some View {
         return fromElement(e, context: c)
     }
     
-    @ViewBuilder
+//    @ViewBuilder
     fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
-        if let (name, attr) = getApplicableCustomAttribute(element: element, context: context) {
-            let newContext = context.with(appliedCustomAttribute: name)
-            AnyView(R.applyCustomAttribute(name, value: attr.getValue(), element: element, context: newContext))
-        } else {
-            createElement(element, context: context)
-                .commonModifiers(from: element)
-                .environment(\.element, element)
-        }
+        let attrs = element.getAttributes()?.asList() ?? []
+        return createElement(element, context: context)
+            .applyAttributes(attrs, context: context)
+//        if let (name, attr) = getApplicableCustomAttribute(element: element, context: context) {
+//            let newContext = context.with(appliedCustomAttribute: name)
+//            AnyView(R.applyCustomAttribute(name, value: attr.getValue(), element: element, context: newContext))
+//        } else {
+//            createElement(element, context: context)
+//                .commonModifiers(from: element)
+//                .environment(\.element, element)
+//        }
     }
     
     private func getApplicableCustomAttribute(element: Element, context: LiveContext<R>) -> (R.AttributeName, Attribute)? {
@@ -136,7 +140,43 @@ public struct LiveContext<R: CustomRegistry> {
     }
 }
 
+// this view is required to to break the infinitely-recursive type that occurs if the body of this view is inlined into applyAttributes(_:context:)
+private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
+    let parent: Parent
+    let attributes: [Attribute]
+    let context: LiveContext<R>
+    
+    var body: some View {
+        // TODO: this creates a new array which copies all but the first element from attributes. this should be replaced with ArraySlice to avoid copying, but using ArraySlice currently results in a crash in SwiftUI (see FB11501045)
+        let remaining = Array(attributes[1...])
+        parent
+            // force-unwrap is okay, this view is never  constructed with an empty slice
+            .applyAttribute(attributes.first!, context: context)
+            .applyAttributes(remaining, context: context)
+    }
+}
+
 private extension View {
+    @ViewBuilder
+    func applyAttributes(_ attributes: [Attribute], context: LiveContext<some CustomRegistry>) -> some View {
+        if attributes.isEmpty {
+            self
+        } else {
+            AttributeApplicator(parent: self, attributes: attributes, context: context)
+        }
+    }
+    
+    @ViewBuilder
+    func applyAttribute(_ attribute: Attribute, context: LiveContext<some CustomRegistry>) -> some View {
+        if BuiltinRegistry.builtinModifiers.contains(attribute.getKey()) {
+            BuiltinRegistry.applyModifier(to: self, attribute: attribute.getKey(), value: attribute.getValue(), context: context)
+        } else {
+            // TODO: custom
+            // attributes not recognized as builtin or custom modifiers are ignored (they may be handled by the element view itself)
+            self
+        }
+    }
+    
     func commonModifiers(from element: Element) -> some View {
         self
             .navigationTitle(from: element)
