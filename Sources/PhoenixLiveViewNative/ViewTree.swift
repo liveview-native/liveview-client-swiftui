@@ -169,7 +169,8 @@ private extension View {
     @ViewBuilder
     func applyAttribute(_ attribute: Attribute, context: LiveContext<some CustomRegistry>) -> some View {
         if let name = BuiltinRegistry.AttributeName(rawValue: attribute.getKey()) {
-            BuiltinRegistry.applyModifier(to: self, attribute: name, value: attribute.getValue(), context: context)
+            BuiltinRegistry.applyModifier(attribute: name, value: attribute.getValue(), context: context)
+                .apply(to: self)
         } else {
             // TODO: custom
             // attributes not recognized as builtin or custom modifiers are ignored (they may be handled by the element view itself)
@@ -284,6 +285,12 @@ private extension View {
         }
     }
 
+}
+
+private extension ViewModifier {
+    func apply<V: View>(to view: V) -> AnyView {
+        AnyView(view.modifier(self))
+    }
 }
 
 struct ElementView<R: CustomRegistry>: View {

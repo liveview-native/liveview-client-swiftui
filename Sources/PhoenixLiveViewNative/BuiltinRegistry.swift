@@ -62,12 +62,20 @@ struct BuiltinRegistry {
         case frame
     }
     
-    @ViewBuilder
-    static func applyModifier(to view: some View, attribute name: AttributeName, value: String, context: LiveContext<some CustomRegistry>) -> some View {
+    static func applyModifier(attribute name: AttributeName, value: String, context: LiveContext<some CustomRegistry>) -> any ViewModifier {
         switch name {
         case .frame:
-            view.frame(width: 50)
-//            return FrameModifier(
+            return FrameModifier(parsing: value)
         }
+    }
+}
+
+struct FrameModifier: ViewModifier {
+    init(parsing value: String) {
+        // TODO: parse the attribute as json
+    }
+    
+    func body(content: Content) -> some View {
+        content.frame(width: 100)
     }
 }
