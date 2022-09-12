@@ -92,53 +92,6 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     }
     
 }
-/// The context provides information at initialization-time to views in a LiveView.
-public struct LiveContext<R: CustomRegistry> {
-    /// The coordinator corresponding to the live view in which thie view is being constructed.
-    public let coordinator: LiveViewCoordinator<R>
-    
-    /// The URL of the live view this context belongs to.
-    public let url: URL
-    
-    // @EnvironmentObject is not suitable for FormModel because views that need the form model don't
-    // necessarily want to re-render on every single change.
-    /// The model of the nearest ancestor `<form>` element, or `nil` if there is no such element.
-    public private(set) var formModel: FormModel?
-    
-    private(set) var appliedCustomAttributes: [R.AttributeName] = []
-    
-    init(coordinator: LiveViewCoordinator<R>, url: URL, formModel: FormModel? = nil) {
-        self.coordinator = coordinator
-        self.url = url
-        self.formModel = formModel
-    }
-    
-    func with(formModel: FormModel) -> LiveContext<R> {
-        var copy = self
-        copy.formModel = formModel
-        return copy
-    }
-    
-    func with(appliedCustomAttribute name: R.AttributeName) -> LiveContext<R> {
-        var copy = self
-        copy.appliedCustomAttributes.append(name)
-        return copy
-    }
-    
-    /// Builds a view representing the given element in the current context.
-    ///
-    /// - Note: If you're building a custom container view, make sure to use ``buildChildren(of:)``. Calling this will cause a stack overflow.
-    public func buildElement(_ element: Element) -> some View {
-        // can't use coordinator.builder.fromElement here, as it causes an infinitely recursive type when used with custom attributes
-        // so use ElementView to break the cycle
-        return ElementView(element: element, context: self)
-    }
-    
-    /// Builds a view representing the children of the current element in the current context.
-    public func buildChildren(of element: Element) -> some View {
-        return coordinator.builder.fromElements(element.children(), context: self)
-    }
-}
 
 // this view is required to to break the infinitely-recursive type that occurs if the body of this view is inlined into applyAttributes(_:context:)
 private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
@@ -293,7 +246,8 @@ private extension ViewModifier {
     }
 }
 
-struct ElementView<R: CustomRegistry>: View {
+// not fileprivate because it's used by LiveContext
+internal struct ElementView<R: CustomRegistry>: View {
     let element: Element
     let context: LiveContext<R>
     
