@@ -10,6 +10,8 @@ import SwiftSoup
 
 struct BuiltinRegistry {
     
+    static let attributeDecoder = JSONDecoder()
+    
     @ViewBuilder
     static func lookup<R: CustomRegistry>(_ name: String, _ element: Element, context: LiveContext<R>) -> some View {
         switch name {
@@ -65,17 +67,7 @@ struct BuiltinRegistry {
     static func applyModifier(attribute name: AttributeName, value: String, context: LiveContext<some CustomRegistry>) -> any ViewModifier {
         switch name {
         case .frame:
-            return FrameModifier(parsing: value)
+            return FrameModifier(string: value)
         }
-    }
-}
-
-struct FrameModifier: ViewModifier {
-    init(parsing value: String) {
-        // TODO: parse the attribute as json
-    }
-    
-    func body(content: Content) -> some View {
-        content.frame(width: 100)
     }
 }

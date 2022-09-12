@@ -37,7 +37,19 @@ extension Alignment {
             self = .trailingLastTextBaseline
 #endif
         default:
-            return  nil
+            return nil
+        }
+    }
+}
+
+extension Alignment: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        if let alignment = Self(string: string) {
+            self = alignment
+        } else {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Alignment"))
         }
     }
 }
