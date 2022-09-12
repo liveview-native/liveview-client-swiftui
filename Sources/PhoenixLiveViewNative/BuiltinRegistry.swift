@@ -58,18 +58,16 @@ struct BuiltinRegistry {
         }
     }
     
-    static let builtinModifiers: [String] = [
-        "frame"
-    ]
+    enum AttributeName: String {
+        case frame
+    }
     
     @ViewBuilder
-    static func applyModifier(to view: some View, attribute name: String, value: String, context: LiveContext<some CustomRegistry>) -> some View {
+    static func applyModifier(to view: some View, attribute name: AttributeName, value: String, context: LiveContext<some CustomRegistry>) -> some View {
         switch name {
-        case "frame":
+        case .frame:
             view.frame(width: 50)
 //            return FrameModifier(
-        default:
-            fatalError()
         }
     }
 }
