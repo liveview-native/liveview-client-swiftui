@@ -20,8 +20,6 @@ public struct LiveContext<R: CustomRegistry> {
     /// The model of the nearest ancestor `<form>` element, or `nil` if there is no such element.
     public private(set) var formModel: FormModel?
     
-    private(set) var appliedCustomAttributes: [R.AttributeName] = []
-    
     init(coordinator: LiveViewCoordinator<R>, url: URL, formModel: FormModel? = nil) {
         self.coordinator = coordinator
         self.url = url
@@ -31,12 +29,6 @@ public struct LiveContext<R: CustomRegistry> {
     func with(formModel: FormModel) -> LiveContext<R> {
         var copy = self
         copy.formModel = formModel
-        return copy
-    }
-    
-    func with(appliedCustomAttribute name: R.AttributeName) -> LiveContext<R> {
-        var copy = self
-        copy.appliedCustomAttributes.append(name)
         return copy
     }
     
