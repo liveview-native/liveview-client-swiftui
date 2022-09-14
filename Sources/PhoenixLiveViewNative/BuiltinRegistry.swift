@@ -62,12 +62,27 @@ struct BuiltinRegistry {
     
     enum AttributeName: String {
         case frame
+        case listRowInsets = "list-row-insets"
+        case listRowSeparator = "list-row-separator"
+        case navigationTitle = "navigation-title"
+        case padding
+        case tint
     }
     
     static func applyModifier(attribute name: AttributeName, value: String, context: LiveContext<some CustomRegistry>) -> any ViewModifier {
         switch name {
         case .frame:
             return FrameModifier(string: value)
+        case .listRowInsets:
+            return ListRowInsetsModifier(string: value)
+        case .listRowSeparator:
+            return ListRowSeparatorModifier(string: value)
+        case .navigationTitle:
+            return NavigationTitleModifier(string: value)
+        case .padding:
+            return PaddingModifier(string: value)
+        case .tint:
+            return TintModifier(string: value)
         }
     }
 }

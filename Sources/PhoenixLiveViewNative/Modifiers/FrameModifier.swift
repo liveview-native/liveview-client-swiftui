@@ -53,7 +53,7 @@ enum FrameModifier: ViewModifier, Decodable {
         }
     }
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case alignment
         case width
         case height
