@@ -343,7 +343,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             if case .awaitingSocketConnection(let continuation) = self.internalState {
                 continuation.resume(throwing: Error.socketError(error))
             } else {
-                self.internalState = .connectionFailed(.socketError(error))
+                DispatchQueue.main.async {
+                    self.internalState = .connectionFailed(.socketError(error))
+                }
             }
         }
         socket.logger = { message in logger.debug("[Socket] \(message)") }
@@ -479,8 +481,10 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
         let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
-        self.internalState = .connected
-        self.elements = elements
+        DispatchQueue.main.async {
+            self.internalState = .connected
+            self.elements = elements
+        }
     }
     
     private func handleLiveRedirect(_ payload: Payload) {

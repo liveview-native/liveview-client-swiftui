@@ -68,10 +68,12 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
             
         case .push:
             func doPushNavigation() {
-                navCoordinator.sourceRect = source?.frameProvider() ?? .zero
-                navCoordinator.sourceElement = source?.element
-                navCoordinator.overrideOverlayView = overrideView?.view
-                navCoordinator.navigationPath.append(dest)
+                DispatchQueue.main.async {
+                    navCoordinator.sourceRect = source?.frameProvider() ?? .zero
+                    navCoordinator.sourceElement = source?.element
+                    navCoordinator.overrideOverlayView = overrideView?.view
+                    navCoordinator.navigationPath.append(dest)
+                }
             }
             
             // if there's no animation source, we trigger the navigation immediately so that it feels more responsive
