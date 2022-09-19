@@ -55,7 +55,7 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
         let attrs = element.getAttributes()?.asList() ?? []
         return createElement(element, context: context)
-            .applyAttributes(attrs, element: element, context: context)
+            .applyAttributes(attrs[...], element: element, context: context)
             .environment(\.element, element)
     }
     
@@ -75,13 +75,12 @@ struct ViewTreeBuilder<R: CustomRegistry> {
 // this view is required to to break the infinitely-recursive type that occurs if the body of this view is inlined into applyAttributes(_:context:)
 private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
     let parent: Parent
-    let attributes: [Attribute]
+    let attributes: ArraySlice<Attribute>
     let element: Element
     let context: LiveContext<R>
     
     var body: some View {
-        // TODO: this creates a new array which copies all but the first element from attributes. this should be replaced with ArraySlice to avoid copying, but using ArraySlice currently results in a crash in SwiftUI (see FB11501045)
-        let remaining = Array(attributes[1...])
+        let remaining = attributes[attributes.index(after: attributes.startIndex)...]
         parent
             // force-unwrap is okay, this view is never  constructed with an empty slice
             .applyAttribute(attributes.first!, element: element, context: context)
@@ -91,7 +90,7 @@ private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
 
 private extension View {
     @ViewBuilder
-    func applyAttributes(_ attributes: [Attribute], element: Element, context: LiveContext<some CustomRegistry>) -> some View {
+    func applyAttributes(_ attributes: ArraySlice<Attribute>, element: Element, context: LiveContext<some CustomRegistry>) -> some View {
         if attributes.isEmpty {
             self
         } else {
