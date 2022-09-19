@@ -92,15 +92,6 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SQ",
-          "text": "Equatable"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
         }
@@ -261,176 +252,6 @@
       "title": "EmptyRegistry.TagName",
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/emptyregistry/tagname"
-    },
-    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/applyCustomAttribute(_:value:element:context:)": {
-      "abstract": [
-        {
-          "text": "A default implementation that does not provide any custom elements. If you omit the ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/AttributeName",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": " type alias, this implementation will be used.",
-          "type": "text"
-        }
-      ],
-      "conformance": {
-        "availabilityPrefix": [
-          {
-            "text": "Available when",
-            "type": "text"
-          }
-        ],
-        "conformancePrefix": [
-          {
-            "text": "Conforms when",
-            "type": "text"
-          }
-        ],
-        "constraints": [
-          {
-            "code": "AttributeName",
-            "type": "codeVoice"
-          },
-          {
-            "text": " is ",
-            "type": "text"
-          },
-          {
-            "code": "EmptyRegistry.None",
-            "type": "codeVoice"
-          },
-          {
-            "text": " and ",
-            "type": "text"
-          },
-          {
-            "code": "Modified",
-            "type": "codeVoice"
-          },
-          {
-            "text": " is ",
-            "type": "text"
-          },
-          {
-            "code": "Never",
-            "type": "codeVoice"
-          },
-          {
-            "text": ".",
-            "type": "text"
-          }
-        ]
-      },
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "static"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "keyword",
-          "text": "func"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "applyCustomAttribute"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:21PhoenixLiveViewNative14CustomRegistryP13AttributeNameQa",
-          "text": "AttributeName"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "value"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "element"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:21PhoenixLiveViewNative7Elementa",
-          "text": "Element"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "context"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:21PhoenixLiveViewNative0B7ContextV",
-          "text": "LiveContext"
-        },
-        {
-          "kind": "text",
-          "text": "<"
-        },
-        {
-          "kind": "typeIdentifier",
-          "text": "Self"
-        },
-        {
-          "kind": "text",
-          "text": ">) -> "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:s5NeverO",
-          "text": "Never"
-        }
-      ],
-      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/applyCustomAttribute(_:value:element:context:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "applyCustomAttribute(_:value:element:context:)",
-      "type": "topic",
-      "url": "/documentation/phoenixliveviewnative/emptyregistry/applycustomattribute(_:value:element:context:)"
     },
     "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/loadingView(for:state:)": {
       "abstract": [
@@ -712,6 +533,168 @@
       "title": "lookup(_:element:context:)",
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/emptyregistry/lookup(_:element:context:)"
+    },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/lookupModifier(_:value:element:context:)": {
+      "abstract": [
+        {
+          "text": "A default implementation that does not provide any custom attributes. If you omit the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/AttributeName",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type alias, this implementation will be used.",
+          "type": "text"
+        }
+      ],
+      "conformance": {
+        "availabilityPrefix": [
+          {
+            "text": "Available when",
+            "type": "text"
+          }
+        ],
+        "conformancePrefix": [
+          {
+            "text": "Conforms when",
+            "type": "text"
+          }
+        ],
+        "constraints": [
+          {
+            "code": "AttributeName",
+            "type": "codeVoice"
+          },
+          {
+            "text": " is ",
+            "type": "text"
+          },
+          {
+            "code": "EmptyRegistry.None",
+            "type": "codeVoice"
+          },
+          {
+            "text": ".",
+            "type": "text"
+          }
+        ]
+      },
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "lookupModifier"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative14CustomRegistryP13AttributeNameQa",
+          "text": "AttributeName"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "value"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "element"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative7Elementa",
+          "text": "Element"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "context"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:21PhoenixLiveViewNative0B7ContextV",
+          "text": "LiveContext"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "text": "Self"
+        },
+        {
+          "kind": "text",
+          "text": ">) -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "any"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
+          "text": "ViewModifier"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/lookupModifier(_:value:element:context:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "lookupModifier(_:value:element:context:)",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/emptyregistry/lookupmodifier(_:value:element:context:)"
     }
   },
   "schemaVersion": {
@@ -732,9 +715,9 @@
     {
       "generated": true,
       "identifiers": [
-        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/applyCustomAttribute(_:value:element:context:)",
         "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/loadingView(for:state:)",
-        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/lookup(_:element:context:)"
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/lookup(_:element:context:)",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/lookupModifier(_:value:element:context:)"
       ],
       "title": "Type Methods"
     }

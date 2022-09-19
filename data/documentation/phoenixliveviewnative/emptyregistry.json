@@ -158,15 +158,6 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SQ",
-          "text": "Equatable"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
         }

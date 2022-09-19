@@ -110,14 +110,6 @@
               "type": "codeVoice"
             },
             {
-              "text": " and ",
-              "type": "text"
-            },
-            {
-              "code": "Equatable",
-              "type": "codeVoice"
-            },
-            {
               "text": " and its raw values must be strings. All raw value strings must be lowercased, otherwise the framework will not be able to construct your attribute types from strings in the DOM.",
               "type": "text"
             }
@@ -136,7 +128,7 @@
         {
           "code": [
             "struct MyRegistry: CustomRegistry {",
-            "    enum AttributeName: String, Equatable {",
+            "    enum AttributeName: String {",
             "        case foo",
             "        case barBaz = \"bar-baz\"",
             "    }",
@@ -243,15 +235,6 @@
         {
           "kind": "text",
           "text": " : "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SQ",
-          "text": "Equatable"
-        },
-        {
-          "kind": "text",
-          "text": ", "
         },
         {
           "kind": "typeIdentifier",

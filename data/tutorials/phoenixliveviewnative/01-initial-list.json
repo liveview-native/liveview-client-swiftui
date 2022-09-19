@@ -480,7 +480,7 @@
         "<list>",
         "  <%= for name <- @cats do %>",
         "    <hstack id={name}>",
-        "      <asyncimage src={\"/images/cats/#{name}.jpg\"} frame-width=\"100\" frame-height=\"100\" />",
+        "      <asyncimage src={\"/images/cats/#{name}.jpg\"} frame='{\"width\": 100, \"height\": 100}' />",
         "      <text><%= name %></text>",
         "    </hstack>",
         "  <% end %>",
@@ -1575,15 +1575,7 @@
                       "type": "text"
                     },
                     {
-                      "code": "frame-width",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " and ",
-                      "type": "text"
-                    },
-                    {
-                      "code": "frame-height",
+                      "code": "frame",
                       "type": "codeVoice"
                     },
                     {

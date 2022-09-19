@@ -2982,8 +2982,8 @@
                   {
                     "children": [
                       {
-                        "path": "/documentation/phoenixliveviewnative/customregistry/applycustomattribute(_:value:element:context:)-2a3mh",
-                        "title": "static func applyCustomAttribute(AttributeName, value: String, element: Element, context: LiveContext<Self>) -> Never",
+                        "path": "/documentation/phoenixliveviewnative/customregistry/lookupmodifier(_:value:element:context:)-8fys4",
+                        "title": "static func lookupModifier(AttributeName, value: String, element: Element, context: LiveContext<Self>) -> any ViewModifier",
                         "type": "method"
                       }
                     ],
@@ -2991,8 +2991,8 @@
                     "type": "groupMarker"
                   }
                 ],
-                "path": "/documentation/phoenixliveviewnative/customregistry/applycustomattribute(_:value:element:context:)-4fh1q",
-                "title": "static func applyCustomAttribute(AttributeName, value: String, element: Element, context: LiveContext<Self>) -> Modified",
+                "path": "/documentation/phoenixliveviewnative/customregistry/lookupmodifier(_:value:element:context:)-9qdm4",
+                "title": "static func lookupModifier(AttributeName, value: String, element: Element, context: LiveContext<Self>) -> any ViewModifier",
                 "type": "method"
               },
               {
@@ -3055,26 +3055,6 @@
                         "path": "/documentation/phoenixliveviewnative/emptyregistry/none/rawvalue-swift.typealias",
                         "title": "EmptyRegistry.None.RawValue",
                         "type": "typealias"
-                      },
-                      {
-                        "title": "Default Implementations",
-                        "type": "groupMarker"
-                      },
-                      {
-                        "children": [
-                          {
-                            "title": "Operators",
-                            "type": "groupMarker"
-                          },
-                          {
-                            "path": "/documentation/phoenixliveviewnative/emptyregistry/none/!=(_:_:)",
-                            "title": "static func != (Self, Self) -> Bool",
-                            "type": "op"
-                          }
-                        ],
-                        "path": "/documentation/phoenixliveviewnative/emptyregistry/none/equatable-implementations",
-                        "title": "Equatable Implementations",
-                        "type": "symbol"
                       }
                     ],
                     "path": "/documentation/phoenixliveviewnative/emptyregistry/none",
@@ -3106,11 +3086,6 @@
                         "type": "groupMarker"
                       },
                       {
-                        "path": "/documentation/phoenixliveviewnative/emptyregistry/applycustomattribute(_:value:element:context:)",
-                        "title": "static func applyCustomAttribute(AttributeName, value: String, element: Element, context: LiveContext<Self>) -> Never",
-                        "type": "method"
-                      },
-                      {
                         "path": "/documentation/phoenixliveviewnative/emptyregistry/loadingview(for:state:)",
                         "title": "static func loadingView(for: URL, state: LiveViewCoordinator<Self>.State) -> Never",
                         "type": "method"
@@ -3118,6 +3093,11 @@
                       {
                         "path": "/documentation/phoenixliveviewnative/emptyregistry/lookup(_:element:context:)",
                         "title": "static func lookup(TagName, element: Element, context: LiveContext<Self>) -> Never",
+                        "type": "method"
+                      },
+                      {
+                        "path": "/documentation/phoenixliveviewnative/emptyregistry/lookupmodifier(_:value:element:context:)",
+                        "title": "static func lookupModifier(AttributeName, value: String, element: Element, context: LiveContext<Self>) -> any ViewModifier",
                         "type": "method"
                       }
                     ],
@@ -3142,11 +3122,6 @@
               {
                 "path": "/documentation/phoenixliveviewnative/customregistry/loadingview",
                 "title": "LoadingView",
-                "type": "associatedtype"
-              },
-              {
-                "path": "/documentation/phoenixliveviewnative/customregistry/modified",
-                "title": "Modified",
                 "type": "associatedtype"
               }
             ],

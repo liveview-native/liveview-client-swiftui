@@ -180,7 +180,7 @@
     "04-04-02-cat-rating.ios.heex": {
       "content": [
         "<vstack nav-title={@name}>",
-        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame-width=\"300\" frame-height=\"300\" />",
+        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame='{\"width\": 300, \"height\": 300}' />",
         "  <cat-rating score={@score} />",
         "</vstack>"
       ],
@@ -322,7 +322,7 @@
     "05-01-03-attribute.ios.heex": {
       "content": [
         "<vstack nav-title={@name} nav-favorite={to_string(@favorite)}>",
-        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame-width=\"300\" frame-height=\"300\" />",
+        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame='{\"width\": 300, \"height\": 300}' />",
         "  <cat-rating score={@score} />",
         "</vstack>"
       ],
@@ -395,11 +395,10 @@
         "        }",
         "    }",
         "    ",
-        "    static func applyCustomAttribute(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> some View {",
+        "    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> any ViewModifier {",
         "        switch name {",
         "        case .navFavorite:",
-        "            context.buildElement(element)",
-        "                .modifier(NavFavoriteModifier(value: value, context: context))",
+        "            return NavFavoriteModifier(value: value, context: context)",
         "        }",
         "    }",
         "}"
@@ -427,9 +426,6 @@
         },
         {
           "line": 24
-        },
-        {
-          "line": 25
         }
       ],
       "identifier": "05-02-02-apply.swift",
@@ -1217,7 +1213,7 @@
                       "type": "codeVoice"
                     },
                     {
-                      "text": " attribute, apply the ",
+                      "text": " attribute, return the ",
                       "type": "text"
                     },
                     {
@@ -1249,7 +1245,7 @@
                       "type": "text"
                     },
                     {
-                      "code": "applyCustomAttribute",
+                      "code": "lookupModifier",
                       "type": "codeVoice"
                     },
                     {
@@ -1263,31 +1259,6 @@
               "media": null,
               "runtimePreview": null,
               "type": "step"
-            },
-            {
-              "inlineContent": [
-                {
-                  "text": "We could add the navigation bar button directly in the ",
-                  "type": "text"
-                },
-                {
-                  "code": "applyCustomAttribute",
-                  "type": "codeVoice"
-                },
-                {
-                  "text": " method, but as you add more custom attributes, it’s useful to keep them separated. So, we’ll use another struct that implements SwiftUI’s ",
-                  "type": "text"
-                },
-                {
-                  "code": "ViewModifier",
-                  "type": "codeVoice"
-                },
-                {
-                  "text": " protocol.",
-                  "type": "text"
-                }
-              ],
-              "type": "paragraph"
             },
             {
               "caption": [],

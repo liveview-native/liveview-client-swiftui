@@ -100,11 +100,6 @@
     }
   ],
   "references": {
-    "doc://PhoenixLiveViewNative/SQ": {
-      "identifier": "doc://PhoenixLiveViewNative/SQ",
-      "title": "Swift.Equatable",
-      "type": "unresolvable"
-    },
     "doc://PhoenixLiveViewNative/SY": {
       "identifier": "doc://PhoenixLiveViewNative/SY",
       "title": "Swift.RawRepresentable",
@@ -176,15 +171,6 @@
         {
           "kind": "text",
           "text": " : "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SQ",
-          "text": "Equatable"
-        },
-        {
-          "kind": "text",
-          "text": ", "
         },
         {
           "kind": "typeIdentifier",
@@ -333,15 +319,6 @@
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/emptyregistry/none"
     },
-    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/None/Equatable-Implementations": {
-      "abstract": [],
-      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/None/Equatable-Implementations",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Equatable Implementations",
-      "type": "topic",
-      "url": "/documentation/phoenixliveviewnative/emptyregistry/none/equatable-implementations"
-    },
     "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/None/RawValue-swift.typealias": {
       "abstract": [],
       "fragments": [
@@ -443,7 +420,6 @@
   "relationshipsSections": [
     {
       "identifiers": [
-        "doc://PhoenixLiveViewNative/SQ",
         "doc://PhoenixLiveViewNative/SY"
       ],
       "kind": "relationships",
@@ -475,13 +451,6 @@
         "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/None/RawValue-swift.typealias"
       ],
       "title": "Type Aliases"
-    },
-    {
-      "generated": true,
-      "identifiers": [
-        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/None/Equatable-Implementations"
-      ],
-      "title": "Default Implementations"
     }
   ],
   "variants": [

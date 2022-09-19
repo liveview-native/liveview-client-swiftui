@@ -84,61 +84,75 @@
                 {
                   "inlineContent": [
                     {
-                      "code": "frame-width",
+                      "code": "frame",
                       "type": "codeVoice"
                     },
                     {
-                      "text": " (float): The width of the view frame.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "frame-height",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (float): The height of the view frame.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "frame-alignment",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": How the view is aligned within the frame created by the ",
+                      "text": " (object): A JSON object containing either a fixed size (",
                       "type": "text"
                     },
                     {
-                      "code": "frame-width",
+                      "code": "width",
                       "type": "codeVoice"
                     },
                     {
-                      "text": " and ",
+                      "text": " and/or ",
                       "type": "text"
                     },
                     {
-                      "code": "frame-height",
+                      "code": "height",
                       "type": "codeVoice"
                     },
                     {
-                      "text": " attributes.",
+                      "text": ") or flexible size (some combination of ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "min_width",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ", ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "ideal_width",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ", ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "max_width",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ", ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "min_height",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ", ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "ideal_height",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ", and ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "max_height",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ") as well as an alignment (how the view is aligned within the frame) which is one of the following values:",
                       "type": "text"
                     }
                   ],
@@ -303,83 +317,78 @@
                 {
                   "inlineContent": [
                     {
-                      "code": "pad",
+                      "code": "padding",
                       "type": "codeVoice"
                     },
                     {
-                      "text": " (float): The padding for all edges of the view.",
+                      "text": ": One of the following types:",
                       "type": "text"
                     }
                   ],
                   "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
+                },
                 {
-                  "inlineContent": [
+                  "items": [
                     {
-                      "code": "pad-top",
-                      "type": "codeVoice"
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "text": "A number that is the padding applied to all edges of the view",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
                     },
                     {
-                      "text": " (float): Padding for the top edge.",
-                      "type": "text"
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "text": "A JSON object containing values for the ",
+                              "type": "text"
+                            },
+                            {
+                              "code": "top",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ", ",
+                              "type": "text"
+                            },
+                            {
+                              "code": "bottom",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ", ",
+                              "type": "text"
+                            },
+                            {
+                              "code": "leading",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ", and ",
+                              "type": "text"
+                            },
+                            {
+                              "code": "trailing",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": " edge padding",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
                     }
                   ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "pad-bottom",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (float): Padding for the bottom edge.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "pad-leading",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (float): Padding for the leading edge.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "pad-trailing",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (float): Padding for the trailing edge.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
+                  "type": "unorderedList"
                 }
               ]
             },
@@ -444,79 +453,74 @@
                       "type": "codeVoice"
                     },
                     {
-                      "text": " (float): The inset for when the element is used as a list row.",
+                      "text": ": The inset for when the element is used as a list row. One of the following types:",
                       "type": "text"
                     }
                   ],
                   "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
+                },
                 {
-                  "inlineContent": [
+                  "items": [
                     {
-                      "code": "list-row-inset-top",
-                      "type": "codeVoice"
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "text": "A number that is the inset applied to all edges",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
                     },
                     {
-                      "text": " (float): The top inset when used as a list row.",
-                      "type": "text"
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "text": "A JSON object containing values for the ",
+                              "type": "text"
+                            },
+                            {
+                              "code": "top",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ", ",
+                              "type": "text"
+                            },
+                            {
+                              "code": "bottom",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ", ",
+                              "type": "text"
+                            },
+                            {
+                              "code": "leading",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ", and ",
+                              "type": "text"
+                            },
+                            {
+                              "code": "trailing",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": " edges",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
                     }
                   ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "list-row-inset-bottom",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (float): The bottom inset when used as a list row.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "list-row-inset-leading",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (float): The leading inset when used as a list row.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "list-row-inset-trailing",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (float): The trailing inset when used as a list row.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
+                  "type": "unorderedList"
                 }
               ]
             },

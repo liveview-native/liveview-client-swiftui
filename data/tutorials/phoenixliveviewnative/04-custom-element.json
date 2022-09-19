@@ -199,7 +199,7 @@
     "03-01-03-cat_live.ios.heex": {
       "content": [
         "<vstack nav-title={@name}>",
-        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame-width=\"300\" frame-height=\"300\" />",
+        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame='{\"width\": 300, \"height\": 300}' />",
         "</vstack>"
       ],
       "fileName": "lib/lvn_tutorial_web/live/cat_live.ios.heex",
@@ -1178,7 +1178,7 @@
     "04-04-02-cat-rating.ios.heex": {
       "content": [
         "<vstack nav-title={@name}>",
-        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame-width=\"300\" frame-height=\"300\" />",
+        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame='{\"width\": 300, \"height\": 300}' />",
         "  <cat-rating score={@score} />",
         "</vstack>"
       ],

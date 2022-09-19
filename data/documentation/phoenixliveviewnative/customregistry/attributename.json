@@ -39,15 +39,6 @@
       },
       {
         "kind": "typeIdentifier",
-        "preciseIdentifier": "s:SQ",
-        "text": "Equatable"
-      },
-      {
-        "kind": "text",
-        "text": ", "
-      },
-      {
-        "kind": "typeIdentifier",
         "preciseIdentifier": "s:SY",
         "text": "RawRepresentable"
       }
@@ -89,15 +80,6 @@
             {
               "kind": "text",
               "text": " : "
-            },
-            {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SQ",
-              "text": "Equatable"
-            },
-            {
-              "kind": "text",
-              "text": ", "
             },
             {
               "kind": "typeIdentifier",
@@ -169,14 +151,6 @@
               "type": "codeVoice"
             },
             {
-              "text": " and ",
-              "type": "text"
-            },
-            {
-              "code": "Equatable",
-              "type": "codeVoice"
-            },
-            {
               "text": " and its raw values must be strings. All raw value strings must be lowercased, otherwise the framework will not be able to construct your attribute types from strings in the DOM.",
               "type": "text"
             }
@@ -195,7 +169,7 @@
         {
           "code": [
             "struct MyRegistry: CustomRegistry {",
-            "    enum AttributeName: String, Equatable {",
+            "    enum AttributeName: String {",
             "        case foo",
             "        case barBaz = \"bar-baz\"",
             "    }",
@@ -305,15 +279,6 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SQ",
-          "text": "Equatable"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
         }
@@ -364,7 +329,7 @@
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/customregistry/tagname"
     },
-    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/applyCustomAttribute(_:value:element:context:)-4fh1q": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/lookupModifier(_:value:element:context:)-9qdm4": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it encounters a custom attribute your registry has declared support for.",
@@ -391,7 +356,7 @@
         },
         {
           "kind": "identifier",
-          "text": "applyCustomAttribute"
+          "text": "lookupModifier"
         },
         {
           "kind": "text",
@@ -466,18 +431,26 @@
           "text": ">) -> "
         },
         {
+          "kind": "keyword",
+          "text": "any"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:21PhoenixLiveViewNative14CustomRegistryP8ModifiedQa",
-          "text": "Modified"
+          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
+          "text": "ViewModifier"
         }
       ],
-      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/applyCustomAttribute(_:value:element:context:)-4fh1q",
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/lookupModifier(_:value:element:context:)-9qdm4",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
-      "title": "applyCustomAttribute(_:value:element:context:)",
+      "title": "lookupModifier(_:value:element:context:)",
       "type": "topic",
-      "url": "/documentation/phoenixliveviewnative/customregistry/applycustomattribute(_:value:element:context:)-4fh1q"
+      "url": "/documentation/phoenixliveviewnative/customregistry/lookupmodifier(_:value:element:context:)-9qdm4"
     },
     "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/EmptyRegistry/None": {
       "abstract": [
@@ -542,7 +515,7 @@
     {
       "generated": true,
       "identifiers": [
-        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/applyCustomAttribute(_:value:element:context:)-4fh1q"
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/lookupModifier(_:value:element:context:)-9qdm4"
       ],
       "title": "Custom Attributes"
     }

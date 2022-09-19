@@ -119,42 +119,24 @@
         {
           "inlineContent": [
             {
-              "text": "To define for this attributes, implement the ",
+              "text": "To define the view modifier for this attributes, implement the ",
               "type": "text"
             },
             {
-              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/applyCustomAttribute(_:value:element:context:)-4fh1q",
+              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/lookupModifier(_:value:element:context:)-9qdm4",
               "isActive": true,
               "type": "reference"
             },
             {
-              "text": " method. Your implementation of this method is automatically a SwiftUI ",
+              "text": " method. From this method, you return a struct that implements SwiftUI’s ",
               "type": "text"
             },
             {
-              "code": "ViewBuilder",
+              "code": "ViewModifier",
               "type": "codeVoice"
             },
             {
-              "text": ", so simply construct the view you want to use rather than returning it.",
-              "type": "text"
-            }
-          ],
-          "type": "paragraph"
-        },
-        {
-          "inlineContent": [
-            {
-              "text": "To get the base view that is being modified, call ",
-              "type": "text"
-            },
-            {
-              "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveContext/buildElement(_:)",
-              "isActive": true,
-              "type": "reference"
-            },
-            {
-              "text": " with the provided element.",
+              "text": " protocol.",
               "type": "text"
             }
           ],
@@ -184,11 +166,10 @@
             "        case myFont = \"myFont\"",
             "    }",
             "",
-            "    static func applyCustomAttribute(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> some View {",
+            "    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> any ViewModifier {",
             "        switch name {",
             "        case .myFont:",
-            "            context.buildElement(element)",
-            "                .font(.custom(\"My Font\", fixedSize: Double(value) ?? 13))",
+            "            return MyFontModifier(size: Double(value) ?? 13)",
             "        }",
             "    }",
             "}"
@@ -207,7 +188,7 @@
               "type": "codeVoice"
             },
             {
-              "text": " b ranch in your ",
+              "text": " branch in your ",
               "type": "text"
             },
             {
@@ -220,6 +201,53 @@
             }
           ],
           "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Then, implement the ",
+              "type": "text"
+            },
+            {
+              "code": "MyFontModifier",
+              "type": "codeVoice"
+            },
+            {
+              "text": " struct. The ",
+              "type": "text"
+            },
+            {
+              "code": "body(content:)",
+              "type": "codeVoice"
+            },
+            {
+              "text": " method modifies the ",
+              "type": "text"
+            },
+            {
+              "code": "content",
+              "type": "codeVoice"
+            },
+            {
+              "text": " view it receives based on whatever values the modifier was initialized with.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyFontModifier: ViewModifier {",
+            "    let size: Double",
+            "",
+            "    func body(content: Content) -> some View {",
+            "        content",
+            "            .font(.custom(\"My Font\", fixedSize: size))",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
         }
       ],
       "kind": "content"
@@ -292,7 +320,7 @@
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/customregistry"
     },
-    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/applyCustomAttribute(_:value:element:context:)-4fh1q": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/lookupModifier(_:value:element:context:)-9qdm4": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it encounters a custom attribute your registry has declared support for.",
@@ -319,7 +347,7 @@
         },
         {
           "kind": "identifier",
-          "text": "applyCustomAttribute"
+          "text": "lookupModifier"
         },
         {
           "kind": "text",
@@ -394,18 +422,26 @@
           "text": ">) -> "
         },
         {
+          "kind": "keyword",
+          "text": "any"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:21PhoenixLiveViewNative14CustomRegistryP8ModifiedQa",
-          "text": "Modified"
+          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
+          "text": "ViewModifier"
         }
       ],
-      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/applyCustomAttribute(_:value:element:context:)-4fh1q",
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/CustomRegistry/lookupModifier(_:value:element:context:)-9qdm4",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
-      "title": "applyCustomAttribute(_:value:element:context:)",
+      "title": "lookupModifier(_:value:element:context:)",
       "type": "topic",
-      "url": "/documentation/phoenixliveviewnative/customregistry/applycustomattribute(_:value:element:context:)-4fh1q"
+      "url": "/documentation/phoenixliveviewnative/customregistry/lookupmodifier(_:value:element:context:)-9qdm4"
     },
     "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveContext": {
       "abstract": [
@@ -440,60 +476,6 @@
       "title": "LiveContext",
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/livecontext"
-    },
-    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveContext/buildElement(_:)": {
-      "abstract": [
-        {
-          "text": "Builds a view representing the given element in the current context.",
-          "type": "text"
-        }
-      ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "func"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "buildElement"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:21PhoenixLiveViewNative7Elementa",
-          "text": "Element"
-        },
-        {
-          "kind": "text",
-          "text": ") -> "
-        },
-        {
-          "kind": "keyword",
-          "text": "some"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI4ViewP",
-          "text": "View"
-        }
-      ],
-      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveContext/buildElement(_:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "buildElement(_:)",
-      "type": "topic",
-      "url": "/documentation/phoenixliveviewnative/livecontext/buildelement(_:)"
     },
     "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveViewCoordinator": {
       "abstract": [
