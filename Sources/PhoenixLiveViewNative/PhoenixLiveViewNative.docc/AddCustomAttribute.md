@@ -21,9 +21,7 @@ struct MyRegistry: CustomRegistry {
 }
 ```
 
-To define for this attributes, implement the ``CustomRegistry/applyCustomAttribute(_:value:element:context:)-4fh1q`` method. Your implementation of this method is automatically a SwiftUI `ViewBuilder`, so simply construct the view you want to use rather than returning it.
-
-To get the base view that is being modified, call ``LiveContext/buildElement(_:)`` with the provided element.
+To define the view modifier for this attributes, implement the ``CustomRegistry/lookupModifier(_:value:element:context:)-9qdm4`` method. From this method, you return a struct that implements SwiftUI's `ViewModifier` protocol.
 
 In the following example, an attribute like `my-font="22"` could be used to apply the custom font named "My Font" with a fixed size of 22pt.
 
@@ -33,14 +31,26 @@ struct MyRegistry: CustomRegistry {
         case myFont = "myFont"
     }
 
-    static func applyCustomAttribute(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> some View {
+    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> any ViewModifier {
         switch name {
         case .myFont:
-            context.buildElement(element)
-                .font(.custom("My Font", fixedSize: Double(value) ?? 13))
+            return MyFontModifier(size: Double(value) ?? 13)
         }
     }
 }
 ```
 
-Because an enum is used for the attribute name, do not include a `default` b ranch in your `switch` statement so that Swift will check if for exhaustiveness.
+Because an enum is used for the attribute name, do not include a `default` branch in your `switch` statement so that Swift will check if for exhaustiveness.
+
+Then, implement the `MyFontModifier` struct. The `body(content:)` method modifies the `content` view it receives based on whatever values the modifier was initialized with.
+
+```swift
+struct MyFontModifier: ViewModifier {
+    let size: Double
+
+    func body(content: Content) -> some View {
+        content
+            .font(.custom("My Font", fixedSize: size))
+    }
+}
+```

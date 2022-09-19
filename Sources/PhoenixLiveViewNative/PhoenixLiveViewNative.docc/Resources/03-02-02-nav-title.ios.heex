@@ -1,7 +1,7 @@
 <list nav-title="Cats!">
   <%= for {name, favorite} <- @cats_and_favorites do %>
     <hstack id={name}>
-      <asyncimage src={"/images/cats/#{name}.jpg"} frame-width="100" frame-height="100" />
+      <asyncimage src={"/images/cats/#{name}.jpg"} frame='{"width": 100, "height": 100}' />
       <text><%= name %></text>
       <spacer />
       <button phx-click="toggle-favorite" phx-value-name={name}>

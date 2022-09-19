@@ -62,14 +62,12 @@
             }
             
             @Step {
-                Implement the `applyCustomAttribute` method. This method is invoked by the framework whenever it encounters an attribute that your registry has declared support for.
+                Implement the `lookupModifier` method. This method is invoked by the framework whenever it encounters an attribute that your registry has declared support for.
                 
-                In the method, we'll switch over the name of the attribute, and if it's the `nav-favorite` attribute, apply the `NavFavoriteModifier`. As with the `lookup` method, don't include a default branch so that the compiler ensures your switch is exhaustive.
+                In the method, we'll switch over the name of the attribute, and if it's the `nav-favorite` attribute, return the `NavFavoriteModifier`. As with the `lookup` method, don't include a default branch so that the compiler ensures your switch is exhaustive.
                 
                 @Code(name: "MyRegistry.swift", file: 05-02-02-apply.swift)
             }
-            
-            We could add the navigation bar button directly in the `applyCustomAttribute` method, but as you add more custom attributes, it's useful to keep them separated. So, we'll use another struct that implements SwiftUI's `ViewModifier` protocol.
             
             @Step {
                 Create a struct called `NavFavoriteModifier` that implements the `ViewModifier` protocol.

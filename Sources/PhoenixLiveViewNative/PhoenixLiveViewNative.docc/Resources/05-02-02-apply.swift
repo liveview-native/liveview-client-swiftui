@@ -16,11 +16,10 @@ struct MyRegistry: CustomRegistry {
         }
     }
     
-    static func applyCustomAttribute(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> some View {
+    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> any ViewModifier {
         switch name {
         case .navFavorite:
-            context.buildElement(element)
-                .modifier(NavFavoriteModifier(value: value, context: context))
+            return NavFavoriteModifier(value: value, context: context)
         }
     }
 }

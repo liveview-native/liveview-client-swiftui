@@ -1,4 +1,4 @@
 <vstack nav-title={@name} nav-favorite={to_string(@favorite)}>
-  <asyncimage src={"/images/cats/#{@name}.jpg"} frame-width="300" frame-height="300" />
+  <asyncimage src={"/images/cats/#{@name}.jpg"} frame='{"width": 300, "height": 300}' />
   <cat-rating score={@score} />
 </vstack>

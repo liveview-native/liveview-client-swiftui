@@ -9,9 +9,7 @@ These attributes are supported by all elements, including custom ones. Individua
 ## Attributes
 
 - `nav-title` (string): The navigation title of the current page. Only displayed when navgiation is enabled, see ``LiveViewConfiguration/navigationMode-swift.property``.
-- `frame-width` (float): The width of the view frame.
-- `frame-height` (float): The height of the view frame.
-- `frame-alignment`: How the view is aligned within the frame created by the `frame-width` and `frame-height` attributes.
+- `frame` (object): A JSON object containing either a fixed size (`width` and/or `height`) or flexible size (some combination of `min_width`, `ideal_width`, `max_width`, `min_height`, `ideal_height`, and `max_height`) as well as an alignment (how the view is aligned within the frame) which is one of the following values:
     - `top-leading`
     - `top`
     - `top-trailing`
@@ -23,19 +21,15 @@ These attributes are supported by all elements, including custom ones. Individua
     - `bottom-trailing`
     - `leading-last-text-baseline`
     - `trailing-last-text-baseline`
-- `pad` (float): The padding for all edges of the view.
-- `pad-top` (float): Padding for the top edge.
-- `pad-bottom` (float): Padding for the bottom edge.
-- `pad-leading` (float): Padding for the leading edge.
-- `pad-trailing` (float): Padding for the trailing edge.
+- `padding`: One of the following types:
+    - A number that is the padding applied to all edges of the view
+    - A JSON object containing values for the `top`, `bottom`, `leading`, and `trailing` edge padding
 - `list-row-separator`: Whether the list row separator is shown for this view (if it's in a list).
     - `automatic` (default)
     - `hidden`
-- `list-row-inset` (float): The inset for when the element is used as a list row.
-- `list-row-inset-top` (float): The top inset when used as a list row.
-- `list-row-inset-bottom` (float): The bottom inset when used as a list row.
-- `list-row-inset-leading` (float): The leading inset when used as a list row.
-- `list-row-inset-trailing` (float): The trailing inset when used as a list row.
+- `list-row-inset`: The inset for when the element is used as a list row. One of the following types:
+    - A number that is the inset applied to all edges
+    - A JSON object containing values for the `top`, `bottom`, `leading`, and `trailing` edges
 - `tint`: The tint color of this element and its children. See <doc:SupportedAttributes#Specifying-Colors>
 
 
