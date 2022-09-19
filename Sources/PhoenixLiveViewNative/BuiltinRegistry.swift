@@ -69,7 +69,7 @@ struct BuiltinRegistry {
         case tint
     }
     
-    static func applyModifier(attribute name: AttributeName, value: String, context: LiveContext<some CustomRegistry>) -> any ViewModifier {
+    static func lookupModifier(attribute name: AttributeName, value: String, context: LiveContext<some CustomRegistry>) -> any ViewModifier {
         switch name {
         case .frame:
             return FrameModifier(string: value)

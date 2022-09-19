@@ -102,7 +102,7 @@ private extension View {
         // EmptyModifier is used if the attribute is not recognized as builtin or custom modifier
         var modifier: any ViewModifier = EmptyModifier()
         if let name = BuiltinRegistry.AttributeName(rawValue: attribute.getKey()) {
-            modifier = BuiltinRegistry.applyModifier(attribute: name, value: attribute.getValue(), context: context)
+            modifier = BuiltinRegistry.lookupModifier(attribute: name, value: attribute.getValue(), context: context)
         } else if let name = R.AttributeName(rawValue: attribute.getKey()) {
             modifier = R.lookupModifier(name, value: attribute.getValue(), element: element, context: context)
         }
