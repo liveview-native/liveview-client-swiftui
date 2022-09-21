@@ -1,4 +1,4 @@
-<list nav-title="Cats!">
+<list navigation-title="Cats!">
   <%= for {name, favorite} <- @cats_and_favorites do %>
     <hstack id={name}>
       <asyncimage src={"/images/cats/#{name}.jpg"} frame='{"width": 100, "height": 100}' />

@@ -8,7 +8,7 @@ These attributes are supported by all elements, including custom ones. Individua
 
 ## Attributes
 
-- `nav-title` (string): The navigation title of the current page. Only displayed when navgiation is enabled, see ``LiveViewConfiguration/navigationMode-swift.property``.
+- `navigation-title` (string): The navigation title of the current page. Only displayed when navgiation is enabled, see ``LiveViewConfiguration/navigationMode-swift.property``.
 - `frame` (object): A JSON object containing either a fixed size (`width` and/or `height`) or flexible size (some combination of `min_width`, `ideal_width`, `max_width`, `min_height`, `ideal_height`, and `max_height`) as well as an alignment (how the view is aligned within the frame) which is one of the following values:
     - `top-leading`
     - `top`
