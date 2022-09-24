@@ -223,8 +223,7 @@
         "    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> any ViewModifier {",
         "        switch name {",
         "        case .navFavorite:",
-        "            context.buildElement(element)",
-        "                .modifier(NavFavoriteModifier(value: value, context: context))",
+        "            return NavFavoriteModifier(value: value, context: context)",
         "        }",
         "    }",
         "    ",
@@ -236,19 +235,13 @@
       "fileType": "swift",
       "highlights": [
         {
-          "line": 22
-        },
-        {
-          "line": 23
+          "line": 25
         },
         {
           "line": 26
         },
         {
           "line": 27
-        },
-        {
-          "line": 28
         }
       ],
       "identifier": "06-01-02-registry.swift",
@@ -278,8 +271,7 @@
         "    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> any ViewModifier {",
         "        switch name {",
         "        case .navFavorite:",
-        "            context.buildElement(element)",
-        "                .modifier(NavFavoriteModifier(value: value, context: context))",
+        "            return NavFavoriteModifier(value: value, context: context)",
         "        }",
         "    }",
         "    ",
@@ -298,6 +290,9 @@
       "fileType": "swift",
       "highlights": [
         {
+          "line": 27
+        },
+        {
           "line": 28
         },
         {
@@ -314,9 +309,6 @@
         },
         {
           "line": 33
-        },
-        {
-          "line": 34
         }
       ],
       "identifier": "06-01-03-error.swift",
@@ -346,8 +338,7 @@
         "    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> any ViewModifier {",
         "        switch name {",
         "        case .navFavorite:",
-        "            context.buildElement(element)",
-        "                .modifier(NavFavoriteModifier(value: value, context: context))",
+        "            return NavFavoriteModifier(value: value, context: context)",
         "        }",
         "    }",
         "    ",
@@ -368,10 +359,10 @@
       "fileType": "swift",
       "highlights": [
         {
-          "line": 34
+          "line": 33
         },
         {
-          "line": 35
+          "line": 34
         }
       ],
       "identifier": "06-01-04-registry.swift",

@@ -395,16 +395,6 @@
                     "type": "method"
                   },
                   {
-                    "path": "/documentation/phoenixliveviewnative/liveview/accessibilityquickaction(style:content:)",
-                    "title": "func accessibilityQuickAction<Style, Content>(style: Style, content: () -> Content) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "path": "/documentation/phoenixliveviewnative/liveview/accessibilityquickaction(style:isactive:content:)",
-                    "title": "func accessibilityQuickAction<Style, Content>(style: Style, isActive: Binding<Bool>, content: () -> Content) -> some View",
-                    "type": "method"
-                  },
-                  {
                     "path": "/documentation/phoenixliveviewnative/liveview/accessibilityremovetraits(_:)",
                     "title": "func accessibilityRemoveTraits(AccessibilityTraits) -> ModifiedContent<Self, AccessibilityAttachmentModifier>",
                     "type": "method"
@@ -1169,6 +1159,11 @@
                   {
                     "path": "/documentation/phoenixliveviewnative/liveview/font(_:)",
                     "title": "func font(Font?) -> some View",
+                    "type": "method"
+                  },
+                  {
+                    "path": "/documentation/phoenixliveviewnative/liveview/fontdesign(_:)",
+                    "title": "func fontDesign(Font.Design?) -> some View",
                     "type": "method"
                   },
                   {
@@ -2220,60 +2215,6 @@
                   {
                     "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:placement:prompt:token:)-9dkhb",
                     "title": "func searchable<C, T>(text: Binding<String>, tokens: Binding<C>, placement: SearchFieldPlacement, prompt: Text?, token: (C.Element) -> T) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:placement:prompt:token:suggestions:)-2l6ha",
-                    "title": "func searchable<C, T, S>(text: Binding<String>, tokens: Binding<C>, placement: SearchFieldPlacement, prompt: LocalizedStringKey, token: (C.Element) -> T, suggestions: () -> S) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:placement:prompt:token:suggestions:)-2qu3o",
-                    "title": "func searchable<C, T, V, S>(text: Binding<String>, tokens: Binding<C>, placement: SearchFieldPlacement, prompt: S, token: (C.Element) -> T, suggestions: () -> V) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:placement:prompt:token:suggestions:)-7z89w",
-                    "title": "func searchable<C, T, S>(text: Binding<String>, tokens: Binding<C>, placement: SearchFieldPlacement, prompt: Text?, token: (C.Element) -> T, suggestions: () -> S) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:scope:placement:prompt:token:scopes:)-5kqof",
-                    "title": "func searchable<C, T, D, V>(text: Binding<String>, tokens: Binding<C>, scope: Binding<D>, placement: SearchFieldPlacement, prompt: Text?, token: (C.Element) -> T, scopes: () -> V) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:scope:placement:prompt:token:scopes:)-9y2s8",
-                    "title": "func searchable<C, T, D, V>(text: Binding<String>, tokens: Binding<C>, scope: Binding<D>, placement: SearchFieldPlacement, prompt: LocalizedStringKey, token: (C.Element) -> T, scopes: () -> V) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:scope:placement:prompt:token:scopes:)-ey5s",
-                    "title": "func searchable<C, T, D, V, S>(text: Binding<String>, tokens: Binding<C>, scope: Binding<D>, placement: SearchFieldPlacement, prompt: S, token: (C.Element) -> T, scopes: () -> V) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:scope:placement:prompt:token:scopes:suggestions:)-5b7jc",
-                    "title": "func searchable<C, T, D, V1, V2>(text: Binding<String>, tokens: Binding<C>, scope: Binding<D>, placement: SearchFieldPlacement, prompt: Text?, token: (C.Element) -> T, scopes: () -> V1, suggestions: () -> V2) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:scope:placement:prompt:token:scopes:suggestions:)-65n37",
-                    "title": "func searchable<C, T, D, V1, V2, S>(text: Binding<String>, tokens: Binding<C>, scope: Binding<D>, placement: SearchFieldPlacement, prompt: S, token: (C.Element) -> T, scopes: () -> V1, suggestions: () -> V2) -> some View",
-                    "type": "method"
-                  },
-                  {
-                    "deprecated": true,
-                    "path": "/documentation/phoenixliveviewnative/liveview/searchable(text:tokens:scope:placement:prompt:token:scopes:suggestions:)-6kw3z",
-                    "title": "func searchable<C, T, D, V1, V2>(text: Binding<String>, tokens: Binding<C>, scope: Binding<D>, placement: SearchFieldPlacement, prompt: LocalizedStringKey, token: (C.Element) -> T, scopes: () -> V1, suggestions: () -> V2) -> some View",
                     "type": "method"
                   },
                   {

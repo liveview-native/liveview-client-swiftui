@@ -58,7 +58,7 @@
                 {
                   "inlineContent": [
                     {
-                      "code": "nav-title",
+                      "code": "navigation-title",
                       "type": "codeVoice"
                     },
                     {

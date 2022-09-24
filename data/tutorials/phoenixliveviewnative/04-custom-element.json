@@ -198,7 +198,7 @@
     },
     "03-01-03-cat_live.ios.heex": {
       "content": [
-        "<vstack nav-title={@name}>",
+        "<vstack navigation-title={@name}>",
         "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame='{\"width\": 300, \"height\": 300}' />",
         "</vstack>"
       ],
@@ -1177,7 +1177,7 @@
     },
     "04-04-02-cat-rating.ios.heex": {
       "content": [
-        "<vstack nav-title={@name}>",
+        "<vstack navigation-title={@name}>",
         "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} frame='{\"width\": 300, \"height\": 300}' />",
         "  <cat-rating score={@score} />",
         "</vstack>"

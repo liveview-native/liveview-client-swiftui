@@ -5,7 +5,7 @@
       "type": "text"
     },
     {
-      "code": "View.accessibilityQuickAction(style:content:)",
+      "code": "View.fontDesign(_:)",
       "type": "codeVoice"
     },
     {
@@ -24,12 +24,12 @@
   },
   "identifier": {
     "interfaceLanguage": "swift",
-    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/accessibilityQuickAction(style:content:)"
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontDesign(_:)"
   },
   "kind": "symbol",
   "metadata": {
     "extendedModule": "SwiftUI",
-    "externalID": "s:7SwiftUI4ViewPAAE24accessibilityQuickAction5style7contentQrqd___qd_0_yXEtAA013AccessibilityeF5StyleRd__AaBRd_0_r0_lF::SYNTHESIZED::s:21PhoenixLiveViewNative0bC0V",
+    "externalID": "s:7SwiftUI4ViewPAAE10fontDesignyQrAA4FontV0E0OSgF::SYNTHESIZED::s:21PhoenixLiveViewNative0bC0V",
     "fragments": [
       {
         "kind": "keyword",
@@ -41,59 +41,29 @@
       },
       {
         "kind": "identifier",
-        "text": "accessibilityQuickAction"
+        "text": "fontDesign"
       },
       {
         "kind": "text",
-        "text": "<"
-      },
-      {
-        "kind": "genericParameter",
-        "text": "Style"
-      },
-      {
-        "kind": "text",
-        "text": ", "
-      },
-      {
-        "kind": "genericParameter",
-        "text": "Content"
-      },
-      {
-        "kind": "text",
-        "text": ">("
-      },
-      {
-        "kind": "externalParam",
-        "text": "style"
-      },
-      {
-        "kind": "text",
-        "text": ": "
+        "text": "("
       },
       {
         "kind": "typeIdentifier",
-        "text": "Style"
+        "preciseIdentifier": "s:7SwiftUI4FontV",
+        "text": "Font"
       },
       {
         "kind": "text",
-        "text": ", "
-      },
-      {
-        "kind": "externalParam",
-        "text": "content"
-      },
-      {
-        "kind": "text",
-        "text": ": () -> "
+        "text": "."
       },
       {
         "kind": "typeIdentifier",
-        "text": "Content"
+        "preciseIdentifier": "s:7SwiftUI4FontV6DesignO",
+        "text": "Design"
       },
       {
         "kind": "text",
-        "text": ") -> "
+        "text": "?) -> "
       },
       {
         "kind": "keyword",
@@ -118,7 +88,7 @@
       {
         "beta": false,
         "deprecated": false,
-        "introducedAt": "16.0",
+        "introducedAt": "16.1",
         "name": "iOS",
         "unavailable": false
       },
@@ -132,14 +102,14 @@
       {
         "beta": false,
         "deprecated": false,
-        "introducedAt": "16.0",
+        "introducedAt": "16.1",
         "name": "tvOS",
         "unavailable": false
       },
       {
         "beta": false,
         "deprecated": false,
-        "introducedAt": "9.0",
+        "introducedAt": "9.1",
         "name": "watchOS",
         "unavailable": false
       }
@@ -147,7 +117,7 @@
     "role": "symbol",
     "roleHeading": "Instance Method",
     "symbolKind": "method",
-    "title": "accessibilityQuickAction(style:content:)"
+    "title": "fontDesign(_:)"
   },
   "primaryContentSections": [
     {
@@ -170,31 +140,23 @@
             },
             {
               "kind": "identifier",
-              "text": "accessibilityQuickAction"
+              "text": "fontDesign"
             },
             {
               "kind": "text",
-              "text": "<"
-            },
-            {
-              "kind": "genericParameter",
-              "text": "Style"
-            },
-            {
-              "kind": "text",
-              "text": ", "
-            },
-            {
-              "kind": "genericParameter",
-              "text": "Content"
-            },
-            {
-              "kind": "text",
-              "text": ">("
+              "text": "("
             },
             {
               "kind": "externalParam",
-              "text": "style"
+              "text": "_"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "internalParam",
+              "text": "design"
             },
             {
               "kind": "text",
@@ -202,27 +164,21 @@
             },
             {
               "kind": "typeIdentifier",
-              "text": "Style"
+              "preciseIdentifier": "s:7SwiftUI4FontV",
+              "text": "Font"
             },
             {
               "kind": "text",
-              "text": ", "
-            },
-            {
-              "kind": "externalParam",
-              "text": "content"
-            },
-            {
-              "kind": "text",
-              "text": ": () -> "
+              "text": "."
             },
             {
               "kind": "typeIdentifier",
-              "text": "Content"
+              "preciseIdentifier": "s:7SwiftUI4FontV6DesignO",
+              "text": "Design"
             },
             {
               "kind": "text",
-              "text": ") -> "
+              "text": "?) -> "
             },
             {
               "kind": "keyword",
@@ -231,48 +187,6 @@
             {
               "kind": "text",
               "text": " "
-            },
-            {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI4ViewP",
-              "text": "View"
-            },
-            {
-              "kind": "text",
-              "text": " "
-            },
-            {
-              "kind": "keyword",
-              "text": "where"
-            },
-            {
-              "kind": "text",
-              "text": " "
-            },
-            {
-              "kind": "typeIdentifier",
-              "text": "Style"
-            },
-            {
-              "kind": "text",
-              "text": " : "
-            },
-            {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI29AccessibilityQuickActionStyleP",
-              "text": "AccessibilityQuickActionStyle"
-            },
-            {
-              "kind": "text",
-              "text": ", "
-            },
-            {
-              "kind": "typeIdentifier",
-              "text": "Content"
-            },
-            {
-              "kind": "text",
-              "text": " : "
             },
             {
               "kind": "typeIdentifier",
@@ -342,7 +256,7 @@
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/liveview/view-implementations"
     },
-    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/accessibilityQuickAction(style:content:)": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontDesign(_:)": {
       "abstract": [],
       "fragments": [
         {
@@ -355,59 +269,29 @@
         },
         {
           "kind": "identifier",
-          "text": "accessibilityQuickAction"
+          "text": "fontDesign"
         },
         {
           "kind": "text",
-          "text": "<"
-        },
-        {
-          "kind": "genericParameter",
-          "text": "Style"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "genericParameter",
-          "text": "Content"
-        },
-        {
-          "kind": "text",
-          "text": ">("
-        },
-        {
-          "kind": "externalParam",
-          "text": "style"
-        },
-        {
-          "kind": "text",
-          "text": ": "
+          "text": "("
         },
         {
           "kind": "typeIdentifier",
-          "text": "Style"
+          "preciseIdentifier": "s:7SwiftUI4FontV",
+          "text": "Font"
         },
         {
           "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "content"
-        },
-        {
-          "kind": "text",
-          "text": ": () -> "
+          "text": "."
         },
         {
           "kind": "typeIdentifier",
-          "text": "Content"
+          "preciseIdentifier": "s:7SwiftUI4FontV6DesignO",
+          "text": "Design"
         },
         {
           "kind": "text",
-          "text": ") -> "
+          "text": "?) -> "
         },
         {
           "kind": "keyword",
@@ -423,12 +307,12 @@
           "text": "View"
         }
       ],
-      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/accessibilityQuickAction(style:content:)",
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontDesign(_:)",
       "kind": "symbol",
       "role": "symbol",
-      "title": "accessibilityQuickAction(style:content:)",
+      "title": "fontDesign(_:)",
       "type": "topic",
-      "url": "/documentation/phoenixliveviewnative/liveview/accessibilityquickaction(style:content:)"
+      "url": "/documentation/phoenixliveviewnative/liveview/fontdesign(_:)"
     }
   },
   "schemaVersion": {
@@ -440,7 +324,7 @@
   "variants": [
     {
       "paths": [
-        "/documentation/phoenixliveviewnative/liveview/accessibilityquickaction(style:content:)"
+        "/documentation/phoenixliveviewnative/liveview/fontdesign(_:)"
       ],
       "traits": [
         {
