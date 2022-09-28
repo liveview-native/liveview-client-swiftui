@@ -16,9 +16,7 @@ class NavigationCoordinator: NSObject, UINavigationControllerDelegate, Observabl
             // while we're animating, don't update the currentRect otherwise it starts animating back
             // to the now-offscreen position of the source
             if case .idle = state {
-                DispatchQueue.main.async {
-                    self.currentRect = self.sourceRect
-                }
+                currentRect = sourceRect
             }
         }
     }
