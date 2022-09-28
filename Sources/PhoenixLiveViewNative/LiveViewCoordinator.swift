@@ -343,7 +343,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             if case .awaitingSocketConnection(let continuation) = self.internalState {
                 continuation.resume(throwing: Error.socketError(error))
             } else {
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     self.internalState = .connectionFailed(.socketError(error))
                 }
             }
@@ -419,7 +419,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             setupChannelJoinHandlers(channel: channel, token: token)
         }
         
-        handleJoinPayload(renderedPayload: renderedPayload)
+        Task { @MainActor in
+            handleJoinPayload(renderedPayload: renderedPayload)
+        }
     }
     
     private func setupChannelJoinHandlers(channel: Channel, token: ConnectionAttemptToken) {
@@ -440,7 +442,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     continuation.resume(returning: renderedPayload)
                 } else if self.internalState.reconnectAutomatically {
                     // if we're in a state where, e.g., a previous attempt failed, but an automatic rejoin attempt succeeds, finish the join
-                    self.handleJoinPayload(renderedPayload: renderedPayload)
+                    Task { @MainActor in
+                        self.handleJoinPayload(renderedPayload: renderedPayload)
+                    }
                 } else {
                     // if we've received a message but don't have anything to do with it,
                     // assume that that will continue to be the case, and leave the channel to prevent future messages
@@ -481,10 +485,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
         let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
-        DispatchQueue.main.async {
-            self.internalState = .connected
-            self.elements = elements
-        }
+        self.internalState = .connected
+        self.elements = elements
     }
     
     private func handleLiveRedirect(_ payload: Payload) {
