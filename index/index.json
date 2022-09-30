@@ -1172,6 +1172,11 @@
                     "type": "method"
                   },
                   {
+                    "path": "/documentation/phoenixliveviewnative/liveview/fontwidth(_:)",
+                    "title": "func fontWidth(Font.Width?) -> some View",
+                    "type": "method"
+                  },
+                  {
                     "path": "/documentation/phoenixliveviewnative/liveview/foregroundcolor(_:)",
                     "title": "func foregroundColor(Color?) -> some View",
                     "type": "method"

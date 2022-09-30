@@ -17105,6 +17105,64 @@
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/liveview/fontweight(_:)"
     },
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontWidth(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "fontWidth"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4FontV",
+          "text": "Font"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4FontV5WidthV",
+          "text": "Width"
+        },
+        {
+          "kind": "text",
+          "text": "?) -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "some"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4ViewP",
+          "text": "View"
+        }
+      ],
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontWidth(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "fontWidth(_:)",
+      "type": "topic",
+      "url": "/documentation/phoenixliveviewnative/liveview/fontwidth(_:)"
+    },
     "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/foregroundColor(_:)": {
       "abstract": [],
       "fragments": [
@@ -35737,6 +35795,7 @@
         "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/font(_:)",
         "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontDesign(_:)",
         "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontWeight(_:)",
+        "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontWidth(_:)",
         "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/foregroundColor(_:)",
         "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/foregroundStyle(_:)",
         "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/foregroundStyle(_:_:)",

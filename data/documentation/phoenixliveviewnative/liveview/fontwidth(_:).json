@@ -5,7 +5,7 @@
       "type": "text"
     },
     {
-      "code": "View.navigationBarBackButtonHidden(_:)",
+      "code": "View.fontWidth(_:)",
       "type": "codeVoice"
     },
     {
@@ -24,12 +24,12 @@
   },
   "identifier": {
     "interfaceLanguage": "swift",
-    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/navigationBarBackButtonHidden(_:)"
+    "url": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontWidth(_:)"
   },
   "kind": "symbol",
   "metadata": {
     "extendedModule": "SwiftUI",
-    "externalID": "s:7SwiftUI4ViewPAAE29navigationBarBackButtonHiddenyQrSbF::SYNTHESIZED::s:21PhoenixLiveViewNative0bC0V",
+    "externalID": "s:7SwiftUI4ViewPAAE9fontWidthyQrAA4FontV0E0VSgF::SYNTHESIZED::s:21PhoenixLiveViewNative0bC0V",
     "fragments": [
       {
         "kind": "keyword",
@@ -41,7 +41,7 @@
       },
       {
         "kind": "identifier",
-        "text": "navigationBarBackButtonHidden"
+        "text": "fontWidth"
       },
       {
         "kind": "text",
@@ -49,12 +49,21 @@
       },
       {
         "kind": "typeIdentifier",
-        "preciseIdentifier": "s:Sb",
-        "text": "Bool"
+        "preciseIdentifier": "s:7SwiftUI4FontV",
+        "text": "Font"
       },
       {
         "kind": "text",
-        "text": ") -> "
+        "text": "."
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:7SwiftUI4FontV5WidthV",
+        "text": "Width"
+      },
+      {
+        "kind": "text",
+        "text": "?) -> "
       },
       {
         "kind": "keyword",
@@ -79,7 +88,7 @@
       {
         "beta": false,
         "deprecated": false,
-        "introducedAt": "13.0",
+        "introducedAt": "16.0",
         "name": "iOS",
         "unavailable": false
       },
@@ -93,14 +102,14 @@
       {
         "beta": false,
         "deprecated": false,
-        "introducedAt": "13.0",
+        "introducedAt": "16.0",
         "name": "tvOS",
         "unavailable": false
       },
       {
         "beta": false,
         "deprecated": false,
-        "introducedAt": "6.0",
+        "introducedAt": "9.0",
         "name": "watchOS",
         "unavailable": false
       }
@@ -108,7 +117,7 @@
     "role": "symbol",
     "roleHeading": "Instance Method",
     "symbolKind": "method",
-    "title": "navigationBarBackButtonHidden(_:)"
+    "title": "fontWidth(_:)"
   },
   "primaryContentSections": [
     {
@@ -131,7 +140,7 @@
             },
             {
               "kind": "identifier",
-              "text": "navigationBarBackButtonHidden"
+              "text": "fontWidth"
             },
             {
               "kind": "text",
@@ -147,7 +156,7 @@
             },
             {
               "kind": "internalParam",
-              "text": "hidesBackButton"
+              "text": "width"
             },
             {
               "kind": "text",
@@ -155,12 +164,21 @@
             },
             {
               "kind": "typeIdentifier",
-              "preciseIdentifier": "s:Sb",
-              "text": "Bool"
+              "preciseIdentifier": "s:7SwiftUI4FontV",
+              "text": "Font"
             },
             {
               "kind": "text",
-              "text": " = true) -> "
+              "text": "."
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:7SwiftUI4FontV5WidthV",
+              "text": "Width"
+            },
+            {
+              "kind": "text",
+              "text": "?) -> "
             },
             {
               "kind": "keyword",
@@ -238,7 +256,7 @@
       "type": "topic",
       "url": "/documentation/phoenixliveviewnative/liveview/view-implementations"
     },
-    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/navigationBarBackButtonHidden(_:)": {
+    "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontWidth(_:)": {
       "abstract": [],
       "fragments": [
         {
@@ -251,7 +269,7 @@
         },
         {
           "kind": "identifier",
-          "text": "navigationBarBackButtonHidden"
+          "text": "fontWidth"
         },
         {
           "kind": "text",
@@ -259,12 +277,21 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:Sb",
-          "text": "Bool"
+          "preciseIdentifier": "s:7SwiftUI4FontV",
+          "text": "Font"
         },
         {
           "kind": "text",
-          "text": ") -> "
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4FontV5WidthV",
+          "text": "Width"
+        },
+        {
+          "kind": "text",
+          "text": "?) -> "
         },
         {
           "kind": "keyword",
@@ -280,12 +307,12 @@
           "text": "View"
         }
       ],
-      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/navigationBarBackButtonHidden(_:)",
+      "identifier": "doc://PhoenixLiveViewNative/documentation/PhoenixLiveViewNative/LiveView/fontWidth(_:)",
       "kind": "symbol",
       "role": "symbol",
-      "title": "navigationBarBackButtonHidden(_:)",
+      "title": "fontWidth(_:)",
       "type": "topic",
-      "url": "/documentation/phoenixliveviewnative/liveview/navigationbarbackbuttonhidden(_:)"
+      "url": "/documentation/phoenixliveviewnative/liveview/fontwidth(_:)"
     }
   },
   "schemaVersion": {
@@ -297,7 +324,7 @@
   "variants": [
     {
       "paths": [
-        "/documentation/phoenixliveviewnative/liveview/navigationbarbackbuttonhidden(_:)"
+        "/documentation/phoenixliveviewnative/liveview/fontwidth(_:)"
       ],
       "traits": [
         {
