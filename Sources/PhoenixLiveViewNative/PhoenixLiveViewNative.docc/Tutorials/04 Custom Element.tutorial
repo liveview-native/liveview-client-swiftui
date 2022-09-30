@@ -1,4 +1,7 @@
 @Tutorial(time: 30) {
+    @Comment {
+        index = 4
+    }
     @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
     @Intro(title: "Add a Custom HTML Element") {
@@ -16,6 +19,10 @@
                 
                 The ``CustomRegistry`` protocol defines the interface you use to provide custom elements and attributes to LiveView Native.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/MyRegistry.swift"
+                }
                 @Code(name: "MyRegistry.swift", file: 04-01-01-registry.swift)
             }
             
@@ -24,12 +31,20 @@
                 
                 The `lookup` method is called by the framework when it encounters a element with one of your declared tag names.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/MyRegistry.swift"
+                }
                 @Code(name: "MyRegistry.swift", file: 04-01-02-tag.swift)
             }
             
             @Step {
                 Then, define a type alias called `AttributeName` that is `EmptyRegistry.None`. This tells the framework that your registry doesn't support any custom attributes.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/MyRegistry.swift"
+                }
                 @Code(name: "MyRegistry.swift", file: 04-01-03-attribute.swift)
             }
             
@@ -38,12 +53,19 @@
                 
                 The `element` is the DOM element that your view is being constructed from, and the `context` is a ``LiveContext`` struct containing additional information about the context in which the element is being used.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/MyRegistry.swift"
+                }
                 @Code(name: "MyRegistry.swift", file: 04-01-04-view.swift)
             }
             
             @Step {
                 Next, open the `ContentView.swift` file.
                 
+                @Comment {
+                    skip = true
+                }
                 @Code(name: "ContentView.swift", file: 03-02-01-navigationmode.swift)
             }
             
@@ -52,6 +74,10 @@
                 
                 All the methods and properties on the registry are `static`, so rather than constructing an instance of it, we only need to provide its type as a generic parameter to the coordinator.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/ContentView.swift"
+                }
                 @Code(name: "ContentView.swift", file: 04-01-05-coordinator.swift)
             }
         }
@@ -64,12 +90,18 @@
             @Step {
                 Open the `favorites_store.ex` file.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial/favorites_store.ex", file: 02-01-01-genserver.ex)
             }
             
             @Step {
                 Update the favorites store to have as its state a map of names to scores, in addition to the list of favorites.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial/favorites_store.ex", file: 04-02-01-genserver.ex)
             }
             
@@ -84,24 +116,40 @@
             @Step {
                 Create the `CatRatingView` struct. This will conform to SwiftUI's `View` protocol and have fields for the element and context.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/CatRatingView.swift"
+                }
                 @Code(name: "CatRatingView.swift", file: 04-03-01-empty-view.swift)
             }
             
             @Step {
                 Next, let's add properties for the context and the score attribute. The score is read from the `score` attribute on the DOM element and converted to an integer, falling back to 0 if that fails.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/CatRatingView.swift"
+                }
                 @Code(name: "CatRatingView.swift", file: 04-03-02-initializer.swift)
             }
             
             @Step {
                 Add a couple of `@State` variables that will be used for building the interaction. The `editedScore` variable will hold the current score as the user is draggin their finger to edit it, but before it's been committed. The `width` variable willll store the width of the view on screen, which is needed to turn the absolute position of the user's finger into a fraction. Finally, `effectiveScore` is a helper property that the view body wil use to read the score that should currently be displayed.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/CatRatingView.swift"
+                }
                 @Code(name: "CatRatingView.swift", file: 04-03-03-properties.swift)
             }
             
             @Step {
                 In the view body, we'll use an `HStack` with two `ForEach` loops to display a set of heart icons. Based on the effective score, some number of them will be filled in and colored red to indicate the current score.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/CatRatingView.swift"
+                }
                 @Code(name: "CatRatingView.swift", file: 04-03-04-hearts.swift)
             }
             
@@ -110,6 +158,10 @@
                 
                 This is in a `.background` modifier so that it doesn't affect the size of our view. A SwiftUI view preference is used to communicate the `GeometryReader` width up to our view without altering state during the evaluation of the body, which SwiftUI forbids.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/CatRatingView.swift"
+                }
                 @Code(name: "CatRatingView.swift", file: 04-03-05-width-reader.swift)
             }
             
@@ -118,6 +170,10 @@
                 
                 The desired score is calculated by looking at the X position of the tap/drag relative to the full width of the view, and converting that into a number from 0 through 5.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/CatRatingView.swift"
+                }
                 @Code(name: "CatRatingView.swift", file: 04-03-06-gestures.swift)
             }
             
@@ -126,6 +182,10 @@
                 
                 The `type` parameter to `pushEvent` can be anything you like; here we use "click" because it matches a type already used by LiveView on the web. The `name` parameter is the name of the event handler that will be invoked on the backend.
                 
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/CatRatingView.swift"
+                }
                 @Code(name: "CatRatingView.swift", file: 04-03-07-pushevent.swift)
             }
         }
@@ -138,18 +198,27 @@
             @Step {
                 Open `cat_live.ex`.
                 
+                @Comment {
+                    skip = true
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 03-01-02-cat_live.ex)
             }
             
             @Step {
                 Update the `mount` callback to assign the current score from the store to the socket, and add a new event handler called `change-score` which updates the favorites store and then assigns the new score to the socket.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 04-04-01-change-score.ex)
             }
             
             @Step {
                 Edit the `cat_live.ios.heex` template.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cat_live.ios.heex", file: 03-01-03-cat_live.ios.heex)
             }
             
@@ -158,6 +227,9 @@
                 
                 With that, you can re-run the app and view and edit scores to your heart's content!
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cat_live.ios.heex", file: 04-04-02-cat-rating.ios.heex) {
                     @Video(source: 04-04-03-preview.mp4, poster: 04-04-04-preview-poster.png)
                 }

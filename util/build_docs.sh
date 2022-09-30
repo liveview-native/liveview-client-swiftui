@@ -1,16 +1,35 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+if [ ! -f "Package.swift" ]; then
+	echo -e "\x1B[1;31mThis script must be run from the repository root (contains Package.swift).\x1B[0m"
+	exit 1
+fi
+
+verbose=0
+
+while getopts "v" opt; do
+	case "$opt" in
+		v)
+			verbose=1
+			;;
+	esac
+done
+
+[[ "$verbose" == "1" ]] && output="/dev/tty" || output="/dev/null"
+
 # build doccarchive
+echo "Building docs..."
 mkdir -p docc_build
-xcodebuild docbuild -scheme PhoenixLiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build
+xcodebuild docbuild -scheme PhoenixLiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build &> $output
 
 # create worktree
 if [ ! -d docs ]; then
 	git worktree add docs docs
 fi
 
-xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/PhoenixLiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui
+echo "Generating static files..."
+xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/PhoenixLiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui &> $output
 
 # add index page to root with redirect to package docs
 cat > docs/index.html << EOF
@@ -31,9 +50,17 @@ EOF
 echo "Sorting JSON..."
 
 pushd util/sort_json
-cargo build --release
+cargo build --release &> $output
+./target/release/sort_json ../../docs
 popd
-./util/sort_json/target/release/sort_json docs
 
+echo "Generating tutorial repo..."
+
+pushd util/generate_tutorial_repo
+cargo build &> $output
+[[ "$verbose" == "1" ]] && flags="-v" || flags=""
+./target/debug/generate_tutorial_repo --repo ../../tutorial --package ../.. $flags
+popd
 
 echo -e "\x1B[1mDocs updated, commit the result in the docs/ directory.\x1B[0m"
+echo -e "\x1B[1mTutorial repo updated, force-push the result in the tutorial/ directory.\x1B[0m"

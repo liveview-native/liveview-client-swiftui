@@ -1,4 +1,7 @@
 @Tutorial(time: 30) {
+    @Comment {
+        index = 2
+    }
     @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
     @Intro(title: "Storing User Favorites") {
@@ -16,12 +19,18 @@
                 
                 In an actual application, you'd use something persistent, such as a database. But a non-persistent GenServer will do for this tutorial.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial/favorites_store.ex", file: 02-01-01-genserver.ex)
             }
             
             @Step {
                 Then, open the `application.ex` file.
                 
+                @Comment {
+                    skip = true
+                }
                 @Code(name: "lib/lvn_tutorial/application.ex", file: 02-01-02-application.ex)
             }
             
@@ -30,24 +39,36 @@
                 
                 Once you've done that, restart the Phoenix project so that the GenServer is started.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial/application.ex", file: 02-01-03-application.ex)
             }
             
             @Step {
                 Open the `cats_list_live.ex` file.
                 
+                @Comment {
+                    skip = true
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-04-initial.ex)
             }
             
             @Step {
                 Let's add a new function called `get_cats_and_favorites` that builds a sorted list of cats and their favorite status, pulling from the GenServer we created before.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-05-build-list.ex)
             }
             
             @Step {
                 Then, we'll assign the result of that function to `cats_and_favorites` in the `mount` callback so we can use it in the template.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-06-assign.ex)
             }
         }
@@ -60,12 +81,18 @@
             @Step {
                 Open the HEEX template for the live view.
                 
+                @Comment {
+                    skip = true
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 01-03-03-images.ios.heex)
             }
             
             @Step {
                 First, we'll update the comprehension in the template to handle the added field.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-01-template.ios.heex)
             }
             
@@ -74,6 +101,9 @@
                 
                 The content of the button will be an `<image>`, which can be used to display an SF Symbol. In our case, we'll use either the filled or unfilled star depending on whether the cat is favorited. We'll also use the `symbol-color` attribute to tint it gold when the cat is favorited.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-02-button.ios.heex) {
                     @Image(source: 02-02-03-button-preview.png, alt: "The list of cats with black, star outlines to the right of each list item.")
                 }
@@ -84,6 +114,9 @@
                 
                 Any `phx-value-*` attributes we include on the button will be collected into a map and provided to the event handler as well.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-04-button-click.ios.heex)
             }
             
@@ -92,6 +125,9 @@
                 
                 LiveView on the backend will automatically re-render the template and send an update to the client which will display it.
                 
+                @Comment {
+                    project = "backend"
+                }
                 @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-02-05-button-handler.ex) {
                     @Video(source: 02-02-06-favorites.mp4, poster: 02-02-07-favorites-poster.png)
                 }
