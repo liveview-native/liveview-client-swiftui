@@ -10,7 +10,7 @@ import Combine
 
 @available(iOS 16.0, *)
 struct PhxModernNavigationLink<R: CustomRegistry>: View {
-    private let element: Element
+    private let element: ElementNode
     private let context: LiveContext<R>
     private let disabled: Bool
     private let linkOpts: LinkOptions?
@@ -19,10 +19,10 @@ struct PhxModernNavigationLink<R: CustomRegistry>: View {
     @State private var overrideView: HeroViewOverrideKey.Value = nil
     @State private var doNavigationCancellable: AnyCancellable?
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
         self.context = context
-        self.disabled = element.hasAttr("disabled")
+        self.disabled = element.attribute(named: "disabled") != nil
         self.linkOpts = LinkOptions(element: element)
     }
     

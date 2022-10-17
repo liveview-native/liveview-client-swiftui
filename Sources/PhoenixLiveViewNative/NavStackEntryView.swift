@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftSoup
+import LiveViewNativeCore
 
 struct NavStackEntryView<R: CustomRegistry>: View {
     // this is a @StateObject instead of @ObservedObject because changing which DOMWindows for a LiveView is not allowed
@@ -23,16 +23,17 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     
     var body: some View {
         // TODO: the ZStack is a workaround for an iOS 16 beta bug, check back before release to see if it's still needed
+        let _ = Self._printChanges()
         ZStack {
             elementTree
                 .environmentObject(liveViewModel)
-                .onReceive(coordinator.$elements) { newValue in
+                .onReceive(coordinator.documentChanged) {
                     // todo: things will go weird if the same url occurs multiple times in the navigation stack
                     if coordinator.currentURL == url,
-                       let elements = newValue {
-                        self.state = .connected(elements)
+                       let doc = coordinator.document {
+                        self.state = .connected(doc)
                         // todo: doing this every time the DOM changes is probably not efficient
-                        liveViewModel.pruneMissingForms(elements: elements)
+                        liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
                     }
                 }
                 .onReceive(coordinator.$internalState) { newValue in
@@ -60,8 +61,8 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     @ViewBuilder
     private var elementTree: some View {
         switch state {
-        case .connected(let elements):
-            coordinator.builder.fromElements(elements, coordinator: coordinator, url: url)
+        case .connected(let doc):
+            coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: url)
         case .other(let lvState):
             if R.self.LoadingView == Never.self {
                 switch lvState {
@@ -85,7 +86,7 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     }
     
     enum ConnectionState {
-        case connected(Elements)
+        case connected(Document)
         case other(LiveViewCoordinator<R>.State)
     }
     

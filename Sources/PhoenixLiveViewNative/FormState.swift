@@ -150,8 +150,8 @@ extension FormState: DynamicProperty {
 private class FormValueObserver: ObservableObject {
 }
 
-private extension Optional where Wrapped == Element {
+private extension Optional where Wrapped == ElementNode {
     var name: String? {
-        self.flatMap { $0.attrIfPresent("name") }
+        self.flatMap { $0.attributeValue(for: "name") }
     }
 }

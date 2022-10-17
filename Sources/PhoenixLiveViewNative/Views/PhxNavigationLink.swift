@@ -10,7 +10,7 @@ import Combine
 
 @available(iOS, obsoleted: 16.0)
 struct PhxNavigationLink<R: CustomRegistry>: View {
-    private let element: Element
+    private let element: ElementNode
     private let context: LiveContext<R>
     private let disabled: Bool
     private let linkOpts: LinkOptions?
@@ -19,10 +19,10 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
     @State private var source: HeroViewSourceKey.Value = nil
     @State private var coordinatorStateCancellable: AnyCancellable?
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
         self.context = context
-        self.disabled = element.hasAttr("disabled")
+        self.disabled = element.attribute(named: "disabled") != nil
         self.linkOpts = LinkOptions(element: element)
     }
     
@@ -124,15 +124,16 @@ struct LinkOptions {
     let state: LinkState
     let href: String
     
-    init?(element: Element) {
-        guard element.hasAttr("data-phx-link"),
-              let kind = LinkKind(rawValue: try! element.attr("data-phx-link")),
-              let state = LinkState(rawValue: try! element.attr("data-phx-link-state")) else {
+    init?(element: ElementNode) {
+        guard let kindStr = element.attributeValue(for: "data-phx-link"),
+              let kind = LinkKind(rawValue: kindStr),
+              let stateStr = element.attributeValue(for: "data-phx-link-state"),
+              let state = LinkState(rawValue: stateStr) else {
             return nil
         }
         self.kind = kind
         self.state = state
-        self.href = try! element.attr("data-phx-href")
+        self.href = element.attributeValue(for: "data-phx-href")!
     }
 }
 

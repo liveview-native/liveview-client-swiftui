@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import SwiftSoup
 
 private struct FormModelKey: EnvironmentKey {
     static let defaultValue: FormModel? = nil
 }
 
 private struct ElementKey: EnvironmentKey {
-    static let defaultValue: Element? = nil
+    static let defaultValue: ElementNode? = nil
 }
 
 private struct TextFieldPrimaryActionKey: EnvironmentKey {
@@ -28,7 +27,7 @@ extension EnvironmentValues {
     }
     
     /// The DOM element that the view was constructed from.
-    public var element: Element? {
+    public var element: ElementNode? {
         get { self[ElementKey.self] }
         set { self[ElementKey.self] = newValue }
     }

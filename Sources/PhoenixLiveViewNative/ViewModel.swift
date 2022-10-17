@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import SwiftSoup
 import Combine
+import LiveViewNativeCore
 
 /// The working-copy data model for a ``LiveView``.
 ///
@@ -26,15 +26,17 @@ public class LiveViewModel<R: CustomRegistry>: ObservableObject {
         }
     }
     
-    /// Removes form models that don't have corresponding `<phx-form>` tags in the DOM.
-    func pruneMissingForms(elements: Elements) {
+    /// Called whenever the document changes to update form models with their current data from the DOM and remove any models for no-longer-present forms.
+    func updateForms(nodes: NodeDepthFirstChildrenSequence) {
         var formIDs = Set<String>()
-        var toVisit = Array(elements)
-        while let el = toVisit.popLast() {
-            if el.tagName().lowercased() == "phx-form" {
-                formIDs.insert(el.id())
+        for node in nodes {
+            guard case .element(let elementData) = node.data,
+                  elementData.namespace == nil && elementData.tag == "phx-form" else {
+                continue
             }
-            toVisit.append(contentsOf: el.children())
+            let id = node["id"]!.value!
+            formIDs.insert(id)
+            forms[id]?.updateFromElement(ElementNode(node: node, data: elementData))
         }
         for id in forms.keys where !formIDs.contains(id) {
             forms.removeValue(forKey: id)
@@ -60,11 +62,32 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         self.elementID = elementID
     }
     
-    func updateFromElement(_ element: Element) {
-        changeEvent = element.attrIfPresent("phx-change")
-        submitEvent = element.attrIfPresent("phx-submit")
+    func updateFromElement(_ element: ElementNode) {
+        changeEvent = element.attributeValue(for: "phx-change")
+        submitEvent = element.attributeValue(for: "phx-submit")
         
-        try! element.traverse(FormDataUpdater(model: self))
+        for node in element.depthFirstChildren() {
+            guard case .element(let elementData) = node.data else {
+                continue
+            }
+            // TODO: should this cover all elements?
+            if elementData.namespace == nil,
+               ["hidden", "textfield"].contains(elementData.tag),
+               let name = node["name"]?.value,
+               let value = node["value"]?.value {
+                #if compiler(>=5.7)
+                // if we have an existing value, try to convert it to the same type
+                if let existing = self[name],
+                   let converted = existing.createNew(formValue: value) {
+                    self[name] = converted
+                } else {
+                    self[name] = value
+                }
+                #else
+                model[name] = AnyFormValue(erasing: value)
+                #endif
+            }
+        }
     }
     
     /// Sends a phx-change event (if configured) to the server with the current form data.
@@ -198,30 +221,3 @@ public struct AnyFormValue: FormValue, Equatable {
     }
 }
 #endif
-
-private struct FormDataUpdater: NodeVisitor {
-    let model: FormModel
-    
-    func head(_ node: Node, _ depth: Int) throws {
-        // TODO: should this cover all elements?
-        if ["hidden", "textfield"].contains(node.nodeName().lowercased()),
-           let name = node.attrIfPresent("name"),
-           let value = node.attrIfPresent("value") {
-            #if compiler(>=5.7)
-            // if we have an existing value, try to convert it to the same type
-            if let existing = model[name],
-               let converted = existing.createNew(formValue: value) {
-                model[name] = converted
-            } else {
-                model[name] = value
-            }
-            #else
-            model[name] = AnyFormValue(erasing: value)
-            #endif
-        }
-    }
-    
-    func tail(_ node: Node, _ depth: Int) throws {
-        // unused
-    }
-}

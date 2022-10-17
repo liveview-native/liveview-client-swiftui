@@ -7,16 +7,16 @@
 
 import Foundation
 import SwiftUI
-import SwiftSoup
+import LiveViewNativeCore
 
 struct ViewTreeBuilder<R: CustomRegistry> {
-    func fromElements(_ elements: Elements, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
-        return fromElements(elements, context: LiveContext(coordinator: coordinator, url: url))
+    func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
+        return fromNodes(nodes, context: LiveContext(coordinator: coordinator, url: url))
     }
     
     @ViewBuilder
-    func fromElements(_ elements: Elements, context: LiveContext<R>) -> some View {
-        let e = elements
+    func fromNodes(_ nodes: NodeChildrenSequence, context: LiveContext<R>) -> some View {
+        let e = nodes
         let c = context
         switch e.count {
         case 0:
@@ -42,31 +42,40 @@ struct ViewTreeBuilder<R: CustomRegistry> {
         case 10:
             TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(e[9], c)))
         default:
-            forEach(elements: e, context: c)
+            forEach(nodes: nodes, context: c)
         }
     }
     
     // alias for typing
     @inline(__always)
-    fileprivate func f(_ e: Element, _ c: LiveContext<R>) -> some View {
-        return fromElement(e, context: c)
+    fileprivate func f(_ n: Node, _ c: LiveContext<R>) -> some View {
+        return fromNode(n, context: c)
     }
     
-    fileprivate func fromElement(_ element: Element, context: LiveContext<R>) -> some View {
-        let attrs = element.getAttributes()?.asList() ?? []
-        return createElement(element, context: context)
-            .applyAttributes(attrs[...], element: element, context: context)
+    @ViewBuilder
+    fileprivate func fromNode(_ node: Node, context: LiveContext<R>) -> some View {
+        switch node.data {
+        case .root:
+            fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
+        case .leaf(let content):
+            Text(content)
+        case .element(let element):
+            fromElement(ElementNode(node: node, data: element), context: context)
+        }
+    }
+    
+    fileprivate func fromElement(_ element: ElementNode, context: LiveContext<R>) -> some View {
+        createView(element, context: context)
+            .applyAttributes(element.attributes[...], element: element, context: context)
             .environment(\.element, element)
     }
     
     @ViewBuilder
-    private func createElement(_ element: Element, context: LiveContext<R>) -> some View {
-        let tag = element.tagName().lowercased()
-        
-        if let tagName = R.TagName(rawValue: tag) {
+    private func createView(_ element: ElementNode, context: LiveContext<R>) -> some View {
+        if let tagName = R.TagName(rawValue: element.tag) {
             R.lookup(tagName, element: element, context: context)
         } else {
-            BuiltinRegistry.lookup(tag, element, context: context)
+            BuiltinRegistry.lookup(element.tag, element, context: context)
         }
     }
     
@@ -76,7 +85,7 @@ struct ViewTreeBuilder<R: CustomRegistry> {
 private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
     let parent: Parent
     let attributes: ArraySlice<Attribute>
-    let element: Element
+    let element: ElementNode
     let context: LiveContext<R>
     
     var body: some View {
@@ -90,7 +99,7 @@ private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
 
 private extension View {
     @ViewBuilder
-    func applyAttributes(_ attributes: ArraySlice<Attribute>, element: Element, context: LiveContext<some CustomRegistry>) -> some View {
+    func applyAttributes(_ attributes: ArraySlice<Attribute>, element: ElementNode, context: LiveContext<some CustomRegistry>) -> some View {
         if attributes.isEmpty {
             self
         } else {
@@ -98,13 +107,13 @@ private extension View {
         }
     }
     
-    func applyAttribute<R: CustomRegistry>(_ attribute: Attribute, element: Element, context: LiveContext<R>) -> some View {
+    func applyAttribute<R: CustomRegistry>(_ attribute: Attribute, element: ElementNode, context: LiveContext<R>) -> some View {
         // EmptyModifier is used if the attribute is not recognized as builtin or custom modifier
         var modifier: any ViewModifier = EmptyModifier()
-        if let name = BuiltinRegistry.AttributeName(rawValue: attribute.getKey()) {
-            modifier = BuiltinRegistry.lookupModifier(attribute: name, value: attribute.getValue(), context: context)
-        } else if let name = R.AttributeName(rawValue: attribute.getKey()) {
-            modifier = R.lookupModifier(name, value: attribute.getValue(), element: element, context: context)
+        if let name = BuiltinRegistry.AttributeName(rawValue: attribute.name.rawValue) {
+            modifier = BuiltinRegistry.lookupModifier(attribute: name, value: attribute.value, context: context)
+        } else if let name = R.AttributeName(rawValue: attribute.name.rawValue) {
+            modifier = R.lookupModifier(name, value: attribute.value, element: element, context: context)
         }
         return modifier.apply(to: self)
     }
@@ -117,8 +126,9 @@ private extension ViewModifier {
 }
 
 // not fileprivate because it's used by LiveContext
+// this cannot be "NodeView" because it's used by forEach which requires element ids, which leaf nodes can't have
 internal struct ElementView<R: CustomRegistry>: View {
-    let element: Element
+    let element: ElementNode
     let context: LiveContext<R>
     
     var body: some View {
@@ -127,10 +137,15 @@ internal struct ElementView<R: CustomRegistry>: View {
 }
 
 // not fileprivate because List needs ot use it so it has access to ForEach modifiers
-func forEach<R: CustomRegistry>(elements: Elements, context: LiveContext<R>) -> ForEach<[(Element, String)], String, ElementView<R>> {
-    let elements = elements.map { (el) -> (Element, String) in
-        precondition(el.hasAttr("id"), "element in list or parent with more than 10 children must have an id")
-        return (el, try! el.attr("id"))
+func forEach<R: CustomRegistry>(nodes: NodeChildrenSequence, context: LiveContext<R>) -> ForEach<[(ElementNode, String)], String, ElementView<R>> {
+    let elements = nodes.map { (node) -> (ElementNode, String) in
+        guard let element = node.asElement() else {
+            preconditionFailure("node in list or parent with more than 10 children must be an element")
+        }
+        guard let id = element.attributeValue(for: "id") else {
+            preconditionFailure("element in list or parent with more than 10 children must have an id")
+        }
+        return (element, id)
     }
     return ForEach(elements, id: \.1) { ElementView(element: $0.0, context: context) }
 }

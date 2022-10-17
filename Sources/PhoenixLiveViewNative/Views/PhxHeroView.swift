@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct PhxHeroView<R: CustomRegistry>: View {
-    private let element: Element
+    private let element: ElementNode
     private let context: LiveContext<R>
     private let kind: Kind
     @EnvironmentObject private var navCoordinator: NavigationCoordinator
     @State private var frameProvider: FrameProvider?
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
         self.context = context
-        self.kind = element.hasAttr("destination") ? .destination : .source
+        self.kind = element.attributeValue(for: "destination") != nil ? .destination : .source
     }
     
     var hidesDuringAnimation: Bool {
@@ -25,11 +25,12 @@ struct PhxHeroView<R: CustomRegistry>: View {
             return false
         }
         // only hide when we're the hero view being animated to/from
+        // Note: comparing NodeRefs here is fine, because this is always within a generation
         switch kind {
         case .destination:
-            return navCoordinator.destElement == element
+            return navCoordinator.destElement?.node.id == element.node.id
         case .source:
-            return navCoordinator.sourceElement == element
+            return navCoordinator.sourceElement?.node.id == element.node.id
         }
     }
     
@@ -135,8 +136,14 @@ struct HeroViewDestKey: PreferenceKey {
 }
 
 struct FrameAndElement: Equatable {
-    let element: Element
+    let element: ElementNode
     let frameProvider: FrameProvider
+    
+    static func ==(lhs: FrameAndElement, rhs: FrameAndElement) -> Bool {
+        // TODO: comparing NodeRefs for equality isn't strictly correct here
+        // if the children of an element have changed, its ref may not have, but we still want to consider it different
+        return lhs.element.node.id == rhs.element.node.id && lhs.frameProvider == rhs.frameProvider
+    }
 }
 
 struct FrameProvider: Equatable {

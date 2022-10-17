@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct PhxZStack<R: CustomRegistry>: View {
-    private let element: Element
+    private let element: ElementNode
     private let context: LiveContext<R>
     private let alignment: Alignment
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
         self.context = context
-        if let s = element.attrIfPresent("alignment"), let alignment = Alignment(string: s) {
+        if let s = element.attributeValue(for: "alignment"), let alignment = Alignment(string: s) {
             self.alignment = alignment
         } else {
             self.alignment = .center

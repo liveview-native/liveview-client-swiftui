@@ -6,13 +6,12 @@
 //
 
 import SwiftUI
-import SwiftSoup
 
 struct PhxScrollView<R: CustomRegistry>: View {
-    let element: Element
+    let element: ElementNode
     let context: LiveContext<R>
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
         self.context = context
     }

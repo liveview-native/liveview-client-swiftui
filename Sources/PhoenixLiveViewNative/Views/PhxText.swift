@@ -6,20 +6,19 @@
 //
 
 import SwiftUI
-import SwiftSoup
 
 struct PhxText: View {
-    var element: Element
+    var element: ElementNode
     
     public var body: some View {
-        Text(element.ownText())
+        Text(element.innerText())
             .font(self.font)
             .foregroundColor(textColor)
     }
     
     private var font: Font? {
         let font: Font?
-        switch try! element.attr("font").lowercased() {
+        switch element.attributeValue(for: "font")?.lowercased() {
         case "largetitle":
             font = .largeTitle
         case "title":
@@ -46,7 +45,7 @@ struct PhxText: View {
             font = nil
         }
         let weight: Font.Weight
-        switch try! element.attr("font-weight").lowercased() {
+        switch element.attributeValue(for: "font-weight")?.lowercased() {
         case "black":
             weight = Font.Weight.black
         case "bold":
@@ -71,7 +70,7 @@ struct PhxText: View {
     }
     
     private var textColor: Color? {
-        if let attr = element.attrIfPresent("color"),
+        if let attr = element.attributeValue(for: "color"),
            let color = Color(fromNamedOrCSSHex: attr) {
             return color
         } else {

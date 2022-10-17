@@ -6,27 +6,26 @@
 //
 
 import SwiftUI
-import SwiftSoup
 
 struct PhxImage: View {
     private let mode: Mode
     private let symbolColor: Color?
     private let symbolScale: Image.Scale?
     
-    init<R: CustomRegistry>(element: Element, context: LiveContext<R>) {
-        if element.hasAttr("system-name") {
-            self.mode = .symbol(try! element.attr("system-name"))
-        } else if element.hasAttr("name") {
-            self.mode = .asset(try! element.attr("name"))
+    init<R: CustomRegistry>(element: ElementNode, context: LiveContext<R>) {
+        if let systemName = element.attributeValue(for: "system-name") {
+            self.mode = .symbol(systemName)
+        } else if let name = element.attributeValue(for: "name") {
+            self.mode = .asset(name)
         } else {
             preconditionFailure("<image> must have system-name or name")
         }
-        if let attr = element.attrIfPresent("symbol-color") {
+        if let attr = element.attributeValue(for: "symbol-color") {
             symbolColor = Color(fromNamedOrCSSHex: attr)
         } else {
             symbolColor = nil
         }
-        if let attr = element.attrIfPresent("symbol-scale") {
+        if let attr = element.attributeValue(for: "symbol-scale") {
             switch attr {
             case "small":
                 symbolScale = .small

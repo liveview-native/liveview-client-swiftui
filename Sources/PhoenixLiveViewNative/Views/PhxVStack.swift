@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct PhxVStack<R: CustomRegistry>: View {
-    private let element: Element
+    private let element: ElementNode
     private let context: LiveContext<R>
     private let alignment: HorizontalAlignment
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
         self.context = context
-        switch element.attrIfPresent("alignment") {
+        switch element.attributeValue(for: "alignment") {
         case nil, "center":
             self.alignment = .center
         case "leading":
@@ -23,7 +23,7 @@ struct PhxVStack<R: CustomRegistry>: View {
         case "trailing":
             self.alignment = .trailing
         default:
-            fatalError("Invalid value '\(try! element.attr("alignment"))' for alignment attribute of <vstack>")
+            fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <vstack>")
         }
     }
 

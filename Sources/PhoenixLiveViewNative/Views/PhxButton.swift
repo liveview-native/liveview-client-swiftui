@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftSoup
 
 struct PhxButton<R: CustomRegistry>: View {
-    private let element: Element
+    private let element: ElementNode
     private let context: LiveContext<R>
     private let clickEvent: String?
     // used internaly by PhxSubmitButton
@@ -17,13 +17,13 @@ struct PhxButton<R: CustomRegistry>: View {
     private let buttonStyle: PhxButtonStyle
     private let disabled: Bool
     
-    init(element: Element, context: LiveContext<R>, action: (() -> Void)?) {
+    init(element: ElementNode, context: LiveContext<R>, action: (() -> Void)?) {
         self.element = element
         self.context = context
-        self.clickEvent = element.attrIfPresent("phx-click")
+        self.clickEvent = element.attributeValue(for: "phx-click")
         self.action = action
-        self.disabled = element.hasAttr("disabled")
-        if let s = element.attrIfPresent("button-style"),
+        self.disabled = element.attributeValue(for: "disabled") != nil
+        if let s = element.attributeValue(for: "button-style"),
            let style = PhxButtonStyle(rawValue: s) {
             self.buttonStyle = style
         } else {

@@ -11,6 +11,7 @@ import SwiftUI
 import SwiftPhoenixClient
 import Combine
 import OSLog
+import LiveViewNativeCore
 
 private var PUSH_TIMEOUT: Double = 30000
 
@@ -45,7 +46,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private var socket: Socket?
     private var channel: Channel?
     
-    @Published internal var elements: Elements? = nil
+    private(set) var document: LiveViewNativeCore.Document? = nil
+    let documentChanged = PassthroughSubject<Void, Never>()
     private var rendered: Root!
     
     private var liveReloadEnabled: Bool = false
@@ -60,20 +62,27 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     private var eventHandlers: [String: (Payload) -> Void] = [:]
     
+    private var cancellables = Set<AnyCancellable>()
+    
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
     /// - Parameter customRegistryType: The type of the registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM. This can generally be inferred automatically.
-    public nonisolated init(_ url: URL, config: LiveViewConfiguration = .init(), customRegistryType: R.Type = R.self) {
+    public init(_ url: URL, config: LiveViewConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.initialURL = url
         self.currentURL = url
         self.config = config
+        
+        // republish document changes to objectWillChange to trigger SwiftUI view updates
+        documentChanged
+            .sink { [unowned self] in self.objectWillChange.send() }
+            .store(in: &cancellables)
     }
     
     /// Creates a new coordinator without a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
-    public nonisolated convenience init(_ url: URL, config: LiveViewConfiguration = .init()) where R == EmptyRegistry {
+    public convenience init(_ url: URL, config: LiveViewConfiguration = .init()) where R == EmptyRegistry {
         self.init(url, config: config, customRegistryType: EmptyRegistry.self)
     }
     
@@ -106,8 +115,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         logger.debug("Connecting to \(self.currentURL.absoluteString)")
         
         internalState = .startingConnection
-        // in case we're reconnecting, reset the elements so nothing gets stale elements
-        elements = nil
+        // in case we're reconnecting, reset the document so nothing gets stale elements
+        document = nil
         
         let html: String
         do {
@@ -182,8 +191,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     @ViewBuilder
     func viewTree() -> some View {
-        if let elements = elements {
-            builder.fromElements(elements, coordinator: self, url: currentURL)
+        if let document {
+            builder.fromNodes(document[document.root()].children(), coordinator: self, url: currentURL)
         }
     }
     
@@ -228,9 +237,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             throw CancellationError()
         }
         
-        if let diffPayload = replyPayload["diff"] as? Payload,
-           let elements = try? self.handleDiff(payload: diffPayload, baseURL: self.currentURL) {
-            self.elements = elements
+        if let diffPayload = replyPayload["diff"] as? Payload {
+            do {
+                try self.handleDiff(payload: diffPayload, baseURL: self.currentURL)
+            } catch {
+                fatalError("todo")
+            }
         } else if config.liveRedirectsEnabled,
                   let liveRedirect = replyPayload["live_redirect"] as? Payload {
             self.handleLiveRedirect(liveRedirect)
@@ -254,7 +266,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
-    private func extractDOMValues(_ doc: Document) throws -> Void {
+    private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> Void {
         let metaRes = try doc.select("meta[name=\"csrf-token\"]")
         guard !metaRes.isEmpty() else {
             throw Error.initialParseError
@@ -273,7 +285,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.phxID = try mainDiv.attr("id")
     }
     
-    private func handleDiff(payload: Payload, baseURL: URL) throws -> Elements {
+    private func handleDiff(payload: Payload, baseURL: URL) throws {
         if config.eventHandlersEnabled,
            let events = payload["e"] as? [[Any]] {
             for event in events {
@@ -287,7 +299,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
         let diff = try RootDiff(from: FragmentDecoder(data: payload))
         self.rendered = try self.rendered.merge(with: diff)
-        return try self.parseDOM(html: self.rendered.buildString(), baseURL: baseURL)
+        self.document!.merge(with: try Document.parse(self.rendered.buildString()))
     }
     
     private nonisolated func parseDOM(html: String, baseURL: URL) throws -> Elements {
@@ -410,7 +422,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 return
             }
             Task { @MainActor in
-                self.elements = try! self.handleDiff(payload: message.payload, baseURL: self.currentURL)
+                try! self.handleDiff(payload: message.payload, baseURL: self.currentURL)
             }
         }
         
@@ -484,9 +496,14 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-        let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
+//        let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
         self.internalState = .connected
-        self.elements = elements
+//        self.elements = elements
+        self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
+        self.documentChanged.send()
+        self.document!.on(.changed) { [unowned self] _ in
+            self.documentChanged.send()
+        }
     }
     
     private func handleLiveRedirect(_ payload: Payload) {

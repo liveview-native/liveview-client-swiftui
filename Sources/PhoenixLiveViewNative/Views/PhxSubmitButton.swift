@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct PhxSubmitButton<R: CustomRegistry>: View {
-    private let element: Element
+    private let element: ElementNode
     private let context: LiveContext<R>
     private let formModel: FormModel
     private let afterSubmit: AfterSubmitAction
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
         self.context = context
         if let formModel = context.formModel {
@@ -21,7 +21,7 @@ struct PhxSubmitButton<R: CustomRegistry>: View {
         } else {
             preconditionFailure("<phx-submit-button> cannot be used outside of a <phx-form>")
         }
-        if let s = element.attrIfPresent("after-submit"), let action = AfterSubmitAction(rawValue: s) {
+        if let s = element.attributeValue(for: "after-submit"), let action = AfterSubmitAction(rawValue: s) {
             self.afterSubmit = action
         } else {
             self.afterSubmit = .none

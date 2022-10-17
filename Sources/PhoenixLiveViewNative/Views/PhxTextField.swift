@@ -15,12 +15,13 @@ struct PhxTextField<R: CustomRegistry>: View {
     @FormState private var value: String?
     @State private var becomeFirstResponder = false
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         precondition(context.formModel != nil, "<textfield> cannot be used outside of a <form>")
-        // throwing: .attr only throws if the given attribute name is empty
-        self.name = try! element.attr("name")
+        guard let name = element.attributeValue(for: "name") else {
+            preconditionFailure("<textfield> must have name")
+        }
+        self.name = name
         self.config = TextFieldConfiguration(element: element)
-        precondition(!name.isEmpty, "<textfield> must have name")
         self.formModel = context.formModel!
     }
     
@@ -130,37 +131,37 @@ private struct TextFieldConfiguration {
     let isSecureTextEntry: Bool
     let returnKeyType: UIReturnKeyType
     
-    init(element: Element) {
-        self.placeholder = element.attrIfPresent("placeholder")
-        switch element.attrIfPresent("border-style") {
+    init(element: ElementNode) {
+        self.placeholder = element.attributeValue(for: "placeholder")
+        switch element.attributeValue(for: "border-style") {
         case nil, "rounded":
             borderStyle = .roundedRect
         case "none":
             borderStyle = .none
-        default:
-            fatalError("Invalid value '\(element.attrIfPresent("border-style")!)' for border-style attribute on <textfield>")
+        case let value:
+            fatalError("Invalid value '\(value!)' for border-style attribute on <textfield>")
         }
-        switch element.attrIfPresent("clear-button") {
+        switch element.attributeValue(for: "clear-button") {
         case nil, "never":
             clearButtonMode = .never
         case "always":
             clearButtonMode = .always
         case "while-editing":
             clearButtonMode = .whileEditing
-        default:
-            fatalError("Invalid value '\(element.attrIfPresent("clear-button")!)' for clear-button attribute on <textfield>")
+        case let value:
+            fatalError("Invalid value '\(value!)' for clear-button attribute on <textfield>")
         }
-        switch element.attrIfPresent("autocorrection") {
+        switch element.attributeValue(for: "autocorrection") {
         case nil, "default":
             autocorrectionType = .default
         case "no":
             autocorrectionType = .no
         case "yes":
             autocorrectionType = .yes
-        default:
-            fatalError("Invalid value '\(element.attrIfPresent("autocorrection")!)' for autocorrection attribute on <textfield>")
+        case let value:
+            fatalError("Invalid value '\(value!)' for autocorrection attribute on <textfield>")
         }
-        switch element.attrIfPresent("autocapitalization") {
+        switch element.attributeValue(for: "autocapitalization") {
         case nil, "sentences":
             autocapitalizationType = .sentences
         case "none":
@@ -169,10 +170,10 @@ private struct TextFieldConfiguration {
             autocapitalizationType = .words
         case "all-characters":
             autocapitalizationType = .allCharacters
-        default:
-            fatalError("Invalid value '\(element.attrIfPresent("autocapitalization")!)' for autocapitalization attribute on <textfield>")
+        case let value:
+            fatalError("Invalid value '\(value!)' for autocapitalization attribute on <textfield>")
         }
-        switch element.attrIfPresent("keyboard") {
+        switch element.attributeValue(for: "keyboard") {
         case nil, "default":
             keyboardType = .default
         case "ascii-capable":
@@ -195,20 +196,20 @@ private struct TextFieldConfiguration {
             keyboardType = .twitter
         case "ascii-capable-number-pad":
             keyboardType = .asciiCapableNumberPad
-        default:
-            fatalError("Invalid value '\(element.attrIfPresent("keyboard")!)' for keyboard attribute on <textfield>")
+        case let value:
+            fatalError("Invalid value '\(value!)' for keyboard attribute on <textfield>")
         }
-        switch element.attrIfPresent("is-secure-text-entry") {
+        switch element.attributeValue(for: "is-secure-text-entry") {
         case nil, "default":
             isSecureTextEntry = false
         case "no":
             isSecureTextEntry = false
         case "yes":
             isSecureTextEntry = true
-        default:
-            fatalError("Invalid value '\(element.attrIfPresent("is-secure-text-entry")!)' for is-secure-text-entry attribute on <textfield>")
+        case let value:
+            fatalError("Invalid value '\(value!)' for is-secure-text-entry attribute on <textfield>")
         }
-        switch element.attrIfPresent("return-key-type") {
+        switch element.attributeValue(for: "return-key-type") {
         case nil, "default":
             returnKeyType = .default
         case "go":
@@ -233,8 +234,8 @@ private struct TextFieldConfiguration {
             returnKeyType = .emergencyCall
         case "continue":
             returnKeyType = .continue
-        default:
-            fatalError("Invalid value '\(element.attrIfPresent("return-key-type")!)' for return-key-type attribute on <textfield>")
+        case let value:
+            fatalError("Invalid value '\(value!)' for return-key-type attribute on <textfield>")
         }
     }
     

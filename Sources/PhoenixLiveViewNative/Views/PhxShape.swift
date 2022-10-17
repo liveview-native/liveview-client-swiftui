@@ -9,18 +9,18 @@ import SwiftUI
 import SwiftSoup
 
 struct PhxShape<S: Shape>: View {
-    private let element: Element
+    private let element: ElementNode
     private let shape: S
     
-    init(element: Element, shape: S) {
+    init(element: ElementNode, shape: S) {
         self.element = element
         self.shape = shape
     }
     
     var body: some View {
-        if let s = element.attrIfPresent("fill-color"), let color = Color(fromNamedOrCSSHex: s) {
+        if let s = element.attributeValue(for: "fill-color"), let color = Color(fromNamedOrCSSHex: s) {
             shape.fill(color)
-        } else if let s = element.attrIfPresent("stroke-color"), let color = Color(fromNamedOrCSSHex: s) {
+        } else if let s = element.attributeValue(for: "stroke-color"), let color = Color(fromNamedOrCSSHex: s) {
             shape.stroke(color)
         } else {
             shape
@@ -29,9 +29,9 @@ struct PhxShape<S: Shape>: View {
 }
 
 extension RoundedRectangle {
-    init(from element: Element) {
+    init(from element: ElementNode) {
         let radius: Double
-        if let s = element.attrIfPresent("corner-radius"), let d = Double(s) {
+        if let s = element.attributeValue(for: "corner-radius"), let d = Double(s) {
             radius = d
         } else {
             radius = 5

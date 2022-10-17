@@ -10,8 +10,8 @@ import SwiftUI
 struct PhxSpacer: View {
     let minLength: CGFloat?
     
-    init(element: Element) {
-        if let s = element.attrIfPresent("min-length"),
+    init(element: ElementNode) {
+        if let s = element.attributeValue(for: "min-length"),
            let d = Double(s) {
             self.minLength = d
         } else {

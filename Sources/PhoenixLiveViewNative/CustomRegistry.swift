@@ -6,11 +6,7 @@
 //
 
 import SwiftUI
-import SwiftSoup
-
-// typealiases so people implementing CustomRegistry don't have to also import SwiftSoup
-public typealias Element = SwiftSoup.Element
-public typealias Attribute = SwiftSoup.Attribute
+import LiveViewNativeCore
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///
@@ -95,18 +91,18 @@ public protocol CustomRegistry {
     /// - Parameter element: The element that a view should be created for.
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
-    static func lookup(_ name: TagName, element: Element, context: LiveContext<Self>) -> CustomView
+    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Self>) -> CustomView
     
     /// This method is called by LiveView Native when it encounters a custom attribute your registry has declared support for.
     ///
     /// If your custom registry does not support any attributes, you can set the `AttributeName` type alias to ``EmptyRegistry/None`` and omit this method.
     ///
     /// - Parameter name: The name of the attribute.
-    /// - Parameter value: The value of the attribute. If no value is provided in the DOM, an empty string will be used as the value.
+    /// - Parameter value: The value of the attribute. `nil` if no value is provided in the DOM.
     /// - Parameter element: The element on which the attribute is present.
     /// - Parameter context: The live context in which the view is being built.
     /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
-    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<Self>) -> any ViewModifier
+    static func lookupModifier(_ name: AttributeName, value: String?, element: ElementNode, context: LiveContext<Self>) -> any ViewModifier
     
     /// This method is called when it needs a view to display while connecting to the live view.
     ///
@@ -144,13 +140,13 @@ extension EmptyRegistry: CustomRegistry {
 }
 extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Never {
     /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/TagName`` type alias, this implementation will be used.
-    public static func lookup(_ name: TagName, element: Element, context: LiveContext<Self>) -> Never {
+    public static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Self>) -> Never {
         fatalError()
     }
 }
 extension CustomRegistry where AttributeName == EmptyRegistry.None {
     /// A default implementation that does not provide any custom attributes. If you omit the ``CustomRegistry/AttributeName`` type alias, this implementation will be used.
-    public static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<Self>) -> any ViewModifier {
+    public static func lookupModifier(_ name: AttributeName, value: String?, element: ElementNode, context: LiveContext<Self>) -> any ViewModifier {
         fatalError()
     }
 }

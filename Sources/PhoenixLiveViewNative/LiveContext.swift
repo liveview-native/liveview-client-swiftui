@@ -35,14 +35,14 @@ public struct LiveContext<R: CustomRegistry> {
     /// Builds a view representing the given element in the current context.
     ///
     /// - Note: If you're building a custom container view, make sure to use ``buildChildren(of:)``. Calling this will cause a stack overflow.
-    public func buildElement(_ element: Element) -> some View {
+    public func buildElement(_ element: ElementNode) -> some View {
         // can't use coordinator.builder.fromElement here, as it causes an infinitely recursive type when used with custom attributes
         // so use ElementView to break the cycle
         return ElementView(element: element, context: self)
     }
     
     /// Builds a view representing the children of the current element in the current context.
-    public func buildChildren(of element: Element) -> some View {
-        return coordinator.builder.fromElements(element.children(), context: self)
+    public func buildChildren(of element: ElementNode) -> some View {
+        return coordinator.builder.fromNodes(element.children(), context: self)
     }
 }

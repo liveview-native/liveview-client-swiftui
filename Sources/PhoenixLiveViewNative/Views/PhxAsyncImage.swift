@@ -12,15 +12,15 @@ struct PhxAsyncImage: View {
     private let scale: Double?
     private let contentMode: ContentMode
     
-    init<R: CustomRegistry>(element: Element, context: LiveContext<R>) {
-        self.url = URL(string: try! element.attr("src"), relativeTo: context.url)
-        if let attr = element.attrIfPresent("scale"),
+    init<R: CustomRegistry>(element: ElementNode, context: LiveContext<R>) {
+        self.url = URL(string: element.attributeValue(for: "src")!, relativeTo: context.url)
+        if let attr = element.attributeValue(for: "scale"),
            let f = Double(attr) {
             self.scale = f
         } else {
             self.scale = nil
         }
-        switch element.attrIfPresent("content-mode") {
+        switch element.attributeValue(for: "content-mode") {
         case "fill":
             self.contentMode = .fill
         default:

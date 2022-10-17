@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import SwiftSoup
 
 struct BuiltinRegistry {
     
     static let attributeDecoder = JSONDecoder()
     
     @ViewBuilder
-    static func lookup<R: CustomRegistry>(_ name: String, _ element: Element, context: LiveContext<R>) -> some View {
+    static func lookup<R: CustomRegistry>(_ name: String, _ element: ElementNode, context: LiveContext<R>) -> some View {
         switch name {
         case "textfield":
             PhxTextField<R>(element: element, context: context)
@@ -69,20 +68,20 @@ struct BuiltinRegistry {
         case tint
     }
     
-    static func lookupModifier(attribute name: AttributeName, value: String, context: LiveContext<some CustomRegistry>) -> any ViewModifier {
+    static func lookupModifier(attribute name: AttributeName, value: String?, context: LiveContext<some CustomRegistry>) -> any ViewModifier {
         switch name {
         case .frame:
-            return FrameModifier(string: value)
+            return FrameModifier(string: value!)
         case .listRowInsets:
-            return ListRowInsetsModifier(string: value)
+            return ListRowInsetsModifier(string: value!)
         case .listRowSeparator:
-            return ListRowSeparatorModifier(string: value)
+            return ListRowSeparatorModifier(string: value!)
         case .navigationTitle:
-            return NavigationTitleModifier(string: value)
+            return NavigationTitleModifier(string: value!)
         case .padding:
-            return PaddingModifier(string: value)
+            return PaddingModifier(string: value!)
         case .tint:
-            return TintModifier(string: value)
+            return TintModifier(string: value!)
         }
     }
 }

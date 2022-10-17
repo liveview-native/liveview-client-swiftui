@@ -97,7 +97,7 @@ public struct LiveView<R: CustomRegistry>: View {
         if let overrideView = navigationCoordinator.overrideOverlayView {
             overrideView
         } else {
-            coordinator.builder.fromElements(navigationCoordinator.sourceElement!.children(), coordinator: coordinator, url: coordinator.currentURL)
+            coordinator.builder.fromNodes(navigationCoordinator.sourceElement!.children(), coordinator: coordinator, url: coordinator.currentURL)
         }
     }
     

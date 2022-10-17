@@ -9,19 +9,19 @@ import SwiftUI
 import SwiftSoup
 
 struct PhxList<R: CustomRegistry>: View {
-    private let element: Element
+    private let element: ElementNode
     private let context: LiveContext<R>
     private let deleteEvent: String?
     
-    init(element: Element, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
         self.context = context
-        self.deleteEvent = element.attrIfPresent("phx-delete")
+        self.deleteEvent = element.attributeValue(for: "phx-delete")
     }
     
     public var body: some View {
         List {
-            forEach(elements: element.children(), context: context)
+            forEach(nodes: element.children(), context: context)
                 .onDelete(perform: onDeleteHandler)
         }
         .listStyle(from: element)
@@ -45,8 +45,8 @@ struct PhxList<R: CustomRegistry>: View {
 
 private extension List {
     @ViewBuilder
-    func listStyle(from element: Element) -> some View {
-        switch element.attrIfPresent("style") {
+    func listStyle(from element: ElementNode) -> some View {
+        switch element.attributeValue(for: "style") {
         case nil, "plain":
             self.listStyle(.plain)
         case "grouped":
@@ -54,7 +54,7 @@ private extension List {
         case "inset-grouped":
             self.listStyle(.insetGrouped)
         default:
-            fatalError("Invalid list style '\(element.attrIfPresent("name")!)'")
+            fatalError("Invalid list style '\(element.attributeValue(for: "name")!)'")
         }
     }
 }
