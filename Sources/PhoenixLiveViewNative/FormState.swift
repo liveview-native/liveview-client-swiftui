@@ -93,11 +93,7 @@ public struct FormState<Value: FormValue> {
             if let existing = formModel[name] {
                 // if it's already the correct type, just return it
                 // otherwise, try to convert
-                #if compiler(>=5.7)
                 return existing as? Value ?? Value(formValue: existing.formValue) ?? defaultValue
-                #else
-                return Value(formValue: existing.formValue) ?? defaultValue
-                #endif
             } else {
                 return defaultValue
             }
@@ -109,11 +105,7 @@ public struct FormState<Value: FormValue> {
             guard let name = name else {
                 fatalError("Cannot access @FormState outisde of an element with a name attribute")
             }
-            #if compiler(>=5.7)
             formModel[name] = newValue
-            #else
-            formModel[name] = AnyFormValue(erasing: newValue)
-            #endif
         }
     }
     

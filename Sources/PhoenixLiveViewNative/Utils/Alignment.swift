@@ -28,14 +28,10 @@ extension Alignment {
             self = .bottom
         case "bottom-trailing":
             self = .bottomTrailing
-#if compiler(>=5.7)
-        // although these are marked as being available back to iOS 13, they were only made public in Xcode 14
-        // so we only compile them if the user's Xcode version is new enough
         case "leading-last-text-baseline":
             self = .leadingLastTextBaseline
         case "trailing-last-text-baseline":
             self = .trailingLastTextBaseline
-#endif
         default:
             return nil
         }

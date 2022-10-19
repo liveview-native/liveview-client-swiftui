@@ -103,42 +103,30 @@ public struct LiveView<R: CustomRegistry>: View {
     
     @ViewBuilder
     private var navigationViewOrStack: some View {
-#if compiler(>=5.7)
-        if #available(iOS 16.0, *) {
-            NavigationStack(path: $navigationCoordinator.navigationPath) {
-                navigationRoot
-                    .navigationDestination(for: URL.self) { url in
-                        NavStackEntryView(coordinator: coordinator, url: url)
-                            .environmentObject(navigationCoordinator)
-                            .onPreferenceChange(HeroViewDestKey.self) { newDest in
-                                if let newDest {
-                                    navigationCoordinator.destRect = newDest.frameProvider()
-                                    navigationCoordinator.destElement = newDest.element
-                                }
+        NavigationStack(path: $navigationCoordinator.navigationPath) {
+            navigationRoot
+                .navigationDestination(for: URL.self) { url in
+                    NavStackEntryView(coordinator: coordinator, url: url)
+                        .environmentObject(navigationCoordinator)
+                        .onPreferenceChange(HeroViewDestKey.self) { newDest in
+                            if let newDest {
+                                navigationCoordinator.destRect = newDest.frameProvider()
+                                navigationCoordinator.destElement = newDest.element
                             }
-                    }
-            }
-            .onReceive(navigationCoordinator.$navigationPath.zip(navigationCoordinator.$navigationPath.dropFirst())) { (oldValue, newValue) in
-                // when navigating backwards, we need to reconnect to the old page
-                // this is done here, because PhxModernNavigationLink does't know when it's popped
-                // navigating forward is handled by the link, in order to do the hero transition
-                if oldValue.count > newValue.count {
-                    let dest = newValue.last ?? coordinator.initialURL
-                    Task {
-                        await coordinator.navigateTo(url: dest)
-                    }
+                        }
+                }
+        }
+        .onReceive(navigationCoordinator.$navigationPath.zip(navigationCoordinator.$navigationPath.dropFirst())) { (oldValue, newValue) in
+            // when navigating backwards, we need to reconnect to the old page
+            // this is done here, because PhxModernNavigationLink does't know when it's popped
+            // navigating forward is handled by the link, in order to do the hero transition
+            if oldValue.count > newValue.count {
+                let dest = newValue.last ?? coordinator.initialURL
+                Task {
+                    await coordinator.navigateTo(url: dest)
                 }
             }
-        } else {
-            NavigationView {
-                navigationRoot
-            }
         }
-#else
-        NavigationView {
-            navigationRoot
-        }
-#endif
     }
     
     private var navigationRoot: some View {

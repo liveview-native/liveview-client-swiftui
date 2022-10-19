@@ -54,7 +54,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     var changeEvent: String?
     var submitEvent: String?
     /// The form data for this form.
-    @Published internal private(set) var data = [String: AnyFormValue]()
+    @Published internal private(set) var data = [String: any FormValue]()
     var focusedFieldName: String?
     var formFieldWillChange = PassthroughSubject<String, Never>()
     
@@ -75,7 +75,6 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                ["hidden", "textfield"].contains(elementData.tag),
                let name = node["name"]?.value,
                let value = node["value"]?.value {
-                #if compiler(>=5.7)
                 // if we have an existing value, try to convert it to the same type
                 if let existing = self[name],
                    let converted = existing.createNew(formValue: value) {
@@ -83,9 +82,6 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                 } else {
                     self[name] = value
                 }
-                #else
-                model[name] = AnyFormValue(erasing: value)
-                #endif
             }
         }
     }
@@ -131,7 +127,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// Access the stored value, if there is one, for the form field of the given name.
     ///
     /// Setting a field to `nil` removes it.
-    public subscript(name: String) -> AnyFormValue? {
+    public subscript(name: String) -> (any FormValue)? {
         get {
             return data[name]
         }
@@ -205,19 +201,3 @@ extension String: FormValue {
         self = formValue
     }
 }
-
-#if compiler(>=5.7)
-public typealias AnyFormValue = any FormValue
-#else
-public struct AnyFormValue: FormValue, Equatable {
-    public let formValue: String
-    
-    public init?(formValue: String) {
-        self.formValue = formValue
-    }
-    
-    init<V: FormValue>(erasing value: V) {
-        self.formValue = value.formValue
-    }
-}
-#endif

@@ -2,22 +2,22 @@
 //  PhxNavigationLink.swift
 //  PhoenixLiveViewNative
 //
-//  Created by Shadowfacts on 4/4/22.
+//  Created by Shadowfacts on 6/13/22.
 //
 
 import SwiftUI
 import Combine
 
-@available(iOS, obsoleted: 16.0)
+@available(iOS 16.0, *)
 struct PhxNavigationLink<R: CustomRegistry>: View {
     private let element: ElementNode
     private let context: LiveContext<R>
     private let disabled: Bool
     private let linkOpts: LinkOptions?
-    @State private var isActive = false
     @EnvironmentObject private var navCoordinator: NavigationCoordinator
     @State private var source: HeroViewSourceKey.Value = nil
-    @State private var coordinatorStateCancellable: AnyCancellable?
+    @State private var overrideView: HeroViewOverrideKey.Value = nil
+    @State private var doNavigationCancellable: AnyCancellable?
     
     init(element: ElementNode, context: LiveContext<R>) {
         self.element = element
@@ -26,97 +26,85 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
         self.linkOpts = LinkOptions(element: element)
     }
     
-    var body: some View {
+    @ViewBuilder
+    public var body: some View {
         if let linkOpts = linkOpts,
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
-            switch linkOpts.state {
-            case .push:
-                ZStack {
-                    NavigationLink(isActive: $isActive) {
-                        NavStackEntryView(coordinator: context.coordinator, url: URL(string: linkOpts.href, relativeTo: context.url)!)
-                            .environmentObject(navCoordinator)
-                            .onPreferenceChange(HeroViewDestKey.self) { newDest in
-                                if let newDest = newDest {
-                                    navCoordinator.destRect = newDest.frameProvider()
-                                    navCoordinator.destElement = newDest.element
-                                }
-                            }
-                    } label: {
-                        // empty, we use a Button to display the link so that we can delay the navigation after the tap
-                    }
-
-                    Button(action: activateNavigationLink) {
-                        context.buildChildren(of: element)
-                            .onPreferenceChange(HeroViewSourceKey.self) { newSource in
-                                source = newSource
-                            }
-                    }
-                    .disabled(disabled)
-                }
-                .onChange(of: isActive, perform: { newValue in
-                    if newValue {
-                        // we don't trigger the navigation when we become active; it's handled by the button action
-                        navCoordinator.sourceRect = source?.frameProvider() ?? .zero
-                        navCoordinator.sourceElement = source?.element
-                    } else {
-                        // became inactive, so we're returning to the previous page (i.e., the page this link is on)
-                        Task {
-                            await context.coordinator.navigateTo(url: context.url)
-                        }
-                    }
-                })
+            ZStack {
+                // need a NavigationLink present to display the disclosure indicator
+                NavigationLink(value: "") { EmptyView() }
                 
-            case .replace:
-                Button {
-                    let newURL = URL(string: linkOpts.href, relativeTo: context.url)!
-                    Task {
-                        await context.coordinator.navigateTo(url: newURL, replace: true)
-                    }
+                Button{
+                    activateNavigationLink()
                 } label: {
                     context.buildChildren(of: element)
+                        .onPreferenceChange(HeroViewSourceKey.self) { newSource in
+                            source = newSource
+                        }
+                        .onPreferenceChange(HeroViewOverrideKey.self) { newOverrideView in
+                            overrideView = newOverrideView
+                        }
                 }
                 .disabled(disabled)
             }
         } else {
-            // if there are no link options, or the coordinator doesn't support the requested navigation, we don't show anything
+            // if there are no link options, or the coordinator doesn't support the required navigation, we don't show anything
         }
     }
     
     private func activateNavigationLink() {
-        guard let linkOpts = linkOpts,
-              linkOpts.state == .push else {
+        guard let linkOpts = linkOpts else {
             return
         }
         
         let dest = URL(string: linkOpts.href, relativeTo: context.url)!
         
-        // if there's no animation source, we trigger the navigation immediately so that it feels more responsive
-        guard source != nil else {
+        switch linkOpts.state {
+        case .replace:
+            navCoordinator.navigationPath[navCoordinator.navigationPath.count - 1] = dest
+            Task {
+                await context.coordinator.navigateTo(url: dest, replace: true)
+            }
+            
+        case .push:
+            func doPushNavigation() {
+                navCoordinator.sourceRect = source?.frameProvider() ?? .zero
+                navCoordinator.sourceElement = source?.element
+                navCoordinator.overrideOverlayView = overrideView?.view
+                navCoordinator.navigationPath.append(dest)
+            }
+            
+            // if there's no animation source, we trigger the navigation immediately so that it feels more responsive
+            guard source != nil else {
+                Task {
+                    await context.coordinator.navigateTo(url: dest, replace: false)
+                }
+                // TODO: when this happens, swiftui warns that publishing changes from within a view update is not allowed
+                // even though this is happening in a button action, not sure why
+                doPushNavigation()
+                return
+            }
+            
+            let subject = PassthroughSubject<Void, Never>()
+            doNavigationCancellable = subject
+                // whichever happens first, connection or timeout, do the navigation
+                .first()
+                .sink { _ in
+                    doPushNavigation()
+                }
+            
             Task {
                 await context.coordinator.navigateTo(url: dest, replace: false)
+                subject.send()
             }
-            isActive = true
-            return
-        }
-        
-        
-        let subject = PassthroughSubject<Void, Never>()
-        coordinatorStateCancellable = subject
-            .first()
-            .sink { _ in
-                isActive = true
+            
+            // if connecting is too slow, navigate immediately without the custom animation
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150)) {
+                subject.send()
             }
-        
-        Task {
-            await context.coordinator.navigateTo(url: dest, replace: false)
-            subject.send()
-        }
-        
-        // if connecting is too slow, navigate immediately without the custom animation
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150)) {
-            subject.send()
         }
     }
+    
 }
 
 struct LinkOptions {
