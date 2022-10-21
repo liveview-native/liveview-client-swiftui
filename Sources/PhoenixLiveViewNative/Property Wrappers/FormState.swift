@@ -8,24 +8,33 @@
 import SwiftUI
 import Combine
 
-/// A property wrapper that stores its data in the ``FormModel`` of the nearest parent `<form>` element.
+/// A property wrapper that stores the primary value of a form element.
 ///
-/// `@FormState` represents the data that is considered the "value" of a form element (such as the string in a text field, or the state of a checkbox).
-/// Additional data that's tied to the form element but is not the primary value should use SwiftUI's  `@State` property wrapper.
+/// This property wrapper represents the data that is considered the "value" of a form element (such as the string in a text field, or the state of a checkbox).
+/// Additional data that's tied to the form element, but is not the primary value should use SwiftUI's `@State` property wrapper.
 ///
-/// The key used in the form model for this data is the `name` attribute of the element this property wrapper is placed on. The property wrapper will
-/// pull the element name from the nearest parent view that corresponds to a DOM element. The framework uses the `\.element` SwiftUI environment
-/// key to determine which element the view belongs to.
+/// ### Value Storage
+/// When the element this properrty wrapper is placed on is located of inside a `<phx-form>`, the value will be stored on that form's ``FormModel``.
+/// The key used in the form model is the `name` attribute of the element this property wrapper is placed on. The property wrapper will pull the element
+/// name from the nearest parent view that corresponds to a DOM element, so this property wrapper may be used on nested views.  The framework uses the `\.element` SwiftUI environment key to determine which element the view belongs to. If used within a form, the element _must_ have a `name`.
 ///
-/// To use this property wrapper, the wrapped type must be an optional and the inner type must implement ``FormValue``
-/// to define how it's converted to/from the serialized form data representation.
+/// If the element is not located inside of a form, the value will be stored directly by the property wrapper. A `name` attribute is not required when used outside of a form.
 ///
-/// ## Example
+/// ### Default Value
+/// When the value is accessed for the first time, the framework will try to use the element's `value` attribute, if possible.
+/// If the element does not have a `value` attribute, or the `Value` type could not be constructed from the string representation,
+/// it will use the default value the property wrapper was initialized with. Before the state is first updated, changes to the element's `value`
+/// attribute will be reflected in the property wrapper's value.
+///
+/// ## Usage
+/// To use this property wrapper, the wrapped type must implement the ``FormValue`` protocol to define how values are converted
+/// to/from the serialized form data representation.
+///
 /// ```swift
 /// struct IntField: View {
 ///     @FormState private var value: Int?
 ///
-///     init(element: Element, context: LiveContext<some CustomRegistry>) {
+///     init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
 ///     }
 ///
 ///     var body: some View {
@@ -36,17 +45,18 @@ import Combine
 @propertyWrapper
 public struct FormState<Value: FormValue> {
     private let defaultValue: Value
-    @StateObject private var observer = FormValueObserver()
-    @State private var observerCancellable: AnyCancellable?
+    @StateObject private var data = FormStateData<Value>()
     
-    @Environment(\.formModel) private var formModel: FormModel?
-    // we don't want the Element itself to be the type we get from the Environment, otherwise
+    // we don't want the ElementNode itself to be the type we get from the Environment, otherwise
     // SwiftUI thinks the view containing the @FormState needs to be updated every time we
-    // re-parse the DOM. instead, use an extension on Optional<Element> to get the name with the keypath
-    @Environment(\.element.name) private var name: String?
+    // re-parse the DOM. instead, use an extension on Optional<Element> to get the name/value by keypath
+    @Environment(\.element.name) private var elementName: String?
+    @Environment(\.element.value) private var elementValue: String?
+    @Environment(\.formModel) private var formModel: FormModel?
     
-    /// Creates a `FormState` property wrapper with a default value that will be used when the form model does not have a value, or it has a value that cannot be converted to the `Value` type.
+    /// Creates a `FormState` property wrapper with a default value that will be used when no other value is present.
     ///
+    /// ## Example
     /// ```swift
     /// struct MyView: View {
     ///     @FormState(default: 0) var value: Int
@@ -64,6 +74,7 @@ public struct FormState<Value: FormValue> {
     
     /// Convenience initializer that creates a `FormState` property wrapper with `nil` as its default value.
     ///
+    /// ## Example
     /// ```swift
     /// struct MyView: View {
     ///     @FormState var value: Int?
@@ -79,41 +90,49 @@ public struct FormState<Value: FormValue> {
         self.init(default: nil)
     }
     
-    /// The value stored by the form model.
-    ///
-    /// If the form model does not have a value, or it has a value that cannot be converted to the `Value` type, the default value provided at initialization will be used.
+    /// The value for this form element.
     public var wrappedValue: Value {
         get {
-            guard let formModel = formModel else {
-                fatalError("Cannot access @FormState without form model. Are you using it outside of a <phx-form>?")
-            }
-            guard let name = name else {
-                fatalError("Cannot access @FormState outisde of an element with a name attribute")
-            }
-            if let existing = formModel[name] {
-                // if it's already the correct type, just return it
-                // otherwise, try to convert
-                return existing as? Value ?? Value(formValue: existing.formValue) ?? defaultValue
-            } else {
-                return defaultValue
+            switch data.mode {
+            case .unknown:
+                fatalError("@FormState cannot be accessed before being installed in a view")
+            case .localInitial:
+                return initialValue
+            case .local(let state):
+                return state.wrappedValue
+            case .form(let formModel):
+                guard let elementName else {
+                    fatalError("Expected @FormState in form mode to have element with name")
+                }
+                if let existing = formModel[elementName],
+                   let value = existing as? Value ?? Value(formValue: existing.formValue) {
+                    return value
+                } else {
+                    return initialValue
+                }
             }
         }
         nonmutating set {
-            guard let formModel = formModel else {
-                fatalError("Cannot access @FormState without form model. Are you using it outside of a <phx-form>?")
+            resolveMode()
+            switch data.mode {
+            case .unknown:
+                fatalError()
+            case .localInitial:
+                data.mode = .local(State(wrappedValue: newValue))
+            case .local(let state):
+                state.wrappedValue = newValue
+            case .form(let formModel):
+                guard let elementName else {
+                    fatalError("Expected @FormState in form mode to have element with name")
+                }
+                formModel[elementName] = newValue
             }
-            guard let name = name else {
-                fatalError("Cannot access @FormState outisde of an element with a name attribute")
-            }
-            formModel[name] = newValue
         }
     }
     
-    /// A binding that is backed by the form model that can be used as the storage for other views or controls.
+    /// A binding to the element's value that can be used as the storage for other views or controls.
     ///
-    /// Access this binding with a dollar sign prefix. If a property is declared as `@FormState var value`, then the project value binding can be accessed as `$value`.
-    ///
-    /// If the form model does not have a value, or it has a value that cannot be converted to the `Value` type, the default value provided at initialization will be used when reading the binding.
+    /// Access this binding with the dollar sign prefix. If a property is declared as `@FormState var value`, then the projected value binding can be accessed as `$value`.
     public var projectedValue: Binding<Value> {
         Binding {
             return wrappedValue
@@ -121,29 +140,70 @@ public struct FormState<Value: FormValue> {
             wrappedValue = newValue
         }
     }
+    
+    // the initial value converts the element's `value` attribute if possible, otherwise uses the default value
+    private var initialValue: Value {
+        if let elementValue,
+           let value = elementValue as? Value ?? Value(formValue: elementValue) {
+            return value
+        } else {
+            return defaultValue
+        }
+    }
+    
+    private func resolveMode() {
+        if case .unknown = data.mode {
+            if let formModel {
+                if let elementName {
+                    data.setFormModel(formModel, elementName: elementName)
+                    data.mode = .form(formModel)
+                } else {
+                    print("Warning: @FormState used on a name-less element inside of a <phx-form>. This may not behave as expected.")
+                    data.mode = .localInitial
+                }
+            } else {
+                data.mode = .localInitial
+            }
+        }
+    }
+    
 }
 
 extension FormState: DynamicProperty {
     public func update() {
-        // once we have the environment values available, setup the observer
-        if observerCancellable == nil,
-           let formModel = formModel {
-            // hack to avoid modifying view state during update
-            DispatchQueue.main.async {
-                observerCancellable = formModel.formFieldWillChange
-                    .filter { $0 == self.name }
-                    .sink { _ in self.observer.objectWillChange.send() }
-            }
-        }
+        resolveMode()
     }
 }
 
-// provides access to an objectWillChange publisher we can use to trigger a SwiftUI view update
-private class FormValueObserver: ObservableObject {
+// This class contains any data that may need to change during a view update (since @State can't be used).
+// It also serves to notify SwiftUI when this @FormState's particular field has changed (as opposed to updates for other fields).
+private class FormStateData<Value: FormValue>: ObservableObject {
+    var mode: Mode = .unknown
+    private var cancellable: AnyCancellable?
+    
+    func setFormModel(_ formModel: FormModel, elementName: String) {
+        cancellable = formModel.formFieldWillChange
+            .filter { $0 == elementName }
+            .sink { [unowned self] _ in self.objectWillChange.send() }
+    }
+    
+    enum Mode {
+        // the mode has not yet been resolved
+        case unknown
+        // local mode, but the value has not been updated, so always return the initial value when reading
+        case localInitial
+        // local mode, has been set
+        case local(State<Value>)
+        // managed by a form model, the initial value will be read when when the form model doesn't yet have a stored value
+        case form(FormModel)
+    }
 }
 
 private extension Optional where Wrapped == ElementNode {
     var name: String? {
         self.flatMap { $0.attributeValue(for: "name") }
+    }
+    var value: String? {
+        self.flatMap { $0.attributeValue(for: "value") }
     }
 }
