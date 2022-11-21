@@ -23,12 +23,14 @@ import LiveViewNativeCore
 /// ## Topics
 /// ### Custom Tags
 /// - ``TagName``
-/// - ``lookup(_:element:context:)-2rzrl``
-/// ### Custom Attributes
-/// - ``AttributeName``
-/// - ``lookupModifier(_:value:element:context:)-9qdm4``
+/// - ``lookup(_:element:context:)-4w8e8``
+/// - ``CustomView``
+/// ### Custom View Modifiers
+/// - ``ModifierType``
+/// - ``decodeModifier(_:from:context:)-2d3pa``
 /// ### Customizing the Loading View
 /// - ``loadingView(for:state:)-vg2v``
+/// - ``LoadingView``
 /// ### See Also
 /// - ``EmptyRegistry``
 public protocol CustomRegistry {
@@ -53,30 +55,30 @@ public protocol CustomRegistry {
     /// }
     /// ```
     associatedtype TagName: RawRepresentable where TagName.RawValue == String
-    /// A type represnting the attribute names that this registry can handle.
+    /// A type represnting the custom modifier types that this registry can handle.
     ///
-    /// The attribute name type must be `RawRepresentable` and its raw values must be strings. All raw value strings must be lowercased, otherwise the framework will not be able to construct your attribute types from strings in the DOM.
+    /// This type must be `RawRepresentable` and its raw values must be strings.
     ///
     /// Generally, this is an enum which declares variants for the support attributes:
     /// ```swift
     /// struct MyRegistry: CustomRegistry {
     ///     enum AttributeName: String {
     ///         case foo
-    ///         case barBaz = "bar-baz"
+    ///         case barBaz
     ///     }
     /// }
     /// ```
     ///
-    /// If your registry does not support any custom attributes, you can set this type alias to the ``EmptyRegistry/None`` type:
+    /// If your registry does not support any custom modifiers, you can set this type alias to the ``EmptyRegistry/None`` type:
     /// ```swift
     /// struct MyRegistry: CustomRegistry {
-    ///     typealias AttributeName = EmptyRegistry.None
+    ///     typealias ModifierType = EmptyRegistry.None
     /// }
     /// ```
-    associatedtype AttributeName: RawRepresentable where AttributeName.RawValue == String
+    associatedtype ModifierType: RawRepresentable where ModifierType.RawValue == String
     /// The type of view this registry returns from the `lookup` method.
     ///
-    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-2rzrl`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-4w8e8`` implementations and this will be inferred automatically.
     associatedtype CustomView: View
     /// The type of view this registry produces for loading views.
     ///
@@ -93,16 +95,16 @@ public protocol CustomRegistry {
     @ViewBuilder
     static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Self>) -> CustomView
     
-    /// This method is called by LiveView Native when it encounters a custom attribute your registry has declared support for.
+    /// This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.
     ///
-    /// If your custom registry does not support any attributes, you can set the `AttributeName` type alias to ``EmptyRegistry/None`` and omit this method.
+    /// If your custom registry does not support any custom modifiers, you can set the `ModifierType` type alias to ``EmptyRegistry/None`` and omit this method.
     ///
-    /// - Parameter name: The name of the attribute.
-    /// - Parameter value: The value of the attribute. `nil` if no value is provided in the DOM.
-    /// - Parameter element: The element on which the attribute is present.
+    /// - Parameter type: The type of the modifier.
+    /// - Parameter decoder: The decoder representing the JSON object of the modifier. Implement `Decodable` on your modifier type and call `MyModifier(from: decoder)` to use it.
     /// - Parameter context: The live context in which the view is being built.
     /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
-    static func lookupModifier(_ name: AttributeName, value: String?, element: ElementNode, context: LiveContext<Self>) -> any ViewModifier
+    /// - Throws: If decoding the modifier fails.
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier
     
     /// This method is called when it needs a view to display while connecting to the live view.
     ///
@@ -125,7 +127,7 @@ extension CustomRegistry where LoadingView == Never {
 public struct EmptyRegistry {
 }
 extension EmptyRegistry: CustomRegistry {
-    /// A type that can be used as ``CustomRegistry/TagName`` or ``CustomRegistry/AttributeName`` for registries which don't support any custom tags or attributes.
+    /// A type that can be used as ``CustomRegistry/TagName`` or ``CustomRegistry/ModifierType`` for registries which don't support any custom tags or attributes.
     public struct None: RawRepresentable {
         public typealias RawValue = String
         public var rawValue: String
@@ -136,7 +138,7 @@ extension EmptyRegistry: CustomRegistry {
     }
     
     public typealias TagName = None
-    public typealias AttributeName = None
+    public typealias ModifierType = None
 }
 extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Never {
     /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/TagName`` type alias, this implementation will be used.
@@ -144,9 +146,9 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
         fatalError()
     }
 }
-extension CustomRegistry where AttributeName == EmptyRegistry.None {
-    /// A default implementation that does not provide any custom attributes. If you omit the ``CustomRegistry/AttributeName`` type alias, this implementation will be used.
-    public static func lookupModifier(_ name: AttributeName, value: String?, element: ElementNode, context: LiveContext<Self>) -> any ViewModifier {
+extension CustomRegistry where ModifierType == EmptyRegistry.None {
+    /// A default implementation that does not provide any custom modifiers. If you omit the ``CustomRegistry/ModifierType`` type alias, this implementation will be used.
+    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) -> any ViewModifier {
         fatalError()
     }
 }

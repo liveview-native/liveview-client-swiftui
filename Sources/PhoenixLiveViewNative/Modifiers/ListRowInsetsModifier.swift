@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct ListRowInsetsModifier: ViewModifier {
+struct ListRowInsetsModifier: ViewModifier, Decodable {
     private let insets: EdgeInsets
     
-    init(string value: String) {
-        self.insets = try! BuiltinRegistry.attributeDecoder.decode(EdgeInsets.self, from: value.data(using: .utf8)!)
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.insets = try container.decode(EdgeInsets.self)
     }
     
     func body(content: Content) -> some View {

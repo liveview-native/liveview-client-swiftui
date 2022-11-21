@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 import LiveViewNativeCore
 
+private extension CodingUserInfoKey {
+    static let liveContext = CodingUserInfoKey(rawValue: "LiveViewNative.liveContext")!
+}
+
 struct ViewTreeBuilder<R: CustomRegistry> {
     func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
         return fromNodes(nodes, context: LiveContext(coordinator: coordinator, url: url))
@@ -65,8 +69,10 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     }
     
     fileprivate func fromElement(_ element: ElementNode, context: LiveContext<R>) -> some View {
-        createView(element, context: context)
-            .applyAttributes(element.attributes[...], element: element, context: context)
+        let view = createView(element, context: context)
+        let jsonStr = element.attributeValue(for: "modifiers")
+        let modified = applyModifiers(encoded: jsonStr, to: view, context: context)
+        return modified
             .environment(\.element, element)
     }
     
@@ -79,43 +85,87 @@ struct ViewTreeBuilder<R: CustomRegistry> {
         }
     }
     
+    private func applyModifiers(encoded: String?, to view: some View, context: LiveContext<R>) -> some View {
+        let modifiers: [ModifierContainer<R>]
+        if let encoded {
+            let decoder = JSONDecoder()
+            decoder.userInfo[.liveContext] = context
+            if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
+                modifiers = decoded
+            } else {
+                modifiers = []
+            }
+        } else {
+            modifiers = []
+        }
+        return view.applyModifiers(modifiers[...], context: context)
+    }
+}
+
+extension ViewTreeBuilder {
+    enum Error: Swift.Error {
+        case unknownModifierType
+        
+        var localizedDescription: String {
+            switch self {
+            case .unknownModifierType:
+                return "The modifier type is not builtin and is not declared by the custom registry."
+            }
+        }
+    }
+}
+
+struct ModifierContainer<R: CustomRegistry>: Decodable {
+    let modifier: any ViewModifier
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let type = try container.decode(String.self, forKey: .type)
+        if let type = R.ModifierType(rawValue: type) {
+            let context = decoder.userInfo[.liveContext] as! LiveContext<R>
+            do {
+                self.modifier = try R.decodeModifier(type, from: decoder, context: context)
+            } catch {
+                self.modifier = ErrorModifier(type: type.rawValue, error: error)
+            }
+        } else if let type = BuiltinRegistry.ModifierType(rawValue: type) {
+            do {
+                self.modifier = try BuiltinRegistry.decodeModifier(type, from: decoder)
+            } catch {
+                self.modifier = ErrorModifier(type: type.rawValue, error: error)
+            }
+        } else {
+            self.modifier = ErrorModifier(type: type, error: ViewTreeBuilder<R>.Error.unknownModifierType)
+        }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+    }
 }
 
 // this view is required to to break the infinitely-recursive type that occurs if the body of this view is inlined into applyAttributes(_:context:)
-private struct AttributeApplicator<Parent: View, R: CustomRegistry>: View {
+private struct ModifierApplicator<Parent: View, R: CustomRegistry>: View {
     let parent: Parent
-    let attributes: ArraySlice<Attribute>
-    let element: ElementNode
+    let modifiers: ArraySlice<ModifierContainer<R>>
     let context: LiveContext<R>
-    
+
     var body: some View {
-        let remaining = attributes[attributes.index(after: attributes.startIndex)...]
-        parent
-            // force-unwrap is okay, this view is never  constructed with an empty slice
-            .applyAttribute(attributes.first!, element: element, context: context)
-            .applyAttributes(remaining, element: element, context: context)
+        let remaining = modifiers[modifiers.index(after: modifiers.startIndex)...]
+        // force-unwrap is okay, this view is never  constructed with an empty slice
+        modifiers.first!.modifier.apply(to: parent)
+            .applyModifiers(remaining, context: context)
     }
 }
 
 private extension View {
     @ViewBuilder
-    func applyAttributes(_ attributes: ArraySlice<Attribute>, element: ElementNode, context: LiveContext<some CustomRegistry>) -> some View {
-        if attributes.isEmpty {
+    func applyModifiers<R: CustomRegistry>(_ modifiers: ArraySlice<ModifierContainer<R>>, context: LiveContext<R>) -> some View {
+        if modifiers.isEmpty {
             self
         } else {
-            AttributeApplicator(parent: self, attributes: attributes, element: element, context: context)
+            ModifierApplicator(parent: self, modifiers: modifiers, context: context)
         }
-    }
-    
-    func applyAttribute<R: CustomRegistry>(_ attribute: Attribute, element: ElementNode, context: LiveContext<R>) -> some View {
-        // EmptyModifier is used if the attribute is not recognized as builtin or custom modifier
-        var modifier: any ViewModifier = EmptyModifier()
-        if let name = BuiltinRegistry.AttributeName(rawValue: attribute.name.rawValue) {
-            modifier = BuiltinRegistry.lookupModifier(attribute: name, value: attribute.value, context: context)
-        } else if let name = R.AttributeName(rawValue: attribute.name.rawValue) {
-            modifier = R.lookupModifier(name, value: attribute.value, element: element, context: context)
-        }
-        return modifier.apply(to: self)
     }
 }
 

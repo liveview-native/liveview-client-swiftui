@@ -7,14 +7,19 @@
 
 import SwiftUI
 
-struct TintModifier: ViewModifier {
+struct TintModifier: ViewModifier, Decodable {
     private let color: Color?
     
-    init(string value: String) {
-        self.color = Color(fromNamedOrCSSHex: value)
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.color = Color(fromNamedOrCSSHex: try container.decode(String.self, forKey: .color))
     }
     
     func body(content: Content) -> some View {
         content.tint(color)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case color
     }
 }

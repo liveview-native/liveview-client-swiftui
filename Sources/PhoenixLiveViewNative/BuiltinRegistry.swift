@@ -55,7 +55,7 @@ struct BuiltinRegistry {
         }
     }
     
-    enum AttributeName: String {
+    enum ModifierType: String {
         case frame
         case listRowInsets = "list-row-insets"
         case listRowSeparator = "list-row-separator"
@@ -64,20 +64,20 @@ struct BuiltinRegistry {
         case tint
     }
     
-    static func lookupModifier(attribute name: AttributeName, value: String?, context: LiveContext<some CustomRegistry>) -> any ViewModifier {
-        switch name {
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> any ViewModifier {
+        switch type {
         case .frame:
-            return FrameModifier(string: value!)
+            return try FrameModifier(from: decoder)
         case .listRowInsets:
-            return ListRowInsetsModifier(string: value!)
+            return try ListRowInsetsModifier(from: decoder)
         case .listRowSeparator:
-            return ListRowSeparatorModifier(string: value!)
+            return try ListRowSeparatorModifier(from: decoder)
         case .navigationTitle:
-            return NavigationTitleModifier(string: value!)
+            return try NavigationTitleModifier(from: decoder)
         case .padding:
-            return PaddingModifier(string: value!)
+            return try PaddingModifier(from: decoder)
         case .tint:
-            return TintModifier(string: value!)
+            return try TintModifier(from: decoder)
         }
     }
 }

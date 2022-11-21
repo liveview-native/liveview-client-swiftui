@@ -7,15 +7,20 @@
 
 import SwiftUI
 
-struct NavigationTitleModifier: ViewModifier {
+struct NavigationTitleModifier: ViewModifier, Decodable {
     private let title: String
     
-    init(string value: String) {
-        self.title = value
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.title = try container.decode(String.self, forKey: .title)
     }
     
     func body(content: Content) -> some View {
         content
             .navigationTitle(title)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case title
     }
 }
