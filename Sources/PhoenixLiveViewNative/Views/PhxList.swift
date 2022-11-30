@@ -9,14 +9,12 @@ import SwiftUI
 import SwiftSoup
 
 struct PhxList<R: CustomRegistry>: View {
-    private let element: ElementNode
+    @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
-    private let deleteEvent: String?
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self.element = element
+        self._element = ObservedElement(element: element, context: context)
         self.context = context
-        self.deleteEvent = element.attributeValue(for: "phx-delete")
     }
     
     public var body: some View {
@@ -28,7 +26,7 @@ struct PhxList<R: CustomRegistry>: View {
     }
     
     private var onDeleteHandler: ((IndexSet) -> Void)? {
-        guard let deleteEvent = deleteEvent else {
+        guard let deleteEvent = element.attributeValue(for: "phx-delete") else {
             return nil
         }
         return { indices in

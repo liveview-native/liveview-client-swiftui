@@ -8,37 +8,10 @@
 import SwiftUI
 
 struct PhxImage: View {
-    private let mode: Mode
-    private let symbolColor: Color?
-    private let symbolScale: Image.Scale?
+    @ObservedElement private var element: ElementNode
     
     init<R: CustomRegistry>(element: ElementNode, context: LiveContext<R>) {
-        if let systemName = element.attributeValue(for: "system-name") {
-            self.mode = .symbol(systemName)
-        } else if let name = element.attributeValue(for: "name") {
-            self.mode = .asset(name)
-        } else {
-            preconditionFailure("<image> must have system-name or name")
-        }
-        if let attr = element.attributeValue(for: "symbol-color") {
-            symbolColor = Color(fromNamedOrCSSHex: attr)
-        } else {
-            symbolColor = nil
-        }
-        if let attr = element.attributeValue(for: "symbol-scale") {
-            switch attr {
-            case "small":
-                symbolScale = .small
-            case "medium":
-                symbolScale = .medium
-            case "large":
-                symbolScale = .large
-            default:
-                fatalError("invalid value '\(attr)' for symbol-scale")
-            }
-        } else {
-            symbolScale = nil
-        }
+        self._element = ObservedElement(element: element, context: context)
     }
     
     public var body: some View {
@@ -52,6 +25,39 @@ struct PhxImage: View {
                 // todo: this probably only works for symbols
                 .scaledIfPresent(scale: symbolScale)
                 .foregroundColor(symbolColor)
+        }
+    }
+    
+    private var mode: Mode {
+        if let systemName = element.attributeValue(for: "system-name") {
+            return .symbol(systemName)
+        } else if let name = element.attributeValue(for: "name") {
+            return .asset(name)
+        } else {
+            preconditionFailure("<image> must have system-name or name")
+        }
+    }
+    
+    private var symbolColor: Color? {
+        if let attr = element.attributeValue(for: "symbol-color") {
+            return Color(fromNamedOrCSSHex: attr)
+        } else {
+            return nil
+        }
+    }
+    
+    private var symbolScale: Image.Scale? {
+        switch element.attributeValue(for: "symbol-scasle") {
+        case nil:
+            return nil
+        case "small":
+            return .small
+        case "medium":
+            return .medium
+        case "large":
+            return .large
+        case .some(let attr):
+            fatalError("invalid value '\(attr)' for symbol-scale")
         }
     }
 }

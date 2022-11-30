@@ -10,25 +10,21 @@ import Combine
 
 @available(iOS 16.0, *)
 struct PhxNavigationLink<R: CustomRegistry>: View {
-    private let element: ElementNode
+    @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
-    private let disabled: Bool
-    private let linkOpts: LinkOptions?
     @EnvironmentObject private var navCoordinator: NavigationCoordinator
     @State private var source: HeroViewSourceKey.Value = nil
     @State private var overrideView: HeroViewOverrideKey.Value = nil
     @State private var doNavigationCancellable: AnyCancellable?
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self.element = element
+        self._element = ObservedElement(element: element, context: context)
         self.context = context
-        self.disabled = element.attribute(named: "disabled") != nil
-        self.linkOpts = LinkOptions(element: element)
     }
     
     @ViewBuilder
     public var body: some View {
-        if let linkOpts = linkOpts,
+        if let linkOpts = LinkOptions(element: element),
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
             ZStack {
                 // need a NavigationLink present to display the disclosure indicator
@@ -45,7 +41,7 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
                             overrideView = newOverrideView
                         }
                 }
-                .disabled(disabled)
+                .disabled(element.attribute(named: "disabled") != nil)
             }
         } else {
             // if there are no link options, or the coordinator doesn't support the required navigation, we don't show anything
@@ -53,7 +49,7 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
     }
     
     private func activateNavigationLink() {
-        guard let linkOpts = linkOpts else {
+        guard let linkOpts = LinkOptions(element: element) else {
             return
         }
         

@@ -8,23 +8,25 @@
 import SwiftUI
 
 struct PhxZStack<R: CustomRegistry>: View {
-    private let element: ElementNode
+    @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
-    private let alignment: Alignment
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self.element = element
+        self._element = ObservedElement(element: element, context: context)
         self.context = context
-        if let s = element.attributeValue(for: "alignment"), let alignment = Alignment(string: s) {
-            self.alignment = alignment
-        } else {
-            self.alignment = .center
-        }
     }
 
     public var body: some View {
         ZStack(alignment: alignment) {
             context.buildChildren(of: element)
+        }
+    }
+    
+    private var alignment: Alignment {
+        if let s = element.attributeValue(for: "alignment"), let alignment = Alignment(string: s) {
+            return alignment
+        } else {
+            return .center
         }
     }
 }

@@ -9,26 +9,15 @@ import SwiftUI
 import SwiftSoup
 
 struct PhxButton<R: CustomRegistry>: View {
-    private let element: ElementNode
+    @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
-    private let clickEvent: String?
     // used internaly by PhxSubmitButton
     private let action: (() -> Void)?
-    private let buttonStyle: PhxButtonStyle
-    private let disabled: Bool
     
     init(element: ElementNode, context: LiveContext<R>, action: (() -> Void)?) {
-        self.element = element
+        self._element = ObservedElement(element: element, context: context)
         self.context = context
-        self.clickEvent = element.attributeValue(for: "phx-click")
         self.action = action
-        self.disabled = element.attributeValue(for: "disabled") != nil
-        if let s = element.attributeValue(for: "button-style"),
-           let style = PhxButtonStyle(rawValue: s) {
-            self.buttonStyle = style
-        } else {
-            self.buttonStyle = .automatic
-        }
     }
     
     public var body: some View {
@@ -36,7 +25,16 @@ struct PhxButton<R: CustomRegistry>: View {
             context.buildChildren(of: element)
         }
         .phxButtonStyle(buttonStyle)
-        .disabled(disabled)
+        .disabled(element.attributeValue(for: "disabled") != nil)
+    }
+    
+    private var buttonStyle: PhxButtonStyle {
+        if let s = element.attributeValue(for: "button-style"),
+           let style = PhxButtonStyle(rawValue: s) {
+            return style
+        } else {
+            return .automatic
+        }
     }
     
     private func handleClick() {
@@ -44,7 +42,7 @@ struct PhxButton<R: CustomRegistry>: View {
             action()
             return
         }
-        guard let clickEvent = clickEvent else {
+        guard let clickEvent = element.attributeValue(for: "phx-click") else {
             return
         }
         Task {

@@ -8,29 +8,29 @@
 import SwiftUI
 
 struct PhxForm<R: CustomRegistry>: View {
-    private let element: ElementNode
+    @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
-    private let id: String
     
     @EnvironmentObject private var liveViewModel: LiveViewModel<R>
     
     private var model: FormModel {
-        liveViewModel.getForm(elementID: id)
-    }
-    
-    init(element: ElementNode, context: LiveContext<R>) {
         guard let id = element.attributeValue(for: "id") else {
             preconditionFailure("<form> must have an id")
         }
-        self.element = element
+        return liveViewModel.getForm(elementID: id)
+    }
+    
+    init(element: ElementNode, context: LiveContext<R>) {
+        self._element = ObservedElement(element: element, context: context)
         self.context = context
-        self.id = id
     }
     
     public var body: some View {
         context.with(formModel: model).buildChildren(of: element)
             .environment(\.formModel, model)
         // TODO: element is not equatable, so we can't use onChange, the FormModel itself should handle updating values when the document changes
+        // actually now the element is observed by this view, but not changes to its children
+        // really the children should use @FormState and handle updating their own values, either backed by the FormModel or stored by the view
 //            .onChange(of: element, perform: { newValue in
 //                model.updateFromElement(newValue)
 //            })

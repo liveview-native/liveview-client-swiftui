@@ -8,18 +8,22 @@
 import SwiftUI
 
 struct PhxSpacer: View {
-    let minLength: CGFloat?
+    @ObservedElement private var element: ElementNode
     
-    init(element: ElementNode) {
-        if let s = element.attributeValue(for: "min-length"),
-           let d = Double(s) {
-            self.minLength = d
-        } else {
-            self.minLength = nil
-        }
+    init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
+        self._element = ObservedElement(element: element, context: context)
     }
     
     public var body: some View {
         Spacer(minLength: minLength)
+    }
+    
+    private var minLength: CGFloat? {
+        if let s = element.attributeValue(for: "min-length"),
+           let d = Double(s) {
+            return d
+        } else {
+            return nil
+        }
     }
 }

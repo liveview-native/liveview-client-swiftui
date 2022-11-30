@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct PhxText: View {
-    var element: ElementNode
+    @ObservedElement private var element: ElementNode
+    
+    init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
+        self._element = ObservedElement(element: element, context: context)
+    }
     
     public var body: some View {
         Text(element.innerText())

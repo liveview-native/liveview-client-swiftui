@@ -9,11 +9,11 @@ import SwiftUI
 import SwiftSoup
 
 struct PhxShape<S: Shape>: View {
-    private let element: ElementNode
+    @ObservedElement private var element: ElementNode
     private let shape: S
     
-    init(element: ElementNode, shape: S) {
-        self.element = element
+    init(element: ElementNode, context: LiveContext<some CustomRegistry>, shape: S) {
+        self._element = ObservedElement(element: element, context: context)
         self.shape = shape
     }
     

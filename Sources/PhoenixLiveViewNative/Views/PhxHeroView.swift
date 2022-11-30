@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct PhxHeroView<R: CustomRegistry>: View {
-    private let element: ElementNode
+    @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
-    private let kind: Kind
     @EnvironmentObject private var navCoordinator: NavigationCoordinator
     @State private var frameProvider: FrameProvider?
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self.element = element
+        self._element = ObservedElement(element: element, context: context)
         self.context = context
-        self.kind = element.attributeValue(for: "destination") != nil ? .destination : .source
     }
     
-    var hidesDuringAnimation: Bool {
+    private var kind: Kind {
+        element.attributeValue(for: "destination") != nil ? .destination : .source
+    }
+    
+    private var hidesDuringAnimation: Bool {
         guard !UIAccessibility.prefersCrossFadeTransitions else {
             return false
         }

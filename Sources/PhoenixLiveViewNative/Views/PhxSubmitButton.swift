@@ -8,23 +8,17 @@
 import SwiftUI
 
 struct PhxSubmitButton<R: CustomRegistry>: View {
-    private let element: ElementNode
+    @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     private let formModel: FormModel
-    private let afterSubmit: AfterSubmitAction
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self.element = element
+        self._element = ObservedElement(element: element, context: context)
         self.context = context
         if let formModel = context.formModel {
             self.formModel = formModel
         } else {
             preconditionFailure("<phx-submit-button> cannot be used outside of a <phx-form>")
-        }
-        if let s = element.attributeValue(for: "after-submit"), let action = AfterSubmitAction(rawValue: s) {
-            self.afterSubmit = action
-        } else {
-            self.afterSubmit = .none
         }
     }
     
@@ -42,16 +36,11 @@ struct PhxSubmitButton<R: CustomRegistry>: View {
     }
     
     private func doAfterSubmitAction() {
-        switch afterSubmit {
-        case .none:
-            return
-        case .clear:
+        switch element.attributeValue(for: "after-submit") {
+        case "clear":
             formModel.clear()
+        default:
+            return
         }
-    }
-    
-    enum AfterSubmitAction: String {
-        case none
-        case clear
     }
 }

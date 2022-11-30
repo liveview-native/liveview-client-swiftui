@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct PhxScrollView<R: CustomRegistry>: View {
-    let element: ElementNode
-    let context: LiveContext<R>
+    @ObservedElement private var element: ElementNode
+    private let context: LiveContext<R>
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self.element = element
+        self._element = ObservedElement(element: element, context: context)
         self.context = context
     }
     

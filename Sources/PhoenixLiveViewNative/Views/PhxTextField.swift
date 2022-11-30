@@ -9,24 +9,22 @@ import SwiftUI
 import SwiftSoup
 
 struct PhxTextField<R: CustomRegistry>: View {
-    private let name: String
-    private let config: TextFieldConfiguration
+    @ObservedElement private var element: ElementNode
     private let formModel: FormModel
     @FormState private var value: String?
     @State private var becomeFirstResponder = false
     
     init(element: ElementNode, context: LiveContext<R>) {
+        self._element = ObservedElement(element: element, context: context)
         precondition(context.formModel != nil, "<textfield> cannot be used outside of a <form>")
-        guard let name = element.attributeValue(for: "name") else {
-            preconditionFailure("<textfield> must have name")
-        }
-        self.name = name
-        self.config = TextFieldConfiguration(element: element)
         self.formModel = context.formModel!
     }
     
     public var body: some View {
-        return PhxWrappedTextField(formModel: formModel, name: name, config: config, value: $value, becomeFirstResponder: $becomeFirstResponder)
+        guard let name = element.attributeValue(for: "name") else {
+            preconditionFailure("<textfield> must have name")
+        }
+        return PhxWrappedTextField(formModel: formModel, name: name, config: TextFieldConfiguration(element: element), value: $value, becomeFirstResponder: $becomeFirstResponder)
             .frame(height: 44)
             .onAppear {
                 // If the DOM changes, the text field can get re-created and destroyed even though

@@ -7,25 +7,13 @@
 
 import SwiftUI
 
-struct PhxAsyncImage: View {
-    private let url: URL?
-    private let scale: Double?
-    private let contentMode: ContentMode
+struct PhxAsyncImage<R: CustomRegistry>: View {
+    @ObservedElement private var element: ElementNode
+    private let context: LiveContext<R>
     
-    init<R: CustomRegistry>(element: ElementNode, context: LiveContext<R>) {
-        self.url = URL(string: element.attributeValue(for: "src")!, relativeTo: context.url)
-        if let attr = element.attributeValue(for: "scale"),
-           let f = Double(attr) {
-            self.scale = f
-        } else {
-            self.scale = nil
-        }
-        switch element.attributeValue(for: "content-mode") {
-        case "fill":
-            self.contentMode = .fill
-        default:
-            self.contentMode = .fit
-        }
+    init(element: ElementNode, context: LiveContext<R>) {
+        self._element = ObservedElement(element: element, context: context)
+        self.context = context
     }
     
     public var body: some View {
@@ -47,6 +35,28 @@ struct PhxAsyncImage: View {
             @unknown default:
                 EmptyView()
             }
+        }
+    }
+    
+    private var url: URL? {
+        URL(string: element.attributeValue(for: "src")!, relativeTo: context.url)
+    }
+    
+    private var scale: Double? {
+        if let attr = element.attributeValue(for: "scale"),
+           let f = Double(attr) {
+            return f
+        } else {
+            return nil
+        }
+    }
+    
+    private var contentMode: ContentMode {
+        switch element.attributeValue(for: "content-mode") {
+        case "fill":
+            return .fill
+        default:
+            return .fit
         }
     }
     

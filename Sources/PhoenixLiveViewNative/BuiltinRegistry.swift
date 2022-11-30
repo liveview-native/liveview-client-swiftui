@@ -17,7 +17,7 @@ struct BuiltinRegistry {
         case "textfield":
             PhxTextField<R>(element: element, context: context)
         case "text":
-            PhxText(element: element)
+            PhxText(element: element, context: context)
         case "hstack":
             PhxHStack<R>(element: element, context: context)
         case "vstack":
@@ -33,15 +33,15 @@ struct BuiltinRegistry {
         case "scrollview":
             PhxScrollView<R>(element: element, context: context)
         case "spacer":
-            PhxSpacer(element: element)
+            PhxSpacer(element: element, context: context)
         case "navigationlink":
             PhxNavigationLink(element: element, context: context)
         case "list":
             PhxList<R>(element: element, context: context)
         case "rectangle":
-            PhxShape(element: element, shape: Rectangle())
+            PhxShape(element: element, context: context, shape: Rectangle())
         case "roundedrectangle":
-            PhxShape(element: element, shape: RoundedRectangle(from: element))
+            PhxShape(element: element, context: context, shape: RoundedRectangle(from: element))
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
