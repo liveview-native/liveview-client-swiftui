@@ -46,8 +46,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private var socket: Socket?
     private var channel: Channel?
     
-    private(set) var document: LiveViewNativeCore.Document? = nil
-    let documentChanged = PassthroughSubject<Void, Never>()
+    @Published private(set) var document: LiveViewNativeCore.Document? = nil
+    let elementChanged = PassthroughSubject<NodeRef, Never>()
     private var rendered: Root!
     
     private var liveReloadEnabled: Bool = false
@@ -62,8 +62,6 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     private var eventHandlers: [String: (Payload) -> Void] = [:]
     
-    private var cancellables = Set<AnyCancellable>()
-    
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
@@ -72,11 +70,6 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.initialURL = url
         self.currentURL = url
         self.config = config
-        
-        // republish document changes to objectWillChange to trigger SwiftUI view updates
-        documentChanged
-            .sink { [unowned self] in self.objectWillChange.send() }
-            .store(in: &cancellables)
     }
     
     /// Creates a new coordinator without a custom registry.
@@ -496,13 +489,16 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-//        let elements = try! self.parseDOM(html: self.rendered.buildString(), baseURL: self.currentURL)
         self.internalState = .connected
-//        self.elements = elements
         self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
-        self.documentChanged.send()
-        self.document!.on(.changed) { [unowned self] _ in
-            self.documentChanged.send()
+        self.document!.on(.changed) { [unowned self] doc, nodeRef in
+            // text nodes don't have their own views, changes to them need to be handled by the parent PhxText view
+            if case .leaf(_) = doc[nodeRef].data,
+               let parent = doc.getParent(nodeRef) {
+                self.elementChanged.send(parent)
+            } else {
+                self.elementChanged.send(nodeRef)
+            }
         }
     }
     

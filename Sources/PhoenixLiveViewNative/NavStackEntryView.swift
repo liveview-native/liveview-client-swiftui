@@ -27,10 +27,10 @@ struct NavStackEntryView<R: CustomRegistry>: View {
         ZStack {
             elementTree
                 .environmentObject(liveViewModel)
-                .onReceive(coordinator.documentChanged) {
+                .onReceive(coordinator.$document) { newDocument in
                     // todo: things will go weird if the same url occurs multiple times in the navigation stack
                     if coordinator.currentURL == url,
-                       let doc = coordinator.document {
+                       let doc = newDocument {
                         self.state = .connected(doc)
                         // todo: doing this every time the DOM changes is probably not efficient
                         liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
