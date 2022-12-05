@@ -10,47 +10,27 @@ import SwiftSoup
 
 struct PhxTextField<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let formModel: FormModel
     @FormState private var value: String?
-    @State private var becomeFirstResponder = false
     
     init(element: ElementNode, context: LiveContext<R>) {
         self._element = ObservedElement(element: element, context: context)
-        precondition(context.formModel != nil, "<textfield> cannot be used outside of a <form>")
-        self.formModel = context.formModel!
     }
     
     public var body: some View {
-        guard let name = element.attributeValue(for: "name") else {
-            preconditionFailure("<textfield> must have name")
-        }
-        return PhxWrappedTextField(formModel: formModel, name: name, config: TextFieldConfiguration(element: element), value: $value, becomeFirstResponder: $becomeFirstResponder)
+        return PhxWrappedTextField(config: TextFieldConfiguration(element: element), value: $value)
             .frame(height: 44)
-            .onAppear {
-                // If the DOM changes, the text field can get re-created and destroyed even though
-                if formModel.focusedFieldName == name {
-                    becomeFirstResponder = true
-                }
-            }
     }
 }
 
-// We need to wrap UITextField ourselves so we can call becomeFirstResponder directly.
 fileprivate struct PhxWrappedTextField: UIViewRepresentable {
     typealias UIViewType = UITextField
-    private let formModel: FormModel
-    private let name: String
     private let config: TextFieldConfiguration
     @Binding private var value: String?
-    @Binding private var becomeFirstResponder: Bool
     @Environment(\.textFieldPrimaryAction) private var primaryAction: (() -> Void)?
     
-    init(formModel: FormModel, name: String, config: TextFieldConfiguration, value: Binding<String?>, becomeFirstResponder: Binding<Bool>) {
-        self.formModel = formModel
-        self.name = name
+    init(config: TextFieldConfiguration, value: Binding<String?>) {
         self.config = config
         self._value = value
-        self._becomeFirstResponder = becomeFirstResponder
     }
     
     func makeUIView(context: Context) -> UITextField {
@@ -69,48 +49,22 @@ fileprivate struct PhxWrappedTextField: UIViewRepresentable {
         config.apply(to: uiView)
         context.coordinator.value = _value
         context.coordinator.primaryAction = primaryAction
-        if becomeFirstResponder {
-            DispatchQueue.main.async {
-                // becoming first responder immediately breaks some internal autocorrect thing, so we wait until the next runloop iteration
-                uiView.becomeFirstResponder()
-                // can't change state during view update, so wait until the next runloop iteration
-                self.becomeFirstResponder = false
-            }
-        }
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(formModel: formModel, name: name, value: _value)
+        return Coordinator(value: _value)
     }
     
     class Coordinator: NSObject, UITextFieldDelegate {
         var value: Binding<String?>
         var primaryAction: (() -> Void)? = nil
-        let formModel: FormModel!
-        let name: String
         
-        init(formModel: FormModel, name: String, value: Binding<String?>) {
+        init(value: Binding<String?>) {
             self.value = value
-            self.formModel = formModel
-            self.name = name
         }
         
         @objc func editingChanged(_ textField: UITextField) {
             value.wrappedValue = textField.text
-            // todo: should change events be debounced?
-            Task {
-                try await formModel.sendChangeEvent()
-            }
-        }
-        
-        func textFieldDidBeginEditing(_ textField: UITextField) {
-            // We save the edited form field name to the form model so that if the DOM changes
-            // and the text field is destroyed/recreated, we can re-focus it.
-            formModel.focusedFieldName = name
-        }
-        
-        func textFieldDidEndEditing(_ textField: UITextField) {
-            formModel.focusedFieldName = nil
         }
         
         @objc func onPrimaryAction() {
