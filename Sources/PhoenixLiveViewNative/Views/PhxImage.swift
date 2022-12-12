@@ -11,7 +11,6 @@ struct PhxImage: View {
     @ObservedElement private var element: ElementNode
     
     init<R: CustomRegistry>(element: ElementNode, context: LiveContext<R>) {
-        self._element = ObservedElement(element: element, context: context)
     }
     
     public var body: some View {

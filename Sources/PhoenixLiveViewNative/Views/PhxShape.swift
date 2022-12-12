@@ -13,7 +13,6 @@ struct PhxShape<S: Shape>: View {
     private let shape: S
     
     init(element: ElementNode, context: LiveContext<some CustomRegistry>, shape: S) {
-        self._element = ObservedElement(element: element, context: context)
         self.shape = shape
     }
     

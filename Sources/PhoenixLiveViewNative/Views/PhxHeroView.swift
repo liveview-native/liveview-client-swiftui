@@ -14,7 +14,6 @@ struct PhxHeroView<R: CustomRegistry>: View {
     @State private var frameProvider: FrameProvider?
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self._element = ObservedElement(element: element, context: context)
         self.context = context
     }
     

@@ -15,7 +15,6 @@ struct PhxButton<R: CustomRegistry>: View {
     private let action: (() -> Void)?
     
     init(element: ElementNode, context: LiveContext<R>, action: (() -> Void)?) {
-        self._element = ObservedElement(element: element, context: context)
         self.context = context
         self.action = action
     }

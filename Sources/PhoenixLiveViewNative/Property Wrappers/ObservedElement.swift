@@ -26,56 +26,57 @@ import Combine
 /// struct MyView: View {
 ///     @ObservedElemenet private var element: ElementNode
 ///
-///     init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
-///         self._element = ObservedElement(element: element, context: context)
-///     }
-///
 ///     var body: some View {
 ///         Text("Value: \(element.attributeValue(for: "my-attr") ?? "<none>")")
 ///     }
 /// }
 @propertyWrapper
 public struct ObservedElement {
-    private let ref: NodeRef
-    private let document: Document
-    @StateObject private var observer: Observer
+    @Environment(\.element) private var element: ElementNode?
+    @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
+    @StateObject private var observer = Observer()
     
-    /// Creates an `ObservedElement` that observes changes to the given element.
-    public init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
-        let ref = element.node.id
-        self.ref = ref
-        guard let document = context.coordinator.document else {
-            preconditionFailure("Coordinator must have document when creating @ObservedElement")
-        }
-        self.document = document
-        self._observer = StateObject(wrappedValue: Observer(ref: ref, elementChanged: context.coordinator.elementChanged))
+    /// Creates an `ObservedElement` that observes changes to the view's element..
+    public init() {
     }
     
     /// The observed element in the document, with all current data.
     public var wrappedValue: ElementNode {
-        guard let element = document[ref].asElement() else {
+        guard let element,
+              let coordinator else {
+            fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
+        }
+        guard let element = coordinator.document[element.node.id].asElement() else {
             preconditionFailure("@ObservedElement ref turned into a non-element node, this should not be possible")
         }
         return element
     }
-    
-    class Observer: ObservableObject {
-        private var cancellable: AnyCancellable?
-        
-        init(ref: NodeRef, elementChanged: PassthroughSubject<NodeRef, Never>) {
-            cancellable = elementChanged
-                .filter {
-                    $0 == ref
-                }
-                .sink { [unowned self] _ in
-                    self.objectWillChange.send()
-                }
+}
+
+extension ObservedElement: DynamicProperty {
+    public func update() {
+        guard let element,
+              let coordinator else {
+            fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
+        self.observer.update(ref: element.node.id, elementChanged: coordinator.elementChanged)
     }
 }
 
-// we don't actually have anything to update, since everything is initialized when the Observer is constructed
-// we just need to implement DynamicProperty, otherwise SwiftUI never "installs" this property wrapper in a view
-// and never sets up the @StateObject
-extension ObservedElement: DynamicProperty {
+extension ObservedElement {
+    private class Observer: ObservableObject {
+        private var cancellable: AnyCancellable?
+        
+        fileprivate func update(ref: NodeRef, elementChanged: PassthroughSubject<NodeRef, Never>) {
+            if cancellable == nil {
+                cancellable = elementChanged
+                    .filter {
+                        $0 == ref
+                    }
+                    .sink { [unowned self] _ in
+                        self.objectWillChange.send()
+                    }
+            }
+        }
+    }
 }

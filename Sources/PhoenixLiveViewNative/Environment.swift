@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
+import Combine
 
 private struct FormModelKey: EnvironmentKey {
     static let defaultValue: FormModel? = nil
@@ -17,6 +19,25 @@ private struct ElementKey: EnvironmentKey {
 
 private struct TextFieldPrimaryActionKey: EnvironmentKey {
     public static var defaultValue: (() -> Void)? = nil
+}
+
+/// Provides access to ``LiveViewCoordinator`` properties via the environment.
+/// This exists to type-erase the coordinator, since environment properties can't be generic.
+struct CoordinatorEnvironment {
+    let pushEvent: (String, String, Any) async throws -> Void
+    let elementChanged: PassthroughSubject<NodeRef, Never>
+    let document: Document
+    
+    @MainActor
+    init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>) {
+        self.pushEvent = coordinator.pushEvent
+        self.elementChanged = coordinator.elementChanged
+        self.document = coordinator.document!
+    }
+    
+    fileprivate struct Key: EnvironmentKey {
+        static var defaultValue: CoordinatorEnvironment? = nil
+    }
 }
 
 extension EnvironmentValues {
@@ -35,5 +56,10 @@ extension EnvironmentValues {
     @_spi(NarwinChat) public var textFieldPrimaryAction: (() -> Void)? {
         get { self[TextFieldPrimaryActionKey.self] }
         set { self[TextFieldPrimaryActionKey.self] = newValue }
+    }
+    
+    var coordinatorEnvironment: CoordinatorEnvironment? {
+        get { self[CoordinatorEnvironment.Key.self] }
+        set { self[CoordinatorEnvironment.Key.self] = newValue }
     }
 }

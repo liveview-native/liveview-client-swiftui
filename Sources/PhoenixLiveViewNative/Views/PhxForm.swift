@@ -21,7 +21,6 @@ struct PhxForm<R: CustomRegistry>: View {
     }
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self._element = ObservedElement(element: element, context: context)
         self.context = context
     }
     

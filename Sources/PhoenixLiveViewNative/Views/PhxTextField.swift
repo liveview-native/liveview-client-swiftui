@@ -13,7 +13,6 @@ struct PhxTextField<R: CustomRegistry>: View {
     @FormState private var value: String?
     
     init(element: ElementNode, context: LiveContext<R>) {
-        self._element = ObservedElement(element: element, context: context)
     }
     
     public var body: some View {

@@ -63,6 +63,7 @@ struct NavStackEntryView<R: CustomRegistry>: View {
         switch state {
         case .connected(let doc):
             coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: url)
+                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator))
         case .other(let lvState):
             if R.self.LoadingView == Never.self {
                 switch lvState {
