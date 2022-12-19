@@ -127,6 +127,8 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// Access the stored value, if there is one, for the form field of the given name.
     ///
     /// Setting a field to `nil` removes it.
+    ///
+    /// Setting a field automatically sends a change event if one was configured on the `<phx-form>` element.
     public subscript(name: String) -> (any FormValue)? {
         get {
             return data[name]
@@ -145,6 +147,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                 return
             }
             data[name] = newValue
+            Task {
+                try? await sendChangeEvent()
+            }
         }
     }
     

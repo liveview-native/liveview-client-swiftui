@@ -26,6 +26,9 @@ import Combine
 /// it will use the default value the property wrapper was initialized with. Before the state is first updated, changes to the element's `value`
 /// attribute will be reflected in the property wrapper's value.
 ///
+/// ### Change Events
+/// If the element has a `phx-change` event set, `@FormState` will send change events when its value changes. Change events can be turned off by constructing the property wrapper with `sendChangeEvents: false`.
+///
 /// ## Usage
 /// To use this property wrapper, the wrapped type must implement the ``FormValue`` protocol to define how values are converted
 /// to/from the serialized form data representation.
@@ -45,16 +48,19 @@ import Combine
 @propertyWrapper
 public struct FormState<Value: FormValue> {
     private let defaultValue: Value
+    private let sendChangeEvents: Bool
+    // this is non-nil iff data.mode == .local
+    @State private var localValue: Value?
     @StateObject private var data = FormStateData<Value>()
     
-    // we don't want the ElementNode itself to be the type we get from the Environment, otherwise
-    // SwiftUI thinks the view containing the @FormState needs to be updated every time we
-    // re-parse the DOM. instead, use an extension on Optional<Element> to get the name/value by keypath
-    @Environment(\.element.name) private var elementName: String?
-    @Environment(\.element.value) private var elementValue: String?
+    @ObservedElement private var element: ElementNode
     @Environment(\.formModel) private var formModel: FormModel?
+    @Environment(\.coordinatorEnvironment) private var coordinator
     
     /// Creates a `FormState` property wrapper with a default value that will be used when no other value is present.
+    ///
+    /// - Parameter default: The default value of this property wrapper. See ``FormState`` for a discussion of how the default value is used.
+    /// - Parameter sendChangeEvents: If `true`, changes to the form state's value will send an event to the server if the element has a `phx-change` attribute.
     ///
     /// ## Example
     /// ```swift
@@ -68,12 +74,15 @@ public struct FormState<Value: FormValue> {
     ///     }
     /// }
     /// ```
-    public init(default: Value) {
+    public init(default: Value, sendChangeEvents: Bool = true) {
         self.defaultValue = `default`
+        self.sendChangeEvents = sendChangeEvents
     }
     
     /// Convenience initializer that creates a `FormState` property wrapper with `nil` as its default value.
     ///
+    /// - Parameter sendChangeEvents: If `true`, changes to the form state's value will send an event to the server if the element has a `phx-change` attribute.
+    /// 
     /// ## Example
     /// ```swift
     /// struct MyView: View {
@@ -86,8 +95,8 @@ public struct FormState<Value: FormValue> {
     ///     }
     /// }
     /// ```
-    public init() where Value: ExpressibleByNilLiteral {
-        self.init(default: nil)
+    public init(sendChangeEvents: Bool = true) where Value: ExpressibleByNilLiteral {
+        self.init(default: nil, sendChangeEvents: sendChangeEvents)
     }
     
     /// The value for this form element.
@@ -98,10 +107,10 @@ public struct FormState<Value: FormValue> {
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .localInitial:
                 return initialValue
-            case .local(let state):
-                return state.wrappedValue
+            case .local:
+                return localValue!
             case .form(let formModel):
-                guard let elementName else {
+                guard let elementName = element.attributeValue(for: "name") else {
                     fatalError("Expected @FormState in form mode to have element with name")
                 }
                 if let existing = formModel[elementName],
@@ -114,18 +123,24 @@ public struct FormState<Value: FormValue> {
         }
         nonmutating set {
             resolveMode()
+            let oldValue = wrappedValue
             switch data.mode {
             case .unknown:
-                fatalError()
+                fatalError("@FormState cannot be accessed before being installed in a view")
             case .localInitial:
-                data.mode = .local(State(wrappedValue: newValue))
-            case .local(let state):
-                state.wrappedValue = newValue
+                localValue = newValue
+                data.mode = .local
+            case .local:
+                localValue = newValue
             case .form(let formModel):
-                guard let elementName else {
+                guard let elementName = element.attributeValue(for: "name") else {
                     fatalError("Expected @FormState in form mode to have element with name")
                 }
                 formModel[elementName] = newValue
+                // todo: this will send a change event for both the form and the input if the input has one, check if that matches web
+            }
+            if oldValue != newValue {
+                sendChangeEventIfNecessary()
             }
         }
     }
@@ -135,15 +150,15 @@ public struct FormState<Value: FormValue> {
     /// Access this binding with the dollar sign prefix. If a property is declared as `@FormState var value`, then the projected value binding can be accessed as `$value`.
     public var projectedValue: Binding<Value> {
         Binding {
-            return wrappedValue
+            return self.wrappedValue
         } set: { newValue in
-            wrappedValue = newValue
+            self.wrappedValue = newValue
         }
     }
     
     // the initial value converts the element's `value` attribute if possible, otherwise uses the default value
     private var initialValue: Value {
-        if let elementValue,
+        if let elementValue = element.attributeValue(for: "value"),
            let value = elementValue as? Value ?? Value(formValue: elementValue) {
             return value
         } else {
@@ -154,7 +169,7 @@ public struct FormState<Value: FormValue> {
     private func resolveMode() {
         if case .unknown = data.mode {
             if let formModel {
-                if let elementName {
+                if let elementName = element.attributeValue(for: "name") {
                     data.setFormModel(formModel, elementName: elementName)
                     data.mode = .form(formModel)
                 } else {
@@ -164,6 +179,20 @@ public struct FormState<Value: FormValue> {
             } else {
                 data.mode = .localInitial
             }
+        }
+    }
+    
+    private func sendChangeEventIfNecessary() {
+        guard sendChangeEvents,
+              let changeEvent = element.attributeValue(for: "phx-change") else {
+            return
+        }
+        // todo: check if this default name matches what the web client does
+        let name = element.attributeValue(for: "name")?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "value"
+        let value = wrappedValue.formValue.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let urlQueryEncodedData = "\(name)=\(value)"
+        Task {
+            try? await coordinator!.pushEvent("form", changeEvent, urlQueryEncodedData)
         }
     }
     
@@ -193,17 +222,8 @@ private class FormStateData<Value: FormValue>: ObservableObject {
         // local mode, but the value has not been updated, so always return the initial value when reading
         case localInitial
         // local mode, has been set
-        case local(State<Value>)
+        case local
         // managed by a form model, the initial value will be read when when the form model doesn't yet have a stored value
         case form(FormModel)
-    }
-}
-
-private extension Optional where Wrapped == ElementNode {
-    var name: String? {
-        self.flatMap { $0.attributeValue(for: "name") }
-    }
-    var value: String? {
-        self.flatMap { $0.attributeValue(for: "value") }
     }
 }
