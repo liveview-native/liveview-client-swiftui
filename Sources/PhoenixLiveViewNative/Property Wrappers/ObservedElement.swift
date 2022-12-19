@@ -67,7 +67,7 @@ extension ObservedElement {
     private class Observer: ObservableObject {
         private var cancellable: AnyCancellable?
         
-        fileprivate func update(ref: NodeRef, elementChanged: PassthroughSubject<NodeRef, Never>) {
+        fileprivate func update(ref: NodeRef, elementChanged: AnyPublisher<NodeRef, Never>) {
             if cancellable == nil {
                 cancellable = elementChanged
                     .filter {

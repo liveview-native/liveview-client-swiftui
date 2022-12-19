@@ -25,14 +25,17 @@ private struct TextFieldPrimaryActionKey: EnvironmentKey {
 /// This exists to type-erase the coordinator, since environment properties can't be generic.
 struct CoordinatorEnvironment {
     let pushEvent: (String, String, Any) async throws -> Void
-    let elementChanged: PassthroughSubject<NodeRef, Never>
+    let elementChanged: AnyPublisher<NodeRef, Never>
     let document: Document
     
     @MainActor
-    init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>) {
+    init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>, document: Document) {
         self.pushEvent = coordinator.pushEvent
-        self.elementChanged = coordinator.elementChanged
-        self.document = coordinator.document!
+        self.document = document
+        self.elementChanged = coordinator.elementChanged.filter({ _ in
+            // only pass through changes that happen for our document
+            coordinator.document === document
+        }).eraseToAnyPublisher()
     }
     
     fileprivate struct Key: EnvironmentKey {
