@@ -1,6 +1,6 @@
 //
 //  ProxyingNavigationControllerDelegate.m
-//  PhoenixLiveViewNative
+// LiveViewNative
 //
 //  Created by Shadowfacts on 6/13/22.
 //

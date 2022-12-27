@@ -1,6 +1,6 @@
 import XCTest
 
-import PhoenixLiveViewNativeTests
+import LiveViewNativeTests
 
 var tests = [XCTestCaseEntry]()
 tests += PhoenixLiveViewNativeTests.allTests()
