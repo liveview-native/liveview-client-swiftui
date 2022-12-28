@@ -1,6 +1,6 @@
 //
-//  PhxNavigationLink.swift
-// LiveViewNative
+//  NavigationLink.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 6/13/22.
 //
@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 @available(iOS 16.0, *)
-struct PhxNavigationLink<R: CustomRegistry>: View {
+struct NavigationLink<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     @EnvironmentObject private var navCoordinator: NavigationCoordinator
@@ -25,11 +25,11 @@ struct PhxNavigationLink<R: CustomRegistry>: View {
     public var body: some View {
         if let linkOpts = LinkOptions(element: element),
            context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state) {
-            ZStack {
+            SwiftUI.ZStack {
                 // need a NavigationLink present to display the disclosure indicator
-                NavigationLink(value: "") { EmptyView() }
+                SwiftUI.NavigationLink(value: "") { EmptyView() }
                 
-                Button{
+                SwiftUI.Button {
                     activateNavigationLink()
                 } label: {
                     context.buildChildren(of: element)

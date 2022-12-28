@@ -15,33 +15,33 @@ struct BuiltinRegistry {
     static func lookup<R: CustomRegistry>(_ name: String, _ element: ElementNode, context: LiveContext<R>) -> some View {
         switch name {
         case "textfield":
-            PhxTextField<R>(element: element, context: context)
+            TextField<R>(element: element, context: context)
         case "text":
-            PhxText(element: element, context: context)
+            Text(element: element, context: context)
         case "hstack":
-            PhxHStack<R>(element: element, context: context)
+            HStack<R>(element: element, context: context)
         case "vstack":
-            PhxVStack<R>(element: element, context: context)
+            VStack<R>(element: element, context: context)
         case "zstack":
-            PhxZStack<R>(element: element, context: context)
+            ZStack<R>(element: element, context: context)
         case "button":
-            PhxButton<R>(element: element, context: context, action: nil)
+            Button<R>(element: element, context: context, action: nil)
         case "image":
-            PhxImage(element: element, context: context)
+            Image(element: element, context: context)
         case "asyncimage":
-            PhxAsyncImage(element: element, context: context)
+            AsyncImage(element: element, context: context)
         case "scrollview":
-            PhxScrollView<R>(element: element, context: context)
+            ScrollView<R>(element: element, context: context)
         case "spacer":
-            PhxSpacer(element: element, context: context)
+            Spacer(element: element, context: context)
         case "navigationlink":
-            PhxNavigationLink(element: element, context: context)
+            NavigationLink(element: element, context: context)
         case "list":
-            PhxList<R>(element: element, context: context)
+            List<R>(element: element, context: context)
         case "rectangle":
-            PhxShape(element: element, context: context, shape: Rectangle())
+            Shape(element: element, context: context, shape: Rectangle())
         case "roundedrectangle":
-            PhxShape(element: element, context: context, shape: RoundedRectangle(from: element))
+            Shape(element: element, context: context, shape: RoundedRectangle(from: element))
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)

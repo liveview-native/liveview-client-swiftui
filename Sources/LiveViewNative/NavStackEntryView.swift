@@ -24,7 +24,7 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     var body: some View {
         // TODO: the ZStack is a workaround for an iOS 16 beta bug, check back before release to see if it's still needed
         let _ = Self._printChanges()
-        ZStack {
+        SwiftUI.ZStack {
             elementTree
                 .environmentObject(liveViewModel)
                 .onReceive(coordinator.$document) { newDocument in
@@ -70,14 +70,14 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                 case .connected:
                     fatalError("unreachable")
                 case .notConnected:
-                    Text("Not Connected")
+                    SwiftUI.Text("Not Connected")
                 case .connecting:
-                    Text("Connecting")
+                    SwiftUI.Text("Connecting")
                 case .connectionFailed(let error):
-                    VStack {
-                        Text("Connection Failed")
+                    SwiftUI.VStack {
+                        SwiftUI.Text("Connection Failed")
                             .font(.subheadline)
-                        Text(error.localizedDescription)
+                        SwiftUI.Text(error.localizedDescription)
                     }
                 }
             } else {

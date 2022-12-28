@@ -1,13 +1,13 @@
 //
-//  PhxImage.swift
-// LiveViewNative
+//  Image.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 2/9/22.
 //
 
 import SwiftUI
 
-struct PhxImage: View {
+struct Image: View {
     @ObservedElement private var element: ElementNode
     
     init<R: CustomRegistry>(element: ElementNode, context: LiveContext<R>) {
@@ -16,11 +16,11 @@ struct PhxImage: View {
     public var body: some View {
         switch mode {
         case .symbol(let name):
-            Image(systemName: name)
+            SwiftUI.Image(systemName: name)
                 .scaledIfPresent(scale: symbolScale)
                 .foregroundColor(symbolColor)
         case .asset(let name):
-            Image(name)
+            SwiftUI.Image(name)
                 // todo: this probably only works for symbols
                 .scaledIfPresent(scale: symbolScale)
                 .foregroundColor(symbolColor)
@@ -45,7 +45,7 @@ struct PhxImage: View {
         }
     }
     
-    private var symbolScale: Image.Scale? {
+    private var symbolScale: SwiftUI.Image.Scale? {
         switch element.attributeValue(for: "symbol-scasle") {
         case nil:
             return nil
@@ -61,16 +61,16 @@ struct PhxImage: View {
     }
 }
 
-extension PhxImage {
+extension Image {
     enum Mode {
         case symbol(String)
         case asset(String)
     }
 }
 
-fileprivate extension Image {
+fileprivate extension SwiftUI.Image {
     @ViewBuilder
-    func scaledIfPresent(scale: Image.Scale?) -> some View {
+    func scaledIfPresent(scale: SwiftUI.Image.Scale?) -> some View {
         if let scale = scale {
             self.imageScale(scale)
         } else {

@@ -12,9 +12,9 @@ struct ErrorModifier: ViewModifier {
     let error: any Error
     
     func body(content: Content) -> some View {
-        VStack {
-            Text("Error Decoding Modifier of Type '\(type)'")
-            Text(String(describing: error))
+        SwiftUI.VStack {
+            SwiftUI.Text("Error Decoding Modifier of Type '\(type)'")
+            SwiftUI.Text(String(describing: error))
         }
     }
 }

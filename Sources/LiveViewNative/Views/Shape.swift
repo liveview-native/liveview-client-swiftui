@@ -1,14 +1,13 @@
 //
-//  PhxShape.swift
-// LiveViewNative
+//  Shape.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 2/9/22.
 //
 
 import SwiftUI
-import SwiftSoup
 
-struct PhxShape<S: Shape>: View {
+struct Shape<S: SwiftUI.Shape>: View {
     @ObservedElement private var element: ElementNode
     private let shape: S
     

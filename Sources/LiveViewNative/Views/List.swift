@@ -1,14 +1,13 @@
 //
-//  PhxList.swift
-// LiveViewNative
+//  List.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 2/9/22.
 //
 
 import SwiftUI
-import SwiftSoup
 
-struct PhxList<R: CustomRegistry>: View {
+struct List<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
@@ -17,7 +16,7 @@ struct PhxList<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        List {
+        SwiftUI.List {
             forEach(nodes: element.children(), context: context)
                 .onDelete(perform: onDeleteHandler)
         }
@@ -40,7 +39,7 @@ struct PhxList<R: CustomRegistry>: View {
     }
 }
 
-private extension List {
+private extension SwiftUI.List {
     @ViewBuilder
     func listStyle(from element: ElementNode) -> some View {
         switch element.attributeValue(for: "style") {

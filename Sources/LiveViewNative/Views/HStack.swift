@@ -1,13 +1,13 @@
 //
-//  PhxHStack.swift
-// LiveViewNative
+//  HStack.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 8/31/22.
 //
 
 import SwiftUI
 
-struct PhxHStack<R: CustomRegistry>: View {
+struct HStack<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
@@ -16,7 +16,7 @@ struct PhxHStack<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        HStack(alignment: alignment) {
+        SwiftUI.HStack(alignment: alignment) {
             context.buildChildren(of: element)
         }
     }

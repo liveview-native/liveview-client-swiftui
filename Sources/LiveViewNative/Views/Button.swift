@@ -1,14 +1,13 @@
 //
-//  PhxButton.swift
-// LiveViewNative
+//  Button.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 2/9/22.
 //
 
 import SwiftUI
-import SwiftSoup
 
-struct PhxButton<R: CustomRegistry>: View {
+struct Button<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     // used internaly by PhxSubmitButton
@@ -20,7 +19,7 @@ struct PhxButton<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        Button(action: self.handleClick) {
+        SwiftUI.Button(action: self.handleClick) {
             context.buildChildren(of: element)
         }
         .phxButtonStyle(buttonStyle)

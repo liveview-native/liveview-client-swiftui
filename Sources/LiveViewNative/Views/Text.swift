@@ -1,20 +1,20 @@
 //
-//  PhxText.swift
-// LiveViewNative
+//  Text.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 2/9/22.
 //
 
 import SwiftUI
 
-struct PhxText: View {
+struct Text: View {
     @ObservedElement private var element: ElementNode
     
     init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
     }
     
     public var body: some View {
-        Text(element.innerText())
+        SwiftUI.Text(element.innerText())
             .font(self.font)
             .foregroundColor(textColor)
     }

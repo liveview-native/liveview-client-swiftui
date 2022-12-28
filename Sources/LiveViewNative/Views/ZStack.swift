@@ -1,13 +1,13 @@
 //
-//  PhxZStack.swift
-// LiveViewNative
+//  ZStack.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 8/31/22.
 //
 
 import SwiftUI
 
-struct PhxZStack<R: CustomRegistry>: View {
+struct ZStack<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
@@ -16,7 +16,7 @@ struct PhxZStack<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        ZStack(alignment: alignment) {
+        SwiftUI.ZStack(alignment: alignment) {
             context.buildChildren(of: element)
         }
     }

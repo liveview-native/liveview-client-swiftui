@@ -22,7 +22,7 @@ struct PhxSubmitButton<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        PhxButton(element: element, context: context) {
+        Button(element: element, context: context) {
             Task {
                 do {
                     try await formModel.sendSubmitEvent()

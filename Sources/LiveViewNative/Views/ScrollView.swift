@@ -1,13 +1,13 @@
 //
-//  PhxScrollView.swift
-// LiveViewNative
+//  ScrollView.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 2/9/22.
 //
 
 import SwiftUI
 
-struct PhxScrollView<R: CustomRegistry>: View {
+struct ScrollView<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
@@ -16,7 +16,7 @@ struct PhxScrollView<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        ScrollView {
+        SwiftUI.ScrollView {
             context.buildChildren(of: element)
         }
     }

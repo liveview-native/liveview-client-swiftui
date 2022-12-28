@@ -62,7 +62,7 @@ struct ViewTreeBuilder<R: CustomRegistry> {
         case .root:
             fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
         case .leaf(let content):
-            Text(content)
+            SwiftUI.Text(content)
         case .element(let element):
             fromElement(ElementNode(node: node, data: element), context: context)
         }

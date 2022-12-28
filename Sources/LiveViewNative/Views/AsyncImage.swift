@@ -1,13 +1,13 @@
 //
-//  PhxAsyncImage.swift
-// LiveViewNative
+//  AsyncImage.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 7/21/22.
 //
 
 import SwiftUI
 
-struct PhxAsyncImage<R: CustomRegistry>: View {
+struct AsyncImage<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
@@ -18,7 +18,7 @@ struct PhxAsyncImage<R: CustomRegistry>: View {
     public var body: some View {
         // todo: do we want to customize the loading state for this
         // todo: this will use URLCache.shared by default, do we want to customize that?
-        AsyncImage(url: url, scale: scale ?? 1, transaction: Transaction(animation: .default)) { phase in
+        SwiftUI.AsyncImage(url: url, scale: scale ?? 1, transaction: Transaction(animation: .default)) { phase in
             switch phase {
             case .success(let image):
                 let configured = configureImage(image)
@@ -28,7 +28,7 @@ struct PhxAsyncImage<R: CustomRegistry>: View {
                     // Image up to the overlay view, in case it needs to be used
                     .preference(key: HeroViewOverrideKey.self, value: HeroViewOverride(configured))
             case .failure(let error):
-                Text(error.localizedDescription)
+                SwiftUI.Text(error.localizedDescription)
             case .empty:
                 ProgressView().progressViewStyle(.circular)
             @unknown default:
@@ -59,7 +59,7 @@ struct PhxAsyncImage<R: CustomRegistry>: View {
         }
     }
     
-    private func configureImage(_ image: Image) -> some View {
+    private func configureImage(_ image: SwiftUI.Image) -> some View {
         image
             .resizable()
             .aspectRatio(contentMode: contentMode)

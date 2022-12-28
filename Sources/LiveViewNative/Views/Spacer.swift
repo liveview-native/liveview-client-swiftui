@@ -1,20 +1,20 @@
 //
-//  PhxSpacer.swift
-// LiveViewNative
+//  Spacer.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 8/15/22.
 //
 
 import SwiftUI
 
-struct PhxSpacer: View {
+struct Spacer: View {
     @ObservedElement private var element: ElementNode
     
     init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
     }
     
     public var body: some View {
-        Spacer(minLength: minLength)
+        SwiftUI.Spacer(minLength: minLength)
     }
     
     private var minLength: CGFloat? {

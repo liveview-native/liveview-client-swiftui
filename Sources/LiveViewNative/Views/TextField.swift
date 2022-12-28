@@ -1,14 +1,13 @@
 //
-//  PhxTextField.swift
-// LiveViewNative
+//  TextField.swift
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 2/9/22.
 //
 
 import SwiftUI
-import SwiftSoup
 
-struct PhxTextField<R: CustomRegistry>: View {
+struct TextField<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     @FormState private var value: String?
     
