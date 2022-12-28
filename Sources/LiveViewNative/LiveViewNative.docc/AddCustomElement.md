@@ -21,7 +21,7 @@ struct MyRegistry: CustomRegistry {
 }
 ```
 
-To provide views for these elements, implement the ``CustomRegistry/lookup(_:element:context:)-2rzrl`` method. Your implementation of this method is automatically treated as SwiftUI `ViewBuilder`, so simply construct the view you want to use rather than returning it.
+To provide views for these elements, implement the ``CustomRegistry/lookup(_:element:context:)-895au`` method. Your implementation of this method is automatically treated as SwiftUI `ViewBuilder`, so simply construct the view you want to use rather than returning it.
 
 In the following example, the element `<my-tag />` in the DOM will be displayed as the text "My custom element!"
 
@@ -30,7 +30,7 @@ struct MyRegistry: CustomRegistry {
     enum TagName: String {
         case myTag = "my-tag"
     }
-    static func lookup(_ name: TagName, element: Element, context: LiveContext<MyRegistry>) -> some View {
+    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {
         switch name {
         case .myTag:
             Text("My custom element!")

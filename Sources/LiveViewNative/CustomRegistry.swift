@@ -10,7 +10,7 @@ import LiveViewNativeCore
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///
-/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-vg2v`` method.
+/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-2uoy9`` method.
 ///
 /// To use your custom registry implementation, provide it as the generic parameter for the ``LiveViewCoordinator`` you construct:
 ///
@@ -23,15 +23,15 @@ import LiveViewNativeCore
 /// ## Topics
 /// ### Custom Tags
 /// - ``TagName``
-/// - ``lookup(_:element:context:)-4w8e8``
+/// - ``lookup(_:element:context:)-895au``
 /// - ``CustomView``
 /// ### Custom View Modifiers
 /// - ``ModifierType``
-/// - ``decodeModifier(_:from:context:)-2d3pa``
+/// - ``decodeModifier(_:from:context:)-4j076``
 /// ### Customizing the Loading View
-/// - ``loadingView(for:state:)-vg2v``
+/// - ``loadingView(for:state:)-2uoy9``
 /// - ``LoadingView``
-/// ### See Also
+/// ### Supporting Types
 /// - ``EmptyRegistry``
 public protocol CustomRegistry {
     /// A type representing the tag names that this registry type can provide views for.
@@ -78,11 +78,11 @@ public protocol CustomRegistry {
     associatedtype ModifierType: RawRepresentable where ModifierType.RawValue == String
     /// The type of view this registry returns from the `lookup` method.
     ///
-    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-4w8e8`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-895au`` implementations and this will be inferred automatically.
     associatedtype CustomView: View
     /// The type of view this registry produces for loading views.
     ///
-    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-vg2v`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-2uoy9`` implementations and this will be inferred automatically.
     associatedtype LoadingView: View
     
     /// This method is called by LiveView Native when it needs to construct a custom view.

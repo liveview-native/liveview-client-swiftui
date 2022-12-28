@@ -26,4 +26,4 @@
     - `thin`
     - `ultralight`
 - `color`: The color of the text to use.
-    - See <doc:SupportedAttributes#Specifying-Colors>
+    - See <doc:SupportedModifiers#Specifying-Colors>

@@ -15,13 +15,23 @@
 - ``LiveView``
 - ``LiveViewCoordinator``
 - ``LiveViewConfiguration``
+
+### Building a Live View Template
+
 - <doc:SupportedElements>
-- <doc:SupportedAttributes>
+- <doc:AttributesVsModifiers>
+- <doc:SupportedModifiers>
+
+### Working with the DOM
+
+- <doc:ElementNode>
+- <doc:ObservedElement>
+- <doc:Attribute>
 
 ### Custom DOM Elements and Attributes
 
 - <doc:AddCustomElement>
-- <doc:AddCustomAttribute>
+- <doc:AddCustomModifier>
 - ``CustomRegistry``
 - ``LiveContext``
 

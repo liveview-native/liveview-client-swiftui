@@ -13,4 +13,4 @@ Either `name` or `system-name` must be provided.
     - `medium`
     - `large`
 - `symbol-color`: The color to displa the symbol in.
-    - See <doc:SupportedAttributes#Specifying-Colors>
+    - See <doc:SupportedModifiers#Specifying-Colors>

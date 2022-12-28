@@ -4,4 +4,4 @@
 
 ## Attributes
 
-Also supports the common <doc:SupportedAttributes#Shape-Attributes>.
+Also supports the common <doc:SupportedModifiers#Shape-Attributes>.

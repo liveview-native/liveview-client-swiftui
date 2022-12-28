@@ -57,9 +57,9 @@ struct BuiltinRegistry {
     
     enum ModifierType: String {
         case frame
-        case listRowInsets = "list-row-insets"
-        case listRowSeparator = "list-row-separator"
-        case navigationTitle = "navigation-title"
+        case listRowInsets = "list_row_insets"
+        case listRowSeparator = "list_row_separator"
+        case navigationTitle = "navigation_title"
         case padding
         case tint
     }
