@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListRowSeparatorModifier: ViewModifier, Decodable {
+struct ListRowSeparatorModifier: ViewModifier, Decodable, Equatable {
     private let visibility: Visibility
     private let edges: VerticalEdge.Set
     
@@ -47,6 +47,11 @@ struct ListRowSeparatorModifier: ViewModifier, Decodable {
         default:
             self.edges = .all
         }
+    }
+    
+    init(visibility: Visibility, edges: VerticalEdge.Set) {
+        self.visibility = visibility
+        self.edges = edges
     }
     
     func body(content: Content) -> some View {
