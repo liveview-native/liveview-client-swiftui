@@ -28,7 +28,7 @@ public struct LiveViewConfiguration {
     public var eventHandlersEnabled: Bool = false
     
     @_spi(NarwinChat)
-    public var liveRedirectsEnabled: Bool = false
+    public var liveRedirectsEnabled: Bool = true
     
     /// Constructs a default, empty configuration.
     public init() {

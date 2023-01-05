@@ -56,9 +56,9 @@ struct NavigationLink<R: CustomRegistry>: View {
         
         switch linkOpts.state {
         case .replace:
-            navCoordinator.navigationPath[navCoordinator.navigationPath.count - 1] = dest
+            context.coordinator.navigationPath[context.coordinator.navigationPath.count - 1] = dest
             Task {
-                await context.coordinator.navigateTo(url: dest, replace: true)
+                await context.coordinator.navigate(.replace, to: dest)
             }
             
         case .push:
@@ -66,13 +66,13 @@ struct NavigationLink<R: CustomRegistry>: View {
                 navCoordinator.sourceRect = source?.frameProvider() ?? .zero
                 navCoordinator.sourceElement = source?.element
                 navCoordinator.overrideOverlayView = overrideView?.view
-                navCoordinator.navigationPath.append(dest)
+                context.coordinator.navigationPath.append(dest)
             }
             
             // if there's no animation source, we trigger the navigation immediately so that it feels more responsive
             guard source != nil else {
                 Task {
-                    await context.coordinator.navigateTo(url: dest, replace: false)
+                    await context.coordinator.navigate(.push, to: dest)
                 }
                 // TODO: when this happens, swiftui warns that publishing changes from within a view update is not allowed
                 // even though this is happening in a button action, not sure why
@@ -89,7 +89,7 @@ struct NavigationLink<R: CustomRegistry>: View {
                 }
             
             Task {
-                await context.coordinator.navigateTo(url: dest, replace: false)
+                await context.coordinator.navigate(.push, to: dest)
                 subject.send()
             }
             

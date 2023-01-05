@@ -28,10 +28,13 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     /// The first URL this live view was connected to.
     public let initialURL: URL
+    @Published var navigationPath: [URL] = []
     /// The current URL this live view is connected to.
     ///
     /// - Note: If you need to use the URL in, e.g., a view with a custom action, you should generally prefer the context's ``LiveContext/url`` because `currentURL` will change upon live navigation and may not reflect the URL of the page your view is actually on.
-    public private(set) var currentURL: URL
+    public var currentURL: URL {
+        navigationPath.last ?? initialURL
+    }
     
     internal let config: LiveViewConfiguration
     
@@ -56,11 +59,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     internal let builder = ViewTreeBuilder<R>()
     
-    internal let replaceRedirectSubject = PassthroughSubject<(URL, URL), Never>()
     private var currentConnectionToken: ConnectionAttemptToken?
     private var currentConnectionTask: Task<Void, Error>?
     
     private var eventHandlers: [String: (Payload) -> Void] = [:]
+    
+    private var cancellables = Set<AnyCancellable>()
     
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
@@ -68,8 +72,16 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// - Parameter customRegistryType: The type of the registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM. This can generally be inferred automatically.
     public init(_ url: URL, config: LiveViewConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.initialURL = url
-        self.currentURL = url
+        self.navigationPath = []
         self.config = config
+        // Subscribe to navigation stack pops
+        self.$navigationPath.scan(([URL](), [URL]()), { ($0.1, $1) }).sink { path in
+            if path.0.count > path.1.count {
+                Task {
+                    await self.reconnect()
+                }
+            }
+        }.store(in: &self.cancellables)
     }
     
     /// Creates a new coordinator without a custom registry.
@@ -166,20 +178,20 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         await connect()
     }
     
-    func navigateTo(url: URL, replace: Bool = false) async {
+    func navigate(_ kind: LiveRedirectKind, to url: URL) async {
         guard self.currentURL != url else { return }
-        let oldURL = self.currentURL
-        self.currentURL = url
-        // TODO: once we only target iOS 16+, remove replaceRedirectSubject. the NavigationCoordinator's url array will be the sole source of truth, and NavStackEntryViews will get their URLs from that
-        if replace {
-            replaceRedirectSubject.send((oldURL, url))
+        switch kind {
+        case .push:
+            self.navigationPath.append(url)
+        case .replace:
+            // Append "" to avoid ambiguity with trailing `/`.
+            if url.appending(path: "").absoluteURL == self.initialURL.appending(path: "").absoluteURL {
+                self.navigationPath.removeAll()
+            } else {
+                self.navigationPath[self.navigationPath.count - 1] = url
+            }
         }
         await reconnect()
-    }
-    
-    @_spi(NarwinChat)
-    public func replaceTopNavigationEntry(with url: URL) async {
-        await navigateTo(url: url, replace: true)
     }
     
     @ViewBuilder
@@ -238,7 +250,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             }
         } else if config.liveRedirectsEnabled,
                   let liveRedirect = replyPayload["live_redirect"] as? Payload {
-            self.handleLiveRedirect(liveRedirect)
+            await self.handleLiveRedirect(liveRedirect)
         }
     }
     
@@ -472,7 +484,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 
                 if self.config.liveRedirectsEnabled,
                    let redirect = message.payload["live_redirect"] as? Payload {
-                    self.handleLiveRedirect(redirect)
+                    Task {
+                        await self.handleLiveRedirect(redirect)
+                    }
                 } else {
                     if case .awaitingJoinResponse(let continuation) = self.internalState {
                         continuation.resume(throwing: Error.joinError(message))
@@ -502,17 +516,17 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
-    private func handleLiveRedirect(_ payload: Payload) {
-        guard let dest = payload["to"] as? String else {
+    enum LiveRedirectKind: String {
+        case push
+        case replace
+    }
+    
+    private func handleLiveRedirect(_ payload: Payload) async {
+        guard let dest = (payload["to"] as? String).flatMap({ URL(string: $0, relativeTo: self.currentURL) }),
+              let kind = (payload["kind"] as? String).flatMap(LiveRedirectKind.init) else {
             return
         }
-        // TODO: rather than kicking off a new task, we should continue the existing one with the redirect
-        Task {
-            await self.replaceTopNavigationEntry(with: URL(string: dest, relativeTo: self.currentURL)!)
-        }
-        if case .awaitingJoinResponse(let continuation) = self.internalState {
-            continuation.resume(throwing: CancellationError())
-        }
+        await self.navigate(kind, to: dest)
     }
     
     // Non-final API, for internal use only.

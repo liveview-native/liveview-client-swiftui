@@ -18,7 +18,6 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
          .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.3.2"),
          .package(url: "https://github.com/davidstump/SwiftPhoenixClient.git", .upToNextMinor(from: "5.0.0")),
-         .package(url: "https://github.com/siteline/SwiftUI-Introspect.git", .upToNextMinor(from: "0.1.4")),
          .package(url: "https://github.com/liveviewnative/liveview-native-core-swift.git", branch: "main"),
     ],
     targets: [
@@ -29,11 +28,8 @@ let package = Package(
             dependencies: [
                 "SwiftSoup",
                 "SwiftPhoenixClient",
-                .product(name: "Introspect", package: "SwiftUI-Introspect"),
-                .target(name: "LVNObjC"),
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
             ]),
-        .target(name: "LVNObjC"),
         .testTarget(
             name: "LiveViewNativeTests",
             dependencies: ["LiveViewNative"]),

@@ -39,9 +39,6 @@ class NavigationCoordinator: NSObject, UINavigationControllerDelegate, Observabl
     private var currentVCCount = 0
     private var didInteractivePopReachHalfwayPoint = false
     
-    // @available(iOS 16.0, *)
-    @Published var navigationPath: [URL] = []
-    
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         guard sourceRect != .zero, sourceElement != nil else {
             return

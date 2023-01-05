@@ -12,13 +12,12 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     // this is a @StateObject instead of @ObservedObject because changing which DOMWindows for a LiveView is not allowed
     @StateObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
-    // TODO: once we target iOS 16 only, this should be non-State and only come from the navigationDestination that creates this view
-    @State private var url: URL
+    private let url: URL
     @State private var state: ConnectionState = .other(.notConnected)
     
     init(coordinator: LiveViewCoordinator<R>, url: URL) {
         self._coordinator = StateObject(wrappedValue: coordinator)
-        self._url = State(initialValue: url)
+        self.url = url
     }
     
     var body: some View {
@@ -47,12 +46,6 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                         } else {
                             state = .other(newState)
                         }
-                    }
-                }
-                .onReceive(coordinator.replaceRedirectSubject) { (oldURL, newURL) in
-                    // when the page is redirected, we need to update this view's url so it receives elements from the new page
-                    if oldURL == url {
-                        self.url = newURL
                     }
                 }
         }
