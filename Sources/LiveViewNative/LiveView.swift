@@ -22,85 +22,64 @@ import SwiftUI
 /// ### See Also
 /// - ``LiveViewModel``
 public struct LiveView<R: CustomRegistry>: View {
-    @ObservedObject private var coordinator: LiveViewCoordinator<R>
     @State private var hasAppeared = false
-    @StateObject private var navigationCoordinator = NavigationCoordinator()
+    @StateObject private var navigationCoordinator: NavigationCoordinator<R>
     @State private var hasSetupNavigationControllerDelegate = false
     
     /// Creates a new LiveView attached to the given coordinator.
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
     public init(coordinator: LiveViewCoordinator<R>) {
-        self.coordinator = coordinator
+        self._navigationCoordinator = .init(wrappedValue: .init(initialCoordinator: coordinator))
     }
 
     public var body: some View {
         rootNavEntry
             .task {
-                // TODO: the hasAppeared check may not be necessary with .task
-                if !hasAppeared {
-                    hasAppeared = true
-                    await coordinator.connect()
-                }
+                await navigationCoordinator.initialCoordinator.connect()
             }
     }
         
     @ViewBuilder
     private var rootNavEntry: some View {
-        if case .enabled = coordinator.config.navigationMode {
-            navigationStack
-                .overlay {
-                    if navigationCoordinator.state.isAnimating,
-                       !UIAccessibility.prefersCrossFadeTransitions {
-                        GeometryReader { _ in
-                            navHeroOverlayView
-                                .frame(width: navigationCoordinator.currentRect.width, height: navigationCoordinator.currentRect.height)
-                                .clipped()
-                                // if we use the GeometryReader, the offset is with respect to the global origin,
-                                // if not, it's with respect to the center of the screen.
-                                // so, we wrap the view in a GeometryReader, but don't actually use the proxy
-                                .offset(x: navigationCoordinator.currentRect.minX, y: navigationCoordinator.currentRect.minY)
-                                .allowsHitTesting(false)
-                                .animation(navigationCoordinator.state.animation, value: navigationCoordinator.currentRect)
-                        }
-                        .edgesIgnoringSafeArea(.all)
-                    }
-                }
+        if case .enabled = navigationCoordinator.initialCoordinator.config.navigationMode {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                navigationSplitView
+            } else {
+                navigationStack
+            }
         } else {
-            NavStackEntryView(coordinator: coordinator, url: coordinator.initialURL)
-        }
-    }
-    
-    @ViewBuilder
-    private var navHeroOverlayView: some View {
-        // some views (AsyncImage) don't work properly when used in the animation
-        // so they can be overriden with a preference
-        if let overrideView = navigationCoordinator.overrideOverlayView {
-            overrideView
-        } else {
-            coordinator.builder.fromNodes(navigationCoordinator.sourceElement!.children(), coordinator: coordinator, url: coordinator.currentURL)
+            NavStackEntryView(coordinator: navigationCoordinator.initialCoordinator)
         }
     }
     
     @ViewBuilder
     private var navigationStack: some View {
-        NavigationStack(path: $coordinator.navigationPath) {
+        NavigationStack(path: $navigationCoordinator.navigationPath) {
             navigationRoot
                 .navigationDestination(for: URL.self) { url in
-                    NavStackEntryView(coordinator: coordinator, url: url)
-                        .environmentObject(navigationCoordinator)
-                        .onPreferenceChange(HeroViewDestKey.self) { newDest in
-                            if let newDest {
-                                navigationCoordinator.destRect = newDest.frameProvider()
-                                navigationCoordinator.destElement = newDest.element
-                            }
-                        }
+                    if let coordinator = navigationCoordinator.coordinator(for: url) {
+                        NavStackEntryView(coordinator: coordinator)
+                            .environmentObject(navigationCoordinator)
+                    }
                 }
+        }
+    }
+    @ViewBuilder
+    private var navigationSplitView: some View {
+        NavigationSplitView {
+            navigationRoot
+        } detail: {
+            if let url = navigationCoordinator.navigationPath.last,
+               let coordinator = navigationCoordinator.coordinator(for: url) {
+                NavStackEntryView(coordinator: coordinator)
+                    .environmentObject(navigationCoordinator)
+            }
         }
     }
     
     private var navigationRoot: some View {
-        NavStackEntryView(coordinator: coordinator, url: coordinator.initialURL)
+        NavStackEntryView(coordinator: navigationCoordinator.initialCoordinator)
             .environmentObject(navigationCoordinator)
     }
     

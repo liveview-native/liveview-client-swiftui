@@ -26,15 +26,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         internalState.publicState
     }
     
-    /// The first URL this live view was connected to.
-    public let initialURL: URL
-    @Published var navigationPath: [URL] = []
     /// The current URL this live view is connected to.
-    ///
-    /// - Note: If you need to use the URL in, e.g., a view with a custom action, you should generally prefer the context's ``LiveContext/url`` because `currentURL` will change upon live navigation and may not reflect the URL of the page your view is actually on.
-    public var currentURL: URL {
-        navigationPath.last ?? initialURL
-    }
+    public private(set) var url: URL
+    @Published private(set) var document: LiveViewNativeCore.Document?
     
     internal let config: LiveViewConfiguration
     
@@ -49,7 +43,6 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private var socket: Socket?
     private var channel: Channel?
     
-    @Published private(set) var document: LiveViewNativeCore.Document? = nil
     let elementChanged = PassthroughSubject<NodeRef, Never>()
     private var rendered: Root!
     
@@ -64,24 +57,17 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     private var eventHandlers: [String: (Payload) -> Void] = [:]
     
+    let liveRedirect = PassthroughSubject<LiveRedirect, Never>()
+    
     private var cancellables = Set<AnyCancellable>()
     
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
     /// - Parameter customRegistryType: The type of the registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM. This can generally be inferred automatically.
-    public init(_ url: URL, config: LiveViewConfiguration = .init(), customRegistryType: R.Type = R.self) {
-        self.initialURL = url
-        self.navigationPath = []
+    public init(_ url: URL, config: LiveViewConfiguration = .init(), customRegistryType _: R.Type = R.self) {
+        self.url = url.appending(path: "").absoluteURL
         self.config = config
-        // Subscribe to navigation stack pops
-        self.$navigationPath.scan(([URL](), [URL]()), { ($0.1, $1) }).sink { path in
-            if path.0.count > path.1.count {
-                Task {
-                    await self.reconnect()
-                }
-            }
-        }.store(in: &self.cancellables)
     }
     
     /// Creates a new coordinator without a custom registry.
@@ -89,6 +75,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// - Parameter config: The configuration for this coordinator.
     public convenience init(_ url: URL, config: LiveViewConfiguration = .init()) where R == EmptyRegistry {
         self.init(url, config: config, customRegistryType: EmptyRegistry.self)
+    }
+    
+    deinit {
+        Task {
+            await self.disconnect()
+        }
     }
     
     /// Connects this coordinator to the LiveView channel.
@@ -117,7 +109,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             return
         }
         
-        logger.debug("Connecting to \(self.currentURL.absoluteString)")
+        logger.debug("Connecting to \(self.url.absoluteString)")
         
         internalState = .startingConnection
         // in case we're reconnecting, reset the document so nothing gets stale elements
@@ -178,29 +170,6 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         await connect()
     }
     
-    func navigate(_ kind: LiveRedirectKind, to url: URL) async {
-        guard self.currentURL != url else { return }
-        switch kind {
-        case .push:
-            self.navigationPath.append(url)
-        case .replace:
-            // Append "" to avoid ambiguity with trailing `/`.
-            if url.appending(path: "").absoluteURL == self.initialURL.appending(path: "").absoluteURL {
-                self.navigationPath.removeAll()
-            } else {
-                self.navigationPath[self.navigationPath.count - 1] = url
-            }
-        }
-        await reconnect()
-    }
-    
-    @ViewBuilder
-    func viewTree() -> some View {
-        if let document {
-            builder.fromNodes(document[document.root()].children(), coordinator: self, url: currentURL)
-        }
-    }
-    
     /// Pushes a LiveView event with the given name and payload to the server.
     ///
     /// This is an asynchronous function that completes when the server finishes processing the event and returns a response.
@@ -244,13 +213,13 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         
         if let diffPayload = replyPayload["diff"] as? Payload {
             do {
-                try self.handleDiff(payload: diffPayload, baseURL: self.currentURL)
+                try self.handleDiff(payload: diffPayload, baseURL: self.url)
             } catch {
                 fatalError("todo")
             }
         } else if config.liveRedirectsEnabled,
-                  let liveRedirect = replyPayload["live_redirect"] as? Payload {
-            await self.handleLiveRedirect(liveRedirect)
+                  let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
+            liveRedirect.send(redirect)
         }
     }
     
@@ -258,7 +227,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         let data: Data
         let resp: URLResponse
         do {
-            (data, resp) = try await config.urlSession.data(from: currentURL)
+            (data, resp) = try await config.urlSession.data(from: self.url)
         } catch {
             throw Error.initialFetchError(error)
         }
@@ -304,7 +273,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
         let diff = try RootDiff(from: FragmentDecoder(data: payload))
         self.rendered = try self.rendered.merge(with: diff)
-        self.document!.merge(with: try Document.parse(self.rendered.buildString()))
+        self.document?.merge(with: try Document.parse(self.rendered.buildString()))
     }
     
     private nonisolated func parseDOM(html: String, baseURL: URL) throws -> Elements {
@@ -315,7 +284,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
 
     private func connectSocket() async throws {
-        let cookies = HTTPCookieStorage.shared.cookies(for: self.currentURL)
+        let cookies = HTTPCookieStorage.shared.cookies(for: self.url)
         
         let configuration = config.urlSession.configuration
         for cookie in cookies! {
@@ -335,8 +304,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     private func doConnectSocket(urlSessionConfiguration config: URLSessionConfiguration) {
-        var wsEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
-        wsEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
+        var wsEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
+        wsEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
         wsEndpoint.path = "/live/websocket"
         let socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: config) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
         self.socket = socket
@@ -372,8 +341,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private func connectLiveReloadSocket(urlSessionConfiguration: URLSessionConfiguration) async {
         logger.debug("[LiveReload] attempting to connect...")
 
-        var liveReloadEndpoint = URLComponents(url: currentURL, resolvingAgainstBaseURL: true)!
-        liveReloadEndpoint.scheme = currentURL.scheme == "https" ? "wss" : "ws"
+        var liveReloadEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
+        liveReloadEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
         liveReloadEndpoint.path = "/phoenix/live_reload/socket"
         self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
             URLSessionTransport(url: $0, configuration: urlSessionConfiguration)
@@ -400,7 +369,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             return
         }
         
-        var connectParams = config.connectParams?(currentURL) ?? [:]
+        var connectParams = config.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = phxCSRFToken
         connectParams["_platform"] = "ios"
@@ -408,7 +377,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         let params: Payload = [
             "session": phxSession,
             "static": phxStatic,
-            "url": currentURL.absoluteString,
+            "url": self.url.absoluteString,
             "params": connectParams,
         ]
         
@@ -427,7 +396,12 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 return
             }
             Task { @MainActor in
-                try! self.handleDiff(payload: message.payload, baseURL: self.currentURL)
+                try! self.handleDiff(payload: message.payload, baseURL: self.url)
+            }
+        }
+        channel.on("phx_close") { message in
+            DispatchQueue.main.async {
+                self.internalState = .notConnected(reconnectAutomatically: false)
             }
         }
         
@@ -483,10 +457,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 }
                 
                 if self.config.liveRedirectsEnabled,
-                   let redirect = message.payload["live_redirect"] as? Payload {
-                    Task {
-                        await self.handleLiveRedirect(redirect)
-                    }
+                   let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
+                    self.liveRedirect.send(redirect)
                 } else {
                     if case .awaitingJoinResponse(let continuation) = self.internalState {
                         continuation.resume(throwing: Error.joinError(message))
@@ -505,8 +477,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
         self.internalState = .connected
         self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
-        self.document!.on(.changed) { [unowned self] doc, nodeRef in
-            // text nodes don't have their own views, changes to them need to be handled by the parent PhxText view
+        self.document?.on(.changed) { [unowned self] doc, nodeRef in
+            // text nodes don't have their own views, changes to them need to be handled by the parent Text view
             if case .leaf(_) = doc[nodeRef].data,
                let parent = doc.getParent(nodeRef) {
                 self.elementChanged.send(parent)
@@ -516,17 +488,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
-    enum LiveRedirectKind: String {
-        case push
-        case replace
-    }
-    
-    private func handleLiveRedirect(_ payload: Payload) async {
-        guard let dest = (payload["to"] as? String).flatMap({ URL(string: $0, relativeTo: self.currentURL) }),
-              let kind = (payload["kind"] as? String).flatMap(LiveRedirectKind.init) else {
-            return
-        }
-        await self.navigate(kind, to: dest)
+    func redirectReplace(with url: URL) async {
+        self.url = url
+        await self.reconnect()
     }
     
     // Non-final API, for internal use only.

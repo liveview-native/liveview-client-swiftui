@@ -12,12 +12,9 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     // this is a @StateObject instead of @ObservedObject because changing which DOMWindows for a LiveView is not allowed
     @StateObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
-    private let url: URL
-    @State private var state: ConnectionState = .other(.notConnected)
     
-    init(coordinator: LiveViewCoordinator<R>, url: URL) {
+    init(coordinator: LiveViewCoordinator<R>) {
         self._coordinator = StateObject(wrappedValue: coordinator)
-        self.url = url
     }
     
     var body: some View {
@@ -26,26 +23,14 @@ struct NavStackEntryView<R: CustomRegistry>: View {
         SwiftUI.ZStack {
             elementTree
                 .environmentObject(liveViewModel)
+                .task {
+                    await coordinator.connect()
+                }
                 .onReceive(coordinator.$document) { newDocument in
                     // todo: things will go weird if the same url occurs multiple times in the navigation stack
-                    if coordinator.currentURL == url,
-                       let doc = newDocument {
-                        self.state = .connected(doc)
+                    if let doc = newDocument {
                         // todo: doing this every time the DOM changes is probably not efficient
                         liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
-                    }
-                }
-                .onReceive(coordinator.$internalState) { newValue in
-                    if coordinator.currentURL == url {
-                        let newState = newValue.publicState
-                        if case .connected(_) = state {
-                            // if we're already connected, we only want to remove the cached elements if there's been an error reconnecting
-                            if case .connectionFailed(_) = newState {
-                                state = .other(newState)
-                            }
-                        } else {
-                            state = .other(newState)
-                        }
                     }
                 }
         }
@@ -53,15 +38,19 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     
     @ViewBuilder
     private var elementTree: some View {
-        switch state {
-        case .connected(let doc):
-            coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: url)
-                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: doc))
-        case .other(let lvState):
-            if R.self.LoadingView == Never.self {
-                switch lvState {
+        switch coordinator.state {
+        case .connected:
+            if let doc = coordinator.document {
+                coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: coordinator.url)
+                    .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: doc))
+            } else {
+                fatalError("State is `.connected`, but no `Document` was found.")
+            }
+        default:
+            if R.LoadingView.self == Never.self {
+                switch coordinator.state {
                 case .connected:
-                    fatalError("unreachable")
+                    fatalError()
                 case .notConnected:
                     SwiftUI.Text("Not Connected")
                 case .connecting:
@@ -74,14 +63,8 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                     }
                 }
             } else {
-                R.loadingView(for: url, state: lvState)
+                R.loadingView(for: coordinator.url, state: coordinator.state)
             }
         }
     }
-    
-    enum ConnectionState {
-        case connected(Document)
-        case other(LiveViewCoordinator<R>.State)
-    }
-    
 }
