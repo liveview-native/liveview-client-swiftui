@@ -39,8 +39,6 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     private var eventHandlers: [String: (Payload) -> Void] = [:]
     
-    let liveRedirect = PassthroughSubject<LiveRedirect, Never>()
-    
     init(session: LiveSessionCoordinator<R>, url: URL) {
         self.session = session
         self.url = url
@@ -95,7 +93,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             }
         } else if session.config.liveRedirectsEnabled,
                   let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
-            liveRedirect.send(redirect)
+            await session.redirect(redirect)
         }
     }
     
@@ -220,7 +218,9 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 
                 if self.session.config.liveRedirectsEnabled,
                    let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
-                    self.liveRedirect.send(redirect)
+                    Task { @MainActor in
+                        await self.session.redirect(redirect)
+                    }
                 } else {
                     if case .awaitingJoinResponse(let continuation) = self.internalState {
                         continuation.resume(throwing: LiveConnectionError.joinError(message))

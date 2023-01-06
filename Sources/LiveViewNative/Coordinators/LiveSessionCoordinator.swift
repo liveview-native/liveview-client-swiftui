@@ -256,9 +256,14 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
-    func redirectReplace(with url: URL) async {
-        self.url = url
-        await self.reconnect()
+    func redirect(_ redirect: LiveRedirect) async {
+        switch redirect.kind {
+        case .push:
+            navigationPath.append(redirect.to)
+        case .replace:
+            navigationPath.removeLast()
+            navigationPath.append(redirect.to)
+        }
     }
 }
 
