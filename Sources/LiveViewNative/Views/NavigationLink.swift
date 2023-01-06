@@ -24,7 +24,7 @@ struct NavigationLink<R: CustomRegistry>: View {
     @ViewBuilder
     public var body: some View {
         if let linkOpts = LinkOptions(element: element),
-           context.coordinator.config.navigationMode.supportsLinkState(linkOpts.state),
+           context.coordinator.session.config.navigationMode.supportsLinkState(linkOpts.state),
            let url = linkOpts.url(in: context)
         {
             SwiftUI.NavigationLink(value: url) {
@@ -70,7 +70,7 @@ enum LinkKind: String {
     case redirect
 }
 
-extension LiveViewConfiguration.NavigationMode {
+extension LiveSessionConfiguration.NavigationMode {
     func supportsLinkState(_ state: LiveRedirect.Kind) -> Bool {
         switch self {
         case .disabled:

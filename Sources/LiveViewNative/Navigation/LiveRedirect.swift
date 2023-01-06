@@ -2,7 +2,7 @@
 //  LiveRedirect.swift
 //  
 //
-//  Created by Carson.Katri on 1/6/23.
+//  Created by Carson Katri on 1/6/23.
 //
 
 import Foundation

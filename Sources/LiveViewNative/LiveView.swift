@@ -12,7 +12,7 @@ import SwiftUI
 ///
 /// The `LiveView` attempts to connect immediately when it appears.
 ///
-/// While in states other than ``LiveViewCoordinator/State-swift.enum/connected``, this view only provides a basic text description of the state. The loading view can be customized with a custom registry and the ``CustomRegistry/loadingView(for:state:)-vg2v`` method.
+/// While in states other than ``LiveSessionCoordinator/State-swift.enum/connected``, this view only provides a basic text description of the state. The loading view can be customized with a custom registry and the ``CustomRegistry/loadingView(for:state:)-vg2v`` method.
 ///
 /// ## Topics
 /// ### Creating a LiveView
@@ -23,45 +23,66 @@ import SwiftUI
 /// - ``LiveViewModel``
 public struct LiveView<R: CustomRegistry>: View {
     @State private var hasAppeared = false
-    @StateObject private var navigationCoordinator: NavigationCoordinator<R>
+    @ObservedObject var session: LiveSessionCoordinator<R>
     @State private var hasSetupNavigationControllerDelegate = false
     
     /// Creates a new LiveView attached to the given coordinator.
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
-    public init(coordinator: LiveViewCoordinator<R>) {
-        self._navigationCoordinator = .init(wrappedValue: .init(initialCoordinator: coordinator))
+    public init(session: LiveSessionCoordinator<R>) {
+        self._session = .init(wrappedValue: session)
     }
 
     public var body: some View {
-        rootNavEntry
+        SwiftUI.VStack {
+            switch session.state {
+            case .connected:
+                rootNavEntry
+            default:
+                if R.LoadingView.self == Never.self {
+                    switch session.state {
+                    case .connected:
+                        fatalError()
+                    case .notConnected:
+                        SwiftUI.Text("Not Connected")
+                    case .connecting:
+                        SwiftUI.Text("Connecting")
+                    case .connectionFailed(let error):
+                        SwiftUI.VStack {
+                            SwiftUI.Text("Connection Failed")
+                                .font(.subheadline)
+                            SwiftUI.Text(error.localizedDescription)
+                        }
+                    }
+                } else {
+                    R.loadingView(for: session.url, state: session.state)
+                }
+            }
+        }
             .task {
-                await navigationCoordinator.initialCoordinator.connect()
+                await session.connect()
             }
     }
         
     @ViewBuilder
     private var rootNavEntry: some View {
-        if case .enabled = navigationCoordinator.initialCoordinator.config.navigationMode {
+        if case .enabled = session.config.navigationMode {
             if UIDevice.current.userInterfaceIdiom == .pad {
                 navigationSplitView
             } else {
                 navigationStack
             }
         } else {
-            NavStackEntryView(coordinator: navigationCoordinator.initialCoordinator)
+            navigationRoot
         }
     }
     
     @ViewBuilder
     private var navigationStack: some View {
-        NavigationStack(path: $navigationCoordinator.navigationPath) {
+        NavigationStack(path: $session.navigationPath) {
             navigationRoot
                 .navigationDestination(for: URL.self) { url in
-                    if let coordinator = navigationCoordinator.coordinator(for: url) {
-                        NavStackEntryView(coordinator: coordinator)
-                            .environmentObject(navigationCoordinator)
-                    }
+                    NavStackEntryView(session: session, url: url)
                 }
         }
     }
@@ -70,17 +91,13 @@ public struct LiveView<R: CustomRegistry>: View {
         NavigationSplitView {
             navigationRoot
         } detail: {
-            if let url = navigationCoordinator.navigationPath.last,
-               let coordinator = navigationCoordinator.coordinator(for: url) {
-                NavStackEntryView(coordinator: coordinator)
-                    .environmentObject(navigationCoordinator)
+            if let url = session.navigationPath.last {
+                NavStackEntryView(session: session, url: url)
             }
         }
     }
     
     private var navigationRoot: some View {
-        NavStackEntryView(coordinator: navigationCoordinator.initialCoordinator)
-            .environmentObject(navigationCoordinator)
+        NavStackEntryView(session: session, url: session.url)
     }
-    
 }

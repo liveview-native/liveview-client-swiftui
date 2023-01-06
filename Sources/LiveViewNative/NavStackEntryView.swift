@@ -13,8 +13,8 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     @StateObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
     
-    init(coordinator: LiveViewCoordinator<R>) {
-        self._coordinator = StateObject(wrappedValue: coordinator)
+    init(session: LiveSessionCoordinator<R>, url: URL) {
+        self._coordinator = .init(wrappedValue: .init(session: session, url: url))
     }
     
     var body: some View {

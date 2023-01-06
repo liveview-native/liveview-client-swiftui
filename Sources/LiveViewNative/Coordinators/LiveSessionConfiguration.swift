@@ -1,5 +1,5 @@
 //
-//  LiveViewConfiguration.swift
+//  LiveSessionConfiguration.swift
 // LiveViewNative
 //
 //  Created by Shadowfacts on 3/30/22.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// An object that configures the behavior of a ``LiveViewCoordinator``.
-public struct LiveViewConfiguration {
+/// An object that configures the behavior of a ``LiveSessionCoordinator``.
+public struct LiveSessionConfiguration {
     /// Whether this coordinators allows its live view to navigate.
     ///
     /// By default, navigation is ``NavigationMode-swift.enum/disabled``.
