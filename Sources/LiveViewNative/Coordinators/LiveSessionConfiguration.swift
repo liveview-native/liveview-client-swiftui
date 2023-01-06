@@ -25,7 +25,7 @@ public struct LiveSessionConfiguration {
     
     // Non-final API for internal use only.
     @_spi(NarwinChat)
-    public var eventHandlersEnabled: Bool = false
+    public var eventHandlersEnabled: Bool = true
     
     @_spi(NarwinChat)
     public var liveRedirectsEnabled: Bool = true

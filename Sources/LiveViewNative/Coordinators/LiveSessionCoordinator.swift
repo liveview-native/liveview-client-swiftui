@@ -100,7 +100,7 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         
         let html: String
         do {
-            html = try await fetchDOM()
+            html = try await fetchDOM(url: self.url)
         } catch let error as LiveConnectionError {
             internalState = .connectionFailed(error)
             return
@@ -137,11 +137,11 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         await connect()
     }
     
-    private func fetchDOM() async throws -> String {
+    func fetchDOM(url: URL) async throws -> String {
         let data: Data
         let resp: URLResponse
         do {
-            (data, resp) = try await config.urlSession.data(from: self.url)
+            (data, resp) = try await config.urlSession.data(from: url)
         } catch {
             throw LiveConnectionError.initialFetchError(error)
         }

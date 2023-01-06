@@ -42,6 +42,16 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     init(session: LiveSessionCoordinator<R>, url: URL) {
         self.session = session
         self.url = url
+        self.eventHandlers = [
+            "native_redirect": { [weak self] payload in
+                guard let self,
+                      let redirect = LiveRedirect(from: payload, relativeTo: self.url)
+                else { return }
+                Task {
+                    await session.redirect(redirect)
+                }
+            }
+        ]
     }
     
     /// Pushes a LiveView event with the given name and payload to the server.
@@ -132,23 +142,64 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
+    private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> (String, String, String, String) {
+        let metaRes = try doc.select("meta[name=\"csrf-token\"]")
+        guard !metaRes.isEmpty() else {
+            throw LiveConnectionError.initialParseError
+        }
+        let phxCSRFToken = try metaRes[0].attr("content")
+//        let liveReloadEnabled = !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
+        
+        let mainDivRes = try doc.select("div[data-phx-main=\"true\"]")
+        guard !mainDivRes.isEmpty() else {
+            throw LiveConnectionError.initialParseError
+        }
+        let mainDiv = mainDivRes[0]
+        let phxSession = try mainDiv.attr("data-phx-session")
+        let phxStatic = try mainDiv.attr("data-phx-static")
+//        let phxView = try mainDiv.attr("data-phx-view")
+        let phxID = try mainDiv.attr("id")
+        
+        return (phxCSRFToken, phxSession, phxStatic, phxID)
+    }
+    
     // todo: don't use Any for the params
     private func connectLiveView() async throws {
         guard let socket = session.socket else { return }
         
+        let html: String
+        do {
+            html = try await session.fetchDOM(url: self.url)
+        } catch let error as LiveConnectionError {
+            internalState = .connectionFailed(error)
+            return
+        }
+        
+        try Task.checkCancellation()
+        
+        let phxCSRFToken: String, phxSession: String, phxStatic: String, phxID: String
+        
+        do {
+            let doc = try SwiftSoup.parse(html)
+            (phxCSRFToken, phxSession, phxStatic, phxID) = try self.extractDOMValues(doc)
+        } catch {
+            internalState = .connectionFailed(LiveConnectionError.initialParseError)
+            return
+        }
+        
         var connectParams = session.config.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
-        connectParams["_csrf_token"] = session.phxCSRFToken
+        connectParams["_csrf_token"] = phxCSRFToken
         connectParams["_platform"] = "ios"
         
         let params: Payload = [
-            "session": session.phxSession,
-            "static": session.phxStatic,
+            "session": phxSession,
+            "static": phxStatic,
             "url": self.url.absoluteString,
             "params": connectParams,
         ]
         
-        let channel = socket.channel("lv:\(self.session.phxID)", params: params)
+        let channel = socket.channel("lv:\(phxID)", params: params)
         self.channel = channel
         channel.onError { message in
             logger.error("[Channel] Error: \(String(describing: message))")
