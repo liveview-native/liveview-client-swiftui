@@ -140,6 +140,7 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         self.rootCoordinator.disconnect()
         navigationPath.removeAll()
         self.socket?.disconnect()
+        self.socket = nil
         // when deliberately disconnect, don't let pending connections continue
         internalState = .notConnected(reconnectAutomatically: false)
     }
@@ -148,7 +149,7 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
     public func reconnect() async {
         disconnect()
         await connect()
-        await self.rootCoordinator.connect()
+        await self.rootCoordinator.reconnect()
     }
     
     func fetchDOM(url: URL) async throws -> String {
