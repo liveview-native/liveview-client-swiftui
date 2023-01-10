@@ -10,11 +10,11 @@ import LiveViewNativeCore
 
 struct NavStackEntryView<R: CustomRegistry>: View {
     // this is a @StateObject instead of @ObservedObject because changing which DOMWindows for a LiveView is not allowed
-    @StateObject private var coordinator: LiveViewCoordinator<R>
+    @ObservedObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
     
-    init(session: LiveSessionCoordinator<R>, url: URL) {
-        self._coordinator = .init(wrappedValue: .init(session: session, url: url))
+    init(coordinator: LiveViewCoordinator<R>) {
+        self.coordinator = coordinator
     }
     
     var body: some View {

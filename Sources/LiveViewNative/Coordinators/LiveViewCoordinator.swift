@@ -25,7 +25,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     let session: LiveSessionCoordinator<R>
-    let url: URL
+    var url: URL
     
     private var channel: Channel?
     
@@ -140,6 +140,20 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         } catch {
             fatalError(error.localizedDescription)
         }
+    }
+    
+    func disconnect() {
+        if let channel {
+            channel.leave()
+        }
+        channel = nil
+        self.internalState = .notConnected(reconnectAutomatically: false)
+        self.document = nil
+    }
+    
+    func reconnect() async {
+        self.disconnect()
+        await self.connect()
     }
     
     private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> (String, String, String, String) {

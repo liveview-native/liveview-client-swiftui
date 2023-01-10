@@ -26,9 +26,9 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
     
     /// The current URL this live view is connected to.
     public private(set) var url: URL
-    @Published private(set) var document: LiveViewNativeCore.Document?
     
-    @Published var navigationPath = [URL]()
+    @Published var navigationPath = [LiveNavigationEntry<R>]()
+    private(set) var rootCoordinator: LiveViewCoordinator<R>!
     
     internal let config: LiveSessionConfiguration
     
@@ -55,6 +55,18 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
     public init(_ url: URL, config: LiveSessionConfiguration = .init(), customRegistryType _: R.Type = R.self) {
         self.url = url.appending(path: "").absoluteURL
         self.config = config
+        self.rootCoordinator = .init(session: self, url: self.url)
+        $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { prev, next in
+            if prev.count > next.count {
+                let last = next.last ?? .init(url: self.url, coordinator: self.rootCoordinator)
+                if last.coordinator.url != last.url {
+                    last.coordinator.url = last.url
+                    Task {
+                        await last.coordinator.reconnect()
+                    }
+                }
+            }
+        }.store(in: &cancellables)
     }
     
     /// Creates a new coordinator without a custom registry.
@@ -95,8 +107,6 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         logger.debug("Connecting to \(self.url.absoluteString)")
         
         internalState = .startingConnection
-        // in case we're reconnecting, reset the document so nothing gets stale elements
-        document = nil
         
         let html: String
         do {
@@ -127,6 +137,9 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     private func disconnect() {
+        self.rootCoordinator.disconnect()
+        navigationPath.removeAll()
+        self.socket?.disconnect()
         // when deliberately disconnect, don't let pending connections continue
         internalState = .notConnected(reconnectAutomatically: false)
     }
@@ -135,6 +148,7 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
     public func reconnect() async {
         disconnect()
         await connect()
+        await self.rootCoordinator.connect()
     }
     
     func fetchDOM(url: URL) async throws -> String {
@@ -257,12 +271,34 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     func redirect(_ redirect: LiveRedirect) async {
-        switch redirect.kind {
-        case .push:
-            navigationPath.append(redirect.to)
-        case .replace:
-            navigationPath.removeLast()
-            navigationPath.append(redirect.to)
+        switch redirect.mode {
+        case .replaceTop:
+            let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
+            coordinator.url = redirect.to
+            let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
+            switch redirect.kind {
+            case .push:
+                navigationPath.append(entry)
+            case .replace:
+                navigationPath.removeLast()
+                navigationPath.append(entry)
+            }
+        case .multiplex:
+            switch redirect.kind {
+            case .push:
+                navigationPath.append(.init(
+                    url: redirect.to,
+                    coordinator: LiveViewCoordinator(session: self, url: redirect.to)
+                ))
+            case .replace:
+                navigationPath.removeLast()
+                // If we are replacing the current path with the previous one, just pop the URL so the previous one is on top.
+                guard (navigationPath.last?.coordinator.url ?? self.url) != redirect.to else { return }
+                navigationPath.append(.init(
+                    url: redirect.to,
+                    coordinator: LiveViewCoordinator(session: self, url: redirect.to)
+                ))
+            }
         }
     }
 }

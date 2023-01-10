@@ -26,11 +26,14 @@ public struct LiveView<R: CustomRegistry>: View {
     @ObservedObject var session: LiveSessionCoordinator<R>
     @State private var hasSetupNavigationControllerDelegate = false
     
+    @ObservedObject private var rootCoordinator: LiveViewCoordinator<R>
+    
     /// Creates a new LiveView attached to the given coordinator.
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
     public init(session: LiveSessionCoordinator<R>) {
         self._session = .init(wrappedValue: session)
+        self.rootCoordinator = session.rootCoordinator
     }
 
     public var body: some View {
@@ -81,8 +84,8 @@ public struct LiveView<R: CustomRegistry>: View {
     private var navigationStack: some View {
         NavigationStack(path: $session.navigationPath) {
             navigationRoot
-                .navigationDestination(for: URL.self) { url in
-                    NavStackEntryView(session: session, url: url)
+                .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
+                    NavStackEntryView(coordinator: entry.coordinator)
                 }
         }
     }
@@ -91,13 +94,28 @@ public struct LiveView<R: CustomRegistry>: View {
         NavigationSplitView {
             navigationRoot
         } detail: {
-            if let url = session.navigationPath.last {
-                NavStackEntryView(session: session, url: url)
+            NavigationStack(path: Binding<[LiveNavigationEntry<R>]> {
+                Array(session.navigationPath.dropFirst())
+            } set: { value in
+                var result = value
+                if let first = session.navigationPath.first {
+                    result.insert(first, at: 0)
+                }
+                session.navigationPath = result
+            }) {
+                Group {
+                    if let entry = session.navigationPath.first {
+                        NavStackEntryView(coordinator: entry.coordinator)
+                    }
+                }
+                .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
+                    NavStackEntryView(coordinator: entry.coordinator)
+                }
             }
         }
     }
     
     private var navigationRoot: some View {
-        NavStackEntryView(session: session, url: session.url)
+        NavStackEntryView(coordinator: rootCoordinator)
     }
 }
