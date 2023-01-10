@@ -19,7 +19,7 @@ func assertMatch(
     _ function: StaticString = #function,
     @ViewBuilder _ view: () -> some View
 ) throws {
-    try assertMatch(name: "\(URL(filePath: file).lastPathComponent):\(line)-\(function)", markup, view)
+    try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, view)
 }
 
 @MainActor
