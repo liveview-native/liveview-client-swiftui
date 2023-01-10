@@ -36,7 +36,7 @@ final class TextTests: XCTestCase {
             "black": .black,
         ]
         for (name, weight) in allWeights {
-            try assertMatch(#"<text font="body" font-weight="\#(name)">Hello, world!</text>"#) {
+            try assertMatch(name: "weight-\(name)", #"<text font="body" font-weight="\#(name)">Hello, world!</text>"#) {
                 Text("Hello, world!").font(.system(.body, weight: weight))
             }
         }

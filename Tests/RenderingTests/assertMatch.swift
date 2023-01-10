@@ -14,9 +14,18 @@ import LiveViewNativeCore
 @MainActor
 func assertMatch(
     _ markup: String,
-    _ function: String = #function,
     _ file: String = #file,
     _ line: Int = #line,
+    _ function: StaticString = #function,
+    @ViewBuilder _ view: () -> some View
+) throws {
+    try assertMatch(name: "\(URL(filePath: file).lastPathComponent):\(line)-\(function)", markup, view)
+}
+
+@MainActor
+func assertMatch(
+    name: String,
+    _ markup: String,
     @ViewBuilder _ view: () -> some View
 ) throws {
     let coordinator = LiveViewCoordinator(URL(string: "http://localhost")!)
@@ -31,9 +40,8 @@ func assertMatch(
     if markupImage == viewImage {
         XCTAssert(true)
     } else {
-        let infoPath = "\(URL(filePath: file).lastPathComponent):\(line)-\(function)"
-        let markupURL = URL.temporaryDirectory.appendingPathComponent("\(infoPath)_markup", conformingTo: .png)
-        let viewURL = URL.temporaryDirectory.appendingPathComponent("\(infoPath)_view", conformingTo: .png)
+        let markupURL = URL.temporaryDirectory.appendingPathComponent("\(name)_markup", conformingTo: .png)
+        let viewURL = URL.temporaryDirectory.appendingPathComponent("\(name)_view", conformingTo: .png)
         try markupImage?.write(to: markupURL)
         try viewImage?.write(to: viewURL)
         XCTAssert(false, "Rendered views did not match. Outputs saved to \(markupURL.path()) and \(viewURL.path())")
