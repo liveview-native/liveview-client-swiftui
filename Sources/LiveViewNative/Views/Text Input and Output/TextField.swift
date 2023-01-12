@@ -67,19 +67,24 @@ struct TextField<R: CustomRegistry>: TextFieldProtocol {
                     format: .percent,
                     prompt: prompt
                 )
-            case let format:
-                if format.starts(with: "currency-"),
-                   let code = format.split(separator: "currency-").last.map(String.init)
-                {
+            case "currency":
+                if let code = element.attributeValue(for: "currency-code") {
                     SwiftUI.TextField(
                         self.placeholder ?? "",
                         value: valueBinding(format: .currency(code: code)),
                         format: .currency(code: code),
                         prompt: prompt
                     )
-                } else if format.starts(with: "name-"),
-                          let style = format.split(separator: "name-").last
-                {
+                } else {
+                    SwiftUI.TextField(
+                        self.placeholder ?? "",
+                        text: textBinding,
+                        prompt: prompt,
+                        axis: axis
+                    )
+                }
+            case "name":
+                if let style = element.attributeValue(for: "name-style") {
                     let nameStyle: PersonNameComponents.FormatStyle.Style = {
                         switch style {
                         case "short":
@@ -108,6 +113,13 @@ struct TextField<R: CustomRegistry>: TextFieldProtocol {
                         axis: axis
                     )
                 }
+            default:
+                SwiftUI.TextField(
+                    self.placeholder ?? "",
+                    text: textBinding,
+                    prompt: prompt,
+                    axis: axis
+                )
             }
         } else {
             SwiftUI.TextField(
