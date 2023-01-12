@@ -7,14 +7,28 @@
 
 import SwiftUI
 
-struct Text: View {
-    @ObservedElement private var element: ElementNode
+struct Text<R: CustomRegistry>: View {
+    let element: ElementNode
+    let context: LiveContext<R>
     
-    init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
+    init(element: ElementNode, context: LiveContext<R>) {
+        self.element = element
+        self.context = context
     }
     
-    public var body: some View {
-        SwiftUI.Text(element.innerText())
+    public var body: SwiftUI.Text {
+        element.children().reduce(into: SwiftUI.Text("")) { prev, next in
+            if let element = next.asElement() {
+                switch element.tag {
+                case "text":
+                    prev = prev + Self(element: element, context: context).body
+                default:
+                    break
+                }
+            } else {
+                prev = prev + SwiftUI.Text(next.toString())
+            }
+        }
             .font(self.font)
             .foregroundColor(textColor)
     }
