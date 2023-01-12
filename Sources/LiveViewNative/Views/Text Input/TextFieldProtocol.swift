@@ -1,124 +1,22 @@
 //
-//  TextField.swift
-//  LiveViewNative
+//  TextFieldProtocol.swift
+//  
 //
-//  Created by Shadowfacts on 2/9/22.
+//  Created by Carson Katri on 1/12/23.
 //
 
 import SwiftUI
 
-struct TextField<R: CustomRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
-    @FormState private var value: String?
-    @FocusState private var isFocused: Bool
+protocol TextFieldProtocol: View {
+    associatedtype R: CustomRegistry
+    var element: ElementNode { get }
+    var context: LiveContext<R> { get }
+    var value: String? { get nonmutating set }
     
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
-    
-    var body: some View {
-        field
-            .focused($isFocused)
-            .phxTextFieldStyle(textFieldStyle)
-            .phxAutocorrectionDisabled(disableAutocorrection)
-            .textInputAutocapitalization(autocapitalization)
-            .phxKeyboardType(keyboard)
-            .phxSubmitLabel(submitLabel)
-            .onChange(of: isFocused, perform: handleFocus)
-    }
-    
-    @ViewBuilder
-    private var field: some View {
-        if let format = element.attributeValue(for: "format") {
-            switch format {
-            case "date-time":
-                SwiftUI.TextField(
-                    self.placeholder ?? "",
-                    value: valueBinding(format: .dateTime),
-                    format: .dateTime,
-                    prompt: prompt
-                )
-            case "url":
-                SwiftUI.TextField(
-                    self.placeholder ?? "",
-                    value: valueBinding(format: .url),
-                    format: .url,
-                    prompt: prompt
-                )
-            case "iso8601":
-                SwiftUI.TextField(
-                    self.placeholder ?? "",
-                    value: valueBinding(format: .iso8601),
-                    format: .iso8601,
-                    prompt: prompt
-                )
-            case "number":
-                SwiftUI.TextField(
-                    self.placeholder ?? "",
-                    value: valueBinding(format: .number),
-                    format: .number,
-                    prompt: prompt
-                )
-            case "percent":
-                SwiftUI.TextField(
-                    self.placeholder ?? "",
-                    value: valueBinding(format: .percent),
-                    format: .percent,
-                    prompt: prompt
-                )
-            case let format:
-                if format.starts(with: "currency-"),
-                   let code = format.split(separator: "currency-").last.map(String.init)
-                {
-                    SwiftUI.TextField(
-                        self.placeholder ?? "",
-                        value: valueBinding(format: .currency(code: code)),
-                        format: .currency(code: code),
-                        prompt: prompt
-                    )
-                } else if format.starts(with: "name-"),
-                          let style = format.split(separator: "name-").last
-                {
-                    let nameStyle: PersonNameComponents.FormatStyle.Style = {
-                        switch style {
-                        case "short":
-                            return .short
-                        case "medium":
-                            return .medium
-                        case "long":
-                            return .long
-                        case "abbreviated":
-                            return .abbreviated
-                        default:
-                            return .medium
-                        }
-                    }()
-                    SwiftUI.TextField(
-                        self.placeholder ?? "",
-                        value: valueBinding(format: .name(style: nameStyle)),
-                        format: .name(style: nameStyle),
-                        prompt: prompt
-                    )
-                } else {
-                    SwiftUI.TextField(
-                        self.placeholder ?? "",
-                        text: textBinding,
-                        prompt: prompt,
-                        axis: axis
-                    )
-                }
-            }
-        } else {
-            SwiftUI.TextField(
-                self.placeholder ?? "",
-                text: textBinding,
-                prompt: prompt,
-                axis: axis
-            )
-        }
-    }
-    
+    init(element: ElementNode, context: LiveContext<R>)
+}
+
+extension TextFieldProtocol {
     func valueBinding<S: ParseableFormatStyle>(format: S) -> Binding<S.FormatInput?> where S.FormatOutput == String {
         .init {
             try? value.flatMap(format.parseStrategy.parse)
@@ -127,7 +25,7 @@ struct TextField<R: CustomRegistry>: View {
         }
     }
     
-    private var textBinding: Binding<String> {
+    var textBinding: Binding<String> {
         Binding {
             value ?? ""
         } set: {
@@ -139,7 +37,7 @@ struct TextField<R: CustomRegistry>: View {
         }
     }
     
-    private var axis: Axis {
+    var axis: Axis {
         switch element.attributeValue(for: "axis") {
         case "horizontal":
             return .horizontal
@@ -150,12 +48,12 @@ struct TextField<R: CustomRegistry>: View {
         }
     }
     
-    private var prompt: SwiftUI.Text? {
+    var prompt: SwiftUI.Text? {
         element.attributeValue(for: "prompt").map(SwiftUI.Text.init)
     }
     
     /// Use `@FocusState` to send `phx-focus` and `phx-blur` events.
-    private func handleFocus(_ isFocused: Bool) {
+    func handleFocus(_ isFocused: Bool) {
         if isFocused {
             guard let event = element.attributeValue(for: "phx-focus") else { return }
             Task {
@@ -169,11 +67,11 @@ struct TextField<R: CustomRegistry>: View {
         }
     }
     
-    private var placeholder: String? {
+    var placeholder: String? {
         element.attributeValue(for: "placeholder")
     }
     
-    private var textFieldStyle: PhxTextFieldStyle {
+    var textFieldStyle: PhxTextFieldStyle {
         if let s = element.attributeValue(for: "text-field-style"),
            let style = PhxTextFieldStyle(rawValue: s) {
             return style
@@ -182,7 +80,7 @@ struct TextField<R: CustomRegistry>: View {
         }
     }
     
-    private var disableAutocorrection: Bool? {
+    var disableAutocorrection: Bool? {
         switch element.attributeValue(for: "autocorrection") {
         case "no":
             return true
@@ -193,7 +91,7 @@ struct TextField<R: CustomRegistry>: View {
         }
     }
     
-    private var autocapitalization: TextInputAutocapitalization? {
+    var autocapitalization: TextInputAutocapitalization? {
         switch element.attributeValue(for: "autocapitalization") {
         case "sentences":
             return .sentences
@@ -208,7 +106,7 @@ struct TextField<R: CustomRegistry>: View {
         }
     }
     
-    private var keyboard: UIKeyboardType? {
+    var keyboard: UIKeyboardType? {
         switch element.attributeValue(for: "keyboard") {
         case "ascii-capable":
             return .asciiCapable
@@ -237,7 +135,7 @@ struct TextField<R: CustomRegistry>: View {
         }
     }
     
-    private var submitLabel: SubmitLabel? {
+    var submitLabel: SubmitLabel? {
         switch element.attributeValue(for: "submit-label") {
         case "done":
             return .done
@@ -263,14 +161,14 @@ struct TextField<R: CustomRegistry>: View {
     }
 }
 
-fileprivate enum PhxTextFieldStyle: String {
+enum PhxTextFieldStyle: String {
     case automatic
     case plain
     case roundedBorder = "rounded-border"
     case squareBorder = "square-border"
 }
 
-fileprivate extension View {
+extension View {
     @ViewBuilder
     func phxTextFieldStyle(_ style: PhxTextFieldStyle) -> some View {
         switch style {

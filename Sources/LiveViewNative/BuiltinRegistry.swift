@@ -16,6 +16,8 @@ struct BuiltinRegistry {
         switch name {
         case "textfield":
             TextField<R>(element: element, context: context)
+        case "securefield":
+            SecureField<R>(element: element, context: context)
         case "text":
             Text(element: element, context: context)
         case "hstack":
