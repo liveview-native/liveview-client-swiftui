@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftSoup
 
 /// A formatter that parses ISO8601 dates as produced by Elixir's `DateTime`.
 fileprivate let dateFormatter: ISO8601DateFormatter = {
