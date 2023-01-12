@@ -19,7 +19,7 @@ struct Link<R: CustomRegistry>: View {
         SwiftUI.Link(
             destination: URL(string: element.attributeValue(for: "destination")!)!
         ) {
-            Text(element: element, context: context).body
+            context.buildChildren(of: element)
         }
     }
 }
