@@ -72,16 +72,16 @@ struct Text<R: CustomRegistry>: View {
                 } else {
                     return SwiftUI.Text("")
                 }
-            case let format:
-                if format.starts(with: "currency-"),
-                   let code = format.split(separator: "currency-").last.map(String.init),
-                   let number = Double(innerText)
-                {
+            case "currency":
+                if let code = element.attributeValue(for: "currency-code"),
+                   let number = Double(innerText) {
                     return SwiftUI.Text(number, format: .currency(code: code))
-                } else if format.starts(with: "name-"),
-                          let style = format.split(separator: "name-").last,
-                          let nameComponents = try? PersonNameComponents(innerText)
-                {
+                } else {
+                    return SwiftUI.Text(innerText)
+                }
+            case "name":
+                if let style = element.attributeValue(for: "name-style"),
+                   let nameComponents = try? PersonNameComponents(innerText) {
                     var nameStyle: PersonNameComponents.FormatStyle.Style {
                         switch style {
                         case "short":
@@ -100,6 +100,8 @@ struct Text<R: CustomRegistry>: View {
                 } else {
                     return SwiftUI.Text(innerText)
                 }
+            default:
+                return SwiftUI.Text(innerText)
             }
         } else {
             return element.children().reduce(into: SwiftUI.Text("")) { prev, next in
