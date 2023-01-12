@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftSoup
 
 struct Text<R: CustomRegistry>: View {
     let element: ElementNode
@@ -17,20 +18,30 @@ struct Text<R: CustomRegistry>: View {
     }
     
     public var body: SwiftUI.Text {
-        element.children().reduce(into: SwiftUI.Text("")) { prev, next in
-            if let element = next.asElement() {
-                switch element.tag {
-                case "text":
-                    prev = prev + Self(element: element, context: context).body
-                default:
-                    break
+        if let verbatim = element.attributeValue(for: "verbatim") {
+            return SwiftUI.Text(verbatim: verbatim)
+                .font(self.font)
+                .foregroundColor(textColor)
+        } else {
+            return element.children().reduce(into: SwiftUI.Text("")) { prev, next in
+                if let element = next.asElement() {
+                    switch element.tag {
+                    case "text":
+                        prev = prev + Self(element: element, context: context).body
+                    case "lvn-link":
+                        prev = prev + SwiftUI.Text(
+                            .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
+                        )
+                    default:
+                        break
+                    }
+                } else {
+                    prev = prev + SwiftUI.Text(next.toString())
                 }
-            } else {
-                prev = prev + SwiftUI.Text(next.toString())
             }
-        }
             .font(self.font)
             .foregroundColor(textColor)
+        }
     }
     
     private var font: Font? {
