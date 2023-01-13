@@ -425,7 +425,10 @@ mod tests {
     #[test]
     fn test_parse() {
         // i'm not hand converting this, just make sure it doesn't panic
-        let s = std::fs::read_to_string("../../Sources/PhoenixLiveViewNative/PhoenixLiveViewNative.docc/Tutorials/01 Initial List.tutorial").unwrap();
+        let s = std::fs::read_to_string(
+            "../../Sources/LiveViewNative/LiveViewNative.docc/Tutorials/01 Initial List.tutorial",
+        )
+        .unwrap();
         parse(&s);
     }
 

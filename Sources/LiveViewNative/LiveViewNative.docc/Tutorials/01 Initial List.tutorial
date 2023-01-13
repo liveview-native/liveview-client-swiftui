@@ -1,0 +1,211 @@
+@Tutorial(time: 30, projectFiles: "cats.zip") {
+    @Comment {
+        index = 1
+    }
+    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
+    
+    @Intro(title: "Your First LiveView") {
+        In this tutorial, you'll build a simple LiveView app to show a list of cute cats.
+        
+        @Image(source: 01-00-intro-header.png, alt: "An iPhone app showing a list of cat images and names.")
+    }
+    
+    @Section(title: "Building the Backend") {
+        Before we start the native frontend, we'll build a simple backend to serve the data.
+        
+        Make sure you have all the prerequisites installed:
+        - [Xcode](https://developer.apple.com/download/applications/) 13.3 or newer
+        - [Elixir](https://elixir-lang.org/install.html) 1.12 or newer
+        - [Phoenix](https://www.phoenixframework.org/)
+            - Run `mix archive.install hex phx_new`
+        
+        @Steps {
+            @Step {
+                On the command line, create a new Phoenix project and then open the created `lvn_tutorial` directory in your text editor of choice.
+                
+                For this project, we don't need most of the usual dependencies Phoenix includes, so we pass the command line flags to omit them.
+                
+                @Comment {
+                    skip = true
+                }
+                @Code(name: "Terminal", file: 01-01-01-create-project.sh)
+            }
+                
+<!--            @Step {-->
+<!--                Edit the `mix.exs` file in the created project.-->
+<!--                -->
+<!--                @Comment {-->
+<!--                    skip = true-->
+<!--                }-->
+<!--                @Code(name: "mix.exs", file: 01-01-02-mix.exs)-->
+<!--            }-->
+<!--                -->
+<!--            @Step {-->
+<!--                Next, add the `live_view_native` and `live_view_native_swift_ui` libraries as dependencies. -->
+<!--                -->
+<!--                These packages provide supporting functions for applying SwiftUI modifiers to elements from within HEEx templates.-->
+<!--                -->
+<!--                @Comment {-->
+<!--                    project = "backend"-->
+<!--                }-->
+<!--                @Code(name: "mix.exs", file: 01-01-03-dependencies.ex)-->
+<!--            }-->
+            
+            @Step {
+                In the router, add a live route for the "/cats" path that points to the live view we'll create next.
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "lib/lvn_tutorial_web/router.ex", file: 01-01-04-router.ex)
+            }
+            
+            @Step {
+                For now, all that we need in the live view is our list of cats and a mount handler to assign it to the socket, so the list is accessible from the template later.
+                
+                Make sure to download the [project files](https://liveviewnative.github.io/liveview-client-swiftui/downloads/cats.zip) for this tutorial and copy the `cats` folder into the `priv/static/images` folder of your Phoenix project.
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 01-01-05-cats_list_live.ex)
+            }
+            
+            @Step {
+                We'll also use `EEx.function_from_file` to define our render implementation to use a different file than the default one.
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 01-01-06-cats_list_live.ex)
+            }
+            
+            @Step {
+                In the template itself, we'll start with just a simple message. In the next section, we'll come back and build the full UI.
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 01-01-07-cats_list_live.ios.heex)
+            }
+            
+            @Step {
+                Lastly, we need to tweak the `live.html.heex` layout to remove the extraneous HTML that the native frontend doesn't need.
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "lib/lvn_tutorial_web/templates/layout/live.html.heex", file: 01-01-08-live-template.html.heex)
+            }
+        }
+    }
+    
+    @Section(title: "Creating the App") {
+        Let's create the iOS app and setup LiveView Native.
+        
+        @Steps {
+            @Step {
+                Create a new iOS App project in Xcode (File -> New -> Project…).
+                
+                @Image(source: 01-02-01-create-project.png, alt: "The New Project dialog with the iOS, App, and Next buttons highlighted.")
+            }
+            
+            @Step {
+                Make sure to select Swift as the language and SwiftUI as the interface.
+                
+                If you haven't used Xcode before, you may see an "Add Team" button. You can sign in with your Apple ID to test on your own devices, but you don't need to sign in to develop or use the iOS Simulator.
+                
+                @Image(source: 01-02-02-create-project.png, alt: "The New Project options dialog for a project named LVNTutorial using Swift, SwiftUI, and without Core Data or tests.")
+            }
+            
+            @Step {
+                Add a new Swift package dependency by selecting File -> Add Packages…, and in the search field, enter `https://github.com/liveviewnative/liveview-client-swiftui`, and click Add Package.
+                
+                Xcode may prompt you to sign in with GitHub. If so, follow its instructions to login and create an access token.
+                
+                @Image(source: 01-02-03-add-package.png, alt: "The Add Package window in Xcode with the search field, dependency rule, and Add button highlighted.")
+            }
+            
+            @Step {
+                Save the Xcode project alongside the Phoenix one you created earlier.
+                
+                This is a separate project from the Phoenix application, and they don't share files. If you wish to version control them together, you can place them in another folder and create a Git repo there.
+                
+                @Image(source: 01-02-04-save.png, alt: "The Save panel.")
+            }
+            
+            @Step {
+                Open the `ContentView.swift` file that the Xcode template created for you.
+                
+                @Comment {
+                    skip = true
+                }
+                @Code(name: "ContentView.swift", file: 01-02-05-initial-view.swift)
+            }
+            
+            @Step {
+                Then, import the LiveViewNative package and add the coordinator as a `@State` variable, using the URL of your Phoenix project.
+                
+                The coordinator handles all networking for the LiveView, and so only one instance of it should exist. We use a `@State` variable for this so that the coordinator isn't re-created if SwiftUI re-creates the containing view.
+                
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/ContentView.swift"
+                }
+                @Code(name: "ContentView.swift", file: 01-02-06-coordinator.swift)
+            }
+            
+            @Step {
+                Lastly, add the `LiveView` to your view's body, passing in the coordinator.
+                
+                Then, you can run the app in the Simulator and see it connecting to your Phoenix app. Make sure you've started the Phoenix server with `mix phx.server`!
+                
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/ContentView.swift"
+                }
+                @Code(name: "ContentView.swift", file: 01-02-07-liveview.swift) {
+                    @Image(source: 01-02-08-preview.png, alt: "Screenshot of an app displaying the text \"Hello, world!\"")
+                }
+            }
+            
+            Once you've got the app running, try updating the text in your HEEX template to see Live Reload refresh your app automatically!
+        }
+    }
+    
+    @Section(title: "Build the List UI") {
+        Now that you've got the iOS app up and running, lets build out the user interface to display our data.
+        
+        @Steps {
+            Pro tip: LiveViewNative supports Live Reload, so you can work on your HEEX template side-by-side with the iOS Simulator and see it update automatically.
+            
+            @Step {
+                In the HEEX template, replace the `<text>` element with a `<list>`. In the list, we'll iterate through the `@cats` list we created earlier, and for each one we'll render a text element with the cat's name.
+                
+                Note that each element inside a `<list>` needs to have a unique `id` attribute. Here, we just use the cat's name.
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 01-03-01-list.ios.heex) {
+                    @Image(source: 01-03-02-list-preview.png, alt: "The cat names we added earlier displayed as an iOS-styled list.")
+                }
+            }
+            
+            @Step {
+                Then, let's replace the `<text>` element in the list with an `<hstack>` (used to layout elements in a horizontal row). Inside the stack, we'll have an `<asyncimage>` element which loads the remote cat image from the server and then the cat's name as before.
+                
+                We also use the `frame` modifier to set the size of the image to 100×100 points.
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 01-03-03-images.ios.heex) {
+                    @Image(source: 01-03-04-images-preview.png, alt: "The list of cats with images of each cat to the left of their name.")
+                }
+            }
+            
+            Congratulations! You've built your first LiveView iOS app!
+        }
+    }
+}

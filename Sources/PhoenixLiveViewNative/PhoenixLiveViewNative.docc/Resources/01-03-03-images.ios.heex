@@ -1,9 +1,0 @@
-<list>
-  <%= for name <- @cats do %>
-    <hstack id={name}>
-      <asyncimage src={"/images/cats/#{name}.jpg"} frame='{"width": 100, "height": 100}' />
-      <text><%= name %></text>
-    </hstack>
-  <% end %>
-</list>
-

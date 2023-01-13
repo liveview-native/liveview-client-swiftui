@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "liveview-native-core-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/liveviewnative/liveview-native-core-swift.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "19a43bb48109af76d91237b238490d449c51e517"
+      }
+    },
+    {
       "identity" : "swiftphoenixclient",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davidstump/SwiftPhoenixClient.git",

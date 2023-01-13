@@ -21,7 +21,7 @@ done
 # build doccarchive
 echo "Building docs..."
 mkdir -p docc_build
-xcodebuild docbuild -scheme PhoenixLiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build &> $output
+xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build &> $output
 
 # create worktree
 if [ ! -d docs ]; then
@@ -29,14 +29,14 @@ if [ ! -d docs ]; then
 fi
 
 echo "Generating static files..."
-xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/PhoenixLiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui &> $output
+xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui &> $output
 
 # add index page to root with redirect to package docs
 cat > docs/index.html << EOF
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="refresh" content="0; url=/liveview-client-swiftui/documentation/phoenixliveviewnative">
+	<meta http-equiv="refresh" content="0; url=/liveview-client-swiftui/documentation/liveviewnative">
 </head>
 <body>
 </body>

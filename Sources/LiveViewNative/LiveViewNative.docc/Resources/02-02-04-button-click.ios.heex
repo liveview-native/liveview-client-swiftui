@@ -1,0 +1,13 @@
+<list>
+  <%= for {name, favorite} <- @cats_and_favorites do %>
+    <hstack id={name}>
+      <asyncimage src={"/images/cats/#{name}.jpg"} modifiers='[{"type": "frame", "width": 100, "height": 100}]' />
+      <text><%= name %></text>
+      <spacer />
+      <button phx-click="toggle-favorite" phx-value-name={name}>
+        <image system-name={if favorite, do: "star.fill", else: "star"} symbol-color={if favorite, do: "#f3c51a", else: "#000000"} />
+      </button>
+    </hstack>
+  <% end %>
+</list>
+

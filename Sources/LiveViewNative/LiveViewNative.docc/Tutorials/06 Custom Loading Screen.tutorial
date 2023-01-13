@@ -1,0 +1,71 @@
+@Tutorial(time: 30) {
+    @Comment {
+        index = 6
+    }
+    @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
+    
+    @Intro(title: "Style the Loading Screen to Match Your App") {
+        Add a more interesting loading screen that matches the style of your app.
+        
+        @Image(source: 06-00-intro-header.png, alt: "A circle of cat emojis.")
+    }
+    
+    @Section(title: "Add the Loading View") {
+        Add the loading view and update the registry.
+        
+        @Steps {
+            @Step {
+                Add a `MyLoadingView` SwiftUI view. This view is what will be displayed while the live view is connecting.
+                
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/MyLoadingView.swift"
+                }
+                @Code(name: "MyLoadingView.swift", file: 06-01-01-loadingview.swift)
+            }
+            
+            @Step {
+                Open your custom registry implementation.
+                
+                @Comment {
+                    skip = true
+                }
+                @Code(name: "MyRegistry.swift", file: 05-02-02-decode.swift)
+            }
+            
+            @Step {
+                Implement the `loadingView(for:state:)` method.
+                
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/MyRegistry.swift"
+                }
+                @Code(name: "MyRegistry.swift", file: 06-01-02-registry.swift)
+            }
+            
+            @Step {
+                In the method, check if the the live view is in an error state, and if so, display an error message.
+                
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/MyRegistry.swift"
+                }
+                @Code(name: "MyRegistry.swift", file: 06-01-03-error.swift)
+            }
+            
+            @Step {
+                Finally, if there isn't an error, display the custom loading view.
+                
+                With that, you can relaunch your app and see the loading view in action. If it's loading too quickly for you to see it, you can add a `Process.sleep(1000)` call to the `mount` callback of the list live view on the backend—just don't forget to remove it!
+                
+                @Comment {
+                    project = "app"
+                    path = "LVNTutorialApp/MyRegistry.swift"
+                }
+                @Code(name: "MyRegistry.swift", file: 06-01-04-registry.swift) {
+                    @Video(source: 06-01-05-loading.mp4, poster: 06-01-06-loading-poster.png)
+                }
+            }
+        }
+    }
+}

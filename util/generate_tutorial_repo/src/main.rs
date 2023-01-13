@@ -99,7 +99,7 @@ fn initialize_repo(opts: &Opts) -> anyhow::Result<Repository> {
 fn apply_tutorial_sections(opts: &Opts, repo: &Repository) -> anyhow::Result<()> {
     let tutorials_path = opts
         .package_path
-        .join("Sources/PhoenixLiveViewNative/PhoenixLiveViewNative.docc/Tutorials/");
+        .join("Sources/LiveViewNative/LiveViewNative.docc/Tutorials/");
     let entries =
         read_dir(tutorials_path).map_err(|e| anyhow!("reading tutorials dir: {:?}", e))?;
 
@@ -330,7 +330,7 @@ fn apply_code(opts: &Opts, code: &Code, file: &str, effective_path: &Path) -> an
 
     let source = opts
         .package_path
-        .join("Sources/PhoenixLiveViewNative/PhoenixLiveViewNative.docc/Resources/")
+        .join("Sources/LiveViewNative/LiveViewNative.docc/Resources/")
         .join(file);
     let dest = opts
         .repo_path
