@@ -1,4 +1,4 @@
-<vstack navigation-title={@name} nav-favorite={to_string(@favorite)}>
-  <asyncimage src={"/images/cats/#{@name}.jpg"} frame='{"width": 300, "height": 300}' />
+<vstack modifiers={[%{"type" => "navigation_title", "title" => @title}, %{"type" => "nav_favorite", "is_favorite" => @favorite}] |> Jason.encode!}>
+  <asyncimage src={"/images/cats/#{@name}.jpg"} modifiers='[{"type": "frame", "width": 300, "height": 300}]' />
   <cat-rating score={@score} />
 </vstack>

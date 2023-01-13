@@ -15,6 +15,7 @@ The only information you are required to provide is the URL of the live view to 
 The LiveView is then created by passing in the coordinator, no other setup necessary.
 
 ```swift
+@MainActor
 struct ContentView: View {
     @State private var coordinator = LiveViewCoordinator(URL(string: "http://localhost:4000/")!)
 
@@ -29,6 +30,7 @@ struct ContentView: View {
 The coordinator can be configured with a number of different options. To customize these, create a ``LiveViewConfiguration`` with the values you want, and then pass it to coordinator's initializer.
 
 ```swift
+@MainActor
 struct ContentView: View {
     @State private var coordinator: LiveViewCoordinator<EmptyRegistry> = {
         var config = LiveViewConfiguration()
@@ -47,6 +49,7 @@ struct ContentView: View {
 You can enable support for your own custom HTML elements and attributes by implementing the ``CustomRegistry`` protocol and providing it to the coordinator. The protocol uses only static methods, so rather than constructing an instance of your registry, you provide it as a generic type to the coordinator when constructing it:
 
 ```swift
+@MainActor
 struct ContentView: View {
     @State private var coordinator = LiveViewCoordinator<MyCustomRegistry>(URL(string: "http://localhost:4000/")!)
 

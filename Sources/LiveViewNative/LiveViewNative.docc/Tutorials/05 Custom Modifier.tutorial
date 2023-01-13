@@ -4,7 +4,7 @@
     }
     @XcodeRequirement(title: "Xcode 13.3", destination: "https://developer.apple.com/download/applications/")
     
-    @Intro(title: "Add a Navigation Bar Button with a Custom Attribute") {
+    @Intro(title: "Add a Navigation Bar Button with a Custom Modifier") {
         Use a custom modifier to add a navigation bar button to the detail view.
         
         @Image(source: 05-00-intro-header.png, alt: "The cat detail screen with a filled star button in the top right corner.")
@@ -51,9 +51,7 @@
             }
             
             @Step {
-                Add the custom attribute `nav-favorite` to the `<vstack>`.
-                
-                We use `to_string` to convert the boolean assign into a string, because just using it as a boolean directs Phoenix to remove the attribute from the DOM when the value is `false`. We want the attribute to always be there, so that the navigation bar button is always present.
+                Add the custom modifier `nav_favorite` to the `<vstack>`. With the modifier we'll pass the current state, so the frontend can display it in the navigation bar button.
                 
                 @Comment {
                     project = "backend"
@@ -64,7 +62,7 @@
     }
     
     @Section(title: "Implement the Attribute") {
-        Add code for handling the `nav-favorite` attribute to your custom registry.
+        Add code for handling the `nav_favorite` attribute to your custom registry.
         
         @Steps {
             @Step {
@@ -77,7 +75,7 @@
             }
             
             @Step {
-                Replace the `AttributeName` type alias with a new enum of the same name. This enum, similar to the `TagName` one, defines the attributes that your registry supports.
+                Replace the `ModifierType` type alias with a new enum of the same name. This enum, similar to the `TagName` one, defines the modifiers that your registry supports.
                 
                 @Comment {
                     project = "app"
@@ -87,15 +85,15 @@
             }
             
             @Step {
-                Implement the `lookupModifier` method. This method is invoked by the framework whenever it encounters an attribute that your registry has declared support for.
+                Implement the `decodeModifier` method. This method is invoked by the framework whenever it encounters an attribute that your registry has declared support for.
                 
-                In the method, we'll switch over the name of the attribute, and if it's the `nav-favorite` attribute, return the `NavFavoriteModifier`. As with the `lookup` method, don't include a default branch so that the compiler ensures your switch is exhaustive.
+                In the method, we'll switch over the type, and if it's the `nav_favorite` modifier, decode a `NavFavoriteModifier`. As with the `lookup` method, don't include a default branch so that the compiler ensures your switch is exhaustive.
                 
                 @Comment {
                     project = "app"
                     path = "LVNTutorialApp/MyRegistry.swift"
                 }
-                @Code(name: "MyRegistry.swift", file: 05-02-02-apply.swift)
+                @Code(name: "MyRegistry.swift", file: 05-02-02-decode.swift)
             }
             
             @Step {
@@ -109,15 +107,15 @@
             }
             
             @Step {
-                Add the `value` and `context` properties to the modifier struct.
+                Add the `isFavorite` and `context` properties to the modifier struct.
                 
-                The value will be used to show the current state of the favorite button, and the context will let us access the coordinator so we can send an event when the btuton's tapped.
+                `isFavorite` will be used to show the current state of the favorite button, and the context will let us access the coordinator so we can send an event when the button's tapped.
                 
                 @Comment {
                     project = "app"
                     path = "LVNTutorialApp/NavFavoriteModifier.swift"
                 }
-                @Code(name: "NavFavoriteModifier.swift", file: 05-02-04-properties.swift)
+                @Code(name: "NavFavoriteModifier.swift", file: 05-02-04-decode-modifier.swift)
             }
             
             @Step {

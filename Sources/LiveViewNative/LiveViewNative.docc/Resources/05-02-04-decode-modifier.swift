@@ -12,18 +12,6 @@ struct NavFavoriteModifier: ViewModifier, Decodable {
     }
     
     func body(content: Content) -> some View {
-        content
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        Task {
-                            try? await context.coordinator.pushEvent(type: "click", event: "toggle-favorite", value: [:])
-                        }
-                    } label: {
-                        Image(systemName: isFavorite ? "star.fill" : "star")
-                    }
-                }
-            }
     }
     
     enum CodingKeys: String, CodingKey {
