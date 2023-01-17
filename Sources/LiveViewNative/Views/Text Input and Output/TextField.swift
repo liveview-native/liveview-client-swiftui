@@ -20,11 +20,11 @@ struct TextField<R: CustomRegistry>: TextFieldProtocol {
     var body: some View {
         field
             .focused($isFocused)
-            .phxTextFieldStyle(textFieldStyle)
-            .phxAutocorrectionDisabled(disableAutocorrection)
+            .applyTextFieldStyle(textFieldStyle)
+            .applyAutocorrectionDisabled(disableAutocorrection)
             .textInputAutocapitalization(autocapitalization)
-            .phxKeyboardType(keyboard)
-            .phxSubmitLabel(submitLabel)
+            .applyKeyboardType(keyboard)
+            .applySubmitLabel(submitLabel)
             .onChange(of: isFocused, perform: handleFocus)
     }
     

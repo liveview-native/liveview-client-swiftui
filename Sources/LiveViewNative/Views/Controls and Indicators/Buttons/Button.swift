@@ -22,13 +22,13 @@ struct Button<R: CustomRegistry>: View {
         SwiftUI.Button(action: self.handleClick) {
             context.buildChildren(of: element)
         }
-        .phxButtonStyle(buttonStyle)
+        .applyButtonStyle(buttonStyle)
         .disabled(element.attributeValue(for: "disabled") != nil)
     }
     
-    private var buttonStyle: PhxButtonStyle {
+    private var buttonStyle: ButtonStyle {
         if let s = element.attributeValue(for: "button-style"),
-           let style = PhxButtonStyle(rawValue: s) {
+           let style = ButtonStyle(rawValue: s) {
             return style
         } else {
             return .automatic
@@ -50,7 +50,7 @@ struct Button<R: CustomRegistry>: View {
     
 }
 
-fileprivate enum PhxButtonStyle: String {
+fileprivate enum ButtonStyle: String {
     case automatic
     case bordered
     case borderedProminent = "bordered-prominent"
@@ -60,7 +60,7 @@ fileprivate enum PhxButtonStyle: String {
 
 fileprivate extension View {
     @ViewBuilder
-    func phxButtonStyle(_ style: PhxButtonStyle) -> some View {
+    func applyButtonStyle(_ style: ButtonStyle) -> some View {
         switch style {
         case .automatic:
             self.buttonStyle(.automatic)

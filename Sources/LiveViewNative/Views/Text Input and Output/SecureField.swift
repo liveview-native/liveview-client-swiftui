@@ -24,11 +24,11 @@ struct SecureField<R: CustomRegistry>: TextFieldProtocol {
             prompt: prompt
         )
             .focused($isFocused)
-            .phxTextFieldStyle(textFieldStyle)
-            .phxAutocorrectionDisabled(disableAutocorrection)
+            .applyTextFieldStyle(textFieldStyle)
+            .applyAutocorrectionDisabled(disableAutocorrection)
             .textInputAutocapitalization(autocapitalization)
-            .phxKeyboardType(keyboard)
-            .phxSubmitLabel(submitLabel)
+            .applyKeyboardType(keyboard)
+            .applySubmitLabel(submitLabel)
             .onChange(of: isFocused, perform: handleFocus)
     }
 }

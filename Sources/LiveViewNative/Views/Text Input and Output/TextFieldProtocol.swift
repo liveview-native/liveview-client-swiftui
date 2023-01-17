@@ -71,9 +71,9 @@ extension TextFieldProtocol {
         element.attributeValue(for: "placeholder")
     }
     
-    var textFieldStyle: PhxTextFieldStyle {
+    var textFieldStyle: TextFieldStyle {
         if let s = element.attributeValue(for: "text-field-style"),
-           let style = PhxTextFieldStyle(rawValue: s) {
+           let style = TextFieldStyle(rawValue: s) {
             return style
         } else {
             return .automatic
@@ -161,7 +161,7 @@ extension TextFieldProtocol {
     }
 }
 
-enum PhxTextFieldStyle: String {
+enum TextFieldStyle: String {
     case automatic
     case plain
     case roundedBorder = "rounded-border"
@@ -170,7 +170,7 @@ enum PhxTextFieldStyle: String {
 
 extension View {
     @ViewBuilder
-    func phxTextFieldStyle(_ style: PhxTextFieldStyle) -> some View {
+    func applyTextFieldStyle(_ style: TextFieldStyle) -> some View {
         switch style {
         case .automatic:
             self.textFieldStyle(.automatic)
@@ -188,7 +188,7 @@ extension View {
     }
     
     @ViewBuilder
-    func phxAutocorrectionDisabled(_ disableAutocorrection: Bool?) -> some View {
+    func applyAutocorrectionDisabled(_ disableAutocorrection: Bool?) -> some View {
         if let disableAutocorrection {
             self.autocorrectionDisabled(disableAutocorrection)
         } else {
@@ -197,7 +197,7 @@ extension View {
     }
     
     @ViewBuilder
-    func phxKeyboardType(_ keyboardType: UIKeyboardType?) -> some View {
+    func applyKeyboardType(_ keyboardType: UIKeyboardType?) -> some View {
         if let keyboardType {
             self.keyboardType(keyboardType)
         } else {
@@ -206,7 +206,7 @@ extension View {
     }
     
     @ViewBuilder
-    func phxSubmitLabel(_ submitLabel: SubmitLabel?) -> some View {
+    func applySubmitLabel(_ submitLabel: SubmitLabel?) -> some View {
         if let submitLabel {
             self.submitLabel(submitLabel)
         } else {
