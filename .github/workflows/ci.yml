@@ -13,4 +13,5 @@ jobs:
         shell: bash
         run: |
           sudo xcode-select --switch /Applications/Xcode_14.2.app
+          cd ..
           xcodebuild test -scheme LiveViewNative -sdk iphonesimulator16.2 -destination "OS=16.2,name=iPhone 14 Pro"
