@@ -14,7 +14,7 @@ These attributes are supported by all elements, including custom ones. Modifiers
 
 ## Attributes
 
-- `navigation-title`: The navigation title of the current page. Only displayed when navgiation is enabled, see ``LiveViewConfiguration/navigationMode-swift.property``. Properties:
+- `navigation_title`: The navigation title of the current page. Only displayed when navgiation is enabled, see ``LiveViewConfiguration/navigationMode-swift.property``. Properties:
     - `title` (string): The navigation title.
 - `frame`: A fixed size or flexible size frame around the modified view. Note that the fixed and flexible properties are mutually exclusive. All properties are optional. Properties:
     - `width` (number): The width of the frame.

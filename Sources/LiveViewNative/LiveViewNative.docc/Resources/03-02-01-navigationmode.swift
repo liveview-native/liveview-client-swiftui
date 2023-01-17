@@ -1,6 +1,7 @@
 import SwiftUI
 import LiveViewNative
 
+@MainActor
 struct ContentView: View {
     @State var coordinator: LiveViewCoordinator<EmptyRegistry> = {
         var config = LiveViewConfiguration()

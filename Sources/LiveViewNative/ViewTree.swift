@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 import LiveViewNativeCore
 
-private extension CodingUserInfoKey {
+public extension CodingUserInfoKey {
+    /// The ``LiveContext`` that is present when a modifier is being decoded.
     static let liveContext = CodingUserInfoKey(rawValue: "LiveViewNative.liveContext")!
 }
 

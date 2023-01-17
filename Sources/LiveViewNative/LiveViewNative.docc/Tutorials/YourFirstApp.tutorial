@@ -22,7 +22,7 @@
         @Image(source: <#file#>, alt: "<#accessible description#>")
         
         @TutorialReference(tutorial: "doc:04-Custom-Element")
-        @TutorialReference(tutorial: "doc:05-Custom-Attribute")
+        @TutorialReference(tutorial: "doc:05-Custom-Modifier")
         @TutorialReference(tutorial: "doc:06-Custom-Loading-Screen")
     }
     

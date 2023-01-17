@@ -5,21 +5,21 @@ struct MyRegistry: CustomRegistry {
     enum TagName: String {
         case catRating = "cat-rating"
     }
-    enum AttributeName: String, Equatable {
-        case navFavorite = "nav-favorite"
+    enum ModifierType: String {
+        case navFavorite = "nav_favorite"
     }
     
-    static func lookup(_ name: TagName, element: Element, context: LiveContext<MyRegistry>) -> some View {
+    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {
         switch name {
         case .catRating:
-            CatRatingView(element: element, context: context)
+            CatRatingView(context: context)
         }
     }
     
-    static func lookupModifier(_ name: AttributeName, value: String, element: Element, context: LiveContext<MyRegistry>) -> any ViewModifier {
-        switch name {
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier {
+        switch type {
         case .navFavorite:
-            return NavFavoriteModifier(value: value, context: context)
+            return try NavFavoriteModifier(from: decoder)
         }
     }
     
