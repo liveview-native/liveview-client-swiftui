@@ -84,7 +84,7 @@ public struct LiveView<R: CustomRegistry>: View {
         NavigationStack(path: $session.navigationPath) {
             navigationRoot
                 .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
-                    NavStackEntryView(coordinator: entry.coordinator)
+                    NavStackEntryView(entry)
                 }
         }
     }
@@ -104,17 +104,17 @@ public struct LiveView<R: CustomRegistry>: View {
             }) {
                 Group {
                     if let entry = session.navigationPath.first {
-                        NavStackEntryView(coordinator: entry.coordinator)
+                        NavStackEntryView(entry)
                     }
                 }
                 .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
-                    NavStackEntryView(coordinator: entry.coordinator)
+                    NavStackEntryView(entry)
                 }
             }
         }
     }
     
     private var navigationRoot: some View {
-        NavStackEntryView(coordinator: rootCoordinator)
+        NavStackEntryView(.init(url: session.url, coordinator: rootCoordinator))
     }
 }

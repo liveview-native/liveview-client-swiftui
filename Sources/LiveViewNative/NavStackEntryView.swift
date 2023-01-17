@@ -9,29 +9,34 @@ import SwiftUI
 import LiveViewNativeCore
 
 struct NavStackEntryView<R: CustomRegistry>: View {
+    private let entry: LiveNavigationEntry<R>
     @ObservedObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
     
-    init(coordinator: LiveViewCoordinator<R>) {
-        self.coordinator = coordinator
+    init(_ entry: LiveNavigationEntry<R>) {
+        self.entry = entry
+        self.coordinator = entry.coordinator
     }
     
     var body: some View {
-        // TODO: the ZStack is a workaround for an iOS 16 beta bug, check back before release to see if it's still needed
         let _ = Self._printChanges()
-        SwiftUI.ZStack {
-            elementTree
-                .environmentObject(liveViewModel)
-                .task {
+        elementTree
+            .environmentObject(liveViewModel)
+            .task {
+                // If the coordinator is not connected to the right URL, update it.
+                if coordinator.url != entry.url {
+                    coordinator.url = entry.url
+                    await coordinator.reconnect()
+                } else {
                     await coordinator.connect()
                 }
-                .onReceive(coordinator.$document) { newDocument in
-                    if let doc = newDocument {
-                        // todo: doing this every time the DOM changes is probably not efficient
-                        liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
-                    }
+            }
+            .onReceive(coordinator.$document) { newDocument in
+                if let doc = newDocument {
+                    // todo: doing this every time the DOM changes is probably not efficient
+                    liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
                 }
-        }
+            }
     }
     
     @ViewBuilder

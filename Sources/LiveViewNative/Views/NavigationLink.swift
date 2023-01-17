@@ -27,14 +27,8 @@ struct NavigationLink<R: CustomRegistry>: View {
            context.coordinator.session.config.navigationMode.supportsLinkState(linkOpts.state),
            let url = linkOpts.url(in: context)
         {
-            SwiftUI.NavigationLink(value: url) {
+            SwiftUI.NavigationLink(value: LiveNavigationEntry(url: url, coordinator: context.coordinator)) {
                 context.buildChildren(of: element)
-//                    .onPreferenceChange(HeroViewSourceKey.self) { newSource in
-//                        source = newSource
-//                    }
-//                    .onPreferenceChange(HeroViewOverrideKey.self) { newOverrideView in
-//                        overrideView = newOverrideView
-//                    }
             }
             .disabled(element.attribute(named: "disabled") != nil)
         } else {
@@ -62,7 +56,7 @@ struct LinkOptions {
     
     @MainActor
     func url<R: CustomRegistry>(in context: LiveContext<R>) -> URL? {
-        .init(string: href, relativeTo: context.coordinator.url)
+        .init(string: href, relativeTo: context.coordinator.url)?.appending(path: "/").absoluteURL
     }
 }
 
