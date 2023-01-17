@@ -47,9 +47,6 @@ struct BuiltinRegistry {
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
-        case "phx-hero":
-//            PhxHeroView(element: element, context: context)
-            fatalError()
         case "phx-submit-button":
             PhxSubmitButton(element: element, context: context)
         default:

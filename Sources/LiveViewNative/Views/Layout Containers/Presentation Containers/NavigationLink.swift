@@ -13,8 +13,6 @@ struct NavigationLink<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     @EnvironmentObject private var navCoordinator: NavigationCoordinator<R>
-//    @State private var source: HeroViewSourceKey.Value = nil
-//    @State private var overrideView: HeroViewOverrideKey.Value = nil
     @State private var doNavigationCancellable: AnyCancellable?
     
     init(element: ElementNode, context: LiveContext<R>) {
