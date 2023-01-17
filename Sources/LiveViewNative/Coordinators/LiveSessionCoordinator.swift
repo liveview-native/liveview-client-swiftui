@@ -275,8 +275,14 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
             case .push:
                 navigationPath.append(entry)
             case .replace:
-                navigationPath.removeLast()
-                navigationPath.append(entry)
+                // If there is nothing to replace, change the root URL.
+                if navigationPath.isEmpty {
+                    rootCoordinator.url = redirect.to
+                    await rootCoordinator.reconnect()
+                } else {
+                    navigationPath.removeLast()
+                    navigationPath.append(entry)
+                }
             }
         case .multiplex:
             switch redirect.kind {
@@ -286,13 +292,19 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
                     coordinator: LiveViewCoordinator(session: self, url: redirect.to)
                 ))
             case .replace:
-                navigationPath.removeLast()
-                // If we are replacing the current path with the previous one, just pop the URL so the previous one is on top.
-                guard (navigationPath.last?.coordinator.url ?? self.url) != redirect.to else { return }
-                navigationPath.append(.init(
-                    url: redirect.to,
-                    coordinator: LiveViewCoordinator(session: self, url: redirect.to)
-                ))
+                // If there is nothing to replace, change the root URL.
+                if navigationPath.isEmpty {
+                    rootCoordinator.url = redirect.to
+                    await rootCoordinator.reconnect()
+                } else {
+                    navigationPath.removeLast()
+                    // If we are replacing the current path with the previous one, just pop the URL so the previous one is on top.
+                    guard (navigationPath.last?.coordinator.url ?? self.url) != redirect.to else { return }
+                    navigationPath.append(.init(
+                        url: redirect.to,
+                        coordinator: LiveViewCoordinator(session: self, url: redirect.to)
+                    ))
+                }
             }
         }
     }
