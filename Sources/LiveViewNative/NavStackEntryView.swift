@@ -9,7 +9,6 @@ import SwiftUI
 import LiveViewNativeCore
 
 struct NavStackEntryView<R: CustomRegistry>: View {
-    // this is a @StateObject instead of @ObservedObject because changing which DOMWindows for a LiveView is not allowed
     @ObservedObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
     
@@ -27,7 +26,6 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                     await coordinator.connect()
                 }
                 .onReceive(coordinator.$document) { newDocument in
-                    // todo: things will go weird if the same url occurs multiple times in the navigation stack
                     if let doc = newDocument {
                         // todo: doing this every time the DOM changes is probably not efficient
                         liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
