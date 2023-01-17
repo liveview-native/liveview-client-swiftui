@@ -14,6 +14,7 @@ import LiveViewNativeCore
 /// In a view in the LiveView tree, a model can be obtained using `@EnvironmentObject`.
 public class LiveViewModel<R: CustomRegistry>: ObservableObject {
     private var forms = [String: FormModel]()
+    var cachedNavigationTitle: NavigationTitleModifier?
     
     /// Get or create a ``FormModel`` for the `<form>` element with the given ID.
     public func getForm(elementID id: String) -> FormModel {
