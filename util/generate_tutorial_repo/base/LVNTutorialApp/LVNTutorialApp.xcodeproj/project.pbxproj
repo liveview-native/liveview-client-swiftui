@@ -11,7 +11,7 @@
 		D61A45D728DBA5D3002BE511 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D61A45D628DBA5D3002BE511 /* ContentView.swift */; };
 		D61A45D928DBA5D4002BE511 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D61A45D828DBA5D4002BE511 /* Assets.xcassets */; };
 		D61A45DC28DBA5D4002BE511 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D61A45DB28DBA5D4002BE511 /* Preview Assets.xcassets */; };
-		D61A45E428DBA5FF002BE511 /* PhoenixLiveViewNative in Frameworks */ = {isa = PBXBuildFile; productRef = D61A45E328DBA5FF002BE511 /* PhoenixLiveViewNative */; };
+		D61A45E428DBA5FF002BE511 /* LiveViewNative in Frameworks */ = {isa = PBXBuildFile; productRef = D61A45E328DBA5FF002BE511 /* LiveViewNative */; };
 		D665963E28E77DB900FD477F /* MyRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D665963D28E77DB900FD477F /* MyRegistry.swift */; };
 		D665964028E77DC200FD477F /* NavFavoriteModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D665963F28E77DC200FD477F /* NavFavoriteModifier.swift */; };
 		D665964228E77DCB00FD477F /* CatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D665964128E77DCB00FD477F /* CatRatingView.swift */; };
@@ -35,7 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D61A45E428DBA5FF002BE511 /* PhoenixLiveViewNative in Frameworks */,
+				D61A45E428DBA5FF002BE511 /* LiveViewNative in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +98,7 @@
 			);
 			name = LVNTutorialApp;
 			packageProductDependencies = (
-				D61A45E328DBA5FF002BE511 /* PhoenixLiveViewNative */,
+				D61A45E328DBA5FF002BE511 /* LiveViewNative */,
 			);
 			productName = LVNTutorialApp;
 			productReference = D61A45D128DBA5D3002BE511 /* LVNTutorialApp.app */;
@@ -376,10 +376,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D61A45E328DBA5FF002BE511 /* PhoenixLiveViewNative */ = {
+		D61A45E328DBA5FF002BE511 /* LiveViewNative */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D61A45E228DBA5FF002BE511 /* XCRemoteSwiftPackageReference "liveview-client-swiftui" */;
-			productName = PhoenixLiveViewNative;
+			productName = LiveViewNative;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

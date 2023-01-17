@@ -39,7 +39,7 @@
             @Step {
                 We'll start with a simple template for this view that just displays the cat's image.
                 
-                The `navigation-title` attribute is used to assign a title that will be displayed in the navigation bar of our app. In the next section, you'll see how this is added.
+                The `navigation_title` modifier is used to assign a title that will be displayed in the navigation bar of our app. In the next section, you'll see how this is added.
                 
                 @Comment {
                     project = "backend"
@@ -75,7 +75,7 @@
             }
             
             @Step {
-                With the configuration updated, you can add a `navigation-title` attribute to the list template.
+                With the configuration updated, you can add a `navigation_title` modifier to the list template.
                 
                 After re-running the iOS app from Xcode (required because the Swift code changed), you should see your new navigation bar and title.
                 
