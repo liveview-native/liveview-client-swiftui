@@ -125,9 +125,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     private nonisolated func parseDOM(html: String, baseURL: URL) throws -> Elements {
-        // we parse the DOM as XML rather than HTML, because we don't want it to apply browser-specific HTML transformations
-        // such as <image> -> <img>
-        let document = try Parser.xmlParser().parseInput(html, baseURL.absoluteString)
+        let document = try Parser.htmlParser().parseInput(html, baseURL.absoluteString)
         return document.children()
     }
     
