@@ -42,5 +42,7 @@ public struct LiveSessionConfiguration {
         case replaceOnly
         /// Navigation is fully enabled. Both replace and push redirects are allowed.
         case enabled
+        /// Navigation is fully enabled and uses a `NavigationSplitView` for the UI.
+        case splitView
     }
 }

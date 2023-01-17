@@ -69,13 +69,12 @@ public struct LiveView<R: CustomRegistry>: View {
         
     @ViewBuilder
     private var rootNavEntry: some View {
-        if case .enabled = session.config.navigationMode {
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                navigationSplitView
-            } else {
-                navigationStack
-            }
-        } else {
+        switch session.config.navigationMode {
+        case .enabled:
+            navigationStack
+        case .splitView:
+            navigationSplitView
+        default:
             navigationRoot
         }
     }

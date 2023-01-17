@@ -28,12 +28,12 @@ func assertMatch(
     _ markup: String,
     @ViewBuilder _ view: () -> some View
 ) throws {
-    let coordinator = LiveViewCoordinator(URL(string: "http://localhost")!)
+    let session = LiveSessionCoordinator(URL(string: "http://localhost")!)
     let document = try LiveViewNativeCore.Document.parse(markup)
-    let viewTree = coordinator.builder.fromNodes(
+    let viewTree = session.rootCoordinator.builder.fromNodes(
         document[document.root()].children(),
-        context: LiveContext(coordinator: coordinator, url: coordinator.currentURL)
-    ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: document))
+        context: LiveContext(coordinator: session.rootCoordinator, url: session.url)
+    ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
     let markupImage = ImageRenderer(content: viewTree).uiImage?.pngData()
     let viewImage = ImageRenderer(content: view()).uiImage?.pngData()
     

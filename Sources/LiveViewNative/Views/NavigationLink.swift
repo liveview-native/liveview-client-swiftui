@@ -77,7 +77,7 @@ extension LiveSessionConfiguration.NavigationMode {
             return false
         case .replaceOnly:
             return state == .replace
-        case .enabled:
+        case .enabled, .splitView:
             return true
         }
     }
