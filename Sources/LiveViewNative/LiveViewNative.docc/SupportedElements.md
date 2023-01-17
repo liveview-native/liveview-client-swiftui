@@ -19,7 +19,6 @@ LiveViewNative supports DOM elements similar to but distinct from their Web coun
 - <doc:Image>
 - <doc:AsyncImage>
 - <doc:NavigationLink>
-- <doc:Hero>
 - <doc:Button>
 
 ### Forms

@@ -12,11 +12,11 @@ import LiveViewNativeCore
 ///
 /// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-2uoy9`` method.
 ///
-/// To use your custom registry implementation, provide it as the generic parameter for the ``LiveViewCoordinator`` you construct:
+/// To use your custom registry implementation, provide it as the generic parameter for the ``LiveSessionCoordinator`` you construct:
 ///
 /// ```swift
 /// struct ContentView: View {
-///     @State var coordinator = LiveViewCoordinator<MyRegistry>(...)
+///     @State var coordinator = LiveSessionCoordinator<MyRegistry>(...)
 /// }
 /// ```
 ///
@@ -111,14 +111,14 @@ public protocol CustomRegistry {
     /// If you do not implement this method, the framework provides a loading view which displays a simple text representation of the state.
     ///
     /// - Parameter url: The URL of the view being connected to.
-    /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveViewCoordinator/State-swift.enum/connected``.
+    /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveSessionCoordinator/State-swift.enum/connected``.
     @ViewBuilder
-    static func loadingView(for url: URL, state: LiveViewCoordinator<Self>.State) -> LoadingView
+    static func loadingView(for url: URL, state: LiveSessionCoordinator<Self>.State) -> LoadingView
 }
 
 extension CustomRegistry where LoadingView == Never {
     /// A default  implementation that falls back to the default framework loading view.
-    public static func loadingView(for url: URL, state: LiveViewCoordinator<Self>.State) -> Never {
+    public static func loadingView(for url: URL, state: LiveSessionCoordinator<Self>.State) -> Never {
         fatalError()
     }
 }

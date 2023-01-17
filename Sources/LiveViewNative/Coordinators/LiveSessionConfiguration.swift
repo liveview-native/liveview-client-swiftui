@@ -1,5 +1,5 @@
 //
-//  LiveViewConfiguration.swift
+//  LiveSessionConfiguration.swift
 // LiveViewNative
 //
 //  Created by Shadowfacts on 3/30/22.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// An object that configures the behavior of a ``LiveViewCoordinator``.
-public struct LiveViewConfiguration {
+/// An object that configures the behavior of a ``LiveSessionCoordinator``.
+public struct LiveSessionConfiguration {
     /// Whether this coordinators allows its live view to navigate.
     ///
     /// By default, navigation is ``NavigationMode-swift.enum/disabled``.
@@ -25,10 +25,10 @@ public struct LiveViewConfiguration {
     
     // Non-final API for internal use only.
     @_spi(NarwinChat)
-    public var eventHandlersEnabled: Bool = false
+    public var eventHandlersEnabled: Bool = true
     
     @_spi(NarwinChat)
-    public var liveRedirectsEnabled: Bool = false
+    public var liveRedirectsEnabled: Bool = true
     
     /// Constructs a default, empty configuration.
     public init() {
@@ -42,5 +42,7 @@ public struct LiveViewConfiguration {
         case replaceOnly
         /// Navigation is fully enabled. Both replace and push redirects are allowed.
         case enabled
+        /// Navigation is fully enabled and uses a `NavigationSplitView` for the UI.
+        case splitView
     }
 }
