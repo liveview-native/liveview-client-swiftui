@@ -22,9 +22,18 @@ struct NavigationTitleModifier: ViewModifier, Decodable, Equatable {
     func body(content: Content) -> some View {
         content
             .navigationTitle(title)
+            .preference(key: NavigationTitleModifierKey.self, value: self)
     }
     
     enum CodingKeys: String, CodingKey {
         case title
+    }
+}
+
+enum NavigationTitleModifierKey: PreferenceKey {
+    static var defaultValue: NavigationTitleModifier?
+    
+    static func reduce(value: inout NavigationTitleModifier?, nextValue: () -> NavigationTitleModifier?) {
+        value = nextValue() ?? value
     }
 }
