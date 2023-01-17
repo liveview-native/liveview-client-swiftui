@@ -7,20 +7,6 @@
 
 import SwiftUI
 
-/// A formatter that parses ISO8601 dates as produced by Elixir's `DateTime`.
-fileprivate let dateTimeFormatter: ISO8601DateFormatter = {
-    let formatter = ISO8601DateFormatter()
-    formatter.formatOptions = [.withFullDate, .withFullTime, .withFractionalSeconds]
-    return formatter
-}()
-
-/// A formatter that parses ISO8601 dates as produced by Elixir's `Date`.
-fileprivate let dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"
-    return formatter
-}()
-
 struct Text<R: CustomRegistry>: View {
     let element: ElementNode
     let context: LiveContext<R>
@@ -37,7 +23,7 @@ struct Text<R: CustomRegistry>: View {
     }
     
     private func formatDate(_ date: String) -> Date? {
-        dateTimeFormatter.date(from: date) ?? dateFormatter.date(from: date)
+        try? ElixirDateParseStrategy().parse(date)
     }
     
     private var text: SwiftUI.Text {

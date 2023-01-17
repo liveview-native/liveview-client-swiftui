@@ -46,6 +46,8 @@ struct BuiltinRegistry {
             Shape(element: element, context: context, shape: RoundedRectangle(from: element))
         case "lvn-link":
             Link(element: element, context: context)
+        case "progressview":
+            ProgressView(element: element, context: context)
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
