@@ -17,16 +17,18 @@ func assertMatch(
     _ file: String = #file,
     _ line: Int = #line,
     _ function: StaticString = #function,
-    @ViewBuilder _ view: () -> some View
+    @ViewBuilder _ view: () -> some View,
+    environment: (inout EnvironmentValues) -> () = { _ in }
 ) throws {
-    try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, view)
+    try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, view, environment: environment)
 }
 
 @MainActor
 func assertMatch(
     name: String,
     _ markup: String,
-    @ViewBuilder _ view: () -> some View
+    @ViewBuilder _ view: () -> some View,
+    environment: (inout EnvironmentValues) -> () = { _ in }
 ) throws {
     let coordinator = LiveViewCoordinator(URL(string: "http://localhost")!)
     let document = try LiveViewNativeCore.Document.parse(markup)

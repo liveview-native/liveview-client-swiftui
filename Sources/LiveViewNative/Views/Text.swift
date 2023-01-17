@@ -8,9 +8,16 @@
 import SwiftUI
 
 /// A formatter that parses ISO8601 dates as produced by Elixir's `DateTime`.
-fileprivate let dateFormatter: ISO8601DateFormatter = {
+fileprivate let dateTimeFormatter: ISO8601DateFormatter = {
     let formatter = ISO8601DateFormatter()
     formatter.formatOptions = [.withFullDate, .withFullTime, .withFractionalSeconds]
+    return formatter
+}()
+
+/// A formatter that parses ISO8601 dates as produced by Elixir's `Date`.
+fileprivate let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
     return formatter
 }()
 
@@ -29,13 +36,17 @@ struct Text<R: CustomRegistry>: View {
             .foregroundColor(textColor)
     }
     
+    private func formatDate(_ date: String) -> Date? {
+        dateTimeFormatter.date(from: date) ?? dateFormatter.date(from: date)
+    }
+    
     private var text: SwiftUI.Text {
         if let verbatim = element.attributeValue(for: "verbatim") {
             return SwiftUI.Text(verbatim: verbatim)
-        } else if let date = element.attributeValue(for: "date").flatMap(dateFormatter.date) {
+        } else if let date = element.attributeValue(for: "date").flatMap(formatDate) {
             return SwiftUI.Text(date, style: dateStyle)
-        } else if let dateStart = element.attributeValue(for: "date-start").flatMap(dateFormatter.date),
-                  let dateEnd = element.attributeValue(for: "date-end").flatMap(dateFormatter.date) {
+        } else if let dateStart = element.attributeValue(for: "date-start").flatMap(formatDate),
+                  let dateEnd = element.attributeValue(for: "date-end").flatMap(formatDate) {
             return SwiftUI.Text(dateStart...dateEnd)
         } else if let markdown = element.attributeValue(for: "markdown") {
             return SwiftUI.Text(.init(markdown))
@@ -43,7 +54,7 @@ struct Text<R: CustomRegistry>: View {
             let innerText = element.attributeValue(for: "value") ?? element.innerText()
             switch format {
             case "date-time":
-                if let date = dateFormatter.date(from: innerText) {
+                if let date = formatDate(innerText) {
                     return SwiftUI.Text(date, format: .dateTime)
                 } else {
                     return SwiftUI.Text(innerText)
@@ -55,7 +66,7 @@ struct Text<R: CustomRegistry>: View {
                     return SwiftUI.Text(innerText)
                 }
             case "iso8601":
-                if let date = dateFormatter.date(from: innerText) {
+                if let date = formatDate(innerText) {
                     return SwiftUI.Text(date, format: .iso8601)
                 } else {
                     return SwiftUI.Text(innerText)
