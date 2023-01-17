@@ -7,16 +7,156 @@
 
 import SwiftUI
 
-struct Text: View {
-    @ObservedElement private var element: ElementNode
+/// A formatter that parses ISO8601 dates as produced by Elixir's `DateTime`.
+fileprivate let dateTimeFormatter: ISO8601DateFormatter = {
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withFullDate, .withFullTime, .withFractionalSeconds]
+    return formatter
+}()
+
+/// A formatter that parses ISO8601 dates as produced by Elixir's `Date`.
+fileprivate let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter
+}()
+
+struct Text<R: CustomRegistry>: View {
+    let element: ElementNode
+    let context: LiveContext<R>
     
-    init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
+    init(element: ElementNode, context: LiveContext<R>) {
+        self.element = element
+        self.context = context
     }
     
-    public var body: some View {
-        SwiftUI.Text(element.innerText())
+    public var body: SwiftUI.Text {
+        text
             .font(self.font)
             .foregroundColor(textColor)
+    }
+    
+    private func formatDate(_ date: String) -> Date? {
+        dateTimeFormatter.date(from: date) ?? dateFormatter.date(from: date)
+    }
+    
+    private var text: SwiftUI.Text {
+        if let verbatim = element.attributeValue(for: "verbatim") {
+            return SwiftUI.Text(verbatim: verbatim)
+        } else if let date = element.attributeValue(for: "date").flatMap(formatDate) {
+            return SwiftUI.Text(date, style: dateStyle)
+        } else if let dateStart = element.attributeValue(for: "date-start").flatMap(formatDate),
+                  let dateEnd = element.attributeValue(for: "date-end").flatMap(formatDate) {
+            return SwiftUI.Text(dateStart...dateEnd)
+        } else if let markdown = element.attributeValue(for: "markdown") {
+            return SwiftUI.Text(.init(markdown))
+        } else if let format = element.attributeValue(for: "format") {
+            let innerText = element.attributeValue(for: "value") ?? element.innerText()
+            switch format {
+            case "date-time":
+                if let date = formatDate(innerText) {
+                    return SwiftUI.Text(date, format: .dateTime)
+                } else {
+                    return SwiftUI.Text(innerText)
+                }
+            case "url":
+                if let url = URL(string: innerText) {
+                    return SwiftUI.Text(url, format: .url)
+                } else {
+                    return SwiftUI.Text(innerText)
+                }
+            case "iso8601":
+                if let date = formatDate(innerText) {
+                    return SwiftUI.Text(date, format: .iso8601)
+                } else {
+                    return SwiftUI.Text(innerText)
+                }
+            case "number":
+                if let number = Double(innerText) {
+                    return SwiftUI.Text(number, format: .number)
+                } else {
+                    return SwiftUI.Text(innerText)
+                }
+            case "percent":
+                if let number = Double(innerText) {
+                    return SwiftUI.Text(number, format: .percent)
+                } else {
+                    return SwiftUI.Text("")
+                }
+            case "currency":
+                if let code = element.attributeValue(for: "currency-code"),
+                   let number = Double(innerText) {
+                    return SwiftUI.Text(number, format: .currency(code: code))
+                } else {
+                    return SwiftUI.Text(innerText)
+                }
+            case "name":
+                if let style = element.attributeValue(for: "name-style"),
+                   let nameComponents = try? PersonNameComponents(innerText) {
+                    var nameStyle: PersonNameComponents.FormatStyle.Style {
+                        switch style {
+                        case "short":
+                            return .short
+                        case "medium":
+                            return .medium
+                        case "long":
+                            return .long
+                        case "abbreviated":
+                            return .abbreviated
+                        default:
+                            return .medium
+                        }
+                    }
+                    return SwiftUI.Text(nameComponents, format: .name(style: nameStyle))
+                } else {
+                    return SwiftUI.Text(innerText)
+                }
+            default:
+                return SwiftUI.Text(innerText)
+            }
+        } else {
+            return element.children().reduce(into: SwiftUI.Text("")) { prev, next in
+                if let element = next.asElement() {
+                    switch element.tag {
+                    case "text":
+                        prev = prev + Self(element: element, context: context).body
+                    case "lvn-link":
+                        prev = prev + SwiftUI.Text(
+                            .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
+                        )
+                    case "image":
+                        if let systemName = element.attributeValue(for: "system-name") {
+                            prev = prev + SwiftUI.Text(SwiftUI.Image(systemName: systemName))
+                        } else if let name = element.attributeValue(for: "name") {
+                            prev = prev + SwiftUI.Text(SwiftUI.Image(systemName: name))
+                        } else {
+                            preconditionFailure("<image> must have system-name or name")
+                        }
+                    default:
+                        break
+                    }
+                } else {
+                    prev = prev + SwiftUI.Text(next.toString())
+                }
+            }
+        }
+    }
+    
+    private var dateStyle: SwiftUI.Text.DateStyle {
+        switch element.attributeValue(for: "date-style") {
+        case "time":
+            return .time
+        case "date":
+            return .date
+        case "relative":
+            return .relative
+        case "offset":
+            return .offset
+        case "timer":
+            return .timer
+        default:
+            return .date
+        }
     }
     
     private var font: Font? {
@@ -59,6 +199,8 @@ struct Text: View {
             weight = Font.Weight.light
         case "regular":
             weight = Font.Weight.regular
+        case "medium":
+            weight = Font.Weight.medium
         case "semibold":
             weight = Font.Weight.semibold
         case "thin":
