@@ -18,7 +18,7 @@ func assertMatch(
     _ line: Int = #line,
     _ function: StaticString = #function,
     @ViewBuilder _ view: () -> some View,
-    environment: (inout EnvironmentValues) -> () = { _ in }
+    environment: @escaping (inout EnvironmentValues) -> () = { _ in }
 ) throws {
     try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, view, environment: environment)
 }
@@ -28,7 +28,7 @@ func assertMatch(
     name: String,
     _ markup: String,
     @ViewBuilder _ view: () -> some View,
-    environment: (inout EnvironmentValues) -> () = { _ in }
+    environment: @escaping (inout EnvironmentValues) -> () = { _ in }
 ) throws {
     let coordinator = LiveViewCoordinator(URL(string: "http://localhost")!)
     let document = try LiveViewNativeCore.Document.parse(markup)
@@ -36,8 +36,8 @@ func assertMatch(
         document[document.root()].children(),
         context: LiveContext(coordinator: coordinator, url: coordinator.currentURL)
     ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: document))
-    let markupImage = ImageRenderer(content: viewTree).uiImage?.pngData()
-    let viewImage = ImageRenderer(content: view()).uiImage?.pngData()
+    let markupImage = ImageRenderer(content: viewTree.transformEnvironment(\.self, transform: environment)).uiImage?.pngData()
+    let viewImage = ImageRenderer(content: view().transformEnvironment(\.self, transform: environment)).uiImage?.pngData()
     
     if markupImage == viewImage {
         XCTAssert(true)

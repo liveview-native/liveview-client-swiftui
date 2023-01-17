@@ -199,6 +199,8 @@ struct Text<R: CustomRegistry>: View {
             weight = Font.Weight.light
         case "regular":
             weight = Font.Weight.regular
+        case "medium":
+            weight = Font.Weight.medium
         case "semibold":
             weight = Font.Weight.semibold
         case "thin":
