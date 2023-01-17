@@ -16,7 +16,7 @@ struct VStack<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        SwiftUI.VStack(alignment: alignment) {
+        SwiftUI.VStack(alignment: alignment, spacing: spacing) {
             context.buildChildren(of: element)
         }
     }
@@ -32,5 +32,11 @@ struct VStack<R: CustomRegistry>: View {
         default:
             fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <vstack>")
         }
+    }
+    
+    private var spacing: CGFloat? {
+        element.attributeValue(for: "spacing")
+            .flatMap(Double.init)
+            .flatMap(CGFloat.init)
     }
 }

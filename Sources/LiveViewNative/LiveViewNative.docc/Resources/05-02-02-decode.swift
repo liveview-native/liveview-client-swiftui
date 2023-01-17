@@ -15,4 +15,11 @@ struct MyRegistry: CustomRegistry {
             CatRatingView(context: context)
         }
     }
+    
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier {
+        switch type {
+        case .navFavorite:
+            return try NavFavoriteModifier(from: decoder)
+        }
+    }
 }

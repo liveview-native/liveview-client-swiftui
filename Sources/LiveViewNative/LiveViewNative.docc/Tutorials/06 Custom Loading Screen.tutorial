@@ -30,7 +30,7 @@
                 @Comment {
                     skip = true
                 }
-                @Code(name: "MyRegistry.swift", file: 05-02-02-apply.swift)
+                @Code(name: "MyRegistry.swift", file: 05-02-02-decode.swift)
             }
             
             @Step {
