@@ -76,12 +76,6 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         self.init(url, config: config, customRegistryType: EmptyRegistry.self)
     }
     
-    deinit {
-        Task {
-            await self.disconnect()
-        }
-    }
-    
     /// Connects this coordinator to the LiveView channel.
     ///
     /// This function is a no-op unless ``state-swift.property`` is ``State-swift.enum/notConnected``.
