@@ -20,6 +20,7 @@ struct ProgressView<R: CustomRegistry>: View {
             if let timerIntervalStart = element.attributeValue(for: "timer-interval-start").flatMap({ try? ElixirDateParseStrategy().parse($0) }),
                let timerIntervalEnd = element.attributeValue(for: "timer-interval-end").flatMap({ try? ElixirDateParseStrategy().parse($0) })
             {
+                // TODO: Note that this variant has a default `currentValueLabel`, which should be used if no current value label slot is used. It seems to only be active when initializing without the `currentValueLabel` argument.
                 SwiftUI.ProgressView(
                     timerInterval: timerIntervalStart...timerIntervalEnd,
                     countsDown: element.attributeValue(for: "counts-down") != "false"
