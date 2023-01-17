@@ -21,12 +21,7 @@ struct AsyncImage<R: CustomRegistry>: View {
         SwiftUI.AsyncImage(url: url, scale: scale ?? 1, transaction: Transaction(animation: .default)) { phase in
             switch phase {
             case .success(let image):
-                let configured = configureImage(image)
-                configured
-                    // when using an AsyncImage in the hero transition overlay, it never resolves to the actual image
-                    // so when the source AsyncImage resolves, we use a preference to communicate the resulting
-                    // Image up to the overlay view, in case it needs to be used
-                    .preference(key: HeroViewOverrideKey.self, value: HeroViewOverride(configured))
+                configureImage(image)
             case .failure(let error):
                 SwiftUI.Text(error.localizedDescription)
             case .empty:

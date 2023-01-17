@@ -16,6 +16,8 @@ struct BuiltinRegistry {
         switch name {
         case "textfield":
             TextField<R>(element: element, context: context)
+        case "securefield":
+            SecureField<R>(element: element, context: context)
         case "text":
             Text(element: element, context: context)
         case "hstack":
@@ -47,8 +49,6 @@ struct BuiltinRegistry {
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
-        case "phx-hero":
-            PhxHeroView(element: element, context: context)
         case "phx-submit-button":
             PhxSubmitButton(element: element, context: context)
         default:
@@ -59,9 +59,9 @@ struct BuiltinRegistry {
     
     enum ModifierType: String {
         case frame
-        case listRowInsets = "list_row_insets"
-        case listRowSeparator = "list_row_separator"
-        case navigationTitle = "navigation_title"
+        case listRowInsets
+        case listRowSeparator
+        case navigationTitle
         case padding
         case tint
     }

@@ -32,10 +32,7 @@ struct CoordinatorEnvironment {
     init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>, document: Document) {
         self.pushEvent = coordinator.pushEvent
         self.document = document
-        self.elementChanged = coordinator.elementChanged.filter({ _ in
-            // only pass through changes that happen for our document
-            coordinator.document === document
-        }).eraseToAnyPublisher()
+        self.elementChanged = coordinator.elementChanged.eraseToAnyPublisher()
     }
     
     fileprivate struct Key: EnvironmentKey {

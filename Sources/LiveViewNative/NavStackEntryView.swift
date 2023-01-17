@@ -9,66 +9,51 @@ import SwiftUI
 import LiveViewNativeCore
 
 struct NavStackEntryView<R: CustomRegistry>: View {
-    // this is a @StateObject instead of @ObservedObject because changing which DOMWindows for a LiveView is not allowed
-    @StateObject private var coordinator: LiveViewCoordinator<R>
+    private let entry: LiveNavigationEntry<R>
+    @ObservedObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel<R>()
-    // TODO: once we target iOS 16 only, this should be non-State and only come from the navigationDestination that creates this view
-    @State private var url: URL
-    @State private var state: ConnectionState = .other(.notConnected)
     
-    init(coordinator: LiveViewCoordinator<R>, url: URL) {
-        self._coordinator = StateObject(wrappedValue: coordinator)
-        self._url = State(initialValue: url)
+    init(_ entry: LiveNavigationEntry<R>) {
+        self.entry = entry
+        self.coordinator = entry.coordinator
     }
     
     var body: some View {
-        // TODO: the ZStack is a workaround for an iOS 16 beta bug, check back before release to see if it's still needed
         let _ = Self._printChanges()
-        SwiftUI.ZStack {
-            elementTree
-                .environmentObject(liveViewModel)
-                .onReceive(coordinator.$document) { newDocument in
-                    // todo: things will go weird if the same url occurs multiple times in the navigation stack
-                    if coordinator.currentURL == url,
-                       let doc = newDocument {
-                        self.state = .connected(doc)
-                        // todo: doing this every time the DOM changes is probably not efficient
-                        liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
-                    }
+        elementTree
+            .environmentObject(liveViewModel)
+            .task {
+                // If the coordinator is not connected to the right URL, update it.
+                if coordinator.url != entry.url {
+                    coordinator.url = entry.url
+                    await coordinator.reconnect()
+                } else {
+                    await coordinator.connect()
                 }
-                .onReceive(coordinator.$internalState) { newValue in
-                    if coordinator.currentURL == url {
-                        let newState = newValue.publicState
-                        if case .connected(_) = state {
-                            // if we're already connected, we only want to remove the cached elements if there's been an error reconnecting
-                            if case .connectionFailed(_) = newState {
-                                state = .other(newState)
-                            }
-                        } else {
-                            state = .other(newState)
-                        }
-                    }
+            }
+            .onReceive(coordinator.$document) { newDocument in
+                if let doc = newDocument {
+                    // todo: doing this every time the DOM changes is probably not efficient
+                    liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
                 }
-                .onReceive(coordinator.replaceRedirectSubject) { (oldURL, newURL) in
-                    // when the page is redirected, we need to update this view's url so it receives elements from the new page
-                    if oldURL == url {
-                        self.url = newURL
-                    }
-                }
-        }
+            }
     }
     
     @ViewBuilder
     private var elementTree: some View {
-        switch state {
-        case .connected(let doc):
-            coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: url)
-                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: doc))
-        case .other(let lvState):
-            if R.self.LoadingView == Never.self {
-                switch lvState {
+        switch coordinator.state {
+        case .connected:
+            if let doc = coordinator.document {
+                coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: coordinator.url)
+                    .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: doc))
+            } else {
+                fatalError("State is `.connected`, but no `Document` was found.")
+            }
+        default:
+            if R.LoadingView.self == Never.self {
+                switch coordinator.state {
                 case .connected:
-                    fatalError("unreachable")
+                    fatalError()
                 case .notConnected:
                     SwiftUI.Text("Not Connected")
                 case .connecting:
@@ -81,14 +66,8 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                     }
                 }
             } else {
-                R.loadingView(for: url, state: lvState)
+                R.loadingView(for: coordinator.url, state: coordinator.state)
             }
         }
     }
-    
-    enum ConnectionState {
-        case connected(Document)
-        case other(LiveViewCoordinator<R>.State)
-    }
-    
 }
