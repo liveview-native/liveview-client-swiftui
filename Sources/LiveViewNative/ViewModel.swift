@@ -206,3 +206,15 @@ extension String: FormValue {
         self = formValue
     }
 }
+
+extension Bool: FormValue {
+    public var formValue: String {
+        self.description
+    }
+    
+    public init?(formValue: String) {
+        guard let value = Bool(formValue)
+        else { return nil }
+        self = value
+    }
+}
