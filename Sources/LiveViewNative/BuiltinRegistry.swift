@@ -48,7 +48,10 @@ struct BuiltinRegistry {
             Link(element: element, context: context)
         case "divider":
             Divider()
-            
+        case "edit-button":
+            EditButton()
+        case "toggle":
+            Toggle(element: element, context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
