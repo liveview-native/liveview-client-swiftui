@@ -72,9 +72,9 @@ struct BuiltinRegistry {
     
     enum ModifierType: String {
         case frame
-        case listRowInsets
-        case listRowSeparator
-        case navigationTitle
+        case listRowInsets = "list_row_insets"
+        case listRowSeparator = "list_row_separator"
+        case navigationTitle = "navigation_title"
         case padding
         case tint
     }
