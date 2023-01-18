@@ -44,6 +44,14 @@ struct BuiltinRegistry {
             Shape(element: element, context: context, shape: Rectangle())
         case "roundedrectangle":
             Shape(element: element, context: context, shape: RoundedRectangle(from: element))
+        case "circle":
+            Shape(element: element, context: context, shape: Circle())
+        case "ellipse":
+            Shape(element: element, context: context, shape: Ellipse())
+        case "capsule":
+            Shape(element: element, context: context, shape: Capsule(from: element))
+        case "containerrelativeshape":
+            Shape(element: element, context: context, shape: ContainerRelativeShape())
         case "lvn-link":
             Link(element: element, context: context)
         case "divider":
