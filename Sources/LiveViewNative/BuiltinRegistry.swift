@@ -46,6 +46,8 @@ struct BuiltinRegistry {
             Shape(element: element, context: context, shape: RoundedRectangle(from: element))
         case "lvn-link":
             Link(element: element, context: context)
+        case "divider":
+            Divider()
         case "edit-button":
             EditButton()
         case "toggle":
