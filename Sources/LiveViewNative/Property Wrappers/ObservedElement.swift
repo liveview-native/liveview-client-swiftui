@@ -24,7 +24,7 @@ import Combine
 /// ## Example
 /// ```swift
 /// struct MyView: View {
-///     @ObservedElemenet private var element: ElementNode
+///     @ObservedElement private var element: ElementNode
 ///
 ///     var body: some View {
 ///         Text("Value: \(element.attributeValue(for: "my-attr") ?? "<none>")")
