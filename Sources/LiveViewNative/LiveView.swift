@@ -115,6 +115,6 @@ public struct LiveView<R: CustomRegistry>: View {
     }
     
     private var navigationRoot: some View {
-        NavStackEntryView(.init(url: rootCoordinator.url, coordinator: rootCoordinator))
+        NavStackEntryView(.init(url: session.url, coordinator: rootCoordinator))
     }
 }

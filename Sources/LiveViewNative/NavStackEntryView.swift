@@ -41,33 +41,48 @@ struct NavStackEntryView<R: CustomRegistry>: View {
     
     @ViewBuilder
     private var elementTree: some View {
-        switch coordinator.state {
-        case .connected:
-            if let doc = coordinator.document {
-                coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: coordinator.url)
-                    .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: doc))
-            } else {
-                fatalError("State is `.connected`, but no `Document` was found.")
-            }
-        default:
-            if R.LoadingView.self == Never.self {
-                switch coordinator.state {
-                case .connected:
-                    fatalError()
-                case .notConnected:
-                    SwiftUI.Text("Not Connected")
-                case .connecting:
-                    SwiftUI.Text("Connecting")
-                case .connectionFailed(let error):
-                    SwiftUI.VStack {
-                        SwiftUI.Text("Connection Failed")
-                            .font(.subheadline)
-                        SwiftUI.Text(error.localizedDescription)
+        if coordinator.url == entry.url {
+            switch coordinator.state {
+            case .connected:
+                if let doc = coordinator.document {
+                    coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: coordinator.url)
+                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: doc))
+                        .onPreferenceChange(NavigationTitleModifierKey.self) { navigationTitle in
+                            self.liveViewModel.cachedNavigationTitle = navigationTitle
+                            print("Nav title changed")
+                        }
+                } else {
+                    fatalError("State is `.connected`, but no `Document` was found.")
+                }
+            default:
+                let content = Group {
+                    if R.LoadingView.self == Never.self {
+                        switch coordinator.state {
+                        case .connected:
+                            fatalError()
+                        case .notConnected:
+                            SwiftUI.Text("Not Connected")
+                        case .connecting:
+                            SwiftUI.Text("Connecting")
+                        case .connectionFailed(let error):
+                            SwiftUI.VStack {
+                                SwiftUI.Text("Connection Failed")
+                                    .font(.subheadline)
+                                SwiftUI.Text(error.localizedDescription)
+                            }
+                        }
+                    } else {
+                        R.loadingView(for: coordinator.url, state: coordinator.state)
                     }
                 }
-            } else {
-                R.loadingView(for: coordinator.url, state: coordinator.state)
+                if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
+                    content.modifier(cachedNavigationTitle)
+                } else {
+                    content
+                }
             }
+        } else if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
+            SwiftUI.Text("").modifier(cachedNavigationTitle)
         }
     }
 }
