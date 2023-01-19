@@ -33,9 +33,6 @@ struct NavigationLink<R: CustomRegistry>: View {
                 context.buildChildren(of: element)
             }
             .disabled(element.attribute(named: "disabled") != nil)
-            .onAppear {
-                print(href)
-            }
         }
     }
 }
