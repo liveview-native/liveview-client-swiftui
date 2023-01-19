@@ -1,0 +1,263 @@
+{
+  "abstract": [
+    {
+      "text": "The coordinator corresponding to the live view in which thie view is being constructed.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0A7ContextV11coordinatorAA0aB11CoordinatorCyxGvp",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "let"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "coordinator"
+      },
+      {
+        "kind": "text",
+        "text": ": "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative0aB11CoordinatorC",
+        "text": "LiveViewCoordinator"
+      },
+      {
+        "kind": "text",
+        "text": "<"
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative0A7ContextV1Rxmfp",
+        "text": "R"
+      },
+      {
+        "kind": "text",
+        "text": ">"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Property",
+    "symbolKind": "property",
+    "title": "coordinator"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "let"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "coordinator"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative0aB11CoordinatorC",
+              "text": "LiveViewCoordinator"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative0A7ContextV1Rxmfp",
+              "text": "R"
+            },
+            {
+              "kind": "text",
+              "text": ">"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
+      "abstract": [
+        {
+          "text": "The context provides information at initialization-time to views in a LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveContext",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator": {
+      "abstract": [
+        {
+          "text": "The coordinator corresponding to the live view in which thie view is being constructed.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "let"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "coordinator"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0aB11CoordinatorC",
+          "text": "LiveViewCoordinator"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7ContextV1Rxmfp",
+          "text": "R"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "coordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext/coordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/livecontext/coordinator"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

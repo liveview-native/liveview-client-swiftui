@@ -1,0 +1,190 @@
+{
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/socketError(_:)"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0A15ConnectionErrorO06socketE0yACs0E0_pcACmF",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "case"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "socketError"
+      },
+      {
+        "kind": "text",
+        "text": "("
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:s5ErrorP",
+        "text": "Error"
+      },
+      {
+        "kind": "text",
+        "text": ")"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Case",
+    "symbolKind": "case",
+    "title": "LiveConnectionError.socketError(_:)"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "case"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "socketError"
+            },
+            {
+              "kind": "text",
+              "text": "("
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:s5ErrorP",
+              "text": "Error"
+            },
+            {
+              "kind": "text",
+              "text": ")"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveConnectionError"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveConnectionError"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveConnectionError",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/socketError(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "socketError"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5ErrorP",
+          "text": "Error"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/socketError(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveConnectionError.socketError(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/socketerror(_:)"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/liveconnectionerror/socketerror(_:)"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,295 @@
+{
+  "abstract": [
+    {
+      "text": "Inherited from ",
+      "type": "text"
+    },
+    {
+      "code": "View.keyboardShortcut(_:)",
+      "type": "codeVoice"
+    },
+    {
+      "text": ".",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/keyboardShortcut(_:)-92j97"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "extendedModule": "SwiftUI",
+    "externalID": "s:7SwiftUI4ViewPAAE16keyboardShortcutyQrAA08KeyboardE0VSgF::SYNTHESIZED::s:14LiveViewNative0aB0V",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "func"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "keyboardShortcut"
+      },
+      {
+        "kind": "text",
+        "text": "("
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:7SwiftUI16KeyboardShortcutV",
+        "text": "KeyboardShortcut"
+      },
+      {
+        "kind": "text",
+        "text": "?) -> "
+      },
+      {
+        "kind": "keyword",
+        "text": "some"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:7SwiftUI4ViewP",
+        "text": "View"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "platforms": [
+      {
+        "beta": false,
+        "deprecated": false,
+        "introducedAt": "15.4",
+        "name": "iOS",
+        "unavailable": false
+      },
+      {
+        "beta": false,
+        "deprecated": false,
+        "introducedAt": "12.3",
+        "name": "macOS",
+        "unavailable": false
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Method",
+    "symbolKind": "method",
+    "title": "keyboardShortcut(_:)"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "func"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "keyboardShortcut"
+            },
+            {
+              "kind": "text",
+              "text": "("
+            },
+            {
+              "kind": "externalParam",
+              "text": "_"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "internalParam",
+              "text": "shortcut"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:7SwiftUI16KeyboardShortcutV",
+              "text": "KeyboardShortcut"
+            },
+            {
+              "kind": "text",
+              "text": "?) -> "
+            },
+            {
+              "kind": "keyword",
+              "text": "some"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:7SwiftUI4ViewP",
+              "text": "View"
+            },
+            {
+              "kind": "text",
+              "text": "\n"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
+      "abstract": [
+        {
+          "text": "The SwiftUI root view for a Phoenix LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveView",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveview"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "View Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveview/view-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/keyboardShortcut(_:)-92j97": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "keyboardShortcut"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI16KeyboardShortcutV",
+          "text": "KeyboardShortcut"
+        },
+        {
+          "kind": "text",
+          "text": "?) -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "some"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4ViewP",
+          "text": "View"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/keyboardShortcut(_:)-92j97",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "keyboardShortcut(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveview/keyboardshortcut(_:)-92j97"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/liveview/keyboardshortcut(_:)-92j97"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

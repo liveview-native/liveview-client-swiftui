@@ -1,0 +1,198 @@
+{
+  "abstract": [
+    {
+      "text": "Constructs a default, empty configuration.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/init()"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0A20SessionConfigurationVACycfc",
+    "fragments": [
+      {
+        "kind": "identifier",
+        "text": "init"
+      },
+      {
+        "kind": "text",
+        "text": "()"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Initializer",
+    "symbolKind": "init",
+    "title": "init()"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "init"
+            },
+            {
+              "kind": "text",
+              "text": "()"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
+      "abstract": [
+        {
+          "text": "An object that configures the behavior of a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/init()": {
+      "abstract": [
+        {
+          "text": "Constructs a default, empty configuration.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "()"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/init()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/init()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/livesessionconfiguration/init()"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

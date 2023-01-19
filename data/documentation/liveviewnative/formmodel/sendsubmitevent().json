@@ -1,0 +1,276 @@
+{
+  "abstract": [
+    {
+      "text": "Sends a phx-submit event (if configured) to the server with the current form data.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendSubmitEvent()"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative9FormModelC15sendSubmitEventyyYaKF",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "func"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "sendSubmitEvent"
+      },
+      {
+        "kind": "text",
+        "text": "() "
+      },
+      {
+        "kind": "keyword",
+        "text": "async"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "keyword",
+        "text": "throws"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Method",
+    "symbolKind": "method",
+    "title": "sendSubmitEvent()"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "func"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "sendSubmitEvent"
+            },
+            {
+              "kind": "text",
+              "text": "() "
+            },
+            {
+              "kind": "keyword",
+              "text": "async"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "throws"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "discussion",
+          "level": 2,
+          "text": "Discussion",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "This method has no effect if the ",
+              "type": "text"
+            },
+            {
+              "code": "<form>",
+              "type": "codeVoice"
+            },
+            {
+              "text": " does not have a ",
+              "type": "text"
+            },
+            {
+              "code": "phx-submit",
+              "type": "codeVoice"
+            },
+            {
+              "text": " event configured.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "See ",
+              "type": "text"
+            },
+            {
+              "code": "LiveSessionCoordinator/pushEvent(type:event:value:)",
+              "type": "codeVoice"
+            },
+            {
+              "text": " for more information.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
+      "abstract": [
+        {
+          "text": "A form model stores the working copy of the data for a specific ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormModel",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendSubmitEvent()": {
+      "abstract": [
+        {
+          "text": "Sends a phx-submit event (if configured) to the server with the current form data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "sendSubmitEvent"
+        },
+        {
+          "kind": "text",
+          "text": "() "
+        },
+        {
+          "kind": "keyword",
+          "text": "async"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendSubmitEvent()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "sendSubmitEvent()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel/sendsubmitevent()"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/formmodel/sendsubmitevent()"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

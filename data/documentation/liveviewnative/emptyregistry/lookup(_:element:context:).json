@@ -1,0 +1,665 @@
+{
+  "abstract": [
+    {
+      "text": "A default implementation that does not provide any custom elements. If you omit the ",
+      "type": "text"
+    },
+    {
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
+      "isActive": true,
+      "type": "reference"
+    },
+    {
+      "text": " type alias, this implementation will be used.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+        "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry",
+        "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/CustomRegistry-Implementations"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/lookup(_:element:context:)"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "conformance": {
+      "availabilityPrefix": [
+        {
+          "text": "Available when",
+          "type": "text"
+        }
+      ],
+      "conformancePrefix": [
+        {
+          "text": "Conforms when",
+          "type": "text"
+        }
+      ],
+      "constraints": [
+        {
+          "code": "CustomView",
+          "type": "codeVoice"
+        },
+        {
+          "text": " is ",
+          "type": "text"
+        },
+        {
+          "code": "Never",
+          "type": "codeVoice"
+        },
+        {
+          "text": " and ",
+          "type": "text"
+        },
+        {
+          "code": "TagName",
+          "type": "codeVoice"
+        },
+        {
+          "text": " is ",
+          "type": "text"
+        },
+        {
+          "code": "EmptyRegistry.None",
+          "type": "codeVoice"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ]
+    },
+    "extendedModule": "LiveViewNative",
+    "externalID": "s:14LiveViewNative14CustomRegistryPAAs5NeverO0dB0RtzAA05EmptyE0V4NoneV7TagNameRtzrlE6lookup_7element7contextAeK_AA11ElementNodeVAA0A7ContextVyxGtFZ::SYNTHESIZED::s:14LiveViewNative13EmptyRegistryV",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "static"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "keyword",
+        "text": "func"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "lookup"
+      },
+      {
+        "kind": "text",
+        "text": "("
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP7TagNameQa",
+        "text": "TagName"
+      },
+      {
+        "kind": "text",
+        "text": ", "
+      },
+      {
+        "kind": "externalParam",
+        "text": "element"
+      },
+      {
+        "kind": "text",
+        "text": ": "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+        "text": "ElementNode"
+      },
+      {
+        "kind": "text",
+        "text": ", "
+      },
+      {
+        "kind": "externalParam",
+        "text": "context"
+      },
+      {
+        "kind": "text",
+        "text": ": "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
+        "text": "LiveContext"
+      },
+      {
+        "kind": "text",
+        "text": "<"
+      },
+      {
+        "kind": "typeIdentifier",
+        "text": "Self"
+      },
+      {
+        "kind": "text",
+        "text": ">) -> "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:s5NeverO",
+        "text": "Never"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Type Method",
+    "symbolKind": "method",
+    "title": "lookup(_:element:context:)"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "static"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "func"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "lookup"
+            },
+            {
+              "kind": "text",
+              "text": "("
+            },
+            {
+              "kind": "externalParam",
+              "text": "_"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "internalParam",
+              "text": "name"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP7TagNameQa",
+              "text": "TagName"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "externalParam",
+              "text": "element"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+              "text": "ElementNode"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "externalParam",
+              "text": "context"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
+              "text": "LiveContext"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "Self"
+            },
+            {
+              "kind": "text",
+              "text": ">) -> "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:s5NeverO",
+              "text": "Never"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName": {
+      "abstract": [
+        {
+          "text": "A type representing the tag names that this registry type can provide views for.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "associatedtype"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "TagName"
+        },
+        {
+          "kind": "text",
+          "text": " : "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SY",
+          "text": "RawRepresentable"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "TagName",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry/tagname"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
+      "abstract": [
+        {
+          "text": "A wrapper for an element-containing DOM node and its associated data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "role": "symbol",
+      "title": "ElementNode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry": {
+      "abstract": [
+        {
+          "text": "The empty registry is the default ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " implementation that does not provide any views or modifiers.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "EmptyRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "EmptyRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "EmptyRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/emptyregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/CustomRegistry-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/CustomRegistry-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "CustomRegistry Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/emptyregistry/customregistry-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/lookup(_:element:context:)": {
+      "abstract": [
+        {
+          "text": "A default implementation that does not provide any custom elements. If you omit the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type alias, this implementation will be used.",
+          "type": "text"
+        }
+      ],
+      "conformance": {
+        "availabilityPrefix": [
+          {
+            "text": "Available when",
+            "type": "text"
+          }
+        ],
+        "conformancePrefix": [
+          {
+            "text": "Conforms when",
+            "type": "text"
+          }
+        ],
+        "constraints": [
+          {
+            "code": "CustomView",
+            "type": "codeVoice"
+          },
+          {
+            "text": " is ",
+            "type": "text"
+          },
+          {
+            "code": "Never",
+            "type": "codeVoice"
+          },
+          {
+            "text": " and ",
+            "type": "text"
+          },
+          {
+            "code": "TagName",
+            "type": "codeVoice"
+          },
+          {
+            "text": " is ",
+            "type": "text"
+          },
+          {
+            "code": "EmptyRegistry.None",
+            "type": "codeVoice"
+          },
+          {
+            "text": ".",
+            "type": "text"
+          }
+        ]
+      },
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "lookup"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP7TagNameQa",
+          "text": "TagName"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "element"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+          "text": "ElementNode"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "context"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
+          "text": "LiveContext"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "text": "Self"
+        },
+        {
+          "kind": "text",
+          "text": ">) -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5NeverO",
+          "text": "Never"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/lookup(_:element:context:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "lookup(_:element:context:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/emptyregistry/lookup(_:element:context:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
+      "abstract": [
+        {
+          "text": "The context provides information at initialization-time to views in a LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveContext",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/emptyregistry/lookup(_:element:context:)"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

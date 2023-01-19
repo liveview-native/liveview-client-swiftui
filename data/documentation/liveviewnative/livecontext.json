@@ -1,0 +1,546 @@
+{
+  "abstract": [
+    {
+      "text": "The context provides information at initialization-time to views in a LiveView.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0A7ContextV",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "struct"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "LiveContext"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "LiveContext"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Structure",
+    "symbolKind": "struct",
+    "title": "LiveContext"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "struct"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "LiveContext"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "genericParameter",
+              "text": "R"
+            },
+            {
+              "kind": "text",
+              "text": "> "
+            },
+            {
+              "kind": "keyword",
+              "text": "where"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "R"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP",
+              "text": "CustomRegistry"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement": {
+      "abstract": [
+        {
+          "text": "Use the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " protocol to define how DOM elements are converted to SwiftUI views.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement",
+      "kind": "article",
+      "role": "article",
+      "title": "Adding Custom Elements",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/addcustomelement"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier": {
+      "abstract": [
+        {
+          "text": "Use the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " protocol to define how custom modifiers in the DOM are handled.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier",
+      "kind": "article",
+      "role": "article",
+      "title": "Adding Custom Modifiers",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/addcustommodifier"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
+      "abstract": [
+        {
+          "text": "The context provides information at initialization-time to views in a LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveContext",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)": {
+      "abstract": [
+        {
+          "text": "Builds a view representing the children of the current element in the current context.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "buildChildren"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "of"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+          "text": "ElementNode"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "some"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4ViewP",
+          "text": "View"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "buildChildren(of:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext/buildchildren(of:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)": {
+      "abstract": [
+        {
+          "text": "Builds a view representing the given element in the current context.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "buildElement"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+          "text": "ElementNode"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "some"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4ViewP",
+          "text": "View"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "buildElement(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext/buildelement(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator": {
+      "abstract": [
+        {
+          "text": "The coordinator corresponding to the live view in which thie view is being constructed.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "let"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "coordinator"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0aB11CoordinatorC",
+          "text": "LiveViewCoordinator"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7ContextV1Rxmfp",
+          "text": "R"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "coordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext/coordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/formModel": {
+      "abstract": [
+        {
+          "text": "The model of the nearest ancestor ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element, or ",
+          "type": "text"
+        },
+        {
+          "code": "nil",
+          "type": "codeVoice"
+        },
+        {
+          "text": " if there is no such element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "formModel"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9FormModelC",
+          "text": "FormModel"
+        },
+        {
+          "kind": "text",
+          "text": "?"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/formModel",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "formModel",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext/formmodel"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/url": {
+      "abstract": [
+        {
+          "text": "The URL of the live view this context belongs to.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "let"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "url"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:10Foundation3URLV",
+          "text": "URL"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/url",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "url",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext/url"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement",
+        "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry"
+      ],
+      "title": "Custom DOM Elements and Attributes"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/formModel",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/url"
+      ],
+      "title": "Instance Properties"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)"
+      ],
+      "title": "Instance Methods"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/livecontext"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

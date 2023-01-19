@@ -1,0 +1,277 @@
+{
+  "abstract": [
+    {
+      "text": "A binding to the element’s value that can be used as the storage for other views or controls.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormState"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative9FormStateV14projectedValue7SwiftUI7BindingVyxGvp",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "var"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "projectedValue"
+      },
+      {
+        "kind": "text",
+        "text": ": "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:7SwiftUI7BindingV",
+        "text": "Binding"
+      },
+      {
+        "kind": "text",
+        "text": "<"
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
+        "text": "Value"
+      },
+      {
+        "kind": "text",
+        "text": ">"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Property",
+    "symbolKind": "property",
+    "title": "projectedValue"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "var"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "projectedValue"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:7SwiftUI7BindingV",
+              "text": "Binding"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
+              "text": "Value"
+            },
+            {
+              "kind": "text",
+              "text": "> { "
+            },
+            {
+              "kind": "keyword",
+              "text": "get"
+            },
+            {
+              "kind": "text",
+              "text": " }"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "discussion",
+          "level": 2,
+          "text": "Discussion",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Access this binding with the dollar sign prefix. If a property is declared as ",
+              "type": "text"
+            },
+            {
+              "code": "@FormState var value",
+              "type": "codeVoice"
+            },
+            {
+              "text": ", then the projected value binding can be accessed as ",
+              "type": "text"
+            },
+            {
+              "code": "$value",
+              "type": "codeVoice"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
+      "abstract": [
+        {
+          "text": "A property wrapper that stores the primary value of a form element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormState",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue": {
+      "abstract": [
+        {
+          "text": "A binding to the element’s value that can be used as the storage for other views or controls.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "projectedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI7BindingV",
+          "text": "Binding"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "projectedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate/projectedvalue"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/formstate/projectedvalue"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

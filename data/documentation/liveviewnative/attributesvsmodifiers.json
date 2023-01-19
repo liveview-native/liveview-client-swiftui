@@ -1,0 +1,191 @@
+{
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "Attributes vs. Modifiers"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "In LiveViewNative, there are two distinct methods for applying changes to elements: attributes and modifiers.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Attributes apply to only a specific element, and are represented in your templates like HTML attributes. They store a single string value, such as ",
+              "type": "text"
+            },
+            {
+              "code": "placeholder",
+              "type": "codeVoice"
+            },
+            {
+              "text": " on ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/TextField",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ". They are implemented on specific view types and are only applicable to that view/element.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Modifiers, on the other hand, represent changes that can be applied to a large swath of elements. They are stored as JSON objects within a JSON array (becuase the behavior when composing modifiers may be order-dependent) on the ",
+              "type": "text"
+            },
+            {
+              "code": "modifiers",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute of an element. Thus, they can hold multiple related values, such as the distinct values for the ",
+              "type": "text"
+            },
+            {
+              "code": "padding",
+              "type": "codeVoice"
+            },
+            {
+              "text": " modifier’s edges. Modifiers are implemented separately from any particular view type and therefore cannot directly access or manipulate particular views.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "When choosing between an attribute and a modifier for a customization in your app, consider how broadly those changes are applicable. If they only apply to a single element, use an attribute implemented directly on that element. If they apply to all elements, or a broad category of them, use a modifier to be able to easily reuse your changes.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/supportedelements"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers": {
+      "abstract": [
+        {
+          "text": "Common modifiers supported by all DOM elements.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers",
+      "kind": "article",
+      "role": "article",
+      "title": "Supported Modifiers",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/supportedmodifiers"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/TextField": {
+      "abstract": [
+        {
+          "code": "<textfield>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a text field form element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/TextField",
+      "kind": "article",
+      "role": "article",
+      "title": "TextField",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/textfield"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
+        "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers"
+      ],
+      "title": "Building a Live View Template"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/attributesvsmodifiers"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

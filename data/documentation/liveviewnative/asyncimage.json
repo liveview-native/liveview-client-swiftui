@@ -1,0 +1,270 @@
+{
+  "abstract": [
+    {
+      "code": "<asyncimage>",
+      "type": "codeVoice"
+    },
+    {
+      "text": ", displays images loaded from a remote URL.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "AsyncImage"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Attributes",
+          "level": 2,
+          "text": "Attributes",
+          "type": "heading"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "src",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " (required): The URL of the image to display.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "scale",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " (float): The pixel scale of the image, if designed for high-resolution screens.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "content-mode",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": How the image is displayed within the view, if their aspect ratios are not the same.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "fit",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": " (default): The image is displayed at its aspect ratio as large as possible without clipping.",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "fill",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": ": The image is cropped in to fill the entire view.",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "unorderedList"
+                }
+              ]
+            }
+          ],
+          "type": "unorderedList"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Button": {
+      "abstract": [
+        {
+          "code": "<button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a tappable element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Button",
+      "kind": "article",
+      "role": "article",
+      "title": "Button",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/button"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Image": {
+      "abstract": [
+        {
+          "code": "<image>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays SF Symbols or images from your app’s asset catalog.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Image",
+      "kind": "article",
+      "role": "article",
+      "title": "Image",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/image"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink": {
+      "abstract": [
+        {
+          "code": "<navigationlink>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", links to another live view page.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
+      "kind": "article",
+      "role": "article",
+      "title": "NavigationLink",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/navigationlink"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/supportedelements"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Text": {
+      "abstract": [
+        {
+          "code": "<text>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays text.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Text",
+      "kind": "article",
+      "role": "article",
+      "title": "Text",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/text"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/Text",
+        "doc://LiveViewNative/documentation/LiveViewNative/Image",
+        "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
+        "doc://LiveViewNative/documentation/LiveViewNative/Button"
+      ],
+      "title": "Content"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/asyncimage"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

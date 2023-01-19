@@ -1,0 +1,261 @@
+{
+  "abstract": [
+    {
+      "text": "Navigation is fully enabled and uses a ",
+      "type": "text"
+    },
+    {
+      "code": "NavigationSplitView",
+      "type": "codeVoice"
+    },
+    {
+      "text": " for the UI.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/splitView"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO05splitB0yA2EmF",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "case"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "splitView"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Case",
+    "symbolKind": "case",
+    "title": "LiveSessionConfiguration.NavigationMode.splitView"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "case"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "splitView"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
+      "abstract": [
+        {
+          "text": "An object that configures the behavior of a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum": {
+      "abstract": [
+        {
+          "text": "Possible modes for live view navigation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "NavigationMode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "NavigationMode"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration.NavigationMode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/splitView": {
+      "abstract": [
+        {
+          "text": "Navigation is fully enabled and uses a ",
+          "type": "text"
+        },
+        {
+          "code": "NavigationSplitView",
+          "type": "codeVoice"
+        },
+        {
+          "text": " for the UI.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "splitView"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/splitView",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveSessionConfiguration.NavigationMode.splitView",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/splitview"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/splitview"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

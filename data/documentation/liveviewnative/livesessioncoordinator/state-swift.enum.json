@@ -1,0 +1,380 @@
+{
+  "abstract": [
+    {
+      "text": "The live view connection state.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "conformance": {
+      "availabilityPrefix": [
+        {
+          "text": "Available when",
+          "type": "text"
+        }
+      ],
+      "conformancePrefix": [
+        {
+          "text": "Conforms when",
+          "type": "text"
+        }
+      ],
+      "constraints": [
+        {
+          "code": "R",
+          "type": "codeVoice"
+        },
+        {
+          "text": " conforms to ",
+          "type": "text"
+        },
+        {
+          "code": "CustomRegistry",
+          "type": "codeVoice"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ]
+    },
+    "extendedModule": "LiveViewNative",
+    "externalID": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "enum"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "State"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "State"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Enumeration",
+    "symbolKind": "enum",
+    "title": "LiveSessionCoordinator.State"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "enum"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "State"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum": {
+      "abstract": [
+        {
+          "text": "The live view connection state.",
+          "type": "text"
+        }
+      ],
+      "conformance": {
+        "availabilityPrefix": [
+          {
+            "text": "Available when",
+            "type": "text"
+          }
+        ],
+        "conformancePrefix": [
+          {
+            "text": "Conforms when",
+            "type": "text"
+          }
+        ],
+        "constraints": [
+          {
+            "code": "R",
+            "type": "codeVoice"
+          },
+          {
+            "text": " conforms to ",
+            "type": "text"
+          },
+          {
+            "code": "CustomRegistry",
+            "type": "codeVoice"
+          },
+          {
+            "text": ".",
+            "type": "text"
+          }
+        ]
+      },
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "State"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "State"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionCoordinator.State",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected": {
+      "abstract": [
+        {
+          "text": "The coordinator has connected and the view tree can be rendered.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "connected"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveSessionCoordinator.State.connected",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/connected"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connecting": {
+      "abstract": [
+        {
+          "text": "The coordinator is attempting to connect.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "connecting"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connecting",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveSessionCoordinator.State.connecting",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/connecting"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connectionFailed(_:)": {
+      "abstract": [
+        {
+          "text": "The coordinator failed to connect and produced the given error.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "connectionFailed"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5ErrorP",
+          "text": "Error"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connectionFailed(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveSessionCoordinator.State.connectionFailed(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/connectionfailed(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/notConnected": {
+      "abstract": [
+        {
+          "text": "The coordinator has not yet connected to the live view.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "notConnected"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/notConnected",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveSessionCoordinator.State.notConnected",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/notconnected"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connecting",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connectionFailed(_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/notConnected"
+      ],
+      "title": "Enumeration Cases"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "abstract": [
+    {
+      "text": "Inherited from ",
+      "type": "text"
+    },
+    {
+      "code": "DynamicProperty.update()",
+      "type": "codeVoice"
+    },
+    {
+      "text": ".",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
+        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/DynamicProperty-Implementations"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/update()"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "extendedModule": "LiveViewNative",
+    "externalID": "s:14LiveViewNative15ObservedElementV6updateyyF",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "func"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "update"
+      },
+      {
+        "kind": "text",
+        "text": "()"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Method",
+    "symbolKind": "method",
+    "title": "update()"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "func"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "update"
+            },
+            {
+              "kind": "text",
+              "text": "()"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement": {
+      "abstract": [
+        {
+          "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ObservedElement"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ObservedElement"
+        }
+      ],
+      "role": "symbol",
+      "title": "ObservedElement",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/DynamicProperty-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/DynamicProperty-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "DynamicProperty Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement/dynamicproperty-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/update()": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "update"
+        },
+        {
+          "kind": "text",
+          "text": "()"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/update()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "update()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement/update()"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/observedelement/update()"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

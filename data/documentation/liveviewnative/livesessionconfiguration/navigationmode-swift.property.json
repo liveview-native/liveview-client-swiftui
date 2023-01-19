@@ -1,0 +1,329 @@
+{
+  "abstract": [
+    {
+      "text": "Whether this coordinators allows its live view to navigate.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0A20SessionConfigurationV14navigationModeAC010NavigationG0Ovp",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "var"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "navigationMode"
+      },
+      {
+        "kind": "text",
+        "text": ": "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
+        "text": "NavigationMode"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Property",
+    "symbolKind": "property",
+    "title": "navigationMode"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "var"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "navigationMode"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
+              "text": "NavigationMode"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "discussion",
+          "level": 2,
+          "text": "Discussion",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "By default, navigation is ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/disabled",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
+      "abstract": [
+        {
+          "text": "An object that configures the behavior of a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum": {
+      "abstract": [
+        {
+          "text": "Possible modes for live view navigation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "NavigationMode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "NavigationMode"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration.NavigationMode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/disabled": {
+      "abstract": [
+        {
+          "text": "Navigation is entirely disabled. The live view will stay on the URL it was initially connected to.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "disabled"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/disabled",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveSessionConfiguration.NavigationMode.disabled",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/disabled"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property": {
+      "abstract": [
+        {
+          "text": "Whether this coordinators allows its live view to navigate.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "navigationMode"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
+          "text": "NavigationMode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "navigationMode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.property"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.property"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

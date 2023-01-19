@@ -1,0 +1,224 @@
+{
+  "abstract": [
+    {
+      "text": "The type of view this registry produces for loading views.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/LoadingView"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative14CustomRegistryP07LoadingB0Qa",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "associatedtype"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "LoadingView"
+      },
+      {
+        "kind": "text",
+        "text": " : "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:7SwiftUI4ViewP",
+        "text": "View"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "required": true,
+    "role": "symbol",
+    "roleHeading": "Associated Type",
+    "symbolKind": "associatedtype",
+    "title": "LoadingView"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "associatedtype"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "LoadingView"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:7SwiftUI4ViewP",
+              "text": "View"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "discussion",
+          "level": 2,
+          "text": "Discussion",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Generally, implementors will use an opaque return type on their ",
+              "type": "text"
+            },
+            {
+              "code": "loadingView(for:state:)-2uoy9",
+              "type": "codeVoice"
+            },
+            {
+              "text": " implementations and this will be inferred automatically.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/LoadingView": {
+      "abstract": [
+        {
+          "text": "The type of view this registry produces for loading views.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "associatedtype"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LoadingView"
+        },
+        {
+          "kind": "text",
+          "text": " : "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4ViewP",
+          "text": "View"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/LoadingView",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "LoadingView",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry/loadingview"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/customregistry/loadingview"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

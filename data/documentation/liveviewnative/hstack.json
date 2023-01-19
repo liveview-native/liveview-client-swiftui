@@ -1,0 +1,264 @@
+{
+  "abstract": [
+    {
+      "code": "<hstack>",
+      "type": "codeVoice"
+    },
+    {
+      "text": ", lays out children in a horizontal line.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/HStack"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "HStack"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Attributes",
+          "level": 2,
+          "text": "Attributes",
+          "type": "heading"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "alignment",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": How children are aligned vertically within the stack.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "center",
+                              "type": "codeVoice"
+                            },
+                            {
+                              "text": " (default)",
+                              "type": "text"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "top",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "bottom",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "unorderedList"
+                }
+              ]
+            }
+          ],
+          "type": "unorderedList"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/List": {
+      "abstract": [
+        {
+          "code": "<list>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", arranges its children in a vertically scrolling list.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/List",
+      "kind": "article",
+      "role": "article",
+      "title": "List",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/list"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ScrollView": {
+      "abstract": [
+        {
+          "code": "<scrollview>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", allows its content to be scrolled if it’s larger than the available space.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
+      "kind": "article",
+      "role": "article",
+      "title": "ScrollView",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/scrollview"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Spacer": {
+      "abstract": [
+        {
+          "code": "<spacer>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", an empty view that can grow to take up as much space as needed.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Spacer",
+      "kind": "article",
+      "role": "article",
+      "title": "Spacer",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/spacer"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/supportedelements"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/VStack": {
+      "abstract": [
+        {
+          "code": "<vstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children in a vertical line",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/VStack",
+      "kind": "article",
+      "role": "article",
+      "title": "VStack",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/vstack"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ZStack": {
+      "abstract": [
+        {
+          "code": "<zstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children on top of each other, from back to front.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
+      "kind": "article",
+      "role": "article",
+      "title": "ZStack",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/zstack"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/VStack",
+        "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
+        "doc://LiveViewNative/documentation/LiveViewNative/Spacer",
+        "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
+        "doc://LiveViewNative/documentation/LiveViewNative/List"
+      ],
+      "title": "Layout"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/hstack"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

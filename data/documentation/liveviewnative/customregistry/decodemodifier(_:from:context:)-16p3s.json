@@ -1,0 +1,691 @@
+{
+  "abstract": [
+    {
+      "text": "A default implementation that does not provide any custom modifiers. If you omit the ",
+      "type": "text"
+    },
+    {
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
+      "isActive": true,
+      "type": "reference"
+    },
+    {
+      "text": " type alias, this implementation will be used.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-16p3s"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "conformance": {
+      "availabilityPrefix": [
+        {
+          "text": "Available when",
+          "type": "text"
+        }
+      ],
+      "conformancePrefix": [
+        {
+          "text": "Conforms when",
+          "type": "text"
+        }
+      ],
+      "constraints": [
+        {
+          "code": "ModifierType",
+          "type": "codeVoice"
+        },
+        {
+          "text": " is ",
+          "type": "text"
+        },
+        {
+          "code": "EmptyRegistry.None",
+          "type": "codeVoice"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ]
+    },
+    "extendedModule": "LiveViewNative",
+    "externalID": "s:14LiveViewNative14CustomRegistryPA2A05EmptyE0V4NoneV12ModifierTypeRtzrlE06decodeH0_4from7context7SwiftUI0bH0_pAG_s7Decoder_pAA0A7ContextVyxGtFZ",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "static"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "keyword",
+        "text": "func"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "decodeModifier"
+      },
+      {
+        "kind": "text",
+        "text": "("
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP12ModifierTypeQa",
+        "text": "ModifierType"
+      },
+      {
+        "kind": "text",
+        "text": ", "
+      },
+      {
+        "kind": "externalParam",
+        "text": "from"
+      },
+      {
+        "kind": "text",
+        "text": ": "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:s7DecoderP",
+        "text": "Decoder"
+      },
+      {
+        "kind": "text",
+        "text": ", "
+      },
+      {
+        "kind": "externalParam",
+        "text": "context"
+      },
+      {
+        "kind": "text",
+        "text": ": "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
+        "text": "LiveContext"
+      },
+      {
+        "kind": "text",
+        "text": "<"
+      },
+      {
+        "kind": "typeIdentifier",
+        "text": "Self"
+      },
+      {
+        "kind": "text",
+        "text": ">) -> "
+      },
+      {
+        "kind": "keyword",
+        "text": "any"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
+        "text": "ViewModifier"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Type Method",
+    "symbolKind": "method",
+    "title": "decodeModifier(_:from:context:)"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "static"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "func"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "decodeModifier"
+            },
+            {
+              "kind": "text",
+              "text": "("
+            },
+            {
+              "kind": "externalParam",
+              "text": "_"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "internalParam",
+              "text": "type"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP12ModifierTypeQa",
+              "text": "ModifierType"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "externalParam",
+              "text": "from"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "internalParam",
+              "text": "decoder"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:s7DecoderP",
+              "text": "Decoder"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "externalParam",
+              "text": "context"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
+              "text": "LiveContext"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "Self"
+            },
+            {
+              "kind": "text",
+              "text": ">) -> "
+            },
+            {
+              "kind": "keyword",
+              "text": "any"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
+              "text": "ViewModifier"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType": {
+      "abstract": [
+        {
+          "text": "A type represnting the custom modifier types that this registry can handle.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "associatedtype"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ModifierType"
+        },
+        {
+          "kind": "text",
+          "text": " : "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SY",
+          "text": "RawRepresentable"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "ModifierType",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry/modifiertype"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-16p3s": {
+      "abstract": [
+        {
+          "text": "A default implementation that does not provide any custom modifiers. If you omit the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type alias, this implementation will be used.",
+          "type": "text"
+        }
+      ],
+      "conformance": {
+        "availabilityPrefix": [
+          {
+            "text": "Available when",
+            "type": "text"
+          }
+        ],
+        "conformancePrefix": [
+          {
+            "text": "Conforms when",
+            "type": "text"
+          }
+        ],
+        "constraints": [
+          {
+            "code": "ModifierType",
+            "type": "codeVoice"
+          },
+          {
+            "text": " is ",
+            "type": "text"
+          },
+          {
+            "code": "EmptyRegistry.None",
+            "type": "codeVoice"
+          },
+          {
+            "text": ".",
+            "type": "text"
+          }
+        ]
+      },
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "decodeModifier"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP12ModifierTypeQa",
+          "text": "ModifierType"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "from"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s7DecoderP",
+          "text": "Decoder"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "context"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
+          "text": "LiveContext"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "text": "Self"
+        },
+        {
+          "kind": "text",
+          "text": ">) -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "any"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
+          "text": "ViewModifier"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-16p3s",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "decodeModifier(_:from:context:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-16p3s"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076": {
+      "abstract": [
+        {
+          "text": "This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.",
+          "type": "text"
+        }
+      ],
+      "defaultImplementations": 1,
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "decodeModifier"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP12ModifierTypeQa",
+          "text": "ModifierType"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "from"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s7DecoderP",
+          "text": "Decoder"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "context"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
+          "text": "LiveContext"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "text": "Self"
+        },
+        {
+          "kind": "text",
+          "text": ">) "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        },
+        {
+          "kind": "text",
+          "text": " -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "any"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
+          "text": "ViewModifier"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "decodeModifier(_:from:context:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-4j076"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
+      "abstract": [
+        {
+          "text": "The context provides information at initialization-time to views in a LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveContext",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-16p3s"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

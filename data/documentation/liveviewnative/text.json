@@ -1,0 +1,535 @@
+{
+  "abstract": [
+    {
+      "code": "<text>",
+      "type": "codeVoice"
+    },
+    {
+      "text": ", displays text.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/Text"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "Text"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Attributes",
+          "level": 2,
+          "text": "Attributes",
+          "type": "heading"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "font",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": The system font to use. See the docs for ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "SwiftUI.Font",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ". If no font is specified, the default body font is used.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "largetitle",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "title",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "title2",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "title3",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "headline",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "subheadline",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "body",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "callout",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "caption",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "caption2",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "footnote",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "unorderedList"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "font-weight",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": The weight of the font. This attribute has no effect unless ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "font",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " is also specified.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "black",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "bold",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "heavy",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "light",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "regular",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "semibold",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "thin",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    },
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "code": "ultralight",
+                              "type": "codeVoice"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "unorderedList"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "color",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": The color of the text to use.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                },
+                {
+                  "items": [
+                    {
+                      "content": [
+                        {
+                          "inlineContent": [
+                            {
+                              "text": "See ",
+                              "type": "text"
+                            },
+                            {
+                              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors",
+                              "isActive": true,
+                              "type": "reference"
+                            }
+                          ],
+                          "type": "paragraph"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "unorderedList"
+                }
+              ]
+            }
+          ],
+          "type": "unorderedList"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage": {
+      "abstract": [
+        {
+          "code": "<asyncimage>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays images loaded from a remote URL.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
+      "kind": "article",
+      "role": "article",
+      "title": "AsyncImage",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/asyncimage"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Button": {
+      "abstract": [
+        {
+          "code": "<button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a tappable element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Button",
+      "kind": "article",
+      "role": "article",
+      "title": "Button",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/button"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Image": {
+      "abstract": [
+        {
+          "code": "<image>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays SF Symbols or images from your app’s asset catalog.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Image",
+      "kind": "article",
+      "role": "article",
+      "title": "Image",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/image"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink": {
+      "abstract": [
+        {
+          "code": "<navigationlink>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", links to another live view page.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
+      "kind": "article",
+      "role": "article",
+      "title": "NavigationLink",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/navigationlink"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/supportedelements"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors",
+      "kind": "section",
+      "title": "Specifying Colors",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/supportedmodifiers#Specifying-Colors"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/Image",
+        "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
+        "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
+        "doc://LiveViewNative/documentation/LiveViewNative/Button"
+      ],
+      "title": "Content"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/text"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

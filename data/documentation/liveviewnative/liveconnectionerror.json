@@ -1,0 +1,391 @@
+{
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0A15ConnectionErrorO",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "enum"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "LiveConnectionError"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "LiveConnectionError"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Enumeration",
+    "symbolKind": "enum",
+    "title": "LiveConnectionError"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "enum"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "LiveConnectionError"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveConnectionError"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveConnectionError"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveConnectionError",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/Error-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/Error-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Error Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/error-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "eventError"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18SwiftPhoenixClient7MessageC",
+          "text": "Message"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveConnectionError.eventError(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/eventerror(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialFetchError(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "initialFetchError"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5ErrorP",
+          "text": "Error"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialFetchError(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveConnectionError.initialFetchError(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/initialfetcherror(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialFetchUnexpectedResponse(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "initialFetchUnexpectedResponse"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "c:objc(cs)NSURLResponse",
+          "text": "URLResponse"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialFetchUnexpectedResponse(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveConnectionError.initialFetchUnexpectedResponse(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/initialfetchunexpectedresponse(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialParseError": {
+      "abstract": [
+        {
+          "text": "An error encountered when parsing the initial HTML.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "initialParseError"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialParseError",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveConnectionError.initialParseError",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/initialparseerror"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/joinError(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "joinError"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18SwiftPhoenixClient7MessageC",
+          "text": "Message"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/joinError(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveConnectionError.joinError(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/joinerror(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/socketError(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "socketError"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5ErrorP",
+          "text": "Error"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/socketError(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveConnectionError.socketError(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/socketerror(_:)"
+    },
+    "doc://LiveViewNative/s5ErrorP": {
+      "identifier": "doc://LiveViewNative/s5ErrorP",
+      "title": "Swift.Error",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/s8SendableP": {
+      "identifier": "doc://LiveViewNative/s8SendableP",
+      "title": "Swift.Sendable",
+      "type": "unresolvable"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/s5ErrorP",
+        "doc://LiveViewNative/s8SendableP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialFetchError(_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialFetchUnexpectedResponse(_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/initialParseError",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/joinError(_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/socketError(_:)"
+      ],
+      "title": "Enumeration Cases"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/Error-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/liveconnectionerror"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

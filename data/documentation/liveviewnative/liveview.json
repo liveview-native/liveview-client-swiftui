@@ -1,0 +1,546 @@
+{
+  "abstract": [
+    {
+      "text": "The SwiftUI root view for a Phoenix LiveView.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveView"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0aB0V",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "struct"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "LiveView"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "LiveView"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Structure",
+    "symbolKind": "struct",
+    "title": "LiveView"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "struct"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "LiveView"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "genericParameter",
+              "text": "R"
+            },
+            {
+              "kind": "text",
+              "text": "> "
+            },
+            {
+              "kind": "keyword",
+              "text": "where"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "R"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP",
+              "text": "CustomRegistry"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The ",
+              "type": "text"
+            },
+            {
+              "code": "LiveView",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attempts to connect immediately when it appears.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "While in states other than ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ", this view only provides a basic text description of the state. The loading view can be customized with a custom registry and the ",
+              "type": "text"
+            },
+            {
+              "code": "CustomRegistry/loadingView(for:state:)-vg2v",
+              "type": "codeVoice"
+            },
+            {
+              "text": " method.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/7SwiftUI4ViewP": {
+      "identifier": "doc://LiveViewNative/7SwiftUI4ViewP",
+      "title": "SwiftUI.View",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted": {
+      "abstract": [
+        {
+          "text": "See how to quickly get up and running displaying a LiveView in your app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
+      "kind": "article",
+      "role": "article",
+      "title": "Getting Started",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/gettingstarted"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected": {
+      "abstract": [
+        {
+          "text": "The coordinator has connected and the view tree can be rendered.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "connected"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveSessionCoordinator.State.connected",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/connected"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
+      "abstract": [
+        {
+          "text": "The SwiftUI root view for a Phoenix LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveView",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveview"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "View Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveview/view-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/body": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "body"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "keyword",
+          "text": "some"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI4ViewP",
+          "text": "View"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/body",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "body",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveview/body"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/init(session:)": {
+      "abstract": [
+        {
+          "text": "Creates a new LiveView attached to the given coordinator.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "session"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC",
+          "text": "LiveSessionCoordinator"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0aB0V1Rxmfp",
+          "text": "R"
+        },
+        {
+          "kind": "text",
+          "text": ">)"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/init(session:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init(session:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveview/init(session:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel": {
+      "abstract": [
+        {
+          "text": "The working-copy data model for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewModel"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewModel",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewmodel"
+    },
+    "doc://LiveViewNative/tutorials/YourFirstApp": {
+      "abstract": [
+        {
+          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
+      "kind": "overview",
+      "role": "overview",
+      "title": "Your First LiveViewNative App",
+      "type": "topic",
+      "url": "/tutorials/yourfirstapp"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/7SwiftUI4ViewP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/tutorials/YourFirstApp",
+        "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
+      ],
+      "title": "Essentials"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveView/body"
+      ],
+      "title": "Supporting Types"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel"
+      ],
+      "title": "See Also"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveView/init(session:)"
+      ],
+      "title": "Initializers"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/liveview"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

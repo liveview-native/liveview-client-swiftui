@@ -1,0 +1,381 @@
+{
+  "abstract": [
+    {
+      "text": "A form value is any type that can be stored in a ",
+      "type": "text"
+    },
+    {
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+      "isActive": true,
+      "type": "reference"
+    },
+    {
+      "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormValue"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative9FormValueP",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "protocol"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "FormValue"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "FormValue"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Protocol",
+    "symbolKind": "protocol",
+    "title": "FormValue"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "protocol"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "FormValue"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:SQ",
+              "text": "Equatable"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/SQ": {
+      "identifier": "doc://LiveViewNative/SQ",
+      "title": "Swift.Equatable",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormControls": {
+      "abstract": [
+        {
+          "text": "See how to build custom form controls that integrate with the form data model and events.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
+      "kind": "article",
+      "role": "article",
+      "title": "Building Form Controls",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formcontrols"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
+      "abstract": [
+        {
+          "text": "A form model stores the working copy of the data for a specific ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormModel",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
+      "abstract": [
+        {
+          "text": "A property wrapper that stores the primary value of a form element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormState",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormValue": {
+      "abstract": [
+        {
+          "text": "A form value is any type that can be stored in a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormValue/formValue": {
+      "abstract": [
+        {
+          "text": "Converts the value from this type to the string representation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "formValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue/formValue",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "formValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formvalue/formvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormValue/init(formValue:)": {
+      "abstract": [
+        {
+          "text": "Converts the value from the string representation to this type.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "?("
+        },
+        {
+          "kind": "externalParam",
+          "text": "formValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue/init(formValue:)",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "init(formValue:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formvalue/init(formvalue:)"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/SQ"
+      ],
+      "kind": "relationships",
+      "title": "Inherits From",
+      "type": "inheritsFrom"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel"
+      ],
+      "title": "Form Controls"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormValue/init(formValue:)"
+      ],
+      "title": "Initializers"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormValue/formValue"
+      ],
+      "title": "Instance Properties"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/formvalue"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

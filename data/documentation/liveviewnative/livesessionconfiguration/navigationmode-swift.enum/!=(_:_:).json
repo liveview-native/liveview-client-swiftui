@@ -1,0 +1,386 @@
+{
+  "abstract": [
+    {
+      "text": "Inherited from ",
+      "type": "text"
+    },
+    {
+      "code": "Equatable.!=(_:_:)",
+      "type": "codeVoice"
+    },
+    {
+      "text": ".",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Equatable-Implementations"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/!=(_:_:)"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "extendedModule": "Swift",
+    "externalID": "s:SQsE2neoiySbx_xtFZ::SYNTHESIZED::s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "static"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "keyword",
+        "text": "func"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "!="
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "text",
+        "text": "("
+      },
+      {
+        "kind": "typeIdentifier",
+        "text": "Self"
+      },
+      {
+        "kind": "text",
+        "text": ", "
+      },
+      {
+        "kind": "typeIdentifier",
+        "text": "Self"
+      },
+      {
+        "kind": "text",
+        "text": ") -> "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:Sb",
+        "text": "Bool"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Operator",
+    "symbolKind": "op",
+    "title": "!=(_:_:)"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "static"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "func"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "!="
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "text",
+              "text": "("
+            },
+            {
+              "kind": "internalParam",
+              "text": "lhs"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "Self"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "internalParam",
+              "text": "rhs"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "Self"
+            },
+            {
+              "kind": "text",
+              "text": ") -> "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:Sb",
+              "text": "Bool"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
+      "abstract": [
+        {
+          "text": "An object that configures the behavior of a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum": {
+      "abstract": [
+        {
+          "text": "Possible modes for live view navigation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "NavigationMode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "NavigationMode"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration.NavigationMode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/!=(_:_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "!="
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "text": "Self"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "typeIdentifier",
+          "text": "Self"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:Sb",
+          "text": "Bool"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/!=(_:_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "!=(_:_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/!=(_:_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Equatable-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Equatable-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Equatable Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/equatable-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/!=(_:_:)"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

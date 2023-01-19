@@ -1,0 +1,391 @@
+{
+  "abstract": [
+    {
+      "text": "The list of attributes present on this element.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributes"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative11ElementNodeV10attributesSay0abC4Core9AttributeVGvp",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "var"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "attributes"
+      },
+      {
+        "kind": "text",
+        "text": ": ["
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative9Attributea",
+        "text": "Attribute"
+      },
+      {
+        "kind": "text",
+        "text": "]"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Property",
+    "symbolKind": "property",
+    "title": "attributes"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "var"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "attributes"
+            },
+            {
+              "kind": "text",
+              "text": ": ["
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative9Attributea",
+              "text": "Attribute"
+            },
+            {
+              "kind": "text",
+              "text": "] { "
+            },
+            {
+              "kind": "keyword",
+              "text": "get"
+            },
+            {
+              "kind": "text",
+              "text": " }"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
+      "abstract": [
+        {
+          "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "typealias"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Attribute"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Attribute"
+        }
+      ],
+      "role": "symbol",
+      "title": "Attribute",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attribute"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
+      "abstract": [
+        {
+          "text": "A wrapper for an element-containing DOM node and its associated data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "role": "symbol",
+      "title": "ElementNode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attribute(named:)": {
+      "abstract": [
+        {
+          "text": "The attribute with the given name, or ",
+          "type": "text"
+        },
+        {
+          "code": "nil",
+          "type": "codeVoice"
+        },
+        {
+          "text": " if there is no such attribute.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "attribute"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "named"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
+          "text": "AttributeName"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9Attributea",
+          "text": "Attribute"
+        },
+        {
+          "kind": "text",
+          "text": "?"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attribute(named:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "attribute(named:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/attribute(named:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)": {
+      "abstract": [
+        {
+          "text": "The value of the attribute with the given name, or ",
+          "type": "text"
+        },
+        {
+          "code": "nil",
+          "type": "codeVoice"
+        },
+        {
+          "text": " if there is no such attribute.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "attributeValue"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "for"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
+          "text": "AttributeName"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": "?"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "attributeValue(for:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/attributevalue(for:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributes": {
+      "abstract": [
+        {
+          "text": "The list of attributes present on this element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "attributes"
+        },
+        {
+          "kind": "text",
+          "text": ": ["
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9Attributea",
+          "text": "Attribute"
+        },
+        {
+          "kind": "text",
+          "text": "]"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributes",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "attributes",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/attributes"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attribute(named:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)"
+      ],
+      "title": "Accessing Attributes"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/elementnode/attributes"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

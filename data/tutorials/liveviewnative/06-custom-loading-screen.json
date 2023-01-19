@@ -1,0 +1,910 @@
+{
+  "hierarchy": {
+    "modules": [
+      {
+        "projects": [
+          {
+            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
+            "sections": [
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend"
+              },
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App"
+              },
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI"
+              }
+            ]
+          },
+          {
+            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
+            "sections": [
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend"
+              },
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button"
+              }
+            ]
+          },
+          {
+            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero",
+            "sections": [
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View"
+              },
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation"
+              }
+            ]
+          }
+        ],
+        "reference": "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started"
+      },
+      {
+        "projects": [
+          {
+            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element",
+            "sections": [
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry"
+              },
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer"
+              },
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View"
+              },
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element"
+              }
+            ]
+          },
+          {
+            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier",
+            "sections": [
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend"
+              },
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute"
+              }
+            ]
+          },
+          {
+            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen",
+            "sections": [
+              {
+                "kind": "task",
+                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View"
+              }
+            ]
+          }
+        ],
+        "reference": "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift"
+      }
+    ],
+    "paths": [
+      [
+        "doc://LiveViewNative/tutorials/YourFirstApp",
+        "doc://LiveViewNative/tutorials/YourFirstApp/$volume",
+        "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift"
+      ]
+    ],
+    "reference": "doc://LiveViewNative/tutorials/YourFirstApp"
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen"
+  },
+  "kind": "project",
+  "metadata": {
+    "category": "Live View Native",
+    "categoryPathComponent": "YourFirstApp",
+    "role": "project",
+    "title": "Style the Loading Screen to Match Your App"
+  },
+  "references": {
+    "05-02-02-decode.swift": {
+      "content": [
+        "import SwiftUI",
+        "import LiveViewNative",
+        "",
+        "struct MyRegistry: CustomRegistry {",
+        "    enum TagName: String {",
+        "        case catRating = \"cat-rating\"",
+        "    }",
+        "    enum ModifierType: String {",
+        "        case navFavorite = \"nav_favorite\"",
+        "    }",
+        "    ",
+        "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
+        "        switch name {",
+        "        case .catRating:",
+        "            CatRatingView(context: context)",
+        "        }",
+        "    }",
+        "    ",
+        "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier {",
+        "        switch type {",
+        "        case .navFavorite:",
+        "            return try NavFavoriteModifier(from: decoder)",
+        "        }",
+        "    }",
+        "}"
+      ],
+      "fileName": "MyRegistry.swift",
+      "fileType": "swift",
+      "highlights": [],
+      "identifier": "05-02-02-decode.swift",
+      "syntax": "swift",
+      "type": "file"
+    },
+    "06-00-intro-header.png": {
+      "alt": "A circle of cat emojis.",
+      "identifier": "06-00-intro-header.png",
+      "type": "image",
+      "variants": [
+        {
+          "traits": [
+            "1x",
+            "light"
+          ],
+          "url": "/images/06-00-intro-header.png"
+        }
+      ]
+    },
+    "06-01-01-loadingview.swift": {
+      "content": [
+        "import SwiftUI",
+        "",
+        "struct MyLoadingView: View {",
+        "    @State var isAnimating = false",
+        "    ",
+        "    var body: some View {",
+        "        ZStack {",
+        "            ForEach(0..<8) { i in",
+        "                let angle = Double(i)/8 * 2 * .pi",
+        "                Text(i % 2 == 0 ? \"🐈\" : \"🐈‍⬛\")",
+        "                    .rotationEffect(.radians(angle + 0.5 * .pi))",
+        "                    .offset(x: 50 * cos(angle), y: 50 * sin(angle))",
+        "            }",
+        "        }",
+        "        .rotationEffect(.degrees(isAnimating ? 0 : 360), anchor: UnitPoint(x: 0.5, y: 0.5))",
+        "        .onAppear {",
+        "            withAnimation(.linear(duration: 3).repeatForever(autoreverses: false)) {",
+        "                isAnimating = true",
+        "            }",
+        "        }",
+        "    }",
+        "}"
+      ],
+      "fileName": "MyLoadingView.swift",
+      "fileType": "swift",
+      "highlights": [],
+      "identifier": "06-01-01-loadingview.swift",
+      "syntax": "swift",
+      "type": "file"
+    },
+    "06-01-02-registry.swift": {
+      "content": [
+        "import SwiftUI",
+        "import LiveViewNative",
+        "",
+        "struct MyRegistry: CustomRegistry {",
+        "    enum TagName: String {",
+        "        case catRating = \"cat-rating\"",
+        "    }",
+        "    enum ModifierType: String {",
+        "        case navFavorite = \"nav_favorite\"",
+        "    }",
+        "    ",
+        "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
+        "        switch name {",
+        "        case .catRating:",
+        "            CatRatingView(context: context)",
+        "        }",
+        "    }",
+        "    ",
+        "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier {",
+        "        switch type {",
+        "        case .navFavorite:",
+        "            return try NavFavoriteModifier(from: decoder)",
+        "        }",
+        "    }",
+        "    ",
+        "    static func loadingView(for url: URL, state: LiveViewCoordinator<MyRegistry>.State) -> some View {",
+        "    }",
+        "}"
+      ],
+      "fileName": "MyRegistry.swift",
+      "fileType": "swift",
+      "highlights": [
+        {
+          "line": 25
+        },
+        {
+          "line": 26
+        },
+        {
+          "line": 27
+        }
+      ],
+      "identifier": "06-01-02-registry.swift",
+      "syntax": "swift",
+      "type": "file"
+    },
+    "06-01-03-error.swift": {
+      "content": [
+        "import SwiftUI",
+        "import LiveViewNative",
+        "",
+        "struct MyRegistry: CustomRegistry {",
+        "    enum TagName: String {",
+        "        case catRating = \"cat-rating\"",
+        "    }",
+        "    enum ModifierType: String {",
+        "        case navFavorite = \"nav_favorite\"",
+        "    }",
+        "    ",
+        "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
+        "        switch name {",
+        "        case .catRating:",
+        "            CatRatingView(context: context)",
+        "        }",
+        "    }",
+        "    ",
+        "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier {",
+        "        switch type {",
+        "        case .navFavorite:",
+        "            return try NavFavoriteModifier(from: decoder)",
+        "        }",
+        "    }",
+        "    ",
+        "    static func loadingView(for url: URL, state: LiveViewCoordinator<MyRegistry>.State) -> some View {",
+        "        if case .connectionFailed(let error) = state {",
+        "            VStack {",
+        "                Text(\"⚠️😿\")",
+        "                    .font(.largeTitle)",
+        "                Text(error.localizedDescription)",
+        "            }",
+        "        }",
+        "    }",
+        "}"
+      ],
+      "fileName": "MyRegistry.swift",
+      "fileType": "swift",
+      "highlights": [
+        {
+          "line": 27
+        },
+        {
+          "line": 28
+        },
+        {
+          "line": 29
+        },
+        {
+          "line": 30
+        },
+        {
+          "line": 31
+        },
+        {
+          "line": 32
+        },
+        {
+          "line": 33
+        }
+      ],
+      "identifier": "06-01-03-error.swift",
+      "syntax": "swift",
+      "type": "file"
+    },
+    "06-01-04-registry.swift": {
+      "content": [
+        "import SwiftUI",
+        "import LiveViewNative",
+        "",
+        "struct MyRegistry: CustomRegistry {",
+        "    enum TagName: String {",
+        "        case catRating = \"cat-rating\"",
+        "    }",
+        "    enum ModifierType: String {",
+        "        case navFavorite = \"nav_favorite\"",
+        "    }",
+        "    ",
+        "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
+        "        switch name {",
+        "        case .catRating:",
+        "            CatRatingView(context: context)",
+        "        }",
+        "    }",
+        "    ",
+        "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier {",
+        "        switch type {",
+        "        case .navFavorite:",
+        "            return try NavFavoriteModifier(from: decoder)",
+        "        }",
+        "    }",
+        "    ",
+        "    static func loadingView(for url: URL, state: LiveViewCoordinator<MyRegistry>.State) -> some View {",
+        "        if case .connectionFailed(let error) = state {",
+        "            VStack {",
+        "                Text(\"⚠️😿\")",
+        "                    .font(.largeTitle)",
+        "                Text(error.localizedDescription)",
+        "            }",
+        "        } else {",
+        "            MyLoadingView()",
+        "        }",
+        "    }",
+        "}"
+      ],
+      "fileName": "MyRegistry.swift",
+      "fileType": "swift",
+      "highlights": [
+        {
+          "line": 33
+        },
+        {
+          "line": 34
+        }
+      ],
+      "identifier": "06-01-04-registry.swift",
+      "syntax": "swift",
+      "type": "file"
+    },
+    "06-01-05-loading.mp4": {
+      "alt": null,
+      "identifier": "06-01-05-loading.mp4",
+      "poster": null,
+      "type": "video",
+      "variants": [
+        {
+          "traits": [
+            "1x",
+            "light"
+          ],
+          "url": "/videos/06-01-05-loading.mp4"
+        }
+      ]
+    },
+    "Xcode 13.3": {
+      "identifier": "Xcode 13.3",
+      "title": "Xcode 13.3",
+      "type": "xcodeRequirement",
+      "url": "https://developer.apple.com/download/applications/"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List": {
+      "abstract": [
+        {
+          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type": "text"
+        }
+      ],
+      "estimatedTime": "30min",
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
+      "kind": "project",
+      "role": "project",
+      "title": "Your First LiveView",
+      "type": "topic",
+      "url": "/tutorials/liveviewnative/01-initial-list"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI": {
+      "abstract": [
+        {
+          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Build the List UI",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/01-initial-list#Build-the-List-UI"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend": {
+      "abstract": [
+        {
+          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Building the Backend",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/01-initial-list#Building-the-Backend"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App": {
+      "abstract": [
+        {
+          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Creating the App",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/01-initial-list#Creating-the-App"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button": {
+      "abstract": [
+        {
+          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type": "text"
+        }
+      ],
+      "estimatedTime": "30min",
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
+      "kind": "project",
+      "role": "project",
+      "title": "Storing User Favorites",
+      "type": "topic",
+      "url": "/tutorials/liveviewnative/02-favorite-button"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button": {
+      "abstract": [
+        {
+          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Adding the Favorite Button",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/02-favorite-button#Adding-the-Favorite-Button"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend": {
+      "abstract": [
+        {
+          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Updating the Backend",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/02-favorite-button#Updating-the-Backend"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero": {
+      "abstract": [
+        {
+          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type": "text"
+        }
+      ],
+      "estimatedTime": "30min",
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero",
+      "kind": "project",
+      "role": "project",
+      "title": "Navigation and Detail View",
+      "type": "topic",
+      "url": "/tutorials/liveviewnative/03-navigation-and-hero"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation": {
+      "abstract": [
+        {
+          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Adding Navigation",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/03-navigation-and-hero#Adding-Navigation"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View": {
+      "abstract": [
+        {
+          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Building the Detail View",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/03-navigation-and-hero#Building-the-Detail-View"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element": {
+      "abstract": [
+        {
+          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type": "text"
+        }
+      ],
+      "estimatedTime": "30min",
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element",
+      "kind": "project",
+      "role": "project",
+      "title": "Add a Custom HTML Element",
+      "type": "topic",
+      "url": "/tutorials/liveviewnative/04-custom-element"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View": {
+      "abstract": [
+        {
+          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Building the View",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/04-custom-element#Building-the-View"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry": {
+      "abstract": [
+        {
+          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Setting Up the Registry",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/04-custom-element#Setting-Up-the-Registry"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer": {
+      "abstract": [
+        {
+          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Update the GenServer",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/04-custom-element#Update-the-GenServer"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element": {
+      "abstract": [
+        {
+          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Using the Element",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/04-custom-element#Using-the-Element"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier": {
+      "abstract": [
+        {
+          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type": "text"
+        }
+      ],
+      "estimatedTime": "30min",
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier",
+      "kind": "project",
+      "role": "project",
+      "title": "Add a Navigation Bar Button with a Custom Modifier",
+      "type": "topic",
+      "url": "/tutorials/liveviewnative/05-custom-modifier"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute": {
+      "abstract": [
+        {
+          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Implement the Attribute",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/05-custom-modifier#Implement-the-Attribute"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend": {
+      "abstract": [
+        {
+          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Update the Backend",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/05-custom-modifier#Update-the-Backend"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen": {
+      "abstract": [
+        {
+          "text": "Add a more interesting loading screen that matches the style of your app.",
+          "type": "text"
+        }
+      ],
+      "estimatedTime": "30min",
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen",
+      "kind": "project",
+      "role": "project",
+      "title": "Style the Loading Screen to Match Your App",
+      "type": "topic",
+      "url": "/tutorials/liveviewnative/06-custom-loading-screen"
+    },
+    "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View": {
+      "abstract": [
+        {
+          "text": "Add a more interesting loading screen that matches the style of your app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View",
+      "kind": "section",
+      "role": "pseudoSymbol",
+      "title": "Add the Loading View",
+      "type": "section",
+      "url": "/tutorials/liveviewnative/06-custom-loading-screen#Add-the-Loading-View"
+    },
+    "doc://LiveViewNative/tutorials/YourFirstApp": {
+      "abstract": [
+        {
+          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
+      "kind": "overview",
+      "role": "overview",
+      "title": "Your First LiveViewNative App",
+      "type": "topic",
+      "url": "/tutorials/yourfirstapp"
+    },
+    "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift",
+      "kind": "article",
+      "role": "article",
+      "title": "Customize with Swift",
+      "type": "topic",
+      "url": "/tutorials/yourfirstapp/customize-with-swift"
+    },
+    "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started",
+      "kind": "article",
+      "role": "article",
+      "title": "Getting Started",
+      "type": "topic",
+      "url": "/tutorials/yourfirstapp/getting-started"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [
+    {
+      "backgroundImage": "06-00-intro-header.png",
+      "chapter": "Customize with Swift",
+      "content": [
+        {
+          "inlineContent": [
+            {
+              "text": "Add a more interesting loading screen that matches the style of your app.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "estimatedTimeInMinutes": 30,
+      "image": "06-00-intro-header.png",
+      "kind": "hero",
+      "title": "Style the Loading Screen to Match Your App",
+      "xcodeRequirement": "Xcode 13.3"
+    },
+    {
+      "kind": "tasks",
+      "tasks": [
+        {
+          "anchor": "Add-the-Loading-View",
+          "contentSection": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "Add the loading view and update the registry.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ],
+              "kind": "fullWidth"
+            }
+          ],
+          "stepsSection": [
+            {
+              "caption": [],
+              "code": "06-01-01-loadingview.swift",
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "Add a ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "MyLoadingView",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " SwiftUI view. This view is what will be displayed while the live view is connecting.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ],
+              "media": null,
+              "runtimePreview": null,
+              "type": "step"
+            },
+            {
+              "caption": [],
+              "code": "05-02-02-decode.swift",
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "Open your custom registry implementation.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ],
+              "media": null,
+              "runtimePreview": null,
+              "type": "step"
+            },
+            {
+              "caption": [],
+              "code": "06-01-02-registry.swift",
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "Implement the ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "loadingView(for:state:)",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " method.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ],
+              "media": null,
+              "runtimePreview": null,
+              "type": "step"
+            },
+            {
+              "caption": [],
+              "code": "06-01-03-error.swift",
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "In the method, check if the the live view is in an error state, and if so, display an error message.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ],
+              "media": null,
+              "runtimePreview": null,
+              "type": "step"
+            },
+            {
+              "caption": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "With that, you can relaunch your app and see the loading view in action. If it’s loading too quickly for you to see it, you can add a ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "Process.sleep(1000)",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " call to the ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "mount",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " callback of the list live view on the backend—just don’t forget to remove it!",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ],
+              "code": "06-01-04-registry.swift",
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "Finally, if there isn’t an error, display the custom loading view.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ],
+              "media": null,
+              "runtimePreview": "06-01-05-loading.mp4",
+              "type": "step"
+            }
+          ],
+          "title": "Add the Loading View"
+        }
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/tutorials/liveviewnative/06-custom-loading-screen"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

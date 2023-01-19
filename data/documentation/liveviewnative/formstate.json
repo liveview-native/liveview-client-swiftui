@@ -1,0 +1,845 @@
+{
+  "abstract": [
+    {
+      "text": "A property wrapper that stores the primary value of a form element.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormState"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative9FormStateV",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "struct"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "FormState"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "FormState"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Structure",
+    "symbolKind": "struct",
+    "title": "FormState"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "attribute",
+              "text": "@propertyWrapper"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "struct"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "FormState"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "genericParameter",
+              "text": "Value"
+            },
+            {
+              "kind": "text",
+              "text": "> "
+            },
+            {
+              "kind": "keyword",
+              "text": "where"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "Value"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative9FormValueP",
+              "text": "FormValue"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "This property wrapper represents the data that is considered the “value” of a form element (such as the string in a text field, or the state of a checkbox).",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "Additional data that’s tied to the form element, but is not the primary value should use SwiftUI’s ",
+              "type": "text"
+            },
+            {
+              "code": "@State",
+              "type": "codeVoice"
+            },
+            {
+              "text": " property wrapper.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "anchor": "Value-Storage",
+          "level": 3,
+          "text": "Value Storage",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "When the element this properrty wrapper is placed on is located of inside a ",
+              "type": "text"
+            },
+            {
+              "code": "<phx-form>",
+              "type": "codeVoice"
+            },
+            {
+              "text": ", the value will be stored on that form’s ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "The key used in the form model is the ",
+              "type": "text"
+            },
+            {
+              "code": "name",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute of the element this property wrapper is placed on. The property wrapper will pull the element",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "name from the nearest parent view that corresponds to a DOM element, so this property wrapper may be used on nested views.  The framework uses the ",
+              "type": "text"
+            },
+            {
+              "code": "\\.element",
+              "type": "codeVoice"
+            },
+            {
+              "text": " SwiftUI environment key to determine which element the view belongs to. If used within a form, the element ",
+              "type": "text"
+            },
+            {
+              "inlineContent": [
+                {
+                  "text": "must",
+                  "type": "text"
+                }
+              ],
+              "type": "emphasis"
+            },
+            {
+              "text": " have a ",
+              "type": "text"
+            },
+            {
+              "code": "name",
+              "type": "codeVoice"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "If the element is not located inside of a form, the value will be stored directly by the property wrapper. A ",
+              "type": "text"
+            },
+            {
+              "code": "name",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute is not required when used outside of a form.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "anchor": "Default-Value",
+          "level": 3,
+          "text": "Default Value",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "When the value is accessed for the first time, the framework will try to use the element’s ",
+              "type": "text"
+            },
+            {
+              "code": "value",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute, if possible.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "If the element does not have a ",
+              "type": "text"
+            },
+            {
+              "code": "value",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute, or the ",
+              "type": "text"
+            },
+            {
+              "code": "Value",
+              "type": "codeVoice"
+            },
+            {
+              "text": " type could not be constructed from the string representation,",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "it will use the default value the property wrapper was initialized with. Before the state is first updated, changes to the element’s ",
+              "type": "text"
+            },
+            {
+              "code": "value",
+              "type": "codeVoice"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "attribute will be reflected in the property wrapper’s value.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "anchor": "Change-Events",
+          "level": 3,
+          "text": "Change Events",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "If the element has a ",
+              "type": "text"
+            },
+            {
+              "code": "phx-change",
+              "type": "codeVoice"
+            },
+            {
+              "text": " event set, ",
+              "type": "text"
+            },
+            {
+              "code": "@FormState",
+              "type": "codeVoice"
+            },
+            {
+              "text": " will send change events when its value changes. Change events can be turned off by constructing the property wrapper with ",
+              "type": "text"
+            },
+            {
+              "code": "sendChangeEvents: false",
+              "type": "codeVoice"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "anchor": "Usage",
+          "level": 2,
+          "text": "Usage",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "To use this property wrapper, the wrapped type must implement the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " protocol to define how values are converted",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "to/from the serialized form data representation.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct IntField: View {",
+            "    @FormState private var value: Int?",
+            "",
+            "    init(element: ElementNode, context: LiveContext<some CustomRegistry>) {",
+            "    }",
+            "",
+            "    var body: some View {",
+            "        TextField(\"My number\", value: $value, format: .number)",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/7SwiftUI15DynamicPropertyP": {
+      "identifier": "doc://LiveViewNative/7SwiftUI15DynamicPropertyP",
+      "title": "SwiftUI.DynamicProperty",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormControls": {
+      "abstract": [
+        {
+          "text": "See how to build custom form controls that integrate with the form data model and events.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
+      "kind": "article",
+      "role": "article",
+      "title": "Building Form Controls",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formcontrols"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
+      "abstract": [
+        {
+          "text": "A form model stores the working copy of the data for a specific ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormModel",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
+      "abstract": [
+        {
+          "text": "A property wrapper that stores the primary value of a form element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormState",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState/DynamicProperty-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/DynamicProperty-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "DynamicProperty Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate/dynamicproperty-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(default:sendChangeEvents:)": {
+      "abstract": [
+        {
+          "text": "Creates a ",
+          "type": "text"
+        },
+        {
+          "code": "FormState",
+          "type": "codeVoice"
+        },
+        {
+          "text": " property wrapper with a default value that will be used when no other value is present.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "default"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "sendChangeEvents"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:Sb",
+          "text": "Bool"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(default:sendChangeEvents:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init(default:sendChangeEvents:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate/init(default:sendchangeevents:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)": {
+      "abstract": [
+        {
+          "text": "Convenience initializer that creates a ",
+          "type": "text"
+        },
+        {
+          "code": "FormState",
+          "type": "codeVoice"
+        },
+        {
+          "text": " property wrapper with ",
+          "type": "text"
+        },
+        {
+          "code": "nil",
+          "type": "codeVoice"
+        },
+        {
+          "text": " as its default value.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "sendChangeEvents"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:Sb",
+          "text": "Bool"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init(sendChangeEvents:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate/init(sendchangeevents:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue": {
+      "abstract": [
+        {
+          "text": "A binding to the element’s value that can be used as the storage for other views or controls.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "projectedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI7BindingV",
+          "text": "Binding"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "projectedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate/projectedvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState/wrappedValue": {
+      "abstract": [
+        {
+          "text": "The value for this form element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
+          "text": "Value"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/wrappedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "wrappedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate/wrappedvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormValue": {
+      "abstract": [
+        {
+          "text": "A form value is any type that can be stored in a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formvalue"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/7SwiftUI15DynamicPropertyP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel"
+      ],
+      "title": "Form Controls"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(default:sendChangeEvents:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)"
+      ],
+      "title": "Initializers"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormState/wrappedValue"
+      ],
+      "title": "Instance Properties"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormState/DynamicProperty-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/formstate"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

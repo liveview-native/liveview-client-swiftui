@@ -1,0 +1,685 @@
+{
+  "abstract": [
+    {
+      "text": "A form model stores the working copy of the data for a specific ",
+      "type": "text"
+    },
+    {
+      "code": "<form>",
+      "type": "codeVoice"
+    },
+    {
+      "text": " element.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormModel"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative9FormModelC",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "class"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "FormModel"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "FormModel"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Class",
+    "symbolKind": "class",
+    "title": "FormModel"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "class"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "FormModel"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "To obtain a form model, use ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel/getForm(elementID:)",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " or the ",
+              "type": "text"
+            },
+            {
+              "code": "\\.formModel",
+              "type": "codeVoice"
+            },
+            {
+              "text": " environment key.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/7Combine16ObservableObjectP": {
+      "identifier": "doc://LiveViewNative/7Combine16ObservableObjectP",
+      "title": "Combine.ObservableObject",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormControls": {
+      "abstract": [
+        {
+          "text": "See how to build custom form controls that integrate with the form data model and events.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
+      "kind": "article",
+      "role": "article",
+      "title": "Building Form Controls",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formcontrols"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
+      "abstract": [
+        {
+          "text": "A form model stores the working copy of the data for a specific ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormModel"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormModel",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/ObservableObject-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/ObservableObject-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "ObservableObject Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel/observableobject-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/clear()": {
+      "abstract": [
+        {
+          "text": "Clears all data in this form.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "clear"
+        },
+        {
+          "kind": "text",
+          "text": "()"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/clear()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "clear()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel/clear()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/debugDescription": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "debugDescription"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/debugDescription",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "debugDescription",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel/debugdescription"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/elementID": {
+      "abstract": [
+        {
+          "text": "The value of the ",
+          "type": "text"
+        },
+        {
+          "code": "id",
+          "type": "codeVoice"
+        },
+        {
+          "text": " attribute of the ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element this model is for.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "let"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "elementID"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/elementID",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "elementID",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel/elementid"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendChangeEvent()": {
+      "abstract": [
+        {
+          "text": "Sends a phx-change event (if configured) to the server with the current form data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "sendChangeEvent"
+        },
+        {
+          "kind": "text",
+          "text": "() "
+        },
+        {
+          "kind": "keyword",
+          "text": "async"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendChangeEvent()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "sendChangeEvent()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel/sendchangeevent()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendSubmitEvent()": {
+      "abstract": [
+        {
+          "text": "Sends a phx-submit event (if configured) to the server with the current form data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "sendSubmitEvent"
+        },
+        {
+          "kind": "text",
+          "text": "() "
+        },
+        {
+          "kind": "keyword",
+          "text": "async"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendSubmitEvent()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "sendSubmitEvent()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel/sendsubmitevent()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/subscript(_:)": {
+      "abstract": [
+        {
+          "text": "Access the stored value, if there is one, for the form field of the given name.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "subscript"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ") -> ("
+        },
+        {
+          "kind": "keyword",
+          "text": "any"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9FormValueP",
+          "text": "FormValue"
+        },
+        {
+          "kind": "text",
+          "text": ")?"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/subscript(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "subscript(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formmodel/subscript(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
+      "abstract": [
+        {
+          "text": "A property wrapper that stores the primary value of a form element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormState",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormValue": {
+      "abstract": [
+        {
+          "text": "A form value is any type that can be stored in a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormValue"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel/getForm(elementID:)": {
+      "abstract": [
+        {
+          "text": "Get or create a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " for the ",
+          "type": "text"
+        },
+        {
+          "code": "<form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": " element with the given ID.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "getForm"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "elementID"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9FormModelC",
+          "text": "FormModel"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel/getForm(elementID:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "getForm(elementID:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewmodel/getform(elementid:)"
+    },
+    "doc://LiveViewNative/s28CustomDebugStringConvertibleP": {
+      "identifier": "doc://LiveViewNative/s28CustomDebugStringConvertibleP",
+      "title": "Swift.CustomDebugStringConvertible",
+      "type": "unresolvable"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/7Combine16ObservableObjectP",
+        "doc://LiveViewNative/s28CustomDebugStringConvertibleP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormValue"
+      ],
+      "title": "Form Controls"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel/debugDescription",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel/elementID"
+      ],
+      "title": "Instance Properties"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel/clear()",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendChangeEvent()",
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel/sendSubmitEvent()"
+      ],
+      "title": "Instance Methods"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel/subscript(_:)"
+      ],
+      "title": "Subscripts"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/FormModel/ObservableObject-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/formmodel"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,474 @@
+{
+  "abstract": [
+    {
+      "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative15ObservedElementV",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "struct"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "ObservedElement"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "ObservedElement"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Structure",
+    "symbolKind": "struct",
+    "title": "ObservedElement"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "attribute",
+              "text": "@propertyWrapper"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "struct"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "ObservedElement"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "When an element is changed as a result of a LiveView update, the coordinator will notify all changed elements.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "Any SwiftUI views using ",
+              "type": "text"
+            },
+            {
+              "code": "@ObservedElement",
+              "type": "codeVoice"
+            },
+            {
+              "text": " will be updated automatically when the observed element changes.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The following changes are observed:",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "Changes to the element’s attributes.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "Changes to text nodes that are immediate children of the element.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "Additions and removals of immediate child elements.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ],
+          "type": "orderedList"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Note that, in order to keep SwiftUI view updates minimal, an element is ",
+              "type": "text"
+            },
+            {
+              "inlineContent": [
+                {
+                  "text": "not",
+                  "type": "text"
+                }
+              ],
+              "type": "emphasis"
+            },
+            {
+              "text": " notified of changes to nested elements.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "anchor": "Example",
+          "level": 2,
+          "text": "Example",
+          "type": "heading"
+        },
+        {
+          "code": [
+            "struct MyView: View {",
+            "    @ObservedElemenet private var element: ElementNode",
+            "",
+            "    var body: some View {",
+            "        Text(\"Value: \\(element.attributeValue(for: \"my-attr\") ?? \"<none>\")\")",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/7SwiftUI15DynamicPropertyP": {
+      "identifier": "doc://LiveViewNative/7SwiftUI15DynamicPropertyP",
+      "title": "SwiftUI.DynamicProperty",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
+      "abstract": [
+        {
+          "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "typealias"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Attribute"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Attribute"
+        }
+      ],
+      "role": "symbol",
+      "title": "Attribute",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attribute"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
+      "abstract": [
+        {
+          "text": "A wrapper for an element-containing DOM node and its associated data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "role": "symbol",
+      "title": "ElementNode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement": {
+      "abstract": [
+        {
+          "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ObservedElement"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ObservedElement"
+        }
+      ],
+      "role": "symbol",
+      "title": "ObservedElement",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/DynamicProperty-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/DynamicProperty-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "DynamicProperty Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement/dynamicproperty-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/init()": {
+      "abstract": [
+        {
+          "text": "Creates an ",
+          "type": "text"
+        },
+        {
+          "code": "ObservedElement",
+          "type": "codeVoice"
+        },
+        {
+          "text": " that observes changes to the view’s element..",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "()"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/init()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement/init()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/wrappedValue": {
+      "abstract": [
+        {
+          "text": "The observed element in the document, with all current data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+          "text": "ElementNode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/wrappedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "wrappedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement/wrappedvalue"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/7SwiftUI15DynamicPropertyP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+        "doc://LiveViewNative/documentation/LiveViewNative/Attribute"
+      ],
+      "title": "Working with the DOM"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/init()"
+      ],
+      "title": "Initializers"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/wrappedValue"
+      ],
+      "title": "Instance Properties"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/DynamicProperty-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/observedelement"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

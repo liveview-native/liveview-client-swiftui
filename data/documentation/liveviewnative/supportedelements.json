@@ -1,0 +1,417 @@
+{
+  "abstract": [
+    {
+      "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "collectionGroup",
+    "title": "Supported Elements"
+  },
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage": {
+      "abstract": [
+        {
+          "code": "<asyncimage>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays images loaded from a remote URL.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
+      "kind": "article",
+      "role": "article",
+      "title": "AsyncImage",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/asyncimage"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers",
+      "kind": "article",
+      "role": "article",
+      "title": "Attributes vs. Modifiers",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributesvsmodifiers"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Button": {
+      "abstract": [
+        {
+          "code": "<button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a tappable element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Button",
+      "kind": "article",
+      "role": "article",
+      "title": "Button",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/button"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/HStack": {
+      "abstract": [
+        {
+          "code": "<hstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children in a horizontal line.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/HStack",
+      "kind": "article",
+      "role": "article",
+      "title": "HStack",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/hstack"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Image": {
+      "abstract": [
+        {
+          "code": "<image>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays SF Symbols or images from your app’s asset catalog.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Image",
+      "kind": "article",
+      "role": "article",
+      "title": "Image",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/image"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/List": {
+      "abstract": [
+        {
+          "code": "<list>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", arranges its children in a vertically scrolling list.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/List",
+      "kind": "article",
+      "role": "article",
+      "title": "List",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/list"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink": {
+      "abstract": [
+        {
+          "code": "<navigationlink>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", links to another live view page.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
+      "kind": "article",
+      "role": "article",
+      "title": "NavigationLink",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/navigationlink"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/PhxForm": {
+      "abstract": [
+        {
+          "code": "<phx-form>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a container for form elements.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/PhxForm",
+      "kind": "article",
+      "role": "article",
+      "title": "PhxForm",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/phxform"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton": {
+      "abstract": [
+        {
+          "code": "<phx-submit-button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", special button that triggers submission of the form it’s contained in when pressed.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton",
+      "kind": "article",
+      "role": "article",
+      "title": "PhxSubmitButton",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/phxsubmitbutton"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Rectangle": {
+      "abstract": [
+        {
+          "code": "<rectangle>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a rectangle shape.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Rectangle",
+      "kind": "article",
+      "role": "article",
+      "title": "Rectangle",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/rectangle"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/RoundedRectangle": {
+      "abstract": [
+        {
+          "code": "<roundedrectangle>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a rectangle shape with rounded corners.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RoundedRectangle",
+      "kind": "article",
+      "role": "article",
+      "title": "RoundedRectangle",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/roundedrectangle"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ScrollView": {
+      "abstract": [
+        {
+          "code": "<scrollview>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", allows its content to be scrolled if it’s larger than the available space.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
+      "kind": "article",
+      "role": "article",
+      "title": "ScrollView",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/scrollview"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Spacer": {
+      "abstract": [
+        {
+          "code": "<spacer>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", an empty view that can grow to take up as much space as needed.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Spacer",
+      "kind": "article",
+      "role": "article",
+      "title": "Spacer",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/spacer"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers": {
+      "abstract": [
+        {
+          "text": "Common modifiers supported by all DOM elements.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers",
+      "kind": "article",
+      "role": "article",
+      "title": "Supported Modifiers",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/supportedmodifiers"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Text": {
+      "abstract": [
+        {
+          "code": "<text>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", displays text.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Text",
+      "kind": "article",
+      "role": "article",
+      "title": "Text",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/text"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/TextField": {
+      "abstract": [
+        {
+          "code": "<textfield>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a text field form element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/TextField",
+      "kind": "article",
+      "role": "article",
+      "title": "TextField",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/textfield"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/VStack": {
+      "abstract": [
+        {
+          "code": "<vstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children in a vertical line",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/VStack",
+      "kind": "article",
+      "role": "article",
+      "title": "VStack",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/vstack"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ZStack": {
+      "abstract": [
+        {
+          "code": "<zstack>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", lays out children on top of each other, from back to front.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
+      "kind": "article",
+      "role": "article",
+      "title": "ZStack",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/zstack"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers",
+        "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers"
+      ],
+      "title": "Building a Live View Template"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/HStack",
+        "doc://LiveViewNative/documentation/LiveViewNative/VStack",
+        "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
+        "doc://LiveViewNative/documentation/LiveViewNative/Spacer",
+        "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
+        "doc://LiveViewNative/documentation/LiveViewNative/List"
+      ],
+      "title": "Layout"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/Text",
+        "doc://LiveViewNative/documentation/LiveViewNative/Image",
+        "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
+        "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
+        "doc://LiveViewNative/documentation/LiveViewNative/Button"
+      ],
+      "title": "Content"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/PhxForm",
+        "doc://LiveViewNative/documentation/LiveViewNative/TextField",
+        "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton"
+      ],
+      "title": "Forms"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/Rectangle",
+        "doc://LiveViewNative/documentation/LiveViewNative/RoundedRectangle"
+      ],
+      "title": "Shapes"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/supportedelements"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

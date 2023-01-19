@@ -1,0 +1,185 @@
+{
+  "abstract": [
+    {
+      "code": "<phx-form>",
+      "type": "codeVoice"
+    },
+    {
+      "text": ", a container for form elements.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/PhxForm"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "PhxForm"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Attributes",
+          "level": 2,
+          "text": "Attributes",
+          "type": "heading"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "phx-submit",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": The name of the event to fire when this form is submitted (see ",
+                      "type": "text"
+                    },
+                    {
+                      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton",
+                      "isActive": true,
+                      "type": "reference"
+                    },
+                    {
+                      "text": ")",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "phx-change",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ": The name of the event to fire when form data is changed",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ],
+          "type": "unorderedList"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton": {
+      "abstract": [
+        {
+          "code": "<phx-submit-button>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", special button that triggers submission of the form it’s contained in when pressed.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton",
+      "kind": "article",
+      "role": "article",
+      "title": "PhxSubmitButton",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/phxsubmitbutton"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
+      "abstract": [
+        {
+          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Supported Elements",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/supportedelements"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/TextField": {
+      "abstract": [
+        {
+          "code": "<textfield>",
+          "type": "codeVoice"
+        },
+        {
+          "text": ", a text field form element.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/TextField",
+      "kind": "article",
+      "role": "article",
+      "title": "TextField",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/textfield"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/TextField",
+        "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton"
+      ],
+      "title": "Forms"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/phxform"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

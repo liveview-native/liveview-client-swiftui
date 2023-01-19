@@ -1,0 +1,546 @@
+{
+  "abstract": [
+    {
+      "text": "Use the ",
+      "type": "text"
+    },
+    {
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "isActive": true,
+      "type": "reference"
+    },
+    {
+      "text": " protocol to define how custom modifiers in the DOM are handled.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier"
+  },
+  "kind": "article",
+  "metadata": {
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "article",
+    "roleHeading": "Article",
+    "title": "Adding Custom Modifiers"
+  },
+  "primaryContentSections": [
+    {
+      "content": [
+        {
+          "anchor": "Overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "If you don’t already have one, create a type that conforms to the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " protocol and provide it as the eneric type paramter to your ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyRegistry: CustomRegistry {",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Then, add an enum called ",
+              "type": "text"
+            },
+            {
+              "code": "AttributeName",
+              "type": "codeVoice"
+            },
+            {
+              "text": " that has strings for raw values and conforms to ",
+              "type": "text"
+            },
+            {
+              "code": "Equatable",
+              "type": "codeVoice"
+            },
+            {
+              "text": ". The framework will use this type to check if your registry supports a particular attribute name. All of the string values should be lowercase, otherwise the framework will not use them.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyRegistry: CustomRegistry {",
+            "    enum ModifierType: String {",
+            "        case myFont = \"my_font\"",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "To define the view modifier for this attributes, implement the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " method. From this method, you return a struct that implements SwiftUI’s ",
+              "type": "text"
+            },
+            {
+              "code": "ViewModifier",
+              "type": "codeVoice"
+            },
+            {
+              "text": " protocol.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "In the following example, a modifier like ",
+              "type": "text"
+            },
+            {
+              "code": "{\"type\": \"my_font\", \"size\": 22}",
+              "type": "codeVoice"
+            },
+            {
+              "text": " could be used to apply the custom font named “My Font” with a fixed size of 22pt.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyRegistry: CustomRegistry {",
+            "    enum ModifierType: String {",
+            "        case myFont = \"my_font\"",
+            "    }",
+            "",
+            "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<MyRegistry>) throws -> any ViewModifier {",
+            "        switch name {",
+            "        case .myFont:",
+            "            return try MyFontModifier(from: decoder)",
+            "        }",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Because an enum is used for the attribute name, do not include a ",
+              "type": "text"
+            },
+            {
+              "code": "default",
+              "type": "codeVoice"
+            },
+            {
+              "text": " branch in your ",
+              "type": "text"
+            },
+            {
+              "code": "switch",
+              "type": "codeVoice"
+            },
+            {
+              "text": " statement so that Swift will check if for exhaustiveness.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Then, implement the ",
+              "type": "text"
+            },
+            {
+              "code": "MyFontModifier",
+              "type": "codeVoice"
+            },
+            {
+              "text": " struct. By conforming to the ",
+              "type": "text"
+            },
+            {
+              "code": "Decodable",
+              "type": "codeVoice"
+            },
+            {
+              "text": " protocol, the ",
+              "type": "text"
+            },
+            {
+              "code": "init(from:)",
+              "type": "codeVoice"
+            },
+            {
+              "text": " initializer that handles decoding the modifier from JSON can be synthesized automatically. The ",
+              "type": "text"
+            },
+            {
+              "code": "body(content:)",
+              "type": "codeVoice"
+            },
+            {
+              "text": " method modifies the ",
+              "type": "text"
+            },
+            {
+              "code": "content",
+              "type": "codeVoice"
+            },
+            {
+              "text": " view it receives based on whatever values were decoded.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyFontModifier: ViewModifier, Decodable {",
+            "    let size: Double?",
+            "",
+            "    func body(content: Content) -> some View {",
+            "        content",
+            "            .font(.custom(\"My Font\", fixedSize: size ?? 13))",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement": {
+      "abstract": [
+        {
+          "text": "Use the ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " protocol to define how DOM elements are converted to SwiftUI views.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement",
+      "kind": "article",
+      "role": "article",
+      "title": "Adding Custom Elements",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/addcustomelement"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076": {
+      "abstract": [
+        {
+          "text": "This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.",
+          "type": "text"
+        }
+      ],
+      "defaultImplementations": 1,
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "decodeModifier"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP12ModifierTypeQa",
+          "text": "ModifierType"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "from"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s7DecoderP",
+          "text": "Decoder"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "context"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
+          "text": "LiveContext"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "text": "Self"
+        },
+        {
+          "kind": "text",
+          "text": ">) "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        },
+        {
+          "kind": "text",
+          "text": " -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "any"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
+          "text": "ViewModifier"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "decodeModifier(_:from:context:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-4j076"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
+      "abstract": [
+        {
+          "text": "The context provides information at initialization-time to views in a LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveContext",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext"
+      ],
+      "title": "Custom DOM Elements and Attributes"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/addcustommodifier"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

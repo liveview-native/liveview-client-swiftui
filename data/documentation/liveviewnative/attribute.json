@@ -1,0 +1,235 @@
+{
+  "abstract": [
+    {
+      "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/Attribute"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative9Attributea",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "typealias"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "Attribute"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "Attribute"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Type Alias",
+    "symbolKind": "typealias",
+    "title": "Attribute"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "typealias"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "Attribute"
+            },
+            {
+              "kind": "text",
+              "text": " = LiveViewNativeCore"
+            },
+            {
+              "kind": "text",
+              "text": "."
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
+              "text": "Attribute"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
+      "abstract": [
+        {
+          "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "typealias"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Attribute"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Attribute"
+        }
+      ],
+      "role": "symbol",
+      "title": "Attribute",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attribute"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
+      "abstract": [
+        {
+          "text": "A wrapper for an element-containing DOM node and its associated data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "role": "symbol",
+      "title": "ElementNode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement": {
+      "abstract": [
+        {
+          "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ObservedElement"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ObservedElement"
+        }
+      ],
+      "role": "symbol",
+      "title": "ObservedElement",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement"
+      ],
+      "title": "Working with the DOM"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/attribute"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}
