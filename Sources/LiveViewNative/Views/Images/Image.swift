@@ -46,7 +46,7 @@ struct Image: View {
     }
     
     private var symbolScale: SwiftUI.Image.Scale? {
-        switch element.attributeValue(for: "symbol-scasle") {
+        switch element.attributeValue(for: "symbol-scale") {
         case nil:
             return nil
         case "small":
