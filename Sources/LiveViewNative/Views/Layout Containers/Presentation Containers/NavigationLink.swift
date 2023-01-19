@@ -21,7 +21,7 @@ struct NavigationLink<R: CustomRegistry>: View {
     
     @ViewBuilder
     public var body: some View {
-        if let href = element.attributeValue(for: "href").flatMap({
+        if let href = element.attributeValue(for: "destination").flatMap({
             URL(string: $0, relativeTo: context.coordinator.url)?.appending(path: "").absoluteURL
         }) {
             SwiftUI.NavigationLink(
@@ -33,6 +33,9 @@ struct NavigationLink<R: CustomRegistry>: View {
                 context.buildChildren(of: element)
             }
             .disabled(element.attribute(named: "disabled") != nil)
+            .onAppear {
+                print(href)
+            }
         }
     }
 }
