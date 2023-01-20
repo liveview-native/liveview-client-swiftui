@@ -22,11 +22,24 @@ fileprivate let dateFormatter: DateFormatter = {
 }()
 
 struct Text<R: CustomRegistry>: View {
-    let element: ElementNode
     let context: LiveContext<R>
     
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.element = element
+    // The view that's in the SwiftUI view tree needs to observe an element to respond to DOM changes,
+    // but we also need to construct a Text view with a specific element to handle nested <text>s.
+    // The `element` property returns the effective one, avoiding accessing the @ObservedElement when not
+    // installed in a view.
+    @ObservedElement private var observedElement: ElementNode
+    private var overrideElement: ElementNode?
+    private var element: ElementNode {
+        overrideElement ?? observedElement
+    }
+    
+    init(context: LiveContext<R>) {
+        self.context = context
+    }
+    
+    private init(overrideElement: ElementNode, context: LiveContext<R>) {
+        self.overrideElement = overrideElement
         self.context = context
     }
     
@@ -119,7 +132,7 @@ struct Text<R: CustomRegistry>: View {
                 if let element = next.asElement() {
                     switch element.tag {
                     case "text":
-                        prev = prev + Self(element: element, context: context).body
+                        prev = prev + Self(overrideElement: element, context: context).body
                     case "lvn-link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")

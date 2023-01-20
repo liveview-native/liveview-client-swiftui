@@ -19,7 +19,7 @@ struct BuiltinRegistry {
         case "securefield":
             SecureField<R>(element: element, context: context)
         case "text":
-            Text(element: element, context: context)
+            Text(context: context)
         case "hstack":
             HStack<R>(element: element, context: context)
         case "vstack":
