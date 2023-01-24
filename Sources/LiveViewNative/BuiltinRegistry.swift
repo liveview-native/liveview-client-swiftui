@@ -62,6 +62,8 @@ struct BuiltinRegistry {
             Toggle(element: element, context: context)
         case "menu":
             Menu(element: element, context: context)
+        case "slider":
+            Slider(element: element, context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
