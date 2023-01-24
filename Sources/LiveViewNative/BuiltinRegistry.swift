@@ -56,7 +56,7 @@ struct BuiltinRegistry {
             Link(element: element, context: context)
         case "divider":
             Divider()
-#if !os(macOS)
+#if os(iOS)
         case "edit-button":
             EditButton()
 #endif

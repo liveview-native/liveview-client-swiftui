@@ -45,7 +45,7 @@ private extension SwiftUI.List {
         switch element.attributeValue(for: "style") {
         case nil, "plain":
             self.listStyle(.plain)
-#if !os(macOS)
+#if os(iOS)
         case "grouped":
             self.listStyle(.grouped)
         case "inset-grouped":

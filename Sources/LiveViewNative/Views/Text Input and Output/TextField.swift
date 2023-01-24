@@ -24,6 +24,8 @@ struct TextField<R: CustomRegistry>: TextFieldProtocol {
             .applyAutocorrectionDisabled(disableAutocorrection)
 #if !os(macOS)
             .textInputAutocapitalization(autocapitalization)
+#endif
+#if os(iOS) || os(tvOS)
             .applyKeyboardType(keyboard)
 #endif
             .applySubmitLabel(submitLabel)

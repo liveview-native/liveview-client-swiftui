@@ -55,7 +55,11 @@ struct ListRowSeparatorModifier: ViewModifier, Decodable, Equatable {
     }
     
     func body(content: Content) -> some View {
+        #if !os(watchOS)
         content.listRowSeparator(visibility, edges: edges)
+        #else
+        content
+        #endif
     }
     
     private enum CodingKeys: String, CodingKey {
