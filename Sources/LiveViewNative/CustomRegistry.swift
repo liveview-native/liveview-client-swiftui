@@ -54,7 +54,7 @@ public protocol CustomRegistry {
     ///     typealias TagName = EmptyRegistry.None
     /// }
     /// ```
-    associatedtype TagName: RawRepresentable where TagName.RawValue == String
+    associatedtype TagName: RawRepresentable = EmptyRegistry.None where TagName.RawValue == String
     /// A type represnting the custom modifier types that this registry can handle.
     ///
     /// This type must be `RawRepresentable` and its raw values must be strings.
@@ -75,15 +75,15 @@ public protocol CustomRegistry {
     ///     typealias ModifierType = EmptyRegistry.None
     /// }
     /// ```
-    associatedtype ModifierType: RawRepresentable where ModifierType.RawValue == String
+    associatedtype ModifierType: RawRepresentable = EmptyRegistry.None where ModifierType.RawValue == String
     /// The type of view this registry returns from the `lookup` method.
     ///
     /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-895au`` implementations and this will be inferred automatically.
-    associatedtype CustomView: View
+    associatedtype CustomView: View = Never
     /// The type of view this registry produces for loading views.
     ///
     /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-2uoy9`` implementations and this will be inferred automatically.
-    associatedtype LoadingView: View
+    associatedtype LoadingView: View = Never
     
     /// This method is called by LiveView Native when it needs to construct a custom view.
     ///
