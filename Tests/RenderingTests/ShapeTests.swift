@@ -18,19 +18,19 @@ final class ShapeTests: XCTestCase {
     }
     
     func testRoundedRectangle() throws {
-        try assertMatch(#"<roundedrectangle corner-radius="5" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<rounded-rectangle corner-radius="5" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerRadius: 5)
         }
-        try assertMatch(#"<roundedrectangle corner-width="5" corner-height="10" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<rounded-rectangle corner-width="5" corner-height="10" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerSize: .init(width: 5, height: 10))
         }
-        try assertMatch(#"<roundedrectangle corner-width="5" corner-radius="15" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<rounded-rectangle corner-width="5" corner-radius="15" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerSize: .init(width: 5, height: 15))
         }
-        try assertMatch(#"<roundedrectangle corner-height="5" corner-radius="15" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<rounded-rectangle corner-height="5" corner-radius="15" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerSize: .init(width: 15, height: 5))
         }
-        try assertMatch(#"<roundedrectangle corner-radius="10" style="continuous" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<rounded-rectangle corner-radius="10" style="continuous" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
         }
     }
@@ -60,7 +60,7 @@ final class ShapeTests: XCTestCase {
     }
     
     func testContainerRelativeShape() throws {
-        try assertMatch(#"<containerrelativeshape />"#) {
+        try assertMatch(#"<container-relative-shape />"#) {
             ContainerRelativeShape()
         }
     }
