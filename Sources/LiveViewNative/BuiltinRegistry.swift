@@ -56,8 +56,10 @@ struct BuiltinRegistry {
             Link(element: element, context: context)
         case "divider":
             Divider()
+#if !os(macOS)
         case "edit-button":
             EditButton()
+#endif
         case "toggle":
             Toggle(element: element, context: context)
         case "phx-form":

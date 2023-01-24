@@ -45,10 +45,12 @@ private extension SwiftUI.List {
         switch element.attributeValue(for: "style") {
         case nil, "plain":
             self.listStyle(.plain)
+#if !os(macOS)
         case "grouped":
             self.listStyle(.grouped)
         case "inset-grouped":
             self.listStyle(.insetGrouped)
+#endif
         default:
             fatalError("Invalid list style '\(element.attributeValue(for: "name")!)'")
         }

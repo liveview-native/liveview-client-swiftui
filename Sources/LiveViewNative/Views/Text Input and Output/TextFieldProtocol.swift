@@ -91,6 +91,7 @@ extension TextFieldProtocol {
         }
     }
     
+#if !os(macOS)
     var autocapitalization: TextInputAutocapitalization? {
         switch element.attributeValue(for: "autocapitalization") {
         case "sentences":
@@ -105,7 +106,9 @@ extension TextFieldProtocol {
             return nil
         }
     }
+#endif
     
+#if !os(macOS)
     var keyboard: UIKeyboardType? {
         switch element.attributeValue(for: "keyboard") {
         case "ascii-capable":
@@ -134,6 +137,7 @@ extension TextFieldProtocol {
             return nil
         }
     }
+#endif
     
     var submitLabel: SubmitLabel? {
         switch element.attributeValue(for: "submit-label") {
@@ -196,6 +200,7 @@ extension View {
         }
     }
     
+#if !os(macOS)
     @ViewBuilder
     func applyKeyboardType(_ keyboardType: UIKeyboardType?) -> some View {
         if let keyboardType {
@@ -204,6 +209,7 @@ extension View {
             self
         }
     }
+#endif
     
     @ViewBuilder
     func applySubmitLabel(_ submitLabel: SubmitLabel?) -> some View {

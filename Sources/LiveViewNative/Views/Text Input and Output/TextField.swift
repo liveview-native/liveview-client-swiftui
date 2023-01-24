@@ -22,8 +22,10 @@ struct TextField<R: CustomRegistry>: TextFieldProtocol {
             .focused($isFocused)
             .applyTextFieldStyle(textFieldStyle)
             .applyAutocorrectionDisabled(disableAutocorrection)
+#if !os(macOS)
             .textInputAutocapitalization(autocapitalization)
             .applyKeyboardType(keyboard)
+#endif
             .applySubmitLabel(submitLabel)
             .onChange(of: isFocused, perform: handleFocus)
     }
