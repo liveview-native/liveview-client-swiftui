@@ -20,11 +20,11 @@ struct BuiltinRegistry {
             SecureField<R>(element: element, context: context)
         case "text":
             Text(context: context)
-        case "h-stack":
+        case "h-stack", "hstack":
             HStack<R>(element: element, context: context)
-        case "v-stack":
+        case "v-stack", "vstack":
             VStack<R>(element: element, context: context)
-        case "z-stack":
+        case "z-stack", "zstack":
             ZStack<R>(element: element, context: context)
         case "button":
             Button<R>(element: element, context: context, action: nil)

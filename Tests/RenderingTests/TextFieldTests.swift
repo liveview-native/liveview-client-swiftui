@@ -12,18 +12,18 @@ import SwiftUI
 @MainActor
 final class TextFieldTests: XCTestCase {
     func testSimple() throws {
-        try assertMatch(#"<textfield placeholder="Type here" />"#) {
+        try assertMatch(#"<text-field placeholder="Type here" />"#) {
             TextField("Type here", text: .constant(""))
         }
-        try assertMatch(#"<securefield placeholder="Password" />"#) {
+        try assertMatch(#"<secure-field placeholder="Password" />"#) {
             SecureField("Password", text: .constant(""))
         }
     }
     func testPrompt() throws {
-        try assertMatch(#"<textfield placeholder="Placeholder" prompt="Prompt" />"#) {
+        try assertMatch(#"<text-field placeholder="Placeholder" prompt="Prompt" />"#) {
             TextField("Placeholder", text: .constant(""), prompt: Text("Prompt"))
         }
-        try assertMatch(#"<securefield placeholder="Placeholder" prompt="Prompt" />"#) {
+        try assertMatch(#"<secure-field placeholder="Placeholder" prompt="Prompt" />"#) {
             SecureField("Placeholder", text: .constant(""), prompt: Text("Prompt"))
         }
     }
