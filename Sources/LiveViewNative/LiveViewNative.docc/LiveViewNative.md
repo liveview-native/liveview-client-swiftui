@@ -13,8 +13,9 @@
 - <doc:YourFirstApp>
 - <doc:GettingStarted>
 - ``LiveView``
+- ``LiveSessionCoordinator``
+- ``LiveSessionConfiguration``
 - ``LiveViewCoordinator``
-- ``LiveViewConfiguration``
 
 ### Building a Live View Template
 
