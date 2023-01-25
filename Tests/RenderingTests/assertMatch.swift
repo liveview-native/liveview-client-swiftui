@@ -17,18 +17,20 @@ func assertMatch(
     _ file: String = #file,
     _ line: Int = #line,
     _ function: StaticString = #function,
-    @ViewBuilder _ view: () -> some View,
-    environment: @escaping (inout EnvironmentValues) -> () = { _ in }
+    environment: @escaping (inout EnvironmentValues) -> () = { _ in },
+    size: CGSize? = nil,
+    @ViewBuilder _ view: () -> some View
 ) throws {
-    try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, view, environment: environment)
+    try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, view)
 }
 
 @MainActor
 func assertMatch(
     name: String,
     _ markup: String,
-    @ViewBuilder _ view: () -> some View,
-    environment: @escaping (inout EnvironmentValues) -> () = { _ in }
+    environment: @escaping (inout EnvironmentValues) -> () = { _ in },
+    size: CGSize? = nil,
+    @ViewBuilder _ view: () -> some View
 ) throws {
     let session = LiveSessionCoordinator(URL(string: "http://localhost")!)
     let document = try LiveViewNativeCore.Document.parse(markup)
@@ -36,8 +38,8 @@ func assertMatch(
         document[document.root()].children(),
         context: LiveContext(coordinator: session.rootCoordinator, url: session.url)
     ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
-    let markupImage = ImageRenderer(content: viewTree.transformEnvironment(\.self, transform: environment)).uiImage?.pngData()
-    let viewImage = ImageRenderer(content: view().transformEnvironment(\.self, transform: environment)).uiImage?.pngData()
+    let markupImage = ImageRenderer(content: viewTree.transformEnvironment(\.self, transform: environment).frame(width: size?.width, height: size?.height)).uiImage?.pngData()
+    let viewImage = ImageRenderer(content: view().transformEnvironment(\.self, transform: environment).frame(width: size?.width, height: size?.height)).uiImage?.pngData()
     
     if markupImage == viewImage {
         XCTAssert(true)

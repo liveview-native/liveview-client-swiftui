@@ -28,12 +28,33 @@ struct Shape<S: SwiftUI.Shape>: View {
 
 extension RoundedRectangle {
     init(from element: ElementNode) {
-        let radius: Double
-        if let s = element.attributeValue(for: "corner-radius"), let d = Double(s) {
-            radius = d
-        } else {
-            radius = 5
+        let radius = element.attributeValue(for: "corner-radius").flatMap(Double.init) ?? 0
+        self.init(
+            cornerSize: .init(
+                width: element.attributeValue(for: "corner-width").flatMap(Double.init) ?? radius,
+                height: element.attributeValue(for: "corner-height").flatMap(Double.init) ?? radius
+            ),
+            style: (element.attributeValue(for: "style").flatMap(RoundedCornerStyle.init) ?? .circular).style
+        )
+    }
+}
+
+extension Capsule {
+    init(from element: ElementNode) {
+        self.init(
+            style: (element.attributeValue(for: "style").flatMap(RoundedCornerStyle.init) ?? .circular).style
+        )
+    }
+}
+
+private enum RoundedCornerStyle: String {
+    case circular
+    case continuous
+    
+    var style: SwiftUI.RoundedCornerStyle {
+        switch self {
+        case .circular: return .circular
+        case .continuous: return .continuous
         }
-        self.init(cornerRadius: radius)
     }
 }
