@@ -1,6 +1,6 @@
 # RoundedRectangle
 
-`<roundedrectangle>`, a rectangle shape with rounded corners.
+`<rounded-rectangle>`, a rectangle shape with rounded corners.
 
 ## Attributes
 

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  LinkTests.swift
 //  
 //
 //  Created by Carson Katri on 1/17/23.
@@ -20,10 +20,10 @@ final class LinkTests: XCTestCase {
     func testComplexBody() throws {
         try assertMatch(#"""
 <lvn-link destination="https://apple.com">
-    <hstack>
+    <h-stack>
         <image system-name="link" />
         <text>Click the link</text>
-    </hstack>
+    </h-stack>
 </lvn-link>
 """#) {
             Link(destination: URL(string: "https://apple.com")!) {

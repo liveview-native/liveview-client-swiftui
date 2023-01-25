@@ -48,13 +48,8 @@ public protocol CustomRegistry {
     /// }
     /// ```
     ///
-    /// If your registry does not support any custom tags, you can set this type alias to the ``EmptyRegistry/None`` type:
-    /// ```swift
-    /// struct MyRegistry: CustomRegistry {
-    ///     typealias TagName = EmptyRegistry.None
-    /// }
-    /// ```
-    associatedtype TagName: RawRepresentable where TagName.RawValue == String
+    /// This will default to the ``EmptyRegistry/None`` type if you don't support any custom tags.
+    associatedtype TagName: RawRepresentable = EmptyRegistry.None where TagName.RawValue == String
     /// A type represnting the custom modifier types that this registry can handle.
     ///
     /// This type must be `RawRepresentable` and its raw values must be strings.
@@ -69,21 +64,16 @@ public protocol CustomRegistry {
     /// }
     /// ```
     ///
-    /// If your registry does not support any custom modifiers, you can set this type alias to the ``EmptyRegistry/None`` type:
-    /// ```swift
-    /// struct MyRegistry: CustomRegistry {
-    ///     typealias ModifierType = EmptyRegistry.None
-    /// }
-    /// ```
-    associatedtype ModifierType: RawRepresentable where ModifierType.RawValue == String
+    /// This will default to the ``EmptyRegistry/None`` type if you don't support any custom modifiers.
+    associatedtype ModifierType: RawRepresentable = EmptyRegistry.None where ModifierType.RawValue == String
     /// The type of view this registry returns from the `lookup` method.
     ///
     /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-895au`` implementations and this will be inferred automatically.
-    associatedtype CustomView: View
+    associatedtype CustomView: View = Never
     /// The type of view this registry produces for loading views.
     ///
     /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-2uoy9`` implementations and this will be inferred automatically.
-    associatedtype LoadingView: View
+    associatedtype LoadingView: View = Never
     
     /// This method is called by LiveView Native when it needs to construct a custom view.
     ///
