@@ -1,6 +1,6 @@
 # HStack
 
-`<hstack>`, lays out children in a horizontal line.
+`<h-stack>`, lays out children in a horizontal line.
 
 ## Attributes
 

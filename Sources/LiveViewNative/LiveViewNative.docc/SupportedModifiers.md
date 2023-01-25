@@ -7,9 +7,9 @@ Common modifiers supported by all DOM elements.
 These attributes are supported by all elements, including custom ones. Modifiers are specified as a JSON array of objects on elements.
 
 ```html
-<hstack modifiers='[{"type": "padding", "all": 16}]'>
+<h-stack modifiers='[{"type": "padding", "all": 16}]'>
     <!-- ... -->
-</hstack>
+</h-stack>
 ```
 
 ## Attributes

@@ -1,6 +1,6 @@
 # VStack
 
-`<vstack>`, lays out children in a vertical line
+`<v-stack>`, lays out children in a vertical line
 
 ## Attributes
 

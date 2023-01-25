@@ -88,7 +88,7 @@
             }
             
             @Step {
-                Next, wrap the `<hstack>` in a `<navigationlink>`. This element functions like an HTML anchor tag, indicating that, when tapped, the client should navigate to a new page. The attributes we provide tell the client which mode to navigate in and to which page. Don't forget to move the `id` attribute from the `<hstack>` to the link!
+                Next, wrap the `<h-stack>` in a `<navigation-link>`. This element functions like an HTML anchor tag, indicating that, when tapped, the client should navigate to a new page. The attributes we provide tell the client which mode to navigate in and to which page. Don't forget to move the `id` attribute from the `<h-stack>` to the link!
                 
                 Once you've done that, you can tap a cat on the list and navigate to the detail view and see the larger image!
                 

@@ -51,7 +51,7 @@
             }
             
             @Step {
-                Add the custom modifier `nav_favorite` to the `<vstack>`. With the modifier we'll pass the current state, so the frontend can display it in the navigation bar button.
+                Add the custom modifier `nav_favorite` to the `<v-stack>`. With the modifier we'll pass the current state, so the frontend can display it in the navigation bar button.
                 
                 @Comment {
                     project = "backend"
