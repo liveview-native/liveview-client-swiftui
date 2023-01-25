@@ -39,16 +39,6 @@
             }
             
             @Step {
-                Then, define a type alias called `ModifierType` that is `EmptyRegistry.None`. This tells the framework that your registry doesn't support any custom modifiers.
-                
-                @Comment {
-                    project = "app"
-                    path = "LVNTutorialApp/MyRegistry.swift"
-                }
-                @Code(name: "MyRegistry.swift", file: 04-01-03-modifier.swift)
-            }
-            
-            @Step {
                 In the `lookup` method, we'll construct a `CatRatingView`, passing in the `context` parameter of the lookup method. This will cause a compiler error, but don't worry; in Section 3, we'll implement the view and resolve it.
                 
                 The `context` is a ``LiveContext`` struct containing additional information about the context in which the element is being used.
@@ -57,7 +47,7 @@
                     project = "app"
                     path = "LVNTutorialApp/MyRegistry.swift"
                 }
-                @Code(name: "MyRegistry.swift", file: 04-01-04-view.swift)
+                @Code(name: "MyRegistry.swift", file: 04-01-03-view.swift)
             }
             
             @Step {
@@ -78,7 +68,7 @@
                     project = "app"
                     path = "LVNTutorialApp/ContentView.swift"
                 }
-                @Code(name: "ContentView.swift", file: 04-01-05-coordinator.swift)
+                @Code(name: "ContentView.swift", file: 04-01-04-coordinator.swift)
             }
         }
     }
