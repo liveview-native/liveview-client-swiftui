@@ -11,8 +11,6 @@ struct Menu<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
-    @FormState(default: false) var value: Bool
-    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
