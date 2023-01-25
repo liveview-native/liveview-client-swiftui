@@ -30,7 +30,7 @@ struct HStack<R: CustomRegistry>: View {
         case "bottom":
             return .bottom
         default:
-            fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <hstack>")
+            fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <h-stack>")
         }
     }
     

@@ -1,6 +1,6 @@
 # NavigationLink
 
-`<navigationlink>`, links to another live view page.
+`<navigation-link>`, links to another live view page.
 
 ## Attributes
 
