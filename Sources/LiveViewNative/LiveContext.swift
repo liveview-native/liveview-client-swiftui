@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// The context provides information at initialization-time to views in a LiveView.
 public struct LiveContext<R: CustomRegistry> {
@@ -44,5 +45,40 @@ public struct LiveContext<R: CustomRegistry> {
     /// Builds a view representing the children of the current element in the current context.
     public func buildChildren(of element: ElementNode) -> some View {
         return coordinator.builder.fromNodes(element.children(), context: self)
+    }
+    
+    public func buildChildren(
+        of element: ElementNode,
+        withTagName tagName: String,
+        namespace: String? = nil,
+        includeDefaultSlot: Bool = false
+    ) -> some View {
+        let children = element.children()
+        let namedSlotChildren = children.filter({ child in
+            if case let .element(element) = child.data,
+               element.namespace == namespace,
+               element.tag == tagName
+            {
+                return true
+            } else {
+                return false
+            }
+        })
+        if namedSlotChildren.isEmpty && includeDefaultSlot {
+            let defaultSlotChildren = children.filter({
+                if case let .element(element) = $0.data {
+                    return element.namespace != tagName
+                } else {
+                    return true
+                }
+            })
+            return ForEach(defaultSlotChildren.map({ ($0.id, $0.children()) }), id: \.0) { subChildren in
+                coordinator.builder.fromNodes(subChildren.1, context: self)
+            }
+        } else {
+            return ForEach(namedSlotChildren.map({ ($0.id, $0.children()) }), id: \.0) { subChildren in
+                coordinator.builder.fromNodes(subChildren.1, context: self)
+            }
+        }
     }
 }
