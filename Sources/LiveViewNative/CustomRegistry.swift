@@ -48,12 +48,7 @@ public protocol CustomRegistry {
     /// }
     /// ```
     ///
-    /// If your registry does not support any custom tags, you can set this type alias to the ``EmptyRegistry/None`` type:
-    /// ```swift
-    /// struct MyRegistry: CustomRegistry {
-    ///     typealias TagName = EmptyRegistry.None
-    /// }
-    /// ```
+    /// This will default to the ``EmptyRegistry/None`` type if you don't support any custom tags.
     associatedtype TagName: RawRepresentable = EmptyRegistry.None where TagName.RawValue == String
     /// A type represnting the custom modifier types that this registry can handle.
     ///
@@ -69,12 +64,7 @@ public protocol CustomRegistry {
     /// }
     /// ```
     ///
-    /// If your registry does not support any custom modifiers, you can set this type alias to the ``EmptyRegistry/None`` type:
-    /// ```swift
-    /// struct MyRegistry: CustomRegistry {
-    ///     typealias ModifierType = EmptyRegistry.None
-    /// }
-    /// ```
+    /// This will default to the ``EmptyRegistry/None`` type if you don't support any custom modifiers.
     associatedtype ModifierType: RawRepresentable = EmptyRegistry.None where ModifierType.RawValue == String
     /// The type of view this registry returns from the `lookup` method.
     ///
