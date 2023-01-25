@@ -19,8 +19,7 @@ struct Menu<R: CustomRegistry>: View {
         SwiftUI.Menu {
             context.buildChildren(of: element, withTagName: "content", namespace: "menu")
         } label: {
-            context.buildChildren(of: element, defaultSlotFor: "menu")
-            context.buildChildren(of: element, withTagName: "label", namespace: "menu")
+            context.buildChildren(of: element, withTagName: "label", namespace: "menu", includeDefaultSlot: true)
         }
     }
 }

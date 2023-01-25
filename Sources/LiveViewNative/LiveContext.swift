@@ -49,19 +49,12 @@ public struct LiveContext<R: CustomRegistry> {
     
     public func buildChildren(
         of element: ElementNode,
-        `where` condition: (NodeChildrenSequence.Element) -> Bool
-    ) -> some View {
-        ForEach(element.children().filter(condition).map({ ($0.id, $0.children()) }), id: \.0) { subChildren in
-            coordinator.builder.fromNodes(subChildren.1, context: self)
-        }
-    }
-    
-    public func buildChildren(
-        of element: ElementNode,
         withTagName tagName: String,
-        namespace: String? = nil
+        namespace: String? = nil,
+        includeDefaultSlot: Bool = false
     ) -> some View {
-        buildChildren(of: element, where: { child in
+        let children = element.children()
+        let namedSlotChildren = children.filter({ child in
             if case let .element(element) = child.data,
                element.namespace == namespace,
                element.tag == tagName
@@ -71,15 +64,21 @@ public struct LiveContext<R: CustomRegistry> {
                 return false
             }
         })
-    }
-    
-    public func buildChildren(of element: ElementNode, defaultSlotFor tagName: String) -> some View {
-        buildChildren(of: element, where: {
+        let defaultSlotChildren = children.filter({
             if case let .element(element) = $0.data {
-                return element.namespace != "menu"
+                return element.namespace != tagName
             } else {
                 return true
             }
         })
+        if namedSlotChildren.isEmpty && includeDefaultSlot {
+            return ForEach(defaultSlotChildren.map({ ($0.id, $0.children()) }), id: \.0) { subChildren in
+                coordinator.builder.fromNodes(subChildren.1, context: self)
+            }
+        } else {
+            return ForEach(namedSlotChildren.map({ ($0.id, $0.children()) }), id: \.0) { subChildren in
+                coordinator.builder.fromNodes(subChildren.1, context: self)
+            }
+        }
     }
 }
