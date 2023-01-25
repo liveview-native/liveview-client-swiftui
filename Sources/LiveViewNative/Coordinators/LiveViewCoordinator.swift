@@ -133,6 +133,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         if let channel {
             guard !channel.isJoined, !channel.isJoining else { return }
         }
+        internalState = .startingConnection
         do {
             try await connectLiveView()
         } catch {

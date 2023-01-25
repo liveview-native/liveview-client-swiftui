@@ -14,35 +14,35 @@ struct BuiltinRegistry {
     @ViewBuilder
     static func lookup<R: CustomRegistry>(_ name: String, _ element: ElementNode, context: LiveContext<R>) -> some View {
         switch name {
-        case "textfield":
+        case "text-field":
             TextField<R>(element: element, context: context)
-        case "securefield":
+        case "secure-field":
             SecureField<R>(element: element, context: context)
         case "text":
             Text(context: context)
-        case "hstack":
+        case "h-stack", "hstack":
             HStack<R>(element: element, context: context)
-        case "vstack":
+        case "v-stack", "vstack":
             VStack<R>(element: element, context: context)
-        case "zstack":
+        case "z-stack", "zstack":
             ZStack<R>(element: element, context: context)
         case "button":
             Button<R>(element: element, context: context, action: nil)
         case "image":
             Image(element: element, context: context)
-        case "asyncimage":
+        case "async-image":
             AsyncImage(element: element, context: context)
-        case "scrollview":
+        case "scroll-view":
             ScrollView<R>(element: element, context: context)
         case "spacer":
             Spacer(element: element, context: context)
-        case "navigationlink":
+        case "navigation-link":
             NavigationLink(element: element, context: context)
         case "list":
             List<R>(element: element, context: context)
         case "rectangle":
             Shape(element: element, context: context, shape: Rectangle())
-        case "roundedrectangle":
+        case "rounded-rectangle":
             Shape(element: element, context: context, shape: RoundedRectangle(from: element))
         case "circle":
             Shape(element: element, context: context, shape: Circle())
@@ -50,10 +50,12 @@ struct BuiltinRegistry {
             Shape(element: element, context: context, shape: Ellipse())
         case "capsule":
             Shape(element: element, context: context, shape: Capsule(from: element))
-        case "containerrelativeshape":
+        case "container-relative-shape":
             Shape(element: element, context: context, shape: ContainerRelativeShape())
         case "lvn-link":
             Link(element: element, context: context)
+        case "progress-view":
+            ProgressView(element: element, context: context)
         case "divider":
             Divider()
 #if os(iOS)
@@ -62,6 +64,10 @@ struct BuiltinRegistry {
 #endif
         case "toggle":
             Toggle(element: element, context: context)
+        case "menu":
+            Menu(element: element, context: context)
+        case "slider":
+            Slider(element: element, context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":

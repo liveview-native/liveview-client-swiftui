@@ -96,14 +96,14 @@ This is some markdown text [click me](apple.com)
     }
     
     func testFormat() throws {
-        try assertMatch(#"<text format="date-time" value="2023-01-17" />"#) {
-            Text(Date(timeIntervalSince1970: 1673931600.0), format: .dateTime)
+        try assertMatch(#"<text format="date-time" value="0001-01-01T00:00:00.000Z" />"#) {
+            Text(Date.distantPast, format: .dateTime)
         }
         try assertMatch(#"<text format="url">apple.com</text>"#) {
             Text(URL(string: "apple.com")!, format: .url)
         }
-        try assertMatch(#"<text format="iso8601" value="2023-01-17T14:55:01.326Z" />"#) {
-            Text(Date(timeIntervalSince1970: 1673967301.325973), format: .iso8601)
+        try assertMatch(#"<text format="iso8601" value="0001-01-01T00:00:00.000Z" />"#) {
+            Text(Date.distantPast, format: .iso8601)
         }
         try assertMatch(#"<text format="number" value="0.42" />"#) {
             Text(0.42, format: .number)

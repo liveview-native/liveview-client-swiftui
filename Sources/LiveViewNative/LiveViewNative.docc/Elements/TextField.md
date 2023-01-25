@@ -1,6 +1,6 @@
 # TextField
 
-`<textfield>`, a text field form element.
+`<text-field>`, a text field form element.
 
 ## Overview
 

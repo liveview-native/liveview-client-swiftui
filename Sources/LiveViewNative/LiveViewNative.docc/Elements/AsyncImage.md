@@ -1,6 +1,6 @@
 # AsyncImage
 
-`<asyncimage>`, displays images loaded from a remote URL.
+`<async-image>`, displays images loaded from a remote URL.
 
 ## Attributes
 

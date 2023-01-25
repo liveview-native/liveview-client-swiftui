@@ -38,8 +38,17 @@ func assertMatch(
         document[document.root()].children(),
         context: LiveContext(coordinator: session.rootCoordinator, url: session.url)
     ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
-    let markupImage = ImageRenderer(content: viewTree.transformEnvironment(\.self, transform: environment).frame(width: size?.width, height: size?.height)).uiImage?.pngData()
-    let viewImage = ImageRenderer(content: view().transformEnvironment(\.self, transform: environment).frame(width: size?.width, height: size?.height)).uiImage?.pngData()
+    
+    let markupImage = snapshot(
+        viewTree
+            .transformEnvironment(\.self, transform: environment),
+        size: size
+    )?.pngData()
+    let viewImage = snapshot(
+        view()
+            .transformEnvironment(\.self, transform: environment),
+        size: size
+    )?.pngData()
     
     if markupImage == viewImage {
         XCTAssert(true)
@@ -49,5 +58,31 @@ func assertMatch(
         try markupImage?.write(to: markupURL)
         try viewImage?.write(to: viewURL)
         XCTAssert(false, "Rendered views did not match. Outputs saved to \(markupURL.path()) and \(viewURL.path())")
+    }
+}
+
+private class SnapshotWindow: UIWindow {
+    override var safeAreaInsets: UIEdgeInsets {
+        .zero
+    }
+}
+
+@MainActor
+private func snapshot(_ view: some View, size: CGSize?) -> UIImage? {
+    
+    let controller = UIHostingController(rootView: view)
+    
+    let uiView = controller.view!
+    uiView.bounds = .init(origin: .zero, size: size ?? uiView.intrinsicContentSize)
+    uiView.backgroundColor = .clear
+    
+    let window = SnapshotWindow(frame: uiView.bounds)
+    window.rootViewController = controller
+    window.isHidden = false
+    window.makeKeyAndVisible()
+
+    let renderer = UIGraphicsImageRenderer(size: uiView.bounds.size)
+    return renderer.image { context in
+        uiView.layer.render(in: context.cgContext)
     }
 }

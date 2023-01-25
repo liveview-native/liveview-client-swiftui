@@ -193,7 +193,7 @@
             }
             
             @Step {
-                Then, let's replace the `<text>` element in the list with an `<hstack>` (used to layout elements in a horizontal row). Inside the stack, we'll have an `<asyncimage>` element which loads the remote cat image from the server and then the cat's name as before.
+                Then, let's replace the `<text>` element in the list with an `<h-stack>` (used to layout elements in a horizontal row). Inside the stack, we'll have an `<async-image>` element which loads the remote cat image from the server and then the cat's name as before.
                 
                 We also use the `frame` modifier to set the size of the image to 100×100 points.
                 
