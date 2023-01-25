@@ -219,3 +219,15 @@ extension Bool: FormValue {
         self = value
     }
 }
+
+extension Double: FormValue {
+    public var formValue: String {
+        self.formatted()
+    }
+    
+    public init?(formValue: String) {
+        guard let value = Double(formValue)
+        else { return nil }
+        self = value
+    }
+}
