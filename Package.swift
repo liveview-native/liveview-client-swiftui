@@ -34,7 +34,8 @@ let package = Package(
             ]),
         .testTarget(
             name: "LiveViewNativeTests",
-            dependencies: ["LiveViewNative"]),
+            dependencies: ["LiveViewNative"]
+        ),
         .testTarget(
             name: "RenderingTests",
             dependencies: ["LiveViewNative"]
