@@ -64,14 +64,14 @@ public struct LiveContext<R: CustomRegistry> {
                 return false
             }
         })
-        let defaultSlotChildren = children.filter({
-            if case let .element(element) = $0.data {
-                return element.namespace != tagName
-            } else {
-                return true
-            }
-        })
         if namedSlotChildren.isEmpty && includeDefaultSlot {
+            let defaultSlotChildren = children.filter({
+                if case let .element(element) = $0.data {
+                    return element.namespace != tagName
+                } else {
+                    return true
+                }
+            })
             return ForEach(defaultSlotChildren.map({ ($0.id, $0.children()) }), id: \.0) { subChildren in
                 coordinator.builder.fromNodes(subChildren.1, context: self)
             }
