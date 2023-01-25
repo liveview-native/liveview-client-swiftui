@@ -54,6 +54,8 @@ struct BuiltinRegistry {
             Shape(element: element, context: context, shape: ContainerRelativeShape())
         case "lvn-link":
             Link(element: element, context: context)
+        case "progress-view":
+            ProgressView(element: element, context: context)
         case "divider":
             Divider()
         case "edit-button":

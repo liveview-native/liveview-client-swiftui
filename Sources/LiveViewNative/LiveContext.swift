@@ -47,14 +47,11 @@ public struct LiveContext<R: CustomRegistry> {
         return coordinator.builder.fromNodes(element.children(), context: self)
     }
     
-    public func buildChildren(
-        of element: ElementNode,
-        withTagName tagName: String,
-        namespace: String? = nil,
-        includeDefaultSlot: Bool = false
-    ) -> some View {
-        let children = element.children()
-        let namedSlotChildren = children.filter({ child in
+    private static func elementWithName(
+        _ tagName: String,
+        namespace: String?
+    ) -> (NodeChildrenSequence.Element) -> Bool {
+        { child in
             if case let .element(element) = child.data,
                element.namespace == namespace,
                element.tag == tagName
@@ -63,7 +60,25 @@ public struct LiveContext<R: CustomRegistry> {
             } else {
                 return false
             }
-        })
+        }
+    }
+    
+    public func hasChild(
+        of element: ElementNode,
+        withTagName tagName: String,
+        namespace: String? = nil
+    ) -> Bool {
+        element.children().contains(where: Self.elementWithName(tagName, namespace: namespace))
+    }
+    
+    public func buildChildren(
+        of element: ElementNode,
+        withTagName tagName: String,
+        namespace: String? = nil,
+        includeDefaultSlot: Bool = false
+    ) -> some View {
+        let children = element.children()
+        let namedSlotChildren = children.filter(Self.elementWithName(tagName, namespace: namespace))
         if namedSlotChildren.isEmpty && includeDefaultSlot {
             let defaultSlotChildren = children.filter({
                 if case let .element(element) = $0.data {

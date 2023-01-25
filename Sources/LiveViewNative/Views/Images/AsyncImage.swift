@@ -25,7 +25,7 @@ struct AsyncImage<R: CustomRegistry>: View {
             case .failure(let error):
                 SwiftUI.Text(error.localizedDescription)
             case .empty:
-                ProgressView().progressViewStyle(.circular)
+                SwiftUI.ProgressView().progressViewStyle(.circular)
             @unknown default:
                 EmptyView()
             }

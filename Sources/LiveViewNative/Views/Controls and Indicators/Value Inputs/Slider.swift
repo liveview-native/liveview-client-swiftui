@@ -26,8 +26,7 @@ struct Slider<R: CustomRegistry>: View {
                 in: lowerBound...upperBound,
                 step: step
             ) {
-                context.buildChildren(of: element, defaultSlotFor: "slider")
-                context.buildChildren(of: element, withTagName: "label", namespace: "slider")
+                context.buildChildren(of: element, withTagName: "label", namespace: "slider", includeDefaultSlot: true)
             } minimumValueLabel: {
                 context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "slider")
             } maximumValueLabel: {
@@ -38,8 +37,7 @@ struct Slider<R: CustomRegistry>: View {
                 value: $value,
                 in: lowerBound...upperBound
             ) {
-                context.buildChildren(of: element, defaultSlotFor: "slider")
-                context.buildChildren(of: element, withTagName: "label", namespace: "slider")
+                context.buildChildren(of: element, withTagName: "label", namespace: "slider", includeDefaultSlot: true)
             } minimumValueLabel: {
                 context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "slider")
             } maximumValueLabel: {
