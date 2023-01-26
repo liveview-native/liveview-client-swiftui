@@ -135,6 +135,8 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         navigationPath.removeAll()
         self.socket?.disconnect()
         self.socket = nil
+        self.liveReloadSocket?.disconnect()
+        self.liveReloadSocket = nil
         // when deliberately disconnect, don't let pending connections continue
         internalState = .notConnected(reconnectAutomatically: false)
     }
