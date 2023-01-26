@@ -20,7 +20,7 @@ struct List<R: CustomRegistry>: View {
             forEach(nodes: element.children(), context: context)
                 .onDelete(perform: onDeleteHandler)
         }
-        .listStyle(from: element)
+        .applyListStyle(element.attributeValue(for: "list-style").flatMap(ListStyle.init) ?? .automatic)
     }
     
     private var onDeleteHandler: ((IndexSet) -> Void)? {
@@ -39,20 +39,43 @@ struct List<R: CustomRegistry>: View {
     }
 }
 
+fileprivate enum ListStyle: String {
+    case automatic
+    case plain
+#if os(iOS) || os(macOS)
+    case sidebar
+    case inset
+#endif
+#if os(iOS)
+    case insetGrouped = "inset-grouped"
+#endif
+#if os(iOS) || os(tvOS)
+    case grouped
+#endif
+}
+
 private extension SwiftUI.List {
     @ViewBuilder
-    func listStyle(from element: ElementNode) -> some View {
-        switch element.attributeValue(for: "style") {
-        case nil, "plain":
+    func applyListStyle(_ style: ListStyle) -> some View {
+        switch style {
+        case .automatic:
+            self.listStyle(.automatic)
+        case .plain:
             self.listStyle(.plain)
+#if os(iOS) || os(macOS)
+        case .sidebar:
+            self.listStyle(.sidebar)
+        case .inset:
+            self.listStyle(.inset)
+#endif
 #if os(iOS)
-        case "grouped":
-            self.listStyle(.grouped)
-        case "inset-grouped":
+        case .insetGrouped:
             self.listStyle(.insetGrouped)
 #endif
-        default:
-            fatalError("Invalid list style '\(element.attributeValue(for: "name")!)'")
+#if os(iOS) || os(tvOS)
+        case .grouped:
+            self.listStyle(.grouped)
+#endif
         }
     }
 }

@@ -119,7 +119,7 @@ struct Text<R: CustomRegistry>: View {
                     switch element.tag {
                     case "text":
                         prev = prev + Self(overrideElement: element, context: context).body
-                    case "lvn-link":
+                    case "link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )

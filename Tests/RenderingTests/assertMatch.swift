@@ -20,9 +20,10 @@ extension XCTestCase {
         _ function: StaticString = #function,
         environment: @escaping (inout EnvironmentValues) -> () = { _ in },
         size: CGSize? = nil,
+        lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
         @ViewBuilder _ view: () -> some View
     ) throws {
-        try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, view)
+        try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, lifetime: lifetime, view)
     }
     
     @MainActor
@@ -31,6 +32,7 @@ extension XCTestCase {
         _ markup: String,
         environment: @escaping (inout EnvironmentValues) -> () = { _ in },
         size: CGSize? = nil,
+        lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
         @ViewBuilder _ view: () -> some View
     ) throws {
         #if !os(iOS)
@@ -60,8 +62,14 @@ extension XCTestCase {
             return XCTAssert(false, "View failed to render an image")
         }
         
-        self.add(XCTAttachment(image: markupImage))
-        self.add(XCTAttachment(image: viewImage))
+        let markupAttachment = XCTAttachment(image: markupImage)
+        markupAttachment.name = "\(name) (markup)"
+        markupAttachment.lifetime = lifetime
+        self.add(markupAttachment)
+        let viewAttachment = XCTAttachment(image: viewImage)
+        viewAttachment.name = "\(name) (view)"
+        viewAttachment.lifetime = lifetime
+        self.add(viewAttachment)
         
         let markupData = markupImage.pngData()
         let viewData = viewImage.pngData()
