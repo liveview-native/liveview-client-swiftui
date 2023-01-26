@@ -4,7 +4,7 @@
 //
 //  Created by Carson Katri on 1/19/23.
 //
-
+#if !os(watchOS)
 import SwiftUI
 
 struct Menu<R: CustomRegistry>: View {
@@ -43,3 +43,4 @@ fileprivate extension View {
         }
     }
 }
+#endif

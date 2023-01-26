@@ -91,6 +91,7 @@ extension TextFieldProtocol {
         }
     }
     
+#if !os(macOS)
     var autocapitalization: TextInputAutocapitalization? {
         switch element.attributeValue(for: "autocapitalization") {
         case "sentences":
@@ -105,7 +106,9 @@ extension TextFieldProtocol {
             return nil
         }
     }
+#endif
     
+#if os(iOS) || os(tvOS)
     var keyboard: UIKeyboardType? {
         switch element.attributeValue(for: "keyboard") {
         case "ascii-capable":
@@ -134,6 +137,7 @@ extension TextFieldProtocol {
             return nil
         }
     }
+#endif
     
     var submitLabel: SubmitLabel? {
         switch element.attributeValue(for: "submit-label") {
@@ -164,8 +168,12 @@ extension TextFieldProtocol {
 enum TextFieldStyle: String {
     case automatic
     case plain
+#if !os(watchOS)
     case roundedBorder = "rounded-border"
+#endif
+#if os(macOS)
     case squareBorder = "square-border"
+#endif
 }
 
 extension View {
@@ -176,14 +184,14 @@ extension View {
             self.textFieldStyle(.automatic)
         case .plain:
             self.textFieldStyle(.plain)
+#if !os(watchOS)
         case .roundedBorder:
             self.textFieldStyle(.roundedBorder)
+#endif
+#if os(macOS)
         case .squareBorder:
-            #if os(macOS)
             self.textFieldStyle(.squareBorder)
-            #else
-            self
-            #endif
+#endif
         }
     }
     
@@ -196,6 +204,7 @@ extension View {
         }
     }
     
+#if os(iOS) || os(tvOS)
     @ViewBuilder
     func applyKeyboardType(_ keyboardType: UIKeyboardType?) -> some View {
         if let keyboardType {
@@ -204,6 +213,7 @@ extension View {
             self
         }
     }
+#endif
     
     @ViewBuilder
     func applySubmitLabel(_ submitLabel: SubmitLabel?) -> some View {

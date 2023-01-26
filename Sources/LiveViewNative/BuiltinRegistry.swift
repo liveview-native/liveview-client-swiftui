@@ -58,12 +58,16 @@ struct BuiltinRegistry {
             ProgressView(element: element, context: context)
         case "divider":
             Divider()
+#if os(iOS)
         case "edit-button":
             EditButton()
+#endif
         case "toggle":
             Toggle(element: element, context: context)
+#if !os(watchOS)
         case "menu":
             Menu(element: element, context: context)
+#endif
         case "slider":
             Slider(element: element, context: context)
         case "phx-form":
