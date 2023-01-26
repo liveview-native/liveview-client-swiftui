@@ -26,8 +26,10 @@ struct SecureField<R: CustomRegistry>: TextFieldProtocol {
             .focused($isFocused)
             .applyTextFieldStyle(textFieldStyle)
             .applyAutocorrectionDisabled(disableAutocorrection)
+#if os(iOS) || os(tvOS)
             .textInputAutocapitalization(autocapitalization)
             .applyKeyboardType(keyboard)
+#endif
             .applySubmitLabel(submitLabel)
             .onChange(of: isFocused, perform: handleFocus)
     }
