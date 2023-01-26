@@ -135,6 +135,8 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         navigationPath.removeAll()
         self.socket?.disconnect()
         self.socket = nil
+        self.liveReloadChannel?.leave()
+        self.liveReloadChannel = nil
         self.liveReloadSocket?.disconnect()
         self.liveReloadSocket = nil
         // when deliberately disconnect, don't let pending connections continue
@@ -192,10 +194,7 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
             configuration.httpCookieStorage!.setCookie(cookie)
         }
     
-        let _: Void = try await withCheckedThrowingContinuation { continuation in
-            self.internalState = .awaitingSocketConnection(continuation)
-            doConnectSocket(urlSessionConfiguration: configuration)
-        }
+        doConnectSocket(urlSessionConfiguration: configuration)
         
         if liveReloadEnabled {
             Task {
@@ -216,9 +215,6 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
                 return
             }
             logger.debug("[Socket] Opened")
-            if case .awaitingSocketConnection(let continuation) = self.internalState {
-                continuation.resume()
-            }
             DispatchQueue.main.async {
                 self.internalState = .connected
             }
@@ -230,12 +226,8 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
                 return
             }
             logger.error("[Socket] Error: \(String(describing: error))")
-            if case .awaitingSocketConnection(let continuation) = self.internalState {
-                continuation.resume(throwing: LiveConnectionError.socketError(error))
-            } else {
-                Task { @MainActor in
-                    self.internalState = .connectionFailed(LiveConnectionError.socketError(error))
-                }
+            Task { @MainActor in
+                self.internalState = .connectionFailed(LiveConnectionError.socketError(error))
             }
         }
         socket.logger = { message in logger.debug("[Socket] \(message)") }
@@ -317,8 +309,6 @@ extension LiveSessionCoordinator {
     enum InternalState {
         case notConnected(reconnectAutomatically: Bool)
         case startingConnection
-        case awaitingSocketConnection(CheckedContinuation<Void, Swift.Error>)
-        case awaitingJoinResponse(CheckedContinuation<Payload, Swift.Error>)
         case connected
         case connectionFailed(Error)
         
@@ -326,7 +316,7 @@ extension LiveSessionCoordinator {
             switch self {
             case .notConnected(reconnectAutomatically: _):
                 return .notConnected
-            case .startingConnection, .awaitingSocketConnection(_), .awaitingJoinResponse(_):
+            case .startingConnection:
                 return .connecting
             case .connected:
                 return .connected
@@ -339,7 +329,7 @@ extension LiveSessionCoordinator {
             switch self {
             case .notConnected(reconnectAutomatically: let b):
                 return b
-            case .startingConnection, .awaitingSocketConnection(_), .awaitingJoinResponse(_):
+            case .startingConnection:
                 // connection attempt tokens should make this unreachable, but just in case
                 return false
             case .connected:
