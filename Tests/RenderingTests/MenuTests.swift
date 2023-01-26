@@ -11,6 +11,7 @@ import SwiftUI
 
 @MainActor
 final class MenuTests: XCTestCase {
+    #if !os(watchOS)
     func testSimple() throws {
         try assertMatch(#"""
 <menu>
@@ -66,4 +67,5 @@ final class MenuTests: XCTestCase {
             }
         }
     }
+    #endif
 }
