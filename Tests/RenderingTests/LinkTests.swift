@@ -12,19 +12,19 @@ import SwiftUI
 @MainActor
 final class LinkTests: XCTestCase {
     func testSimple() throws {
-        try assertMatch(#"<lvn-link destination="https://apple.com">Hello, world!</lvn-link>"#) {
+        try assertMatch(#"<link destination="https://apple.com">Hello, world!</link>"#) {
             Link("Hello, world!", destination: URL(string: "https://apple.com")!)
         }
     }
     
     func testComplexBody() throws {
         try assertMatch(#"""
-<lvn-link destination="https://apple.com">
+<link destination="https://apple.com">
     <h-stack>
         <image system-name="link" />
         <text>Click the link</text>
     </h-stack>
-</lvn-link>
+</link>
 """#) {
             Link(destination: URL(string: "https://apple.com")!) {
                 HStack {

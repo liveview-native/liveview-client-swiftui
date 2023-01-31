@@ -82,7 +82,7 @@ public struct LiveContext<R: CustomRegistry> {
         if namedSlotChildren.isEmpty && includeDefaultSlot {
             let defaultSlotChildren = children.filter({
                 if case let .element(element) = $0.data {
-                    return element.namespace != tagName
+                    return element.namespace != namespace
                 } else {
                     return true
                 }
