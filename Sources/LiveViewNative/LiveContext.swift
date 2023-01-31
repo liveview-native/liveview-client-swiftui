@@ -87,11 +87,11 @@ public struct LiveContext<R: CustomRegistry> {
                     return true
                 }
             })
-            return ForEach(defaultSlotChildren.map({ ($0.id, $0.children()) }), id: \.0) { subChildren in
+            return ForEach([(element.node.id, defaultSlotChildren)], id: \.0) { subChildren in
                 coordinator.builder.fromNodes(subChildren.1, context: self)
             }
         } else {
-            return ForEach(namedSlotChildren.map({ ($0.id, $0.children()) }), id: \.0) { subChildren in
+            return ForEach(namedSlotChildren.map({ ($0.id, Array($0.children())) }), id: \.0) { subChildren in
                 coordinator.builder.fromNodes(subChildren.1, context: self)
             }
         }

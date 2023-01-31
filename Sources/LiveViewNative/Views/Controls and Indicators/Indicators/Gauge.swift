@@ -17,23 +17,42 @@ struct Gauge<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        let lowerBound = element.attributeValue(for: "lower-bound").flatMap(Double.init) ?? 0
-        let upperBound = element.attributeValue(for: "upper-bound").flatMap(Double.init) ?? 1
         Group {
-            SwiftUI.Gauge(
-                value: element.attributeValue(for: "value").flatMap(Double.init) ?? 0,
-                in: lowerBound...upperBound
-            ) {
-                context.buildChildren(of: element, withTagName: "label", namespace: "gauge", includeDefaultSlot: true)
-            } currentValueLabel: {
-                context.buildChildren(of: element, withTagName: "current-value-label", namespace: "gauge")
-            } minimumValueLabel: {
-                context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "gauge")
-            } maximumValueLabel: {
-                context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "gauge")
+            if context.hasChild(of: element, withTagName: "current-value-label", namespace: "gauge") ||
+               context.hasChild(of: element, withTagName: "minimum-value-label", namespace: "gauge") ||
+               context.hasChild(of: element, withTagName: "maximum-value-label", namespace: "gauge")
+            {
+                SwiftUI.Gauge(
+                    value: self.value,
+                    in: self.lowerBound...self.upperBound
+                ) {
+                    label
+                } currentValueLabel: {
+                    context.buildChildren(of: element, withTagName: "current-value-label", namespace: "gauge")
+                } minimumValueLabel: {
+                    context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "gauge")
+                } maximumValueLabel: {
+                    context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "gauge")
+                }
+            } else {
+                SwiftUI.Gauge(
+                    value: value,
+                    in: lowerBound...upperBound
+                ) {
+                    label
+                }
             }
         }
-        .applyGaugeStyle(element.attributeValue(for: "gauge-style").flatMap(GaugeStyle.init) ?? .automatic)
+        .applyGaugeStyle(style)
+    }
+    
+    private var value: Double { element.attributeValue(for: "value").flatMap(Double.init) ?? 0 }
+    private var lowerBound: Double { element.attributeValue(for: "lower-bound").flatMap(Double.init) ?? 0 }
+    private var upperBound: Double { element.attributeValue(for: "upper-bound").flatMap(Double.init) ?? 1 }
+    private var style: GaugeStyle { element.attributeValue(for: "gauge-style").flatMap(GaugeStyle.init) ?? .automatic }
+    
+    private var label: some View {
+        context.buildChildren(of: element, withTagName: "label", namespace: "gauge", includeDefaultSlot: true)
     }
 }
 
