@@ -11,6 +11,8 @@ import SwiftUI
 
 @MainActor
 final class ValueInputTests: XCTestCase {
+    // MARK: Slider
+    
     func testSliderSimple() throws {
         try assertMatch(#"<slider />"#, size: .init(width: 100, height: 100)) {
             Slider(value: .constant(0))
@@ -41,9 +43,21 @@ final class ValueInputTests: XCTestCase {
         }
     }
     
+    // MARK: Toggle
+    
     func testToggleSimple() throws {
-        try assertMatch(#"<toggle>Switch</toggle>"#, lifetime: .keepAlways) {
+        try assertMatch(#"<toggle>Switch</toggle>"#) {
             Toggle("Switch", isOn: .constant(false))
+        }
+    }
+    
+    // MARK: Stepper
+    
+    func testStepperSimple() throws {
+        try assertMatch(#"<stepper>Stepper Label</stepper>"#) {
+            Stepper(value: .constant(0)) {
+                Text("Stepper Label")
+            }
         }
     }
 }
