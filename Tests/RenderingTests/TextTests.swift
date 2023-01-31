@@ -11,13 +11,13 @@ import SwiftUI
 
 @MainActor
 final class TextTests: XCTestCase {
-    func testSimple() throws {
+    func testTextSimple() throws {
         try assertMatch("<text>Hello, world!</text>") {
             Text("Hello, world!")
         }
     }
 
-    func testStyles() throws {
+    func testTextStyles() throws {
         for style in Font.TextStyle.allCases {
             try assertMatch(#"<text font="\#(style)">Hello, world!</text>"#) {
                 Text("Hello, world!").font(.system(style, weight: .regular))
@@ -25,7 +25,7 @@ final class TextTests: XCTestCase {
         }
     }
 
-    func testWeights() throws {
+    func testTextWeights() throws {
         let allWeights: [String:Font.Weight] = [
             "ultraLight": .ultraLight,
             "thin": .thin,
@@ -44,7 +44,7 @@ final class TextTests: XCTestCase {
         }
     }
 
-    func testColor() throws {
+    func testTextColor() throws {
         for color in [Color.primary, Color.red, Color.blue] {
             try assertMatch(#"<text color="system-\#(color)">Hello, world!</text>"#) {
                 Text("Hello, world!").foregroundColor(color)
@@ -52,7 +52,7 @@ final class TextTests: XCTestCase {
         }
     }
     
-    func testNesting() throws {
+    func testTextNesting() throws {
         try assertMatch(#"""
 <text>
     <image system-name="person.crop.circle.fill" />
@@ -61,7 +61,7 @@ final class TextTests: XCTestCase {
     <text verbatim="
 " />
     Plain text<text verbatim=" " />
-    <lvn-link destination="https://apple.com">visit apple.com</lvn-link>
+    <link destination="https://apple.com">visit apple.com</link>
     <text>. More plain text</text>
 </text>
 """#) {
@@ -72,7 +72,7 @@ Plain text [visit apple.com](https://apple.com). More plain text
         }
     }
     
-    func testMarkdown() throws {
+    func testTextMarkdown() throws {
         try assertMatch(#"""
 <text markdown="*Hello, world!*
 This is some markdown text [click me](apple.com)" />
@@ -84,7 +84,7 @@ This is some markdown text [click me](apple.com)
         }
     }
     
-    func testDate() throws {
+    func testTextDate() throws {
         try assertMatch(#"<text date="2023-01-17" date-style="date" />"#) {
             Text(Date(timeIntervalSince1970: 1673931600.0), style: .date)
         }
@@ -95,7 +95,7 @@ This is some markdown text [click me](apple.com)
         }
     }
     
-    func testFormat() throws {
+    func testTextFormat() throws {
         try assertMatch(#"<text format="date-time" value="0001-01-01T00:00:00.000Z" />"#) {
             Text(Date.distantPast, format: .dateTime)
         }
@@ -116,6 +116,23 @@ This is some markdown text [click me](apple.com)
         }
         try assertMatch(#"<text format="name" name-style="short">John Doe</text>"#) {
             Text(try! PersonNameComponents("John Doe", strategy: .name), format: .name(style: .short))
+        }
+    }
+    
+    func testTextFieldSimple() throws {
+        try assertMatch(#"<text-field placeholder="Type here" />"#) {
+            TextField("Type here", text: .constant(""))
+        }
+        try assertMatch(#"<secure-field placeholder="Password" />"#) {
+            SecureField("Password", text: .constant(""))
+        }
+    }
+    func testTextFieldPrompt() throws {
+        try assertMatch(#"<text-field placeholder="Placeholder" prompt="Prompt" />"#) {
+            TextField("Placeholder", text: .constant(""), prompt: Text("Prompt"))
+        }
+        try assertMatch(#"<secure-field placeholder="Placeholder" prompt="Prompt" />"#) {
+            SecureField("Placeholder", text: .constant(""), prompt: Text("Prompt"))
         }
     }
 }
