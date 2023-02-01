@@ -70,6 +70,10 @@ public protocol CustomRegistry {
     ///
     /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-895au`` implementations and this will be inferred automatically.
     associatedtype CustomView: View = Never
+    /// The type of view modifier this registry returns from the `decodeModifiers` method.
+    ///
+    /// Generally, implementors will use an opaque return type on their ``decodeModifier(_:from:context:)-35xcx`` implementations and this will be inferred automatically.
+    associatedtype CustomModifier: ViewModifier = EmptyModifier
     /// The type of view this registry produces for loading views.
     ///
     /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-2uoy9`` implementations and this will be inferred automatically.
@@ -94,7 +98,7 @@ public protocol CustomRegistry {
     /// - Parameter context: The live context in which the view is being built.
     /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
     /// - Throws: If decoding the modifier fails.
-    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> CustomModifier
     
     /// This method is called when it needs a view to display while connecting to the live view.
     ///
@@ -136,9 +140,9 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
         fatalError()
     }
 }
-extension CustomRegistry where ModifierType == EmptyRegistry.None {
+extension CustomRegistry where ModifierType == EmptyRegistry.None, CustomModifier == EmptyModifier {
     /// A default implementation that does not provide any custom modifiers. If you omit the ``CustomRegistry/ModifierType`` type alias, this implementation will be used.
-    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) -> any ViewModifier {
-        fatalError()
+    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) -> EmptyModifier {
+        EmptyModifier()
     }
 }

@@ -7,7 +7,13 @@
 
 import SwiftUI
 
-struct BuiltinRegistry {
+protocol BuiltinRegistryProtocol {
+    associatedtype BuiltinModifier: ViewModifier
+    associatedtype ModifierType: RawRepresentable where ModifierType.RawValue == String
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> BuiltinModifier
+}
+
+struct BuiltinRegistry: BuiltinRegistryProtocol {
     
     static let attributeDecoder = JSONDecoder()
     
@@ -89,20 +95,21 @@ struct BuiltinRegistry {
         case tint
     }
     
-    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> any ViewModifier {
+    @ViewModifierBuilder
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch type {
         case .frame:
-            return try FrameModifier(from: decoder)
+            try FrameModifier(from: decoder)
         case .listRowInsets:
-            return try ListRowInsetsModifier(from: decoder)
+            try ListRowInsetsModifier(from: decoder)
         case .listRowSeparator:
-            return try ListRowSeparatorModifier(from: decoder)
+            try ListRowSeparatorModifier(from: decoder)
         case .navigationTitle:
-            return try NavigationTitleModifier(from: decoder)
+            try NavigationTitleModifier(from: decoder)
         case .padding:
-            return try PaddingModifier(from: decoder)
+            try PaddingModifier(from: decoder)
         case .tint:
-            return try TintModifier(from: decoder)
+            try TintModifier(from: decoder)
         }
     }
 }
