@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// This protocol provides access to the `ViewModifier` type returned from `decodeModifier` in the `BuiltinRegistry`.
+/// That type is used by `ModifierContainer.builtin`.
 protocol BuiltinRegistryProtocol {
     associatedtype BuiltinModifier: ViewModifier
     associatedtype ModifierType: RawRepresentable where ModifierType.RawValue == String

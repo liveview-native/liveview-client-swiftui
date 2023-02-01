@@ -98,6 +98,7 @@ public protocol CustomRegistry {
     /// - Parameter context: The live context in which the view is being built.
     /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
     /// - Throws: If decoding the modifier fails.
+    @ViewModifierBuilder
     static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> CustomModifier
     
     /// This method is called when it needs a view to display while connecting to the live view.
