@@ -20,7 +20,9 @@ struct ViewTreeBuilder<R: CustomRegistry> {
     }
     
     @ViewBuilder
-    func fromNodes(_ nodes: NodeChildrenSequence, context: LiveContext<R>) -> some View {
+    func fromNodes<Nodes>(_ nodes: Nodes, context: LiveContext<R>) -> some View
+        where Nodes: RandomAccessCollection, Nodes.Index == Int, Nodes.Element == Node
+    {
         let e = nodes
         let c = context
         switch e.count {
@@ -188,7 +190,7 @@ internal struct ElementView<R: CustomRegistry>: View {
 }
 
 // not fileprivate because List needs ot use it so it has access to ForEach modifiers
-func forEach<R: CustomRegistry>(nodes: NodeChildrenSequence, context: LiveContext<R>) -> ForEach<[(ElementNode, String)], String, ElementView<R>> {
+func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContext<R>) -> ForEach<[(ElementNode, String)], String, ElementView<R>> {
     let elements = nodes.map { (node) -> (ElementNode, String) in
         guard let element = node.asElement() else {
             preconditionFailure("node in list or parent with more than 10 children must be an element")
