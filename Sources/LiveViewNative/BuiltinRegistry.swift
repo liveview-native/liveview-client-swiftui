@@ -74,6 +74,8 @@ struct BuiltinRegistry {
 #endif
         case "slider":
             Slider(element: element, context: context)
+        case "stepper":
+            Stepper(element: element, context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
