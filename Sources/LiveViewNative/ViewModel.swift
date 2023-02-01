@@ -12,9 +12,13 @@ import LiveViewNativeCore
 /// The working-copy data model for a ``LiveView``.
 ///
 /// In a view in the LiveView tree, a model can be obtained using `@EnvironmentObject`.
-public class LiveViewModel<R: CustomRegistry>: ObservableObject {
+public class LiveViewModel: ObservableObject {
     private var forms = [String: FormModel]()
     var cachedNavigationTitle: NavigationTitleModifier?
+    
+    private(set) var bindingValues = [String: Any]()
+    let bindingUpdatedByServer = PassthroughSubject<(String, Any), Never>()
+    let bindingUpdatedByClient = PassthroughSubject<(String, Any), Never>()
     
     /// Get or create a ``FormModel`` for the `<form>` element with the given ID.
     public func getForm(elementID id: String) -> FormModel {
@@ -42,6 +46,18 @@ public class LiveViewModel<R: CustomRegistry>: ObservableObject {
         for id in forms.keys where !formIDs.contains(id) {
             forms.removeValue(forKey: id)
         }
+    }
+    
+    func updateBindings(payload: Payload) {
+        for (key, value) in payload {
+            bindingValues[key] = value
+            bindingUpdatedByServer.send((key, value))
+        }
+    }
+    
+    func setBinding(_ name: String, to encodedValue: Any) {
+        bindingValues[name] = encodedValue
+        bindingUpdatedByClient.send((name, encodedValue))
     }
 }
 
@@ -91,7 +107,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     ///
     /// This method has no effect if the `<form>` does not have a `phx-change` event configured.
     ///
-    /// See ``LiveSessionCoordinator/pushEvent(type:event:value:)`` for more information.
+    /// See ``LiveViewCoordinator/pushEvent(type:event:value:)`` for more information.
     @MainActor
     public func sendChangeEvent() async throws {
         if let changeEvent = changeEvent {
@@ -103,7 +119,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     ///
     /// This method has no effect if the `<form>` does not have a `phx-submit` event configured.
     ///
-    /// See ``LiveSessionCoordinator/pushEvent(type:event:value:)`` for more information.
+    /// See ``LiveViewCoordinator/pushEvent(type:event:value:)`` for more information.
     @MainActor
     public func sendSubmitEvent() async throws {
         if let submitEvent = submitEvent {

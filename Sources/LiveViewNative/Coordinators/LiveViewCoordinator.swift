@@ -174,18 +174,23 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     }
     
     private func handleDiff(payload: Payload, baseURL: URL) throws {
-        if let events = payload["e"] as? [[Any]] {
-            for event in events {
-                guard let name = event[0] as? String,
-                      let value = event[1] as? Payload else {
-                    continue
-                }
-                eventSubject.send((name, value))
-            }
-        }
+        handleEvents(payload: payload)
         let diff = try RootDiff(from: FragmentDecoder(data: payload))
         self.rendered = try self.rendered.merge(with: diff)
         self.document?.merge(with: try Document.parse(self.rendered.buildString()))
+    }
+    
+    private func handleEvents(payload: Payload) {
+        guard let events = payload["e"] as? [[Any]] else {
+            return
+        }
+        for event in events {
+            guard let name = event[0] as? String,
+                  let value = event[1] as? Payload else {
+                continue
+            }
+            eventSubject.send((name, value))
+        }
     }
     
     private nonisolated func parseDOM(html: String, baseURL: URL) throws -> Elements {
@@ -376,6 +381,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 self.elementChanged.send(nodeRef)
             }
         }
+        self.handleEvents(payload: renderedPayload)
     }
 }
 

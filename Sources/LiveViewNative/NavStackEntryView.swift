@@ -11,7 +11,7 @@ import LiveViewNativeCore
 struct NavStackEntryView<R: CustomRegistry>: View {
     private let entry: LiveNavigationEntry<R>
     @ObservedObject private var coordinator: LiveViewCoordinator<R>
-    @StateObject private var liveViewModel = LiveViewModel<R>()
+    @StateObject private var liveViewModel = LiveViewModel()
     
     init(_ entry: LiveNavigationEntry<R>) {
         self.entry = entry
@@ -35,6 +35,15 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                 if let doc = newDocument {
                     // todo: doing this every time the DOM changes is probably not efficient
                     liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
+                }
+            }
+            .onReceive(coordinator.receiveEvent("_live_bindings"), perform: liveViewModel.updateBindings)
+            .onReceive(liveViewModel.bindingUpdatedByClient) { (name, value) in
+                // todo: consider grouping these into a single even per runloop iteration?
+                Task {
+                    try? await coordinator.pushEvent(type: "_live_bindings", event: name, value: [
+                        "value": value
+                    ])
                 }
             }
     }
