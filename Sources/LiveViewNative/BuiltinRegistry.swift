@@ -68,6 +68,10 @@ struct BuiltinRegistry {
         case "menu":
             Menu(element: element, context: context)
 #endif
+#if !os(tvOS)
+        case "gauge":
+            Gauge(element: element, context: context)
+#endif
         case "slider":
             Slider(element: element, context: context)
         case "label":
