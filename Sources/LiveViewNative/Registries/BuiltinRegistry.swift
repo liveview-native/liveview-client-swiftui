@@ -224,6 +224,25 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
                     }
                 }
             }
+        case "phx-focus":
+            FocusObserver(content: view) { isFocused in
+                guard isFocused else { return }
+                Task {
+                    try await context.coordinator.pushEvent(type: "focus", event: event, value: value)
+                }
+            }
+        case "phx-blur":
+            // Special case for `TextFieldProtocol`, which handles this event itself.
+            if element.tag == "text-field" || element.tag == "secure-field" {
+                view
+            } else {
+                FocusObserver(content: view) { isFocused in
+                    guard !isFocused else { return }
+                    Task {
+                        try await context.coordinator.pushEvent(type: "blur", event: event, value: value)
+                    }
+                }
+            }
         case "phx-click":
             // Special case for `Button`, which handles this event itself.
             if element.tag == "button" {
@@ -250,5 +269,18 @@ fileprivate struct ScenePhaseObserver<Content: View>: View {
     var body: some View {
         content
             .onChange(of: scenePhase, perform: onChange)
+    }
+}
+
+fileprivate struct FocusObserver<Content: View>: View {
+    @FocusState private var isFocused: Bool
+    
+    let content: Content
+    let onChange: (Bool) -> ()
+    
+    var body: some View {
+        content
+            .focused($isFocused)
+            .onChange(of: isFocused, perform: onChange)
     }
 }
