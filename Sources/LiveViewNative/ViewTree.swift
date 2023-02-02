@@ -75,7 +75,8 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let view = createView(element, context: context)
         let jsonStr = element.attributeValue(for: "modifiers")
         let modified = applyModifiers(encoded: jsonStr, to: view, context: context)
-        return modified
+        let bound = applyBindings(to: modified, element: element, context: context)
+        return bound
             .environment(\.element, element)
     }
     
@@ -102,6 +103,21 @@ struct ViewTreeBuilder<R: RootRegistry> {
             modifiers = []
         }
         return view.applyModifiers(modifiers[...], context: context)
+    }
+    
+    @ViewBuilder
+    private func applyBindings(
+        to view: some View,
+        element: ElementNode,
+        context: LiveContext<R>
+    ) -> some View {
+        view.applyBindings(
+            element.attributes.filter({
+                $0.name.rawValue.starts(with: "phx-") && $0.value != nil
+            })[...],
+            element: element,
+            context: context
+        )
     }
 }
 
@@ -168,10 +184,32 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let context: LiveContext<R>
 
     var body: some View {
-        let remaining = modifiers[modifiers.index(after: modifiers.startIndex)...]
-        // force-unwrap is okay, this view is never  constructed with an empty slice
+        let remaining = modifiers.dropFirst()
+        // force-unwrap is okay, this view is never constructed with an empty slice
         parent.modifier(modifiers.first!.modifier)
             .applyModifiers(remaining, context: context)
+    }
+}
+
+private struct BindingApplicator<Parent: View, R: CustomRegistry>: View {
+    let parent: Parent
+    let bindings: ArraySlice<Attribute>
+    let element: ElementNode
+    let context: LiveContext<R>
+
+    var body: some View {
+        let remaining = bindings.dropFirst()
+        // force-unwrap is okay, this view is never constructed with an empty slice
+        let binding = bindings.first!
+        BuiltinRegistry.applyBinding(
+            binding.name,
+            event: binding.value!,
+            value: element.buildPhxValuePayload(),
+            to: parent,
+            element: element,
+            context: context
+        )
+            .applyBindings(remaining, element: element, context: context)
     }
 }
 
@@ -182,6 +220,15 @@ private extension View {
             self
         } else {
             ModifierApplicator(parent: self, modifiers: modifiers, context: context)
+        }
+    }
+    
+    @ViewBuilder
+    func applyBindings<R: CustomRegistry>(_ bindings: ArraySlice<Attribute>, element: ElementNode, context: LiveContext<R>) -> some View {
+        if bindings.isEmpty {
+            self
+        } else {
+            BindingApplicator(parent: self, bindings: bindings, element: element, context: context)
         }
     }
 }

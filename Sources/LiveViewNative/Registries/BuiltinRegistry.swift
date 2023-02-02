@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// This protocol provides access to the `ViewModifier` type returned from `decodeModifier` in the `BuiltinRegistry`.
 /// That type is used by `ModifierContainer.builtin`.
@@ -194,6 +195,49 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try TagModifier(from: decoder)
         case .tint:
             try TintModifier(from: decoder)
+        }
+    }
+    
+    @ViewBuilder
+    static func applyBinding<R: CustomRegistry>(
+        _ binding: AttributeName,
+        event: String,
+        value: Payload,
+        to view: some View,
+        element: ElementNode,
+        context: LiveContext<R>
+    ) -> some View {
+        switch binding {
+        case "phx-window-focus":
+            ScenePhaseObserver(content: view) { scenePhase in
+                if scenePhase == .active {
+                    Task {
+                        try await context.coordinator.pushEvent(type: "focus", event: event, value: value)
+                    }
+                }
+            }
+        case "phx-window-blur":
+            ScenePhaseObserver(content: view) { scenePhase in
+                if scenePhase == .background {
+                    Task {
+                        try await context.coordinator.pushEvent(type: "blur", event: event, value: value)
+                    }
+                }
+            }
+        default:
+            view
+        }
+    }
+    
+    struct ScenePhaseObserver<Content: View>: View {
+        @Environment(\.scenePhase) var scenePhase
+        
+        let content: Content
+        let onChange: (ScenePhase) -> ()
+        
+        var body: some View {
+            content
+                .onChange(of: scenePhase, perform: onChange)
         }
     }
 }
