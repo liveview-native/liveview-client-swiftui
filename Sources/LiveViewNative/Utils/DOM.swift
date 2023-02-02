@@ -64,6 +64,17 @@ public struct ElementNode {
         attribute(named: name)?.value
     }
     
+    /// Checks for a [boolean attribute](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes).
+    ///
+    /// If the attribute is present, the value is `true`.
+    ///
+    ///
+    /// > The strings `"true"`/`"false"` are ignored, and only the presence of the attribute is considered.
+    /// > A value of `"false"` would still return `true`.
+    public func attributeBoolean(for name: AttributeName) -> Bool {
+        attribute(named: name) != nil
+    }
+    
     /// The text of this element.
     ///
     /// The returned string only incorporates the direct text node children, not any text nodes within nested elements.
