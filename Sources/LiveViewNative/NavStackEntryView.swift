@@ -58,7 +58,6 @@ struct NavStackEntryView<R: RootRegistry>: View {
                         .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: doc))
                         .onPreferenceChange(NavigationTitleModifierKey.self) { navigationTitle in
                             self.liveViewModel.cachedNavigationTitle = navigationTitle
-                            print("Nav title changed")
                         }
                 } else {
                     fatalError("State is `.connected`, but no `Document` was found.")
