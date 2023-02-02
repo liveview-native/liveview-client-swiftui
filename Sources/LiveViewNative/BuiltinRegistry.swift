@@ -88,6 +88,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Stepper(element: element, context: context)
         case "form":
             Form(context: context)
+        case "section":
+            Section(element: element, context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
