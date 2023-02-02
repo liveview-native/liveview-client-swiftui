@@ -224,20 +224,31 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
                     }
                 }
             }
+        case "phx-click":
+            // Special case for `Button`, which handles this event itself.
+            if element.tag == "button" {
+                view
+            } else {
+                view.onTapGesture {
+                    Task {
+                        try await context.coordinator.pushEvent(type: "click", event: event, value: value)
+                    }
+                }
+            }
         default:
             view
         }
     }
+}
+
+fileprivate struct ScenePhaseObserver<Content: View>: View {
+    @Environment(\.scenePhase) var scenePhase
     
-    struct ScenePhaseObserver<Content: View>: View {
-        @Environment(\.scenePhase) var scenePhase
-        
-        let content: Content
-        let onChange: (ScenePhase) -> ()
-        
-        var body: some View {
-            content
-                .onChange(of: scenePhase, perform: onChange)
-        }
+    let content: Content
+    let onChange: (ScenePhase) -> ()
+    
+    var body: some View {
+        content
+            .onChange(of: scenePhase, perform: onChange)
     }
 }
