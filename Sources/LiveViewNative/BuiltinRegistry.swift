@@ -82,6 +82,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
 #endif
         case "slider":
             Slider(element: element, context: context)
+        case "label":
+            Label(element: element, context: context)
         case "stepper":
             Stepper(element: element, context: context)
         case "phx-form":

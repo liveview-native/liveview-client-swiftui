@@ -11,6 +11,7 @@ import SwiftUI
 
 @MainActor
 final class TextTests: XCTestCase {
+    // MARK: Text
     func testTextSimple() throws {
         try assertMatch("<text>Hello, world!</text>") {
             Text("Hello, world!")
@@ -119,6 +120,7 @@ This is some markdown text [click me](apple.com)
         }
     }
     
+    // MARK: TextField
     func testTextFieldSimple() throws {
         try assertMatch(#"<text-field placeholder="Type here" />"#) {
             TextField("Type here", text: .constant(""))
@@ -133,6 +135,30 @@ This is some markdown text [click me](apple.com)
         }
         try assertMatch(#"<secure-field placeholder="Placeholder" prompt="Prompt" />"#) {
             SecureField("Placeholder", text: .constant(""), prompt: Text("Prompt"))
+        }
+    }
+    
+    // MARK: Label
+    func testLabelSimple() throws {
+        try assertMatch(#"<label system-image="bolt.fill">Lightning<label>"#) {
+            Label("Lightning", systemImage: "bolt.fill")
+        }
+    }
+    
+    func testLabelSlots() throws {
+        try assertMatch(
+            #"""
+            <label>
+                <label:icon><image system-name="bolt.fill" /></label:icon>
+                <label:title><text>Lightning</text></label:title>
+            <label>
+            """#
+        ) {
+            Label {
+                Text("Lightning")
+            } icon: {
+                Image(systemName: "bolt.fill")
+            }
         }
     }
 }
