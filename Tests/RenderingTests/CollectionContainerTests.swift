@@ -11,6 +11,8 @@ import SwiftUI
 
 @MainActor
 final class CollectionContainerTests: XCTestCase {
+    // MARK: List
+    
     func testList() throws {
         try assertMatch(
             #"""
@@ -90,5 +92,44 @@ final class CollectionContainerTests: XCTestCase {
             list.listStyle(.grouped)
         }
 #endif
+    }
+    
+    // MARK: Section
+    
+    func testSection() throws {
+        try assertMatch(
+            #"""
+            <section>
+                <section:header>Header</section:header>
+                <section:content>Content</section:content>
+                <section:footer>Footer</section:footer>
+            </section>
+            """#
+        ) {
+            Section {
+                Text("Content")
+            } header: {
+                Text("Header")
+            } footer: {
+                Text("Footer")
+            }
+        }
+        try assertMatch(
+            #"""
+            <section>
+                <section:header>Header</section:header>
+                Content
+                <section:footer>Footer</section:footer>
+            </section>
+            """#
+        ) {
+            Section {
+                Text("Content")
+            } header: {
+                Text("Header")
+            } footer: {
+                Text("Footer")
+            }
+        }
     }
 }
