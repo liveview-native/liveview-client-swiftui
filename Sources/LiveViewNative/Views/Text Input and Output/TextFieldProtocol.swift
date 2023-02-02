@@ -37,6 +37,10 @@ extension TextFieldProtocol {
         }
     }
     
+    var label: some View {
+        context.buildChildren(of: element)
+    }
+    
     var axis: Axis {
         switch element.attributeValue(for: "axis") {
         case "horizontal":
@@ -57,18 +61,24 @@ extension TextFieldProtocol {
         if isFocused {
             guard let event = element.attributeValue(for: "phx-focus") else { return }
             Task {
-                try await context.coordinator.pushEvent(type: "focus", event: event, value: element.buildPhxValuePayload())
+                try await context.coordinator.pushEvent(
+                    type: "focus",
+                    event: event,
+                    value: element.buildPhxValuePayload()
+                        .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+                )
             }
         } else {
             guard let event = element.attributeValue(for: "phx-blur") else { return }
             Task {
-                try await context.coordinator.pushEvent(type: "focus", event: event, value: element.buildPhxValuePayload())
+                try await context.coordinator.pushEvent(
+                    type: "blur",
+                    event: event,
+                    value: element.buildPhxValuePayload()
+                        .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+                )
             }
         }
-    }
-    
-    var placeholder: String? {
-        element.attributeValue(for: "placeholder")
     }
     
     var textFieldStyle: TextFieldStyle {

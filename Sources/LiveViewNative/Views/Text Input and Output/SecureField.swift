@@ -19,11 +19,13 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
     
     var body: some View {
         SwiftUI.SecureField(
-            self.placeholder ?? "",
             text: textBinding,
             prompt: prompt
-        )
+        ) {
+            label
+        }
             .focused($isFocused)
+            .onChange(of: isFocused, perform: handleFocus)
             .applyTextFieldStyle(textFieldStyle)
             .applyAutocorrectionDisabled(disableAutocorrection)
 #if os(iOS) || os(tvOS)
@@ -31,7 +33,6 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
             .applyKeyboardType(keyboard)
 #endif
             .applySubmitLabel(submitLabel)
-            .onChange(of: isFocused, perform: handleFocus)
     }
 }
 

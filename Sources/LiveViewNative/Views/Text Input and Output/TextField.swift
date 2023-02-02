@@ -20,6 +20,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     var body: some View {
         field
             .focused($isFocused)
+            .onChange(of: isFocused, perform: handleFocus)
             .applyTextFieldStyle(textFieldStyle)
             .applyAutocorrectionDisabled(disableAutocorrection)
 #if !os(macOS)
@@ -29,7 +30,6 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
             .applyKeyboardType(keyboard)
 #endif
             .applySubmitLabel(submitLabel)
-            .onChange(of: isFocused, perform: handleFocus)
     }
     
     @ViewBuilder
@@ -38,54 +38,61 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
             switch format {
             case "date-time":
                 SwiftUI.TextField(
-                    self.placeholder ?? "",
                     value: valueBinding(format: .dateTime),
                     format: .dateTime,
                     prompt: prompt
-                )
+                ) {
+                    label
+                }
             case "url":
                 SwiftUI.TextField(
-                    self.placeholder ?? "",
                     value: valueBinding(format: .url),
                     format: .url,
                     prompt: prompt
-                )
+                ) {
+                    label
+                }
             case "iso8601":
                 SwiftUI.TextField(
-                    self.placeholder ?? "",
                     value: valueBinding(format: .iso8601),
                     format: .iso8601,
                     prompt: prompt
-                )
+                ) {
+                    label
+                }
             case "number":
                 SwiftUI.TextField(
-                    self.placeholder ?? "",
                     value: valueBinding(format: .number),
                     format: .number,
                     prompt: prompt
-                )
+                ) {
+                    label
+                }
             case "percent":
                 SwiftUI.TextField(
-                    self.placeholder ?? "",
                     value: valueBinding(format: .percent),
                     format: .percent,
                     prompt: prompt
-                )
+                ) {
+                    label
+                }
             case "currency":
                 if let code = element.attributeValue(for: "currency-code") {
                     SwiftUI.TextField(
-                        self.placeholder ?? "",
                         value: valueBinding(format: .currency(code: code)),
                         format: .currency(code: code),
                         prompt: prompt
-                    )
+                    ) {
+                        label
+                    }
                 } else {
                     SwiftUI.TextField(
-                        self.placeholder ?? "",
                         text: textBinding,
                         prompt: prompt,
                         axis: axis
-                    )
+                    ) {
+                        label
+                    }
                 }
             case "name":
                 if let style = element.attributeValue(for: "name-style") {
@@ -104,34 +111,38 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                         }
                     }()
                     SwiftUI.TextField(
-                        self.placeholder ?? "",
                         value: valueBinding(format: .name(style: nameStyle)),
                         format: .name(style: nameStyle),
                         prompt: prompt
-                    )
+                    ) {
+                        label
+                    }
                 } else {
                     SwiftUI.TextField(
-                        self.placeholder ?? "",
                         text: textBinding,
                         prompt: prompt,
                         axis: axis
-                    )
+                    ) {
+                        label
+                    }
                 }
             default:
                 SwiftUI.TextField(
-                    self.placeholder ?? "",
                     text: textBinding,
                     prompt: prompt,
                     axis: axis
-                )
+                ) {
+                    label
+                }
             }
         } else {
             SwiftUI.TextField(
-                self.placeholder ?? "",
                 text: textBinding,
                 prompt: prompt,
                 axis: axis
-            )
+            ) {
+                label
+            }
         }
     }
 }
