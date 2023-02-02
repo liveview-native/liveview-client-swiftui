@@ -18,10 +18,18 @@ struct Section<R: CustomRegistry>: View {
     public var body: some View {
         #if os(macOS)
         self.section
-            .collapsible(element.attributeValue(for: "collapsible").flatMap(Bool.init(_:)) ?? false)
+            .collapsible(isCollapsible)
         #else
         self.section
         #endif
+    }
+    
+    private var isCollapsible: Bool {
+        guard let collapsible = element.attribute(named: "collapsible")
+        else { return false }
+        guard let value = collapsible.value
+        else { return true }
+        return Bool(value) ?? false
     }
     
     private var section: SwiftUI.Section<some View, some View, some View> {
