@@ -13,14 +13,12 @@ final class DecodeModifiersTest: XCTestCase {
 
     let decoder = JSONDecoder()
     
-    private func assertDecodeModifier<T: ViewModifier & Equatable>(_ json: String, expected: T) throws {
+    private func assertDecodeModifier<T: ViewModifier & Equatable>(_ json: String, expected: T) throws
+    where T: Decodable
+    {
         let data = json.data(using: .utf8)!
-        let container = try decoder.decode(ModifierContainer<EmptyRegistry>.self, from: data)
-        guard let decodedAsT = container.modifier as? T else {
-            XCTFail("Expected modifier of type \(type(of: container.modifier)) to be \(T.self)")
-            return
-        }
-        XCTAssertEqual(decodedAsT, expected)
+        let decoded = try decoder.decode(T.self, from: data)
+        XCTAssertEqual(decoded, expected)
     }
     
     func testDecodeFrame() throws {

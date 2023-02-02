@@ -118,8 +118,10 @@ extension ViewTreeBuilder {
     }
 }
 
-struct ModifierContainer<R: CustomRegistry>: Decodable {
-    let modifier: any ViewModifier
+enum ModifierContainer<R: CustomRegistry>: Decodable {
+    case builtin(BuiltinRegistry.BuiltinModifier)
+    case custom(R.CustomModifier)
+    case error(ErrorModifier)
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -127,23 +129,35 @@ struct ModifierContainer<R: CustomRegistry>: Decodable {
         if let type = R.ModifierType(rawValue: type) {
             let context = decoder.userInfo[.liveContext] as! LiveContext<R>
             do {
-                self.modifier = try R.decodeModifier(type, from: decoder, context: context)
+                self = .custom(try R.decodeModifier(type, from: decoder, context: context))
             } catch {
-                self.modifier = ErrorModifier(type: type.rawValue, error: error)
+                self = .error(ErrorModifier(type: type.rawValue, error: error))
             }
         } else if let type = BuiltinRegistry.ModifierType(rawValue: type) {
             do {
-                self.modifier = try BuiltinRegistry.decodeModifier(type, from: decoder)
+                self = .builtin(try BuiltinRegistry.decodeModifier(type, from: decoder))
             } catch {
-                self.modifier = ErrorModifier(type: type.rawValue, error: error)
+                self = .error(ErrorModifier(type: type.rawValue, error: error))
             }
         } else {
-            self.modifier = ErrorModifier(type: type, error: ViewTreeBuilder<R>.Error.unknownModifierType)
+            self = .error(ErrorModifier(type: type, error: ViewTreeBuilder<R>.Error.unknownModifierType))
         }
     }
     
     enum CodingKeys: String, CodingKey {
         case type
+    }
+    
+    @ViewModifierBuilder
+    var modifier: some ViewModifier {
+        switch self {
+        case let .builtin(modifier):
+            modifier
+        case let .custom(modifier):
+            modifier
+        case let .error(modifier):
+            modifier
+        }
     }
 }
 
@@ -156,7 +170,7 @@ private struct ModifierApplicator<Parent: View, R: CustomRegistry>: View {
     var body: some View {
         let remaining = modifiers[modifiers.index(after: modifiers.startIndex)...]
         // force-unwrap is okay, this view is never  constructed with an empty slice
-        modifiers.first!.modifier.apply(to: parent)
+        parent.modifier(modifiers.first!.modifier)
             .applyModifiers(remaining, context: context)
     }
 }
@@ -169,12 +183,6 @@ private extension View {
         } else {
             ModifierApplicator(parent: self, modifiers: modifiers, context: context)
         }
-    }
-}
-
-private extension ViewModifier {
-    func apply<V: View>(to view: V) -> AnyView {
-        AnyView(view.modifier(self))
     }
 }
 
