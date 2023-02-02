@@ -225,10 +225,15 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
                 }
             }
         case "phx-focus":
-            FocusObserver(content: view) { isFocused in
-                guard isFocused else { return }
-                Task {
-                    try await context.coordinator.pushEvent(type: "focus", event: event, value: value)
+            // Special case for `TextFieldProtocol`, which handles this event itself.
+            if element.tag == "text-field" || element.tag == "secure-field" {
+                view
+            } else {
+                FocusObserver(content: view) { isFocused in
+                    guard isFocused else { return }
+                    Task {
+                        try await context.coordinator.pushEvent(type: "focus", event: event, value: value)
+                    }
                 }
             }
         case "phx-blur":
