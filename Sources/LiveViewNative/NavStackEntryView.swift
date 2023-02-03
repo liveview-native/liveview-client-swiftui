@@ -38,12 +38,12 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                 }
             }
             .onReceive(coordinator.receiveEvent("_live_bindings"), perform: liveViewModel.updateBindings)
-            .onReceive(liveViewModel.bindingUpdatedByClient) { (name, value) in
-                // todo: consider grouping these into a single even per runloop iteration?
+            .onReceive(
+                liveViewModel.bindingUpdatedByClient
+                    .collect(.byTime(RunLoop.main, RunLoop.main.minimumTolerance))
+            ) { updates in
                 Task {
-                    try? await coordinator.pushEvent(type: "_live_bindings", event: name, value: [
-                        "value": value
-                    ])
+                    try? await coordinator.pushEvent(type: "_live_bindings", event: "_live_bindings", value: Dictionary(updates, uniquingKeysWith: { cur, new in new }))
                 }
             }
     }
