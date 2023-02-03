@@ -17,7 +17,14 @@ import Combine
 /// ### Binding Names
 /// The name of a live binding is not defined directly by the client.
 /// Instead, it always controlled by the backend, to prevent the name getting out-of-sync, especially when multiple client versions may be in use.
-/// The name of the live binding is given by the value of the attribute whose name is provided to the ``LiveBinding/init(attribute:)`` initializer.
+///
+/// Depending on how the live binding is used, the name is obtained in one of two ways:
+/// 1. If it is being used as part of an element, the binding name is provided by an attribute on the element.
+/// Pass the name of the attribute which specifies the binding name to the ``LiveBinding/init(attribute:)`` initializer.
+/// 2. If it is being used as part of a view modifier, the binding name is encoded as a string in the modifier payload.
+/// Decode the biding using the normal `Decodable` API, and the string value will be used as the binding name.
+///
+/// See below for examples of both use cases.
 ///
 /// ### Server Support
 /// As live bindings are two-way mechanism, they are not implemented purely on the client, but rather require server-side support.
@@ -32,7 +39,7 @@ import Combine
 ///     use AppWeb, :live_view
 ///     use LiveViewNativeSwiftUi.Bindings
 ///
-///     bindings(toggle_binding: false)
+///     bindings(toggle_binding: false, alert_shown: false)
 /// end
 /// ```
 ///
@@ -40,6 +47,10 @@ import Combine
 ///
 /// ```html
 /// <my-toggle is-on="toggle_binding" />
+///
+/// <button modifiers='[{"type": "my_alert", "is_active": "alert_shown"}]'>
+///     <text>Present alert</text>
+/// </button>
 /// ```
 ///
 /// ### Client Usage
@@ -55,28 +66,64 @@ import Combine
 ///         }
 ///     }
 /// }
+///
+/// struct MyAlertModifier: ViewModifier, Decodable {
+///     @LiveBinding private var isActive: Bool
+///
+///     init(from decoder: Decoder) throws {
+///         let container = try decoder.container(keyedBy: CodingKeys.self)
+///         self._isActive = try container.decode(LiveBinding.self, forKey: .isActive)
+///     }
+///
+///     func body(content: Content) -> some View {
+///         content
+///             .alert("Hello", isPresented: $isActive) {
+///                 Button("OK") {}
+///             }
+///     }
+///
+///     enum CodingKeys: String, CodingKey {
+///         case isActive = "is_active"
+///     }
+/// }
 /// ```
 @propertyWrapper
-public struct LiveBinding<Value: Codable> {
-    private let attributeName: AttributeName
+public struct LiveBinding<Value: Codable>: Decodable {
     @StateObject private var data = Data()
     
     @ObservedElement private var element
     @Environment(\.coordinatorEnvironment) private var coordinator
     @EnvironmentObject private var liveViewModel: LiveViewModel
     
+    private let bindingNameSource: BindingNameSource
     private var bindingName: String {
-        guard let name = element.attributeValue(for: attributeName) else {
-            fatalError("@LiveBinding missing binding name for \(attributeName)")
+        switch bindingNameSource {
+        case .fixed(let name):
+            return name
+        case .attribute(let attr):
+            guard let name = element.attributeValue(for: attr) else {
+                fatalError("@LiveBinding missing binding name for \(attr)")
+            }
+            return name
         }
-        return name
     }
     
     /// Creates a `LiveBinding` property wrapper that uses the binding in the given attribute.
     ///
-    /// See ``LiveBinding`` for a discussion of how the underlying binding name is determined.
+    /// This initializer should be used when the live binding is used as part of an element.
+    /// See ``LiveBinding`` for a discussion of how the underlying binding name is determined and an example of this usage.
     public init(attribute: AttributeName) {
-        self.attributeName = attribute
+        self.bindingNameSource = .attribute(attribute)
+    }
+    
+    /// Creates a `LiveBinding` by decoding its name from a container.
+    ///
+    /// This initializer should be used when the live binding is used as part of a view modifier.
+    /// See ``LiveBinding`` for an example of how this is used.
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let name = try container.decode(String.self)
+        self.bindingNameSource = .fixed(name)
     }
     
     /// The value of the binding.
@@ -113,6 +160,13 @@ public struct LiveBinding<Value: Codable> {
 extension LiveBinding: DynamicProperty {
     public func update() {
         // don't need to do anything, just need to conform to DynamicProperty to make sure our @StateObject gets installed
+    }
+}
+
+extension LiveBinding {
+    enum BindingNameSource {
+        case fixed(String)
+        case attribute(AttributeName)
     }
 }
 
