@@ -11,7 +11,10 @@ import Combine
 
 /// A property wrapper that observes changes to an element in the coordinator's document.
 ///
-/// When an element is changed as a result of a LiveView update, the coordinator will notify all changed elements.
+/// The element that is observed is the nearest parent from the view in which this property wrapper is used.
+/// So, if an element `<outer>` maps to a view `Outer` which contains another view `Inner` that uses this property wrapper, the observed element will be the `<outer>`.
+///
+/// When an element is changed as a result of a LiveView update, the coordinator will notify all relevant views.
 /// Any SwiftUI views using `@ObservedElement` will be updated automatically when the observed element changes.
 ///
 /// The following changes are observed:

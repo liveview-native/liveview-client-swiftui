@@ -14,14 +14,21 @@ import Combine
 /// Additional data that's tied to the form element, but is not the primary value should use SwiftUI's `@State` property wrapper.
 ///
 /// ### Value Storage
-/// When the element this properrty wrapper is placed on is located of inside a `<phx-form>`, the value will be stored on that form's ``FormModel``.
-/// The key used in the form model is the `name` attribute of the element this property wrapper is placed on. The property wrapper will pull the element
-/// name from the nearest parent view that corresponds to a DOM element, so this property wrapper may be used on nested views.  The framework uses the `\.element` SwiftUI environment key to determine which element the view belongs to. If used within a form, the element _must_ have a `name`.
+/// When a `value-binding` attribute is provided on the element, the value of that attributed is treated as the name of a ``LiveBinding`` to use as the value storage.
+/// ``LiveBinding`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
 ///
-/// If the element is not located inside of a form, the value will be stored directly by the property wrapper. A `name` attribute is not required when used outside of a form.
+/// When the element this properrty wrapper is placed on is located of inside a `<phx-form>` and it has a `name` attribute, the value will be stored on that form's ``FormModel``.
+/// The key used in the form model is the element's `name` attribute.
+///
+/// If the element is not located inside of a form, the value will be stored directly by the property wrapper.
+///
+/// In all three cases, `FormState` uses the nearest ancestor DOM element, following the semantics of ``ObservedElement``.
+/// See those docs for more information about how the element is obtained.
 ///
 /// ### Default Value
-/// When the value is accessed for the first time, the framework will try to use the element's `value` attribute, if possible.
+/// If the value is using a ``LiveBinding``, the default value of the binding will be provided by the server outside of the element.
+///
+/// Otherwise, when the value is accessed for the first time, the framework will try to use the element's `value` attribute, if possible.
 /// If the element does not have a `value` attribute, or the `Value` type could not be constructed from the string representation,
 /// it will use the default value the property wrapper was initialized with. Before the state is first updated, changes to the element's `value`
 /// attribute will be reflected in the property wrapper's value.
@@ -52,6 +59,7 @@ public struct FormState<Value: FormValue> {
     // this is non-nil iff data.mode == .local
     @State private var localValue: Value?
     @StateObject private var data = FormStateData<Value>()
+    @LiveBinding(attribute: "value-binding") private var boundValue: Value
     
     @ObservedElement private var element: ElementNode
     @Environment(\.formModel) private var formModel: FormModel?
@@ -105,6 +113,8 @@ public struct FormState<Value: FormValue> {
             switch data.mode {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
+            case .bound:
+                return boundValue
             case .localInitial:
                 return initialValue
             case .local:
@@ -127,6 +137,8 @@ public struct FormState<Value: FormValue> {
             switch data.mode {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
+            case .bound:
+                boundValue = newValue
             case .localInitial:
                 localValue = newValue
                 data.mode = .local
@@ -168,7 +180,9 @@ public struct FormState<Value: FormValue> {
     
     private func resolveMode() {
         if case .unknown = data.mode {
-            if let formModel {
+            if _boundValue.isBound {
+                data.mode = .bound
+            } else if let formModel {
                 if let elementName = element.attributeValue(for: "name") {
                     data.setFormModel(formModel, elementName: elementName)
                     data.mode = .form(formModel)
@@ -219,6 +233,8 @@ private class FormStateData<Value: FormValue>: ObservableObject {
     enum Mode {
         // the mode has not yet been resolved
         case unknown
+        // use the LiveBinding
+        case bound
         // local mode, but the value has not been updated, so always return the initial value when reading
         case localInitial
         // local mode, has been set
