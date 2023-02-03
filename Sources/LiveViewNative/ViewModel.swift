@@ -180,8 +180,22 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
 }
 
-/// A form value is any type that can be stored in a ``FormModel``. This protocol defines the requirements for converting to/from the serialized form data representation.
-public protocol FormValue: Equatable {
+/// A form value is any type that can be stored in a ``FormModel`` and used with ``FormState``.
+///
+/// This protocol defines the requirements for converting to/from the serialized form data representation.
+/// There are two serialized formats: form value strings and the codable representation.
+///
+/// The form value string (``formValue`` and ``init(formValue:)``) mode is used for form values that are provided in a `value` attribute on form controls or are stored in `<phx-form>` elements.
+///
+/// The `Codable` mode is used when a live binding is used with a form control.
+/// See ``FormState`` for more information about how form values and live bindings interact.
+///
+/// A number of out-of-the-box `FormValue` implementations are provided:
+/// 1. `Optional`, when the `Wrapped` type itself conforms to `FormValue`
+/// 2. `String`
+/// 3. `Bool`
+/// 4. `Double`
+public protocol FormValue: Equatable, Codable {
     /// Converts the value from this type to the string representation.
     var formValue: String { get }
     

@@ -108,6 +108,15 @@ public struct LiveBinding<Value: Codable>: Decodable {
         }
     }
     
+    var isBound: Bool {
+        switch bindingNameSource {
+        case .fixed(_):
+            return true
+        case .attribute(let attr):
+            return element.attribute(named: attr) != nil
+        }
+    }
+    
     /// Creates a `LiveBinding` property wrapper that uses the binding in the given attribute.
     ///
     /// This initializer should be used when the live binding is used as part of an element.
@@ -140,8 +149,7 @@ public struct LiveBinding<Value: Codable>: Decodable {
             let encoder = FragmentEncoder()
             // todo: if encoding fails, what should happen?
             try! newValue.encode(to: encoder)
-            // todo: force unwrap here forbids null binding values
-            liveViewModel.setBinding(bindingName, to: encoder.unwrap()!)
+            liveViewModel.setBinding(bindingName, to: encoder.unwrap() as Any)
         }
     }
     
