@@ -37,6 +37,8 @@ public struct ElementNode {
     public func children() -> NodeChildrenSequence { node.children() }
     /// A sequence that traverses the nested child nodes of this element in depth-first order.
     public func depthFirstChildren() -> NodeDepthFirstChildrenSequence { node.depthFirstChildren() }
+    /// A sequence representing this element's direct children that are elements.
+    public func elementChildren() -> [ElementNode] { node.children().compactMap({ $0.asElement() }) }
     
     /// The namespace of the element.
     public var namespace: String? { data.namespace }
