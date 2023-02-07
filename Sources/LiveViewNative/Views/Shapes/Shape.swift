@@ -16,8 +16,8 @@ struct Shape<S: SwiftUI.Shape>: View {
     }
     
     var body: some View {
-        if let s = element.attributeValue(for: "fill"), let style = AnyShapeStyle(named: s) {
-            shape.fill(style)
+        if let s = element.attributeValue(for: "fill-color"), let color = Color(fromNamedOrCSSHex: s) {
+            shape.fill(color)
         } else if let s = element.attributeValue(for: "stroke-color"), let color = Color(fromNamedOrCSSHex: s) {
             shape.stroke(color)
         } else {
