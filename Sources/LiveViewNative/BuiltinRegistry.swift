@@ -90,6 +90,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Form(context: context)
         case "share-link":
             ShareLink(element: element, context: context)
+        case "section":
+            Section(element: element, context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":

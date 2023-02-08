@@ -23,11 +23,6 @@ public struct LiveSessionConfiguration {
     /// The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.
     public var urlSession: URLSession = .shared
     
-    // Non-final API for internal use only.
-    @_spi(NarwinChat)
-    public var eventHandlersEnabled: Bool = true
-    
-    @_spi(NarwinChat)
     public var liveRedirectsEnabled: Bool = true
     
     /// Constructs a default, empty configuration.

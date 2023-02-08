@@ -11,7 +11,7 @@ struct PhxForm<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
-    @EnvironmentObject private var liveViewModel: LiveViewModel<R>
+    @EnvironmentObject private var liveViewModel: LiveViewModel
     
     private var model: FormModel {
         guard let id = element.attributeValue(for: "id") else {

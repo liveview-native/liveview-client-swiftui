@@ -16,6 +16,13 @@ private var PUSH_TIMEOUT: Double = 30000
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoordinator")
 
+/// The live view coordinator manages the connection to a particular LiveView on the backend.
+///
+/// ## Topics
+/// ### LiveView Events
+/// - ``pushEvent(type:event:value:)``
+/// - ``receiveEvent(_:)``
+/// - ``handleEvent(_:handler:)``
 @MainActor
 public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     @Published internal private(set) var internalState: LiveSessionCoordinator<R>.InternalState = .notConnected(reconnectAutomatically: false)
@@ -37,21 +44,21 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private var currentConnectionToken: ConnectionAttemptToken?
     private var currentConnectionTask: Task<Void, Error>?
     
-    private var eventHandlers: [String: (Payload) -> Void] = [:]
+    private var eventSubject = PassthroughSubject<(String, Payload), Never>()
+    private var eventHandlers = Set<AnyCancellable>()
     
     init(session: LiveSessionCoordinator<R>, url: URL) {
         self.session = session
         self.url = url
-        self.eventHandlers = [
-            "native_redirect": { [weak self] payload in
-                guard let self,
-                      let redirect = LiveRedirect(from: payload, relativeTo: self.url)
-                else { return }
-                Task {
-                    await session.redirect(redirect)
-                }
+        
+        self.handleEvent("native_redirect") { [weak self] payload in
+            guard let self,
+                  let redirect = LiveRedirect(from: payload, relativeTo: self.url)
+            else { return }
+            Task {
+                await session.redirect(redirect)
             }
-        ]
+        }
     }
     
     /// Pushes a LiveView event with the given name and payload to the server.
@@ -62,7 +69,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     /// - Parameter type: The type of event that is being sent (e.g., `click` or `form`). Note: this is not currently used by the LiveView backend.
     /// - Parameter event: The name of the LiveView event handler that the event is being dispatched to.
     /// - Parameter value: The event value to provide to the backend event handler. The value _must_ be  serializable using ``JSONSerialization``.
-    /// - Throws: `FetchError.eventError` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
+    /// - Throws: ``LiveConnectionError/eventError(_:)`` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
     public func pushEvent(type: String, event: String, value: Any) async throws {
         // isValidJSONObject only accepts objects, but we want to check that the value can be serialized as a field of an object
         precondition(JSONSerialization.isValidJSONObject(["a": value]))
@@ -107,21 +114,83 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         }
     }
     
+    /// Creates a publisher that can be used to listen for server-sent LiveView events.
+    ///
+    /// - Parameter event: The event name that is being listened for.
+    /// - Returns: A publisher that emits event payloads.
+    ///
+    /// To handle events, use the `sink` subscriber:
+    /// ```swift
+    /// myEventHandler = coordinator.receiveEvent("my_event")
+    ///     .sink { payload in
+    ///         print("Received payload: \(payload)")
+    ///     }
+    /// ```
+    /// The `sink` method returns an `AnyCancellable` which can be used to later stop listening for events by calling its `cancel` method.
+    ///
+    /// - Important: `AnyCancellable` will cancel itself upon deinitialization, so you must hold a strong reference to it for the duration you want to keep receiving events. If you want to keep listenting for the lifetime of the coordinator, you may use ``handleEvent(_:handler:)``.
+    ///
+    /// This publisher is _not_ guaranteed to fire on the main thread.
+    /// If you need to perform UI updates, use the `receive(on:)` operator, as shown below.
+    /// ```swift
+    /// coordinator.receiveEvent("my_event")
+    ///     .receive(on: DispatchQueue.main)
+    ///     .sink { payload in
+    ///         myUIObject.value = payload["value"] as! String
+    ///     }
+    ///     .store(in: &cancellables)
+    /// ```
+    ///
+    /// If you are using SwiftUI's `onReceive` modifier, applying `receive(on:)` to the publisher is not necessary.
+    /// ```swift
+    /// struct MyView: View {
+    ///     let context: LiveContext<EmptyRegistry>
+    ///     @State private var text = "Hello"
+    ///     var body: some View {
+    ///         Text(text)
+    ///             .onReceive(context.coordinator.receiveEvent("my_event")) { payload in
+    ///                 self.text = payload["text"] as! String
+    ///             }
+    ///     }
+    /// }
+    /// ```
+    public func receiveEvent(_ event: String) -> some Publisher<Payload, Never> {
+        eventSubject
+            .filter { $0.0 == event }
+            .map(\.1)
+    }
+    
+    /// Permanently registers a handler for a server-sent LiveView event.
+    ///
+    /// - Parameter event: The event name that is being listened for.
+    /// - Parameter handler: A closure to invoke when the coordinator receives an event. The event value is provided as the closure's parameter.
+    ///
+    /// Handlers registered using this method will receive events for the lifetime of the coordinator.
+    /// To create an event listener that can later be cancelled, use ``receiveEvent(_:)``.
+    public func handleEvent(_ event: String, handler: @escaping (Payload) -> Void) {
+        receiveEvent(event)
+            .sink(receiveValue: handler)
+            .store(in: &eventHandlers)
+    }
+    
     private func handleDiff(payload: Payload, baseURL: URL) throws {
-        if session.config.eventHandlersEnabled,
-           let events = payload["e"] as? [[Any]] {
-            for event in events {
-                guard let name = event[0] as? String,
-                      let value = event[1] as? Payload,
-                      let handler = eventHandlers[name] else {
-                    continue
-                }
-                handler(value)
-            }
-        }
+        handleEvents(payload: payload)
         let diff = try RootDiff(from: FragmentDecoder(data: payload))
         self.rendered = try self.rendered.merge(with: diff)
         self.document?.merge(with: try Document.parse(self.rendered.buildString()))
+    }
+    
+    private func handleEvents(payload: Payload) {
+        guard let events = payload["e"] as? [[Any]] else {
+            return
+        }
+        for event in events {
+            guard let name = event[0] as? String,
+                  let value = event[1] as? Payload else {
+                continue
+            }
+            eventSubject.send((name, value))
+        }
     }
     
     private nonisolated func parseDOM(html: String, baseURL: URL) throws -> Elements {
@@ -312,6 +381,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 self.elementChanged.send(nodeRef)
             }
         }
+        self.handleEvents(payload: renderedPayload)
     }
 }
 
