@@ -33,45 +33,98 @@ struct ShareLink<R: CustomRegistry>: View {
         })
         if let items {
             let previews = previews(for: items)
-            let _ = print(previews)
-            switch previews {
-            case nil:
-                SwiftUI.ShareLink(
-                    items: items,
-                    subject: subject,
-                    message: message
-                )
-            case let .titled(titles):
-                SwiftUI.ShareLink(
-                    items: items,
-                    subject: subject,
-                    message: message
-                ) { item in
-                    .init(titles.value(for: item))
+            if useDefaultLabel {
+                switch previews {
+                case nil:
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    )
+                case let .titled(titles):
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) { item in
+                            .init(titles.value(for: item))
+                    }
+                case let .complete(titles, images, icons):
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) { item in
+                            .init(titles.value(for: item), image: images.value(for: item), icon: icons.value(for: item))
+                    }
+                case let .imageOnly(titles, images):
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) { item in
+                            .init(titles.value(for: item), image: images.value(for: item))
+                    }
+                case let .iconOnly(titles, icons):
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) { item in
+                            .init(titles.value(for: item), icon: icons.value(for: item))
+                    }
                 }
-            case let .complete(titles, images, icons):
-                SwiftUI.ShareLink(
-                    items: items,
-                    subject: subject,
-                    message: message
-                ) { item in
-                    .init(titles.value(for: item), image: images.value(for: item), icon: icons.value(for: item))
-                }
-            case let .imageOnly(titles, images):
-                SwiftUI.ShareLink(
-                    items: items,
-                    subject: subject,
-                    message: message
-                ) { item in
-                    .init(titles.value(for: item), image: images.value(for: item))
-                }
-            case let .iconOnly(titles, icons):
-                SwiftUI.ShareLink(
-                    items: items,
-                    subject: subject,
-                    message: message
-                ) { item in
-                    .init(titles.value(for: item), icon: icons.value(for: item))
+            } else {
+                let label = context.buildChildren(of: element)
+                switch previews {
+                case nil:
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) {
+                        label
+                    }
+                case let .titled(titles):
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) { item in
+                            .init(titles.value(for: item))
+                    } label: {
+                        label
+                    }
+                case let .complete(titles, images, icons):
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) { item in
+                            .init(titles.value(for: item), image: images.value(for: item), icon: icons.value(for: item))
+                    } label: {
+                        label
+                    }
+                case let .imageOnly(titles, images):
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) { item in
+                            .init(titles.value(for: item), image: images.value(for: item))
+                    } label: {
+                        label
+                    }
+                case let .iconOnly(titles, icons):
+                    SwiftUI.ShareLink(
+                        items: items,
+                        subject: subject,
+                        message: message
+                    ) { item in
+                            .init(titles.value(for: item), icon: icons.value(for: item))
+                    } label: {
+                        label
+                    }
                 }
             }
         } else if let item = element.attributeValue(for: "item") {
