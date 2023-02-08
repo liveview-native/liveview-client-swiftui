@@ -59,6 +59,7 @@ public struct FormState<Value: FormValue> {
     // this is non-nil iff data.mode == .local
     @State private var localValue: Value?
     @StateObject private var data = FormStateData<Value>()
+    // non-nil iff data.mode == .bound
     @LiveBinding(attribute: "value-binding") private var boundValue: Value
     
     @ObservedElement private var element: ElementNode
