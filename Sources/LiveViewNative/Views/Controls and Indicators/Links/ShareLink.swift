@@ -266,7 +266,7 @@ struct ShareLink<R: CustomRegistry>: View {
         if Set(previews.0.keys) != Set(items) && previews.default == nil {
             previews.default = .init(title: "", image: nil, icon: nil)
         }
-        guard !previews.0.isEmpty else { return nil }
+        guard !previews.0.isEmpty || previews.1 != nil else { return nil }
         let accessors = (previews.0.values + (previews.default.flatMap({ [$0] }) ?? []))
             .reduce(
                 into: Set([\PreviewData.title, \PreviewData.image, \PreviewData.icon])
