@@ -16,20 +16,23 @@ import Combine
 ///
 /// ### Binding Names
 /// The name of a live binding is not defined directly by the client.
-/// Instead, it always controlled by the backend, to prevent the name getting out-of-sync, especially when multiple client versions may be in use.
+/// Instead, it is always controlled by the backend, to prevent the name getting out-of-sync, especially when multiple client versions may be in use.
 ///
 /// Depending on how the live binding is used, the name is obtained in one of two ways:
 /// 1. If it is being used as part of an element, the binding name is provided by an attribute on the element.
 /// Pass the name of the attribute which specifies the binding name to the ``LiveBinding/init(attribute:)`` initializer.
 /// 2. If it is being used as part of a view modifier, the binding name is encoded as a string in the modifier payload.
-/// Decode the biding using the normal `Decodable` API, and the string value will be used as the binding name.
+/// Decode the binding using the ``init(decoding:in:initialValue:)`` initializer, and the string value at the given coding key will be used as the binding name.
 ///
 /// See below for examples of both use cases.
 ///
-/// ### Server Support
-/// As live bindings are two-way mechanism, they are not implemented purely on the client, but rather require server-side support.
+/// In either case, if the binding name is not provided, the `LiveBinding` operates in local mode (that is, like a regular SwiftUI `@State` property, not connected to the backend).
+/// When in local mode, an initial value for the property must be provided (see the respective initializers for how), otherwise accessing the live binding will crash.
 ///
-/// The server sends an event on mount with all of the binding values, sends an event when a binding is changed, and handles an even when a binding is changed on the client. These are all provided by the [`live_view_native_swift_ui`](https://github.com/liveviewnative/live_view_native_swift_ui) Elixir package.
+/// ### Server Support
+/// As live bindings are a two-way mechanism, they are not implemented purely on the client, but rather require server-side support.
+///
+/// The server sends an event on mount with all of the binding values, sends an event when a binding is changed, and handles an event when a binding is changed on the client. These are all provided by the [`live_view_native_swift_ui`](https://github.com/liveviewnative/live_view_native_swift_ui) Elixir package.
 ///
 /// The `bindings` macro takes a keyword list of bindings and their initial values and automatically generates all the necessary supporting code.
 /// The Elixir value used for the initial binding value must be serializable as JSON.
@@ -72,7 +75,7 @@ import Combine
 ///
 ///     init(from decoder: Decoder) throws {
 ///         let container = try decoder.container(keyedBy: CodingKeys.self)
-///         self._isActive = try container.decode(LiveBinding.self, forKey: .isActive)
+///         self._isActive = try LiveBinding(decoding: .isActive, in: container)
 ///     }
 ///
 ///     func body(content: Content) -> some View {
@@ -88,51 +91,57 @@ import Combine
 /// }
 /// ```
 @propertyWrapper
-public struct LiveBinding<Value: Codable>: Decodable {
+public struct LiveBinding<Value: Codable> {
     @StateObject private var data = Data()
+    
+    private let initialLocalValue: Value?
     
     @ObservedElement private var element
     @Environment(\.coordinatorEnvironment) private var coordinator
     @EnvironmentObject private var liveViewModel: LiveViewModel
     
     private let bindingNameSource: BindingNameSource
-    private var bindingName: String {
+    private var bindingName: String? {
         switch bindingNameSource {
+        case .none:
+            return nil
         case .fixed(let name):
             return name
         case .attribute(let attr):
-            guard let name = element.attributeValue(for: attr) else {
-                fatalError("@LiveBinding missing binding name for \(attr)")
-            }
-            return name
+            return element.attributeValue(for: attr)
         }
     }
     
     var isBound: Bool {
-        switch bindingNameSource {
-        case .fixed(_):
-            return true
-        case .attribute(let attr):
-            return element.attribute(named: attr) != nil
-        }
+        return bindingName != nil
     }
     
     /// Creates a `LiveBinding` property wrapper that uses the binding in the given attribute.
     ///
     /// This initializer should be used when the live binding is used as part of an element.
     /// See ``LiveBinding`` for a discussion of how the underlying binding name is determined and an example of this usage.
-    public init(attribute: AttributeName) {
+    ///
+    /// If a binding name is not provided in the given attribute and you provide a wrapped value, the `LiveBinding` operates in local mode, using the wrapped value as the initial value for the property.
+    public init(wrappedValue: Value? = nil, attribute: AttributeName) {
         self.bindingNameSource = .attribute(attribute)
+        self.initialLocalValue = wrappedValue
     }
     
     /// Creates a `LiveBinding` by decoding its name from a container.
     ///
     /// This initializer should be used when the live binding is used as part of a view modifier.
     /// See ``LiveBinding`` for an example of how this is used.
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let name = try container.decode(String.self)
-        self.bindingNameSource = .fixed(name)
+    ///
+    /// The name key is treated as optional when decoding.
+    /// If a binding name is not provided, the `LiveBinding` operates in local mode.
+    /// In that mode, the `initialValue` is used as the initial value of the property.
+    public init<K: CodingKey>(decoding key: K, in container: KeyedDecodingContainer<K>, initialValue: Value? = nil) throws {
+        if let name = try container.decodeIfPresent(String.self, forKey: key) {
+            self.bindingNameSource = .fixed(name)
+        } else {
+            self.bindingNameSource = .none
+        }
+        self.initialLocalValue = initialValue
     }
     
     /// The value of the binding.
@@ -140,16 +149,26 @@ public struct LiveBinding<Value: Codable>: Decodable {
     /// Setting this property will send an event to the server to update its value as well.
     public var wrappedValue: Value {
         get {
-            return data.getValue(from: liveViewModel, bindingName: bindingName)
+            if let bindingName {
+                return data.getValue(from: liveViewModel, bindingName: bindingName)
+            } else if case .local(let value) = data.mode {
+                return value
+            } else if let initialLocalValue {
+                return initialLocalValue
+            } else {
+                fatalError("@LiveBinding must have binding name or default value")
+            }
         }
         nonmutating set {
             // update the local value
             data.mode = .local(newValue)
-            // update the view model, which will send an update to the backend
-            let encoder = FragmentEncoder()
-            // todo: if encoding fails, what should happen?
-            try! newValue.encode(to: encoder)
-            liveViewModel.setBinding(bindingName, to: encoder.unwrap() as Any)
+            // if we are bound, update the view model, which will send an update to the backend
+            if let bindingName {
+                let encoder = FragmentEncoder()
+                // todo: if encoding fails, what should happen?
+                try! newValue.encode(to: encoder)
+                liveViewModel.setBinding(bindingName, to: encoder.unwrap() as Any)
+            }
         }
     }
     
@@ -173,6 +192,7 @@ extension LiveBinding: DynamicProperty {
 
 extension LiveBinding {
     enum BindingNameSource {
+        case none
         case fixed(String)
         case attribute(AttributeName)
     }
@@ -192,18 +212,22 @@ extension LiveBinding {
                         self.mode = .needsUpdateFromViewModel
                         self.objectWillChange.send()
                     }
-                fallthrough
+                return getValueFromViewModel(liveViewModel, bindingName: bindingName)
             case .needsUpdateFromViewModel:
-                guard let defaultPayload = liveViewModel.bindingValues[bindingName] else {
-                    fatalError("@LiveBinding for \(bindingName) must have value sent before use")
-                }
-                // todo: if decoding fails, what should happen?
-                let value = try! Value(from: FragmentDecoder(data: defaultPayload))
-                mode = .local(value)
-                return value
+                return getValueFromViewModel(liveViewModel, bindingName: bindingName)
             case .local(let value):
                 return value
             }
+        }
+        
+        private func getValueFromViewModel(_ liveViewModel: LiveViewModel, bindingName: String) -> Value {
+            guard let defaultPayload = liveViewModel.bindingValues[bindingName] else {
+                fatalError("@LiveBinding for \(bindingName) must have value sent before use")
+            }
+            // todo: if decoding fails, what should happen?
+            let value = try! Value(from: FragmentDecoder(data: defaultPayload))
+            mode = .local(value)
+            return value
         }
         
         enum Mode {
