@@ -90,6 +90,11 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Form(context: context)
         case "section":
             Section(element: element, context: context)
+#if os(iOS) || os(macOS)
+        case "text-editor":
+            TextEditor(element: element, context: context)
+#endif
+            
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
