@@ -94,6 +94,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case "text-editor":
             TextEditor(element: element, context: context)
 #endif
+        case "lazy-v-stack", "lazy-vstack":
+            LazyVStack(element: element, context: context)
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
