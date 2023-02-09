@@ -95,6 +95,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             TextEditor(element: element, context: context)
         case "group-box":
             GroupBox(element: element, context: context)
+        case "control-group":
+            ControlGroup(element: element, context: context)
 #endif
             
         case "phx-form":
