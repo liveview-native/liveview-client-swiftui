@@ -123,8 +123,7 @@ final class GroupTests: XCTestCase {
                 <button>Action #2</button>
                 <button>Action #3</button>
             </control-group>
-            """#,
-            lifetime: .keepAlways
+            """#
         ) {
             ControlGroup {
                 Button("Action #1") {}
@@ -140,8 +139,7 @@ final class GroupTests: XCTestCase {
                 <button>Action #2</button>
                 <button>Action #3</button>
             </control-group>
-            """#,
-            lifetime: .keepAlways
+            """#
         ) {
             ControlGroup {
                 Button("Action #1") {}
