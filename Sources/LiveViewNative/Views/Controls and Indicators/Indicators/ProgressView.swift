@@ -16,7 +16,7 @@ struct ProgressView<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        Group {
+        SwiftUI.Group {
             if let timerIntervalStart = element.attributeValue(for: "timer-interval-start").flatMap({ try? ElixirDateParseStrategy().parse($0) }),
                let timerIntervalEnd = element.attributeValue(for: "timer-interval-end").flatMap({ try? ElixirDateParseStrategy().parse($0) })
             {
