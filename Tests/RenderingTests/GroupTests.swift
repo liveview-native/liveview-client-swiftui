@@ -11,9 +11,8 @@ import SwiftUI
 
 @MainActor
 final class GroupTests: XCTestCase {
-    // MARK: GroupBox
-    
 #if os(iOS) || os(macOS)
+    // MARK: GroupBox
     func testGroupBox() throws {
         try assertMatch(
             #"""
@@ -68,6 +67,88 @@ final class GroupTests: XCTestCase {
             GroupBox("Label") {
                 Text("Content")
             }
+        }
+    }
+    
+    // MARK: ControlGroup
+    
+    func testControlGroup() throws {
+        try assertMatch(
+            #"""
+            <control-group>
+                <button>Action #1</button>
+                <button>Action #2</button>
+                <button>Action #3</button>
+            </control-group>
+            """#
+        ) {
+            ControlGroup {
+                Button("Action #1") {}
+                Button("Action #2") {}
+                Button("Action #3") {}
+            }
+        }
+    }
+    
+    func testControlGroupSlots() throws {
+        try assertMatch(
+            #"""
+            <control-group>
+                <control-group:label>
+                    Label
+                </control-group:label>
+                <control-group:content>
+                    <button>Action #1</button>
+                    <button>Action #2</button>
+                    <button>Action #3</button>
+                </control-group:content>
+            </control-group>
+            """#
+        ) {
+            ControlGroup {
+                Button("Action #1") {}
+                Button("Action #2") {}
+                Button("Action #3") {}
+            } label: {
+                Text("Label")
+            }
+        }
+    }
+    
+    func testControlGroupStyles() throws {
+        try assertMatch(
+            #"""
+            <control-group control-group-style="automatic">
+                <button>Action #1</button>
+                <button>Action #2</button>
+                <button>Action #3</button>
+            </control-group>
+            """#,
+            lifetime: .keepAlways
+        ) {
+            ControlGroup {
+                Button("Action #1") {}
+                Button("Action #2") {}
+                Button("Action #3") {}
+            }
+            .controlGroupStyle(.automatic)
+        }
+        try assertMatch(
+            #"""
+            <control-group control-group-style="navigation">
+                <button>Action #1</button>
+                <button>Action #2</button>
+                <button>Action #3</button>
+            </control-group>
+            """#,
+            lifetime: .keepAlways
+        ) {
+            ControlGroup {
+                Button("Action #1") {}
+                Button("Action #2") {}
+                Button("Action #3") {}
+            }
+            .controlGroupStyle(.navigation)
         }
     }
 #endif
