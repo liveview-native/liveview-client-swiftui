@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LazyVStack<R: CustomRegistry>: View {
+struct LazyHStack<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
@@ -16,21 +16,21 @@ struct LazyVStack<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        SwiftUI.LazyVStack(alignment: alignment, spacing: spacing, pinnedViews: pinnedViews) {
+        SwiftUI.LazyHStack(alignment: alignment, spacing: spacing, pinnedViews: pinnedViews) {
             context.buildChildren(of: element)
         }
     }
     
-    private var alignment: HorizontalAlignment {
+    private var alignment: VerticalAlignment {
         switch element.attributeValue(for: "alignment") {
         case nil, "center":
             return .center
-        case "leading":
-            return .leading
-        case "trailing":
-            return .trailing
+        case "top":
+            return .top
+        case "bottom":
+            return .bottom
         default:
-            fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <lazy-v-stack>")
+            fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <lazy-h-stack>")
         }
     }
     
