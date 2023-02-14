@@ -16,7 +16,7 @@ struct ScrollView<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        SwiftUI.ScrollView(axes, showsIndicators: showsIndicators) {
+        SwiftUI.ScrollView(axes, showsIndicators: element.attributeBoolean(for: "shows-indicators")) {
             context.buildChildren(of: element)
         }
     }
@@ -31,13 +31,4 @@ struct ScrollView<R: CustomRegistry>: View {
             return .vertical
         }
     }
-    
-    private var showsIndicators: Bool {
-        if let attr = element.attributeValue(for: "shows-indicators") {
-            return attr == "true"
-        } else {
-            return true
-        }
-    }
-    
 }
