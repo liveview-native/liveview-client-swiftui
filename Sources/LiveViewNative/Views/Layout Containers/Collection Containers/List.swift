@@ -10,7 +10,7 @@ import SwiftUI
 struct List<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
-    #if !os(watchOS)
+    #if os(iOS) || os(tvOS)
     @Environment(\.editMode) var editMode
     #endif
     
@@ -124,7 +124,7 @@ struct List<R: CustomRegistry>: View {
             Task { [meta] in
                 // todo: should this have its own type?
                 try await context.coordinator.pushEvent(type: "click", event: moveEvent, value: meta)
-                #if !os(watchOS)
+#if os(iOS) || os(tvOS)
                 // Workaround to fix items not following the order from the backend when changed during edit mode.
                 // Toggling edit modes forces it to follow the backend ordering.
                 // Toggles between `active`/`transient` instead of `active`/`inactive` so no transitions play.
@@ -134,7 +134,7 @@ struct List<R: CustomRegistry>: View {
                         editMode?.wrappedValue = initial
                     }
                 }
-                #endif
+#endif
             }
         }
     }
