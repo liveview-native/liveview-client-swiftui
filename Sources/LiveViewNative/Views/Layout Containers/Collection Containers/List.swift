@@ -125,6 +125,9 @@ struct List<R: CustomRegistry>: View {
                 // todo: should this have its own type?
                 try await context.coordinator.pushEvent(type: "click", event: moveEvent, value: meta)
                 #if !os(watchOS)
+                // Workaround to fix items not following the order from the backend when changed during edit mode.
+                // Toggling edit modes forces it to follow the backend ordering.
+                // Toggles between `active`/`transient` instead of `active`/`inactive` so no transitions play.
                 if let initial = editMode?.wrappedValue {
                     editMode?.wrappedValue = initial == .transient ? .active : .transient
                     await MainActor.run {
