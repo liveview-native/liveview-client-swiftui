@@ -102,7 +102,7 @@ public struct LiveView<R: CustomRegistry>: View {
                 }
                 session.navigationPath = result
             }) {
-                Group {
+                SwiftUI.Group {
                     if let entry = session.navigationPath.first {
                         NavStackEntryView(entry)
                     }
