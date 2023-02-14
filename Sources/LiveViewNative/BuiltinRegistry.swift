@@ -100,6 +100,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
 #endif
         case "group":
             Group(element: element, context: context)
+        case "grid":
+            Grid(element: element, context: context)
+        case "grid-row":
+            GridRow(element: element, context: context)
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
