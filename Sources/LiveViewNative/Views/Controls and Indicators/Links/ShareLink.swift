@@ -33,6 +33,7 @@ struct ShareLink<R: CustomRegistry>: View {
         })
         if let items {
             let previews = previews(for: items)
+            let _ = print(previews)
             if useDefaultLabel {
                 switch previews {
                 case nil:
@@ -47,7 +48,7 @@ struct ShareLink<R: CustomRegistry>: View {
                         subject: subject,
                         message: message
                     ) { item in
-                            .init(titles.value(for: item))
+                        SharePreview(titles.value(for: item))
                     }
                 case let .complete(titles, images, icons):
                     SwiftUI.ShareLink(
@@ -55,7 +56,7 @@ struct ShareLink<R: CustomRegistry>: View {
                         subject: subject,
                         message: message
                     ) { item in
-                            .init(titles.value(for: item), image: images.value(for: item), icon: icons.value(for: item))
+                        SharePreview(titles.value(for: item), image: images.value(for: item), icon: icons.value(for: item))
                     }
                 case let .imageOnly(titles, images):
                     SwiftUI.ShareLink(
@@ -63,7 +64,7 @@ struct ShareLink<R: CustomRegistry>: View {
                         subject: subject,
                         message: message
                     ) { item in
-                            .init(titles.value(for: item), image: images.value(for: item))
+                        SharePreview(titles.value(for: item), image: images.value(for: item))
                     }
                 case let .iconOnly(titles, icons):
                     SwiftUI.ShareLink(
@@ -71,11 +72,10 @@ struct ShareLink<R: CustomRegistry>: View {
                         subject: subject,
                         message: message
                     ) { item in
-                            .init(titles.value(for: item), icon: icons.value(for: item))
+                        SharePreview(titles.value(for: item), icon: icons.value(for: item))
                     }
                 }
             } else {
-                let label = context.buildChildren(of: element)
                 switch previews {
                 case nil:
                     SwiftUI.ShareLink(
@@ -91,7 +91,7 @@ struct ShareLink<R: CustomRegistry>: View {
                         subject: subject,
                         message: message
                     ) { item in
-                            .init(titles.value(for: item))
+                        SharePreview(titles.value(for: item))
                     } label: {
                         label
                     }
@@ -101,7 +101,7 @@ struct ShareLink<R: CustomRegistry>: View {
                         subject: subject,
                         message: message
                     ) { item in
-                            .init(titles.value(for: item), image: images.value(for: item), icon: icons.value(for: item))
+                        SharePreview(titles.value(for: item), image: images.value(for: item), icon: icons.value(for: item))
                     } label: {
                         label
                     }
@@ -111,7 +111,7 @@ struct ShareLink<R: CustomRegistry>: View {
                         subject: subject,
                         message: message
                     ) { item in
-                            .init(titles.value(for: item), image: images.value(for: item))
+                        SharePreview(titles.value(for: item), image: images.value(for: item))
                     } label: {
                         label
                     }
@@ -121,7 +121,7 @@ struct ShareLink<R: CustomRegistry>: View {
                         subject: subject,
                         message: message
                     ) { item in
-                            .init(titles.value(for: item), icon: icons.value(for: item))
+                        SharePreview(titles.value(for: item), icon: icons.value(for: item))
                     } label: {
                         label
                     }
@@ -166,7 +166,6 @@ struct ShareLink<R: CustomRegistry>: View {
                     )
                 }
             } else {
-                let label = context.buildChildren(of: element)
                 switch previews(for: [item]) {
                 case nil:
                     SwiftUI.ShareLink(
@@ -207,22 +206,25 @@ struct ShareLink<R: CustomRegistry>: View {
         }
     }
     
-    struct PreviewData {
-        let title: String
-        let image: SwiftUI.Image?
-        let icon: SwiftUI.Image?
+    private var label: some View {
+        context.buildChildren(of: element, withTagName: "label", namespace: "share-link", includeDefaultSlot: true)
     }
     
-    enum PreviewBranch<Item: Hashable> {
+    /// The set of values used to create the `SharePreview` for each item.
+    private enum PreviewBranch<Item: Hashable> {
         struct Properties<Property> {
+            /// A map between share items and a certain property of the `SharePreview`.
             let values: [Item:Property]
+            /// The value in the default `SharePreview`.
             let defaultValue: Property?
             
+            @inlinable
             init(_ values: [Item:Property], default defaultValue: Property?) {
                 self.values = values
                 self.defaultValue = defaultValue
             }
             
+            @inlinable
             func value(for item: Item?) -> Property {
                 guard let item = item,
                       let value = values[item]
@@ -230,14 +232,32 @@ struct ShareLink<R: CustomRegistry>: View {
                 return value
             }
         }
+        
+        /// Only the title is present.
         case titled(Properties<String>)
+        /// Title and image are present.
         case imageOnly(Properties<String>, Properties<SwiftUI.Image>)
+        /// Title and icon are present.
         case iconOnly(Properties<String>, Properties<SwiftUI.Image>)
+        /// Title, image, and icon are present.
         case complete(Properties<String>, images: Properties<SwiftUI.Image>, icons: Properties<SwiftUI.Image>)
     }
     
-    private func previews<Item>(for items: [Item]) -> PreviewBranch<Item>? where Item == String {
-        var previews: ([Item: PreviewData], default: PreviewData?) = element.elementChildren()
+    private struct PreviewData {
+        let title: String
+        let image: SwiftUI.Image?
+        let icon: SwiftUI.Image?
+    }
+    
+    /// Extract the `SharePreview` for each item.
+    ///
+    /// Selects the "least common denominator" set of properties.
+    /// For example, if one preview provides the `title`, `image`, and `icon`, but another only provides the `title` and `icon`, `PreviewBranch.iconOnly` will be returned.
+    ///
+    /// This is due to a limitation in the `ShareLink` type wherein a single `SharePreview` type must be returned, but would have a different type if the presence of the `image`/`icon` differed.
+    private func previews(for items: [String]) -> PreviewBranch<String>? {
+        // Collect the `share-link:preview` values for each item, and the default if present.
+        var previews: ([String: PreviewData], default: PreviewData?) = element.elementChildren()
             .filter({ $0.tag == "preview" && $0.namespace == "share-link" })
             .reduce(into: ([:], default: nil)) { pairs, element in
                 let title = element.attributeValue(for: "title") ?? ""
@@ -263,10 +283,15 @@ struct ShareLink<R: CustomRegistry>: View {
                     pairs.1 = data
                 }
             }
-        if Set(previews.0.keys) != Set(items) && previews.default == nil {
+        
+        guard !previews.0.isEmpty || previews.1 != nil else { return nil }
+        
+        // If there is no default and not all items have a preview, create a fallback preview.
+        if previews.default == nil && Set(previews.0.keys) != Set(items) {
             previews.default = .init(title: "", image: nil, icon: nil)
         }
-        guard !previews.0.isEmpty || previews.1 != nil else { return nil }
+        
+        // Find the "least common denominator" set of properties.
         let accessors = (previews.0.values + (previews.default.flatMap({ [$0] }) ?? []))
             .reduce(
                 into: Set([\PreviewData.title, \PreviewData.image, \PreviewData.icon])
@@ -278,6 +303,7 @@ struct ShareLink<R: CustomRegistry>: View {
                     accessors.remove(\.icon)
                 }
             }
+        
         switch accessors {
         case [\.title, \.image]:
             return .imageOnly(
