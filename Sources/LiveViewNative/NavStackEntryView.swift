@@ -64,7 +64,7 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                     fatalError("State is `.connected`, but no `Document` was found.")
                 }
             default:
-                let content = Group {
+                let content = SwiftUI.Group {
                     if R.LoadingView.self == Never.self {
                         switch coordinator.state {
                         case .connected:

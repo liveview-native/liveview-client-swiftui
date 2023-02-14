@@ -93,7 +93,13 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
 #if os(iOS) || os(macOS)
         case "text-editor":
             TextEditor(element: element, context: context)
+        case "group-box":
+            GroupBox(element: element, context: context)
+        case "control-group":
+            ControlGroup(element: element, context: context)
 #endif
+        case "group":
+            Group(element: element, context: context)
         case "lazy-v-stack", "lazy-vstack":
             LazyVStack(element: element, context: context)
         case "lazy-h-stack", "lazy-hstack":
