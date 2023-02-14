@@ -10,6 +10,9 @@ import SwiftUI
 struct List<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
+    #if !os(watchOS)
+    @Environment(\.editMode) var editMode
+    #endif
     
     /// Selection of either a single value or set of values.
     enum Selection: Codable {
@@ -92,6 +95,7 @@ struct List<R: CustomRegistry>: View {
     private var content: some View {
         forEach(nodes: element.children(), context: context)
             .onDelete(perform: onDeleteHandler)
+            .onMove(perform: onMoveHandler)
     }
     
     private var onDeleteHandler: ((IndexSet) -> Void)? {
@@ -105,6 +109,29 @@ struct List<R: CustomRegistry>: View {
             Task { [meta] in
                 // todo: should this have its own type?
                 try await context.coordinator.pushEvent(type: "click", event: deleteEvent, value: meta)
+            }
+        }
+    }
+    
+    private var onMoveHandler: ((IndexSet, Int) -> Void)? {
+        guard let moveEvent = element.attributeValue(for: "phx-move") else {
+            return nil
+        }
+        return { indices, index in
+            var meta = element.buildPhxValuePayload()
+            meta["index"] = indices.first!
+            meta["destination"] = index
+            Task { [meta] in
+                // todo: should this have its own type?
+                try await context.coordinator.pushEvent(type: "click", event: moveEvent, value: meta)
+                #if !os(watchOS)
+                if let initial = editMode?.wrappedValue {
+                    editMode?.wrappedValue = initial == .transient ? .active : .transient
+                    await MainActor.run {
+                        editMode?.wrappedValue = initial
+                    }
+                }
+                #endif
             }
         }
     }
