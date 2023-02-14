@@ -122,6 +122,11 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case navigationTitle = "navigation_title"
         case padding
         case tint
+        
+        case gridCellAnchor = "grid_cell_anchor"
+        case gridCellColumns = "grid_cell_columns"
+        case gridCellUnsizedAxes = "grid_cell_unsized_axes"
+        case gridColumnAlignment = "grid_column_alignment"
     }
     
     @ViewModifierBuilder
@@ -139,6 +144,15 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try PaddingModifier(from: decoder)
         case .tint:
             try TintModifier(from: decoder)
+            
+        case .gridCellAnchor:
+            try GridCellAnchorModifier(from: decoder)
+        case .gridCellColumns:
+            try GridCellColumnsModifier(from: decoder)
+        case .gridCellUnsizedAxes:
+            try GridCellUnsizedAxesModifier(from: decoder)
+        case .gridColumnAlignment:
+            try GridColumnAlignmentModifier(from: decoder)
         }
     }
 }

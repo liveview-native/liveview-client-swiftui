@@ -16,21 +16,8 @@ struct GridRow<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        SwiftUI.GridRow(alignment: alignment) {
+        SwiftUI.GridRow(alignment: element.attributeValue(for: "alignment").flatMap(VerticalAlignment.init)) {
             context.buildChildren(of: element)
-        }
-    }
-    
-    private var alignment: VerticalAlignment? {
-        switch element.attributeValue(for: "alignment") {
-        case "center":
-            return .center
-        case "top":
-            return .top
-        case "bottom":
-            return .bottom
-        default:
-            return nil
         }
     }
 }

@@ -16,21 +16,11 @@ struct HStack<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        SwiftUI.HStack(alignment: alignment, spacing: spacing) {
+        SwiftUI.HStack(
+            alignment: element.attributeValue(for: "alignment").flatMap(VerticalAlignment.init) ?? .center,
+            spacing: spacing
+        ) {
             context.buildChildren(of: element)
-        }
-    }
-    
-    private var alignment: VerticalAlignment {
-        switch element.attributeValue(for: "alignment") {
-        case nil, "center":
-            return .center
-        case "top":
-            return .top
-        case "bottom":
-            return .bottom
-        default:
-            fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <h-stack>")
         }
     }
     
