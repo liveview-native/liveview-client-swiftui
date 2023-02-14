@@ -93,6 +93,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
 #if os(iOS) || os(macOS)
         case "text-editor":
             TextEditor(element: element, context: context)
+        case "color-picker":
+            ColorPicker(element: element, context: context)
         case "group-box":
             GroupBox(element: element, context: context)
         case "control-group":
