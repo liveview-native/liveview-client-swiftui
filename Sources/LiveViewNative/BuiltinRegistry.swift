@@ -104,6 +104,11 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Grid(element: element, context: context)
         case "grid-row":
             GridRow(element: element, context: context)
+        
+        case "lazy-v-grid":
+            LazyVGrid(element: element, context: context)
+        case "lazy-h-grid":
+            LazyHGrid(element: element, context: context)
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
