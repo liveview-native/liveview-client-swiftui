@@ -162,11 +162,13 @@ public struct LiveBinding<Value: Codable> {
         nonmutating set {
             // update the local value
             data.mode = .local(newValue)
+            data.objectWillChange.send()
             // if we are bound, update the view model, which will send an update to the backend
             if let bindingName {
                 let encoder = FragmentEncoder()
                 // todo: if encoding fails, what should happen?
                 try! newValue.encode(to: encoder)
+                data.skipNextUpdate = true
                 liveViewModel.setBinding(bindingName, to: encoder.unwrap() as Any)
             }
         }
@@ -201,16 +203,28 @@ extension LiveBinding {
 extension LiveBinding {
     class Data: ObservableObject {
         var mode: Mode = .uninitialized
-        private var cancellable: AnyCancellable?
+        var skipNextUpdate = false
+        private var serverCancellable: AnyCancellable?
+        private var clientCancellable: AnyCancellable?
         
         func getValue(from liveViewModel: LiveViewModel, bindingName: String) -> Value {
             switch mode {
             case .uninitialized:
-                cancellable = liveViewModel.bindingUpdatedByServer
+                serverCancellable = liveViewModel.bindingUpdatedByServer
                     .filter { $0.0 == bindingName }
                     .sink { [unowned self] _ in
                         self.mode = .needsUpdateFromViewModel
                         self.objectWillChange.send()
+                    }
+                clientCancellable = liveViewModel.bindingUpdatedByClient
+                    .filter { $0.0 == bindingName }
+                    .sink { [unowned self] _ in
+                        if self.skipNextUpdate {
+                            self.skipNextUpdate = false
+                        } else {
+                            self.mode = .needsUpdateFromViewModel
+                            self.objectWillChange.send()
+                        }
                     }
                 return getValueFromViewModel(liveViewModel, bindingName: bindingName)
             case .needsUpdateFromViewModel:

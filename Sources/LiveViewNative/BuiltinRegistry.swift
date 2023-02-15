@@ -112,7 +112,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             LazyVStack(element: element, context: context)
         case "lazy-h-stack", "lazy-hstack":
             LazyHStack(element: element, context: context)
-            
+        case "picker":
+            Picker(context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
@@ -130,6 +131,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case navigationTitle = "navigation_title"
         case padding
         case tint
+        case tag
         
         case gridCellAnchor = "grid_cell_anchor"
         case gridCellColumns = "grid_cell_columns"
@@ -152,6 +154,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try PaddingModifier(from: decoder)
         case .tint:
             try TintModifier(from: decoder)
+        case .tag:
+            try TagModifier(from: decoder)
             
         case .gridCellAnchor:
             try GridCellAnchorModifier(from: decoder)
