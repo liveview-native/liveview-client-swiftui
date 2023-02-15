@@ -100,6 +100,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
 #endif
         case "group":
             Group(element: element, context: context)
+        case "lazy-v-stack", "lazy-vstack":
+            LazyVStack(element: element, context: context)
+        case "lazy-h-stack", "lazy-hstack":
+            LazyHStack(element: element, context: context)
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
