@@ -7,23 +7,34 @@
 
 import SwiftUI
 
-struct Image: View {
-    @ObservedElement private var element: ElementNode
+struct Image<R: CustomRegistry>: View {
+    @ObservedElement private var observedElement: ElementNode
+    private let overrideElement: ElementNode?
+    private var element: ElementNode {
+        overrideElement ?? observedElement
+    }
     
-    init<R: CustomRegistry>(element: ElementNode, context: LiveContext<R>) {
+    init(element: ElementNode, context: LiveContext<R>) {
+        self.overrideElement = nil
+    }
+    
+    init(overrideElement: ElementNode, context: LiveContext<R>) {
+        self.overrideElement = overrideElement
     }
     
     public var body: some View {
+        image
+            // todo: this probably only works for symbols
+            .scaledIfPresent(scale: symbolScale)
+            .foregroundColor(symbolColor)
+    }
+    
+    var image: SwiftUI.Image {
         switch mode {
         case .symbol(let name):
-            SwiftUI.Image(systemName: name)
-                .scaledIfPresent(scale: symbolScale)
-                .foregroundColor(symbolColor)
+            return SwiftUI.Image(systemName: name)
         case .asset(let name):
-            SwiftUI.Image(name)
-                // todo: this probably only works for symbols
-                .scaledIfPresent(scale: symbolScale)
-                .foregroundColor(symbolColor)
+            return SwiftUI.Image(name)
         }
     }
     

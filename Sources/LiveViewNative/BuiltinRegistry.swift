@@ -88,6 +88,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Stepper(element: element, context: context)
         case "form":
             Form(context: context)
+        case "share-link":
+            ShareLink(element: element, context: context)
         case "section":
             Section(element: element, context: context)
 #if os(iOS) || os(macOS)
