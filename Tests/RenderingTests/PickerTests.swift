@@ -43,4 +43,62 @@ final class PickerTests: XCTestCase {
         }
     }
 #endif
+    
+    func testPicker() throws {
+        try assertMatch(
+            #"""
+            <picker value="paperplane" picker-style="automatic">
+                <picker:label><text>Pick an icon</text></picker:label>
+                <picker:content>
+                    <label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><text>paperplane</text></label>
+                    <label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><text>graduationcap</text></label>
+                    <label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><text>ellipsis.bubble</text></label>
+                </picker:content>
+            </picker>
+            """#) {
+                Picker(selection: .constant("paperplane")) {
+                    ForEach(["paperplane", "graduationcap", "ellipsis.bubble"], id: \.self) { name in
+                        Label {
+                            Text(name)
+                                // the Picker imposes a slightly different font by default, but our Text view uses nil, so match that
+                                .font(nil)
+                        } icon: {
+                            Image(systemName: name)
+                        }
+                        .tag(name)
+                    }
+                } label: {
+                    Text("Pick an icon")
+                }
+                .pickerStyle(.automatic)
+        }
+        
+        try assertMatch(
+            #"""
+            <picker value="paperplane" picker-style="inline">
+                <picker:label><text>Pick an icon</text></picker:label>
+                <picker:content>
+                    <label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><text>paperplane</text></label>
+                    <label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><text>graduationcap</text></label>
+                    <label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><text>ellipsis.bubble</text></label>
+                </picker:content>
+            </picker>
+            """#) {
+                Picker(selection: .constant("paperplane")) {
+                    ForEach(["paperplane", "graduationcap", "ellipsis.bubble"], id: \.self) { name in
+                        Label {
+                            Text(name)
+                                // the Picker imposes a slightly different font by default, but our Text view uses nil, so match that
+                                .font(nil)
+                        } icon: {
+                            Image(systemName: name)
+                        }
+                        .tag(name)
+                    }
+                } label: {
+                    Text("Pick an icon")
+                }
+                .pickerStyle(.inline)
+        }
+    }
 }
