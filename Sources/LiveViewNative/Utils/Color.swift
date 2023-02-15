@@ -67,9 +67,12 @@ extension Color {
             self = .primary
         case "system-secondary":
             self = .secondary
-        // TODO: named colors from bundle?
-        default:
-            self.init(fromCSSHex: string)
+        case let string?:
+            if let hexColor = Self(fromCSSHex: string) {
+                self = hexColor
+            } else {
+                self = .init(string)
+            }
         }
     }
 }
