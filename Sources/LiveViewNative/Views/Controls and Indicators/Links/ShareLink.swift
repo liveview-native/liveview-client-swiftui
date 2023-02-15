@@ -218,13 +218,11 @@ struct ShareLink<R: CustomRegistry>: View {
             /// The value in the default `SharePreview`.
             let defaultValue: Property?
             
-            @inlinable
             init(_ values: [Item:Property], default defaultValue: Property?) {
                 self.values = values
                 self.defaultValue = defaultValue
             }
             
-            @inlinable
             func value(for item: Item?) -> Property {
                 guard let item = item,
                       let value = values[item]
@@ -291,37 +289,28 @@ struct ShareLink<R: CustomRegistry>: View {
             previews.default = .init(title: "", image: nil, icon: nil)
         }
         
-        // Find the "least common denominator" set of properties.
-        let accessors = (previews.0.values + (previews.default.flatMap({ [$0] }) ?? []))
-            .reduce(
-                into: Set([\PreviewData.title, \PreviewData.image, \PreviewData.icon])
-            ) { accessors, preview in
-                if preview.image == nil {
-                    accessors.remove(\.image)
-                }
-                if preview.icon == nil {
-                    accessors.remove(\.icon)
-                }
-            }
+        let allSharePreviews = previews.0.values + (previews.default.flatMap({ [$0] }) ?? [])
+        let image = allSharePreviews.allSatisfy({ $0.image != nil })
+        let icon = allSharePreviews.allSatisfy({ $0.icon != nil })
         
-        switch accessors {
-        case [\.title, \.image]:
+        switch (image, icon) {
+        case (true, false):
             return .imageOnly(
                 .init(previews.0.mapValues(\.title), default: previews.default?.title),
                 .init(previews.0.compactMapValues(\.image), default: previews.default?.image)
             )
-        case [\.title, \.icon]:
+        case (false, true):
             return .iconOnly(
                 .init(previews.0.mapValues(\.title), default: previews.default?.title),
                 .init(previews.0.compactMapValues(\.icon), default: previews.default?.icon)
             )
-        case [\.title, \.image, \.icon]:
+        case (true, true):
             return .complete(
                 .init(previews.0.mapValues(\.title), default: previews.default?.title),
                 images: .init(previews.0.compactMapValues(\.image), default: previews.default?.image),
                 icons: .init(previews.0.compactMapValues(\.icon), default: previews.default?.icon)
             )
-        default:
+        case (false, false):
             return .titled(.init(previews.0.mapValues(\.title), default: previews.default?.title))
         }
     }
