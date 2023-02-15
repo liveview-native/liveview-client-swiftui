@@ -25,7 +25,7 @@ struct ShareLink<R: CustomRegistry>: View {
         let message = element.attributeValue(for: "message").flatMap(SwiftUI.Text.init)
         let useDefaultLabel = element.children().filter({
             guard let element = $0.asElement() else { return true }
-            return !(element.tag == "preview" && element.namespace == "share-link")
+            return element.tag != "share-link-preview"
         }).isEmpty
         let items: [String]? = element.attributeValue(for: "items").flatMap({
             guard let data = $0.data(using: .utf8) else { return nil }
@@ -33,7 +33,6 @@ struct ShareLink<R: CustomRegistry>: View {
         })
         if let items {
             let previews = previews(for: items)
-            let _ = print(previews)
             if useDefaultLabel {
                 switch previews {
                 case nil:
@@ -256,16 +255,16 @@ struct ShareLink<R: CustomRegistry>: View {
     private func previews(for items: [String]) -> PreviewBranch<String>? {
         // Collect the `share-link:preview` values for each item, and the default if present.
         var previews: ([String: PreviewData], default: PreviewData?) = element.elementChildren()
-            .filter({ $0.tag == "preview" && $0.namespace == "share-link" })
+            .filter({ $0.tag == "share-link-preview" })
             .reduce(into: ([:], default: nil)) { pairs, element in
                 let title = element.attributeValue(for: "title") ?? ""
                 let image = element.elementChildren()
-                    .first(where: { $0.tag == "image" && $0.namespace == "preview" })?
+                    .first(where: { $0.tag == "image" && $0.namespace == "share-link-preview" })?
                     .elementChildren()
                     .first
                     .flatMap({ Image(overrideElement: $0, context: context).image })
                 let icon = element.elementChildren()
-                    .first(where: { $0.tag == "icon" && $0.namespace == "preview" })?
+                    .first(where: { $0.tag == "icon" && $0.namespace == "share-link-preview" })?
                     .elementChildren()
                     .first
                     .flatMap({ Image(overrideElement: $0, context: context).image })
