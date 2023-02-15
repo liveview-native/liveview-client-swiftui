@@ -92,6 +92,17 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             ShareLink(element: element, context: context)
         case "section":
             Section(element: element, context: context)
+#if os(iOS) || os(macOS)
+        case "text-editor":
+            TextEditor(element: element, context: context)
+        case "group-box":
+            GroupBox(element: element, context: context)
+        case "control-group":
+            ControlGroup(element: element, context: context)
+#endif
+        case "group":
+            Group(element: element, context: context)
+            
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":

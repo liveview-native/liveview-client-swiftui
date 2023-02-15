@@ -17,7 +17,7 @@ struct Gauge<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        Group {
+        SwiftUI.Group {
             if context.hasChild(of: element, withTagName: "current-value-label", namespace: "gauge") ||
                context.hasChild(of: element, withTagName: "minimum-value-label", namespace: "gauge") ||
                context.hasChild(of: element, withTagName: "maximum-value-label", namespace: "gauge")
