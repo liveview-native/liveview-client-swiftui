@@ -56,8 +56,6 @@ import Combine
 public struct FormState<Value: FormValue> {
     private let defaultValue: Value
     private let sendChangeEvents: Bool
-    // this is non-nil iff data.mode == .local
-    @State private var localValue: Value?
     @StateObject private var data = FormStateData<Value>()
     // non-nil iff data.mode == .bound
     @LiveBinding(attribute: "value-binding") private var boundValue: Value
@@ -118,8 +116,8 @@ public struct FormState<Value: FormValue> {
                 return boundValue
             case .localInitial:
                 return initialValue
-            case .local:
-                return localValue!
+            case .local(let value):
+                return value
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     fatalError("Expected @FormState in form mode to have element with name")
@@ -141,10 +139,11 @@ public struct FormState<Value: FormValue> {
             case .bound:
                 boundValue = newValue
             case .localInitial:
-                localValue = newValue
-                data.mode = .local
+                data.mode = .local(newValue)
+                data.objectWillChange.send()
             case .local:
-                localValue = newValue
+                data.mode = .local(newValue)
+                data.objectWillChange.send()
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     fatalError("Expected @FormState in form mode to have element with name")
@@ -239,7 +238,7 @@ private class FormStateData<Value: FormValue>: ObservableObject {
         // local mode, but the value has not been updated, so always return the initial value when reading
         case localInitial
         // local mode, has been set
-        case local
+        case local(Value)
         // managed by a form model, the initial value will be read when when the form model doesn't yet have a stored value
         case form(FormModel)
     }
