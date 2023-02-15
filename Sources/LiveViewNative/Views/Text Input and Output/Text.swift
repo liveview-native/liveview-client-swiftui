@@ -124,13 +124,7 @@ struct Text<R: CustomRegistry>: View {
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
                     case "image":
-                        if let systemName = element.attributeValue(for: "system-name") {
-                            prev = prev + SwiftUI.Text(SwiftUI.Image(systemName: systemName))
-                        } else if let name = element.attributeValue(for: "name") {
-                            prev = prev + SwiftUI.Text(SwiftUI.Image(systemName: name))
-                        } else {
-                            preconditionFailure("<image> must have system-name or name")
-                        }
+                        prev = prev + SwiftUI.Text(Image(overrideElement: element, context: context).image)
                     default:
                         break
                     }

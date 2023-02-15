@@ -88,11 +88,15 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Stepper(element: element, context: context)
         case "form":
             Form(context: context)
+        case "share-link":
+            ShareLink(element: element, context: context)
         case "section":
             Section(element: element, context: context)
 #if os(iOS) || os(macOS)
         case "text-editor":
             TextEditor(element: element, context: context)
+        case "color-picker":
+            ColorPicker(element: element, context: context)
         case "group-box":
             GroupBox(element: element, context: context)
         case "control-group":
@@ -104,6 +108,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Grid(element: element, context: context)
         case "grid-row":
             GridRow(element: element, context: context)
+        case "lazy-v-stack", "lazy-vstack":
+            LazyVStack(element: element, context: context)
+        case "lazy-h-stack", "lazy-hstack":
+            LazyHStack(element: element, context: context)
             
         case "phx-form":
             PhxForm<R>(element: element, context: context)
