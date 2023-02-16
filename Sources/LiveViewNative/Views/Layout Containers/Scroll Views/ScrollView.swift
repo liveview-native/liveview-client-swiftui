@@ -16,19 +16,11 @@ struct ScrollView<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        SwiftUI.ScrollView(axes, showsIndicators: element.attributeBoolean(for: "shows-indicators")) {
+        SwiftUI.ScrollView(
+            element.attributeValue(for: "axes").flatMap(Axis.Set.init) ?? .vertical,
+            showsIndicators: element.attributeBoolean(for: "shows-indicators")
+        ) {
             context.buildChildren(of: element)
-        }
-    }
-    
-    private var axes: Axis.Set {
-        switch element.attributeValue(for: "axes") {
-        case "all":
-            return [.horizontal, .vertical]
-        case "horizontal":
-            return .horizontal
-        default:
-            return .vertical
         }
     }
 }

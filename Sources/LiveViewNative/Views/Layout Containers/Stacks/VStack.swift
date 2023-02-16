@@ -16,21 +16,11 @@ struct VStack<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        SwiftUI.VStack(alignment: alignment, spacing: spacing) {
+        SwiftUI.VStack(
+            alignment: element.attributeValue(for: "alignment").flatMap(HorizontalAlignment.init) ?? .center,
+            spacing: spacing
+        ) {
             context.buildChildren(of: element)
-        }
-    }
-    
-    private var alignment: HorizontalAlignment {
-        switch element.attributeValue(for: "alignment") {
-        case nil, "center":
-            return .center
-        case "leading":
-            return .leading
-        case "trailing":
-            return .trailing
-        default:
-            fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <v-stack>")
         }
     }
     

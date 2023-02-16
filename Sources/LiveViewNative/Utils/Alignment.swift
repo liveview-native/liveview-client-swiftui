@@ -49,3 +49,53 @@ extension Alignment: Decodable {
         }
     }
 }
+
+extension HorizontalAlignment: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        if let alignment = Self(string: string) {
+            self = alignment
+        } else {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for HorizontalAlignment"))
+        }
+    }
+    
+    init?(string: String) {
+        switch string {
+        case "center":
+            self = .center
+        case "leading":
+            self = .leading
+        case "trailing":
+            self = .trailing
+        default:
+            return nil
+        }
+    }
+}
+
+extension VerticalAlignment: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        if let alignment = Self(string: string) {
+            self = alignment
+        } else {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for VerticalAlignment"))
+        }
+    }
+    
+    init?(string: String) {
+        switch string {
+        case "center":
+            self = .center
+        case "top":
+            self = .top
+        case "bottom":
+            self = .bottom
+        default:
+            return nil
+        }
+    }
+}
