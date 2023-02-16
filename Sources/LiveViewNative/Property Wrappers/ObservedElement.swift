@@ -35,7 +35,7 @@ import Combine
 /// }
 @propertyWrapper
 public struct ObservedElement {
-    @Environment(\.element) private var element: ElementNode?
+    @Environment(\.element.nodeRef) private var nodeRef: NodeRef?
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
     @StateObject private var observer = Observer()
     
@@ -45,11 +45,11 @@ public struct ObservedElement {
     
     /// The observed element in the document, with all current data.
     public var wrappedValue: ElementNode {
-        guard let element,
+        guard let nodeRef,
               let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
-        guard let element = coordinator.document[element.node.id].asElement() else {
+        guard let element = coordinator.document[nodeRef].asElement() else {
             preconditionFailure("@ObservedElement ref turned into a non-element node, this should not be possible")
         }
         return element
@@ -58,11 +58,11 @@ public struct ObservedElement {
 
 extension ObservedElement: DynamicProperty {
     public func update() {
-        guard let element,
+        guard let nodeRef,
               let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
-        self.observer.update(ref: element.node.id, elementChanged: coordinator.elementChanged)
+        self.observer.update(ref: nodeRef, elementChanged: coordinator.elementChanged)
     }
 }
 
@@ -81,5 +81,11 @@ extension ObservedElement {
                     }
             }
         }
+    }
+}
+
+private extension Optional where Wrapped == ElementNode {
+    var nodeRef: NodeRef? {
+        self?.node.id
     }
 }
