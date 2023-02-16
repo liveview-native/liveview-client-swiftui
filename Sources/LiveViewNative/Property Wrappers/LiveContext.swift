@@ -110,17 +110,18 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     ) -> some View {
         let children = element.children()
         let namedSlotChildren = children.filter(Self.elementWithName(tagName, namespace: namespace))
-        if namedSlotChildren.isEmpty && includeDefaultSlot {
+        let namedSlotAttributeChildren = element.elementChildren().filter({ $0.attributeValue(for: "argument") == tagName || $0.attributeBoolean(for: .init(stringLiteral: "#\(tagName)")) })
+        if namedSlotChildren.isEmpty && namedSlotAttributeChildren.isEmpty && includeDefaultSlot {
             let defaultSlotChildren = children.filter({
                 if case let .element(element) = $0.data {
-                    return element.tag != "template"
+                    return element.tag != "template" && !element.attributes.contains(where: { $0.id.rawValue == "argument" || $0.id.rawValue.starts(with: "#") })
                 } else {
                     return true
                 }
             })
             return coordinator.builder.fromNodes(defaultSlotChildren, context: storage)
         } else {
-            return coordinator.builder.fromNodes(namedSlotChildren.flatMap { $0.children() }, context: storage)
+            return coordinator.builder.fromNodes(namedSlotChildren.flatMap { $0.children() } + namedSlotAttributeChildren.map(\.node), context: storage)
         }
     }
 }
