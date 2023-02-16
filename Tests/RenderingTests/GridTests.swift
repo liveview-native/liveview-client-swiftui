@@ -57,4 +57,61 @@ final class GridTests: XCTestCase {
             }
         }
     }
+    
+    // MARK: Lazy Grids
+    func testLazyVGrid() throws {
+        try assertMatch(
+            #"""
+            <lazy-v-grid columns="[{&quot;fixed&quot;:null,&quot;adaptive&quot;:null,&quot;flexible&quot;:{&quot;minimum&quot;:10,&quot;maximum&quot;:100},&quot;spacing&quot;:8,&quot;alignment&quot;:&quot;center&quot;},{&quot;flexible&quot;:null,&quot;adaptive&quot;:null,&quot;fixed&quot;:50,&quot;spacing&quot;:16,&quot;alignment&quot;:&quot;trailing&quot;}]">
+                <rectangle />
+                <rectangle />
+                <rectangle />
+                <rectangle />
+                <rectangle />
+                <rectangle />
+            </lazy-v-grid>
+            """#,
+            size: .init(width: 500, height: 500)
+        ) {
+            LazyVGrid(columns: [
+                .init(.flexible(minimum: 10, maximum: 100), spacing: 8, alignment: .center),
+                .init(.fixed(50), spacing: 16, alignment: .trailing),
+            ]) {
+                Rectangle()
+                Rectangle()
+                Rectangle()
+                Rectangle()
+                Rectangle()
+                Rectangle()
+            }
+        }
+    }
+    
+    func testLazyHGrid() throws {
+        try assertMatch(
+            #"""
+            <lazy-h-grid rows="[{&quot;fixed&quot;:null,&quot;adaptive&quot;:null,&quot;flexible&quot;:{&quot;minimum&quot;:10,&quot;maximum&quot;:100},&quot;spacing&quot;:8,&quot;alignment&quot;:&quot;center&quot;},{&quot;flexible&quot;:null,&quot;adaptive&quot;:null,&quot;fixed&quot;:50,&quot;spacing&quot;:16,&quot;alignment&quot;:&quot;trailing&quot;}]">
+                <rectangle />
+                <rectangle />
+                <rectangle />
+                <rectangle />
+                <rectangle />
+                <rectangle />
+            </lazy-h-grid>
+            """#,
+            size: .init(width: 500, height: 500)
+        ) {
+            LazyHGrid(rows: [
+                .init(.flexible(minimum: 10, maximum: 100), spacing: 8, alignment: .center),
+                .init(.fixed(50), spacing: 16, alignment: .trailing),
+            ]) {
+                Rectangle()
+                Rectangle()
+                Rectangle()
+                Rectangle()
+                Rectangle()
+                Rectangle()
+            }
+        }
+    }
 }
