@@ -20,7 +20,7 @@ struct LazyHGrid<R: CustomRegistry>: View {
             rows: rows,
             alignment: element.attributeValue(for: "alignment").flatMap(VerticalAlignment.init) ?? .center,
             spacing: element.attributeValue(for: "spacing").flatMap(Double.init(_:)).flatMap(CGFloat.init),
-            pinnedViews: pinnedViews
+            pinnedViews: element.attributeValue(for: "pinned-views").flatMap(PinnedScrollableViews.init) ?? []
         ) {
             context.buildChildren(of: element)
         }
@@ -29,17 +29,4 @@ struct LazyHGrid<R: CustomRegistry>: View {
     private var rows: [GridItem] {
         try! JSONDecoder().decode([GridItem].self, from: element.attributeValue(for: "rows")!.data(using: .utf8)!)
     }
-    
-    private var pinnedViews: PinnedScrollableViews {
-         switch element.attributeValue(for: "pinned-views") {
-         case "section-headers":
-             return .sectionHeaders
-         case "section-footers":
-             return .sectionFooters
-         case "all":
-             return [.sectionHeaders, .sectionFooters]
-         default:
-             return .init()
-         }
-     }
 }

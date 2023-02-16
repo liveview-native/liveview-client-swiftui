@@ -16,21 +16,12 @@ struct LazyVStack<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        SwiftUI.LazyVStack(alignment: alignment, spacing: spacing, pinnedViews: pinnedViews) {
+        SwiftUI.LazyVStack(
+            alignment: element.attributeValue(for: "alignment").flatMap(HorizontalAlignment.init) ?? .center,
+            spacing: spacing,
+            pinnedViews: element.attributeValue(for: "pinned-views").flatMap(PinnedScrollableViews.init) ?? []
+        ) {
             context.buildChildren(of: element)
-        }
-    }
-    
-    private var alignment: HorizontalAlignment {
-        switch element.attributeValue(for: "alignment") {
-        case nil, "center":
-            return .center
-        case "leading":
-            return .leading
-        case "trailing":
-            return .trailing
-        default:
-            fatalError("Invalid value '\(element.attributeValue(for: "alignment")!)' for alignment attribute of <lazy-v-stack>")
         }
     }
     
@@ -38,18 +29,5 @@ struct LazyVStack<R: CustomRegistry>: View {
         element.attributeValue(for: "spacing")
             .flatMap(Double.init)
             .flatMap(CGFloat.init)
-    }
-    
-    private var pinnedViews: PinnedScrollableViews {
-        switch element.attributeValue(for: "pinned-views") {
-        case "section-headers":
-            return .sectionHeaders
-        case "section-footers":
-            return .sectionFooters
-        case "all":
-            return [.sectionHeaders, .sectionFooters]
-        default:
-            return .init()
-        }
     }
 }
