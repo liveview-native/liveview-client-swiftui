@@ -9,6 +9,11 @@ import Foundation
 import SwiftUI
 import LiveViewNativeCore
 
+public extension CodingUserInfoKey {
+    /// The ``ElementNode`` that a modifier is attached to.
+    static let elementNode = CodingUserInfoKey(rawValue: "LiveViewNative.elementNode")!
+}
+
 struct ViewTreeBuilder<R: RootRegistry> {
     func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
         let context = LiveContextStorage(coordinator: coordinator, url: url)
@@ -71,7 +76,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
     fileprivate func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
         let jsonStr = element.attributeValue(for: "modifiers")
-        let modified = applyModifiers(encoded: jsonStr, to: view, context: context)
+        let modified = applyModifiers(encoded: jsonStr, to: view, element: element)
         let bound = applyBindings(to: modified, element: element)
         let withID = applyID(element: element, to: bound)
         return withID
@@ -97,10 +102,11 @@ struct ViewTreeBuilder<R: RootRegistry> {
         }
     }
     
-    private func applyModifiers(encoded: String?, to view: some View, context: LiveContextStorage<R>) -> some View {
+    private func applyModifiers(encoded: String?, to view: some View, element: ElementNode) -> some View {
         let modifiers: [ModifierContainer<R>]
         if let encoded {
             let decoder = JSONDecoder()
+            decoder.userInfo[.elementNode] = element
             if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
                 modifiers = decoded
             } else {
