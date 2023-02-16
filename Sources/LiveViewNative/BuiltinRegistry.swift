@@ -108,6 +108,12 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Grid(element: element, context: context)
         case "grid-row":
             GridRow(element: element, context: context)
+
+        case "lazy-v-grid":
+            LazyVGrid(element: element, context: context)
+        case "lazy-h-grid":
+            LazyHGrid(element: element, context: context)
+
         case "lazy-v-stack", "lazy-vstack":
             LazyVStack(element: element, context: context)
         case "lazy-h-stack", "lazy-hstack":
