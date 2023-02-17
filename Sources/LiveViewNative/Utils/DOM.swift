@@ -20,9 +20,11 @@ public typealias Attribute = LiveViewNativeCore.Attribute
 /// - ``attributes``
 /// - ``attribute(named:)``
 /// - ``attributeValue(for:)``
+/// - ``attributeBoolean(for:)``
 /// ### Accessing Children
 /// - ``children()``
 /// - ``depthFirstChildren()``
+/// - ``elementChildren()``
 /// - ``innerText()``
 public struct ElementNode {
     let node: Node

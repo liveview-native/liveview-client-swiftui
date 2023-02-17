@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A Swift result builder that allows building a single, concrete `ViewModifier` from a set of conditional modifiers.
 @resultBuilder
 public enum ViewModifierBuilder {
     public static func buildBlock<M>(_ modifier: M) -> M where M: ViewModifier {
