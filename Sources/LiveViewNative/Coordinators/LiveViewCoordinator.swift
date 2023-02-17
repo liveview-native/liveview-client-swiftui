@@ -108,7 +108,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
             } catch {
                 fatalError("todo")
             }
-        } else if session.config.liveRedirectsEnabled,
+        } else if session.config.navigationMode.permitsRedirects,
                   let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
             await session.redirect(redirect)
         }
@@ -349,7 +349,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     return
                 }
                 
-                if self.session.config.liveRedirectsEnabled,
+                if self.session.config.navigationMode.permitsRedirects,
                    let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
                     Task { @MainActor in
                         await self.session.redirect(redirect)
