@@ -101,4 +101,33 @@ final class PickerTests: XCTestCase {
                 .pickerStyle(.inline)
         }
     }
+    
+#if os(iOS)
+    func testDatePicker() throws {
+        let date = DateComponents(calendar: .current, year: 2023, month: 1, day: 1, hour: 8, minute: 30, second: 42).date!
+        try assertMatch(
+            #"""
+            <vstack>
+                <date-picker value="\#(date.formatted(.elixirDateTime))" date-picker-style="compact">
+                    <text>Pick a date</text>
+                </date-picker>
+                <date-picker value="\#(date.formatted(.elixirDateTime))" date-picker-style="graphical" />
+                <date-picker value="\#(date.formatted(.elixirDateTime))" date-picker-style="wheel" displayed-components="date" />
+            </vstack>
+            """#) {
+                VStack {
+                    DatePicker(selection: .constant(date), displayedComponents: [.date, .hourAndMinute]) {
+                        Text("Pick a date")
+                    }
+                    .datePickerStyle(.compact)
+                    DatePicker(selection: .constant(date), displayedComponents: [.date, .hourAndMinute]) {
+                    }
+                    .datePickerStyle(.graphical)
+                    DatePicker(selection: .constant(date), displayedComponents: .date) {
+                    }
+                    .datePickerStyle(.wheel)
+                }
+        }
+    }
+#endif
 }
