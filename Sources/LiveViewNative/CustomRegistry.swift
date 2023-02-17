@@ -10,7 +10,7 @@ import LiveViewNativeCore
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///
-/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-2uoy9`` method.
+/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-33lst`` method.
 ///
 /// To use your custom registry implementation, provide it as the generic parameter for the ``LiveSessionCoordinator`` you construct:
 ///
@@ -27,12 +27,14 @@ import LiveViewNativeCore
 /// - ``CustomView``
 /// ### Custom View Modifiers
 /// - ``ModifierType``
-/// - ``decodeModifier(_:from:context:)-4j076``
+/// - ``decodeModifier(_:from:context:)-35xcx``
+/// - ``CustomModifier``
 /// ### Customizing the Loading View
-/// - ``loadingView(for:state:)-2uoy9``
+/// - ``loadingView(for:state:)-33lst``
 /// - ``LoadingView``
 /// ### Supporting Types
 /// - ``EmptyRegistry``
+/// - ``ViewModifierBuilder``
 public protocol CustomRegistry {
     /// A type representing the tag names that this registry type can provide views for.
     ///
@@ -76,7 +78,7 @@ public protocol CustomRegistry {
     associatedtype CustomModifier: ViewModifier = EmptyModifier
     /// The type of view this registry produces for loading views.
     ///
-    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-2uoy9`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-33lst`` implementations and this will be inferred automatically.
     associatedtype LoadingView: View = Never
     
     /// This method is called by LiveView Native when it needs to construct a custom view.

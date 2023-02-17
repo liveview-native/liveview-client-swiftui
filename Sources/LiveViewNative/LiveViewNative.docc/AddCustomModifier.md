@@ -21,7 +21,7 @@ struct MyRegistry: CustomRegistry {
 }
 ```
 
-To define the view modifier for this attributes, implement the ``CustomRegistry/decodeModifier(_:from:context:)-4j076`` method. From this method, you return a struct that implements SwiftUI's `ViewModifier` protocol.
+To define the view modifier for this attributes, implement the ``CustomRegistry/decodeModifier(_:from:context:)-35xcx`` method. This method is automatically treated as a ``ViewModifierBuilder``, so simply construct your modifier rather than returning it.
 
 In the following example, a modifier like `{"type": "my_font", "size": 22}` could be used to apply the custom font named "My Font" with a fixed size of 22pt.
 
@@ -31,10 +31,10 @@ struct MyRegistry: CustomRegistry {
         case myFont = "my_font"
     }
 
-    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<MyRegistry>) throws -> any ViewModifier {
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<MyRegistry>) throws -> some ViewModifier {
         switch name {
         case .myFont:
-            return try MyFontModifier(from: decoder)
+            try MyFontModifier(from: decoder)
         }
     }
 }
