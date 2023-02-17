@@ -149,6 +149,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     }
     
     enum ModifierType: String {
+        case fontWeight = "font_weight"
         case frame
         case gridCellAnchor = "grid_cell_anchor"
         case gridCellColumns = "grid_cell_columns"
@@ -165,6 +166,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     @ViewModifierBuilder
     static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch type {
+        case .fontWeight:
+            try FontWeightModifier(from: decoder)
         case .frame:
             try FrameModifier(from: decoder)
         case .gridCellAnchor:
