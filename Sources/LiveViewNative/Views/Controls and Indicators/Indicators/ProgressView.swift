@@ -17,8 +17,8 @@ struct ProgressView<R: CustomRegistry>: View {
     
     public var body: some View {
         SwiftUI.Group {
-            if let timerIntervalStart = element.attributeValue(for: "timer-interval-start").flatMap({ try? ElixirDateParseStrategy().parse($0) }),
-               let timerIntervalEnd = element.attributeValue(for: "timer-interval-end").flatMap({ try? ElixirDateParseStrategy().parse($0) })
+            if let timerIntervalStart = element.attributeValue(for: "timer-interval-start").flatMap({ try? Date($0, strategy: .elixirDateTimeOrDate) }),
+               let timerIntervalEnd = element.attributeValue(for: "timer-interval-end").flatMap({ try? Date($0, strategy: .elixirDateTimeOrDate) })
             {
                 // SwiftUI's default `currentValueLabel` is not present unless the argument is not included in the initializer.
                 // Check if we have it first otherwise use the default.

@@ -22,6 +22,7 @@ import Foundation
 /// 2. `String`
 /// 3. `Bool`
 /// 4. `Double`
+/// 5. `Date`
 public protocol FormValue: Equatable, Codable {
     /// Converts the value from this type to the string representation.
     var formValue: String { get }
@@ -86,5 +87,15 @@ extension Double: FormValue {
         guard let value = Double(formValue)
         else { return nil }
         self = value
+    }
+}
+
+extension Date: FormValue {
+    public var formValue: String {
+        self.formatted(.elixirDateTime)
+    }
+    
+    public init?(formValue: String) {
+        try? self.init(formValue, strategy: .elixirDateTimeOrDate)
     }
 }

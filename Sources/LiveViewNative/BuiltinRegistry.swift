@@ -40,6 +40,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case "control-group":
             ControlGroup(element: element, context: context)
 #endif
+#if os(iOS) || os(macOS)
+        case "date-picker":
+            DatePicker(context: context)
+#endif
         case "divider":
             Divider()
 #if os(iOS)
