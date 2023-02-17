@@ -232,7 +232,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         let phxCSRFToken = try metaRes[0].attr("content")
 //        let liveReloadEnabled = !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
         
-        let mainDivRes = try doc.select("div[data-phx-main=\"true\"]")
+        let mainDivRes = try doc.select("div[data-phx-main]")
         guard !mainDivRes.isEmpty() else {
             throw LiveConnectionError.initialParseError
         }
