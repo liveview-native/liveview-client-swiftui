@@ -1,28 +1,64 @@
 defmodule LiveViewNativeSwiftUi.Types.Color do
+  @derive Jason.Encoder
   defstruct [
     :blue,
     :brightness,
-    :cg_color,
+    :create_with,
     :green,
     :hue,
-    :ns_color,
     :opacity,
     :red,
-    :rgb_color_space,
     :saturation,
     :string,
-    :type,
-    :ui_color,
     :white
   ]
+
+  @system_colors ~w(
+    black
+    blue
+    brown
+    clear
+    cyan
+    gray
+    green
+    indigo
+    mint
+    orange
+    pink
+    purple
+    red
+    teal
+    white
+    yellow
+    accent
+    primary
+    secondary
+  )a
 
   use LiveViewNativePlatform.Modifier.Type
   def type, do: :map
 
   def cast(value) when is_map(value), do: {:ok, struct(__MODULE__, value)}
-  def cast(value) when is_bitstring(value), do: {:ok, %__MODULE__{type: :string, string: value}}
-  def cast({:ui_color, ui_color}), do: {:ok, %__MODULE__{type: :ui_color, ui_color: ui_color}}
-  def cast({:ns_color, ns_color}), do: {:ok, %__MODULE__{type: :ns_color, ns_color: ns_color}}
-  def cast({:cg_color, cg_color}), do: {:ok, %__MODULE__{type: :cg_color, cg_color: cg_color}}
+
+  def cast(value) when is_bitstring(value),
+    do: {:ok, %__MODULE__{create_with: :string, string: value}}
+
+  def cast(value) when value in @system_colors,
+    do: {:ok, %__MODULE__{create_with: :string, string: "system-#{value}"}}
+
+  def cast({:rgb_color_space, %{white: white} = opts}),
+    do: {:ok, %__MODULE__{create_with: :rgb_color_space, white: white, opacity: opts[:opacity]}}
+
+  def cast({:rgb_color_space, %{} = opts}),
+    do:
+      {:ok,
+       %__MODULE__{
+         create_with: :rgb_color_space,
+         red: opts[:red],
+         green: opts[:green],
+         blue: opts[:blue],
+         opacity: opts[:opacity]
+       }}
+
   def cast(_), do: :error
 end

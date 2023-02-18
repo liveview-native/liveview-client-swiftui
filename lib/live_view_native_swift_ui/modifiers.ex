@@ -1,8 +1,6 @@
 defmodule LiveViewNativeSwiftUi.Modifiers do
   @moduledoc false
-  defstruct [
-    stack: []
-  ]
+  defstruct stack: []
 
   def encode_map(%{} = map) do
     Enum.into(map, %{})
@@ -45,6 +43,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers do
 
         modifiers ->
           Jason.encode!(modifiers)
+          |> IO.inspect()
           |> Phoenix.HTML.Engine.html_escape()
       end
     end

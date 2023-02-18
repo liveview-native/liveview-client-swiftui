@@ -57,6 +57,55 @@ extension SwiftUI.Color.RGBColorSpace: AttributeDecodable {
     }
 }
 
+// extension Color: Decodable {
+//     public init(from decoder: Decoder) throws {
+//         let container = try decoder.container(keyedBy: CodingKeys.self)
+//         var color: Color = Color(fromNamedOrCSSHex: "#000000")!
+
+//         if let createWith = try container.decode(String?.self, forKey: .createWith) {
+//             switch createWith {
+//                 case "string":
+//                     if let string = try container.decode(String?.self, forKey: .string) {
+//                         color = Color(fromNamedOrCSSHex: string)!
+//                     }
+
+//                 case "rgb_color_space":
+//                     let colorSpace: Color.RGBColorSpace = .sRGB
+//                     var opacity: Double = 1
+//                     var white: Double = 0
+//                     var red: Double = 0
+//                     var green: Double = 0
+//                     var blue: Double = 0
+
+//                     if let number = try container.decode(Double?.self, forKey: .opacity) {
+//                         opacity = number
+//                     }
+//                     if let number = try container.decode(Double?.self, forKey: .white) {
+//                         white = number
+
+//                         color = Color(colorSpace, white: white, opacity: opacity)
+//                     } else {
+//                         if let number = try container.decode(Double?.self, forKey: .red) {
+//                             red = number
+//                         }
+//                         if let number = try container.decode(Double?.self, forKey: .green) {
+//                             green = number
+//                         }
+//                         if let number = try container.decode(Double?.self, forKey: .blue) {
+//                             blue = number
+//                         }
+//                         color = Color(colorSpace, red: red, green: green, blue: blue, opacity: opacity)
+//                     }
+
+//                 default:
+//                 // TODO: Fix this
+//                 color = Color(fromNamedOrCSSHex: nil)!
+//             }
+//         }
+//         self = color
+//     }
+
+
 extension SwiftUI.Color {
     public init?(fromCSSHex string: String?) {
         guard let string = string else {
@@ -122,5 +171,18 @@ extension SwiftUI.Color {
                 self = .init(string)
             }
         }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case blue
+        case brightness
+        case createWith = "create_with"
+        case green
+        case hue
+        case opacity
+        case red
+        case saturation
+        case string
+        case white
     }
 }

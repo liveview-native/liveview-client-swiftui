@@ -1,4 +1,5 @@
 defmodule LiveViewNativeSwiftUi.Types.EdgeInsets do
+  @derive Jason.Encoder
   defstruct [:top, :bottom, :leading, :trailing]
 
   use LiveViewNativePlatform.Modifier.Type
