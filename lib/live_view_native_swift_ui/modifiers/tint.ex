@@ -1,7 +1,9 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.Tint do
   use LiveViewNativePlatform.Modifier
 
+  alias LiveViewNativeSwiftUi.Types.Color
+
   modifier_schema "tint" do
-    field :color, :string
+    field :color, Color
   end
 end
