@@ -10,26 +10,24 @@ import SwiftUI
 extension Gradient: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        var gradient: Gradient = Gradient(colors: [])
+        let createWith = try container.decode(String?.self, forKey: .createWith)
+        var gradient: Gradient?
 
-        if let createWith = try container.decode(String?.self, forKey: .createWith) {
-            switch createWith {
-                case "colors":
-                    if let colors = try container.decode([Color]?.self, forKey: .colors) {
-                        gradient = Gradient(colors: colors)
-                    }
+        switch createWith {
+            case "colors":
+                if let colors = try container.decode([Color]?.self, forKey: .colors) {
+                    gradient = Gradient(colors: colors)
+                }
 
-                case "stops":
-                    if let stops = try container.decode([Gradient.Stop]?.self, forKey: .stops) {
-                        gradient = Gradient(stops: stops)
-                    }
+            case "stops":
+                if let stops = try container.decode([Gradient.Stop]?.self, forKey: .stops) {
+                    gradient = Gradient(stops: stops)
+                }
 
-                default:
-                // TODO: Fix this
-                gradient = Gradient(colors: [])
-            }
+            default:
+                throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for createWith"))
         }
-        self = gradient
+        self = gradient!
     }
     
     enum CodingKeys: String, CodingKey {
