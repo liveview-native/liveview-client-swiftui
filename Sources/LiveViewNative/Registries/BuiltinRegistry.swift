@@ -169,6 +169,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     
     enum ModifierType: String {
         case fontWeight = "font_weight"
+        case foregroundStyle = "foreground_style"
         case frame
         case gridCellAnchor = "grid_cell_anchor"
         case gridCellColumns = "grid_cell_columns"
@@ -188,6 +189,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         switch type {
         case .fontWeight:
             try FontWeightModifier(from: decoder)
+        case .foregroundStyle:
+            try ForegroundStyleModifier(from: decoder)
         case .frame:
             try FrameModifier(from: decoder)
         case .gridCellAnchor:
