@@ -10,6 +10,7 @@ import SwiftUI
 struct WrappedShapeStyle: Decodable {
     var concreteStyle: ConcreteStyle?
     var color: Color?
+    var linearGradient: LinearGradient?
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -20,6 +21,12 @@ struct WrappedShapeStyle: Decodable {
                 if let decoded = try container.decode(Color?.self, forKey: .style) {
                     self.color = decoded
                     self.concreteStyle = .color
+                }
+
+            case "linear_gradient":
+                if let decoded = try container.decode(LinearGradient?.self, forKey: .style) {
+                    self.linearGradient = decoded
+                    self.concreteStyle = .linearGradient
                 }
 
             default:
@@ -34,5 +41,6 @@ struct WrappedShapeStyle: Decodable {
 
     enum ConcreteStyle {
         case color
+        case linearGradient
     }
 }
