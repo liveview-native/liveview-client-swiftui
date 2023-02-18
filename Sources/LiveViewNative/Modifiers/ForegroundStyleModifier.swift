@@ -23,6 +23,9 @@ struct ForegroundStyleModifier: ViewModifier, Decodable {
         case .color:
             content.foregroundStyle(primaryStyle.color!)
             
+        case .linearGradient:
+            content.foregroundStyle(primaryStyle.linearGradient!)
+            
         default:
             content
         }
