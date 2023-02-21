@@ -112,7 +112,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Stepper(element: element, context: context)
         case "spacer":
             Spacer(element: element, context: context)
-#if !os(watchOS)
+#if os(iOS) || os(macOS)
         case "table":
             Table(element: element, context: context)
 #endif
