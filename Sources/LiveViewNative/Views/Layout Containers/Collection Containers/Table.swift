@@ -11,7 +11,9 @@ import SwiftUI
 struct Table<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
-    @Environment(\.self) private var environment
+    @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
+    
+    @LiveBinding(attribute: "selection") private var selection = Selection.single(nil)
     
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
@@ -39,89 +41,204 @@ struct Table<R: CustomRegistry>: View {
         return SwiftUI.Group {
             switch columns.count {
             case 1:
-                SwiftUI.Table(rows) {
-                    columns[0]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                    }
                 }
             case 2:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                    }
                 }
             case 3:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                    }
                 }
             case 4:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                    }
                 }
             case 5:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                    }
                 }
             case 6:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                    }
                 }
             case 7:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                    columns[6]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                        columns[6]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                        columns[6]
+                    }
                 }
             case 8:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                    columns[6]
-                    columns[7]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                        columns[6]
+                        columns[7]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                        columns[6]
+                        columns[7]
+                    }
                 }
             case 9:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                    columns[6]
-                    columns[7]
-                    columns[8]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                        columns[6]
+                        columns[7]
+                        columns[8]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                        columns[6]
+                        columns[7]
+                        columns[8]
+                    }
                 }
             case 10:
-                SwiftUI.Table(rows) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                    columns[6]
-                    columns[7]
-                    columns[8]
-                    columns[9]
+                switch selection {
+                case .single:
+                    SwiftUI.Table(rows, selection: $selection.single) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                        columns[6]
+                        columns[7]
+                        columns[8]
+                        columns[9]
+                    }
+                case .multiple:
+                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                        columns[0]
+                        columns[1]
+                        columns[2]
+                        columns[3]
+                        columns[4]
+                        columns[5]
+                        columns[6]
+                        columns[7]
+                        columns[8]
+                        columns[9]
+                    }
                 }
             default:
                 fatalError("Too many columns in table: \(columns.count)")
@@ -142,7 +259,7 @@ struct Table<R: CustomRegistry>: View {
                         [rowChildren[item.offset]],
                         context: context
                     )
-                    .environment(\.self, environment)
+                    .environment(\.coordinatorEnvironment, coordinatorEnvironment)
                 }
             }
             .width(item.element.attributeValue(for: "width").flatMap(Double.init(_:)).flatMap(CGFloat.init))
