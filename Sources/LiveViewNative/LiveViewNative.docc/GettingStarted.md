@@ -4,7 +4,7 @@ See how to quickly get up and running displaying a LiveView in your app.
 
 ## First Steps
 
-Getting started with LiveViewNative is easy: simply create a ``LiveViewCoordinator`` and pass it into a ``LiveView`` that's part of your view tree.
+Getting started with LiveViewNative is easy: simply create a ``LiveSessionCoordinator`` and pass it into a ``LiveView`` that's part of your view tree.
 
 The coordinator object is responsible for connecting to the Phoenix LiveView backend, managing the network connection, and sending and responding to events.
 
@@ -17,29 +17,29 @@ The LiveView is then created by passing in the coordinator, no other setup neces
 ```swift
 @MainActor
 struct ContentView: View {
-    @State private var coordinator = LiveViewCoordinator(URL(string: "http://localhost:4000/")!)
+    @State private var session = LiveSessionCoordinator(URL(string: "http://localhost:4000/")!)
 
     var body: some View {
-        LiveView(coordinator: coordinator)
+        LiveView(session: session)
     }
 }
 ```
 
 ## Configuring the Coordinator
 
-The coordinator can be configured with a number of different options. To customize these, create a ``LiveViewConfiguration`` with the values you want, and then pass it to coordinator's initializer.
+The coordinator can be configured with a number of different options. To customize these, create a ``LiveSessionConfiguration`` with the values you want, and then pass it to coordinator's initializer.
 
 ```swift
 @MainActor
 struct ContentView: View {
-    @State private var coordinator: LiveViewCoordinator<EmptyRegistry> = {
-        var config = LiveViewConfiguration()
+    @State private var session: LiveSessionCoordinator<EmptyRegistry> = {
+        var config = LiveSessionConfiguration()
         config.navigationMode = .enabled
-        return LiveViewCoordinator(URL(string: "http://localhost:4000/")!, config: config)
+        return LiveSessionCoordinator(URL(string: "http://localhost:4000/")!, config: config)
     }()
 
     var body: some View {
-        LiveView(coordinator: coordinator)
+        LiveView(session: session)
     }
 }
 ```
@@ -51,10 +51,10 @@ You can enable support for your own custom HTML elements and attributes by imple
 ```swift
 @MainActor
 struct ContentView: View {
-    @State private var coordinator = LiveViewCoordinator<MyCustomRegistry>(URL(string: "http://localhost:4000/")!)
+    @State private var session = LiveSessionCoordinator<MyCustomRegistry>(URL(string: "http://localhost:4000/")!)
 
     var body: some View {
-        LiveView(coordinator: coordinator)
+        LiveView(session: session)
     }
 }
 ```

@@ -63,6 +63,7 @@ public struct LiveContext<R: CustomRegistry> {
         }
     }
     
+    /// Checks whether the element has any children with the given tag.
     public func hasChild(
         of element: ElementNode,
         withTagName tagName: String,
@@ -71,6 +72,24 @@ public struct LiveContext<R: CustomRegistry> {
         element.children().contains(where: Self.elementWithName(tagName, namespace: namespace))
     }
     
+    /// Builds a view representing only the children of the element which have the given tag name.
+    ///
+    /// This can be use to build views which have multiple types of children, such as how Menu takes content and a label:
+    /// ```html
+    /// <menu>
+    ///     <menu:content>
+    ///         <button phx-click="clicked">Hello</button>
+    ///     </menu:content>
+    ///     <menu:label>
+    ///         My Menu
+    ///     </menu:label>
+    /// </menu>
+    /// ```
+    ///
+    /// - Parameter element: The element whose children to consider.
+    /// - Parameter withTagName: The name of the tag to build children from.
+    /// - Parameter namespace: The namespace of the tag to build children from.
+    /// - Parameter includeDefaultSlot: Whether to use all un-namespaced children if there are no children with the correct tag name and namespace.
     public func buildChildren(
         of element: ElementNode,
         withTagName tagName: String,

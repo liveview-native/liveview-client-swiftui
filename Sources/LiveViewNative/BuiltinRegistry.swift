@@ -22,108 +22,116 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     @ViewBuilder
     static func lookup<R: CustomRegistry>(_ name: String, _ element: ElementNode, context: LiveContext<R>) -> some View {
         switch name {
-        case "text-field":
-            TextField<R>(element: element, context: context)
-        case "secure-field":
-            SecureField<R>(element: element, context: context)
-        case "text":
-            Text(context: context)
-        case "h-stack", "hstack":
-            HStack<R>(element: element, context: context)
-        case "v-stack", "vstack":
-            VStack<R>(element: element, context: context)
-        case "z-stack", "zstack":
-            ZStack<R>(element: element, context: context)
-        case "button":
-            Button<R>(element: element, context: context, action: nil)
-        case "image":
-            Image(element: element, context: context)
         case "async-image":
             AsyncImage(element: element, context: context)
-        case "scroll-view":
-            ScrollView<R>(element: element, context: context)
-        case "spacer":
-            Spacer(element: element, context: context)
-        case "navigation-link":
-            NavigationLink(element: element, context: context)
-        case "list":
-            List<R>(element: element, context: context)
-        case "rectangle":
-            Shape(element: element, context: context, shape: Rectangle())
-        case "rounded-rectangle":
-            Shape(element: element, context: context, shape: RoundedRectangle(from: element))
-        case "circle":
-            Shape(element: element, context: context, shape: Circle())
-        case "ellipse":
-            Shape(element: element, context: context, shape: Ellipse())
+        case "button":
+            Button<R>(element: element, context: context, action: nil)
         case "capsule":
             Shape(element: element, context: context, shape: Capsule(from: element))
+        case "circle":
+            Shape(element: element, context: context, shape: Circle())
+#if os(iOS) || os(macOS)
+        case "color-picker":
+            ColorPicker(element: element, context: context)
+#endif
         case "container-relative-shape":
             Shape(element: element, context: context, shape: ContainerRelativeShape())
-        case "link":
-            Link(element: element, context: context)
-        case "progress-view":
-            ProgressView(element: element, context: context)
+#if os(iOS) || os(macOS)
+        case "control-group":
+            ControlGroup(element: element, context: context)
+#endif
+#if os(iOS) || os(macOS)
+        case "date-picker":
+            DatePicker(context: context)
+#endif
         case "divider":
             Divider()
 #if os(iOS)
         case "edit-button":
             EditButton()
 #endif
-        case "toggle":
-            Toggle(element: element, context: context)
-#if !os(watchOS)
-        case "menu":
-            Menu(element: element, context: context)
-#endif
+        case "ellipse":
+            Shape(element: element, context: context, shape: Ellipse())
+        case "form":
+            Form(context: context)
 #if !os(tvOS)
         case "gauge":
             Gauge(element: element, context: context)
 #endif
-        case "slider":
-            Slider(element: element, context: context)
-        case "label":
-            Label(element: element, context: context)
-        case "stepper":
-            Stepper(element: element, context: context)
-        case "form":
-            Form(context: context)
-        case "share-link":
-            ShareLink(element: element, context: context)
-        case "section":
-            Section(element: element, context: context)
-#if os(iOS) || os(macOS)
-        case "text-editor":
-            TextEditor(element: element, context: context)
-        case "color-picker":
-            ColorPicker(element: element, context: context)
-        case "group-box":
-            GroupBox(element: element, context: context)
-        case "control-group":
-            ControlGroup(element: element, context: context)
-#endif
-        case "group":
-            Group(element: element, context: context)
         case "grid":
             Grid(element: element, context: context)
         case "grid-row":
             GridRow(element: element, context: context)
-
-        case "lazy-v-grid":
-            LazyVGrid(element: element, context: context)
+#if os(iOS) || os(macOS)
+        case "group-box":
+            GroupBox(element: element, context: context)
+#endif
+        case "h-stack", "hstack":
+            HStack<R>(element: element, context: context)
+        case "image":
+            Image(element: element, context: context)
+        case "label":
+            Label(element: element, context: context)
         case "lazy-h-grid":
             LazyHGrid(element: element, context: context)
-
-        case "lazy-v-stack", "lazy-vstack":
-            LazyVStack(element: element, context: context)
         case "lazy-h-stack", "lazy-hstack":
             LazyHStack(element: element, context: context)
+        case "lazy-v-grid":
+            LazyVGrid(element: element, context: context)
+        case "lazy-v-stack", "lazy-vstack":
+            LazyVStack(element: element, context: context)
+        case "link":
+            Link(element: element, context: context)
+        case "list":
+            List<R>(element: element, context: context)
+#if !os(watchOS)
+        case "menu":
+            Menu(element: element, context: context)
+#endif
+        case "navigation-link":
+            NavigationLink(element: element, context: context)
+        case "progress-view":
+            ProgressView(element: element, context: context)
         case "picker":
             Picker(context: context)
+        case "rectangle":
+            Shape(element: element, context: context, shape: Rectangle())
+        case "rounded-rectangle":
+            Shape(element: element, context: context, shape: RoundedRectangle(from: element))
+        case "scroll-view":
+            ScrollView<R>(element: element, context: context)
+        case "section":
+            Section(element: element, context: context)
+        case "secure-field":
+            SecureField<R>(element: element, context: context)
+        case "share-link":
+            ShareLink(element: element, context: context)
+        case "slider":
+            Slider(element: element, context: context)
+        case "stepper":
+            Stepper(element: element, context: context)
+        case "spacer":
+            Spacer(element: element, context: context)
 #if !os(watchOS)
         case "table":
             Table(element: element, context: context)
 #endif
+        case "text":
+            Text(context: context)
+#if os(iOS) || os(macOS)
+        case "text-editor":
+            TextEditor(element: element, context: context)
+#endif
+        case "text-field":
+            TextField<R>(element: element, context: context)
+        case "toggle":
+            Toggle(element: element, context: context)
+        case "v-stack", "vstack":
+            VStack<R>(element: element, context: context)
+        case "view-that-fits":
+            ViewThatFits(element: element, context: context)
+        case "z-stack", "zstack":
+            ZStack<R>(element: element, context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
@@ -136,17 +144,16 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     
     enum ModifierType: String {
         case frame
-        case listRowInsets = "list_row_insets"
-        case listRowSeparator = "list_row_separator"
-        case navigationTitle = "navigation_title"
-        case padding
-        case tint
-        case tag
-        
         case gridCellAnchor = "grid_cell_anchor"
         case gridCellColumns = "grid_cell_columns"
         case gridCellUnsizedAxes = "grid_cell_unsized_axes"
         case gridColumnAlignment = "grid_column_alignment"
+        case listRowInsets = "list_row_insets"
+        case listRowSeparator = "list_row_separator"
+        case navigationTitle = "navigation_title"
+        case padding
+        case tag
+        case tint
     }
     
     @ViewModifierBuilder
@@ -154,19 +161,6 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         switch type {
         case .frame:
             try FrameModifier(from: decoder)
-        case .listRowInsets:
-            try ListRowInsetsModifier(from: decoder)
-        case .listRowSeparator:
-            try ListRowSeparatorModifier(from: decoder)
-        case .navigationTitle:
-            try NavigationTitleModifier(from: decoder)
-        case .padding:
-            try PaddingModifier(from: decoder)
-        case .tint:
-            try TintModifier(from: decoder)
-        case .tag:
-            try TagModifier(from: decoder)
-            
         case .gridCellAnchor:
             try GridCellAnchorModifier(from: decoder)
         case .gridCellColumns:
@@ -175,6 +169,18 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try GridCellUnsizedAxesModifier(from: decoder)
         case .gridColumnAlignment:
             try GridColumnAlignmentModifier(from: decoder)
+        case .listRowInsets:
+            try ListRowInsetsModifier(from: decoder)
+        case .listRowSeparator:
+            try ListRowSeparatorModifier(from: decoder)
+        case .navigationTitle:
+            try NavigationTitleModifier(from: decoder)
+        case .padding:
+            try PaddingModifier(from: decoder)
+        case .tag:
+            try TagModifier(from: decoder)
+        case .tint:
+            try TintModifier(from: decoder)
         }
     }
 }

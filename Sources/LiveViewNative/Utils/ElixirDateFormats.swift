@@ -21,7 +21,7 @@ fileprivate let dateFormatter: DateFormatter = {
     return formatter
 }()
 
-struct ElixirDateFormat: ParseableFormatStyle {
+struct ElixirDateTimeFormat: ParseableFormatStyle {
     typealias FormatInput = Date
     
     typealias FormatOutput = String
@@ -30,10 +30,10 @@ struct ElixirDateFormat: ParseableFormatStyle {
         dateTimeFormatter.string(from: value)
     }
     
-    var parseStrategy = ElixirDateParseStrategy()
+    var parseStrategy = ElixirDateTimeOrDateParseStrategy()
 }
 
-struct ElixirDateParseStrategy: ParseStrategy {
+struct ElixirDateTimeOrDateParseStrategy: ParseStrategy {
     func parse(_ value: String) throws -> Date {
         guard let value = dateTimeFormatter.date(from: value) ?? dateFormatter.date(from: value)
         else { throw DateParseError.invalidDate }
@@ -45,6 +45,10 @@ struct ElixirDateParseStrategy: ParseStrategy {
     }
 }
 
-extension FormatStyle where Self == ElixirDateFormat {
-    static var elixirDate: ElixirDateFormat { .init() }
+extension FormatStyle where Self == ElixirDateTimeFormat {
+    static var elixirDateTime: ElixirDateTimeFormat { .init() }
+}
+
+extension ParseStrategy where Self == ElixirDateTimeOrDateParseStrategy {
+    static var elixirDateTimeOrDate: ElixirDateTimeOrDateParseStrategy { .init() }
 }

@@ -23,8 +23,6 @@ public struct LiveSessionConfiguration {
     /// The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.
     public var urlSession: URLSession = .shared
     
-    public var liveRedirectsEnabled: Bool = true
-    
     /// Constructs a default, empty configuration.
     public init() {
     }
@@ -39,5 +37,14 @@ public struct LiveSessionConfiguration {
         case enabled
         /// Navigation is fully enabled and uses a `NavigationSplitView` for the UI.
         case splitView
+        
+        var permitsRedirects: Bool {
+            switch self {
+            case .disabled:
+                return false
+            default:
+                return true
+            }
+        }
     }
 }

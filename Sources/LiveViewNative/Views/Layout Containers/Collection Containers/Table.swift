@@ -13,7 +13,7 @@ struct Table<R: CustomRegistry>: View {
     private let context: LiveContext<R>
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     
-    @LiveBinding(attribute: "selection") private var selection = Selection.single(nil)
+    @LiveBinding(attribute: "selection") private var selection = Selection.multiple([])
     
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context

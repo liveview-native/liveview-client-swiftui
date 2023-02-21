@@ -50,4 +50,10 @@ struct MicToggle: View {
 }
 ```
 
-Use this view in your LiveView view tree using the ``CustomRegistry`` (see <doc:AddCustomElement>) inside of a `<phx-form>` element. It will participate in the form model automatically, and its value will be sent whenever change or submit events are triggered on the form.
+Use this view in your LiveView view tree using the ``CustomRegistry`` (see <doc:AddCustomElement>).
+
+If used inside of a `<phx-form>`, it will participate in the form model automatically and its value will be sent whenever change or submit events are triggered on the form. The initial value will be read from the `value` attribute on the element, if present.
+
+When used outside of `<phx-form>`, the value is stored directly by the `FormState`. The initial value will be read from the `value` attribute on the element, if present. The `@FormState` property wrapper will automatically detect changes to its value and send change events to the backend, if an event name has been provided in the `phx-change` attribute on the element.
+
+`@FormState` values can also be bound directly to assigns on the backend by using live bindings. See the ``LiveBinding`` docs for more information.

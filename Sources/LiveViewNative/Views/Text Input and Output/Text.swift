@@ -36,7 +36,7 @@ struct Text<R: CustomRegistry>: View {
     }
     
     private func formatDate(_ date: String) -> Date? {
-        try? ElixirDateParseStrategy().parse(date)
+        try? Date(date, strategy: .elixirDateTimeOrDate)
     }
     
     private var text: SwiftUI.Text {
