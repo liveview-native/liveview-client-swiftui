@@ -120,6 +120,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             LazyHStack(element: element, context: context)
         case "picker":
             Picker(context: context)
+#if !os(watchOS)
+        case "table":
+            Table(element: element, context: context)
+#endif
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
