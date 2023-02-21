@@ -30,8 +30,11 @@ struct Table<R: CustomRegistry>: View {
     }
     
     public var body: some View {
-        let rows = element.elementChildren().compactMap({ $0.tag == "table-row" ? Row(element: $0) : nil })
-        let columns = columns(for: rows)
+        let rows = element.elementChildren()
+            .filter { $0.tag == "rows" && $0.namespace == "table" }
+            .flatMap { $0.elementChildren() }
+            .compactMap { $0.tag == "table-row" ? Row(element: $0) : nil }
+        let columns = self.columns
         return SwiftUI.Group {
             switch columns.count {
             case 1:
@@ -120,30 +123,26 @@ struct Table<R: CustomRegistry>: View {
                     columns[9]
                 }
             default:
-                SwiftUI.Text("Too many columns in table: \(columns.count)")
+                fatalError("Too many columns in table: \(columns.count)")
             }
         }
     }
     
-    private func columns(for rows: [Row]) -> [TableColumn<Row, Never, some View, SwiftUI.Text>] {
-        print(rows)
-        let columns = rows.reduce([String]()) { partialResult, row in
-            let columns = row.element.elementChildren().compactMap({ $0.tag == "table-column" ? $0.attributeValue(for: "id") : nil })
-                .filter({ !partialResult.contains($0) })
-            return partialResult + columns
-        }
-        print(columns)
-        return columns.map { column in
-            TableColumn(column) { (row: Row) in
-                context.coordinator.builder.fromNodes(
-                    row.element.children().filter({
-                        guard let element = $0.asElement() else { return false }
-                        return element.tag == "table-column" && element.attributeValue(for: "id") == column
-                    }).flatMap({ $0.children() }),
-                    context: context
-                )
+    private var columns: [TableColumn<Row, Never, some View, SwiftUI.Text>] {
+        let columnElements = element.elementChildren()
+            .filter { $0.tag == "columns" && $0.namespace == "table" }
+            .flatMap{ $0.elementChildren() }
+            .filter { $0.tag == "table-column" }
+        return columnElements.enumerated().map { item in
+            TableColumn(item.element.innerText()) { (row: Row) in
+                let rowChildren = row.element.children()
+                if rowChildren.indices.contains(item.offset) {
+                    context.coordinator.builder.fromNodes(
+                        [rowChildren[item.offset]],
+                        context: context
+                    )
+                }
             }
-            .width(min: <#T##CGFloat?#>, ideal: <#T##CGFloat?#>, max: <#T##CGFloat?#>)
         }
     }
 }
