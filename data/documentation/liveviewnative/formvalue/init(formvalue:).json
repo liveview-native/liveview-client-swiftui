@@ -152,6 +152,40 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/formmodel"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
+      "abstract": [
+        {
+          "text": "A property wrapper that stores the primary value of a form element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "FormState"
+        }
+      ],
+      "role": "symbol",
+      "title": "FormState",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/formstate"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/FormValue": {
       "abstract": [
         {
@@ -164,7 +198,16 @@
           "type": "reference"
         },
         {
-          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "text": " and used with ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
           "type": "text"
         }
       ],

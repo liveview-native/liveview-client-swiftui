@@ -196,7 +196,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage": {
       "abstract": [
         {
-          "code": "<asyncimage>",
+          "code": "<async-image>",
           "type": "codeVoice"
         },
         {
@@ -232,7 +232,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink": {
       "abstract": [
         {
-          "code": "<navigationlink>",
+          "code": "<navigation-link>",
           "type": "codeVoice"
         },
         {

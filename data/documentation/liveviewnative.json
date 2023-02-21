@@ -303,7 +303,16 @@
           "type": "reference"
         },
         {
-          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "text": " and used with ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
           "type": "text"
         }
       ],
@@ -347,6 +356,40 @@
       "title": "Getting Started",
       "type": "topic",
       "url": "/documentation/liveviewnative/gettingstarted"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding": {
+      "abstract": [
+        {
+          "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveBinding"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveBinding"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveBinding",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError": {
       "abstract": [],
@@ -457,7 +500,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
       "abstract": [
         {
-          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "text": "The session coordinator object handles the initial connection, as well as navigation.",
           "type": "text"
         }
       ],
@@ -523,7 +566,12 @@
       "url": "/documentation/liveviewnative/liveview"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [],
+      "abstract": [
+        {
+          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type": "text"
+        }
+      ],
       "fragments": [
         {
           "kind": "keyword",
@@ -669,6 +717,8 @@
         "doc://LiveViewNative/tutorials/YourFirstApp",
         "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
       ],
       "title": "Essentials"
@@ -709,13 +759,7 @@
     },
     {
       "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator"
-      ],
-      "title": "Classes"
-    },
-    {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration"
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding"
       ],
       "title": "Structures"
     },

@@ -76,7 +76,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/RoundedRectangle": {
       "abstract": [
         {
-          "code": "<roundedrectangle>",
+          "code": "<rounded-rectangle>",
           "type": "codeVoice"
         },
         {

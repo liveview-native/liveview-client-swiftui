@@ -198,9 +198,9 @@
     },
     "03-01-03-cat_live.ios.heex": {
       "content": [
-        "<vstack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @name}] |> Jason.encode!}>",
-        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
-        "</vstack>"
+        "<v-stack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @name}] |> Jason.encode!}>",
+        "  <async-image src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
+        "</v-stack>"
       ],
       "fileName": "lib/lvn_tutorial_web/live/cat_live.ios.heex",
       "fileType": "heex",
@@ -319,7 +319,7 @@
       "syntax": "swift",
       "type": "file"
     },
-    "04-01-03-modifier.swift": {
+    "04-01-03-view.swift": {
       "content": [
         "import SwiftUI",
         "import LiveViewNative",
@@ -328,37 +328,6 @@
         "    enum TagName: String {",
         "        case catRating = \"cat-rating\"",
         "    }",
-        "    typealias ModifierType = EmptyRegistry.None",
-        "    ",
-        "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
-        "        switch name {",
-        "        case .catRating:",
-        "            // TODO",
-        "        }",
-        "    }",
-        "}"
-      ],
-      "fileName": "MyRegistry.swift",
-      "fileType": "swift",
-      "highlights": [
-        {
-          "line": 8
-        }
-      ],
-      "identifier": "04-01-03-modifier.swift",
-      "syntax": "swift",
-      "type": "file"
-    },
-    "04-01-04-view.swift": {
-      "content": [
-        "import SwiftUI",
-        "import LiveViewNative",
-        "",
-        "struct MyRegistry: CustomRegistry {",
-        "    enum TagName: String {",
-        "        case catRating = \"cat-rating\"",
-        "    }",
-        "    typealias ModifierType = EmptyRegistry.None",
         "    ",
         "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
         "        switch name {",
@@ -372,14 +341,14 @@
       "fileType": "swift",
       "highlights": [
         {
-          "line": 13
+          "line": 12
         }
       ],
-      "identifier": "04-01-04-view.swift",
+      "identifier": "04-01-03-view.swift",
       "syntax": "swift",
       "type": "file"
     },
-    "04-01-05-coordinator.swift": {
+    "04-01-04-coordinator.swift": {
       "content": [
         "import SwiftUI",
         "import LiveViewNative",
@@ -404,7 +373,7 @@
           "line": 6
         }
       ],
-      "identifier": "04-01-05-coordinator.swift",
+      "identifier": "04-01-04-coordinator.swift",
       "syntax": "swift",
       "type": "file"
     },
@@ -1170,10 +1139,10 @@
     },
     "04-04-02-cat-rating.ios.heex": {
       "content": [
-        "<vstack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @title}] |> Jason.encode!}>",
-        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
+        "<v-stack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @title}] |> Jason.encode!}>",
+        "  <async-image src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
         "  <cat-rating score={@score} />",
-        "</vstack>"
+        "</v-stack>"
       ],
       "fileName": "lib/lvn_tutorial_web/live/cat_live.ios.heex",
       "fileType": "heex",
@@ -1666,40 +1635,6 @@
               "type": "step"
             },
             {
-              "caption": [],
-              "code": "04-01-03-modifier.swift",
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "text": "Then, define a type alias called ",
-                      "type": "text"
-                    },
-                    {
-                      "code": "ModifierType",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " that is ",
-                      "type": "text"
-                    },
-                    {
-                      "code": "EmptyRegistry.None",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ". This tells the framework that your registry doesn’t support any custom modifiers.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
-            },
-            {
               "caption": [
                 {
                   "inlineContent": [
@@ -1727,7 +1662,7 @@
                   "type": "paragraph"
                 }
               ],
-              "code": "04-01-04-view.swift",
+              "code": "04-01-03-view.swift",
               "content": [
                 {
                   "inlineContent": [
@@ -1813,7 +1748,7 @@
                   "type": "paragraph"
                 }
               ],
-              "code": "04-01-05-coordinator.swift",
+              "code": "04-01-04-coordinator.swift",
               "content": [
                 {
                   "inlineContent": [

@@ -337,6 +337,69 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/elementnode/attribute(named:)"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)": {
+      "abstract": [
+        {
+          "text": "Checks for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "attributeBoolean"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "for"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
+          "text": "AttributeName"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:Sb",
+          "text": "Bool"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "attributeBoolean(for:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/attributeboolean(for:)"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)": {
       "abstract": [
         {
@@ -443,6 +506,18 @@
       "title": "attributes",
       "type": "topic",
       "url": "/documentation/liveviewnative/elementnode/attributes"
+    },
+    "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes": {
+      "identifier": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes",
+      "title": "boolean attribute",
+      "titleInlineContent": [
+        {
+          "text": "boolean attribute",
+          "type": "text"
+        }
+      ],
+      "type": "link",
+      "url": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes"
     }
   },
   "schemaVersion": {
@@ -456,7 +531,8 @@
       "generated": true,
       "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributes",
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)"
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)"
       ],
       "title": "Accessing Attributes"
     }

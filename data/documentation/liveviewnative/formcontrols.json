@@ -199,7 +199,16 @@
               "type": "reference"
             },
             {
-              "text": ") inside of a ",
+              "text": ").",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "If used inside of a ",
               "type": "text"
             },
             {
@@ -207,7 +216,86 @@
               "type": "codeVoice"
             },
             {
-              "text": " element. It will participate in the form model automatically, and its value will be sent whenever change or submit events are triggered on the form.",
+              "text": ", it will participate in the form model automatically and its value will be sent whenever change or submit events are triggered on the form. The initial value will be read from the ",
+              "type": "text"
+            },
+            {
+              "code": "value",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute on the element, if present.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "When used outside of ",
+              "type": "text"
+            },
+            {
+              "code": "<phx-form>",
+              "type": "codeVoice"
+            },
+            {
+              "text": ", the value is stored directly by the ",
+              "type": "text"
+            },
+            {
+              "code": "FormState",
+              "type": "codeVoice"
+            },
+            {
+              "text": ". The initial value will be read from the ",
+              "type": "text"
+            },
+            {
+              "code": "value",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute on the element, if present. The ",
+              "type": "text"
+            },
+            {
+              "code": "@FormState",
+              "type": "codeVoice"
+            },
+            {
+              "text": " property wrapper will automatically detect changes to its value and send change events to the backend, if an event name has been provided in the ",
+              "type": "text"
+            },
+            {
+              "code": "phx-change",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute on the element.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "code": "@FormState",
+              "type": "codeVoice"
+            },
+            {
+              "text": " values can also be bound directly to assigns on the backend by using live bindings. See the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " docs for more information.",
               "type": "text"
             }
           ],
@@ -422,7 +510,16 @@
           "type": "reference"
         },
         {
-          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "text": " and used with ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
           "type": "text"
         }
       ],
@@ -452,6 +549,40 @@
       "title": "FormValue",
       "type": "topic",
       "url": "/documentation/liveviewnative/formvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding": {
+      "abstract": [
+        {
+          "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveBinding"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveBinding"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveBinding",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding"
     }
   },
   "schemaVersion": {

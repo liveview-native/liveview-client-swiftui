@@ -97,6 +97,20 @@
       "type": "topic",
       "url": "/documentation/liveviewnative"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted": {
+      "abstract": [
+        {
+          "text": "See how to quickly get up and running displaying a LiveView in your app.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
+      "kind": "article",
+      "role": "article",
+      "title": "Getting Started",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/gettingstarted"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
       "abstract": [
         {
@@ -333,7 +347,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
       "abstract": [
         {
-          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "text": "The session coordinator object handles the initial connection, as well as navigation.",
           "type": "text"
         }
       ],
@@ -363,6 +377,88 @@
       "title": "LiveSessionCoordinator",
       "type": "topic",
       "url": "/documentation/liveviewnative/livesessioncoordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
+      "abstract": [
+        {
+          "text": "The SwiftUI root view for a Phoenix LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveView"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveView",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveview"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator"
+    },
+    "doc://LiveViewNative/tutorials/YourFirstApp": {
+      "abstract": [
+        {
+          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type": "text"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
+      "kind": "overview",
+      "role": "overview",
+      "title": "Your First LiveViewNative App",
+      "type": "topic",
+      "url": "/tutorials/yourfirstapp"
     }
   },
   "schemaVersion": {
@@ -371,6 +467,19 @@
     "patch": 0
   },
   "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/tutorials/YourFirstApp",
+        "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
+      ],
+      "title": "Essentials"
+    }
+  ],
   "topicSections": [
     {
       "identifiers": [

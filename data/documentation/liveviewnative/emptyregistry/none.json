@@ -176,6 +176,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
@@ -214,6 +232,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",

@@ -1,0 +1,329 @@
+{
+  "abstract": [
+    {
+      "text": "A sequence representing this element’s direct children that are elements.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative11ElementNodeV15elementChildrenSayACGyF",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "func"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "elementChildren"
+      },
+      {
+        "kind": "text",
+        "text": "() -> ["
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+        "text": "ElementNode"
+      },
+      {
+        "kind": "text",
+        "text": "]"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Method",
+    "symbolKind": "method",
+    "title": "elementChildren()"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "func"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "elementChildren"
+            },
+            {
+              "kind": "text",
+              "text": "() -> ["
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+              "text": "ElementNode"
+            },
+            {
+              "kind": "text",
+              "text": "]"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
+      "abstract": [
+        {
+          "text": "A wrapper for an element-containing DOM node and its associated data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ElementNode"
+        }
+      ],
+      "role": "symbol",
+      "title": "ElementNode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/children()": {
+      "abstract": [
+        {
+          "text": "A sequence representing this element’s direct children.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "children"
+        },
+        {
+          "kind": "text",
+          "text": "() -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore20NodeChildrenSequenceV",
+          "text": "NodeChildrenSequence"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/children()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "children()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/children()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/depthFirstChildren()": {
+      "abstract": [
+        {
+          "text": "A sequence that traverses the nested child nodes of this element in depth-first order.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "depthFirstChildren"
+        },
+        {
+          "kind": "text",
+          "text": "() -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore30NodeDepthFirstChildrenSequenceV",
+          "text": "NodeDepthFirstChildrenSequence"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/depthFirstChildren()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "depthFirstChildren()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/depthfirstchildren()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()": {
+      "abstract": [
+        {
+          "text": "A sequence representing this element’s direct children that are elements.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "elementChildren"
+        },
+        {
+          "kind": "text",
+          "text": "() -> ["
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+          "text": "ElementNode"
+        },
+        {
+          "kind": "text",
+          "text": "]"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "elementChildren()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/elementchildren()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/innerText()": {
+      "abstract": [
+        {
+          "text": "The text of this element.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "innerText"
+        },
+        {
+          "kind": "text",
+          "text": "() -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/innerText()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "innerText()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/innertext()"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/children()",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/depthFirstChildren()",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/innerText()"
+      ],
+      "title": "Accessing Children"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/elementnode/elementchildren()"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

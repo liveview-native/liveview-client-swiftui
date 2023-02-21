@@ -160,6 +160,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
@@ -198,6 +216,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
@@ -311,6 +347,48 @@
       "title": "EmptyRegistry.None",
       "type": "topic",
       "url": "/documentation/liveviewnative/emptyregistry/none"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder": {
+      "abstract": [
+        {
+          "text": "A Swift result builder that allows building a single, concrete ",
+          "type": "text"
+        },
+        {
+          "code": "ViewModifier",
+          "type": "codeVoice"
+        },
+        {
+          "text": " from a set of conditional modifiers.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ViewModifierBuilder"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ViewModifierBuilder"
+        }
+      ],
+      "role": "symbol",
+      "title": "ViewModifierBuilder",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/viewmodifierbuilder"
     }
   },
   "relationshipsSections": [
@@ -329,6 +407,15 @@
     "patch": 0
   },
   "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder"
+      ],
+      "title": "Supporting Types"
+    }
+  ],
   "topicSections": [
     {
       "identifiers": [

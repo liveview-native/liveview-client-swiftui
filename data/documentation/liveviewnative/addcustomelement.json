@@ -413,7 +413,12 @@
       "url": "/documentation/liveviewnative/livecontext"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [],
+      "abstract": [
+        {
+          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type": "text"
+        }
+      ],
       "fragments": [
         {
           "kind": "keyword",

@@ -94,6 +94,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
@@ -132,6 +150,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
@@ -284,6 +320,22 @@
         ],
         "constraints": [
           {
+            "code": "CustomModifier",
+            "type": "codeVoice"
+          },
+          {
+            "text": " is ",
+            "type": "text"
+          },
+          {
+            "code": "EmptyModifier",
+            "type": "codeVoice"
+          },
+          {
+            "text": " and ",
+            "type": "text"
+          },
+          {
             "code": "ModifierType",
             "type": "codeVoice"
           },
@@ -378,17 +430,9 @@
           "text": ">) -> "
         },
         {
-          "kind": "keyword",
-          "text": "any"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-          "text": "ViewModifier"
+          "preciseIdentifier": "s:7SwiftUI13EmptyModifierV",
+          "text": "EmptyModifier"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/decodeModifier(_:from:context:)",

@@ -222,6 +222,69 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/elementnode/attribute(named:)"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)": {
+      "abstract": [
+        {
+          "text": "Checks for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "attributeBoolean"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "for"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
+          "text": "AttributeName"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:Sb",
+          "text": "Bool"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "attributeBoolean(for:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/attributeboolean(for:)"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)": {
       "abstract": [
         {
@@ -403,6 +466,47 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/elementnode/depthfirstchildren()"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()": {
+      "abstract": [
+        {
+          "text": "A sequence representing this element’s direct children that are elements.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "elementChildren"
+        },
+        {
+          "kind": "text",
+          "text": "() -> ["
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+          "text": "ElementNode"
+        },
+        {
+          "kind": "text",
+          "text": "]"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "elementChildren()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/elementchildren()"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/innerText()": {
       "abstract": [
         {
@@ -551,6 +655,18 @@
       "title": "ObservedElement",
       "type": "topic",
       "url": "/documentation/liveviewnative/observedelement"
+    },
+    "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes": {
+      "identifier": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes",
+      "title": "boolean attribute",
+      "titleInlineContent": [
+        {
+          "text": "boolean attribute",
+          "type": "text"
+        }
+      ],
+      "type": "link",
+      "url": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes"
     }
   },
   "schemaVersion": {
@@ -581,7 +697,8 @@
       "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributes",
         "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attribute(named:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)"
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)"
       ],
       "title": "Accessing Attributes"
     },
@@ -589,6 +706,7 @@
       "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/children()",
         "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/depthFirstChildren()",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()",
         "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/innerText()"
       ],
       "title": "Accessing Children"

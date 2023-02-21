@@ -10,7 +10,16 @@
       "type": "reference"
     },
     {
-      "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+      "text": " and used with ",
+      "type": "text"
+    },
+    {
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+      "isActive": true,
+      "type": "reference"
+    },
+    {
+      "text": ".",
       "type": "text"
     }
   ],
@@ -87,6 +96,24 @@
             },
             {
               "kind": "typeIdentifier",
+              "preciseIdentifier": "s:Se",
+              "text": "Decodable"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:SE",
+              "text": "Encodable"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "typeIdentifier",
               "preciseIdentifier": "s:SQ",
               "text": "Equatable"
             }
@@ -94,12 +121,230 @@
         }
       ],
       "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "This protocol defines the requirements for converting to/from the serialized form data representation.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "There are two serialized formats: form value strings and the codable representation.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The form value string (",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue/formValue",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " and ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue/init(formValue:)",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ") mode is used for form values that are provided in a ",
+              "type": "text"
+            },
+            {
+              "code": "value",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute on form controls or are stored in ",
+              "type": "text"
+            },
+            {
+              "code": "<phx-form>",
+              "type": "codeVoice"
+            },
+            {
+              "text": " elements.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The ",
+              "type": "text"
+            },
+            {
+              "code": "Codable",
+              "type": "codeVoice"
+            },
+            {
+              "text": " mode is used when a live binding is used with a form control.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "See ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " for more information about how form values and live bindings interact.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "A number of out-of-the-box ",
+              "type": "text"
+            },
+            {
+              "code": "FormValue",
+              "type": "codeVoice"
+            },
+            {
+              "text": " implementations are provided:",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "Optional",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": ", when the ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "Wrapped",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " type itself conforms to ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "FormValue",
+                      "type": "codeVoice"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "String",
+                      "type": "codeVoice"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "Bool",
+                      "type": "codeVoice"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "Double",
+                      "type": "codeVoice"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "code": "Date",
+                      "type": "codeVoice"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ],
+          "type": "orderedList"
+        }
+      ],
+      "kind": "content"
     }
   ],
   "references": {
+    "doc://LiveViewNative/SE": {
+      "identifier": "doc://LiveViewNative/SE",
+      "title": "Swift.Encodable",
+      "type": "unresolvable"
+    },
     "doc://LiveViewNative/SQ": {
       "identifier": "doc://LiveViewNative/SQ",
       "title": "Swift.Equatable",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/Se": {
+      "identifier": "doc://LiveViewNative/Se",
+      "title": "Swift.Decodable",
       "type": "unresolvable"
     },
     "doc://LiveViewNative/documentation/LiveViewNative": {
@@ -213,7 +458,16 @@
           "type": "reference"
         },
         {
-          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "text": " and used with ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
           "type": "text"
         }
       ],
@@ -328,6 +582,8 @@
   "relationshipsSections": [
     {
       "identifiers": [
+        "doc://LiveViewNative/Se",
+        "doc://LiveViewNative/SE",
         "doc://LiveViewNative/SQ"
       ],
       "kind": "relationships",

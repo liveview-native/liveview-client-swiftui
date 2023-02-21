@@ -1,7 +1,7 @@
 {
   "abstract": [
     {
-      "code": "<textfield>",
+      "code": "<text-field>",
       "type": "codeVoice"
     },
     {

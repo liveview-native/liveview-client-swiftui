@@ -1,0 +1,762 @@
+{
+  "abstract": [
+    {
+      "text": "Creates a publisher that can be used to listen for server-sent LiveView events.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0aB11CoordinatorC12receiveEventyQrSSF",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "func"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "receiveEvent"
+      },
+      {
+        "kind": "text",
+        "text": "("
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:SS",
+        "text": "String"
+      },
+      {
+        "kind": "text",
+        "text": ") -> "
+      },
+      {
+        "kind": "keyword",
+        "text": "some"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:7Combine9PublisherP",
+        "text": "Publisher"
+      },
+      {
+        "kind": "text",
+        "text": "<"
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative7Payloada",
+        "text": "Payload"
+      },
+      {
+        "kind": "text",
+        "text": ", "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:s5NeverO",
+        "text": "Never"
+      },
+      {
+        "kind": "text",
+        "text": ">\n"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Method",
+    "symbolKind": "method",
+    "title": "receiveEvent(_:)"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "func"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "receiveEvent"
+            },
+            {
+              "kind": "text",
+              "text": "("
+            },
+            {
+              "kind": "externalParam",
+              "text": "_"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "internalParam",
+              "text": "event"
+            },
+            {
+              "kind": "text",
+              "text": ": "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:SS",
+              "text": "String"
+            },
+            {
+              "kind": "text",
+              "text": ") -> "
+            },
+            {
+              "kind": "keyword",
+              "text": "some"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:7Combine9PublisherP",
+              "text": "Publisher"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Payload",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative7Payloada",
+              "text": "Payload"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:s5NeverO",
+              "text": "Never"
+            },
+            {
+              "kind": "text",
+              "text": ">\n"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "return-value",
+          "level": 2,
+          "text": "Return Value",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "A publisher that emits event payloads.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        }
+      ],
+      "kind": "content"
+    },
+    {
+      "kind": "parameters",
+      "parameters": [
+        {
+          "content": [
+            {
+              "inlineContent": [
+                {
+                  "text": "The event name that is being listened for.",
+                  "type": "text"
+                }
+              ],
+              "type": "paragraph"
+            }
+          ],
+          "name": "event"
+        }
+      ]
+    },
+    {
+      "content": [
+        {
+          "anchor": "discussion",
+          "level": 2,
+          "text": "Discussion",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "To handle events, use the ",
+              "type": "text"
+            },
+            {
+              "code": "sink",
+              "type": "codeVoice"
+            },
+            {
+              "text": " subscriber:",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "myEventHandler = coordinator.receiveEvent(\"my_event\")",
+            "    .sink { payload in",
+            "        print(\"Received payload: \\(payload)\")",
+            "    }"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The ",
+              "type": "text"
+            },
+            {
+              "code": "sink",
+              "type": "codeVoice"
+            },
+            {
+              "text": " method returns an ",
+              "type": "text"
+            },
+            {
+              "code": "AnyCancellable",
+              "type": "codeVoice"
+            },
+            {
+              "text": " which can be used to later stop listening for events by calling its ",
+              "type": "text"
+            },
+            {
+              "code": "cancel",
+              "type": "codeVoice"
+            },
+            {
+              "text": " method.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "content": [
+            {
+              "inlineContent": [
+                {
+                  "text": "",
+                  "type": "text"
+                },
+                {
+                  "code": "AnyCancellable",
+                  "type": "codeVoice"
+                },
+                {
+                  "text": " will cancel itself upon deinitialization, so you must hold a strong reference to it for the duration you want to keep receiving events. If you want to keep listenting for the lifetime of the coordinator, you may use ",
+                  "type": "text"
+                },
+                {
+                  "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/handleEvent(_:handler:)",
+                  "isActive": true,
+                  "type": "reference"
+                },
+                {
+                  "text": ".",
+                  "type": "text"
+                }
+              ],
+              "type": "paragraph"
+            }
+          ],
+          "name": "Important",
+          "style": "important",
+          "type": "aside"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "This publisher is ",
+              "type": "text"
+            },
+            {
+              "inlineContent": [
+                {
+                  "text": "not",
+                  "type": "text"
+                }
+              ],
+              "type": "emphasis"
+            },
+            {
+              "text": " guaranteed to fire on the main thread.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "If you need to perform UI updates, use the ",
+              "type": "text"
+            },
+            {
+              "code": "receive(on:)",
+              "type": "codeVoice"
+            },
+            {
+              "text": " operator, as shown below.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "coordinator.receiveEvent(\"my_event\")",
+            "    .receive(on: DispatchQueue.main)",
+            "    .sink { payload in",
+            "        myUIObject.value = payload[\"value\"] as! String",
+            "    }",
+            "    .store(in: &cancellables)"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "If you are using SwiftUI’s ",
+              "type": "text"
+            },
+            {
+              "code": "onReceive",
+              "type": "codeVoice"
+            },
+            {
+              "text": " modifier, applying ",
+              "type": "text"
+            },
+            {
+              "code": "receive(on:)",
+              "type": "codeVoice"
+            },
+            {
+              "text": " to the publisher is not necessary.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyView: View {",
+            "    let context: LiveContext<EmptyRegistry>",
+            "    @State private var text = \"Hello\"",
+            "    var body: some View {",
+            "        Text(text)",
+            "            .onReceive(context.coordinator.receiveEvent(\"my_event\")) { payload in",
+            "                self.text = payload[\"text\"] as! String",
+            "            }",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveViewCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveViewCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/handleEvent(_:handler:)": {
+      "abstract": [
+        {
+          "text": "Permanently registers a handler for a server-sent LiveView event.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "handleEvent"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "handler"
+        },
+        {
+          "kind": "text",
+          "text": ": ("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative7Payloada",
+          "text": "Payload"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s4Voida",
+          "text": "Void"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/handleEvent(_:handler:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "handleEvent(_:handler:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator/handleevent(_:handler:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)": {
+      "abstract": [
+        {
+          "text": "Pushes a LiveView event with the given name and payload to the server.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "pushEvent"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "type"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "event"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "value"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "keyword",
+          "text": "Any"
+        },
+        {
+          "kind": "text",
+          "text": ") "
+        },
+        {
+          "kind": "keyword",
+          "text": "async"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "pushEvent(type:event:value:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)": {
+      "abstract": [
+        {
+          "text": "Creates a publisher that can be used to listen for server-sent LiveView events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "receiveEvent"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "some"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7Combine9PublisherP",
+          "text": "Publisher"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative7Payloada",
+          "text": "Payload"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5NeverO",
+          "text": "Never"
+        },
+        {
+          "kind": "text",
+          "text": ">\n"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "receiveEvent(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator/receiveevent(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Payload": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "typealias"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Payload"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Payload",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Payload"
+        }
+      ],
+      "role": "symbol",
+      "title": "Payload",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/payload"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/handleEvent(_:handler:)"
+      ],
+      "title": "LiveView Events"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/liveviewcoordinator/receiveevent(_:)"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

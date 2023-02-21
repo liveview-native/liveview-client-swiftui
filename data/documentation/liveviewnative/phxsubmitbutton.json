@@ -203,7 +203,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/TextField": {
       "abstract": [
         {
-          "code": "<textfield>",
+          "code": "<text-field>",
           "type": "codeVoice"
         },
         {

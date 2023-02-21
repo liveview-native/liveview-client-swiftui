@@ -49,6 +49,15 @@
         "kind": "typeIdentifier",
         "preciseIdentifier": "s:7SwiftUI4ViewP",
         "text": "View"
+      },
+      {
+        "kind": "text",
+        "text": " = "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:s5NeverO",
+        "text": "Never"
       }
     ],
     "modules": [
@@ -93,6 +102,15 @@
               "kind": "typeIdentifier",
               "preciseIdentifier": "s:7SwiftUI4ViewP",
               "text": "View"
+            },
+            {
+              "kind": "text",
+              "text": " = "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:s5NeverO",
+              "text": "Never"
             }
           ]
         }
@@ -209,6 +227,15 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:7SwiftUI4ViewP",
           "text": "View"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5NeverO",
+          "text": "Never"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/CustomView",
@@ -247,6 +274,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",

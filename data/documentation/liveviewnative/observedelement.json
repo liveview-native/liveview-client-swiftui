@@ -96,7 +96,56 @@
         {
           "inlineContent": [
             {
-              "text": "When an element is changed as a result of a LiveView update, the coordinator will notify all changed elements.",
+              "text": "The element that is observed is the nearest parent from the view in which this property wrapper is used.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "So, if an element ",
+              "type": "text"
+            },
+            {
+              "code": "<outer>",
+              "type": "codeVoice"
+            },
+            {
+              "text": " maps to a view ",
+              "type": "text"
+            },
+            {
+              "code": "Outer",
+              "type": "codeVoice"
+            },
+            {
+              "text": " which contains another view ",
+              "type": "text"
+            },
+            {
+              "code": "Inner",
+              "type": "codeVoice"
+            },
+            {
+              "text": " that uses this property wrapper, the observed element will be the ",
+              "type": "text"
+            },
+            {
+              "code": "<outer>",
+              "type": "codeVoice"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "When an element is changed as a result of a LiveView update, the coordinator will notify all relevant views.",
               "type": "text"
             },
             {
@@ -202,7 +251,7 @@
         {
           "code": [
             "struct MyView: View {",
-            "    @ObservedElemenet private var element: ElementNode",
+            "    @ObservedElement private var element: ElementNode",
             "",
             "    var body: some View {",
             "        Text(\"Value: \\(element.attributeValue(for: \"my-attr\") ?? \"<none>\")\")",

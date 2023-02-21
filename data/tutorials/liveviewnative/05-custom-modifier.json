@@ -119,32 +119,6 @@
     "title": "Add a Navigation Bar Button with a Custom Modifier"
   },
   "references": {
-    "04-01-04-view.swift": {
-      "content": [
-        "import SwiftUI",
-        "import LiveViewNative",
-        "",
-        "struct MyRegistry: CustomRegistry {",
-        "    enum TagName: String {",
-        "        case catRating = \"cat-rating\"",
-        "    }",
-        "    typealias ModifierType = EmptyRegistry.None",
-        "    ",
-        "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
-        "        switch name {",
-        "        case .catRating:",
-        "            CatRatingView(context: context)",
-        "        }",
-        "    }",
-        "}"
-      ],
-      "fileName": "MyRegistry.swift",
-      "fileType": "swift",
-      "highlights": [],
-      "identifier": "04-01-04-view.swift",
-      "syntax": "swift",
-      "type": "file"
-    },
     "04-04-01-change-score.ex": {
       "content": [
         "defmodule LvnTutorialWeb.CatLive do",
@@ -179,10 +153,10 @@
     },
     "04-04-02-cat-rating.ios.heex": {
       "content": [
-        "<vstack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @title}] |> Jason.encode!}>",
-        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
+        "<v-stack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @title}] |> Jason.encode!}>",
+        "  <async-image src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
         "  <cat-rating score={@score} />",
-        "</vstack>"
+        "</v-stack>"
       ],
       "fileName": "lib/lvn_tutorial_web/live/cat_live.ios.heex",
       "fileType": "heex",
@@ -321,10 +295,10 @@
     },
     "05-01-03-attribute.ios.heex": {
       "content": [
-        "<vstack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @title}, %{\"type\" => \"nav_favorite\", \"is_favorite\" => @favorite}] |> Jason.encode!}>",
-        "  <asyncimage src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
+        "<v-stack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @title}, %{\"type\" => \"nav_favorite\", \"is_favorite\" => @favorite}] |> Jason.encode!}>",
+        "  <async-image src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
         "  <cat-rating score={@score} />",
-        "</vstack>"
+        "</v-stack>"
       ],
       "fileName": "lib/lvn_tutorial_web/live/cat_live.ios.heex",
       "fileType": "heex",
@@ -360,17 +334,7 @@
       ],
       "fileName": "MyRegistry.swift",
       "fileType": "swift",
-      "highlights": [
-        {
-          "line": 8
-        },
-        {
-          "line": 9
-        },
-        {
-          "line": 10
-        }
-      ],
+      "highlights": [],
       "identifier": "05-02-01-attribute-name.swift",
       "syntax": "swift",
       "type": "file"
@@ -1137,7 +1101,7 @@
                       "type": "text"
                     },
                     {
-                      "code": "<vstack>",
+                      "code": "<v-stack>",
                       "type": "codeVoice"
                     },
                     {
@@ -1184,7 +1148,7 @@
           "stepsSection": [
             {
               "caption": [],
-              "code": "04-01-04-view.swift",
+              "code": "",
               "content": [
                 {
                   "inlineContent": [

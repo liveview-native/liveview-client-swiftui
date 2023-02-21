@@ -518,10 +518,10 @@
       "content": [
         "<list>",
         "  <%= for name <- @cats do %>",
-        "    <hstack id={name}>",
-        "      <asyncimage src={\"/images/cats/#{name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 100, \"height\": 100}]' />",
+        "    <h-stack id={name}>",
+        "      <async-image src={\"/images/cats/#{name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 100, \"height\": 100}]' />",
         "      <text><%= name %></text>",
-        "    </hstack>",
+        "    </h-stack>",
         "  <% end %>",
         "</list>",
         ""
@@ -1642,7 +1642,7 @@
                       "type": "text"
                     },
                     {
-                      "code": "<hstack>",
+                      "code": "<h-stack>",
                       "type": "codeVoice"
                     },
                     {
@@ -1650,7 +1650,7 @@
                       "type": "text"
                     },
                     {
-                      "code": "<asyncimage>",
+                      "code": "<async-image>",
                       "type": "codeVoice"
                     },
                     {

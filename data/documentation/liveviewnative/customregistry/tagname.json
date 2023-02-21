@@ -41,6 +41,24 @@
         "kind": "typeIdentifier",
         "preciseIdentifier": "s:SY",
         "text": "RawRepresentable"
+      },
+      {
+        "kind": "text",
+        "text": " = "
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+        "text": "EmptyRegistry"
+      },
+      {
+        "kind": "text",
+        "text": "."
+      },
+      {
+        "kind": "typeIdentifier",
+        "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+        "text": "None"
       }
     ],
     "modules": [
@@ -85,6 +103,26 @@
               "kind": "typeIdentifier",
               "preciseIdentifier": "s:SY",
               "text": "RawRepresentable"
+            },
+            {
+              "kind": "text",
+              "text": " = "
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+              "text": "EmptyRegistry"
+            },
+            {
+              "kind": "text",
+              "text": "."
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/None",
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+              "text": "None"
             },
             {
               "kind": "text",
@@ -181,7 +219,7 @@
         {
           "inlineContent": [
             {
-              "text": "If your registry does not support any custom tags, you can set this type alias to the ",
+              "text": "This will default to the ",
               "type": "text"
             },
             {
@@ -190,20 +228,11 @@
               "type": "reference"
             },
             {
-              "text": " type:",
+              "text": " type if you don’t support any custom tags.",
               "type": "text"
             }
           ],
           "type": "paragraph"
-        },
-        {
-          "code": [
-            "struct MyRegistry: CustomRegistry {",
-            "    typealias TagName = EmptyRegistry.None",
-            "}"
-          ],
-          "syntax": "swift",
-          "type": "codeListing"
         }
       ],
       "kind": "content"
@@ -289,6 +318,15 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:7SwiftUI4ViewP",
           "text": "View"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5NeverO",
+          "text": "Never"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/CustomView",
@@ -327,6 +365,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
@@ -365,6 +421,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
@@ -472,6 +546,49 @@
       "title": "lookup(_:element:context:)",
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-895au"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry": {
+      "abstract": [
+        {
+          "text": "The empty registry is the default ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " implementation that does not provide any views or modifiers.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "EmptyRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "EmptyRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "EmptyRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/emptyregistry"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/None": {
       "abstract": [

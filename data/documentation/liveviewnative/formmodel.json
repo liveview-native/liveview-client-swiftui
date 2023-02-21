@@ -504,7 +504,16 @@
           "type": "reference"
         },
         {
-          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "text": " and used with ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
           "type": "text"
         }
       ],

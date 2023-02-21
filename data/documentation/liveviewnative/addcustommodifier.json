@@ -123,20 +123,21 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx",
               "isActive": true,
               "type": "reference"
             },
             {
-              "text": " method. From this method, you return a struct that implements SwiftUI’s ",
+              "text": " method. This method is automatically treated as a ",
               "type": "text"
             },
             {
-              "code": "ViewModifier",
-              "type": "codeVoice"
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder",
+              "isActive": true,
+              "type": "reference"
             },
             {
-              "text": " protocol.",
+              "text": ", so simply construct your modifier rather than returning it.",
               "type": "text"
             }
           ],
@@ -166,10 +167,10 @@
             "        case myFont = \"my_font\"",
             "    }",
             "",
-            "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<MyRegistry>) throws -> any ViewModifier {",
+            "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<MyRegistry>) throws -> some ViewModifier {",
             "        switch name {",
             "        case .myFont:",
-            "            return try MyFontModifier(from: decoder)",
+            "            try MyFontModifier(from: decoder)",
             "        }",
             "    }",
             "}"
@@ -336,7 +337,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.",
@@ -429,26 +430,18 @@
           "text": " -> "
         },
         {
-          "kind": "keyword",
-          "text": "any"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-          "text": "ViewModifier"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP0D8ModifierQa",
+          "text": "CustomModifier"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "decodeModifier(_:from:context:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-4j076"
+      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-35xcx"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
       "abstract": [
@@ -485,7 +478,12 @@
       "url": "/documentation/liveviewnative/livecontext"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [],
+      "abstract": [
+        {
+          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type": "text"
+        }
+      ],
       "fragments": [
         {
           "kind": "keyword",
@@ -512,6 +510,48 @@
       "title": "LiveViewCoordinator",
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewcoordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder": {
+      "abstract": [
+        {
+          "text": "A Swift result builder that allows building a single, concrete ",
+          "type": "text"
+        },
+        {
+          "code": "ViewModifier",
+          "type": "codeVoice"
+        },
+        {
+          "text": " from a set of conditional modifiers.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ViewModifierBuilder"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ViewModifierBuilder"
+        }
+      ],
+      "role": "symbol",
+      "title": "ViewModifierBuilder",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/viewmodifierbuilder"
     }
   },
   "schemaVersion": {

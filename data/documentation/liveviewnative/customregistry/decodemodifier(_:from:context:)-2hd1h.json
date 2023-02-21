@@ -19,13 +19,13 @@
       [
         "doc://LiveViewNative/documentation/LiveViewNative",
         "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076"
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx"
       ]
     ]
   },
   "identifier": {
     "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-16p3s"
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-2hd1h"
   },
   "kind": "symbol",
   "metadata": {
@@ -43,6 +43,22 @@
         }
       ],
       "constraints": [
+        {
+          "code": "CustomModifier",
+          "type": "codeVoice"
+        },
+        {
+          "text": " is ",
+          "type": "text"
+        },
+        {
+          "code": "EmptyModifier",
+          "type": "codeVoice"
+        },
+        {
+          "text": " and ",
+          "type": "text"
+        },
         {
           "code": "ModifierType",
           "type": "codeVoice"
@@ -62,7 +78,7 @@
       ]
     },
     "extendedModule": "LiveViewNative",
-    "externalID": "s:14LiveViewNative14CustomRegistryPA2A05EmptyE0V4NoneV12ModifierTypeRtzrlE06decodeH0_4from7context7SwiftUI0bH0_pAG_s7Decoder_pAA0A7ContextVyxGtFZ",
+    "externalID": "s:14LiveViewNative14CustomRegistryPAA7SwiftUI13EmptyModifierV0dI0RtzAA0hE0V4NoneV0I4TypeRtzrlE06decodeI0_4from7contextAfL_s7Decoder_pAA0A7ContextVyxGtFZ",
     "fragments": [
       {
         "kind": "keyword",
@@ -140,17 +156,9 @@
         "text": ">) -> "
       },
       {
-        "kind": "keyword",
-        "text": "any"
-      },
-      {
-        "kind": "text",
-        "text": " "
-      },
-      {
         "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-        "text": "ViewModifier"
+        "preciseIdentifier": "s:7SwiftUI13EmptyModifierV",
+        "text": "EmptyModifier"
       }
     ],
     "modules": [
@@ -276,17 +284,9 @@
               "text": ">) -> "
             },
             {
-              "kind": "keyword",
-              "text": "any"
-            },
-            {
-              "kind": "text",
-              "text": " "
-            },
-            {
               "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-              "text": "ViewModifier"
+              "preciseIdentifier": "s:7SwiftUI13EmptyModifierV",
+              "text": "EmptyModifier"
             }
           ]
         }
@@ -366,6 +366,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
@@ -376,7 +394,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry/modifiertype"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-16p3s": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-2hd1h": {
       "abstract": [
         {
           "text": "A default implementation that does not provide any custom modifiers. If you omit the ",
@@ -406,6 +424,22 @@
           }
         ],
         "constraints": [
+          {
+            "code": "CustomModifier",
+            "type": "codeVoice"
+          },
+          {
+            "text": " is ",
+            "type": "text"
+          },
+          {
+            "code": "EmptyModifier",
+            "type": "codeVoice"
+          },
+          {
+            "text": " and ",
+            "type": "text"
+          },
           {
             "code": "ModifierType",
             "type": "codeVoice"
@@ -501,27 +535,19 @@
           "text": ">) -> "
         },
         {
-          "kind": "keyword",
-          "text": "any"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-          "text": "ViewModifier"
+          "preciseIdentifier": "s:7SwiftUI13EmptyModifierV",
+          "text": "EmptyModifier"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-16p3s",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-2hd1h",
       "kind": "symbol",
       "role": "symbol",
       "title": "decodeModifier(_:from:context:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-16p3s"
+      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-2hd1h"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.",
@@ -614,26 +640,18 @@
           "text": " -> "
         },
         {
-          "kind": "keyword",
-          "text": "any"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-          "text": "ViewModifier"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP0D8ModifierQa",
+          "text": "CustomModifier"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4j076",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "decodeModifier(_:from:context:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-4j076"
+      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-35xcx"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
       "abstract": [
@@ -679,7 +697,7 @@
   "variants": [
     {
       "paths": [
-        "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-16p3s"
+        "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-2hd1h"
       ],
       "traits": [
         {

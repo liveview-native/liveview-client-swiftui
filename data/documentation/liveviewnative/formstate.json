@@ -161,6 +161,45 @@
         {
           "inlineContent": [
             {
+              "text": "When a ",
+              "type": "text"
+            },
+            {
+              "code": "value-binding",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute is provided on the element, the value of that attributed is treated as the name of a ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " to use as the value storage.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
               "text": "When the element this properrty wrapper is placed on is located of inside a ",
               "type": "text"
             },
@@ -169,7 +208,15 @@
               "type": "codeVoice"
             },
             {
-              "text": ", the value will be stored on that form’s ",
+              "text": " and it has a ",
+              "type": "text"
+            },
+            {
+              "code": "name",
+              "type": "codeVoice"
+            },
+            {
+              "text": " attribute, the value will be stored on that form’s ",
               "type": "text"
             },
             {
@@ -186,7 +233,7 @@
               "type": "text"
             },
             {
-              "text": "The key used in the form model is the ",
+              "text": "The key used in the form model is the element’s ",
               "type": "text"
             },
             {
@@ -194,44 +241,7 @@
               "type": "codeVoice"
             },
             {
-              "text": " attribute of the element this property wrapper is placed on. The property wrapper will pull the element",
-              "type": "text"
-            },
-            {
-              "text": " ",
-              "type": "text"
-            },
-            {
-              "text": "name from the nearest parent view that corresponds to a DOM element, so this property wrapper may be used on nested views.  The framework uses the ",
-              "type": "text"
-            },
-            {
-              "code": "\\.element",
-              "type": "codeVoice"
-            },
-            {
-              "text": " SwiftUI environment key to determine which element the view belongs to. If used within a form, the element ",
-              "type": "text"
-            },
-            {
-              "inlineContent": [
-                {
-                  "text": "must",
-                  "type": "text"
-                }
-              ],
-              "type": "emphasis"
-            },
-            {
-              "text": " have a ",
-              "type": "text"
-            },
-            {
-              "code": "name",
-              "type": "codeVoice"
-            },
-            {
-              "text": ".",
+              "text": " attribute.",
               "type": "text"
             }
           ],
@@ -240,15 +250,41 @@
         {
           "inlineContent": [
             {
-              "text": "If the element is not located inside of a form, the value will be stored directly by the property wrapper. A ",
+              "text": "If the element is not located inside of a form, the value will be stored directly by the property wrapper.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "In all three cases, ",
               "type": "text"
             },
             {
-              "code": "name",
+              "code": "FormState",
               "type": "codeVoice"
             },
             {
-              "text": " attribute is not required when used outside of a form.",
+              "text": " uses the nearest ancestor DOM element, following the semantics of ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "See those docs for more information about how the element is obtained.",
               "type": "text"
             }
           ],
@@ -263,7 +299,25 @@
         {
           "inlineContent": [
             {
-              "text": "When the value is accessed for the first time, the framework will try to use the element’s ",
+              "text": "If the value is using a ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ", the default value of the binding will be provided by the server outside of the element.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Otherwise, when the value is accessed for the first time, the framework will try to use the element’s ",
               "type": "text"
             },
             {
@@ -748,7 +802,16 @@
           "type": "reference"
         },
         {
-          "text": ". This protocol defines the requirements for converting to/from the serialized form data representation.",
+          "text": " and used with ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
           "type": "text"
         }
       ],
@@ -778,6 +841,74 @@
       "title": "FormValue",
       "type": "topic",
       "url": "/documentation/liveviewnative/formvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding": {
+      "abstract": [
+        {
+          "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveBinding"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveBinding"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveBinding",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement": {
+      "abstract": [
+        {
+          "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ObservedElement"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ObservedElement"
+        }
+      ],
+      "role": "symbol",
+      "title": "ObservedElement",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement"
     }
   },
   "relationshipsSections": [

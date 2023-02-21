@@ -1,0 +1,857 @@
+{
+  "abstract": [
+    {
+      "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0A7BindingV",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "struct"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "LiveBinding"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "LiveBinding"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Structure",
+    "symbolKind": "struct",
+    "title": "LiveBinding"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "attribute",
+              "text": "@propertyWrapper"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "struct"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "LiveBinding"
+            },
+            {
+              "kind": "text",
+              "text": "<"
+            },
+            {
+              "kind": "genericParameter",
+              "text": "Value"
+            },
+            {
+              "kind": "text",
+              "text": "> "
+            },
+            {
+              "kind": "keyword",
+              "text": "where"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "Value"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:Se",
+              "text": "Decodable"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "typeIdentifier",
+              "text": "Value"
+            },
+            {
+              "kind": "text",
+              "text": " : "
+            },
+            {
+              "kind": "typeIdentifier",
+              "preciseIdentifier": "s:SE",
+              "text": "Encodable"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Updates to the value from the client-side will automatically send an event to the server to update its stored value.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "Likewise, whenever the value is updated on the server, an event will be sent to the client which will trigger the ",
+              "type": "text"
+            },
+            {
+              "code": "@LiveBinding",
+              "type": "codeVoice"
+            },
+            {
+              "text": " to update and the SwiftUI view that contains it (as well as any that use the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/projectedValue",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " binding) to re-render.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "anchor": "Binding-Names",
+          "level": 3,
+          "text": "Binding Names",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The name of a live binding is not defined directly by the client.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "Instead, it is always controlled by the backend, to prevent the name getting out-of-sync, especially when multiple client versions may be in use.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Depending on how the live binding is used, the name is obtained in one of two ways:",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "items": [
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "If it is being used as part of an element, the binding name is provided by an attribute on the element.",
+                      "type": "text"
+                    },
+                    {
+                      "text": " ",
+                      "type": "text"
+                    },
+                    {
+                      "text": "Pass the name of the attribute which specifies the binding name to the ",
+                      "type": "text"
+                    },
+                    {
+                      "code": "LiveBinding/init(attribute:)",
+                      "type": "codeVoice"
+                    },
+                    {
+                      "text": " initializer.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            },
+            {
+              "content": [
+                {
+                  "inlineContent": [
+                    {
+                      "text": "If it is being used as part of a view modifier, the binding name is encoded as a string in the modifier payload.",
+                      "type": "text"
+                    },
+                    {
+                      "text": " ",
+                      "type": "text"
+                    },
+                    {
+                      "text": "Decode the binding using the ",
+                      "type": "text"
+                    },
+                    {
+                      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(decoding:in:initialValue:)",
+                      "isActive": true,
+                      "type": "reference"
+                    },
+                    {
+                      "text": " initializer, and the string value at the given coding key will be used as the binding name.",
+                      "type": "text"
+                    }
+                  ],
+                  "type": "paragraph"
+                }
+              ]
+            }
+          ],
+          "type": "orderedList"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "See below for examples of both use cases.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "In either case, if the binding name is not provided, the ",
+              "type": "text"
+            },
+            {
+              "code": "LiveBinding",
+              "type": "codeVoice"
+            },
+            {
+              "text": " operates in local mode (that is, like a regular SwiftUI ",
+              "type": "text"
+            },
+            {
+              "code": "@State",
+              "type": "codeVoice"
+            },
+            {
+              "text": " property, not connected to the backend).",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "When in local mode, an initial value for the property must be provided (see the respective initializers for how), otherwise accessing the live binding will crash.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "anchor": "Server-Support",
+          "level": 3,
+          "text": "Server Support",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "As live bindings are a two-way mechanism, they are not implemented purely on the client, but rather require server-side support.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The server sends an event on mount with all of the binding values, sends an event when a binding is changed, and handles an event when a binding is changed on the client. These are all provided by the ",
+              "type": "text"
+            },
+            {
+              "identifier": "https://github.com/liveviewnative/live_view_native_swift_ui",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " Elixir package.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "The ",
+              "type": "text"
+            },
+            {
+              "code": "bindings",
+              "type": "codeVoice"
+            },
+            {
+              "text": " macro takes a keyword list of bindings and their initial values and automatically generates all the necessary supporting code.",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "The Elixir value used for the initial binding value must be serializable as JSON.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "defmodule AppWeb.TestLive do",
+            "    use AppWeb, :live_view",
+            "    use LiveViewNativeSwiftUi.Bindings",
+            "",
+            "    bindings(toggle_binding: false, alert_shown: false)",
+            "end"
+          ],
+          "syntax": "elixir",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Then, in the template, the same name is given as the value of a binding attribute:",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "<my-toggle is-on=\"toggle_binding\" />",
+            "",
+            "<button modifiers='[{\"type\": \"my_alert\", \"is_active\": \"alert_shown\"}]'>",
+            "    <text>Present alert</text>",
+            "</button>"
+          ],
+          "syntax": "html",
+          "type": "codeListing"
+        },
+        {
+          "anchor": "Client-Usage",
+          "level": 3,
+          "text": "Client Usage",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "To use this property wrapper, the wrapped type must impelement the ",
+              "type": "text"
+            },
+            {
+              "code": "Codable",
+              "type": "codeVoice"
+            },
+            {
+              "text": " protocol to define how values are serialized over the network.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyToggle: View {",
+            "    @LiveBinding(attribute: \"is-on\") private var isOn: Bool",
+            "",
+            "    var body: some View {",
+            "        Toggle(isOn: $isOn) {",
+            "            Text(\"My Toggle\")",
+            "        }",
+            "    }",
+            "}",
+            "",
+            "struct MyAlertModifier: ViewModifier, Decodable {",
+            "    @LiveBinding private var isActive: Bool",
+            "",
+            "    init(from decoder: Decoder) throws {",
+            "        let container = try decoder.container(keyedBy: CodingKeys.self)",
+            "        self._isActive = try LiveBinding(decoding: .isActive, in: container)",
+            "    }",
+            "",
+            "    func body(content: Content) -> some View {",
+            "        content",
+            "            .alert(\"Hello\", isPresented: $isActive) {",
+            "                Button(\"OK\") {}",
+            "            }",
+            "    }",
+            "",
+            "    enum CodingKeys: String, CodingKey {",
+            "        case isActive = \"is_active\"",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/7SwiftUI15DynamicPropertyP": {
+      "identifier": "doc://LiveViewNative/7SwiftUI15DynamicPropertyP",
+      "title": "SwiftUI.DynamicProperty",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding": {
+      "abstract": [
+        {
+          "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveBinding"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveBinding"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveBinding",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/DynamicProperty-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/DynamicProperty-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "DynamicProperty Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding/dynamicproperty-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(decoding:in:initialValue:)": {
+      "abstract": [
+        {
+          "text": "Creates a ",
+          "type": "text"
+        },
+        {
+          "code": "LiveBinding",
+          "type": "codeVoice"
+        },
+        {
+          "text": " by decoding its name from a container.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "genericParameter",
+          "text": "K"
+        },
+        {
+          "kind": "text",
+          "text": ">("
+        },
+        {
+          "kind": "externalParam",
+          "text": "decoding"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
+          "text": "K"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "in"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s22KeyedDecodingContainerV",
+          "text": "KeyedDecodingContainer"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
+          "text": "K"
+        },
+        {
+          "kind": "text",
+          "text": ">, "
+        },
+        {
+          "kind": "externalParam",
+          "text": "initialValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": "?) "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(decoding:in:initialValue:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init(decoding:in:initialValue:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding/init(decoding:in:initialvalue:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(wrappedValue:attribute:)": {
+      "abstract": [
+        {
+          "text": "Creates a ",
+          "type": "text"
+        },
+        {
+          "code": "LiveBinding",
+          "type": "codeVoice"
+        },
+        {
+          "text": " property wrapper that uses the binding in the given attribute.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": "?, "
+        },
+        {
+          "kind": "externalParam",
+          "text": "attribute"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
+          "text": "AttributeName"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(wrappedValue:attribute:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init(wrappedValue:attribute:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding/init(wrappedvalue:attribute:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/projectedValue": {
+      "abstract": [
+        {
+          "text": "A SwiftUI ",
+          "type": "text"
+        },
+        {
+          "code": "Binding",
+          "type": "codeVoice"
+        },
+        {
+          "text": " that provides read and write access to the underlying data.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "projectedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7SwiftUI7BindingV",
+          "text": "Binding"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
+          "text": "Value"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/projectedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "projectedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding/projectedvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/wrappedValue": {
+      "abstract": [
+        {
+          "text": "The value of the binding.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
+          "text": "Value"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/wrappedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "wrappedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livebinding/wrappedvalue"
+    },
+    "https://github.com/liveviewnative/live_view_native_swift_ui": {
+      "identifier": "https://github.com/liveviewnative/live_view_native_swift_ui",
+      "title": "live_view_native_swift_ui",
+      "titleInlineContent": [
+        {
+          "code": "live_view_native_swift_ui",
+          "type": "codeVoice"
+        }
+      ],
+      "type": "link",
+      "url": "https://github.com/liveviewnative/live_view_native_swift_ui"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/7SwiftUI15DynamicPropertyP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(decoding:in:initialValue:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(wrappedValue:attribute:)"
+      ],
+      "title": "Initializers"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/projectedValue",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/wrappedValue"
+      ],
+      "title": "Instance Properties"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/DynamicProperty-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/livebinding"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

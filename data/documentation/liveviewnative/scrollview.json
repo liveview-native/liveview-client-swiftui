@@ -1,7 +1,7 @@
 {
   "abstract": [
     {
-      "code": "<scrollview>",
+      "code": "<scroll-view>",
       "type": "codeVoice"
     },
     {
@@ -58,7 +58,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/HStack": {
       "abstract": [
         {
-          "code": "<hstack>",
+          "code": "<h-stack>",
           "type": "codeVoice"
         },
         {
@@ -126,7 +126,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/VStack": {
       "abstract": [
         {
-          "code": "<vstack>",
+          "code": "<v-stack>",
           "type": "codeVoice"
         },
         {
@@ -144,7 +144,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/ZStack": {
       "abstract": [
         {
-          "code": "<zstack>",
+          "code": "<z-stack>",
           "type": "codeVoice"
         },
         {

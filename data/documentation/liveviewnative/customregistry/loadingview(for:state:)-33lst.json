@@ -363,6 +363,15 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:7SwiftUI4ViewP",
           "text": "View"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5NeverO",
+          "text": "Never"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/LoadingView",
@@ -602,7 +611,7 @@
     "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
       "abstract": [
         {
-          "text": "The live view coordinator object handles connecting to Phoenix LiveView on the backend, managing the websocket connection, and transmitting/handling events.",
+          "text": "The session coordinator object handles the initial connection, as well as navigation.",
           "type": "text"
         }
       ],
@@ -734,6 +743,15 @@
     "patch": 0
   },
   "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/LoadingView"
+      ],
+      "title": "Customizing the Loading View"
+    }
+  ],
   "variants": [
     {
       "paths": [

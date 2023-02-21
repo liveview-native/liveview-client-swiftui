@@ -209,6 +209,47 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/elementnode/depthfirstchildren()"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()": {
+      "abstract": [
+        {
+          "text": "A sequence representing this element’s direct children that are elements.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "elementChildren"
+        },
+        {
+          "kind": "text",
+          "text": "() -> ["
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
+          "text": "ElementNode"
+        },
+        {
+          "kind": "text",
+          "text": "]"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "elementChildren()",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/elementnode/elementchildren()"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/innerText()": {
       "abstract": [
         {
@@ -258,6 +299,7 @@
       "generated": true,
       "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/depthFirstChildren()",
+        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/elementChildren()",
         "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/innerText()"
       ],
       "title": "Accessing Children"

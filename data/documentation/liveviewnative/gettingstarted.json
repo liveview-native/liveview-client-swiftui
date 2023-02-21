@@ -43,7 +43,7 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
               "isActive": true,
               "type": "reference"
             },
@@ -111,10 +111,10 @@
           "code": [
             "@MainActor",
             "struct ContentView: View {",
-            "    @State private var coordinator = LiveViewCoordinator(URL(string: \"http://localhost:4000/\")!)",
+            "    @State private var session = LiveSessionCoordinator(URL(string: \"http://localhost:4000/\")!)",
             "",
             "    var body: some View {",
-            "        LiveView(coordinator: coordinator)",
+            "        LiveView(session: session)",
             "    }",
             "}"
           ],
@@ -134,8 +134,9 @@
               "type": "text"
             },
             {
-              "code": "LiveViewConfiguration",
-              "type": "codeVoice"
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
+              "isActive": true,
+              "type": "reference"
             },
             {
               "text": " with the values you want, and then pass it to coordinator’s initializer.",
@@ -148,14 +149,14 @@
           "code": [
             "@MainActor",
             "struct ContentView: View {",
-            "    @State private var coordinator: LiveViewCoordinator<EmptyRegistry> = {",
-            "        var config = LiveViewConfiguration()",
+            "    @State private var session: LiveSessionCoordinator<EmptyRegistry> = {",
+            "        var config = LiveSessionConfiguration()",
             "        config.navigationMode = .enabled",
-            "        return LiveViewCoordinator(URL(string: \"http://localhost:4000/\")!, config: config)",
+            "        return LiveSessionCoordinator(URL(string: \"http://localhost:4000/\")!, config: config)",
             "    }()",
             "",
             "    var body: some View {",
-            "        LiveView(coordinator: coordinator)",
+            "        LiveView(session: session)",
             "    }",
             "}"
           ],
@@ -190,10 +191,10 @@
           "code": [
             "@MainActor",
             "struct ContentView: View {",
-            "    @State private var coordinator = LiveViewCoordinator<MyCustomRegistry>(URL(string: \"http://localhost:4000/\")!)",
+            "    @State private var session = LiveSessionCoordinator<MyCustomRegistry>(URL(string: \"http://localhost:4000/\")!)",
             "",
             "    var body: some View {",
-            "        LiveView(coordinator: coordinator)",
+            "        LiveView(session: session)",
             "    }",
             "}"
           ],
@@ -248,6 +249,83 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
+      "abstract": [
+        {
+          "text": "An object that configures the behavior of a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionConfiguration"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
+      "abstract": [
+        {
+          "text": "The session coordinator object handles the initial connection, as well as navigation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
       "abstract": [
         {
@@ -283,7 +361,12 @@
       "url": "/documentation/liveviewnative/liveview"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [],
+      "abstract": [
+        {
+          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type": "text"
+        }
+      ],
       "fragments": [
         {
           "kind": "keyword",
@@ -338,6 +421,8 @@
       "identifiers": [
         "doc://LiveViewNative/tutorials/YourFirstApp",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
       ],
       "title": "Essentials"

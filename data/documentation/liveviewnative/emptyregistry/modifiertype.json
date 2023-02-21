@@ -140,7 +140,7 @@
         {
           "inlineContent": [
             {
-              "text": "If your registry does not support any custom modifiers, you can set this type alias to the ",
+              "text": "This will default to the ",
               "type": "text"
             },
             {
@@ -149,20 +149,11 @@
               "type": "reference"
             },
             {
-              "text": " type:",
+              "text": " type if you don’t support any custom modifiers.",
               "type": "text"
             }
           ],
           "type": "paragraph"
-        },
-        {
-          "code": [
-            "struct MyRegistry: CustomRegistry {",
-            "    typealias ModifierType = EmptyRegistry.None",
-            "}"
-          ],
-          "syntax": "swift",
-          "type": "codeListing"
         }
       ],
       "kind": "content"
@@ -240,6 +231,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
@@ -278,6 +287,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",

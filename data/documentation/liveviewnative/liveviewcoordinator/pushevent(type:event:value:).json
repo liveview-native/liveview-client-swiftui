@@ -322,8 +322,9 @@
                   "type": "text"
                 },
                 {
-                  "code": "FetchError.eventError",
-                  "type": "codeVoice"
+                  "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)",
+                  "isActive": true,
+                  "type": "reference"
                 },
                 {
                   "text": " if an error is encountered sending the event or processing it on the backend, ",
@@ -359,8 +360,49 @@
       "type": "topic",
       "url": "/documentation/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)": {
       "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "eventError"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18SwiftPhoenixClient7MessageC",
+          "text": "Message"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveConnectionError.eventError(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveconnectionerror/eventerror(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
+      "abstract": [
+        {
+          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type": "text"
+        }
+      ],
       "fragments": [
         {
           "kind": "keyword",
@@ -387,6 +429,73 @@
       "title": "LiveViewCoordinator",
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewcoordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/handleEvent(_:handler:)": {
+      "abstract": [
+        {
+          "text": "Permanently registers a handler for a server-sent LiveView event.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "handleEvent"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "handler"
+        },
+        {
+          "kind": "text",
+          "text": ": ("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative7Payloada",
+          "text": "Payload"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s4Voida",
+          "text": "Void"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/handleEvent(_:handler:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "handleEvent(_:handler:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator/handleevent(_:handler:)"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)": {
       "abstract": [
@@ -481,6 +590,82 @@
       "title": "pushEvent(type:event:value:)",
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)": {
+      "abstract": [
+        {
+          "text": "Creates a publisher that can be used to listen for server-sent LiveView events.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "receiveEvent"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "keyword",
+          "text": "some"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7Combine9PublisherP",
+          "text": "Publisher"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative7Payloada",
+          "text": "Payload"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5NeverO",
+          "text": "Never"
+        },
+        {
+          "kind": "text",
+          "text": ">\n"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "receiveEvent(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/liveviewcoordinator/receiveevent(_:)"
     }
   },
   "schemaVersion": {
@@ -489,6 +674,16 @@
     "patch": 0
   },
   "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/handleEvent(_:handler:)"
+      ],
+      "title": "LiveView Events"
+    }
+  ],
   "variants": [
     {
       "paths": [

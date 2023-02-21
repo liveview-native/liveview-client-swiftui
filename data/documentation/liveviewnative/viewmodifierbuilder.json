@@ -1,0 +1,544 @@
+{
+  "abstract": [
+    {
+      "text": "A Swift result builder that allows building a single, concrete ",
+      "type": "text"
+    },
+    {
+      "code": "ViewModifier",
+      "type": "codeVoice"
+    },
+    {
+      "text": " from a set of conditional modifiers.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative0B15ModifierBuilderO",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "enum"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "ViewModifierBuilder"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "ViewModifierBuilder"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Enumeration",
+    "symbolKind": "enum",
+    "title": "ViewModifierBuilder"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "attribute",
+              "text": "@resultBuilder"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "keyword",
+              "text": "enum"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "ViewModifierBuilder"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
+      "abstract": [
+        {
+          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "CustomRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "CustomRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry": {
+      "abstract": [
+        {
+          "text": "The empty registry is the default ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " implementation that does not provide any views or modifiers.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "EmptyRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "EmptyRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "EmptyRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/emptyregistry"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder": {
+      "abstract": [
+        {
+          "text": "A Swift result builder that allows building a single, concrete ",
+          "type": "text"
+        },
+        {
+          "code": "ViewModifier",
+          "type": "codeVoice"
+        },
+        {
+          "text": " from a set of conditional modifiers.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "ViewModifierBuilder"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "ViewModifierBuilder"
+        }
+      ],
+      "role": "symbol",
+      "title": "ViewModifierBuilder",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/viewmodifierbuilder"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildBlock(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "buildBlock"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "genericParameter",
+          "text": "M"
+        },
+        {
+          "kind": "text",
+          "text": ">("
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
+          "text": "M"
+        },
+        {
+          "kind": "text",
+          "text": ") -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
+          "text": "M"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildBlock(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "buildBlock(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/viewmodifierbuilder/buildblock(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(first:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "buildEither"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "genericParameter",
+          "text": "TrueModifier"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "genericParameter",
+          "text": "FalseModifier"
+        },
+        {
+          "kind": "text",
+          "text": ">("
+        },
+        {
+          "kind": "externalParam",
+          "text": "first"
+        },
+        {
+          "kind": "text",
+          "text": ": () "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        },
+        {
+          "kind": "text",
+          "text": " -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither5firstAA012_ConditionalD0Vyxq_GxyKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
+          "text": "TrueModifier"
+        },
+        {
+          "kind": "text",
+          "text": ") "
+        },
+        {
+          "kind": "keyword",
+          "text": "rethrows"
+        },
+        {
+          "kind": "text",
+          "text": " -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative20_ConditionalModifierV",
+          "text": "_ConditionalModifier"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither5firstAA012_ConditionalD0Vyxq_GxyKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
+          "text": "TrueModifier"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither5firstAA012_ConditionalD0Vyxq_GxyKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+          "text": "FalseModifier"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(first:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "buildEither(first:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/viewmodifierbuilder/buildeither(first:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(second:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "static"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "keyword",
+          "text": "func"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "buildEither"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "genericParameter",
+          "text": "TrueModifier"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "genericParameter",
+          "text": "FalseModifier"
+        },
+        {
+          "kind": "text",
+          "text": ">("
+        },
+        {
+          "kind": "externalParam",
+          "text": "second"
+        },
+        {
+          "kind": "text",
+          "text": ": () "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        },
+        {
+          "kind": "text",
+          "text": " -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+          "text": "FalseModifier"
+        },
+        {
+          "kind": "text",
+          "text": ") "
+        },
+        {
+          "kind": "keyword",
+          "text": "rethrows"
+        },
+        {
+          "kind": "text",
+          "text": " -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative20_ConditionalModifierV",
+          "text": "_ConditionalModifier"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
+          "text": "TrueModifier"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+          "text": "FalseModifier"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(second:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "buildEither(second:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/viewmodifierbuilder/buildeither(second:)"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "seeAlsoSections": [
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry"
+      ],
+      "title": "Supporting Types"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildBlock(_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(first:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(second:)"
+      ],
+      "title": "Type Methods"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/viewmodifierbuilder"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -45,6 +45,22 @@
       ],
       "constraints": [
         {
+          "code": "CustomModifier",
+          "type": "codeVoice"
+        },
+        {
+          "text": " is ",
+          "type": "text"
+        },
+        {
+          "code": "EmptyModifier",
+          "type": "codeVoice"
+        },
+        {
+          "text": " and ",
+          "type": "text"
+        },
+        {
           "code": "ModifierType",
           "type": "codeVoice"
         },
@@ -63,7 +79,7 @@
       ]
     },
     "extendedModule": "LiveViewNative",
-    "externalID": "s:14LiveViewNative14CustomRegistryPA2A05EmptyE0V4NoneV12ModifierTypeRtzrlE06decodeH0_4from7context7SwiftUI0bH0_pAG_s7Decoder_pAA0A7ContextVyxGtFZ::SYNTHESIZED::s:14LiveViewNative13EmptyRegistryV",
+    "externalID": "s:14LiveViewNative14CustomRegistryPAA7SwiftUI13EmptyModifierV0dI0RtzAA0hE0V4NoneV0I4TypeRtzrlE06decodeI0_4from7contextAfL_s7Decoder_pAA0A7ContextVyxGtFZ::SYNTHESIZED::s:14LiveViewNative13EmptyRegistryV",
     "fragments": [
       {
         "kind": "keyword",
@@ -141,17 +157,9 @@
         "text": ">) -> "
       },
       {
-        "kind": "keyword",
-        "text": "any"
-      },
-      {
-        "kind": "text",
-        "text": " "
-      },
-      {
         "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-        "text": "ViewModifier"
+        "preciseIdentifier": "s:7SwiftUI13EmptyModifierV",
+        "text": "EmptyModifier"
       }
     ],
     "modules": [
@@ -277,17 +285,9 @@
               "text": ">) -> "
             },
             {
-              "kind": "keyword",
-              "text": "any"
-            },
-            {
-              "kind": "text",
-              "text": " "
-            },
-            {
               "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-              "text": "ViewModifier"
+              "preciseIdentifier": "s:7SwiftUI13EmptyModifierV",
+              "text": "EmptyModifier"
             }
           ]
         }
@@ -367,6 +367,24 @@
           "kind": "typeIdentifier",
           "preciseIdentifier": "s:SY",
           "text": "RawRepresentable"
+        },
+        {
+          "kind": "text",
+          "text": " = "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
+          "text": "EmptyRegistry"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text": "None"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
@@ -459,6 +477,22 @@
           }
         ],
         "constraints": [
+          {
+            "code": "CustomModifier",
+            "type": "codeVoice"
+          },
+          {
+            "text": " is ",
+            "type": "text"
+          },
+          {
+            "code": "EmptyModifier",
+            "type": "codeVoice"
+          },
+          {
+            "text": " and ",
+            "type": "text"
+          },
           {
             "code": "ModifierType",
             "type": "codeVoice"
@@ -554,17 +588,9 @@
           "text": ">) -> "
         },
         {
-          "kind": "keyword",
-          "text": "any"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-          "text": "ViewModifier"
+          "preciseIdentifier": "s:7SwiftUI13EmptyModifierV",
+          "text": "EmptyModifier"
         }
       ],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry/decodeModifier(_:from:context:)",
