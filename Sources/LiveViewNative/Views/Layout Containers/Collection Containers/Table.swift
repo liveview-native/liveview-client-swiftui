@@ -290,13 +290,19 @@ fileprivate extension View {
         case .automatic:
             self.tableStyle(.automatic)
         case .inset:
+#if os(macOS)
             self.tableStyle(.inset(alternatesRowBackgrounds: false))
+#else
+            self.tableStyle(.inset)
+#endif
+#if os(macOS)
         case .insetAlternating:
             self.tableStyle(.inset(alternatesRowBackgrounds: true))
         case .bordered:
             self.tableStyle(.bordered(alternatesRowBackgrounds: false))
         case .borderedAlternating:
             self.tableStyle(.bordered(alternatesRowBackgrounds: true))
+#endif
         }
     }
 }
