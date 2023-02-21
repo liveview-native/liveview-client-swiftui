@@ -120,6 +120,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             LazyHStack(element: element, context: context)
         case "picker":
             Picker(context: context)
+        case "view-that-fits":
+            ViewThatFits(element: element, context: context)
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
