@@ -14,6 +14,7 @@ struct Table<R: CustomRegistry>: View {
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     
     @LiveBinding(attribute: "selection") private var selection = Selection.multiple([])
+    @LiveBinding(attribute: "sort-order") private var sortOrder = [ColumnSort]()
     
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
@@ -43,23 +44,23 @@ struct Table<R: CustomRegistry>: View {
             case 1:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                     }
                 }
             case 2:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                     }
@@ -67,13 +68,13 @@ struct Table<R: CustomRegistry>: View {
             case 3:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -82,14 +83,14 @@ struct Table<R: CustomRegistry>: View {
             case 4:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
                         columns[3]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -99,7 +100,7 @@ struct Table<R: CustomRegistry>: View {
             case 5:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -107,7 +108,7 @@ struct Table<R: CustomRegistry>: View {
                         columns[4]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -118,7 +119,7 @@ struct Table<R: CustomRegistry>: View {
             case 6:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -127,7 +128,7 @@ struct Table<R: CustomRegistry>: View {
                         columns[5]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -139,7 +140,7 @@ struct Table<R: CustomRegistry>: View {
             case 7:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -149,7 +150,7 @@ struct Table<R: CustomRegistry>: View {
                         columns[6]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -162,7 +163,7 @@ struct Table<R: CustomRegistry>: View {
             case 8:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -173,7 +174,7 @@ struct Table<R: CustomRegistry>: View {
                         columns[7]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -187,7 +188,7 @@ struct Table<R: CustomRegistry>: View {
             case 9:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -199,7 +200,7 @@ struct Table<R: CustomRegistry>: View {
                         columns[8]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -214,7 +215,7 @@ struct Table<R: CustomRegistry>: View {
             case 10:
                 switch selection {
                 case .single:
-                    SwiftUI.Table(rows, selection: $selection.single) {
+                    SwiftUI.Table(rows, selection: $selection.single, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -227,7 +228,7 @@ struct Table<R: CustomRegistry>: View {
                         columns[9]
                     }
                 case .multiple:
-                    SwiftUI.Table(rows, selection: $selection.multiple) {
+                    SwiftUI.Table(rows, selection: $selection.multiple, sortOrder: $sortOrder) {
                         columns[0]
                         columns[1]
                         columns[2]
@@ -247,13 +248,24 @@ struct Table<R: CustomRegistry>: View {
         .applyTableStyle(element.attributeValue(for: "table-style").flatMap(TableStyle.init) ?? .automatic)
     }
     
-    private var columns: [TableColumn<Row, Never, some View, SwiftUI.Text>] {
+    struct ColumnSort: SortComparator, Codable, Equatable {
+        func compare(_ lhs: Row, _ rhs: Row) -> ComparisonResult {
+            .orderedSame
+        }
+        
+        typealias Compared = Row
+        
+        let id: String
+        var order: SortOrder
+    }
+    
+    private var columns: [TableColumn<Row, ColumnSort, some View, SwiftUI.Text>] {
         let columnElements = element.elementChildren()
             .filter { $0.tag == "columns" && $0.namespace == "table" }
             .flatMap{ $0.elementChildren() }
             .filter { $0.tag == "table-column" }
         return columnElements.enumerated().map { item in
-            TableColumn(item.element.innerText()) { (row: Row) in
+            TableColumn(item.element.innerText(), sortUsing: ColumnSort(id: item.element.attributeValue(for: "id") ?? String(item.offset), order: .forward)) { (row: Row) in
                 let rowChildren = row.element.children()
                 if rowChildren.indices.contains(item.offset) {
                     context.coordinator.builder.fromNodes(
