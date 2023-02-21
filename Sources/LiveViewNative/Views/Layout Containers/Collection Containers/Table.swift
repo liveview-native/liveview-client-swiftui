@@ -11,6 +11,7 @@ import SwiftUI
 struct Table<R: CustomRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
+    @Environment(\.self) private var environment
     
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
@@ -141,6 +142,7 @@ struct Table<R: CustomRegistry>: View {
                         [rowChildren[item.offset]],
                         context: context
                     )
+                    .environment(\.self, environment)
                 }
             }
             .width(item.element.attributeValue(for: "width").flatMap(Double.init(_:)).flatMap(CGFloat.init))
