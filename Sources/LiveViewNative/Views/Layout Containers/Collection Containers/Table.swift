@@ -20,19 +20,6 @@ struct Table<R: CustomRegistry>: View {
         self.context = context
     }
     
-    struct Row: Identifiable {
-        let element: ElementNode
-        var id: String {
-            guard let id = element.attributeValue(for: "id")
-            else { preconditionFailure("<table-row> must have an id") }
-            return id
-        }
-        
-        init(element: ElementNode) {
-            self.element = element
-        }
-    }
-    
     public var body: some View {
         let rows = element.elementChildren()
             .filter { $0.tag == "rows" && $0.namespace == "table" }
@@ -248,21 +235,32 @@ struct Table<R: CustomRegistry>: View {
         .applyTableStyle(element.attributeValue(for: "table-style").flatMap(TableStyle.init) ?? .automatic)
     }
     
-    struct ColumnSort: SortComparator, Codable, Equatable {
+    private struct Row: Identifiable {
+        let element: ElementNode
+        var id: String {
+            guard let id = element.attributeValue(for: "id")
+            else { preconditionFailure("<table-row> must have an id") }
+            return id
+        }
+        
+        init(element: ElementNode) {
+            self.element = element
+        }
+    }
+    
+    private struct ColumnSort: SortComparator, Codable, Equatable {
+        let id: String
+        var order: SortOrder
+        
         func compare(_ lhs: Row, _ rhs: Row) -> ComparisonResult {
             .orderedSame
         }
-        
-        typealias Compared = Row
-        
-        let id: String
-        var order: SortOrder
     }
     
     private var columns: [TableColumn<Row, ColumnSort, some View, SwiftUI.Text>] {
         let columnElements = element.elementChildren()
             .filter { $0.tag == "columns" && $0.namespace == "table" }
-            .flatMap{ $0.elementChildren() }
+            .flatMap { $0.elementChildren() }
             .filter { $0.tag == "table-column" }
         return columnElements.enumerated().map { item in
             TableColumn(item.element.innerText(), sortUsing: ColumnSort(id: item.element.attributeValue(for: "id") ?? String(item.offset), order: .forward)) { (row: Row) in
