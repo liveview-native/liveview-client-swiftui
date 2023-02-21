@@ -58,6 +58,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case "gauge":
             Gauge(element: element, context: context)
 #endif
+        case "group":
+            Group(element: element, context: context)
         case "grid":
             Grid(element: element, context: context)
         case "grid-row":

@@ -5,7 +5,7 @@
 //  Created by Carson Katri on 2/21/23.
 //
 
-#if !os(watchOS)
+#if os(iOS) || os(macOS)
 import SwiftUI
 
 struct Table<R: CustomRegistry>: View {
@@ -244,6 +244,7 @@ struct Table<R: CustomRegistry>: View {
                 fatalError("Too many columns in table: \(columns.count)")
             }
         }
+        .applyTableStyle(element.attributeValue(for: "table-style").flatMap(TableStyle.init) ?? .automatic)
     }
     
     private var columns: [TableColumn<Row, Never, some View, SwiftUI.Text>] {
@@ -271,4 +272,33 @@ struct Table<R: CustomRegistry>: View {
         }
     }
 }
+
+fileprivate enum TableStyle: String {
+    case automatic
+    case inset
+    #if os(macOS)
+    case insetAlternating = "inset-alternating"
+    case bordered
+    case borderedAlternating = "bordered-alternating"
+    #endif
+}
+
+fileprivate extension View {
+    @ViewBuilder
+    func applyTableStyle(_ style: TableStyle) -> some View {
+        switch style {
+        case .automatic:
+            self.tableStyle(.automatic)
+        case .inset:
+            self.tableStyle(.inset(alternatesRowBackgrounds: false))
+        case .insetAlternating:
+            self.tableStyle(.inset(alternatesRowBackgrounds: true))
+        case .bordered:
+            self.tableStyle(.bordered(alternatesRowBackgrounds: false))
+        case .borderedAlternating:
+            self.tableStyle(.bordered(alternatesRowBackgrounds: true))
+        }
+    }
+}
+
 #endif
