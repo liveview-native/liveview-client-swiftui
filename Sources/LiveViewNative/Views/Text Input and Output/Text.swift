@@ -207,9 +207,9 @@ struct Text<R: CustomRegistry>: View {
         return font?.weight(weight)
     }
     
-    private var textColor: Color? {
+    private var textColor: SwiftUI.Color? {
         if let attr = element.attributeValue(for: "color"),
-           let color = Color(fromNamedOrCSSHex: attr) {
+           let color = SwiftUI.Color(fromNamedOrCSSHex: attr) {
             return color
         } else {
             return nil

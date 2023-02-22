@@ -48,9 +48,9 @@ struct Image<R: CustomRegistry>: View {
         }
     }
     
-    private var symbolColor: Color? {
+    private var symbolColor: SwiftUI.Color? {
         if let attr = element.attributeValue(for: "symbol-color") {
-            return Color(fromNamedOrCSSHex: attr)
+            return SwiftUI.Color(fromNamedOrCSSHex: attr)
         } else {
             return nil
         }

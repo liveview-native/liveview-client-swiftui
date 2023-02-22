@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct TintModifier: ViewModifier, Decodable, Equatable {
-    private let color: Color?
+    private let color: SwiftUI.Color?
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.color = Color(fromNamedOrCSSHex: try container.decode(String.self, forKey: .color))
+        self.color = SwiftUI.Color(fromNamedOrCSSHex: try container.decode(String.self, forKey: .color))
     }
     
-    init(color: Color) {
+    init(color: SwiftUI.Color) {
         self.color = color
     }
     
