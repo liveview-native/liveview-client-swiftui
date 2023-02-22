@@ -30,6 +30,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Shape(element: element, context: context, shape: Capsule(from: element))
         case "circle":
             Shape(element: element, context: context, shape: Circle())
+        case "color":
+            Color(context: context)
 #if os(iOS) || os(macOS)
         case "color-picker":
             ColorPicker(element: element, context: context)

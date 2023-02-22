@@ -7,9 +7,47 @@
 
 import SwiftUI
 
+struct Color<R: CustomRegistry>: View {
+    @ObservedElement private var element: ElementNode
+    private let context: LiveContext<R>
+    
+    init(context: LiveContext<R>) {
+        self.context = context
+    }
+    
+    var body: some View {
+        let opacity = element.attributeValue(for: "opacity").flatMap(Double.init(_:)) ?? 1
+        if let named = element.attributeValue(for: "name").flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) {
+            named.opacity(opacity)
+        } else if let red = element.attributeValue(for: "red").flatMap(Double.init(_:)),
+                  let green = element.attributeValue(for: "green").flatMap(Double.init(_:)),
+                  let blue = element.attributeValue(for: "blue").flatMap(Double.init(_:))
+        {
+            SwiftUI.Color(
+                element.attributeValue(for: "color-space").flatMap(SwiftUI.Color.RGBColorSpace.init) ?? .sRGB,
+                red: red,
+                green: green,
+                blue: blue,
+                opacity: opacity
+            )
+        }
+    }
+}
+
 private let colorRegex = try! NSRegularExpression(pattern: "^#[0-9a-f]{6}$", options: .caseInsensitive)
 
-extension Color {
+extension SwiftUI.Color.RGBColorSpace {
+    init?(string: String) {
+        switch string {
+        case "srgb": self = .sRGB
+        case "srgb-linear": self = .sRGBLinear
+        case "display-p3": self = .displayP3
+        default: return nil
+        }
+    }
+}
+
+extension SwiftUI.Color {
     public init?(fromCSSHex string: String?) {
         guard let string = string else {
             return nil

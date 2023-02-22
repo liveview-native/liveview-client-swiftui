@@ -64,4 +64,39 @@ final class ShapeTests: XCTestCase {
             ContainerRelativeShape()
         }
     }
+    
+    // MARK: Color
+    
+    func testSystemColor() throws {
+        try assertMatch(#"<color name="system-red" />"#, size: .init(width: 50, height: 50)) {
+            Color.red
+        }
+    }
+    
+    func testRGBColor() throws {
+        try assertMatch(#"<color red="1" green="0.5" blue="0.25" />"#, size: .init(width: 50, height: 50)) {
+            Color(red: 1, green: 0.5, blue: 0.25)
+        }
+    }
+    
+    func testRGBColorSpace() throws {
+        try assertMatch(#"<color red="1" green="0.5" blue="0.25" color-space="srgb" />"#, size: .init(width: 50, height: 50)) {
+            Color(.sRGB, red: 1, green: 0.5, blue: 0.25)
+        }
+        try assertMatch(#"<color red="1" green="0.5" blue="0.25" color-space="srgb-linear" />"#, size: .init(width: 50, height: 50)) {
+            Color(.sRGBLinear, red: 1, green: 0.5, blue: 0.25)
+        }
+        try assertMatch(#"<color red="1" green="0.5" blue="0.25" color-space="display-p3" />"#, size: .init(width: 50, height: 50)) {
+            Color(.displayP3, red: 1, green: 0.5, blue: 0.25)
+        }
+    }
+    
+    func testColorOpacity() throws {
+        try assertMatch(#"<color name="system-red" opacity="0.5" />"#, size: .init(width: 50, height: 50)) {
+            Color.red.opacity(0.5)
+        }
+        try assertMatch(#"<color red="1" green="0.5" blue="0.25" opacity="0.5" />"#, size: .init(width: 50, height: 50)) {
+            Color(red: 1, green: 0.5, blue: 0.25, opacity: 0.5)
+        }
+    }
 }
