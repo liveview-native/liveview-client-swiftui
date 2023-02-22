@@ -29,7 +29,13 @@ defmodule LiveViewNativeSwiftUi.Platform do
           list_row_separator: Modifiers.ListRowSeparator,
           navigation_title: Modifiers.NavigationTitle,
           padding: Modifiers.Padding,
-          tint: Modifiers.Tint
+          tint: Modifiers.Tint,
+
+          # grid
+          grid_cell_anchor: Modifiers.GridCellAnchor,
+          grid_cell_columns: Modifiers.GridCellColumns,
+          grid_cell_unsized_axes: Modifiers.GridCellUnsizedAxes,
+          grid_column_alignment: Modifiers.GridColumnAlignment
         ],
         template_engine: LiveViewNative.Engine,
         template_namespace: SwiftUi
