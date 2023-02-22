@@ -132,4 +132,58 @@ final class CollectionContainerTests: XCTestCase {
             }
         }
     }
+    
+    // MARK: Table
+    func testTable() throws {
+        struct Item: Identifiable {
+            let id: Int
+            var a: String { "A\(id)" }
+            var b: String { "B\(id)" }
+            var c: String { "C\(id)" }
+        }
+        try assertMatch(
+            #"""
+            <table>
+                <table:columns>
+                    <table-column>A</table-column>
+                    <table-column>B</table-column>
+                    <table-column>C</table-column>
+                </table:columns>
+                <table:rows>
+                    <table-row id="1">
+                        <text>A1</text>
+                        <text>B1</text>
+                        <text>C1</text>
+                    </table-row>
+                    <table-row id="2">
+                        <text>A2</text>
+                        <text>B2</text>
+                        <text>C2</text>
+                    </table-row>
+                    <table-row id="3">
+                        <text>A3</text>
+                        <text>B3</text>
+                        <text>C3</text>
+                    </table-row>
+                </table:rows>
+            </table>
+            """#,
+            environment: { environment in
+                environment.horizontalSizeClass = .regular
+                environment.verticalSizeClass = .regular
+            },
+            size: .init(width: 600, height: 500),
+            lifetime: .keepAlways
+        ) {
+            Table(of: Item.self) {
+                TableColumn("A", value: \.a)
+                TableColumn("B", value: \.b)
+                TableColumn("C", value: \.c)
+            } rows: {
+                TableRow(Item(id: 1))
+                TableRow(Item(id: 2))
+                TableRow(Item(id: 3))
+            }
+        }
+    }
 }
