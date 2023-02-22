@@ -172,8 +172,7 @@ final class CollectionContainerTests: XCTestCase {
                 environment.horizontalSizeClass = .regular
                 environment.verticalSizeClass = .regular
             },
-            size: .init(width: 600, height: 500),
-            lifetime: .keepAlways
+            size: .init(width: 600, height: 500)
         ) {
             Table(of: Item.self) {
                 TableColumn("A", value: \.a)
