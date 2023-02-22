@@ -134,6 +134,7 @@ final class CollectionContainerTests: XCTestCase {
     }
     
     // MARK: Table
+#if os(iOS) || os(macOS)
     func testTable() throws {
         struct Item: Identifiable {
             let id: Int
@@ -169,8 +170,10 @@ final class CollectionContainerTests: XCTestCase {
             </table>
             """#,
             environment: { environment in
+                #if os(iOS)
                 environment.horizontalSizeClass = .regular
                 environment.verticalSizeClass = .regular
+                #endif
             },
             size: .init(width: 600, height: 500)
         ) {
@@ -185,4 +188,5 @@ final class CollectionContainerTests: XCTestCase {
             }
         }
     }
+#endif
 }
