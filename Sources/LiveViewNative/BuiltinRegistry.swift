@@ -58,6 +58,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case "gauge":
             Gauge(element: element, context: context)
 #endif
+        case "group":
+            Group(element: element, context: context)
         case "grid":
             Grid(element: element, context: context)
         case "grid-row":
@@ -112,6 +114,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Stepper(element: element, context: context)
         case "spacer":
             Spacer(element: element, context: context)
+#if os(iOS) || os(macOS)
+        case "table":
+            Table(element: element, context: context)
+#endif
         case "text":
             Text(context: context)
 #if os(iOS) || os(macOS)
@@ -128,8 +134,6 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             ViewThatFits(element: element, context: context)
         case "z-stack", "zstack":
             ZStack<R>(element: element, context: context)
-            
-
         case "phx-form":
             PhxForm<R>(element: element, context: context)
         case "phx-submit-button":
