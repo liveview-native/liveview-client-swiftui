@@ -162,6 +162,7 @@ public struct LiveBinding<Value: Codable> {
         nonmutating set {
             // update the local value
             data.mode = .local(newValue)
+            data.objectWillChange.send()
             // if we are bound, update the view model, which will send an update to the backend
             if let bindingName {
                 let encoder = FragmentEncoder()
