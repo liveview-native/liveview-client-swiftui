@@ -149,5 +149,40 @@ final class GroupTests: XCTestCase {
             .controlGroupStyle(.navigation)
         }
     }
+    
+    // MARK: DisclosureGroup
+    func testDisclosureGroup() throws {
+        try assertMatch(
+            #"""
+            <disclosure-group>
+                <disclosure-group:label>Expandable Section</disclosure-group:label>
+                Content
+            </disclosure-group>
+            """#
+        ) {
+            DisclosureGroup {
+                Text("Content")
+            } label: {
+                Text("Expandable Section")
+            }
+        }
+    }
+    
+    func testDisclosureGroupSlots() throws {
+        try assertMatch(
+            #"""
+            <disclosure-group>
+                <disclosure-group:label>Expandable Section</disclosure-group:label>
+                <disclosure-group:content>Content</disclosure-group:content>
+            </disclosure-group>
+            """#
+        ) {
+            DisclosureGroup {
+                Text("Content")
+            } label: {
+                Text("Expandable Section")
+            }
+        }
+    }
 #endif
 }

@@ -17,12 +17,10 @@ struct ControlGroup<R: CustomRegistry>: View {
     }
 
     public var body: some View {
-        SwiftUI.Group {
-            SwiftUI.ControlGroup {
-                context.buildChildren(of: element, withTagName: "content", namespace: "control-group", includeDefaultSlot: true)
-            } label: {
-                context.buildChildren(of: element, withTagName: "label", namespace: "control-group")
-            }
+        SwiftUI.ControlGroup {
+            context.buildChildren(of: element, withTagName: "content", namespace: "control-group", includeDefaultSlot: true)
+        } label: {
+            context.buildChildren(of: element, withTagName: "label", namespace: "control-group")
         }
         .applyControlGroupStyle(element.attributeValue(for: "control-group-style").flatMap(ControlGroupStyle.init) ?? .automatic)
     }
