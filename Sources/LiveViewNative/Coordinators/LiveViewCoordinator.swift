@@ -249,39 +249,21 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     private func connectLiveView() async throws {
         guard let socket = session.socket else { return }
         
-        let html: String
-        do {
-            html = try await session.fetchDOM(url: self.url)
-        } catch let error as LiveConnectionError {
-            internalState = .connectionFailed(error)
-            return
-        }
-        
-        try Task.checkCancellation()
-        
-        let phxCSRFToken: String, phxSession: String, phxStatic: String, phxID: String
-        
-        do {
-            let doc = try SwiftSoup.parse(html)
-            (phxCSRFToken, phxSession, phxStatic, phxID) = try self.extractDOMValues(doc)
-        } catch {
-            internalState = .connectionFailed(LiveConnectionError.initialParseError)
-            return
-        }
-        
         var connectParams = session.config.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
-        connectParams["_csrf_token"] = phxCSRFToken
+        connectParams["_csrf_token"] = session.phxCSRFToken
         connectParams["_platform"] = "ios"
         
         let params: Payload = [
-            "session": phxSession,
-            "static": phxStatic,
-            "url": self.url.absoluteString,
+            "session": session.phxSession,
+            "static": session.phxStatic,
+            (session.isMounted ? "redirect": "url"): self.url.absoluteString,
             "params": connectParams,
         ]
         
-        let channel = socket.channel("lv:\(phxID)", params: params)
+        session.isMounted = true
+        
+        let channel = socket.channel("lv:\(session.phxID)", params: params)
         self.channel = channel
         channel.onError { message in
             logger.error("[Channel] Error: \(String(describing: message))")
@@ -289,14 +271,18 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         channel.onClose { message in
             logger.info("[Channel] Closed")
         }
-        channel.on("diff") { message in
+        channel.on("diff") { [weak self] message in
             Task { @MainActor in
+                guard let self,
+                      channel === self.channel
+                else { return }
                 try! self.handleDiff(payload: message.payload, baseURL: self.url)
             }
         }
-        channel.on("phx_close") { message in
-            DispatchQueue.main.async {
-                self.internalState = .notConnected(reconnectAutomatically: false)
+        channel.on("phx_close") { [weak self] message in
+            Task { @MainActor in
+                guard channel === self?.channel else { return }
+                self?.internalState = .notConnected(reconnectAutomatically: false)
             }
         }
         
