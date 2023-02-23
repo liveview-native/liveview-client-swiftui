@@ -1,11 +1,11 @@
 //
 //  LiveSessionConfiguration.swift
-// LiveViewNative
+//  LiveViewNative
 //
 //  Created by Shadowfacts on 3/30/22.
 //
 
-import Foundation
+import SwiftUI
 
 /// An object that configures the behavior of a ``LiveSessionCoordinator``.
 public struct LiveSessionConfiguration {
@@ -37,6 +37,20 @@ public struct LiveSessionConfiguration {
         case enabled
         /// Navigation is fully enabled and uses a `NavigationSplitView` for the UI.
         case splitView
+        /// Navigation is fully enabled and uses a `TabView` to switch between routes.
+        case tabView(tabs: [Tab])
+        
+        public struct Tab: Identifiable {
+            let label: SwiftUI.Label<SwiftUI.Text, SwiftUI.Image>
+            let url: URL
+            
+            public var id: URL { url }
+            
+            public init(label: SwiftUI.Label<SwiftUI.Text, SwiftUI.Image>, url: URL) {
+                self.label = label
+                self.url = url
+            }
+        }
         
         var permitsRedirects: Bool {
             switch self {

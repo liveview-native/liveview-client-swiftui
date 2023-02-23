@@ -74,6 +74,8 @@ public struct LiveView<R: CustomRegistry>: View {
             navigationStack
         case .splitView:
             navigationSplitView
+        case let .tabView(tabs):
+            tabView(tabs)
         default:
             navigationRoot
         }
@@ -110,6 +112,32 @@ public struct LiveView<R: CustomRegistry>: View {
                 .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
                     NavStackEntryView(entry)
                 }
+            }
+        }
+    }
+    
+    @State private var selectedTab: URL?
+    @ViewBuilder
+    private func tabView(_ tabs: [LiveSessionConfiguration.NavigationMode.Tab]) -> some View {
+        TabView(selection: $selectedTab) {
+            ForEach(tabs) { tab in
+                NavigationStack(path: $session.navigationPath) {
+                    navigationRoot
+                        .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
+                            NavStackEntryView(entry)
+                        }
+                }
+                    .tabItem {
+                        tab.label
+                    }
+                    .tag(URL?.some(tab.url))
+            }
+        }
+        .onChange(of: selectedTab) { newValue in
+            guard let newValue else { return }
+            Task {
+                session.rootCoordinator.url = newValue
+                await session.rootCoordinator.reconnect()
             }
         }
     }
