@@ -80,6 +80,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Image(element: element, context: context)
         case "label":
             Label(element: element, context: context)
+        case "labeled-content":
+            LabeledContent(context: context)
         case "lazy-h-grid":
             LazyHGrid(element: element, context: context)
         case "lazy-h-stack", "lazy-hstack":
