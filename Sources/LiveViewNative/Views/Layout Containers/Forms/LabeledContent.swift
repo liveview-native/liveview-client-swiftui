@@ -16,10 +16,20 @@ struct LabeledContent<R: CustomRegistry>: View {
     }
     
     var body: some View {
-        SwiftUI.LabeledContent {
-            context.buildChildren(of: element, withTagName: "content", namespace: "labeled-content", includeDefaultSlot: true)
-        } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "labeled-content")
+        SwiftUI.Group {
+            if element.attributeValue(for: "format") != nil {
+                SwiftUI.LabeledContent {
+                    Text(context: context)
+                } label: {
+                    context.buildChildren(of: element)
+                }
+            } else {
+                SwiftUI.LabeledContent {
+                    context.buildChildren(of: element, withTagName: "content", namespace: "labeled-content", includeDefaultSlot: true)
+                } label: {
+                    context.buildChildren(of: element, withTagName: "label", namespace: "labeled-content")
+                }
+            }
         }
         .applyLabeledContentStyle(element.attributeValue(for: "labeled-content-style").flatMap(LabeledContentStyle.init) ?? .automatic)
     }

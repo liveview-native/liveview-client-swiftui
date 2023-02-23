@@ -110,4 +110,13 @@ final class FormTests: XCTestCase {
             }
         }
     }
+    
+    func testLabeledContentFormat() throws {
+        try assertMatch(
+            #"<labeled-content value="100" format="currency" currency-code="usd">Label</labeled-content>"#,
+            size: .init(width: 300, height: 100)
+        ) {
+            LabeledContent("Label", value: 100, format: .currency(code: "usd"))
+        }
+    }
 }
