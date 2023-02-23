@@ -26,15 +26,21 @@ struct ScrollView<R: RootRegistry>: View {
             ) {
                 context.buildChildren(of: element)
             }
+            .onAppear {
+                guard let scrollPosition = element.attributeValue(for: "scroll-position")
+                else { return }
+                proxy.scrollTo(scrollPosition, anchor: scrollPositionAnchor)
+            }
             .onChange(of: element.attributeValue(for: "scroll-position")) { newValue in
                 guard let newValue else { return }
-                proxy.scrollTo(
-                    newValue,
-                    anchor: element.attributeValue(for: "scroll-position-anchor")?
-                        .data(using: .utf8)
-                        .flatMap { try? JSONDecoder().decode(UnitPoint.self, from: $0) }
-                )
+                proxy.scrollTo(newValue, anchor: scrollPositionAnchor)
             }
         }
+    }
+    
+    private var scrollPositionAnchor: UnitPoint? {
+        element.attributeValue(for: "scroll-position-anchor")?
+            .data(using: .utf8)
+            .flatMap { try? JSONDecoder().decode(UnitPoint.self, from: $0) }
     }
 }
