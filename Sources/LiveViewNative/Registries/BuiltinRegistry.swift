@@ -226,7 +226,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             }
         case "phx-focus":
             // Special case for `TextFieldProtocol`, which handles this event itself.
-            if element.tag == "text-field" || element.tag == "secure-field" {
+            if element.tag == "text-field" || element.tag == "secure-field" || element.tag == "text-editor" {
                 view
             } else {
                 FocusObserver(content: view) { isFocused in
@@ -238,7 +238,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             }
         case "phx-blur":
             // Special case for `TextFieldProtocol`, which handles this event itself.
-            if element.tag == "text-field" || element.tag == "secure-field" {
+            if element.tag == "text-field" || element.tag == "secure-field" || element.tag == "text-editor" {
                 view
             } else {
                 FocusObserver(content: view) { isFocused in
