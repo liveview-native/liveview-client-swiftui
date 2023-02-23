@@ -76,9 +76,19 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let jsonStr = element.attributeValue(for: "modifiers")
         let modified = applyModifiers(encoded: jsonStr, to: view, context: context)
         let bound = applyBindings(to: modified, element: element, context: context)
-        return bound
+        let withID = applyID(element: element, to: bound)
+        return withID
             .environment(\.element, element)
             .preference(key: ProvidedBindingsKey.self, value: []) // reset for the next View.
+    }
+    
+    @ViewBuilder
+    private func applyID(element: ElementNode, to view: some View) -> some View {
+        if let id = element.attributeValue(for: "id") {
+            view.id(id)
+        } else {
+            view
+        }
     }
     
     @ViewBuilder
