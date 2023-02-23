@@ -87,8 +87,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         
         let token = self.currentConnectionToken
 
-        let replyPayload = try await withCheckedThrowingContinuation({ continuation in
-            channel.push(event, payload: payload, timeout: PUSH_TIMEOUT)
+        let replyPayload = try await withCheckedThrowingContinuation({ [weak channel] continuation in
+            channel?.push(event, payload: payload, timeout: PUSH_TIMEOUT)
                 .receive("ok") { reply in
                     continuation.resume(returning: reply.payload)
                 }
@@ -271,7 +271,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
         channel.onClose { message in
             logger.info("[Channel] Closed")
         }
-        channel.on("diff") { [weak self] message in
+        channel.on("diff") { [weak self, weak channel] message in
             Task { @MainActor in
                 guard let self,
                       channel === self.channel
@@ -279,7 +279,7 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                 try! self.handleDiff(payload: message.payload, baseURL: self.url)
             }
         }
-        channel.on("phx_close") { [weak self] message in
+        channel.on("phx_close") { [weak self, weak channel] message in
             Task { @MainActor in
                 guard channel === self?.channel else { return }
                 self?.internalState = .notConnected(reconnectAutomatically: false)
@@ -298,7 +298,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
     
     private func setupChannelJoinHandlers(channel: Channel) {
         channel.join()
-            .receive("ok") { [weak self] message in
+            .receive("ok") { [weak self, weak channel] message in
+                guard let channel else { return }
                 guard let self = self else {
                     // leave the channel so we don't get any more messages/automatic rejoins
                     channel.leave()
@@ -322,7 +323,8 @@ public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
                     channel.leave()
                 }
             }
-            .receive("error") { [weak self] message in
+            .receive("error") { [weak self, weak channel] message in
+                guard let channel else { return }
                 // TODO: reconsider this behavior, web tries to automatically rejoin, and we do to when an error is encountered after a successful join
                 // leave the channel, otherwise the it'll continue retrying indefinitely
                 // we want to control the retry behavior ourselves, so just leave the channel
