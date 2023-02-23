@@ -210,7 +210,8 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
         wsEndpoint.path = "/live/websocket"
         let socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: config) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
         self.socket = socket
-        socket.onOpen { [weak self] in
+        socket.onOpen { [weak self, weak socket] in
+            guard let socket else { return }
             guard let self = self else {
                 socket.disconnect()
                 return
@@ -224,7 +225,8 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
             }
         }
         socket.onClose { logger.debug("[Socket] Closed") }
-        socket.onError { [weak self] (error) in
+        socket.onError { [weak self, weak socket] (error) in
+            guard let socket else { return }
             guard let self = self else {
                 socket.disconnect()
                 return
