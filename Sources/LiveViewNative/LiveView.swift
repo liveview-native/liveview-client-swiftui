@@ -122,7 +122,7 @@ public struct LiveView<R: CustomRegistry>: View {
         TabView(selection: $selectedTab) {
             ForEach(tabs) { tab in
                 NavigationStack(path: $session.navigationPath) {
-                    navigationRoot
+                    NavStackEntryView(.init(url: selectedTab ?? session.url, coordinator: rootCoordinator))
                         .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
                             NavStackEntryView(entry)
                         }

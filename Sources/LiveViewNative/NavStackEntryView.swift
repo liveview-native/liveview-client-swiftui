@@ -27,7 +27,7 @@ struct NavStackEntryView<R: CustomRegistry>: View {
                 if coordinator.url != entry.url {
                     coordinator.url = entry.url
                     await coordinator.reconnect()
-                } else if case .notConnected = coordinator.state {
+                } else {
                     await coordinator.connect()
                 }
             }

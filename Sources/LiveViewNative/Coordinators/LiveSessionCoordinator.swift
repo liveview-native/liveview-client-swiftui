@@ -48,6 +48,8 @@ public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    var isMounted: Bool = false
+    
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
