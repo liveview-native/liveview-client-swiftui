@@ -19,6 +19,7 @@ struct ScrollView<R: RootRegistry>: View {
     }
     
     public var body: some View {
+        let scrollPosition = element.attributeValue(for: "scroll-position")
         SwiftUI.ScrollViewReader { proxy in
             SwiftUI.ScrollView(
                 axes,
@@ -27,11 +28,10 @@ struct ScrollView<R: RootRegistry>: View {
                 context.buildChildren(of: element)
             }
             .onAppear {
-                guard let scrollPosition = element.attributeValue(for: "scroll-position")
-                else { return }
+                guard let scrollPosition else { return }
                 proxy.scrollTo(scrollPosition, anchor: scrollPositionAnchor)
             }
-            .onChange(of: element.attributeValue(for: "scroll-position")) { newValue in
+            .onChange(of: scrollPosition) { newValue in
                 guard let newValue else { return }
                 proxy.scrollTo(newValue, anchor: scrollPositionAnchor)
             }
