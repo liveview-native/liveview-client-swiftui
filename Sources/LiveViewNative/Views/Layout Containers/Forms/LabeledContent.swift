@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LabeledContent<R: CustomRegistry>: View {
+struct LabeledContent<R: RootRegistry>: View {
     @ObservedElement private var element
     private let context: LiveContext<R>
     

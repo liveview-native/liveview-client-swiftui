@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct List<R: CustomRegistry>: View {
+struct List<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     #if os(iOS) || os(tvOS)

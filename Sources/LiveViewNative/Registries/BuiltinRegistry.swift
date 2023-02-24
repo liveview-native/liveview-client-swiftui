@@ -20,7 +20,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     static let attributeDecoder = JSONDecoder()
     
     @ViewBuilder
-    static func lookup<R: CustomRegistry>(_ name: String, _ element: ElementNode, context: LiveContext<R>) -> some View {
+    static func lookup<R: RootRegistry>(_ name: String, _ element: ElementNode, context: LiveContext<R>) -> some View {
         switch name {
         case "async-image":
             AsyncImage(element: element, context: context)

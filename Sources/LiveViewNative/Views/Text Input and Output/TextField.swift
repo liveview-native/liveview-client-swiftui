@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TextField<R: CustomRegistry>: TextFieldProtocol {
+struct TextField<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
     let context: LiveContext<R>
     @FormState var value: String?

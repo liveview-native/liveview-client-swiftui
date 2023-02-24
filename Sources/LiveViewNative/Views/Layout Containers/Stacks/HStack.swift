@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HStack<R: CustomRegistry>: View {
+struct HStack<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

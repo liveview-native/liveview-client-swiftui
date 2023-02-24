@@ -17,10 +17,10 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 
 /// The session coordinator object handles the initial connection, as well as navigation.
 @MainActor
-public class LiveSessionCoordinator<R: CustomRegistry>: ObservableObject {
+public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     @Published internal private(set) var internalState: InternalState = .notConnected(reconnectAutomatically: false)
     /// The current state of the live view connection.
-    public var state: State {
+    public var state: LiveSessionState {
         internalState.publicState
     }
     
@@ -324,7 +324,7 @@ extension LiveSessionCoordinator {
         case connected
         case connectionFailed(Error)
         
-        var publicState: State {
+        var publicState: LiveSessionState {
             switch self {
             case .notConnected(reconnectAutomatically: _):
                 return .notConnected
@@ -353,17 +353,5 @@ extension LiveSessionCoordinator {
                 return true
             }
         }
-    }
-    /// The live view connection state.
-    public enum State {
-        /// The coordinator has not yet connected to the live view.
-        case notConnected
-        /// The coordinator is attempting to connect.
-        case connecting
-        /// The coordinator has connected and the view tree can be rendered.
-        case connected
-        // todo: disconnected state?
-        /// The coordinator failed to connect and produced the given error.
-        case connectionFailed(Error)
     }
 }

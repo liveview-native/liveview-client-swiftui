@@ -8,7 +8,7 @@
 #if !os(tvOS)
 import SwiftUI
 
-struct Gauge<R: CustomRegistry>: View {
+struct Gauge<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     

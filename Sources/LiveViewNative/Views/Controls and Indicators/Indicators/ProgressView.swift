@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProgressView<R: CustomRegistry>: View {
+struct ProgressView<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     

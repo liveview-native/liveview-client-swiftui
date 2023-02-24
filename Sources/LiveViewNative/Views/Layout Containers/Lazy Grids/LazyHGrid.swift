@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LazyHGrid<R: CustomRegistry>: View {
+struct LazyHGrid<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

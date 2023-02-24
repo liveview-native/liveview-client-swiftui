@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 @available(iOS 16.0, *)
-struct NavigationLink<R: CustomRegistry>: View {
+struct NavigationLink<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     @EnvironmentObject private var navCoordinator: NavigationCoordinator<R>

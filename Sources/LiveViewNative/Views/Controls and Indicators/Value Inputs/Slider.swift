@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Slider<R: CustomRegistry>: View {
+struct Slider<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     

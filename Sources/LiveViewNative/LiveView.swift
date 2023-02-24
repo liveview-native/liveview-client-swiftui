@@ -21,7 +21,7 @@ import SwiftUI
 /// - ``body``
 /// ### See Also
 /// - ``LiveViewModel``
-public struct LiveView<R: CustomRegistry>: View {
+public struct LiveView<R: RootRegistry>: View {
     @State private var hasAppeared = false
     @ObservedObject var session: LiveSessionCoordinator<R>
     @State private var hasSetupNavigationControllerDelegate = false

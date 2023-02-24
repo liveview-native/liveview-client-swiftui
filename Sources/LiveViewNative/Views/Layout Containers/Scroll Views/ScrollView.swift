@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ScrollView<R: CustomRegistry>: View {
+struct ScrollView<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

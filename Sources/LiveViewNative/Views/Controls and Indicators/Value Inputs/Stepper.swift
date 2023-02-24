@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Stepper<R: CustomRegistry>: View {
+struct Stepper<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     

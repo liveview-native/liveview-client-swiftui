@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Image<R: CustomRegistry>: View {
+struct Image<R: RootRegistry>: View {
     @ObservedElement private var observedElement: ElementNode
     private let overrideElement: ElementNode?
     private var element: ElementNode {

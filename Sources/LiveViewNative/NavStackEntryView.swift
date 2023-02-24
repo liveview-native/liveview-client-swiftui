@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeCore
 
-struct NavStackEntryView<R: CustomRegistry>: View {
+struct NavStackEntryView<R: RootRegistry>: View {
     private let entry: LiveNavigationEntry<R>
     @ObservedObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel()

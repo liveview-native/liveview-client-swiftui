@@ -8,7 +8,7 @@
 #if os(iOS) || os(macOS)
 import SwiftUI
 
-struct Table<R: CustomRegistry>: View {
+struct Table<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment

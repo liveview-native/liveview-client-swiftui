@@ -11,7 +11,7 @@ struct Shape<S: SwiftUI.Shape>: View {
     @ObservedElement private var element: ElementNode
     private let shape: S
     
-    init(element: ElementNode, context: LiveContext<some CustomRegistry>, shape: S) {
+    init(element: ElementNode, context: LiveContext<some RootRegistry>, shape: S) {
         self.shape = shape
     }
     

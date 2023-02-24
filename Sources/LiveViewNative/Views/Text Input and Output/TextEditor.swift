@@ -8,7 +8,7 @@
 #if os(iOS) || os(macOS)
 import SwiftUI
 
-struct TextEditor<R: CustomRegistry>: TextFieldProtocol {
+struct TextEditor<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
     let context: LiveContext<R>
     @FormState var value: String?

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PhxForm<R: CustomRegistry>: View {
+struct PhxForm<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
