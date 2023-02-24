@@ -80,7 +80,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     
     /// Connects this coordinator to the LiveView channel.
     ///
-    /// This function is a no-op unless ``state-swift.property`` is ``State-swift.enum/notConnected``.
+    /// This function is a no-op unless ``state`` is ``LiveSessionState/notConnected``.
     ///
     /// This is an async function which completes when the connection has been established or failed.
     public func connect() async {

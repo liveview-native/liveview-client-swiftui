@@ -10,9 +10,10 @@ import LiveViewNativeCore
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///
-/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-33lst`` method.
+/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-6jd3b`` method.
 ///
-/// To use your custom registry implementation, provide it as the generic parameter for the ``LiveSessionCoordinator`` you construct:
+/// To use a single registry, implement the ``RootRegistry`` protocol and implement the inherited `CustomRegistry` requirements. If you want to combine multiple registries, see ``AggregateRegistry``.
+/// To use your registry, provide it as the generic parameter for the ``LiveSessionCoordinator`` you construct:
 ///
 /// ```swift
 /// struct ContentView: View {
@@ -23,19 +24,28 @@ import LiveViewNativeCore
 /// ## Topics
 /// ### Custom Tags
 /// - ``TagName``
-/// - ``lookup(_:element:context:)-895au``
+/// - ``lookup(_:element:context:)-5bvqg``
 /// - ``CustomView``
 /// ### Custom View Modifiers
 /// - ``ModifierType``
-/// - ``decodeModifier(_:from:context:)-35xcx``
+/// - ``decodeModifier(_:from:context:)-4cqvs``
 /// - ``CustomModifier``
 /// ### Customizing the Loading View
-/// - ``loadingView(for:state:)-33lst``
+/// - ``loadingView(for:state:)-6jd3b``
 /// - ``LoadingView``
+/// ### Composing Registries
+/// - ``AggregateRegistry``
+/// - ``RootRegistry``
+/// - ``Root``
 /// ### Supporting Types
 /// - ``EmptyRegistry``
 /// - ``ViewModifierBuilder``
 public protocol CustomRegistry {
+    /// The root custom registry type that the live view coordinator and context use.
+    ///
+    /// Conform you registry type to ``RootRegistry``, which sets this type to `Self` automatically, if you intend to use your registry directly.
+    ///
+    /// If you are composing multiple custom registries together or building a registry intended to incorporated into an aggregated registry, see ``AggregateRegistry``.
     associatedtype Root: RootRegistry
     
     /// A type representing the tag names that this registry type can provide views for.
@@ -44,7 +54,7 @@ public protocol CustomRegistry {
     ///
     /// Generally, this is an enum which declares variants for the supported tags:
     /// ```swift
-    /// struct MyRegistry: CustomRegistry {
+    /// struct MyRegistry: RootRegistry {
     ///     enum TagName: String {
     ///         case foo
     ///         case barBaz = "bar-baz"
@@ -60,7 +70,7 @@ public protocol CustomRegistry {
     ///
     /// Generally, this is an enum which declares variants for the support attributes:
     /// ```swift
-    /// struct MyRegistry: CustomRegistry {
+    /// struct MyRegistry: RootRegistry {
     ///     enum AttributeName: String {
     ///         case foo
     ///         case barBaz
@@ -72,15 +82,15 @@ public protocol CustomRegistry {
     associatedtype ModifierType: RawRepresentable = EmptyRegistry.None where ModifierType.RawValue == String
     /// The type of view this registry returns from the `lookup` method.
     ///
-    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-895au`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-5bvqg`` implementations and this will be inferred automatically.
     associatedtype CustomView: View = Never
     /// The type of view modifier this registry returns from the `decodeModifiers` method.
     ///
-    /// Generally, implementors will use an opaque return type on their ``decodeModifier(_:from:context:)-35xcx`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``decodeModifier(_:from:context:)-4cqvs`` implementations and this will be inferred automatically.
     associatedtype CustomModifier: ViewModifier = EmptyModifier
     /// The type of view this registry produces for loading views.
     ///
-    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-33lst`` implementations and this will be inferred automatically.
+    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-6jd3b`` implementations and this will be inferred automatically.
     associatedtype LoadingView: View = Never
     
     /// This method is called by LiveView Native when it needs to construct a custom view.
@@ -110,7 +120,7 @@ public protocol CustomRegistry {
     /// If you do not implement this method, the framework provides a loading view which displays a simple text representation of the state.
     ///
     /// - Parameter url: The URL of the view being connected to.
-    /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveSessionCoordinator/State-swift.enum/connected``.
+    /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveSessionState/connected``.
     @ViewBuilder
     static func loadingView(for url: URL, state: LiveSessionState) -> LoadingView
 }
@@ -152,5 +162,6 @@ extension CustomRegistry where ModifierType == EmptyRegistry.None, CustomModifie
     }
 }
 
+/// A root registry is a ``CustomRegistry`` type that can be used directly as the registry for a ``LiveSessionCoordinator``.
 public protocol RootRegistry: CustomRegistry where Root == Self {
 }
