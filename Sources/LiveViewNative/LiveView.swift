@@ -12,7 +12,7 @@ import SwiftUI
 ///
 /// The `LiveView` attempts to connect immediately when it appears.
 ///
-/// While in states other than ``LiveSessionCoordinator/State-swift.enum/connected``, this view only provides a basic text description of the state. The loading view can be customized with a custom registry and the ``CustomRegistry/loadingView(for:state:)-33lst`` method.
+/// While in states other than ``LiveSessionState/connected``, this view only provides a basic text description of the state. The loading view can be customized with a custom registry and the ``CustomRegistry/loadingView(for:state:)-6jd3b`` method.
 ///
 /// ## Topics
 /// ### Creating a LiveView

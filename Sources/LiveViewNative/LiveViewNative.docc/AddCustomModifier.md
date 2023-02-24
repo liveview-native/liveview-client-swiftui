@@ -1,32 +1,32 @@
 # Adding Custom Modifiers
 
-Use the ``CustomRegistry`` protocol to define how custom modifiers in the DOM are handled.
+Use the ``RootRegistry`` protocol to define how custom modifiers in the DOM are handled.
 
 ## Overview
 
-If you don't already have one, create a type that conforms to the ``CustomRegistry`` protocol and provide it as the eneric type paramter to your ``LiveViewCoordinator``.
+If you don't already have one, create a type that conforms to the ``RootRegistry`` protocol and provide it as the eneric type paramter to your ``LiveViewCoordinator``.
 
 ```swift
-struct MyRegistry: CustomRegistry {
+struct MyRegistry: RootRegistry {
 }
 ```
 
 Then, add an enum called `AttributeName` that has strings for raw values and conforms to `Equatable`. The framework will use this type to check if your registry supports a particular attribute name. All of the string values should be lowercase, otherwise the framework will not use them.
 
 ```swift
-struct MyRegistry: CustomRegistry {
+struct MyRegistry: RootRegistry {
     enum ModifierType: String {
         case myFont = "my_font"
     }
 }
 ```
 
-To define the view modifier for this attributes, implement the ``CustomRegistry/decodeModifier(_:from:context:)-35xcx`` method. This method is automatically treated as a ``ViewModifierBuilder``, so simply construct your modifier rather than returning it.
+To define the view modifier for this attributes, implement the ``CustomRegistry/decodeModifier(_:from:context:)-4cqvs`` method. This method is automatically treated as a ``ViewModifierBuilder``, so simply construct your modifier rather than returning it.
 
 In the following example, a modifier like `{"type": "my_font", "size": 22}` could be used to apply the custom font named "My Font" with a fixed size of 22pt.
 
 ```swift
-struct MyRegistry: CustomRegistry {
+struct MyRegistry: RootRegistry {
     enum ModifierType: String {
         case myFont = "my_font"
     }

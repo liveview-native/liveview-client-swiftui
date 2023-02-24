@@ -20,7 +20,7 @@ import Combine
 ///
 /// Depending on how the live binding is used, the name is obtained in one of two ways:
 /// 1. If it is being used as part of an element, the binding name is provided by an attribute on the element.
-/// Pass the name of the attribute which specifies the binding name to the ``LiveBinding/init(attribute:)`` initializer.
+/// Pass the name of the attribute which specifies the binding name to the ``LiveBinding/init(wrappedValue:attribute:)`` initializer.
 /// 2. If it is being used as part of a view modifier, the binding name is encoded as a string in the modifier payload.
 /// Decode the binding using the ``init(decoding:in:initialValue:)`` initializer, and the string value at the given coding key will be used as the binding name.
 ///
