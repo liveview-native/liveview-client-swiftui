@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeCore
 
 /// The context provides information at initialization-time to views in a LiveView.
-public struct LiveContext<R: CustomRegistry> {
+public struct LiveContext<R: RootRegistry> {
     /// The coordinator corresponding to the live view in which thie view is being constructed.
     public let coordinator: LiveViewCoordinator<R>
     

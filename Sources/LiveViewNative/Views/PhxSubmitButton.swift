@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PhxSubmitButton<R: CustomRegistry>: View {
+struct PhxSubmitButton<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     private let formModel: FormModel

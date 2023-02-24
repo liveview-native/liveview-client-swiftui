@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Color<R: CustomRegistry>: View {
+struct Color<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

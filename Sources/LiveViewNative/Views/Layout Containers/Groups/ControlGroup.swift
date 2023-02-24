@@ -8,7 +8,7 @@
 #if os(iOS) || os(macOS)
 import SwiftUI
 
-struct ControlGroup<R: CustomRegistry>: View {
+struct ControlGroup<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
 

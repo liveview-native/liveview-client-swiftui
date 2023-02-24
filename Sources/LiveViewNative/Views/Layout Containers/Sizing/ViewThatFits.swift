@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ViewThatFits<R: CustomRegistry>: View {
+struct ViewThatFits<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Group<R: CustomRegistry>: View {
+struct Group<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

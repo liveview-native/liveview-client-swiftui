@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Link<R: CustomRegistry>: View {
+struct Link<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     

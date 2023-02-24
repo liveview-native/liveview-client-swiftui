@@ -10,7 +10,7 @@ import LiveViewNativeCore
 import CoreTransferable
 
 
-struct ShareLink<R: CustomRegistry>: View {
+struct ShareLink<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     

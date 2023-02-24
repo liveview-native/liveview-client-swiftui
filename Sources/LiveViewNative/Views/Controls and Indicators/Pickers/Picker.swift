@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Picker<R: CustomRegistry>: View {
+struct Picker<R: RootRegistry>: View {
     private let context: LiveContext<R>
     @ObservedElement private var element
     @FormState private var value: String?

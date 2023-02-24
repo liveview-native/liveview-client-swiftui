@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Toggle<R: CustomRegistry>: View {
+struct Toggle<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     

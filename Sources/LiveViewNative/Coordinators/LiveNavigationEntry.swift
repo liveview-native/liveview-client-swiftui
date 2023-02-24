@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LiveNavigationEntry<R: CustomRegistry>: Hashable {
+struct LiveNavigationEntry<R: RootRegistry>: Hashable {
     let url: URL
     let coordinator: LiveViewCoordinator<R>
     

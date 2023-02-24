@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Form<R: CustomRegistry>: View {
+struct Form<R: RootRegistry>: View {
     @ObservedElement private var element
     private let context: LiveContext<R>
     

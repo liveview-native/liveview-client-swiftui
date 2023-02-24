@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LazyVStack<R: CustomRegistry>: View {
+struct LazyVStack<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

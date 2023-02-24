@@ -14,7 +14,7 @@ public extension CodingUserInfoKey {
     static let liveContext = CodingUserInfoKey(rawValue: "LiveViewNative.liveContext")!
 }
 
-struct ViewTreeBuilder<R: CustomRegistry> {
+struct ViewTreeBuilder<R: RootRegistry> {
     func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
         return fromNodes(nodes, context: LiveContext(coordinator: coordinator, url: url))
     }
@@ -118,7 +118,7 @@ extension ViewTreeBuilder {
     }
 }
 
-enum ModifierContainer<R: CustomRegistry>: Decodable {
+enum ModifierContainer<R: RootRegistry>: Decodable {
     case builtin(BuiltinRegistry.BuiltinModifier)
     case custom(R.CustomModifier)
     case error(ErrorModifier)
@@ -162,7 +162,7 @@ enum ModifierContainer<R: CustomRegistry>: Decodable {
 }
 
 // this view is required to to break the infinitely-recursive type that occurs if the body of this view is inlined into applyAttributes(_:context:)
-private struct ModifierApplicator<Parent: View, R: CustomRegistry>: View {
+private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     let modifiers: ArraySlice<ModifierContainer<R>>
     let context: LiveContext<R>
@@ -188,7 +188,7 @@ private extension View {
 
 // not fileprivate because it's used by LiveContext
 // this cannot be "NodeView" because it's used by forEach which requires element ids, which leaf nodes can't have
-internal struct ElementView<R: CustomRegistry>: View {
+internal struct ElementView<R: RootRegistry>: View {
     let element: ElementNode
     let context: LiveContext<R>
     

@@ -8,7 +8,7 @@
 #if os(iOS) || os(macOS)
 import SwiftUI
 
-struct DatePicker<R: CustomRegistry>: View {
+struct DatePicker<R: RootRegistry>: View {
     private let context: LiveContext<R>
     @ObservedElement private var element
     @FormState(default: CodableDate()) private var value: CodableDate

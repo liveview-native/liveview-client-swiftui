@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Text<R: CustomRegistry>: View {
+struct Text<R: RootRegistry>: View {
     let context: LiveContext<R>
     
     // The view that's in the SwiftUI view tree needs to observe an element to respond to DOM changes,

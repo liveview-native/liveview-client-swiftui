@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ZStack<R: CustomRegistry>: View {
+struct ZStack<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

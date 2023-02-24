@@ -10,7 +10,7 @@ import SwiftUI
 struct Spacer: View {
     @ObservedElement private var element: ElementNode
     
-    init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
+    init(element: ElementNode, context: LiveContext<some RootRegistry>) {
     }
     
     public var body: some View {

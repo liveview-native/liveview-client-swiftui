@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol TextFieldProtocol: View {
-    associatedtype R: CustomRegistry
+    associatedtype R: RootRegistry
     var element: ElementNode { get }
     var context: LiveContext<R> { get }
     var value: String? { get nonmutating set }

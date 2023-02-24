@@ -7,7 +7,7 @@
 #if !os(watchOS)
 import SwiftUI
 
-struct Menu<R: CustomRegistry>: View {
+struct Menu<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     

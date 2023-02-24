@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AsyncImage<R: CustomRegistry>: View {
+struct AsyncImage<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     

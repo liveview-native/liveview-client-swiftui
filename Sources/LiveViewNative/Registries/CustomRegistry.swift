@@ -36,6 +36,8 @@ import LiveViewNativeCore
 /// - ``EmptyRegistry``
 /// - ``ViewModifierBuilder``
 public protocol CustomRegistry {
+    associatedtype Root: RootRegistry
+    
     /// A type representing the tag names that this registry type can provide views for.
     ///
     /// The tag name type must be `RawRepresentable` and its raw values must be strings. All raw value strings must be lowercased, otherwise the framework will not be able to construct your tag types from strings in the DOM.
@@ -89,7 +91,7 @@ public protocol CustomRegistry {
     /// - Parameter element: The element that a view should be created for.
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
-    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Self>) -> CustomView
+    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Root>) -> CustomView
     
     /// This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.
     ///
@@ -101,7 +103,7 @@ public protocol CustomRegistry {
     /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
     /// - Throws: If decoding the modifier fails.
     @ViewModifierBuilder
-    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> CustomModifier
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Root>) throws -> CustomModifier
     
     /// This method is called when it needs a view to display while connecting to the live view.
     ///
@@ -110,12 +112,12 @@ public protocol CustomRegistry {
     /// - Parameter url: The URL of the view being connected to.
     /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveSessionCoordinator/State-swift.enum/connected``.
     @ViewBuilder
-    static func loadingView(for url: URL, state: LiveSessionCoordinator<Self>.State) -> LoadingView
+    static func loadingView(for url: URL, state: LiveSessionState) -> LoadingView
 }
 
 extension CustomRegistry where LoadingView == Never {
     /// A default  implementation that falls back to the default framework loading view.
-    public static func loadingView(for url: URL, state: LiveSessionCoordinator<Self>.State) -> Never {
+    public static func loadingView(for url: URL, state: LiveSessionState) -> Never {
         fatalError()
     }
 }
@@ -123,7 +125,7 @@ extension CustomRegistry where LoadingView == Never {
 /// The empty registry is the default ``CustomRegistry`` implementation that does not provide any views or modifiers.
 public struct EmptyRegistry {
 }
-extension EmptyRegistry: CustomRegistry {
+extension EmptyRegistry: RootRegistry {
     /// A type that can be used as ``CustomRegistry/TagName`` or ``CustomRegistry/ModifierType`` for registries which don't support any custom tags or attributes.
     public struct None: RawRepresentable {
         public typealias RawValue = String
@@ -139,13 +141,16 @@ extension EmptyRegistry: CustomRegistry {
 }
 extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Never {
     /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/TagName`` type alias, this implementation will be used.
-    public static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Self>) -> Never {
+    public static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Root>) -> Never {
         fatalError()
     }
 }
 extension CustomRegistry where ModifierType == EmptyRegistry.None, CustomModifier == EmptyModifier {
     /// A default implementation that does not provide any custom modifiers. If you omit the ``CustomRegistry/ModifierType`` type alias, this implementation will be used.
-    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) -> EmptyModifier {
+    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Root>) -> EmptyModifier {
         EmptyModifier()
     }
+}
+
+public protocol RootRegistry: CustomRegistry where Root == Self {
 }

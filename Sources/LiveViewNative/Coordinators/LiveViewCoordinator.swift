@@ -24,10 +24,10 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 /// - ``receiveEvent(_:)``
 /// - ``handleEvent(_:handler:)``
 @MainActor
-public class LiveViewCoordinator<R: CustomRegistry>: ObservableObject {
+public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     @Published internal private(set) var internalState: LiveSessionCoordinator<R>.InternalState = .notConnected(reconnectAutomatically: false)
     
-    var state: LiveSessionCoordinator<R>.State {
+    var state: LiveSessionState {
         internalState.publicState
     }
     

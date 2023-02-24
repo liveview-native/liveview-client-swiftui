@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GridRow<R: CustomRegistry>: View {
+struct GridRow<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
