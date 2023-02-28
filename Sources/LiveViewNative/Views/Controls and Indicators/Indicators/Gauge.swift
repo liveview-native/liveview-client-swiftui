@@ -12,6 +12,11 @@ struct Gauge<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
+    @Attribute("value") private var value: Double = 0
+    @Attribute("lower-bound") private var lowerBound: Double = 0
+    @Attribute("upper-bound") private var upperBound: Double = 1
+    @Attribute("style") private var style: GaugeStyle = .automatic
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
@@ -46,17 +51,12 @@ struct Gauge<R: RootRegistry>: View {
         .applyGaugeStyle(style)
     }
     
-    private var value: Double { element.attributeValue(for: "value").flatMap(Double.init) ?? 0 }
-    private var lowerBound: Double { element.attributeValue(for: "lower-bound").flatMap(Double.init) ?? 0 }
-    private var upperBound: Double { element.attributeValue(for: "upper-bound").flatMap(Double.init) ?? 1 }
-    private var style: GaugeStyle { element.attributeValue(for: "gauge-style").flatMap(GaugeStyle.init) ?? .automatic }
-    
     private var label: some View {
         context.buildChildren(of: element, withTagName: "label", namespace: "gauge", includeDefaultSlot: true)
     }
 }
 
-fileprivate enum GaugeStyle: String {
+fileprivate enum GaugeStyle: String, AttributeDecodable {
     case accessoryCircularCapacity = "accessory-circular-capacity"
     case accessoryLinearCapacity = "accessory-linear-capacity"
     case accessoryCircular = "accessory-circular"

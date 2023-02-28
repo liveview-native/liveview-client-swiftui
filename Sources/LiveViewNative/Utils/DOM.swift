@@ -7,9 +7,6 @@
 
 import LiveViewNativeCore
 
-/// An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.
-public typealias Attribute = LiveViewNativeCore.Attribute
-
 /// A wrapper for an element-containing DOM node and its associated data.
 ///
 /// ## Topics
@@ -47,7 +44,7 @@ public struct ElementNode {
     /// The tag name of the element.
     public var tag: String { data.tag }
     /// The list of attributes present on this element.
-    public var attributes: [Attribute] { data.attributes }
+    public var attributes: [LiveViewNativeCore.Attribute] { data.attributes }
     /// The attribute with the given name, or `nil` if there is no such attribute.
     ///
     /// ## Discussion
@@ -55,7 +52,7 @@ public struct ElementNode {
     /// ```swift
     /// element.attribute(named: "my-attr")
     /// ```
-    public func attribute(named name: AttributeName) -> Attribute? { node[name] }
+    public func attribute(named name: AttributeName) -> LiveViewNativeCore.Attribute? { node[name] }
     
     /// The value of the attribute with the given name, or `nil` if there is no such attribute.
     ///

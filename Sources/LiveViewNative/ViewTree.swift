@@ -194,7 +194,7 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
 
 private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
-    let bindings: ArraySlice<Attribute>
+    let bindings: ArraySlice<LiveViewNativeCore.Attribute>
     let element: ElementNode
     let context: LiveContext<R>
 
@@ -225,7 +225,7 @@ private extension View {
     }
     
     @ViewBuilder
-    func applyBindings<R: CustomRegistry>(_ bindings: ArraySlice<Attribute>, element: ElementNode, context: LiveContext<R>) -> some View {
+    func applyBindings<R: CustomRegistry>(_ bindings: ArraySlice<LiveViewNativeCore.Attribute>, element: ElementNode, context: LiveContext<R>) -> some View {
         if bindings.isEmpty {
             self
         } else {
