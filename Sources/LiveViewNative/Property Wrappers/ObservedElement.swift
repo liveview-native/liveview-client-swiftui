@@ -54,6 +54,10 @@ public struct ObservedElement {
         }
         return element
     }
+    
+    public var projectedValue: AnyPublisher<Void, Never> {
+        observer.objectWillChange.eraseToAnyPublisher()
+    }
 }
 
 extension ObservedElement: DynamicProperty {
