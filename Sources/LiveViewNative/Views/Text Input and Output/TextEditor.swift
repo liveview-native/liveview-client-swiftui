@@ -15,6 +15,9 @@ struct TextEditor<R: RootRegistry>: TextFieldProtocol {
     @FocusState private var isFocused: Bool
     @LiveBinding(attribute: "find-presented") private var isFindPresented = false
     
+    let focusEvent = Event("phx-focus", type: "focus")
+    let blurEvent = Event("phx-blur", type: "blur")
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }

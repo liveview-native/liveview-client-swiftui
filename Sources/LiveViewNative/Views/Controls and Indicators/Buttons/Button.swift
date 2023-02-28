@@ -13,6 +13,8 @@ struct Button<R: RootRegistry>: View {
     // used internaly by PhxSubmitButton
     private let action: (() -> Void)?
     
+    @Event("phx-click", type: "click") private var click
+    
     init(element: ElementNode, context: LiveContext<R>, action: (() -> Void)?) {
         self.context = context
         self.action = action
@@ -40,12 +42,7 @@ struct Button<R: RootRegistry>: View {
             action()
             return
         }
-        guard let clickEvent = element.attributeValue(for: "phx-click") else {
-            return
-        }
-        Task {
-            try await context.coordinator.pushEvent(type: "click", event: clickEvent, value: element.buildPhxValuePayload())
-        }
+        click(element.buildPhxValuePayload()) {}
     }
     
 }

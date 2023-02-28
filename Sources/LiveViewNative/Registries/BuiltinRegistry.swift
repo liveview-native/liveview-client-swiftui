@@ -209,55 +209,29 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     ) -> some View {
         switch binding {
         case "phx-window-focus":
-            ScenePhaseObserver(content: view) { scenePhase in
-                if scenePhase == .active {
-                    Task {
-                        try await context.coordinator.pushEvent(type: "focus", event: event, value: value)
-                    }
-                }
-            }
+            ScenePhaseObserver(content: view, target: .active, type: "focus", event: event, value: value)
         case "phx-window-blur":
-            ScenePhaseObserver(content: view) { scenePhase in
-                if scenePhase == .background {
-                    Task {
-                        try await context.coordinator.pushEvent(type: "blur", event: event, value: value)
-                    }
-                }
-            }
+            ScenePhaseObserver(content: view, target: .background, type: "blur", event: event, value: value)
         case "phx-focus":
             // Special case for `TextFieldProtocol`, which handles this event itself.
             if element.tag == "text-field" || element.tag == "secure-field" || element.tag == "text-editor" {
                 view
             } else {
-                FocusObserver(content: view) { isFocused in
-                    guard isFocused else { return }
-                    Task {
-                        try await context.coordinator.pushEvent(type: "focus", event: event, value: value)
-                    }
-                }
+                FocusObserver(content: view, target: true, type: "focus", event: event, value: value)
             }
         case "phx-blur":
             // Special case for `TextFieldProtocol`, which handles this event itself.
             if element.tag == "text-field" || element.tag == "secure-field" || element.tag == "text-editor" {
                 view
             } else {
-                FocusObserver(content: view) { isFocused in
-                    guard !isFocused else { return }
-                    Task {
-                        try await context.coordinator.pushEvent(type: "blur", event: event, value: value)
-                    }
-                }
+                FocusObserver(content: view, target: false, type: "blur", event: event, value: value)
             }
         case "phx-click":
             // Special case for `Button`, which handles this event itself.
             if element.tag == "button" {
                 view
             } else {
-                view.onTapGesture {
-                    Task {
-                        try await context.coordinator.pushEvent(type: "click", event: event, value: value)
-                    }
-                }
+                TapGestureView(content: view, type: "click", event: event, value: value)
             }
         default:
             view
@@ -269,11 +243,23 @@ fileprivate struct ScenePhaseObserver<Content: View>: View {
     @Environment(\.scenePhase) var scenePhase
     
     let content: Content
-    let onChange: (ScenePhase) -> ()
+    let target: ScenePhase
+    let _event: Event
+    let value: Payload
+    
+    init(content: Content, target: ScenePhase, type: String, event: String, value: Payload) {
+        self.content = content
+        self.target = target
+        self._event = .init(event: event, type: type)
+        self.value = value
+    }
     
     var body: some View {
         content
-            .onChange(of: scenePhase, perform: onChange)
+            .onChange(of: scenePhase) { newValue in
+                guard newValue == target else { return }
+                _event.wrappedValue(value) {}
+            }
     }
 }
 
@@ -281,11 +267,42 @@ fileprivate struct FocusObserver<Content: View>: View {
     @FocusState private var isFocused: Bool
     
     let content: Content
-    let onChange: (Bool) -> ()
+    let target: Bool
+    let _event: Event
+    let value: Payload
+    
+    init(content: Content, target: Bool, type: String, event: String, value: Payload) {
+        self.content = content
+        self.target = target
+        self._event = .init(event: event, type: type)
+        self.value = value
+    }
     
     var body: some View {
         content
             .focused($isFocused)
-            .onChange(of: isFocused, perform: onChange)
+            .onChange(of: isFocused) { newValue in
+                guard newValue == target else { return }
+                _event.wrappedValue(value) {}
+            }
+    }
+}
+
+fileprivate struct TapGestureView<Content: View>: View {
+    let content: Content
+    let _event: Event
+    let value: Payload
+    
+    init(content: Content, type: String, event: String, value: Payload) {
+        self.content = content
+        self._event = .init(event: event, type: type)
+        self.value = value
+    }
+    
+    var body: some View {
+        content
+            .onTapGesture {
+                _event.wrappedValue(value) {}
+            }
     }
 }

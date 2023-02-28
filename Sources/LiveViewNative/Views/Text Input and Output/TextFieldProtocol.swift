@@ -13,6 +13,9 @@ protocol TextFieldProtocol: View {
     var context: LiveContext<R> { get }
     var value: String? { get nonmutating set }
     
+    var focusEvent: Event { get }
+    var blurEvent: Event { get }
+    
     init(element: ElementNode, context: LiveContext<R>)
 }
 
@@ -59,25 +62,15 @@ extension TextFieldProtocol {
     /// Use `@FocusState` to send `phx-focus` and `phx-blur` events.
     func handleFocus(_ isFocused: Bool) {
         if isFocused {
-            guard let event = element.attributeValue(for: "phx-focus") else { return }
-            Task {
-                try await context.coordinator.pushEvent(
-                    type: "focus",
-                    event: event,
-                    value: element.buildPhxValuePayload()
-                        .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
-                )
-            }
+            focusEvent.wrappedValue(
+                element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            ) {}
         } else {
-            guard let event = element.attributeValue(for: "phx-blur") else { return }
-            Task {
-                try await context.coordinator.pushEvent(
-                    type: "blur",
-                    event: event,
-                    value: element.buildPhxValuePayload()
-                        .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
-                )
-            }
+            blurEvent.wrappedValue(
+                element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            ) {}
         }
     }
     

@@ -13,6 +13,9 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
     @FormState var value: String?
     @FocusState private var isFocused: Bool
     
+    let focusEvent = Event("phx-focus", type: "focus")
+    let blurEvent = Event("phx-blur", type: "blur")
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
