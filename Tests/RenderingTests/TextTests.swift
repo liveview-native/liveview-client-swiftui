@@ -122,18 +122,18 @@ This is some markdown text [click me](apple.com)
     
     // MARK: TextField
     func testTextFieldSimple() throws {
-        try assertMatch(#"<text-field placeholder="Type here" />"#) {
+        try assertMatch(#"<text-field>Type here</text-field>"#) {
             TextField("Type here", text: .constant(""))
         }
-        try assertMatch(#"<secure-field placeholder="Password" />"#) {
+        try assertMatch(#"<secure-field>Password</secure-field>"#) {
             SecureField("Password", text: .constant(""))
         }
     }
     func testTextFieldPrompt() throws {
-        try assertMatch(#"<text-field placeholder="Placeholder" prompt="Prompt" />"#) {
+        try assertMatch(#"<text-field prompt="Prompt">Placeholder</text-field>"#) {
             TextField("Placeholder", text: .constant(""), prompt: Text("Prompt"))
         }
-        try assertMatch(#"<secure-field placeholder="Placeholder" prompt="Prompt" />"#) {
+        try assertMatch(#"<secure-field prompt="Prompt">Placeholder</secure-field>"#) {
             SecureField("Placeholder", text: .constant(""), prompt: Text("Prompt"))
         }
     }
