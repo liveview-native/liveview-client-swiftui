@@ -15,7 +15,7 @@ struct Gauge<R: RootRegistry>: View {
     @Attribute("value") private var value: Double = 0
     @Attribute("lower-bound") private var lowerBound: Double = 0
     @Attribute("upper-bound") private var upperBound: Double = 1
-    @Attribute("style") private var style: GaugeStyle = .automatic
+    @Attribute("gauge-style") private var style: GaugeStyle = .automatic
     
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
