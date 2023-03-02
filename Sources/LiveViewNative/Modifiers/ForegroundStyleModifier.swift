@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct ForegroundStyleModifier: ViewModifier, Decodable {
-    private let primary: AnyShapeStyle?
+    private let primary: AnyShapeStyle
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.primary = try container.decodeIfPresent(AnyShapeStyle.self, forKey: .primary)
+        self.primary = try container.decode(AnyShapeStyle.self, forKey: .primary)
     }
 
     func body(content: Content) -> some View {
-        let primaryStyle = self.primary!
+        let primaryStyle = self.primary
 
         content.foregroundStyle(primaryStyle)
     }
