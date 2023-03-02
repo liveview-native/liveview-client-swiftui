@@ -67,7 +67,7 @@ public class LiveViewModel: ObservableObject {
 public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// The value of the `id` attribute of the `<form>` element this model is for.
     public let elementID: String
-    var pushEventImpl: ((String, String, Any) async throws -> Void)!
+    var pushEventImpl: ((String, String, Any, Int?) async throws -> Void)!
     var changeEvent: String?
     var submitEvent: String?
     /// The form data for this form.
@@ -134,7 +134,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)=\(v.formValue.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
         }.joined(separator: "&")
 
-        try await pushEventImpl("form", event, urlQueryEncodedData)
+        try await pushEventImpl("form", event, urlQueryEncodedData, nil)
     }
     
     public var debugDescription: String {

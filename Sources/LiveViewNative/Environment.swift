@@ -24,7 +24,7 @@ private struct TextFieldPrimaryActionKey: EnvironmentKey {
 /// Provides access to ``LiveViewCoordinator`` properties via the environment.
 /// This exists to type-erase the coordinator, since environment properties can't be generic.
 struct CoordinatorEnvironment {
-    let pushEvent: @MainActor (String, String, Any) async throws -> Void
+    let pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void
     let elementChanged: AnyPublisher<NodeRef, Never>
     let document: Document
     
