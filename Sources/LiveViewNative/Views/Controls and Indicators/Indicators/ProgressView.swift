@@ -11,8 +11,8 @@ struct ProgressView<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
-    @Attribute("timer-interval-start", transform: { $0?.value.flatMap({ try? Date($0, strategy: .elixirDateTimeOrDate) }) }) private var timerIntervalStart: Date?
-    @Attribute("timer-interval-end", transform: { $0?.value.flatMap({ try? Date($0, strategy: .elixirDateTimeOrDate) }) }) private var timerIntervalEnd: Date?
+    @Attribute("timer-interval-start") private var timerIntervalStart: Date?
+    @Attribute("timer-interval-end") private var timerIntervalEnd: Date?
     @Attribute("counts-down") private var countsDown: Bool
     
     @Attribute("value") private var value: Double?

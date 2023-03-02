@@ -116,6 +116,13 @@ extension Double: AttributeDecodable {
     }
 }
 
+extension Date: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self = try Self(attributeValue, strategy: .elixirDateTimeOrDate)
+    }
+}
+
 extension AttributeDecodable where Self: RawRepresentable, RawValue == String {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
