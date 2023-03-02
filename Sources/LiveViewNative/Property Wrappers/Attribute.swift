@@ -18,11 +18,6 @@ public struct Attribute<T>: DynamicProperty where T: AttributeDecodable {
         self.name = name
         self.defaultValue = wrappedValue
     }
-    
-    public init(wrappedValue: T? = nil, _ name: String) {
-        self.name = AttributeName(name: name)
-        self.defaultValue = wrappedValue
-    }
 
     public var wrappedValue: T {
         do {
