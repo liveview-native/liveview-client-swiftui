@@ -187,10 +187,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     @ViewModifierBuilder
     static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch type {
-        case .fontWeight:
-            try FontWeightModifier(from: decoder)
         case .foregroundStyle:
             try ForegroundStyleModifier(from: decoder)
+        case .fontWeight:
+            try FontWeightModifier(from: decoder)
         case .frame:
             try FrameModifier(from: decoder)
         case .gridCellAnchor:
