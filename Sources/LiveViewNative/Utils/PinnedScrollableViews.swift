@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
-extension PinnedScrollableViews: Decodable {
-    
+extension PinnedScrollableViews: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
@@ -26,5 +26,10 @@ extension PinnedScrollableViews: Decodable {
         default:
             self = .init()
         }
+    }
+    
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.init(string: value)
     }
 }

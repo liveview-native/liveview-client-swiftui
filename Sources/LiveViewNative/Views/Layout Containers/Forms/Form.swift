@@ -11,6 +11,8 @@ struct Form<R: RootRegistry>: View {
     @ObservedElement private var element
     private let context: LiveContext<R>
     
+    @Attribute("form-style") private var style: FormStyle = .automatic
+    
     init(context: LiveContext<R>) {
         self.context = context
     }
@@ -19,15 +21,11 @@ struct Form<R: RootRegistry>: View {
         SwiftUI.Form {
             context.buildChildren(of: element)
         }
-        .applyFormStyle(formStyle)
-    }
-    
-    private var formStyle: FormStyle {
-        element.attributeValue(for: "form-style").flatMap(FormStyle.init) ?? .automatic
+        .applyFormStyle(style)
     }
 }
 
-private enum FormStyle: String {
+private enum FormStyle: String, AttributeDecodable {
     case automatic, columns, grouped
 }
 

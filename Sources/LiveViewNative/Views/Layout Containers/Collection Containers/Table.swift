@@ -16,6 +16,8 @@ struct Table<R: RootRegistry>: View {
     @LiveBinding(attribute: "selection") private var selection = Selection.multiple([])
     @LiveBinding(attribute: "sort-order") private var sortOrder = [TableColumnSort]()
     
+    @Attribute("table-style") private var style: TableStyle = .automatic
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
@@ -117,7 +119,7 @@ struct Table<R: RootRegistry>: View {
                 fatalError("Too many columns in table: \(columns.count)")
             }
         }
-        .applyTableStyle(element.attributeValue(for: "table-style").flatMap(TableStyle.init) ?? .automatic)
+        .applyTableStyle(style)
     }
     
     
@@ -185,7 +187,7 @@ fileprivate extension SwiftUI.Table where Value == TableRow, Rows == TableForEac
     }
 }
 
-fileprivate enum TableStyle: String {
+fileprivate enum TableStyle: String, AttributeDecodable {
     case automatic
     case inset
     #if os(macOS)

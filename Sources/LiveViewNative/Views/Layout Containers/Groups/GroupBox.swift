@@ -11,6 +11,9 @@ import SwiftUI
 struct GroupBox<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
+    
+    @Attribute("title") private var title: String?
+    @Attribute("group-box-style") private var style: GroupBoxStyle = .automatic
 
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
@@ -18,7 +21,7 @@ struct GroupBox<R: RootRegistry>: View {
 
     public var body: some View {
         SwiftUI.Group {
-            if let title = element.attributeValue(for: "title") {
+            if let title {
                 SwiftUI.GroupBox(title) {
                     context.buildChildren(of: element)
                 }
@@ -30,11 +33,11 @@ struct GroupBox<R: RootRegistry>: View {
                 }
             }
         }
-        .applyGroupBoxStyle(element.attributeValue(for: "group-box-style").flatMap(GroupBoxStyle.init) ?? .automatic)
+        .applyGroupBoxStyle(style)
     }
 }
 
-fileprivate enum GroupBoxStyle: String {
+fileprivate enum GroupBoxStyle: String, AttributeDecodable {
     case automatic
 }
 

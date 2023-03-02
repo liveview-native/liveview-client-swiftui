@@ -13,6 +13,8 @@ struct Toggle<R: RootRegistry>: View {
     
     @FormState(default: false) var value: Bool
     
+    @Attribute("toggle-style") private var style: ToggleStyle = .automatic
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
@@ -21,13 +23,11 @@ struct Toggle<R: RootRegistry>: View {
         SwiftUI.Toggle(isOn: $value) {
             context.buildChildren(of: element)
         }
-        .applyToggleStyle(
-            element.attributeValue(for: "toggle-style").flatMap(ToggleStyle.init) ?? .automatic
-        )
+        .applyToggleStyle(style)
     }
 }
 
-fileprivate enum ToggleStyle: String {
+fileprivate enum ToggleStyle: String, AttributeDecodable {
     case automatic
     case button
     case `switch`

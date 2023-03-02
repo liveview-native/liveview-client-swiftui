@@ -11,15 +11,19 @@ struct Grid<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
+    @Attribute("alignment") private var alignment: Alignment = .center
+    @Attribute("horizontal-spacing") private var horizontalSpacing: Double?
+    @Attribute("vertical-spacing") private var verticalSpacing: Double?
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
 
     public var body: some View {
         SwiftUI.Grid(
-            alignment: element.attributeValue(for: "alignment").flatMap(Alignment.init(string:)) ?? .center,
-            horizontalSpacing: element.attributeValue(for: "horizontal-spacing").flatMap(Double.init(_:)).flatMap(CGFloat.init),
-            verticalSpacing: element.attributeValue(for: "vertical-spacing").flatMap(Double.init(_:)).flatMap(CGFloat.init)
+            alignment: alignment,
+            horizontalSpacing: horizontalSpacing.flatMap(CGFloat.init),
+            verticalSpacing: verticalSpacing.flatMap(CGFloat.init)
         ) {
             context.buildChildren(of: element)
         }

@@ -11,6 +11,8 @@ struct Section<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
+    @Attribute("collapsible") private var collapsible: Bool
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
@@ -24,7 +26,7 @@ struct Section<R: RootRegistry>: View {
             context.buildChildren(of: element, withTagName: "footer", namespace: "section")
         }
         #if os(macOS)
-            .collapsible(element.attributeBoolean(for: "collapsible"))
+            .collapsible(collapsible)
         #endif
     }
 }

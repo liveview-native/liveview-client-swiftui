@@ -9,28 +9,34 @@ import SwiftUI
 import LiveViewNativeCore
 import CoreTransferable
 
+fileprivate let itemsDecoder = JSONDecoder()
 
 struct ShareLink<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
+    @Attribute("subject", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var subject: SwiftUI.Text?
+    @Attribute("message", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var message: SwiftUI.Text?
+    @Attribute(
+        "items",
+        transform: {
+            $0?.value.flatMap({
+                guard let data = $0.data(using: .utf8) else { return nil }
+                return try? itemsDecoder.decode([String].self, from: data)
+            })
+        }
+    ) private var items: [String]?
+    @Attribute("item") private var item: String?
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
     
-    private let decoder = JSONDecoder()
-    
     public var body: some View {
-        let subject = element.attributeValue(for: "subject").flatMap(SwiftUI.Text.init)
-        let message = element.attributeValue(for: "message").flatMap(SwiftUI.Text.init)
         let useDefaultLabel = element.children().filter({
             guard let element = $0.asElement() else { return true }
             return element.tag != "share-link-preview"
         }).isEmpty
-        let items: [String]? = element.attributeValue(for: "items").flatMap({
-            guard let data = $0.data(using: .utf8) else { return nil }
-            return try? decoder.decode([String].self, from: data)
-        })
         if let items {
             let previews = previews(for: items)
             if useDefaultLabel {
@@ -126,7 +132,7 @@ struct ShareLink<R: RootRegistry>: View {
                     }
                 }
             }
-        } else if let item = element.attributeValue(for: "item") {
+        } else if let item {
             if useDefaultLabel {
                 switch previews(for: [item]) {
                 case nil:

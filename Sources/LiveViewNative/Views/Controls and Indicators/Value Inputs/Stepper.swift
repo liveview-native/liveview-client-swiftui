@@ -13,14 +13,17 @@ struct Stepper<R: RootRegistry>: View {
     
     @FormState(default: 0) var value: Double
     
+    @Attribute("step") private var step: Double = 1
+    @Attribute("lower-bound") private var lowerBound: Double?
+    @Attribute("upper-bound") private var upperBound: Double?
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
     
     public var body: some View {
-        let step = element.attributeValue(for: "step").flatMap(Double.init) ?? 1
-        if let lowerBound = element.attributeValue(for: "lower-bound").flatMap(Double.init),
-           let upperBound = element.attributeValue(for: "upper-bound").flatMap(Double.init)
+        if let lowerBound,
+           let upperBound
         {
             SwiftUI.Stepper(value: $value, in: lowerBound...upperBound, step: step) {
                 label

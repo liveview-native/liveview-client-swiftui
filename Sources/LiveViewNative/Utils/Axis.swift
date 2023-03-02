@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
-extension Axis.Set: Decodable {
+extension Axis.Set: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
@@ -29,5 +30,11 @@ extension Axis.Set: Decodable {
         default:
             return nil
         }
+    }
+    
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
     }
 }

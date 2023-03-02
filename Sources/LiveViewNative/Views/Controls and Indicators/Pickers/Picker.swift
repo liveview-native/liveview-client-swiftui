@@ -11,6 +11,7 @@ struct Picker<R: RootRegistry>: View {
     private let context: LiveContext<R>
     @ObservedElement private var element
     @FormState private var value: String?
+    @Attribute("picker-style") private var style: PickerStyle = .automatic
     
     init(context: LiveContext<R>) {
         self.context = context
@@ -22,12 +23,12 @@ struct Picker<R: RootRegistry>: View {
         } label: {
             context.buildChildren(of: element, withTagName: "label", namespace: "picker", includeDefaultSlot: false)
         }
-        .applyPickerStyle(element.attributeValue(for: "picker-style").flatMap(PickerStyle.init))
+        .applyPickerStyle(style)
     }
     
 }
 
-private enum PickerStyle: String {
+private enum PickerStyle: String, AttributeDecodable {
     case automatic
     case inline
 #if os(iOS) || os(macOS)
@@ -49,9 +50,9 @@ private enum PickerStyle: String {
 
 private extension View {
     @ViewBuilder
-    func applyPickerStyle(_ style: PickerStyle?) -> some View {
+    func applyPickerStyle(_ style: PickerStyle) -> some View {
         switch style {
-        case .automatic, nil:
+        case .automatic:
             self.pickerStyle(.automatic)
         case .inline:
             self.pickerStyle(.inline)

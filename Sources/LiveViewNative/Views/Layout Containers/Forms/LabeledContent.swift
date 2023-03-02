@@ -11,13 +11,16 @@ struct LabeledContent<R: RootRegistry>: View {
     @ObservedElement private var element
     private let context: LiveContext<R>
     
+    @Attribute("format") private var format: String?
+    @Attribute("labeled-content-style") private var style: LabeledContentStyle = .automatic
+    
     init(context: LiveContext<R>) {
         self.context = context
     }
     
     var body: some View {
         SwiftUI.Group {
-            if element.attributeValue(for: "format") != nil {
+            if format != nil {
                 SwiftUI.LabeledContent {
                     Text(context: context)
                 } label: {
@@ -31,11 +34,11 @@ struct LabeledContent<R: RootRegistry>: View {
                 }
             }
         }
-        .applyLabeledContentStyle(element.attributeValue(for: "labeled-content-style").flatMap(LabeledContentStyle.init) ?? .automatic)
+        .applyLabeledContentStyle(style)
     }
 }
 
-private enum LabeledContentStyle: String {
+private enum LabeledContentStyle: String, AttributeDecodable {
     case automatic
 }
 

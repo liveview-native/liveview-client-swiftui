@@ -6,25 +6,35 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 struct Color<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
+    
+    @Attribute("opacity") private var opacity: Double = 1
+    
+    @Attribute("name") private var name: String?
+    
+    @Attribute("red") private var red: Double?
+    @Attribute("green") private var green: Double?
+    @Attribute("blue") private var blue: Double?
+    
+    @Attribute("color-space") private var colorSpace: SwiftUI.Color.RGBColorSpace = .sRGB
     
     init(context: LiveContext<R>) {
         self.context = context
     }
     
     var body: some View {
-        let opacity = element.attributeValue(for: "opacity").flatMap(Double.init(_:)) ?? 1
-        if let named = element.attributeValue(for: "name").flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) {
+        if let named = name.flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) {
             named.opacity(opacity)
-        } else if let red = element.attributeValue(for: "red").flatMap(Double.init(_:)),
-                  let green = element.attributeValue(for: "green").flatMap(Double.init(_:)),
-                  let blue = element.attributeValue(for: "blue").flatMap(Double.init(_:))
+        } else if let red,
+                  let green,
+                  let blue
         {
             SwiftUI.Color(
-                element.attributeValue(for: "color-space").flatMap(SwiftUI.Color.RGBColorSpace.init) ?? .sRGB,
+                colorSpace,
                 red: red,
                 green: green,
                 blue: blue,
@@ -36,13 +46,13 @@ struct Color<R: RootRegistry>: View {
 
 private let colorRegex = try! NSRegularExpression(pattern: "^#[0-9a-f]{6}$", options: .caseInsensitive)
 
-extension SwiftUI.Color.RGBColorSpace {
-    init?(string: String) {
-        switch string {
+extension SwiftUI.Color.RGBColorSpace: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        switch attribute?.value {
         case "srgb": self = .sRGB
         case "srgb-linear": self = .sRGBLinear
         case "display-p3": self = .displayP3
-        default: return nil
+        default: throw AttributeDecodingError.missingAttribute(Self.self)
         }
     }
 }

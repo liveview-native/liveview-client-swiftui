@@ -13,14 +13,16 @@ struct Slider<R: RootRegistry>: View {
     
     @FormState(default: 0) var value: Double
     
+    @Attribute("lower-bound") private var lowerBound: Double = 0
+    @Attribute("upper-bound") private var upperBound: Double = 1
+    @Attribute("step") private var step: Double.Stride?
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
     
     public var body: some View {
-        let lowerBound = element.attributeValue(for: "lower-bound").flatMap(Double.init) ?? 0
-        let upperBound = element.attributeValue(for: "upper-bound").flatMap(Double.init) ?? 1
-        if let step = element.attributeValue(for: "step").flatMap(Double.Stride.init) {
+        if let step {
             SwiftUI.Slider(
                 value: $value,
                 in: lowerBound...upperBound,

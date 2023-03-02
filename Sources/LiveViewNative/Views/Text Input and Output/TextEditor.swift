@@ -17,6 +17,8 @@ struct TextEditor<R: RootRegistry>: TextFieldProtocol {
     
     let focusEvent = Event("phx-focus", type: "focus")
     let blurEvent = Event("phx-blur", type: "blur")
+    @Attribute("find-disabled") private var findDisabled: Bool
+    @Attribute("replace-disabled") private var replaceDisabled: Bool
     
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
@@ -31,8 +33,8 @@ struct TextEditor<R: RootRegistry>: TextFieldProtocol {
             .textInputAutocapitalization(autocapitalization)
             .applyKeyboardType(keyboard)
             .findNavigator(isPresented: $isFindPresented)
-            .findDisabled(element.attributeBoolean(for: "find-disabled"))
-            .replaceDisabled(element.attributeBoolean(for: "replace-disabled"))
+            .findDisabled(findDisabled)
+            .replaceDisabled(replaceDisabled)
 #endif
             .onChange(of: isFocused, perform: handleFocus)
             .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])

@@ -11,6 +11,8 @@ struct Menu<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
+    @Attribute("menu-style") private var style: MenuStyle = .automatic
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
@@ -21,10 +23,11 @@ struct Menu<R: RootRegistry>: View {
         } label: {
             context.buildChildren(of: element, withTagName: "label", namespace: "menu", includeDefaultSlot: true)
         }
+        .applyMenuStyle(style)
     }
 }
 
-fileprivate enum MenuStyle: String {
+fileprivate enum MenuStyle: String, AttributeDecodable {
     case automatic
     case borderlessButton = "borderless-button"
     case button

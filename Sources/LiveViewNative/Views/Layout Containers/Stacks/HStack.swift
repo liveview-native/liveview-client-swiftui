@@ -11,22 +11,19 @@ struct HStack<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
+    @Attribute("alignment") private var alignment: VerticalAlignment = .center
+    @Attribute("spacing") private var spacing: Double?
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
 
     public var body: some View {
         SwiftUI.HStack(
-            alignment: element.attributeValue(for: "alignment").flatMap(VerticalAlignment.init) ?? .center,
-            spacing: spacing
+            alignment: alignment,
+            spacing: spacing.flatMap(CGFloat.init)
         ) {
             context.buildChildren(of: element)
         }
-    }
-    
-    private var spacing: CGFloat? {
-        element.attributeValue(for: "spacing")
-            .flatMap(Double.init)
-            .flatMap(CGFloat.init)
     }
 }

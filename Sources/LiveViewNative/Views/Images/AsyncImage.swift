@@ -11,6 +11,10 @@ struct AsyncImage<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
+    @Attribute("url") private var url: String?
+    @Attribute("scale") private var scale: Double?
+    @Attribute("content-mode", transform: { $0?.value == "fill" ? .fill : .fit }) private var contentMode: ContentMode
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
@@ -18,7 +22,7 @@ struct AsyncImage<R: RootRegistry>: View {
     public var body: some View {
         // todo: do we want to customize the loading state for this
         // todo: this will use URLCache.shared by default, do we want to customize that?
-        SwiftUI.AsyncImage(url: url, scale: scale ?? 1, transaction: Transaction(animation: .default)) { phase in
+        SwiftUI.AsyncImage(url: url.flatMap({ URL(string: $0, relativeTo: context.url) }), scale: scale ?? 1, transaction: Transaction(animation: .default)) { phase in
             switch phase {
             case .success(let image):
                 configureImage(image)
@@ -29,28 +33,6 @@ struct AsyncImage<R: RootRegistry>: View {
             @unknown default:
                 EmptyView()
             }
-        }
-    }
-    
-    private var url: URL? {
-        URL(string: element.attributeValue(for: "src")!, relativeTo: context.url)
-    }
-    
-    private var scale: Double? {
-        if let attr = element.attributeValue(for: "scale"),
-           let f = Double(attr) {
-            return f
-        } else {
-            return nil
-        }
-    }
-    
-    private var contentMode: ContentMode {
-        switch element.attributeValue(for: "content-mode") {
-        case "fill":
-            return .fill
-        default:
-            return .fit
         }
     }
     

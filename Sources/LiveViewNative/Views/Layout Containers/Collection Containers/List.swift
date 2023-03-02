@@ -19,13 +19,15 @@ struct List<R: RootRegistry>: View {
     
     @LiveBinding(attribute: "selection") private var selection = Selection.single(nil)
     
+    @Attribute("list-style") private var style: ListStyle = .automatic
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
     
     public var body: some View {
         list
-            .applyListStyle(element.attributeValue(for: "list-style").flatMap(ListStyle.init) ?? .automatic)
+            .applyListStyle(style)
     }
     
     @ViewBuilder
@@ -87,7 +89,7 @@ struct List<R: RootRegistry>: View {
     }
 }
 
-fileprivate enum ListStyle: String {
+fileprivate enum ListStyle: String, AttributeDecodable {
     case automatic
     case plain
 #if os(iOS) || os(macOS)

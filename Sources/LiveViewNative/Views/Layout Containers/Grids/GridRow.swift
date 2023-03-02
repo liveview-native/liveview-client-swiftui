@@ -11,12 +11,14 @@ struct GridRow<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
+    @Attribute("alignment") private var alignment: VerticalAlignment?
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
 
     public var body: some View {
-        SwiftUI.GridRow(alignment: element.attributeValue(for: "alignment").flatMap(VerticalAlignment.init)) {
+        SwiftUI.GridRow(alignment: alignment) {
             context.buildChildren(of: element)
         }
     }

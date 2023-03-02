@@ -11,14 +11,17 @@ struct ScrollView<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
+    @Attribute("axes") private var axes: Axis.Set = .vertical
+    @Attribute("shows-indicators") private var showsIndicators: Bool
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
     
     public var body: some View {
         SwiftUI.ScrollView(
-            element.attributeValue(for: "axes").flatMap(Axis.Set.init) ?? .vertical,
-            showsIndicators: element.attributeBoolean(for: "shows-indicators")
+            axes,
+            showsIndicators: showsIndicators
         ) {
             context.buildChildren(of: element)
         }

@@ -15,24 +15,23 @@ struct NavigationLink<R: RootRegistry>: View {
     @EnvironmentObject private var navCoordinator: NavigationCoordinator<R>
     @State private var doNavigationCancellable: AnyCancellable?
     
+    @Attribute("destination") private var destination: String
+    @Attribute("disabled") private var disabled: Bool
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
     
     @ViewBuilder
     public var body: some View {
-        if let href = element.attributeValue(for: "destination").flatMap({
-            URL(string: $0, relativeTo: context.coordinator.url)?.appending(path: "").absoluteURL
-        }) {
-            SwiftUI.NavigationLink(
-                value: LiveNavigationEntry(
-                    url: href,
-                    coordinator: context.coordinator
-                )
-            ) {
-                context.buildChildren(of: element)
-            }
-            .disabled(element.attribute(named: "disabled") != nil)
+        SwiftUI.NavigationLink(
+            value: LiveNavigationEntry(
+                url: URL(string: destination, relativeTo: context.coordinator.url)!.appending(path: "").absoluteURL,
+                coordinator: context.coordinator
+            )
+        ) {
+            context.buildChildren(of: element)
         }
+        .disabled(disabled)
     }
 }
