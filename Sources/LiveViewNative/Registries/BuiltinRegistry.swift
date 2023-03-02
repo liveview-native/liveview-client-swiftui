@@ -105,6 +105,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
 #endif
         case "navigation-link":
             NavigationLink(element: element, context: context)
+#if os(iOS) || os(macOS)
+        case "paste-button":
+            PasteButton(context: context)
+#endif
         case "progress-view":
             ProgressView(element: element, context: context)
         case "picker":
