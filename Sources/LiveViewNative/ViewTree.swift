@@ -78,6 +78,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let bound = applyBindings(to: modified, element: element, context: context)
         return bound
             .environment(\.element, element)
+            .preference(key: ProvidedBindingsKey.self, value: []) // reset for the next View.
     }
     
     @ViewBuilder

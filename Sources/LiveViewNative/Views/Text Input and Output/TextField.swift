@@ -33,6 +33,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
             .applyKeyboardType(keyboard)
 #endif
             .applySubmitLabel(submitLabel)
+            .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
     }
     
     @ViewBuilder
