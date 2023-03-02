@@ -192,7 +192,7 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     }
 }
 
-private struct BindingApplicator<Parent: View, R: CustomRegistry>: View {
+private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     let bindings: ArraySlice<Attribute>
     let element: ElementNode
