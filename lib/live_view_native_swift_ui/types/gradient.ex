@@ -1,6 +1,6 @@
 defmodule LiveViewNativeSwiftUi.Types.Gradient do
   @derive Jason.Encoder
-  defstruct [:create_with, :colors, :stops]
+  defstruct [:colors, :stops]
 
   use LiveViewNativePlatform.Modifier.Type
   def type, do: :map
@@ -9,7 +9,7 @@ defmodule LiveViewNativeSwiftUi.Types.Gradient do
   alias LiveViewNativeSwiftUi.Types.Gradient.Stop
 
   def cast({:colors, colors}) when is_list(colors) do
-    Enum.reduce(colors, {:ok, %__MODULE__{create_with: :colors, colors: []}}, fn color, acc ->
+    Enum.reduce(colors, {:ok, %__MODULE__{colors: []}}, fn color, acc ->
       with {:ok, %__MODULE__{colors: gradient_colors} = gradient} <- acc,
            {:ok, cast_color} <- Color.cast(color)
       do
@@ -22,7 +22,7 @@ defmodule LiveViewNativeSwiftUi.Types.Gradient do
   end
 
   def cast({:stops, stops}) when is_list(stops) do
-    Enum.reduce(stops, {:ok, %__MODULE__{create_with: :stops, stops: []}}, fn stop, acc ->
+    Enum.reduce(stops, {:ok, %__MODULE__{stops: []}}, fn stop, acc ->
       with {:ok, %__MODULE__{stops: gradient_stops} = gradient} <- acc,
            {:ok, cast_stop} <- Stop.cast(stop)
       do
