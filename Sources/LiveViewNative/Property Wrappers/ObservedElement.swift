@@ -55,8 +55,8 @@ public struct ObservedElement {
         return element
     }
     
-    public var projectedValue: AnyPublisher<Void, Never> {
-        observer.objectWillChange.eraseToAnyPublisher()
+    public var projectedValue: some Publisher<Void, Never> {
+        observer.objectWillChange
     }
 }
 

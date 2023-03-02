@@ -53,7 +53,7 @@ public struct Event: DynamicProperty {
         
         init() {}
         
-        func bind(element: ElementNode, elementWillChange: AnyPublisher<Void, Never>) {
+        func bind(element: ElementNode, elementWillChange: some Publisher<Void, Never>) {
             guard cancellable == nil else { return }
             // If the element changes, invalidate the current sink.
             elementWillChangeCancellable = elementWillChange.sink(receiveValue: { [weak self] _ in
@@ -114,7 +114,7 @@ public struct Event: DynamicProperty {
     /// After declaring an event, call the `wrappedValue` with a JSON-encodable payload and completion handler.
     /// ```swift
     /// @Event("phx-click", type: "click") private var click
-    /// 
+    ///
     /// click(["count": clickCount]) {
     ///     print("Event completed")
     /// }
