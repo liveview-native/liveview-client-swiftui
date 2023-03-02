@@ -15,12 +15,14 @@ public struct Attribute<T>: DynamicProperty {
     private let defaultValue: T?
     private let transform: (LiveViewNativeCore.Attribute?) throws -> T
 
+    /// Create an `Attribute` with an ``AttributeDecodable`` type.
     public init(wrappedValue: T? = nil, _ name: AttributeName) where T: AttributeDecodable {
         self.name = name
         self.defaultValue = wrappedValue
         self.transform = { try T(from: $0) }
     }
     
+    /// Create an `Attribute` with a `transform` function that converts the attribute into the desired type.
     public init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?) throws -> T) {
         self.name = name
         self.defaultValue = wrappedValue
