@@ -8,6 +8,29 @@
 import SwiftUI
 import LiveViewNativeCore
 
+/// A property wrapper that decodes an attribute of an element.
+///
+/// Specify the attribute name and an optional default value. Then use the value in the body of the View.
+/// ```swift
+/// struct MyElement: View {
+///     @Attribute("count") private var count: Double = 0
+///
+///     var body: some View {
+///         Text("Count: \(count)")
+///     }
+/// }
+/// ```
+///
+/// If the value is not optional and no default is provided, a fatal error will be thrown when the attribute is not present or fails to decode.
+///
+/// An attribute can also be created with a `transform` function, which can be used to convert a value that does not conform to ``AttributeDecodable`` or modify the way a value is decoded.
+/// ```swift
+/// @Attribute(
+///     "count",
+///     // add 5 to the count
+///     transform: { $0?.value.flatMap(Double.init(_:)).flatMap({ $0 + 5 }) }
+/// ) private var count: Double
+/// ```
 @propertyWrapper
 public struct Attribute<T>: DynamicProperty {
     @ObservedElement private var element
