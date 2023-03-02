@@ -127,7 +127,7 @@ public struct Event: DynamicProperty {
             handler.bind(element: element, elementWillChange: $element)
             handler.currentEvent.send({
                 Task {
-                    try await coordinatorEnvironment?.pushEvent(type, event, value)
+                    try await coordinatorEnvironment?.pushEvent(type, event, value, element.attributeValue(for: "phx-target").flatMap(Int.init))
                     didSend()
                 }
             })
