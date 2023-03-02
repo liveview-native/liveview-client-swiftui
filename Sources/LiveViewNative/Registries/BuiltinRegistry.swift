@@ -74,6 +74,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case "group-box":
             GroupBox(element: element, context: context)
 #endif
+#if os(macOS)
+        case "h-split-view":
+            HSplitView(context: context)
+#endif
         case "h-stack", "hstack":
             HStack<R>(element: element, context: context)
         case "image":
@@ -136,6 +140,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             TextField<R>(element: element, context: context)
         case "toggle":
             Toggle(element: element, context: context)
+#if os(macOS)
+        case "v-split-view":
+            VSplitView(context: context)
+#endif
         case "v-stack", "vstack":
             VStack<R>(element: element, context: context)
         case "view-that-fits":
