@@ -35,6 +35,7 @@ struct TextEditor<R: RootRegistry>: TextFieldProtocol {
             .replaceDisabled(element.attributeBoolean(for: "replace-disabled"))
 #endif
             .onChange(of: isFocused, perform: handleFocus)
+            .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
     }
 }
 

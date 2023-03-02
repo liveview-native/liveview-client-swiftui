@@ -36,6 +36,7 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
             .applyKeyboardType(keyboard)
 #endif
             .applySubmitLabel(submitLabel)
+            .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
     }
 }
 

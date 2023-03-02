@@ -26,6 +26,7 @@ struct Button<R: RootRegistry>: View {
         }
         .applyButtonStyle(buttonStyle)
         .disabled(element.attributeValue(for: "disabled") != nil)
+        .preference(key: ProvidedBindingsKey.self, value: ["phx-click"])
     }
     
     private var buttonStyle: ButtonStyle {
