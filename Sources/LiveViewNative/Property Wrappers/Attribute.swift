@@ -9,19 +9,27 @@ import SwiftUI
 import LiveViewNativeCore
 
 @propertyWrapper
-public struct Attribute<T>: DynamicProperty where T: AttributeDecodable {
+public struct Attribute<T>: DynamicProperty {
     @ObservedElement private var element
     private let name: AttributeName
     private let defaultValue: T?
+    private let transform: (LiveViewNativeCore.Attribute?) throws -> T
 
-    public init(wrappedValue: T? = nil, _ name: AttributeName) {
+    public init(wrappedValue: T? = nil, _ name: AttributeName) where T: AttributeDecodable {
         self.name = name
         self.defaultValue = wrappedValue
+        self.transform = { try T(from: $0) }
+    }
+    
+    public init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?) throws -> T) {
+        self.name = name
+        self.defaultValue = wrappedValue
+        self.transform = transform
     }
 
     public var wrappedValue: T {
         do {
-            return try T(from: element.attribute(named: name))
+            return try transform(element.attribute(named: name))
         } catch {
             guard let defaultValue else { fatalError(error.localizedDescription) }
             return defaultValue
