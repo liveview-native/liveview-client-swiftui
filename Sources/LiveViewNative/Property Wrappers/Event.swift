@@ -80,24 +80,45 @@ public struct Event: DynamicProperty {
         }
     }
     
+    /// Retrieves the event name from a specific attribute.
+    ///
+    /// A `Button` may handle the `phx-click` event.
+    /// ```html
+    /// <button phx-click="my_event_name" />
+    /// ```
+    /// Using this initializer, the event name would be identified by the value of the `phx-click` attribute:
+    /// ```swift
+    /// @Event("phx-click", type: "click") private var click
+    /// ```
     public init(_ name: AttributeName, type: String) {
         self.event = nil
         self.name = name
         self.type = type
     }
     
-    public init(_ name: String, type: String) {
-        self.event = nil
-        self.name = .init(name: name)
-        self.type = type
-    }
-    
+    /// Creates a binding to a known server-side event name.
+    ///
+    /// Unlike ``init(_:type:)``, which identifies the event name from an attribute, this initializer has a static event name specified.
+    /// ```swift
+    /// @Event(event: "my_event_name", type: "click") private var click
+    /// ```
+    /// The event name is no longer defined by the client, but instead uses the value passed in here.
     public init(event: String, type: String) {
         self.event = event
         self.name = nil
         self.type = type
     }
     
+    /// Sends the event with a given payload and completion handler.
+    ///
+    /// After declaring an event, call the `wrappedValue` with a JSON-encodable payload and completion handler.
+    /// ```swift
+    /// @Event("phx-click", type: "click") private var click
+    /// 
+    /// click(["count": clickCount]) {
+    ///     print("Event completed")
+    /// }
+    /// ```
     public var wrappedValue: (Any, @escaping () -> ()) -> () {
         { value, didSend in
             guard let event = self.event ?? self.name.flatMap(element.attributeValue(for:)) else {
