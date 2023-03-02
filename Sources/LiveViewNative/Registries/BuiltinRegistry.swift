@@ -139,6 +139,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
 #endif
         case "text-field":
             TextField<R>(element: element, context: context)
+#if os(watchOS)
+        case "text-field-link":
+            TextFieldLink(context: context)
+#endif
         case "toggle":
             Toggle(element: element, context: context)
 #if os(macOS)
