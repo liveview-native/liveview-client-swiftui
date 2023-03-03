@@ -37,13 +37,13 @@ struct NavStackEntryView<R: RootRegistry>: View {
                     liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
                 }
             }
-            .onReceive(coordinator.receiveEvent("_live_bindings"), perform: liveViewModel.updateBindings)
+            .onReceive(coordinator.receiveEvent("_native_bindings"), perform: liveViewModel.updateBindings)
             .onReceive(
                 liveViewModel.bindingUpdatedByClient
                     .collect(.byTime(RunLoop.main, RunLoop.main.minimumTolerance))
             ) { updates in
                 Task {
-                    try? await coordinator.pushEvent(type: "_live_bindings", event: "_live_bindings", value: Dictionary(updates, uniquingKeysWith: { cur, new in new }))
+                    try? await coordinator.pushEvent(type: "_native_bindings", event: "_native_bindings", value: Dictionary(updates, uniquingKeysWith: { cur, new in new }))
                 }
             }
     }
