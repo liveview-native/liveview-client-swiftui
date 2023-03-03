@@ -4,8 +4,6 @@
 
 ## Overview
 
-This element must be contained inside a `<phx-form>` element.
-
 ## Attributes
 
 - `name` (required): The name to use for this field's value in the form data.

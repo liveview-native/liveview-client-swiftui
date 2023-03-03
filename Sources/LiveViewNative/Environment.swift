@@ -17,10 +17,6 @@ private struct ElementKey: EnvironmentKey {
     static let defaultValue: ElementNode? = nil
 }
 
-private struct TextFieldPrimaryActionKey: EnvironmentKey {
-    public static var defaultValue: (() -> Void)? = nil
-}
-
 /// Provides access to ``LiveViewCoordinator`` properties via the environment.
 /// This exists to type-erase the coordinator, since environment properties can't be generic.
 struct CoordinatorEnvironment {
@@ -51,11 +47,6 @@ extension EnvironmentValues {
     public var element: ElementNode? {
         get { self[ElementKey.self] }
         set { self[ElementKey.self] = newValue }
-    }
-    
-    @_spi(NarwinChat) public var textFieldPrimaryAction: (() -> Void)? {
-        get { self[TextFieldPrimaryActionKey.self] }
-        set { self[TextFieldPrimaryActionKey.self] = newValue }
     }
     
     var coordinatorEnvironment: CoordinatorEnvironment? {

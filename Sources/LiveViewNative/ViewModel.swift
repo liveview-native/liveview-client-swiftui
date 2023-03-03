@@ -20,7 +20,9 @@ public class LiveViewModel: ObservableObject {
     let bindingUpdatedByServer = PassthroughSubject<(String, Any), Never>()
     let bindingUpdatedByClient = PassthroughSubject<(String, Any), Never>()
     
-    /// Get or create a ``FormModel`` for the `<form>` element with the given ID.
+    /// Get or create a ``FormModel`` for the given `<live-form>`.
+    ///
+    /// - Important: The element parameter must be the form element. To get the form model for an element within a form, use the ``LiveContext`` or the `\.formModel` environment value.
     public func getForm(elementID id: String) -> FormModel {
         if let form = forms[id] {
             return form
@@ -36,7 +38,7 @@ public class LiveViewModel: ObservableObject {
         var formIDs = Set<String>()
         for node in nodes {
             guard case .element(let elementData) = node.data,
-                  elementData.namespace == nil && elementData.tag == "phx-form" else {
+                  elementData.namespace == nil && elementData.tag == "live-form" else {
                 continue
             }
             let id = node["id"]!.value!
@@ -65,42 +67,21 @@ public class LiveViewModel: ObservableObject {
 ///
 /// To obtain a form model, use ``LiveViewModel/getForm(elementID:)`` or the `\.formModel` environment key.
 public class FormModel: ObservableObject, CustomDebugStringConvertible {
-    /// The value of the `id` attribute of the `<form>` element this model is for.
-    public let elementID: String
-    var pushEventImpl: ((String, String, Any, Int?) async throws -> Void)!
+    let elementID: String
+    @_spi(LiveForm) public var pushEventImpl: ((String, String, Any, Int?) async throws -> Void)!
     var changeEvent: String?
     var submitEvent: String?
     /// The form data for this form.
     @Published internal private(set) var data = [String: any FormValue]()
-    var focusedFieldName: String?
     var formFieldWillChange = PassthroughSubject<String, Never>()
     
     init(elementID: String) {
         self.elementID = elementID
     }
     
-    func updateFromElement(_ element: ElementNode) {
+    @_spi(LiveForm) public func updateFromElement(_ element: ElementNode) {
         changeEvent = element.attributeValue(for: "phx-change")
         submitEvent = element.attributeValue(for: "phx-submit")
-        
-        for node in element.depthFirstChildren() {
-            guard case .element(let elementData) = node.data else {
-                continue
-            }
-            // TODO: should this cover all elements?
-            if elementData.namespace == nil,
-               ["hidden", "textfield"].contains(elementData.tag),
-               let name = node["name"]?.value,
-               let value = node["value"]?.value {
-                // if we have an existing value, try to convert it to the same type
-                if let existing = self[name],
-                   let converted = existing.createNew(formValue: value) {
-                    self[name] = converted
-                } else {
-                    self[name] = value
-                }
-            }
-        }
     }
     
     /// Sends a phx-change event (if configured) to the server with the current form data.
@@ -145,7 +126,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     ///
     /// Setting a field to `nil` removes it.
     ///
-    /// Setting a field automatically sends a change event if one was configured on the `<phx-form>` element.
+    /// Setting a field automatically sends a change event if one was configured on the `<live-form>` element.
     public subscript(name: String) -> (any FormValue)? {
         get {
             return data[name]

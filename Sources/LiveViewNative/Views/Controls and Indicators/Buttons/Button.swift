@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Button<R: RootRegistry>: View {
+@_spi(LiveForm) public struct Button<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     // used internaly by PhxSubmitButton
@@ -18,7 +18,7 @@ struct Button<R: RootRegistry>: View {
     @Attribute("disabled") private var disabled: Bool
     @Attribute("button-style") private var buttonStyle: ButtonStyle = .automatic
     
-    init(element: ElementNode, context: LiveContext<R>, action: (() -> Void)?) {
+    @_spi(LiveForm) public init(element: ElementNode, context: LiveContext<R>, action: (() -> Void)?) {
         self.context = context
         self.action = action
     }
