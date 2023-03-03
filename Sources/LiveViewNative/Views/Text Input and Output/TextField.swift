@@ -15,6 +15,25 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     
     let focusEvent = Event("phx-focus", type: "focus")
     let blurEvent = Event("phx-blur", type: "blur")
+    @Attribute("format") private var format: String?
+    @Attribute("currency-code") private var currencyCode: String?
+    @Attribute(
+        "name-style",
+        transform: {
+            switch $0?.value {
+            case "short":
+                return .short
+            case "medium":
+                return .medium
+            case "long":
+                return .long
+            case "abbreviated":
+                return .abbreviated
+            default:
+                return nil
+            }
+        }
+    ) private var nameStyle: PersonNameComponents.FormatStyle.Style?
     
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
@@ -38,7 +57,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     
     @ViewBuilder
     private var field: some View {
-        if let format = element.attributeValue(for: "format") {
+        if let format {
             switch format {
             case "date-time":
                 SwiftUI.TextField(
@@ -81,10 +100,10 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                     label
                 }
             case "currency":
-                if let code = element.attributeValue(for: "currency-code") {
+                if let currencyCode {
                     SwiftUI.TextField(
-                        value: valueBinding(format: .currency(code: code)),
-                        format: .currency(code: code),
+                        value: valueBinding(format: .currency(code: currencyCode)),
+                        format: .currency(code: currencyCode),
                         prompt: prompt
                     ) {
                         label
@@ -99,21 +118,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                     }
                 }
             case "name":
-                if let style = element.attributeValue(for: "name-style") {
-                    let nameStyle: PersonNameComponents.FormatStyle.Style = {
-                        switch style {
-                        case "short":
-                            return .short
-                        case "medium":
-                            return .medium
-                        case "long":
-                            return .long
-                        case "abbreviated":
-                            return .abbreviated
-                        default:
-                            return .medium
-                        }
-                    }()
+                if let nameStyle {
                     SwiftUI.TextField(
                         value: valueBinding(format: .name(style: nameStyle)),
                         format: .name(style: nameStyle),

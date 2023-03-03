@@ -15,6 +15,9 @@ struct Button<R: RootRegistry>: View {
     
     @Event("phx-click", type: "click") private var click
     
+    @Attribute("disabled") private var disabled: Bool
+    @Attribute("button-style") private var buttonStyle: ButtonStyle = .automatic
+    
     init(element: ElementNode, context: LiveContext<R>, action: (() -> Void)?) {
         self.context = context
         self.action = action
@@ -25,17 +28,8 @@ struct Button<R: RootRegistry>: View {
             context.buildChildren(of: element)
         }
         .applyButtonStyle(buttonStyle)
-        .disabled(element.attributeValue(for: "disabled") != nil)
+        .disabled(disabled)
         .preference(key: ProvidedBindingsKey.self, value: ["phx-click"])
-    }
-    
-    private var buttonStyle: ButtonStyle {
-        if let s = element.attributeValue(for: "button-style"),
-           let style = ButtonStyle(rawValue: s) {
-            return style
-        } else {
-            return .automatic
-        }
     }
     
     private func handleClick() {
@@ -45,10 +39,9 @@ struct Button<R: RootRegistry>: View {
         }
         click(element.buildPhxValuePayload()) {}
     }
-    
 }
 
-fileprivate enum ButtonStyle: String {
+fileprivate enum ButtonStyle: String, AttributeDecodable {
     case automatic
     case bordered
     case borderedProminent = "bordered-prominent"

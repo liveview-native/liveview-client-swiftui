@@ -11,6 +11,8 @@ import SwiftUI
 struct ControlGroup<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
+    
+    @Attribute("control-group-style") private var style: ControlGroupStyle = .automatic
 
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
@@ -22,11 +24,11 @@ struct ControlGroup<R: RootRegistry>: View {
         } label: {
             context.buildChildren(of: element, withTagName: "label", namespace: "control-group")
         }
-        .applyControlGroupStyle(element.attributeValue(for: "control-group-style").flatMap(ControlGroupStyle.init) ?? .automatic)
+        .applyControlGroupStyle(style)
     }
 }
 
-fileprivate enum ControlGroupStyle: String {
+fileprivate enum ControlGroupStyle: String, AttributeDecodable {
     case automatic
     case navigation
 }

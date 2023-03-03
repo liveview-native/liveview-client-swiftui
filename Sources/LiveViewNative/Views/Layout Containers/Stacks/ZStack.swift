@@ -11,6 +11,8 @@ struct ZStack<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
+    @Attribute("alignment") private var alignment: Alignment = .center
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
@@ -18,14 +20,6 @@ struct ZStack<R: RootRegistry>: View {
     public var body: some View {
         SwiftUI.ZStack(alignment: alignment) {
             context.buildChildren(of: element)
-        }
-    }
-    
-    private var alignment: Alignment {
-        if let s = element.attributeValue(for: "alignment"), let alignment = Alignment(string: s) {
-            return alignment
-        } else {
-            return .center
         }
     }
 }

@@ -11,6 +11,9 @@ struct Label<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
+    @Attribute("system-image") private var systemImage: String?
+    @Attribute("label-style") private var style: LabelStyle = .automatic
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
@@ -19,17 +22,17 @@ struct Label<R: RootRegistry>: View {
         SwiftUI.Label {
             context.buildChildren(of: element, withTagName: "title", namespace: "label", includeDefaultSlot: true)
         } icon: {
-            if let systemImage = element.attributeValue(for: "system-image") {
+            if let systemImage {
                 SwiftUI.Image(systemName: systemImage)
             } else {
                 context.buildChildren(of: element, withTagName: "icon", namespace: "label")
             }
         }
-        .applyLabelStyle(element.attributeValue(for: "label-style").flatMap(LabelStyle.init) ?? .automatic)
+        .applyLabelStyle(style)
     }
 }
 
-fileprivate enum LabelStyle: String {
+fileprivate enum LabelStyle: String, AttributeDecodable {
     case iconOnly = "icon-only"
     case titleOnly = "title-only"
     case titleAndIcon = "title-and-icon"

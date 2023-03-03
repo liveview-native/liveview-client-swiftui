@@ -10,16 +10,19 @@ import SwiftUI
 struct Shape<S: SwiftUI.Shape>: View {
     @ObservedElement private var element: ElementNode
     private let shape: S
+
+    @Attribute("fill-color", transform: { $0?.value.flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) }) private var fillColor: SwiftUI.Color?
+    @Attribute("stroke-color", transform: { $0?.value.flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) }) private var strokeColor: SwiftUI.Color?
     
     init(element: ElementNode, context: LiveContext<some RootRegistry>, shape: S) {
         self.shape = shape
     }
     
     var body: some View {
-        if let color = element.attributeValue(for: "fill-color").flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) {
-            shape.fill(color)
-        } else if let color = element.attributeValue(for: "stroke-color").flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) {
-            shape.stroke(color)
+        if let fillColor {
+            shape.fill(fillColor)
+        } else if let strokeColor {
+            shape.stroke(strokeColor)
         } else {
             shape
         }

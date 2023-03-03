@@ -12,6 +12,22 @@ struct DatePicker<R: RootRegistry>: View {
     private let context: LiveContext<R>
     @ObservedElement private var element
     @FormState(default: CodableDate()) private var value: CodableDate
+    @Attribute("start") private var start: Date?
+    @Attribute("end") private var end: Date?
+    @Attribute(
+        "displayed-components",
+        transform: {
+            switch $0?.value {
+            case "hour-and-minute":
+                return .hourAndMinute
+            case "date":
+                return .date
+            default:
+                return [.hourAndMinute, .date]
+            }
+        }
+    ) private var components: DatePickerComponents
+    @Attribute("date-picker-style") private var style: DatePickerStyle = .automatic
     
     private var dateBinding: Binding<Date> {
         Binding {
@@ -26,8 +42,6 @@ struct DatePicker<R: RootRegistry>: View {
     }
     
     var body: some View {
-        let start = element.attributeValue(for: "start").flatMap { try? Date($0, strategy: .elixirDateTimeOrDate) }
-        let end = element.attributeValue(for: "end").flatMap { try? Date($0, strategy: .elixirDateTimeOrDate) }
         if let start, let end {
             SwiftUI.DatePicker(selection: dateBinding, in: start...end, displayedComponents: components) {
                 context.buildChildren(of: element)
@@ -49,21 +63,6 @@ struct DatePicker<R: RootRegistry>: View {
             }
             .applyDatePickerStyle(style)
         }
-    }
-    
-    private var components: DatePickerComponents {
-        switch element.attributeValue(for: "displayed-components") {
-        case "hour-and-minute":
-            return .hourAndMinute
-        case "date":
-            return .date
-        default:
-            return [.hourAndMinute, .date]
-        }
-    }
-    
-    private var style: DatePickerStyle? {
-        element.attributeValue(for: "date-picker-style").flatMap(DatePickerStyle.init)
     }
 }
 
@@ -99,7 +98,7 @@ private struct CodableDate: FormValue {
     }
 }
 
-private enum DatePickerStyle: String {
+private enum DatePickerStyle: String, AttributeDecodable {
     case automatic
     case compact
     case graphical

@@ -13,6 +13,7 @@ struct ColorPicker<R: RootRegistry>: View {
     let context: LiveContext<R>
     
     @LiveBinding(attribute: "selection") private var selection: CodableColor = .init(r: 0, g: 0, b: 0, a: 1)
+    @Attribute("supports-opacity") private var supportsOpacity: Bool
     
     struct CodableColor: Codable {
         var r: CGFloat
@@ -45,7 +46,7 @@ struct ColorPicker<R: RootRegistry>: View {
     public var body: some View {
         SwiftUI.ColorPicker(
             selection: $selection.cgColor,
-            supportsOpacity: element.attributeBoolean(for: "supports-opacity")
+            supportsOpacity: supportsOpacity
         ) {
             label
         }

@@ -10,19 +10,12 @@ import SwiftUI
 struct Spacer: View {
     @ObservedElement private var element: ElementNode
     
+    @Attribute("min-length") private var minLength: Double?
+    
     init(element: ElementNode, context: LiveContext<some RootRegistry>) {
     }
     
     public var body: some View {
-        SwiftUI.Spacer(minLength: minLength)
-    }
-    
-    private var minLength: CGFloat? {
-        if let s = element.attributeValue(for: "min-length"),
-           let d = Double(s) {
-            return d
-        } else {
-            return nil
-        }
+        SwiftUI.Spacer(minLength: minLength.flatMap(CGFloat.init))
     }
 }

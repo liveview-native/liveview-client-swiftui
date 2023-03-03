@@ -6,8 +6,19 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
-extension Alignment {
+extension Alignment: Decodable, AttributeDecodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        if let alignment = Self(string: string) {
+            self = alignment
+        } else {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Alignment"))
+        }
+    }
+    
     init?(string: String) {
         switch string {
         case "top-leading":
@@ -36,21 +47,15 @@ extension Alignment {
             return nil
         }
     }
-}
-
-extension Alignment: Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        if let alignment = Self(string: string) {
-            self = alignment
-        } else {
-            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Alignment"))
-        }
+    
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
     }
 }
 
-extension HorizontalAlignment: Decodable {
+extension HorizontalAlignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
@@ -73,9 +78,15 @@ extension HorizontalAlignment: Decodable {
             return nil
         }
     }
+    
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
 }
 
-extension VerticalAlignment: Decodable {
+extension VerticalAlignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
@@ -97,5 +108,11 @@ extension VerticalAlignment: Decodable {
         default:
             return nil
         }
+    }
+    
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
     }
 }

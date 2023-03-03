@@ -13,6 +13,8 @@ struct DisclosureGroup<R: RootRegistry>: View {
     private let context: LiveContext<R>
     
     @LiveBinding(attribute: "is-expanded") private var isExpanded = false
+    
+    @Attribute("disclosure-group-style") private var style: DisclosureGroupStyle = .automatic
 
     init(context: LiveContext<R>) {
         self.context = context
@@ -24,11 +26,11 @@ struct DisclosureGroup<R: RootRegistry>: View {
         } label: {
             context.buildChildren(of: element, withTagName: "label", namespace: "disclosure-group", includeDefaultSlot: false)
         }
-        .applyDisclosureGroupStyle(element.attributeValue(for: "disclosure-group-style").flatMap(DisclosureGroupStyle.init) ?? .automatic)
+        .applyDisclosureGroupStyle(style)
     }
 }
 
-fileprivate enum DisclosureGroupStyle: String {
+fileprivate enum DisclosureGroupStyle: String, AttributeDecodable {
     case automatic
 }
 

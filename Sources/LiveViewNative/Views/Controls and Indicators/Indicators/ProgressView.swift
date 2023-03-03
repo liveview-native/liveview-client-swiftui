@@ -11,21 +11,29 @@ struct ProgressView<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
+    @Attribute("timer-interval-start") private var timerIntervalStart: Date?
+    @Attribute("timer-interval-end") private var timerIntervalEnd: Date?
+    @Attribute("counts-down") private var countsDown: Bool
+    
+    @Attribute("value") private var value: Double?
+    @Attribute("total") private var total: Double = 1
+    @Attribute("progress-view-style") private var style: ProgressViewStyle = .automatic
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
     
     public var body: some View {
         SwiftUI.Group {
-            if let timerIntervalStart = element.attributeValue(for: "timer-interval-start").flatMap({ try? Date($0, strategy: .elixirDateTimeOrDate) }),
-               let timerIntervalEnd = element.attributeValue(for: "timer-interval-end").flatMap({ try? Date($0, strategy: .elixirDateTimeOrDate) })
+            if let timerIntervalStart,
+               let timerIntervalEnd
             {
                 // SwiftUI's default `currentValueLabel` is not present unless the argument is not included in the initializer.
                 // Check if we have it first otherwise use the default.
                 if context.hasChild(of: element, withTagName: "current-value-label", namespace: "progress-view") {
                     SwiftUI.ProgressView(
                         timerInterval: timerIntervalStart...timerIntervalEnd,
-                        countsDown: element.attributeValue(for: "counts-down") != "false"
+                        countsDown: countsDown
                     ) {
                         context.buildChildren(of: element, withTagName: "label", namespace: "progress-view", includeDefaultSlot: true)
                     } currentValueLabel: {
@@ -39,10 +47,10 @@ struct ProgressView<R: RootRegistry>: View {
                         context.buildChildren(of: element, withTagName: "label", namespace: "progress-view", includeDefaultSlot: true)
                     }
                 }
-            } else if let value = element.attributeValue(for: "value").flatMap(Double.init) {
+            } else if let value {
                 SwiftUI.ProgressView(
                     value: value,
-                    total: element.attributeValue(for: "total").flatMap(Double.init) ?? 1
+                    total: total
                 ) {
                     context.buildChildren(of: element, withTagName: "label", namespace: "progress-view", includeDefaultSlot: true)
                 } currentValueLabel: {
@@ -54,11 +62,11 @@ struct ProgressView<R: RootRegistry>: View {
                 }
             }
         }
-        .applyProgressViewStyle(element.attributeValue(for: "progress-view-style").flatMap(ProgressViewStyle.init) ?? .automatic)
+        .applyProgressViewStyle(style)
     }
 }
 
-fileprivate enum ProgressViewStyle: String {
+fileprivate enum ProgressViewStyle: String, AttributeDecodable {
     case automatic
     case linear
     case circular

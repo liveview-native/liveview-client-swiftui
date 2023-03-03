@@ -11,23 +11,21 @@ struct LazyHStack<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     
+    @Attribute("alignment") private var alignment: VerticalAlignment = .center
+    @Attribute("spacing") private var spacing: Double?
+    @Attribute("pinned-views") private var pinnedViews: PinnedScrollableViews = []
+    
     init(element: ElementNode, context: LiveContext<R>) {
         self.context = context
     }
 
     public var body: some View {
         SwiftUI.LazyHStack(
-            alignment: element.attributeValue(for: "alignment").flatMap(VerticalAlignment.init) ?? .center,
-            spacing: spacing,
-            pinnedViews: element.attributeValue(for: "pinned-views").flatMap(PinnedScrollableViews.init) ?? []
+            alignment: alignment,
+            spacing: spacing.flatMap(CGFloat.init),
+            pinnedViews: pinnedViews
         ) {
             context.buildChildren(of: element)
         }
-    }
-    
-    private var spacing: CGFloat? {
-        element.attributeValue(for: "spacing")
-            .flatMap(Double.init)
-            .flatMap(CGFloat.init)
     }
 }
