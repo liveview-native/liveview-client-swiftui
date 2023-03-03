@@ -66,7 +66,7 @@ final class DecodeModifiersTest: XCTestCase {
     
     func testDecodeTint() throws {
         let data = """
-        {"type": "tint", "color": "system-pink"}
+        {"type": "tint", "color": {"string": "system-pink", "rgb_color_space": null}}
         """
         try assertDecodeModifier(data, expected: TintModifier(color: .pink))
     }
