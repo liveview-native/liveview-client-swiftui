@@ -36,7 +36,9 @@ defmodule LiveViewNativeSwiftUi.Platform do
           grid_cell_anchor: Modifiers.GridCellAnchor,
           grid_cell_columns: Modifiers.GridCellColumns,
           grid_cell_unsized_axes: Modifiers.GridCellUnsizedAxes,
-          grid_column_alignment: Modifiers.GridColumnAlignment
+          grid_column_alignment: Modifiers.GridColumnAlignment,
+
+          rename_action: Modifiers.RenameAction
         ],
         template_engine: LiveViewNative.Engine,
         template_namespace: SwiftUi
