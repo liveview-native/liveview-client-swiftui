@@ -115,6 +115,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             Picker(context: context)
         case "rectangle":
             Shape(element: element, context: context, shape: Rectangle())
+        case "rename-button":
+            RenameButton()
         case "rounded-rectangle":
             Shape(element: element, context: context, shape: RoundedRectangle(from: element))
         case "scroll-view":
@@ -180,6 +182,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case listRowSeparator = "list_row_separator"
         case navigationTitle = "navigation_title"
         case padding
+        case renameAction = "rename_action"
         case tag
         case tint
     }
@@ -207,6 +210,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try NavigationTitleModifier(from: decoder)
         case .padding:
             try PaddingModifier(from: decoder)
+        case .renameAction:
+            try RenameActionModifier(from: decoder)
         case .tag:
             try TagModifier(from: decoder)
         case .tint:
