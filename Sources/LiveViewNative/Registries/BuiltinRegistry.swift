@@ -143,10 +143,6 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             ViewThatFits(element: element, context: context)
         case "z-stack", "zstack":
             ZStack<R>(element: element, context: context)
-        case "phx-form":
-            PhxForm<R>(element: element, context: context)
-        case "phx-submit-button":
-            PhxSubmitButton(element: element, context: context)
         default:
             // log here that view type cannot be found
             EmptyView()

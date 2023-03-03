@@ -17,7 +17,7 @@ import Combine
 /// When a `value-binding` attribute is provided on the element, the value of that attributed is treated as the name of a ``LiveBinding`` to use as the value storage.
 /// ``LiveBinding`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
 ///
-/// When the element this properrty wrapper is placed on is located of inside a `<phx-form>` and it has a `name` attribute, the value will be stored on that form's ``FormModel``.
+/// When the element this properrty wrapper is placed on is located of inside a `<live-form>` and it has a `name` attribute, the value will be stored on that form's ``FormModel``.
 /// The key used in the form model is the element's `name` attribute.
 ///
 /// If the element is not located inside of a form, the value will be stored directly by the property wrapper.
@@ -187,7 +187,7 @@ public struct FormState<Value: FormValue> {
                     data.setFormModel(formModel, elementName: elementName)
                     data.mode = .form(formModel)
                 } else {
-                    print("Warning: @FormState used on a name-less element inside of a <phx-form>. This may not behave as expected.")
+                    print("Warning: @FormState used on a name-less element inside of a <live-form>. This may not behave as expected.")
                     data.mode = .localInitial
                 }
             } else {

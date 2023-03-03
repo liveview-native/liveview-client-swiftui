@@ -33,13 +33,29 @@ import Combine
 ///         Text("Value: \(element.attributeValue(for: "my-attr") ?? "<none>")")
 ///     }
 /// }
+/// ```
+///
+/// ## Handling Arbitrary Changes
+/// If you need to run code, rather than only triggering a SwiftUI view update, whenever an element changes (subject to the restrictions above), use SwiftUI's `onReceive` view modifier in conjunction with the projected value of this property wrapper:
+/// ```swift
+/// struct MyView: View {
+///     @ObservedElement private var element: ElementNode
+///
+///     var body: some View {
+///         Text("Hello")
+///             .onReceive($element) {
+///                 print("Element changed!")
+///             }
+///     }
+/// }
+/// ```
 @propertyWrapper
 public struct ObservedElement {
     @Environment(\.element.nodeRef) private var nodeRef: NodeRef?
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
     @StateObject private var observer = Observer()
     
-    /// Creates an `ObservedElement` that observes changes to the view's element..
+    /// Creates an `ObservedElement` that observes changes to the view's element.
     public init() {
     }
     
@@ -55,6 +71,7 @@ public struct ObservedElement {
         return element
     }
     
+    /// A publisher that publishes when the observed element changes.
     public var projectedValue: some Publisher<Void, Never> {
         observer.objectWillChange
     }

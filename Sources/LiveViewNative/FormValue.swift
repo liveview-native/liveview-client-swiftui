@@ -12,7 +12,7 @@ import Foundation
 /// This protocol defines the requirements for converting to/from the serialized form data representation.
 /// There are two serialized formats: form value strings and the codable representation.
 ///
-/// The form value string (``formValue`` and ``init(formValue:)``) mode is used for form values that are provided in a `value` attribute on form controls or are stored in `<phx-form>` elements.
+/// The form value string (``formValue`` and ``init(formValue:)``) mode is used for form values that are provided in a `value` attribute on form controls or are stored in `<live-form>` elements.
 ///
 /// The `Codable` mode is used when a live binding is used with a form control.
 /// See ``FormState`` for more information about how form values and live bindings interact.
