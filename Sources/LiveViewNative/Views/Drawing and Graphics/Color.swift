@@ -46,13 +46,32 @@ struct Color<R: RootRegistry>: View {
 
 private let colorRegex = try! NSRegularExpression(pattern: "^#[0-9a-f]{6}$", options: .caseInsensitive)
 
-extension SwiftUI.Color.RGBColorSpace: AttributeDecodable {
+extension SwiftUI.Color.RGBColorSpace: AttributeDecodable, Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        
+        if let rgbColorSpace = Self(string: string) {
+            self = rgbColorSpace
+        } else {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for RGBColorSpace"))
+        }
+    }
+
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
-        switch attribute?.value {
+        if let string = attribute?.value, let rgbColorSpace = Self(string: string) {
+            self = rgbColorSpace
+        } else {
+            throw AttributeDecodingError.missingAttribute(Self.self)
+        }
+    }
+    
+    init?(string: String) {
+        switch string {
         case "srgb": self = .sRGB
         case "srgb-linear": self = .sRGBLinear
         case "display-p3": self = .displayP3
-        default: throw AttributeDecodingError.missingAttribute(Self.self)
+        default: return nil
         }
     }
 }
@@ -60,56 +79,32 @@ extension SwiftUI.Color.RGBColorSpace: AttributeDecodable {
 extension SwiftUI.Color: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        var color: SwiftUI.Color = SwiftUI.Color(fromNamedOrCSSHex: "#000000")!
+        
+        if let rgbColorSpace = try container.decode(SwiftUI.Color.RGBColorSpace?.self, forKey: .rgbColorSpace) {
+            var opacity: Double = 1
 
-        if let createWith = try container.decode(String?.self, forKey: .createWith) {
-            switch createWith {
-                case "string":
-                    if let string = try container.decode(String?.self, forKey: .string) {
-                        color = SwiftUI.Color(fromNamedOrCSSHex: string)!
-                    }
-
-                case "rgb_color_space":
-                    let colorSpace: SwiftUI.Color.RGBColorSpace = .sRGB
-                    var opacity: Double = 1
-                    var white: Double = 0
-                    var red: Double = 0
-                    var green: Double = 0
-                    var blue: Double = 0
-
-                    if let number = try container.decode(Double?.self, forKey: .opacity) {
-                        opacity = number
-                    }
-                    if let number = try container.decode(Double?.self, forKey: .white) {
-                        white = number
-
-                        color = SwiftUI.Color(colorSpace, white: white, opacity: opacity)
-                    } else {
-                        if let number = try container.decode(Double?.self, forKey: .red) {
-                            red = number
-                        }
-                        if let number = try container.decode(Double?.self, forKey: .green) {
-                            green = number
-                        }
-                        if let number = try container.decode(Double?.self, forKey: .blue) {
-                            blue = number
-                        }
-                        color = SwiftUI.Color(colorSpace, red: red, green: green, blue: blue, opacity: opacity)
-                    }
-
-                default:
-                // TODO: Fix this
-                color = SwiftUI.Color(fromNamedOrCSSHex: nil)!
+            if let number = try container.decode(Double?.self, forKey: .opacity) {
+                opacity = number
             }
+            if let red = try container.decode(Double?.self, forKey: .red), let green = try container.decode(Double?.self, forKey: .green), let blue = try container.decode(Double?.self, forKey: .blue) {
+                self = SwiftUI.Color(rgbColorSpace, red: red, green: green, blue: blue)
+            } else if let white = try container.decode(Double?.self, forKey: .white) {
+                self = SwiftUI.Color(rgbColorSpace, white: white, opacity: opacity)
+            } else {
+                throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Color"))
+            }
+        } else if let string = try container.decode(String?.self, forKey: .string) {
+            self = SwiftUI.Color(fromNamedOrCSSHex: string)!
+        } else {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Color"))
         }
-        self = color
     }
-
+    
     public init?(fromCSSHex string: String?) {
         guard let string = string else {
             return nil
         }
-
+        
         if colorRegex.firstMatch(in: string, options: [], range: NSRange(location: 0, length: string.utf16.count)) != nil {
             let r = Int(string[string.index(string.startIndex, offsetBy: 1)..<string.index(string.startIndex, offsetBy: 3)], radix: 16)!
             let g = Int(string[string.index(string.startIndex, offsetBy: 3)..<string.index(string.startIndex, offsetBy: 5)], radix: 16)!
@@ -174,11 +169,11 @@ extension SwiftUI.Color: Decodable {
     enum CodingKeys: String, CodingKey {
         case blue
         case brightness
-        case createWith = "create_with"
         case green
         case hue
         case opacity
         case red
+        case rgbColorSpace = "rgb_color_space"
         case saturation
         case string
         case white

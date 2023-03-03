@@ -24,6 +24,8 @@ defmodule LiveViewNativeSwiftUi.Platform do
         modifiers: %LiveViewNativeSwiftUi.Modifiers{stack: []},
         platform_id: :ios,
         platform_modifiers: [
+          background: Modifiers.Background,
+          background_style: Modifiers.BackgroundStyle,
           font_weight: Modifiers.FontWeight,
           foreground_style: Modifiers.ForegroundStyle,
           frame: Modifiers.Frame,

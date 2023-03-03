@@ -43,7 +43,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers do
 
         modifiers ->
           Jason.encode!(modifiers)
-          |> IO.inspect()
           |> Phoenix.HTML.Engine.html_escape()
       end
     end
