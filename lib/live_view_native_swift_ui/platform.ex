@@ -43,7 +43,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
 
           rename_action: Modifiers.RenameAction
         ],
-        template_engine: LiveViewNative.Engine,
+        tag_handler: LiveViewNative.TagEngine,
         template_namespace: SwiftUi
       }
     end
