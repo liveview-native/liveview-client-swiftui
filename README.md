@@ -5,7 +5,7 @@ The LiveViewNative Swift package lets you use Phoenix LiveView to build native i
 ## Installation
 
 1. In Xcode, select *File → Add Packages...*
-2. Enter the package URL `https://github.com/liveviewnative/liveview-client-swiftui`
+2. Enter the package URL `https://github.com/liveview-native/liveview-client-swiftui`
 3. Select *Add Package*
 
 ## Usage
@@ -49,6 +49,6 @@ be found at <https://hexdocs.pm/live_view_native_swift_ui>.
 
 ## Resources
 
-- Browse the [documentation](https://liveviewnative.github.io/liveview-client-swiftui/documentation/liveviewnative/) to read about the API.
-- Follow the [tutorial](https://liveviewnative.github.io/liveview-client-swiftui/tutorials/yourfirstapp) to get a step-by-step walkthrough of building an app with LiveView Native.
-- Check out the [ElixirConf '22 chat app](https://github.com/liveviewnative/elixirconf_chat) for an example of a complete app.
+- Browse the [documentation](https://liveview-native.github.io/liveview-client-swiftui/documentation/liveviewnative/) to read about the API.
+- Follow the [tutorial](https://liveview-native.github.io/liveview-client-swiftui/tutorials/yourfirstapp) to get a step-by-step walkthrough of building an app with LiveView Native.
+- Check out the [ElixirConf '22 chat app](https://github.com/liveview-native/elixirconf_chat) for an example of a complete app.
