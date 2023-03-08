@@ -27,8 +27,7 @@ struct RenameActionModifier: ViewModifier, Decodable {
         content
             .renameAction {
                 Task {
-                    // FIXME: Pass the target once that is available.
-                    try await coordinatorEnvironment?.pushEvent("click", event, [String:Any]())
+                    try await coordinatorEnvironment?.pushEvent("click", event, [String:Any](), target)
                 }
             }
     }
