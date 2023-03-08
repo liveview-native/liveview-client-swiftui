@@ -129,5 +129,20 @@ final class PickerTests: XCTestCase {
                 }
         }
     }
+    
+    func testMultiDatePicker() throws {
+        let start = DateComponents(calendar: .current, year: 2023, month: 1, day: 1).date!
+        let end = DateComponents(calendar: .current, year: 2023, month: 1, day: 31).date!
+        try assertMatch(
+            #"""
+            <multi-date-picker start="2023-01-01" end="2023-01-31">
+                <text>Pick some dates</text>
+            </mult-date-picker>
+            """#) {
+                MultiDatePicker(selection: .constant([]), in: start..<end) {
+                    Text("Pick some dates")
+                }
+            }
+    }
 #endif
 }
