@@ -103,6 +103,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case "menu":
             Menu(element: element, context: context)
 #endif
+#if os(iOS)
+        case "multi-date-picker":
+            MultiDatePicker<R>(context: context)
+#endif
         case "navigation-link":
             NavigationLink(element: element, context: context)
 #if os(iOS) || os(macOS)
