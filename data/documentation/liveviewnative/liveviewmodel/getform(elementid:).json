@@ -10,15 +10,15 @@
       "type": "reference"
     },
     {
-      "text": " for the ",
+      "text": " for the given ",
       "type": "text"
     },
     {
-      "code": "<form>",
+      "code": "<live-form>",
       "type": "codeVoice"
     },
     {
-      "text": " element with the given ID.",
+      "text": ".",
       "type": "text"
     }
   ],
@@ -150,6 +150,50 @@
         }
       ],
       "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "discussion",
+          "level": 2,
+          "text": "Discussion",
+          "type": "heading"
+        },
+        {
+          "content": [
+            {
+              "inlineContent": [
+                {
+                  "text": "The element parameter must be the form element. To get the form model for an element within a form, use the ",
+                  "type": "text"
+                },
+                {
+                  "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+                  "isActive": true,
+                  "type": "reference"
+                },
+                {
+                  "text": " or the ",
+                  "type": "text"
+                },
+                {
+                  "code": "\\.formModel",
+                  "type": "codeVoice"
+                },
+                {
+                  "text": " environment value.",
+                  "type": "text"
+                }
+              ],
+              "type": "paragraph"
+            }
+          ],
+          "name": "Important",
+          "style": "important",
+          "type": "aside"
+        }
+      ],
+      "kind": "content"
     }
   ],
   "references": {
@@ -203,6 +247,40 @@
       "title": "FormModel",
       "type": "topic",
       "url": "/documentation/liveviewnative/formmodel"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
+      "abstract": [
+        {
+          "text": "The context provides information at initialization-time to views in a LiveView.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveContext"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveContext",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livecontext"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
       "abstract": [
@@ -293,15 +371,15 @@
           "type": "reference"
         },
         {
-          "text": " for the ",
+          "text": " for the given ",
           "type": "text"
         },
         {
-          "code": "<form>",
+          "code": "<live-form>",
           "type": "codeVoice"
         },
         {
-          "text": " element with the given ID.",
+          "text": ".",
           "type": "text"
         }
       ],

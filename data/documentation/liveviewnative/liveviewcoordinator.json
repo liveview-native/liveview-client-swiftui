@@ -101,10 +101,10 @@
               "text": " : "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
               "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP",
-              "text": "CustomRegistry"
+              "preciseIdentifier": "s:14LiveViewNative12RootRegistryP",
+              "text": "RootRegistry"
             }
           ]
         }
@@ -396,7 +396,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewcoordinator/handleevent(_:handler:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)": {
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:target:)": {
       "abstract": [
         {
           "text": "Pushes a LiveView event with the given name and payload to the server.",
@@ -468,7 +468,24 @@
         },
         {
           "kind": "text",
-          "text": ") "
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "target"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:Si",
+          "text": "Int"
+        },
+        {
+          "kind": "text",
+          "text": "?) "
         },
         {
           "kind": "keyword",
@@ -483,12 +500,12 @@
           "text": "throws"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:target:)",
       "kind": "symbol",
       "role": "symbol",
-      "title": "pushEvent(type:event:value:)",
+      "title": "pushEvent(type:event:value:target:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:)"
+      "url": "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:target:)"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)": {
       "abstract": [
@@ -566,6 +583,58 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewcoordinator/receiveevent(_:)"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
+      "abstract": [
+        {
+          "text": "A root registry is a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type that can be used directly as the registry for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "RootRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/rootregistry"
+    },
     "doc://LiveViewNative/s8SendableP": {
       "identifier": "doc://LiveViewNative/s8SendableP",
       "title": "Swift.Sendable",
@@ -619,11 +688,16 @@
   "topicSections": [
     {
       "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/handleEvent(_:handler:)"
       ],
       "title": "LiveView Events"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:target:)"
+      ],
+      "title": "Instance Methods"
     },
     {
       "generated": true,

@@ -75,8 +75,9 @@
                       "type": "text"
                     },
                     {
-                      "code": "LiveViewConfiguration/navigationMode-swift.property",
-                      "type": "codeVoice"
+                      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
+                      "isActive": true,
+                      "type": "reference"
                     },
                     {
                       "text": ". Properties:",
@@ -1057,6 +1058,43 @@
       "title": "Attributes vs. Modifiers",
       "type": "topic",
       "url": "/documentation/liveviewnative/attributesvsmodifiers"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property": {
+      "abstract": [
+        {
+          "text": "Whether this coordinators allows its live view to navigate.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "navigationMode"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
+          "text": "NavigationMode"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "navigationMode",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.property"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
       "abstract": [

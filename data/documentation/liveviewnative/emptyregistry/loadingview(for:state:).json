@@ -54,7 +54,7 @@
       ]
     },
     "extendedModule": "LiveViewNative",
-    "externalID": "s:14LiveViewNative14CustomRegistryPAAs5NeverO07LoadingB0RtzrlE07loadingB03for5stateAE10Foundation3URLV_AA0A18SessionCoordinatorC5StateOyx_GtFZ::SYNTHESIZED::s:14LiveViewNative13EmptyRegistryV",
+    "externalID": "s:14LiveViewNative14CustomRegistryPAAs5NeverO07LoadingB0RtzrlE07loadingB03for5stateAE10Foundation3URLV_AA0A12SessionStateOtFZ::SYNTHESIZED::s:14LiveViewNative13EmptyRegistryV",
     "fragments": [
       {
         "kind": "keyword",
@@ -107,25 +107,8 @@
       },
       {
         "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC",
-        "text": "LiveSessionCoordinator"
-      },
-      {
-        "kind": "text",
-        "text": "<"
-      },
-      {
-        "kind": "typeIdentifier",
-        "text": "Self"
-      },
-      {
-        "kind": "text",
-        "text": ">."
-      },
-      {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
-        "text": "State"
+        "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
+        "text": "LiveSessionState"
       },
       {
         "kind": "text",
@@ -216,28 +199,10 @@
               "text": ": "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState",
               "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC",
-              "text": "LiveSessionCoordinator"
-            },
-            {
-              "kind": "text",
-              "text": "<"
-            },
-            {
-              "kind": "typeIdentifier",
-              "text": "Self"
-            },
-            {
-              "kind": "text",
-              "text": ">."
-            },
-            {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
-              "text": "State"
+              "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
+              "text": "LiveSessionState"
             },
             {
               "kind": "text",
@@ -441,25 +406,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC",
-          "text": "LiveSessionCoordinator"
-        },
-        {
-          "kind": "text",
-          "text": "<"
-        },
-        {
-          "kind": "typeIdentifier",
-          "text": "Self"
-        },
-        {
-          "kind": "text",
-          "text": ">."
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
-          "text": "State"
+          "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
+          "text": "LiveSessionState"
         },
         {
           "kind": "text",
@@ -478,79 +426,13 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/emptyregistry/loadingview(for:state:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
-      "abstract": [
-        {
-          "text": "The session coordinator object handles the initial connection, as well as navigation.",
-          "type": "text"
-        }
-      ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "class"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum": {
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState": {
       "abstract": [
         {
           "text": "The live view connection state.",
           "type": "text"
         }
       ],
-      "conformance": {
-        "availabilityPrefix": [
-          {
-            "text": "Available when",
-            "type": "text"
-          }
-        ],
-        "conformancePrefix": [
-          {
-            "text": "Conforms when",
-            "type": "text"
-          }
-        ],
-        "constraints": [
-          {
-            "code": "R",
-            "type": "codeVoice"
-          },
-          {
-            "text": " conforms to ",
-            "type": "text"
-          },
-          {
-            "code": "CustomRegistry",
-            "type": "codeVoice"
-          },
-          {
-            "text": ".",
-            "type": "text"
-          }
-        ]
-      },
       "fragments": [
         {
           "kind": "keyword",
@@ -562,21 +444,21 @@
         },
         {
           "kind": "identifier",
-          "text": "State"
+          "text": "LiveSessionState"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState",
       "kind": "symbol",
       "navigatorTitle": [
         {
           "kind": "identifier",
-          "text": "State"
+          "text": "LiveSessionState"
         }
       ],
       "role": "symbol",
-      "title": "LiveSessionCoordinator.State",
+      "title": "LiveSessionState",
       "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum"
+      "url": "/documentation/liveviewnative/livesessionstate"
     }
   },
   "schemaVersion": {

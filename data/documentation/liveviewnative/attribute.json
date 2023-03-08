@@ -1,7 +1,7 @@
 {
   "abstract": [
     {
-      "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+      "text": "A property wrapper that decodes an attribute of an element.",
       "type": "text"
     }
   ],
@@ -18,11 +18,11 @@
   },
   "kind": "symbol",
   "metadata": {
-    "externalID": "s:14LiveViewNative9Attributea",
+    "externalID": "s:14LiveViewNative9AttributeV",
     "fragments": [
       {
         "kind": "keyword",
-        "text": "typealias"
+        "text": "struct"
       },
       {
         "kind": "text",
@@ -45,8 +45,8 @@
       }
     ],
     "role": "symbol",
-    "roleHeading": "Type Alias",
-    "symbolKind": "typealias",
+    "roleHeading": "Structure",
+    "symbolKind": "struct",
     "title": "Attribute"
   },
   "primaryContentSections": [
@@ -61,8 +61,16 @@
           ],
           "tokens": [
             {
+              "kind": "attribute",
+              "text": "@propertyWrapper"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
               "kind": "keyword",
-              "text": "typealias"
+              "text": "struct"
             },
             {
               "kind": "text",
@@ -74,24 +82,107 @@
             },
             {
               "kind": "text",
-              "text": " = LiveViewNativeCore"
+              "text": "<"
+            },
+            {
+              "kind": "genericParameter",
+              "text": "T"
             },
             {
               "kind": "text",
-              "text": "."
-            },
-            {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
-              "text": "Attribute"
+              "text": ">"
             }
           ]
         }
       ],
       "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "overview",
+          "level": 2,
+          "text": "Overview",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "Specify the attribute name and an optional default value. Then use the value in the body of the View.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyElement: View {",
+            "    @Attribute(\"count\") private var count: Double = 0",
+            "",
+            "    var body: some View {",
+            "        Text(\"Count: \\(count)\")",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "If the value is not optional and no default is provided, a fatal error will be thrown when the attribute is not present or fails to decode.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "An attribute can also be created with a ",
+              "type": "text"
+            },
+            {
+              "code": "transform",
+              "type": "codeVoice"
+            },
+            {
+              "text": " function, which can be used to convert a value that does not conform to ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " or modify the way a value is decoded.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "@Attribute(",
+            "    \"count\",",
+            "    // add 5 to the count",
+            "    transform: { $0?.value.flatMap(Double.init(_:)).flatMap({ $0 + 5 }) }",
+            ") private var count: Double"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        }
+      ],
+      "kind": "content"
     }
   ],
   "references": {
+    "doc://LiveViewNative/7SwiftUI15DynamicPropertyP": {
+      "identifier": "doc://LiveViewNative/7SwiftUI15DynamicPropertyP",
+      "title": "SwiftUI.DynamicProperty",
+      "type": "unresolvable"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative": {
       "abstract": [],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
@@ -104,14 +195,14 @@
     "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
       "abstract": [
         {
-          "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+          "text": "A property wrapper that decodes an attribute of an element.",
           "type": "text"
         }
       ],
       "fragments": [
         {
           "kind": "keyword",
-          "text": "typealias"
+          "text": "struct"
         },
         {
           "kind": "text",
@@ -134,6 +225,247 @@
       "title": "Attribute",
       "type": "topic",
       "url": "/documentation/liveviewnative/attribute"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Attribute/DynamicProperty-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute/DynamicProperty-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "DynamicProperty Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attribute/dynamicproperty-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Attribute/init(wrappedValue:_:)": {
+      "abstract": [
+        {
+          "text": "Create an ",
+          "type": "text"
+        },
+        {
+          "code": "Attribute",
+          "type": "codeVoice"
+        },
+        {
+          "text": " with an ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9AttributeV1Txmfp",
+          "text": "T"
+        },
+        {
+          "kind": "text",
+          "text": "?, "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
+          "text": "AttributeName"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute/init(wrappedValue:_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init(wrappedValue:_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attribute/init(wrappedvalue:_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Attribute/init(wrappedValue:_:transform:)": {
+      "abstract": [
+        {
+          "text": "Create an ",
+          "type": "text"
+        },
+        {
+          "code": "Attribute",
+          "type": "codeVoice"
+        },
+        {
+          "text": " with a ",
+          "type": "text"
+        },
+        {
+          "code": "transform",
+          "type": "codeVoice"
+        },
+        {
+          "text": " function that converts the attribute into the desired type.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9AttributeV1Txmfp",
+          "text": "T"
+        },
+        {
+          "kind": "text",
+          "text": "?, "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
+          "text": "AttributeName"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "externalParam",
+          "text": "transform"
+        },
+        {
+          "kind": "text",
+          "text": ": (LiveViewNativeCore"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
+          "text": "Attribute"
+        },
+        {
+          "kind": "text",
+          "text": "?) "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        },
+        {
+          "kind": "text",
+          "text": " -> "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9AttributeV1Txmfp",
+          "text": "T"
+        },
+        {
+          "kind": "text",
+          "text": ")"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute/init(wrappedValue:_:transform:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "init(wrappedValue:_:transform:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attribute/init(wrappedvalue:_:transform:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Attribute/wrappedValue": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative9AttributeV1Txmfp",
+          "text": "T"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute/wrappedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "wrappedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attribute/wrappedvalue"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodable"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodable"
+        }
+      ],
+      "role": "symbol",
+      "title": "AttributeDecodable",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodable"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
       "abstract": [
@@ -204,6 +536,16 @@
       "url": "/documentation/liveviewnative/observedelement"
     }
   },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/7SwiftUI15DynamicPropertyP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
   "schemaVersion": {
     "major": 0,
     "minor": 3,
@@ -218,6 +560,28 @@
         "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement"
       ],
       "title": "Working with the DOM"
+    }
+  ],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/Attribute/init(wrappedValue:_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/Attribute/init(wrappedValue:_:transform:)"
+      ],
+      "title": "Initializers"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/Attribute/wrappedValue"
+      ],
+      "title": "Instance Properties"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/Attribute/DynamicProperty-Implementations"
+      ],
+      "title": "Default Implementations"
     }
   ],
   "variants": [

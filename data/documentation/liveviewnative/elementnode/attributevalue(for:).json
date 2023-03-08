@@ -283,11 +283,15 @@
         },
         {
           "kind": "text",
-          "text": ") -> "
+          "text": ") -> LiveViewNativeCore"
+        },
+        {
+          "kind": "text",
+          "text": "."
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9Attributea",
+          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
           "text": "Attribute"
         },
         {
@@ -453,11 +457,15 @@
         },
         {
           "kind": "text",
-          "text": ": ["
+          "text": ": [LiveViewNativeCore"
+        },
+        {
+          "kind": "text",
+          "text": "."
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9Attributea",
+          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
           "text": "Attribute"
         },
         {

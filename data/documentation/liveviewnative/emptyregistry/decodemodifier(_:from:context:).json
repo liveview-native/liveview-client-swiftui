@@ -79,7 +79,7 @@
       ]
     },
     "extendedModule": "LiveViewNative",
-    "externalID": "s:14LiveViewNative14CustomRegistryPAA7SwiftUI13EmptyModifierV0dI0RtzAA0hE0V4NoneV0I4TypeRtzrlE06decodeI0_4from7contextAfL_s7Decoder_pAA0A7ContextVyxGtFZ::SYNTHESIZED::s:14LiveViewNative13EmptyRegistryV",
+    "externalID": "s:14LiveViewNative14CustomRegistryPAA7SwiftUI13EmptyModifierV0dI0RtzAA0hE0V4NoneV0I4TypeRtzrlE06decodeI0_4from7contextAfL_s7Decoder_pAA0A7ContextVy4RootQzGtFZ::SYNTHESIZED::s:14LiveViewNative13EmptyRegistryV",
     "fragments": [
       {
         "kind": "keyword",
@@ -150,7 +150,8 @@
       },
       {
         "kind": "typeIdentifier",
-        "text": "Self"
+        "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+        "text": "Root"
       },
       {
         "kind": "text",
@@ -277,8 +278,10 @@
               "text": "<"
             },
             {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/Root",
               "kind": "typeIdentifier",
-              "text": "Self"
+              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+              "text": "Root"
             },
             {
               "kind": "text",
@@ -394,6 +397,44 @@
       "title": "ModifierType",
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry/modifiertype"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/Root": {
+      "abstract": [
+        {
+          "text": "The root custom registry type that the live view coordinator and context use.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "associatedtype"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Root"
+        },
+        {
+          "kind": "text",
+          "text": " : "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative12RootRegistryP",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/Root",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "Root",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry/root"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry": {
       "abstract": [
@@ -581,7 +622,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "text": "Self"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+          "text": "Root"
         },
         {
           "kind": "text",

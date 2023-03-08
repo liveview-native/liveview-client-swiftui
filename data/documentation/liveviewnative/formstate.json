@@ -204,7 +204,7 @@
               "type": "text"
             },
             {
-              "code": "<phx-form>",
+              "code": "<live-form>",
               "type": "codeVoice"
             },
             {

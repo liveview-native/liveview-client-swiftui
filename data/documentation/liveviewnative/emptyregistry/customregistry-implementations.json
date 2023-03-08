@@ -423,7 +423,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "text": "Self"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+          "text": "Root"
         },
         {
           "kind": "text",
@@ -533,25 +534,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC",
-          "text": "LiveSessionCoordinator"
-        },
-        {
-          "kind": "text",
-          "text": "<"
-        },
-        {
-          "kind": "typeIdentifier",
-          "text": "Self"
-        },
-        {
-          "kind": "text",
-          "text": ">."
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
-          "text": "State"
+          "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
+          "text": "LiveSessionState"
         },
         {
           "kind": "text",
@@ -704,7 +688,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "text": "Self"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+          "text": "Root"
         },
         {
           "kind": "text",

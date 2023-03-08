@@ -1,0 +1,258 @@
+{
+  "abstract": [
+    {
+      "text": "Sends the event with a given payload and completion handler.",
+      "type": "text"
+    }
+  ],
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative",
+        "doc://LiveViewNative/documentation/LiveViewNative/Event"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/Event/wrappedValue"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative5EventV12wrappedValueyyyp_yyctcvp",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "var"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "wrappedValue"
+      },
+      {
+        "kind": "text",
+        "text": ": ("
+      },
+      {
+        "kind": "keyword",
+        "text": "Any"
+      },
+      {
+        "kind": "text",
+        "text": ", () -> ()) -> ()"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Instance Property",
+    "symbolKind": "property",
+    "title": "wrappedValue"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "var"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "wrappedValue"
+            },
+            {
+              "kind": "text",
+              "text": ": ("
+            },
+            {
+              "kind": "keyword",
+              "text": "Any"
+            },
+            {
+              "kind": "text",
+              "text": ", "
+            },
+            {
+              "kind": "attribute",
+              "text": "@escaping"
+            },
+            {
+              "kind": "text",
+              "text": " () -> ()) -> () { "
+            },
+            {
+              "kind": "keyword",
+              "text": "get"
+            },
+            {
+              "kind": "text",
+              "text": " }"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    },
+    {
+      "content": [
+        {
+          "anchor": "discussion",
+          "level": 2,
+          "text": "Discussion",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "After declaring an event, call the ",
+              "type": "text"
+            },
+            {
+              "code": "wrappedValue",
+              "type": "codeVoice"
+            },
+            {
+              "text": " with a JSON-encodable payload and completion handler.",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "@Event(\"phx-click\", type: \"click\") private var click",
+            "",
+            "click([\"count\": clickCount]) {",
+            "    print(\"Event completed\")",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
+        }
+      ],
+      "kind": "content"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Event": {
+      "abstract": [
+        {
+          "text": "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Event"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Event"
+        }
+      ],
+      "role": "symbol",
+      "title": "Event",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/event"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Event/wrappedValue": {
+      "abstract": [
+        {
+          "text": "Sends the event with a given payload and completion handler.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "wrappedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": ("
+        },
+        {
+          "kind": "keyword",
+          "text": "Any"
+        },
+        {
+          "kind": "text",
+          "text": ", () -> ()) -> ()"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event/wrappedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "wrappedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/event/wrappedvalue"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/event/wrappedvalue"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

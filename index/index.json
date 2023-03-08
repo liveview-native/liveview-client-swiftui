@@ -2449,8 +2449,8 @@
                 "type": "groupMarker"
               },
               {
-                "path": "/documentation/liveviewnative/livesessioncoordinator/state-swift.property",
-                "title": "var state: State",
+                "path": "/documentation/liveviewnative/livesessioncoordinator/state",
+                "title": "var state: LiveSessionState",
                 "type": "property"
               },
               {
@@ -2466,41 +2466,6 @@
                 "path": "/documentation/liveviewnative/livesessioncoordinator/connect()",
                 "title": "func connect() async",
                 "type": "method"
-              },
-              {
-                "title": "Enumerations",
-                "type": "groupMarker"
-              },
-              {
-                "children": [
-                  {
-                    "title": "Enumeration Cases",
-                    "type": "groupMarker"
-                  },
-                  {
-                    "path": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/connected",
-                    "title": "case connected",
-                    "type": "case"
-                  },
-                  {
-                    "path": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/connecting",
-                    "title": "case connecting",
-                    "type": "case"
-                  },
-                  {
-                    "path": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/connectionfailed(_:)",
-                    "title": "case connectionFailed(Error)",
-                    "type": "case"
-                  },
-                  {
-                    "path": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/notconnected",
-                    "title": "case notConnected",
-                    "type": "case"
-                  }
-                ],
-                "path": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum",
-                "title": "LiveSessionCoordinator.State",
-                "type": "enum"
               },
               {
                 "title": "Default Implementations",
@@ -2564,6 +2529,55 @@
               {
                 "children": [
                   {
+                    "title": "Structures",
+                    "type": "groupMarker"
+                  },
+                  {
+                    "children": [
+                      {
+                        "title": "Initializers",
+                        "type": "groupMarker"
+                      },
+                      {
+                        "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tab/init(label:url:)",
+                        "title": "init(label: SwiftUI.Label<SwiftUI.Text, SwiftUI.Image>, url: URL)",
+                        "type": "init"
+                      },
+                      {
+                        "title": "Instance Properties",
+                        "type": "groupMarker"
+                      },
+                      {
+                        "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tab/id-7tzsr",
+                        "title": "var id: URL",
+                        "type": "property"
+                      },
+                      {
+                        "title": "Default Implementations",
+                        "type": "groupMarker"
+                      },
+                      {
+                        "children": [
+                          {
+                            "title": "Instance Properties",
+                            "type": "groupMarker"
+                          },
+                          {
+                            "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tab/id-75w88",
+                            "title": "var id: ObjectIdentifier",
+                            "type": "property"
+                          }
+                        ],
+                        "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tab/identifiable-implementations",
+                        "title": "Identifiable Implementations",
+                        "type": "symbol"
+                      }
+                    ],
+                    "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tab",
+                    "title": "LiveSessionConfiguration.NavigationMode.Tab",
+                    "type": "struct"
+                  },
+                  {
                     "title": "Enumeration Cases",
                     "type": "groupMarker"
                   },
@@ -2588,24 +2602,9 @@
                     "type": "case"
                   },
                   {
-                    "title": "Default Implementations",
-                    "type": "groupMarker"
-                  },
-                  {
-                    "children": [
-                      {
-                        "title": "Operators",
-                        "type": "groupMarker"
-                      },
-                      {
-                        "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/!=(_:_:)",
-                        "title": "static func != (Self, Self) -> Bool",
-                        "type": "op"
-                      }
-                    ],
-                    "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/equatable-implementations",
-                    "title": "Equatable Implementations",
-                    "type": "symbol"
+                    "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tabview(tabs:)",
+                    "title": "case tabView(tabs: [Tab])",
+                    "type": "case"
                   }
                 ],
                 "path": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum",
@@ -2624,11 +2623,6 @@
                 "type": "groupMarker"
               },
               {
-                "path": "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:)",
-                "title": "func pushEvent(type: String, event: String, value: Any) async throws",
-                "type": "method"
-              },
-              {
                 "path": "/documentation/liveviewnative/liveviewcoordinator/receiveevent(_:)",
                 "title": "func receiveEvent(String) -> some Publisher<Payload, Never>\n",
                 "type": "method"
@@ -2636,6 +2630,15 @@
               {
                 "path": "/documentation/liveviewnative/liveviewcoordinator/handleevent(_:handler:)",
                 "title": "func handleEvent(String, handler: (Payload) -> Void)",
+                "type": "method"
+              },
+              {
+                "title": "Instance Methods",
+                "type": "groupMarker"
+              },
+              {
+                "path": "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:target:)",
+                "title": "func pushEvent(type: String, event: String, value: Any, target: Int?) async throws",
                 "type": "method"
               },
               {
@@ -2737,18 +2740,8 @@
                 "type": "groupMarker"
               },
               {
-                "path": "/documentation/liveviewnative/phxform",
-                "title": "PhxForm",
-                "type": "article"
-              },
-              {
                 "path": "/documentation/liveviewnative/textfield",
                 "title": "TextField",
-                "type": "article"
-              },
-              {
-                "path": "/documentation/liveviewnative/phxsubmitbutton",
-                "title": "PhxSubmitButton",
                 "type": "article"
               },
               {
@@ -2806,12 +2799,12 @@
               },
               {
                 "path": "/documentation/liveviewnative/elementnode/attributes",
-                "title": "var attributes: [Attribute]",
+                "title": "var attributes: [LiveViewNativeCore.Attribute]",
                 "type": "property"
               },
               {
                 "path": "/documentation/liveviewnative/elementnode/attribute(named:)",
-                "title": "func attribute(named: AttributeName) -> Attribute?",
+                "title": "func attribute(named: AttributeName) -> LiveViewNativeCore.Attribute?",
                 "type": "method"
               },
               {
@@ -2869,6 +2862,11 @@
                 "type": "groupMarker"
               },
               {
+                "path": "/documentation/liveviewnative/observedelement/projectedvalue",
+                "title": "var projectedValue: some Publisher<Void, Never>",
+                "type": "property"
+              },
+              {
                 "path": "/documentation/liveviewnative/observedelement/wrappedvalue",
                 "title": "var wrappedValue: ElementNode",
                 "type": "property"
@@ -2899,9 +2897,54 @@
             "type": "struct"
           },
           {
+            "children": [
+              {
+                "title": "Initializers",
+                "type": "groupMarker"
+              },
+              {
+                "path": "/documentation/liveviewnative/attribute/init(wrappedvalue:_:)",
+                "title": "init(wrappedValue: T?, AttributeName)",
+                "type": "init"
+              },
+              {
+                "path": "/documentation/liveviewnative/attribute/init(wrappedvalue:_:transform:)",
+                "title": "init(wrappedValue: T?, AttributeName, transform: (LiveViewNativeCore.Attribute?) throws -> T)",
+                "type": "init"
+              },
+              {
+                "title": "Instance Properties",
+                "type": "groupMarker"
+              },
+              {
+                "path": "/documentation/liveviewnative/attribute/wrappedvalue",
+                "title": "var wrappedValue: T",
+                "type": "property"
+              },
+              {
+                "title": "Default Implementations",
+                "type": "groupMarker"
+              },
+              {
+                "children": [
+                  {
+                    "title": "Instance Methods",
+                    "type": "groupMarker"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/attribute/update()",
+                    "title": "func update()",
+                    "type": "method"
+                  }
+                ],
+                "path": "/documentation/liveviewnative/attribute/dynamicproperty-implementations",
+                "title": "DynamicProperty Implementations",
+                "type": "symbol"
+              }
+            ],
             "path": "/documentation/liveviewnative/attribute",
             "title": "Attribute",
-            "type": "typealias"
+            "type": "struct"
           },
           {
             "title": "Custom DOM Elements and Attributes",
@@ -2933,8 +2976,8 @@
                   {
                     "children": [
                       {
-                        "path": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-3zxni",
-                        "title": "static func lookup(TagName, element: ElementNode, context: LiveContext<Self>) -> Never",
+                        "path": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-1rtgc",
+                        "title": "static func lookup(TagName, element: ElementNode, context: LiveContext<Root>) -> Never",
                         "type": "method"
                       }
                     ],
@@ -2942,8 +2985,8 @@
                     "type": "groupMarker"
                   }
                 ],
-                "path": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-895au",
-                "title": "static func lookup(TagName, element: ElementNode, context: LiveContext<Self>) -> CustomView",
+                "path": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-5bvqg",
+                "title": "static func lookup(TagName, element: ElementNode, context: LiveContext<Root>) -> CustomView",
                 "type": "method"
               },
               {
@@ -2965,8 +3008,8 @@
                   {
                     "children": [
                       {
-                        "path": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-2hd1h",
-                        "title": "static func decodeModifier(ModifierType, from: Decoder, context: LiveContext<Self>) -> EmptyModifier",
+                        "path": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-2xrhn",
+                        "title": "static func decodeModifier(ModifierType, from: Decoder, context: LiveContext<Root>) -> EmptyModifier",
                         "type": "method"
                       }
                     ],
@@ -2974,8 +3017,8 @@
                     "type": "groupMarker"
                   }
                 ],
-                "path": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-35xcx",
-                "title": "static func decodeModifier(ModifierType, from: Decoder, context: LiveContext<Self>) throws -> CustomModifier",
+                "path": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-4cqvs",
+                "title": "static func decodeModifier(ModifierType, from: Decoder, context: LiveContext<Root>) throws -> CustomModifier",
                 "type": "method"
               },
               {
@@ -2992,8 +3035,8 @@
                   {
                     "children": [
                       {
-                        "path": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-2mt69",
-                        "title": "static func loadingView(for: URL, state: LiveSessionCoordinator<Self>.State) -> Never",
+                        "path": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-71hh9",
+                        "title": "static func loadingView(for: URL, state: LiveSessionState) -> Never",
                         "type": "method"
                       }
                     ],
@@ -3001,13 +3044,92 @@
                     "type": "groupMarker"
                   }
                 ],
-                "path": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-33lst",
-                "title": "static func loadingView(for: URL, state: LiveSessionCoordinator<Self>.State) -> LoadingView",
+                "path": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-6jd3b",
+                "title": "static func loadingView(for: URL, state: LiveSessionState) -> LoadingView",
                 "type": "method"
               },
               {
                 "path": "/documentation/liveviewnative/customregistry/loadingview",
                 "title": "LoadingView",
+                "type": "associatedtype"
+              },
+              {
+                "title": "Composing Registries",
+                "type": "groupMarker"
+              },
+              {
+                "children": [
+                  {
+                    "title": "Protocol Requirements",
+                    "type": "groupMarker"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/aggregateregistry/registries",
+                    "title": "Registries",
+                    "type": "associatedtype"
+                  },
+                  {
+                    "title": "Multi-Registry Types",
+                    "type": "groupMarker"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/registry2",
+                    "title": "Registry2",
+                    "type": "typealias"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/registry3",
+                    "title": "Registry3",
+                    "type": "typealias"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/registry4",
+                    "title": "Registry4",
+                    "type": "typealias"
+                  },
+                  {
+                    "title": "Default Implementations",
+                    "type": "groupMarker"
+                  },
+                  {
+                    "children": [
+                      {
+                        "title": "Type Methods",
+                        "type": "groupMarker"
+                      },
+                      {
+                        "path": "/documentation/liveviewnative/aggregateregistry/decodemodifier(_:from:context:)",
+                        "title": "static func decodeModifier(Registries.ModifierType, from: Decoder, context: LiveContext<Root>) throws -> some ViewModifier",
+                        "type": "method"
+                      },
+                      {
+                        "path": "/documentation/liveviewnative/aggregateregistry/loadingview(for:state:)",
+                        "title": "static func loadingView(for: URL, state: LiveSessionState) -> some View",
+                        "type": "method"
+                      },
+                      {
+                        "path": "/documentation/liveviewnative/aggregateregistry/lookup(_:element:context:)",
+                        "title": "static func lookup(Registries.TagName, element: ElementNode, context: LiveContext<Root>) -> some View",
+                        "type": "method"
+                      }
+                    ],
+                    "path": "/documentation/liveviewnative/aggregateregistry/customregistry-implementations",
+                    "title": "CustomRegistry Implementations",
+                    "type": "symbol"
+                  }
+                ],
+                "path": "/documentation/liveviewnative/aggregateregistry",
+                "title": "AggregateRegistry",
+                "type": "protocol"
+              },
+              {
+                "path": "/documentation/liveviewnative/rootregistry",
+                "title": "RootRegistry",
+                "type": "protocol"
+              },
+              {
+                "path": "/documentation/liveviewnative/customregistry/root",
+                "title": "Root",
                 "type": "associatedtype"
               },
               {
@@ -3080,17 +3202,17 @@
                       },
                       {
                         "path": "/documentation/liveviewnative/emptyregistry/decodemodifier(_:from:context:)",
-                        "title": "static func decodeModifier(ModifierType, from: Decoder, context: LiveContext<Self>) -> EmptyModifier",
+                        "title": "static func decodeModifier(ModifierType, from: Decoder, context: LiveContext<Root>) -> EmptyModifier",
                         "type": "method"
                       },
                       {
                         "path": "/documentation/liveviewnative/emptyregistry/loadingview(for:state:)",
-                        "title": "static func loadingView(for: URL, state: LiveSessionCoordinator<Self>.State) -> Never",
+                        "title": "static func loadingView(for: URL, state: LiveSessionState) -> Never",
                         "type": "method"
                       },
                       {
                         "path": "/documentation/liveviewnative/emptyregistry/lookup(_:element:context:)",
-                        "title": "static func lookup(TagName, element: ElementNode, context: LiveContext<Self>) -> Never",
+                        "title": "static func lookup(TagName, element: ElementNode, context: LiveContext<Root>) -> Never",
                         "type": "method"
                       }
                     ],
@@ -3285,11 +3407,6 @@
                 "type": "property"
               },
               {
-                "path": "/documentation/liveviewnative/formmodel/elementid",
-                "title": "let elementID: String",
-                "type": "property"
-              },
-              {
                 "title": "Instance Methods",
                 "type": "groupMarker"
               },
@@ -3343,8 +3460,91 @@
             "type": "class"
           },
           {
+            "title": "Protocols",
+            "type": "groupMarker"
+          },
+          {
+            "children": [
+              {
+                "title": "Initializers",
+                "type": "groupMarker"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "path": "/documentation/liveviewnative/attributedecodable/init(from:)-2clc5",
+                        "title": "init(from: LiveViewNativeCore.Attribute?) throws",
+                        "type": "init"
+                      }
+                    ],
+                    "title": "AttributeDecodable Implementations",
+                    "type": "groupMarker"
+                  }
+                ],
+                "path": "/documentation/liveviewnative/attributedecodable/init(from:)-5yds5",
+                "title": "init(from: LiveViewNativeCore.Attribute?) throws",
+                "type": "init"
+              }
+            ],
+            "path": "/documentation/liveviewnative/attributedecodable",
+            "title": "AttributeDecodable",
+            "type": "protocol"
+          },
+          {
             "title": "Structures",
             "type": "groupMarker"
+          },
+          {
+            "children": [
+              {
+                "title": "Initializers",
+                "type": "groupMarker"
+              },
+              {
+                "path": "/documentation/liveviewnative/event/init(_:type:)",
+                "title": "init(AttributeName, type: String)",
+                "type": "init"
+              },
+              {
+                "path": "/documentation/liveviewnative/event/init(event:type:)",
+                "title": "init(event: String, type: String)",
+                "type": "init"
+              },
+              {
+                "title": "Instance Properties",
+                "type": "groupMarker"
+              },
+              {
+                "path": "/documentation/liveviewnative/event/wrappedvalue",
+                "title": "var wrappedValue: (Any, () -> ()) -> ()",
+                "type": "property"
+              },
+              {
+                "title": "Default Implementations",
+                "type": "groupMarker"
+              },
+              {
+                "children": [
+                  {
+                    "title": "Instance Methods",
+                    "type": "groupMarker"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/event/update()",
+                    "title": "func update()",
+                    "type": "method"
+                  }
+                ],
+                "path": "/documentation/liveviewnative/event/dynamicproperty-implementations",
+                "title": "DynamicProperty Implementations",
+                "type": "symbol"
+              }
+            ],
+            "path": "/documentation/liveviewnative/event",
+            "title": "Event",
+            "type": "struct"
           },
           {
             "children": [
@@ -3421,6 +3621,87 @@
                 "type": "groupMarker"
               },
               {
+                "path": "/documentation/liveviewnative/attributedecodingerror/badvalue(_:)",
+                "title": "case badValue(Any.Type)",
+                "type": "case"
+              },
+              {
+                "path": "/documentation/liveviewnative/attributedecodingerror/missingattribute(_:)",
+                "title": "case missingAttribute(Any.Type)",
+                "type": "case"
+              },
+              {
+                "title": "Instance Properties",
+                "type": "groupMarker"
+              },
+              {
+                "path": "/documentation/liveviewnative/attributedecodingerror/errordescription-8zv5o",
+                "title": "var errorDescription: String?",
+                "type": "property"
+              },
+              {
+                "title": "Default Implementations",
+                "type": "groupMarker"
+              },
+              {
+                "children": [
+                  {
+                    "title": "Instance Properties",
+                    "type": "groupMarker"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/attributedecodingerror/localizeddescription",
+                    "title": "var localizedDescription: String",
+                    "type": "property"
+                  }
+                ],
+                "path": "/documentation/liveviewnative/attributedecodingerror/error-implementations",
+                "title": "Error Implementations",
+                "type": "symbol"
+              },
+              {
+                "children": [
+                  {
+                    "title": "Instance Properties",
+                    "type": "groupMarker"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/attributedecodingerror/errordescription-8dpp3",
+                    "title": "var errorDescription: String?",
+                    "type": "property"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/attributedecodingerror/failurereason",
+                    "title": "var failureReason: String?",
+                    "type": "property"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/attributedecodingerror/helpanchor",
+                    "title": "var helpAnchor: String?",
+                    "type": "property"
+                  },
+                  {
+                    "path": "/documentation/liveviewnative/attributedecodingerror/recoverysuggestion",
+                    "title": "var recoverySuggestion: String?",
+                    "type": "property"
+                  }
+                ],
+                "path": "/documentation/liveviewnative/attributedecodingerror/localizederror-implementations",
+                "title": "LocalizedError Implementations",
+                "type": "symbol"
+              }
+            ],
+            "path": "/documentation/liveviewnative/attributedecodingerror",
+            "title": "AttributeDecodingError",
+            "type": "enum"
+          },
+          {
+            "children": [
+              {
+                "title": "Enumeration Cases",
+                "type": "groupMarker"
+              },
+              {
                 "path": "/documentation/liveviewnative/liveconnectionerror/eventerror(_:)",
                 "title": "case eventError(Message)",
                 "type": "case"
@@ -3473,6 +3754,37 @@
             ],
             "path": "/documentation/liveviewnative/liveconnectionerror",
             "title": "LiveConnectionError",
+            "type": "enum"
+          },
+          {
+            "children": [
+              {
+                "title": "Enumeration Cases",
+                "type": "groupMarker"
+              },
+              {
+                "path": "/documentation/liveviewnative/livesessionstate/connected",
+                "title": "case connected",
+                "type": "case"
+              },
+              {
+                "path": "/documentation/liveviewnative/livesessionstate/connecting",
+                "title": "case connecting",
+                "type": "case"
+              },
+              {
+                "path": "/documentation/liveviewnative/livesessionstate/connectionfailed(_:)",
+                "title": "case connectionFailed(Error)",
+                "type": "case"
+              },
+              {
+                "path": "/documentation/liveviewnative/livesessionstate/notconnected",
+                "title": "case notConnected",
+                "type": "case"
+              }
+            ],
+            "path": "/documentation/liveviewnative/livesessionstate",
+            "title": "LiveSessionState",
             "type": "enum"
           }
         ],

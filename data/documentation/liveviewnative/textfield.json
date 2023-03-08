@@ -42,23 +42,6 @@
           "type": "heading"
         },
         {
-          "inlineContent": [
-            {
-              "text": "This element must be contained inside a ",
-              "type": "text"
-            },
-            {
-              "code": "<phx-form>",
-              "type": "codeVoice"
-            },
-            {
-              "text": " element.",
-              "type": "text"
-            }
-          ],
-          "type": "paragraph"
-        },
-        {
           "anchor": "Attributes",
           "level": 2,
           "text": "Attributes",
@@ -732,42 +715,6 @@
       "type": "topic",
       "url": "/documentation/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/PhxForm": {
-      "abstract": [
-        {
-          "code": "<phx-form>",
-          "type": "codeVoice"
-        },
-        {
-          "text": ", a container for form elements.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/PhxForm",
-      "kind": "article",
-      "role": "article",
-      "title": "PhxForm",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/phxform"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton": {
-      "abstract": [
-        {
-          "code": "<phx-submit-button>",
-          "type": "codeVoice"
-        },
-        {
-          "text": ", special button that triggers submission of the form it’s contained in when pressed.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton",
-      "kind": "article",
-      "role": "article",
-      "title": "PhxSubmitButton",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/phxsubmitbutton"
-    },
     "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
       "abstract": [
         {
@@ -789,16 +736,6 @@
     "patch": 0
   },
   "sections": [],
-  "seeAlsoSections": [
-    {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/PhxForm",
-        "doc://LiveViewNative/documentation/LiveViewNative/PhxSubmitButton"
-      ],
-      "title": "Forms"
-    }
-  ],
   "variants": [
     {
       "paths": [

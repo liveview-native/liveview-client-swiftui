@@ -1,0 +1,187 @@
+{
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative18AttributeDecodableP",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "protocol"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "AttributeDecodable"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "AttributeDecodable"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Protocol",
+    "symbolKind": "protocol",
+    "title": "AttributeDecodable"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "protocol"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "AttributeDecodable"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodable"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodable"
+        }
+      ],
+      "role": "symbol",
+      "title": "AttributeDecodable",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable/init(from:)-5yds5": {
+      "abstract": [],
+      "defaultImplementations": 1,
+      "fragments": [
+        {
+          "kind": "identifier",
+          "text": "init"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "from"
+        },
+        {
+          "kind": "text",
+          "text": ": LiveViewNativeCore"
+        },
+        {
+          "kind": "text",
+          "text": "."
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
+          "text": "Attribute"
+        },
+        {
+          "kind": "text",
+          "text": "?) "
+        },
+        {
+          "kind": "keyword",
+          "text": "throws"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable/init(from:)-5yds5",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "init(from:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodable/init(from:)-5yds5"
+    }
+  },
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable/init(from:)-5yds5"
+      ],
+      "title": "Initializers"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/attributedecodable"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -35,11 +35,15 @@
       },
       {
         "kind": "text",
-        "text": ": ["
+        "text": ": [LiveViewNativeCore"
+      },
+      {
+        "kind": "text",
+        "text": "."
       },
       {
         "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative9Attributea",
+        "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
         "text": "Attribute"
       },
       {
@@ -82,12 +86,15 @@
             },
             {
               "kind": "text",
-              "text": ": ["
+              "text": ": [LiveViewNativeCore"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute",
+              "kind": "text",
+              "text": "."
+            },
+            {
               "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative9Attributea",
+              "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
               "text": "Attribute"
             },
             {
@@ -117,40 +124,6 @@
       "title": "LiveViewNative",
       "type": "topic",
       "url": "/documentation/liveviewnative"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
-      "abstract": [
-        {
-          "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
-          "type": "text"
-        }
-      ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "typealias"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "Attribute"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "Attribute"
-        }
-      ],
-      "role": "symbol",
-      "title": "Attribute",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attribute"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
       "abstract": [
@@ -233,11 +206,15 @@
         },
         {
           "kind": "text",
-          "text": ") -> "
+          "text": ") -> LiveViewNativeCore"
+        },
+        {
+          "kind": "text",
+          "text": "."
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9Attributea",
+          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
           "text": "Attribute"
         },
         {
@@ -403,11 +380,15 @@
         },
         {
           "kind": "text",
-          "text": ": ["
+          "text": ": [LiveViewNativeCore"
+        },
+        {
+          "kind": "text",
+          "text": "."
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9Attributea",
+          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
           "text": "Attribute"
         },
         {

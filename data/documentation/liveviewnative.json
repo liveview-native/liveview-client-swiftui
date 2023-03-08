@@ -51,7 +51,7 @@
           "type": "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
           "isActive": true,
           "type": "reference"
         },
@@ -74,7 +74,7 @@
           "type": "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
           "isActive": true,
           "type": "reference"
         },
@@ -93,14 +93,14 @@
     "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
       "abstract": [
         {
-          "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+          "text": "A property wrapper that decodes an attribute of an element.",
           "type": "text"
         }
       ],
       "fragments": [
         {
           "kind": "keyword",
-          "text": "typealias"
+          "text": "struct"
         },
         {
           "kind": "text",
@@ -123,6 +123,64 @@
       "title": "Attribute",
       "type": "topic",
       "url": "/documentation/liveviewnative/attribute"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodable"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodable"
+        }
+      ],
+      "role": "symbol",
+      "title": "AttributeDecodable",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodingError"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodingError"
+        }
+      ],
+      "role": "symbol",
+      "title": "AttributeDecodingError",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodingerror"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers": {
       "abstract": [],
@@ -200,6 +258,40 @@
       "title": "ElementNode",
       "type": "topic",
       "url": "/documentation/liveviewnative/elementnode"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/Event": {
+      "abstract": [
+        {
+          "text": "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Event"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Event"
+        }
+      ],
+      "role": "symbol",
+      "title": "Event",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/event"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/FormControls": {
       "abstract": [
@@ -531,6 +623,40 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/livesessioncoordinator"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState": {
+      "abstract": [
+        {
+          "text": "The live view connection state.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionState"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionState"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionState",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionstate"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
       "abstract": [
         {
@@ -662,6 +788,58 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/payload"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
+      "abstract": [
+        {
+          "text": "A root registry is a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type that can be used directly as the registry for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "RootRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/rootregistry"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
       "abstract": [
         {
@@ -759,6 +937,13 @@
     },
     {
       "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable"
+      ],
+      "title": "Protocols"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/Event",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding"
       ],
       "title": "Structures"
@@ -771,7 +956,9 @@
     },
     {
       "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError"
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState"
       ],
       "title": "Enumerations"
     }

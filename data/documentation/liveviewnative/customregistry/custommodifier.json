@@ -132,7 +132,7 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4cqvs",
               "isActive": true,
               "type": "reference"
             },
@@ -302,7 +302,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry/modifiertype"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4cqvs": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.",
@@ -380,7 +380,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "text": "Self"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+          "text": "Root"
         },
         {
           "kind": "text",
@@ -400,13 +401,13 @@
           "text": "CustomModifier"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4cqvs",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "decodeModifier(_:from:context:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-35xcx"
+      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-4cqvs"
     }
   },
   "schemaVersion": {
@@ -420,7 +421,7 @@
       "generated": true,
       "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx"
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4cqvs"
       ],
       "title": "Custom View Modifiers"
     }

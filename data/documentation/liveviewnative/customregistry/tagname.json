@@ -206,7 +206,7 @@
         },
         {
           "code": [
-            "struct MyRegistry: CustomRegistry {",
+            "struct MyRegistry: RootRegistry {",
             "    enum TagName: String {",
             "        case foo",
             "        case barBaz = \"bar-baz\"",
@@ -449,7 +449,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry/tagname"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it needs to construct a custom view.",
@@ -527,7 +527,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "text": "Self"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+          "text": "Root"
         },
         {
           "kind": "text",
@@ -539,13 +540,13 @@
           "text": "CustomView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "lookup(_:element:context:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-895au"
+      "url": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-5bvqg"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry": {
       "abstract": [
@@ -653,7 +654,7 @@
     {
       "generated": true,
       "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg",
         "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/CustomView"
       ],
       "title": "Custom Tags"

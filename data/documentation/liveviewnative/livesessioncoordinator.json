@@ -101,10 +101,10 @@
               "text": " : "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
               "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP",
-              "text": "CustomRegistry"
+              "preciseIdentifier": "s:14LiveViewNative12RootRegistryP",
+              "text": "RootRegistry"
             }
           ]
         }
@@ -261,72 +261,6 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/livesessioncoordinator/observableobject-implementations"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum": {
-      "abstract": [
-        {
-          "text": "The live view connection state.",
-          "type": "text"
-        }
-      ],
-      "conformance": {
-        "availabilityPrefix": [
-          {
-            "text": "Available when",
-            "type": "text"
-          }
-        ],
-        "conformancePrefix": [
-          {
-            "text": "Conforms when",
-            "type": "text"
-          }
-        ],
-        "constraints": [
-          {
-            "code": "R",
-            "type": "codeVoice"
-          },
-          {
-            "text": " conforms to ",
-            "type": "text"
-          },
-          {
-            "code": "CustomRegistry",
-            "type": "codeVoice"
-          },
-          {
-            "text": ".",
-            "type": "text"
-          }
-        ]
-      },
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "enum"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "State"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "State"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator.State",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum"
-    },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/connect()": {
       "abstract": [
         {
@@ -480,7 +414,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/livesessioncoordinator/init(_:config:customregistrytype:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state-swift.property": {
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state": {
       "abstract": [
         {
           "text": "The current state of the live view connection.",
@@ -506,16 +440,16 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
-          "text": "State"
+          "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
+          "text": "LiveSessionState"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state-swift.property",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state",
       "kind": "symbol",
       "role": "symbol",
       "title": "state",
       "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.property"
+      "url": "/documentation/liveviewnative/livesessioncoordinator/state"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/url": {
       "abstract": [
@@ -622,6 +556,58 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewcoordinator"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
+      "abstract": [
+        {
+          "text": "A root registry is a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type that can be used directly as the registry for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "RootRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/rootregistry"
+    },
     "doc://LiveViewNative/s8SendableP": {
       "identifier": "doc://LiveViewNative/s8SendableP",
       "title": "Swift.Sendable",
@@ -682,7 +668,7 @@
     },
     {
       "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state-swift.property",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/url"
       ],
       "title": "Instance Properties"
@@ -692,12 +678,6 @@
         "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/connect()"
       ],
       "title": "Instance Methods"
-    },
-    {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum"
-      ],
-      "title": "Enumerations"
     },
     {
       "generated": true,

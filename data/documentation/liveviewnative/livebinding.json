@@ -228,8 +228,9 @@
                       "type": "text"
                     },
                     {
-                      "code": "LiveBinding/init(attribute:)",
-                      "type": "codeVoice"
+                      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(wrappedValue:attribute:)",
+                      "isActive": true,
+                      "type": "reference"
                     },
                     {
                       "text": " initializer.",

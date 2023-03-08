@@ -357,100 +357,6 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewcoordinator/handleevent(_:handler:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)": {
-      "abstract": [
-        {
-          "text": "Pushes a LiveView event with the given name and payload to the server.",
-          "type": "text"
-        }
-      ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "func"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "pushEvent"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "externalParam",
-          "text": "type"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "event"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "value"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "keyword",
-          "text": "Any"
-        },
-        {
-          "kind": "text",
-          "text": ") "
-        },
-        {
-          "kind": "keyword",
-          "text": "async"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "keyword",
-          "text": "throws"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "pushEvent(type:event:value:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:)"
-    },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)": {
       "abstract": [
         {
@@ -567,7 +473,6 @@
     {
       "generated": true,
       "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:)",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/receiveEvent(_:)"
       ],
       "title": "LiveView Events"

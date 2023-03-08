@@ -91,14 +91,14 @@
     "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
       "abstract": [
         {
-          "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+          "text": "A property wrapper that decodes an attribute of an element.",
           "type": "text"
         }
       ],
       "fragments": [
         {
           "kind": "keyword",
-          "text": "typealias"
+          "text": "struct"
         },
         {
           "kind": "text",
@@ -203,11 +203,15 @@
         },
         {
           "kind": "text",
-          "text": ") -> "
+          "text": ") -> LiveViewNativeCore"
+        },
+        {
+          "kind": "text",
+          "text": "."
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9Attributea",
+          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
           "text": "Attribute"
         },
         {
@@ -373,11 +377,15 @@
         },
         {
           "kind": "text",
-          "text": ": ["
+          "text": ": [LiveViewNativeCore"
+        },
+        {
+          "kind": "text",
+          "text": "."
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9Attributea",
+          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
           "text": "Attribute"
         },
         {

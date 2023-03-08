@@ -124,7 +124,7 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b",
               "isActive": true,
               "type": "reference"
             },
@@ -230,7 +230,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry/loadingview"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b": {
       "abstract": [
         {
           "text": "This method is called when it needs a view to display while connecting to the live view.",
@@ -290,25 +290,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC",
-          "text": "LiveSessionCoordinator"
-        },
-        {
-          "kind": "text",
-          "text": "<"
-        },
-        {
-          "kind": "typeIdentifier",
-          "text": "Self"
-        },
-        {
-          "kind": "text",
-          "text": ">."
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
-          "text": "State"
+          "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
+          "text": "LiveSessionState"
         },
         {
           "kind": "text",
@@ -320,13 +303,13 @@
           "text": "LoadingView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "loadingView(for:state:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-33lst"
+      "url": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-6jd3b"
     }
   },
   "schemaVersion": {
@@ -339,7 +322,7 @@
     {
       "generated": true,
       "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst"
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b"
       ],
       "title": "Customizing the Loading View"
     }

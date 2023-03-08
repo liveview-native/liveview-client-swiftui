@@ -92,7 +92,7 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b",
               "isActive": true,
               "type": "reference"
             },
@@ -106,7 +106,41 @@
         {
           "inlineContent": [
             {
-              "text": "To use your custom registry implementation, provide it as the generic parameter for the ",
+              "text": "To use a single registry, implement the ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": " protocol and implement the inherited ",
+              "type": "text"
+            },
+            {
+              "code": "CustomRegistry",
+              "type": "codeVoice"
+            },
+            {
+              "text": " requirements. If you want to combine multiple registries, see ",
+              "type": "text"
+            },
+            {
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AggregateRegistry",
+              "isActive": true,
+              "type": "reference"
+            },
+            {
+              "text": ".",
+              "type": "text"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            },
+            {
+              "text": "To use your registry, provide it as the generic parameter for the ",
               "type": "text"
             },
             {
@@ -151,7 +185,7 @@
           "type": "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
           "isActive": true,
           "type": "reference"
         },
@@ -174,7 +208,7 @@
           "type": "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
           "isActive": true,
           "type": "reference"
         },
@@ -189,6 +223,40 @@
       "title": "Adding Custom Modifiers",
       "type": "topic",
       "url": "/documentation/liveviewnative/addcustommodifier"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AggregateRegistry": {
+      "abstract": [
+        {
+          "text": "An aggregate registry combines multiple other registries together, allowing you to use tags/modifiers declared by any of them.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "AggregateRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AggregateRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "AggregateRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "AggregateRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/aggregateregistry"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
       "abstract": [
@@ -437,6 +505,44 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry/modifiertype"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/Root": {
+      "abstract": [
+        {
+          "text": "The root custom registry type that the live view coordinator and context use.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "associatedtype"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Root"
+        },
+        {
+          "kind": "text",
+          "text": " : "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative12RootRegistryP",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/Root",
+      "kind": "symbol",
+      "required": true,
+      "role": "symbol",
+      "title": "Root",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/customregistry/root"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName": {
       "abstract": [
         {
@@ -493,7 +599,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry/tagname"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4cqvs": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.",
@@ -571,7 +677,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "text": "Self"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+          "text": "Root"
         },
         {
           "kind": "text",
@@ -591,15 +698,15 @@
           "text": "CustomModifier"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4cqvs",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "decodeModifier(_:from:context:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-35xcx"
+      "url": "/documentation/liveviewnative/customregistry/decodemodifier(_:from:context:)-4cqvs"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b": {
       "abstract": [
         {
           "text": "This method is called when it needs a view to display while connecting to the live view.",
@@ -659,25 +766,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC",
-          "text": "LiveSessionCoordinator"
-        },
-        {
-          "kind": "text",
-          "text": "<"
-        },
-        {
-          "kind": "typeIdentifier",
-          "text": "Self"
-        },
-        {
-          "kind": "text",
-          "text": ">."
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
-          "text": "State"
+          "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
+          "text": "LiveSessionState"
         },
         {
           "kind": "text",
@@ -689,15 +779,15 @@
           "text": "LoadingView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "loadingView(for:state:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-33lst"
+      "url": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-6jd3b"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it needs to construct a custom view.",
@@ -775,7 +865,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "text": "Self"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+          "text": "Root"
         },
         {
           "kind": "text",
@@ -787,13 +878,13 @@
           "text": "CustomView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "lookup(_:element:context:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-895au"
+      "url": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-5bvqg"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry": {
       "abstract": [
@@ -906,6 +997,58 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/livesessioncoordinator"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
+      "abstract": [
+        {
+          "text": "A root registry is a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type that can be used directly as the registry for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "RootRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/rootregistry"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder": {
       "abstract": [
         {
@@ -952,6 +1095,15 @@
   "relationshipsSections": [
     {
       "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AggregateRegistry",
+        "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry"
+      ],
+      "kind": "relationships",
+      "title": "Inherited By",
+      "type": "inheritedBy"
+    },
+    {
+      "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/EmptyRegistry"
       ],
       "kind": "relationships",
@@ -980,7 +1132,7 @@
     {
       "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg",
         "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/CustomView"
       ],
       "title": "Custom Tags"
@@ -988,17 +1140,25 @@
     {
       "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/ModifierType",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-35xcx",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/decodeModifier(_:from:context:)-4cqvs",
         "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/CustomModifier"
       ],
       "title": "Custom View Modifiers"
     },
     {
       "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b",
         "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/LoadingView"
       ],
       "title": "Customizing the Loading View"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AggregateRegistry",
+        "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/Root"
+      ],
+      "title": "Composing Registries"
     },
     {
       "identifiers": [

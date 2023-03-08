@@ -271,15 +271,15 @@
           "type": "reference"
         },
         {
-          "text": " for the ",
+          "text": " for the given ",
           "type": "text"
         },
         {
-          "code": "<form>",
+          "code": "<live-form>",
           "type": "codeVoice"
         },
         {
-          "text": " element with the given ID.",
+          "text": ".",
           "type": "text"
         }
       ],

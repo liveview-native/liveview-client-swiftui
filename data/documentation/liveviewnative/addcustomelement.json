@@ -5,7 +5,7 @@
       "type": "text"
     },
     {
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
       "isActive": true,
       "type": "reference"
     },
@@ -52,7 +52,7 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
               "isActive": true,
               "type": "reference"
             },
@@ -74,7 +74,7 @@
         },
         {
           "code": [
-            "struct MyRegistry: CustomRegistry {",
+            "struct MyRegistry: RootRegistry {",
             "}"
           ],
           "syntax": "swift",
@@ -115,7 +115,7 @@
         },
         {
           "code": [
-            "struct MyRegistry: CustomRegistry {",
+            "struct MyRegistry: RootRegistry {",
             "    enum TagName: String {",
             "        case myTag = \"my-tag\"",
             "    }",
@@ -131,7 +131,7 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg",
               "isActive": true,
               "type": "reference"
             },
@@ -169,7 +169,7 @@
         },
         {
           "code": [
-            "struct MyRegistry: CustomRegistry {",
+            "struct MyRegistry: RootRegistry {",
             "    enum TagName: String {",
             "        case myTag = \"my-tag\"",
             "    }",
@@ -230,7 +230,7 @@
           "type": "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
           "isActive": true,
           "type": "reference"
         },
@@ -280,7 +280,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg": {
       "abstract": [
         {
           "text": "This method is called by LiveView Native when it needs to construct a custom view.",
@@ -358,7 +358,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "text": "Self"
+          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
+          "text": "Root"
         },
         {
           "kind": "text",
@@ -370,13 +371,13 @@
           "text": "CustomView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-895au",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "lookup(_:element:context:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-895au"
+      "url": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-5bvqg"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
       "abstract": [
@@ -412,6 +413,40 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/livecontext"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
+      "abstract": [
+        {
+          "text": "The session coordinator object handles the initial connection, as well as navigation.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "class"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "LiveSessionCoordinator"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionCoordinator",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessioncoordinator"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
       "abstract": [
         {
@@ -445,6 +480,58 @@
       "title": "LiveViewCoordinator",
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewcoordinator"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
+      "abstract": [
+        {
+          "text": "A root registry is a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type that can be used directly as the registry for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "RootRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/rootregistry"
     }
   },
   "schemaVersion": {

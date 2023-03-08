@@ -212,7 +212,7 @@
               "type": "text"
             },
             {
-              "code": "<phx-form>",
+              "code": "<live-form>",
               "type": "codeVoice"
             },
             {
@@ -237,7 +237,7 @@
               "type": "text"
             },
             {
-              "code": "<phx-form>",
+              "code": "<live-form>",
               "type": "codeVoice"
             },
             {
@@ -322,7 +322,7 @@
           "type": "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
           "isActive": true,
           "type": "reference"
         },
@@ -583,6 +583,58 @@
       "title": "LiveBinding",
       "type": "topic",
       "url": "/documentation/liveviewnative/livebinding"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
+      "abstract": [
+        {
+          "text": "A root registry is a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type that can be used directly as the registry for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "RootRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/rootregistry"
     }
   },
   "schemaVersion": {

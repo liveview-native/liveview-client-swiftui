@@ -101,10 +101,10 @@
               "text": " : "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
               "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP",
-              "text": "CustomRegistry"
+              "preciseIdentifier": "s:14LiveViewNative12RootRegistryP",
+              "text": "RootRegistry"
             }
           ]
         }
@@ -143,7 +143,7 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connected",
               "isActive": true,
               "type": "reference"
             },
@@ -152,7 +152,7 @@
               "type": "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst",
+              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b",
               "isActive": true,
               "type": "reference"
             },
@@ -216,7 +216,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst": {
+    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b": {
       "abstract": [
         {
           "text": "This method is called when it needs a view to display while connecting to the live view.",
@@ -276,25 +276,8 @@
         },
         {
           "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC",
-          "text": "LiveSessionCoordinator"
-        },
-        {
-          "kind": "text",
-          "text": "<"
-        },
-        {
-          "kind": "typeIdentifier",
-          "text": "Self"
-        },
-        {
-          "kind": "text",
-          "text": ">."
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC5StateO",
-          "text": "State"
+          "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
+          "text": "LiveSessionState"
         },
         {
           "kind": "text",
@@ -306,13 +289,13 @@
           "text": "LoadingView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-33lst",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/loadingView(for:state:)-6jd3b",
       "kind": "symbol",
       "required": true,
       "role": "symbol",
       "title": "loadingView(for:state:)",
       "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-33lst"
+      "url": "/documentation/liveviewnative/customregistry/loadingview(for:state:)-6jd3b"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted": {
       "abstract": [
@@ -405,7 +388,7 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/livesessioncoordinator"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected": {
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connected": {
       "abstract": [
         {
           "text": "The coordinator has connected and the view tree can be rendered.",
@@ -426,12 +409,12 @@
           "text": "connected"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/State-swift.enum/connected",
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connected",
       "kind": "symbol",
       "role": "symbol",
-      "title": "LiveSessionCoordinator.State.connected",
+      "title": "LiveSessionState.connected",
       "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/state-swift.enum/connected"
+      "url": "/documentation/liveviewnative/livesessionstate/connected"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
       "abstract": [
@@ -642,6 +625,58 @@
       "title": "LiveViewModel",
       "type": "topic",
       "url": "/documentation/liveviewnative/liveviewmodel"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
+      "abstract": [
+        {
+          "text": "A root registry is a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": " type that can be used directly as the registry for a ",
+          "type": "text"
+        },
+        {
+          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
+          "isActive": true,
+          "type": "reference"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "protocol"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "RootRegistry"
+        }
+      ],
+      "role": "symbol",
+      "title": "RootRegistry",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/rootregistry"
     },
     "doc://LiveViewNative/tutorials/YourFirstApp": {
       "abstract": [

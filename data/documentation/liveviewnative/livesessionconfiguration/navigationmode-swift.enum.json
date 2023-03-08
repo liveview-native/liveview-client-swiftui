@@ -80,16 +80,6 @@
     }
   ],
   "references": {
-    "doc://LiveViewNative/SH": {
-      "identifier": "doc://LiveViewNative/SH",
-      "title": "Swift.Hashable",
-      "type": "unresolvable"
-    },
-    "doc://LiveViewNative/SQ": {
-      "identifier": "doc://LiveViewNative/SQ",
-      "title": "Swift.Equatable",
-      "type": "unresolvable"
-    },
     "doc://LiveViewNative/documentation/LiveViewNative": {
       "abstract": [],
       "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
@@ -176,14 +166,34 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Equatable-Implementations": {
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Tab": {
       "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Equatable-Implementations",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Equatable Implementations",
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "struct"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "Tab"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Tab",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "Tab"
+        }
+      ],
+      "role": "symbol",
+      "title": "LiveSessionConfiguration.NavigationMode.Tab",
       "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/equatable-implementations"
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tab"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/disabled": {
       "abstract": [
@@ -313,6 +323,63 @@
       "type": "topic",
       "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/splitview"
     },
+    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/tabView(tabs:)": {
+      "abstract": [
+        {
+          "text": "Navigation is fully enabled and uses a ",
+          "type": "text"
+        },
+        {
+          "code": "TabView",
+          "type": "codeVoice"
+        },
+        {
+          "text": " to switch between routes.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "tabView"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "externalParam",
+          "text": "tabs"
+        },
+        {
+          "kind": "text",
+          "text": ": ["
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO3TabV",
+          "text": "Tab"
+        },
+        {
+          "kind": "text",
+          "text": "])"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/tabView(tabs:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "LiveSessionConfiguration.NavigationMode.tabView(tabs:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tabview(tabs:)"
+    },
     "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
       "abstract": [
         {
@@ -348,17 +415,6 @@
       "url": "/documentation/liveviewnative/livesessioncoordinator"
     }
   },
-  "relationshipsSections": [
-    {
-      "identifiers": [
-        "doc://LiveViewNative/SQ",
-        "doc://LiveViewNative/SH"
-      ],
-      "kind": "relationships",
-      "title": "Conforms To",
-      "type": "conformsTo"
-    }
-  ],
   "schemaVersion": {
     "major": 0,
     "minor": 3,
@@ -368,19 +424,19 @@
   "topicSections": [
     {
       "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Tab"
+      ],
+      "title": "Structures"
+    },
+    {
+      "identifiers": [
         "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/disabled",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/enabled",
         "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/replaceOnly",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/splitView"
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/splitView",
+        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/tabView(tabs:)"
       ],
       "title": "Enumeration Cases"
-    },
-    {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Equatable-Implementations"
-      ],
-      "title": "Default Implementations"
     }
   ],
   "variants": [

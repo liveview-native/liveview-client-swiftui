@@ -260,6 +260,45 @@
           ],
           "syntax": "swift",
           "type": "codeListing"
+        },
+        {
+          "anchor": "Handling-Arbitrary-Changes",
+          "level": 2,
+          "text": "Handling Arbitrary Changes",
+          "type": "heading"
+        },
+        {
+          "inlineContent": [
+            {
+              "text": "If you need to run code, rather than only triggering a SwiftUI view update, whenever an element changes (subject to the restrictions above), use SwiftUI’s ",
+              "type": "text"
+            },
+            {
+              "code": "onReceive",
+              "type": "codeVoice"
+            },
+            {
+              "text": " view modifier in conjunction with the projected value of this property wrapper:",
+              "type": "text"
+            }
+          ],
+          "type": "paragraph"
+        },
+        {
+          "code": [
+            "struct MyView: View {",
+            "    @ObservedElement private var element: ElementNode",
+            "",
+            "    var body: some View {",
+            "        Text(\"Hello\")",
+            "            .onReceive($element) {",
+            "                print(\"Element changed!\")",
+            "            }",
+            "    }",
+            "}"
+          ],
+          "syntax": "swift",
+          "type": "codeListing"
         }
       ],
       "kind": "content"
@@ -283,14 +322,14 @@
     "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
       "abstract": [
         {
-          "text": "An attribute is a key-value pair of an attribute name (with an optional namespace) and an optional value.",
+          "text": "A property wrapper that decodes an attribute of an element.",
           "type": "text"
         }
       ],
       "fragments": [
         {
           "kind": "keyword",
-          "text": "typealias"
+          "text": "struct"
         },
         {
           "kind": "text",
@@ -402,7 +441,7 @@
           "type": "codeVoice"
         },
         {
-          "text": " that observes changes to the view’s element..",
+          "text": " that observes changes to the view’s element.",
           "type": "text"
         }
       ],
@@ -422,6 +461,73 @@
       "title": "init()",
       "type": "topic",
       "url": "/documentation/liveviewnative/observedelement/init()"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/projectedValue": {
+      "abstract": [
+        {
+          "text": "A publisher that publishes when the observed element changes.",
+          "type": "text"
+        }
+      ],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "projectedValue"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "keyword",
+          "text": "some"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:7Combine9PublisherP",
+          "text": "Publisher"
+        },
+        {
+          "kind": "text",
+          "text": "<"
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s4Voida",
+          "text": "Void"
+        },
+        {
+          "kind": "text",
+          "text": ", "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:s5NeverO",
+          "text": "Never"
+        },
+        {
+          "kind": "text",
+          "text": ">"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/projectedValue",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "projectedValue",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/observedelement/projectedvalue"
     },
     "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/wrappedValue": {
       "abstract": [
@@ -496,6 +602,7 @@
     },
     {
       "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/projectedValue",
         "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/wrappedValue"
       ],
       "title": "Instance Properties"

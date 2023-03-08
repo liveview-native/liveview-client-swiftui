@@ -1,0 +1,307 @@
+{
+  "hierarchy": {
+    "paths": [
+      [
+        "doc://LiveViewNative/documentation/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier": {
+    "interfaceLanguage": "swift",
+    "url": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError"
+  },
+  "kind": "symbol",
+  "metadata": {
+    "externalID": "s:14LiveViewNative22AttributeDecodingErrorO",
+    "fragments": [
+      {
+        "kind": "keyword",
+        "text": "enum"
+      },
+      {
+        "kind": "text",
+        "text": " "
+      },
+      {
+        "kind": "identifier",
+        "text": "AttributeDecodingError"
+      }
+    ],
+    "modules": [
+      {
+        "name": "LiveViewNative"
+      }
+    ],
+    "navigatorTitle": [
+      {
+        "kind": "identifier",
+        "text": "AttributeDecodingError"
+      }
+    ],
+    "role": "symbol",
+    "roleHeading": "Enumeration",
+    "symbolKind": "enum",
+    "title": "AttributeDecodingError"
+  },
+  "primaryContentSections": [
+    {
+      "declarations": [
+        {
+          "languages": [
+            "swift"
+          ],
+          "platforms": [
+            "iOS"
+          ],
+          "tokens": [
+            {
+              "kind": "keyword",
+              "text": "enum"
+            },
+            {
+              "kind": "text",
+              "text": " "
+            },
+            {
+              "kind": "identifier",
+              "text": "AttributeDecodingError"
+            }
+          ]
+        }
+      ],
+      "kind": "declarations"
+    }
+  ],
+  "references": {
+    "doc://LiveViewNative/10Foundation14LocalizedErrorP": {
+      "identifier": "doc://LiveViewNative/10Foundation14LocalizedErrorP",
+      "title": "Foundation.LocalizedError",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
+      "kind": "symbol",
+      "role": "collection",
+      "title": "LiveViewNative",
+      "type": "topic",
+      "url": "/documentation/liveviewnative"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "enum"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodingError"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError",
+      "kind": "symbol",
+      "navigatorTitle": [
+        {
+          "kind": "identifier",
+          "text": "AttributeDecodingError"
+        }
+      ],
+      "role": "symbol",
+      "title": "AttributeDecodingError",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodingerror"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/Error-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/Error-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "Error Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodingerror/error-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/LocalizedError-Implementations": {
+      "abstract": [],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/LocalizedError-Implementations",
+      "kind": "article",
+      "role": "collectionGroup",
+      "title": "LocalizedError Implementations",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodingerror/localizederror-implementations"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/badValue(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "badValue"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "keyword",
+          "text": "Any"
+        },
+        {
+          "kind": "text",
+          "text": ".Type)"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/badValue(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "AttributeDecodingError.badValue(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodingerror/badvalue(_:)"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/errorDescription-8zv5o": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "var"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "errorDescription"
+        },
+        {
+          "kind": "text",
+          "text": ": "
+        },
+        {
+          "kind": "typeIdentifier",
+          "preciseIdentifier": "s:SS",
+          "text": "String"
+        },
+        {
+          "kind": "text",
+          "text": "?"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/errorDescription-8zv5o",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "errorDescription",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodingerror/errordescription-8zv5o"
+    },
+    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/missingAttribute(_:)": {
+      "abstract": [],
+      "fragments": [
+        {
+          "kind": "keyword",
+          "text": "case"
+        },
+        {
+          "kind": "text",
+          "text": " "
+        },
+        {
+          "kind": "identifier",
+          "text": "missingAttribute"
+        },
+        {
+          "kind": "text",
+          "text": "("
+        },
+        {
+          "kind": "keyword",
+          "text": "Any"
+        },
+        {
+          "kind": "text",
+          "text": ".Type)"
+        }
+      ],
+      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/missingAttribute(_:)",
+      "kind": "symbol",
+      "role": "symbol",
+      "title": "AttributeDecodingError.missingAttribute(_:)",
+      "type": "topic",
+      "url": "/documentation/liveviewnative/attributedecodingerror/missingattribute(_:)"
+    },
+    "doc://LiveViewNative/s5ErrorP": {
+      "identifier": "doc://LiveViewNative/s5ErrorP",
+      "title": "Swift.Error",
+      "type": "unresolvable"
+    },
+    "doc://LiveViewNative/s8SendableP": {
+      "identifier": "doc://LiveViewNative/s8SendableP",
+      "title": "Swift.Sendable",
+      "type": "unresolvable"
+    }
+  },
+  "relationshipsSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/10Foundation14LocalizedErrorP",
+        "doc://LiveViewNative/s5ErrorP",
+        "doc://LiveViewNative/s8SendableP"
+      ],
+      "kind": "relationships",
+      "title": "Conforms To",
+      "type": "conformsTo"
+    }
+  ],
+  "schemaVersion": {
+    "major": 0,
+    "minor": 3,
+    "patch": 0
+  },
+  "sections": [],
+  "topicSections": [
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/badValue(_:)",
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/missingAttribute(_:)"
+      ],
+      "title": "Enumeration Cases"
+    },
+    {
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/errorDescription-8zv5o"
+      ],
+      "title": "Instance Properties"
+    },
+    {
+      "generated": true,
+      "identifiers": [
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/Error-Implementations",
+        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/LocalizedError-Implementations"
+      ],
+      "title": "Default Implementations"
+    }
+  ],
+  "variants": [
+    {
+      "paths": [
+        "/documentation/liveviewnative/attributedecodingerror"
+      ],
+      "traits": [
+        {
+          "interfaceLanguage": "swift"
+        }
+      ]
+    }
+  ]
+}
