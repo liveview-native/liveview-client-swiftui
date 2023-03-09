@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+/// A button element that sends events when tapped.
+///
+/// Use the `phx-click` attribute to specify which event to fire on tap.
+///
+/// ```html
+/// <button phx-click="my_event">Click Me!</button>
+/// ```
 @_spi(LiveForm) public struct Button<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
