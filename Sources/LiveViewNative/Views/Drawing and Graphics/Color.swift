@@ -80,20 +80,20 @@ extension SwiftUI.Color: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        if let rgbColorSpace = try container.decode(SwiftUI.Color.RGBColorSpace?.self, forKey: .rgbColorSpace) {
+        if let rgbColorSpace = try container.decodeIfPresent(SwiftUI.Color.RGBColorSpace?.self, forKey: .rgbColorSpace) {
             var opacity: Double = 1
 
-            if let number = try container.decode(Double?.self, forKey: .opacity) {
-                opacity = number
+            if let number = try container.decodeIfPresent(Double?.self, forKey: .opacity) {
+                opacity = number!
             }
-            if let red = try container.decode(Double?.self, forKey: .red), let green = try container.decode(Double?.self, forKey: .green), let blue = try container.decode(Double?.self, forKey: .blue) {
-                self = SwiftUI.Color(rgbColorSpace, red: red, green: green, blue: blue)
-            } else if let white = try container.decode(Double?.self, forKey: .white) {
-                self = SwiftUI.Color(rgbColorSpace, white: white, opacity: opacity)
+            if let red = try container.decodeIfPresent(Double?.self, forKey: .red), let green = try container.decodeIfPresent(Double?.self, forKey: .green), let blue = try container.decodeIfPresent(Double?.self, forKey: .blue) {
+                self = SwiftUI.Color(rgbColorSpace!, red: red!, green: green!, blue: blue!)
+            } else if let white = try container.decodeIfPresent(Double?.self, forKey: .white) {
+                self = SwiftUI.Color(rgbColorSpace!, white: white!, opacity: opacity)
             } else {
                 throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Color"))
             }
-        } else if let string = try container.decode(String?.self, forKey: .string) {
+        } else if let string = try container.decodeIfPresent(String?.self, forKey: .string) {
             self = SwiftUI.Color(fromNamedOrCSSHex: string)!
         } else {
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Color"))
