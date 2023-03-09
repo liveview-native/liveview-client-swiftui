@@ -11,10 +11,10 @@ extension Gradient: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         var gradient: Gradient?
 
-        if let colors = try container.decode([SwiftUI.Color]?.self, forKey: .colors) {
-            gradient = Gradient(colors: colors)
-        } else if let stops = try container.decode([Gradient.Stop]?.self, forKey: .stops) {
-            gradient = Gradient(stops: stops)
+        if let colors = try container.decodeIfPresent([SwiftUI.Color]?.self, forKey: .colors) {
+            gradient = Gradient(colors: colors!)
+        } else if let stops = try container.decodeIfPresent([Gradient.Stop]?.self, forKey: .stops) {
+            gradient = Gradient(stops: stops!)
         } else {
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected either colors or stops for Gradient"))
         }
