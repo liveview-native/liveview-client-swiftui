@@ -168,8 +168,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     }
     
     enum ModifierType: String {
-        case fontWeight = "font_weight"
         case backgroundStyle = "background_style"
+        case fontWeight = "font_weight"
         case foregroundStyle = "foreground_style"
         case frame
         case gridCellAnchor = "grid_cell_anchor"
