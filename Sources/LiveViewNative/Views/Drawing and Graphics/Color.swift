@@ -65,7 +65,7 @@ extension SwiftUI.Color.RGBColorSpace: AttributeDecodable, Decodable {
             throw AttributeDecodingError.missingAttribute(Self.self)
         }
     }
-    
+
     init?(string: String) {
         switch string {
         case "srgb": self = .sRGB
