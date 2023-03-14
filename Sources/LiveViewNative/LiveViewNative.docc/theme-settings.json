@@ -5,7 +5,6 @@
         },
         "color": {
             "figure-gray-secondary": "#86868b",
-            "code-background": "var(--color-fill-gray-quaternary)",
             "fill-blue": "#0071e3",
             "documentation-intro-fill": "radial-gradient(circle at top, #555 30%, #1d1d1f 100%)",
             "documentation-intro-accent": "#555"
