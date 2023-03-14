@@ -14,7 +14,9 @@ import SwiftUI
 /// ```html
 /// <button phx-click="my_event">Click Me!</button>
 /// ```
-@_spi(LiveForm) public struct Button<R: RootRegistry>: View {
+@_documentation(visibility: public)
+@_spi(LiveForm)
+public struct Button<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     // used internaly by PhxSubmitButton

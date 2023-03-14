@@ -21,7 +21,7 @@ done
 # build doccarchive
 echo "Building docs..."
 mkdir -p docc_build
-xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build "OTHER_SWIFT_FLAGS=-symbol-graph-minimum-access-level internal -include-spi-symbols" &> $output
+xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build -toolchain swift &> $output
 
 # create worktree
 if [ ! -d docs ]; then
