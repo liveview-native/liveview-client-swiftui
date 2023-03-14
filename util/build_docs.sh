@@ -23,13 +23,28 @@ echo "Building docs..."
 mkdir -p docc_build
 xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build -toolchain swift &> $output
 
+# build docc-render with Elixir syntax highlighting support
+if [ -d "docc_build/swift-docc-render" ]; then
+	echo "swift-docc-render already built at docc_build/swift-docc-render"
+else
+	git clone https://github.com/apple/swift-docc-render docc_build/swift-docc-render
+	cd docc_build/swift-docc-render
+	. $(brew --prefix nvm)/nvm.sh
+	nvm install
+	npm install
+	sed -i '' "s/Languages = {/Languages = {\n  elixir: ['elixir', 'ex'],/g" src/utils/syntax-highlight.js
+	sed -i '' 's/bash\|/elixir\|bash\|/g' src/utils/syntax-highlight.js
+	npm run build
+	cd ../..
+fi
+
 # create worktree
 if [ ! -d docs ]; then
 	git worktree add docs docs
 fi
 
 echo "Generating static files..."
-xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui &> $output
+DOCC_HTML_DIR="docc_build/swift-docc-render/dist" xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui &> $output
 
 # add index page to root with redirect to package docs
 cat > docs/index.html << EOF
