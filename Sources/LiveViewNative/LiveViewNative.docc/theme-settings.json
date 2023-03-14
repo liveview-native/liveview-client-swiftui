@@ -1,0 +1,18 @@
+{
+    "theme": {
+        "typography": {
+            "html-font": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\""
+        },
+        "color": {
+            "grid": "var(--color-fill-gray-tertiary)",
+            "figure-gray-secondary": "#86868b",
+            "code-background": "var(--color-fill-gray-quaternary)",
+            "fill-gray-quaternary": "#333336",
+            "fill-light-blue-secondary": "#002a51"
+        },
+        "border-radius": "13px",
+        "code": {
+            "border-radius": "22px"
+        }
+    }
+}

@@ -7,13 +7,24 @@
 
 import SwiftUI
 
-/// A button element that sends events when tapped.
+/// `<button>`, sends events when tapped.
 ///
 /// Use the `phx-click` attribute to specify which event to fire on tap.
 ///
 /// ```html
-/// <button phx-click="my_event">Click Me!</button>
+/// <button phx-click="my_event" phx-value-extra="more info">Click Me!</button>
 /// ```
+///
+/// ```elixir
+/// def handle_event("my_event", %{ "extra" => extra }, socket) do
+///     {:noreply, assign(socket, value: extra)}
+/// end
+/// ```
+///
+/// - Parameters:
+///     - disabled: Boolean attribute that indicates if the button is tappable.
+///     - button-style: The style to apply to this button.
+///     - phx-click: Event triggered when tapped.
 @_documentation(visibility: public)
 @_spi(LiveForm)
 public struct Button<R: RootRegistry>: View {
