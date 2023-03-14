@@ -20,11 +20,16 @@ import SwiftUI
 ///     {:noreply, assign(socket, value: extra)}
 /// end
 /// ```
-///
-/// - Parameters:
-///     - disabled: Boolean attribute that indicates if the button is tappable.
-///     - button-style: The style to apply to this button.
-///     - phx-click: Event triggered when tapped.
+/// 
+/// ## Attributes
+/// * `disabled`
+///     * Boolean attribute that indicates if the button is tappable.
+/// * `button-style`
+///     * The style to apply to this button.
+/// 
+/// ## Events
+/// * `phx-click`
+///     * Event triggered when tapped.
 @_documentation(visibility: public)
 @_spi(LiveForm)
 public struct Button<R: RootRegistry>: View {
