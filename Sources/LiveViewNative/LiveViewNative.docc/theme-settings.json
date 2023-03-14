@@ -4,15 +4,18 @@
             "html-font": "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\""
         },
         "color": {
-            "grid": "var(--color-fill-gray-tertiary)",
             "figure-gray-secondary": "#86868b",
             "code-background": "var(--color-fill-gray-quaternary)",
-            "fill-gray-quaternary": "#333336",
-            "fill-light-blue-secondary": "#002a51"
+            "fill-blue": "#0071e3",
+            "documentation-intro-fill": "radial-gradient(circle at top, #555 30%, #1d1d1f 100%)"
         },
         "border-radius": "13px",
+        "toggle-border-radius-inner": "13px",
         "code": {
             "border-radius": "22px"
+        },
+        "icons": {
+            "technology": "/images/lvn.svg"
         }
     }
 }
