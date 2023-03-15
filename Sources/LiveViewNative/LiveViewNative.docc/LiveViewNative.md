@@ -25,9 +25,11 @@
 
 ### Working with the DOM
 
-- <doc:ElementNode>
-- <doc:ObservedElement>
-- <doc:Attribute>
+- ``ElementNode``
+- ``ObservedElement``
+- ``Attribute``
+- ``Event``
+- ``LiveBinding``
 
 ### Custom DOM Elements and Attributes
 

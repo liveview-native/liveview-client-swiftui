@@ -9,7 +9,7 @@ import SwiftUI
 
 /// An object that configures the behavior of a ``LiveSessionCoordinator``.
 public struct LiveSessionConfiguration {
-    /// Whether this coordinators allows its live view to navigate.
+    /// Whether this session allows its live view to navigate.
     ///
     /// By default, navigation is ``NavigationMode-swift.enum/disabled``.
     public var navigationMode: NavigationMode = .disabled
@@ -37,15 +37,19 @@ public struct LiveSessionConfiguration {
         case enabled
         /// Navigation is fully enabled and uses a `NavigationSplitView` for the UI.
         case splitView
-        /// Navigation is fully enabled and uses a `TabView` to switch between routes.
+        /// Navigation is fully enabled and uses a `TabView` with the given tabs at the top level.
+        ///
+        /// Within each tab, navigation is fully enabled.
         case tabView(tabs: [Tab])
         
+        /// A top level tab for use with the `.tabView` navigation mode.
         public struct Tab: Identifiable {
             let label: SwiftUI.Label<SwiftUI.Text, SwiftUI.Image>
             let url: URL
             
             public var id: URL { url }
             
+            /// Create a tab with the given label and URL.
             public init(label: SwiftUI.Label<SwiftUI.Text, SwiftUI.Image>, url: URL) {
                 self.label = label
                 self.url = url
