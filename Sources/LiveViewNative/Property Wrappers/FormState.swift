@@ -123,7 +123,7 @@ public struct FormState<Value: FormValue> {
                     fatalError("Expected @FormState in form mode to have element with name")
                 }
                 if let existing = formModel[elementName],
-                   let value = existing as? Value ?? Value(formValue: existing.formValue) {
+                   let value = existing as? Value {
                     return value
                 } else {
                     return initialValue
@@ -170,8 +170,8 @@ public struct FormState<Value: FormValue> {
     
     // the initial value converts the element's `value` attribute if possible, otherwise uses the default value
     private var initialValue: Value {
-        if let elementValue = element.attributeValue(for: "value"),
-           let value = elementValue as? Value ?? Value(formValue: elementValue) {
+        if let attribute = element.attribute(named: "value"),
+           let value = try? Value(from: attribute) {
             return value
         } else {
             return defaultValue
@@ -201,12 +201,12 @@ public struct FormState<Value: FormValue> {
               let changeEvent = element.attributeValue(for: "phx-change") else {
             return
         }
-        // todo: check if this default name matches what the web client does
-        let name = element.attributeValue(for: "name")?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "value"
-        let value = wrappedValue.formValue.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        let urlQueryEncodedData = "\(name)=\(value)"
+        let name = element.attributeValue(for: "name")
+        let encoder = FragmentEncoder()
+        try! wrappedValue.encode(to: encoder)
+        let value = encoder.unwrap() as Any
         Task {
-            try? await coordinator!.pushEvent("form", changeEvent, urlQueryEncodedData, nil)
+            try? await coordinator!.pushEvent("native-form", changeEvent, [name: value], nil)
         }
     }
     
