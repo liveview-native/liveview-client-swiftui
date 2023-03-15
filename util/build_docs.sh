@@ -21,6 +21,11 @@ done
 # build doccarchive
 echo "Building docs..."
 mkdir -p docc_build
+# build the docs once to get the symbol graph.
+xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build -toolchain swift &> $output
+# generate the documentation extensions.
+xcrun -toolchain swift swift package plugin --allow-writing-to-package-directory generate-documentation-extensions &> $output || :
+# build the docs again with the extensions.
 xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build -toolchain swift &> $output
 
 # build docc-render with Elixir syntax highlighting support
@@ -44,7 +49,7 @@ if [ ! -d docs ]; then
 fi
 
 echo "Generating static files..."
-DOCC_HTML_DIR="docc_build/swift-docc-render/dist" xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui &> $output
+DOCC_HTML_DIR="docc_build/swift-docc-render/dist" xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive --output-path docs #--hosting-base-path /liveview-client-swiftui &> $output
 
 # add index page to root with redirect to package docs
 cat > docs/index.html << EOF
