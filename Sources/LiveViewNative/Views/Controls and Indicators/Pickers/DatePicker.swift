@@ -7,6 +7,7 @@
 
 #if os(iOS) || os(macOS)
 import SwiftUI
+import LiveViewNativeCore
 
 struct DatePicker<R: RootRegistry>: View {
     private let context: LiveContext<R>
@@ -70,20 +71,15 @@ struct DatePicker<R: RootRegistry>: View {
 private struct CodableDate: FormValue {
     var date: Date
     
-    var formValue: String {
-        date.formatted(.iso8601)
-    }
-    
     init() {
         self.date = Date()
     }
     
-    init?(formValue: String) {
-        if let date = try? Date(formValue, strategy: .elixirDateTimeOrDate) {
-            self.date = date
-        } else {
-            return nil
+    init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value else {
+            throw AttributeDecodingError.missingAttribute(CodableDate.self)
         }
+        self.date = try Date(value, strategy: .elixirDateTimeOrDate)
     }
     
     init(from decoder: Decoder) throws {

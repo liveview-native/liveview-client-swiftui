@@ -110,12 +110,14 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     @MainActor
     private func pushFormEvent(_ event: String) async throws {
-        let urlQueryEncodedData = data.map { k, v in
-            // todo: in what cases does addingPercentEncoding return nil? do we care?
-            "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)=\(v.formValue.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
-        }.joined(separator: "&")
+        let data = data.mapValues { value in
+            let encoder = FragmentEncoder()
+            try! value.encode(to: encoder)
+            return encoder.unwrap() as Any
+        }
 
-        try await pushEventImpl("form", event, urlQueryEncodedData, nil)
+        // the `form` event type signals to LiveView on the backend that the payload is url encoded (e.g., `a=b&c=d`), so we use a different type
+        try await pushEventImpl("native-form", event, data, nil)
     }
     
     public var debugDescription: String {
