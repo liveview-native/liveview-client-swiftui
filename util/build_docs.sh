@@ -34,7 +34,7 @@ if [ ! -d docs ]; then
 fi
 
 echo "Generating static files..."
-xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive --output-path docs #--hosting-base-path /liveview-client-swiftui &> $output
+xcrun docc process-archive transform-for-static-hosting docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive --output-path docs --hosting-base-path /liveview-client-swiftui &> $output
 
 # add index page to root with redirect to package docs
 cat > docs/index.html << EOF

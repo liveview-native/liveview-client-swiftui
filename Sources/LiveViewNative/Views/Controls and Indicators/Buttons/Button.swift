@@ -37,7 +37,7 @@ public struct Button<R: RootRegistry>: View {
     
     /// Event triggered when tapped.
     @_documentation(visibility: public)
-    @Event("phx-click", type: "click") public var click
+    @Event("phx-click", type: "click") private var click
     
     /// Boolean attribute that indicates whether the button is tappable.
     @_documentation(visibility: public)
