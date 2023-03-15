@@ -8,6 +8,7 @@
 import Foundation
 import SwiftPhoenixClient
 
+/// An error that occurred when connecting to a live view.
 public enum LiveConnectionError: Error {
     case initialFetchError(Error)
     case initialFetchUnexpectedResponse(URLResponse)

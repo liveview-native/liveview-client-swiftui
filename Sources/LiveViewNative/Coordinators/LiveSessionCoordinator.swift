@@ -16,6 +16,19 @@ import LiveViewNativeCore
 private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionCoordinator")
 
 /// The session coordinator object handles the initial connection, as well as navigation.
+///
+/// ## Topics
+/// ### Create a Coordinator
+/// - ``init(_:config:)``
+/// - ``init(_:config:customRegistryType:)``
+/// ### Observing Session State
+/// - ``state``
+/// - ``url``
+/// ### Managing the Session
+/// - ``connect()``
+/// ### Supporting Types
+/// - ``LiveSessionState``
+/// - ``LiveConnectionError``
 @MainActor
 public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     @Published internal private(set) var internalState: InternalState = .notConnected(reconnectAutomatically: false)
@@ -79,6 +92,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     /// Connects this coordinator to the LiveView channel.
+    ///
+    /// You generally do not call this function yourself. It is called automatically when the ``LiveView`` appears.
     ///
     /// This function is a no-op unless ``state`` is ``LiveSessionState/notConnected``.
     ///

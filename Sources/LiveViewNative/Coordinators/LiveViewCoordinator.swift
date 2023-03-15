@@ -20,7 +20,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 ///
 /// ## Topics
 /// ### LiveView Events
-/// - ``pushEvent(type:event:value:)``
+/// - ``pushEvent(type:event:value:target:)``
 /// - ``receiveEvent(_:)``
 /// - ``handleEvent(_:handler:)``
 @MainActor

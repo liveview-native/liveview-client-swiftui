@@ -31,6 +31,15 @@ import LiveViewNativeCore
 ///     transform: { $0?.value.flatMap(Double.init(_:)).flatMap({ $0 + 5 }) }
 /// ) private var count: Double
 /// ```
+///
+/// ## Topics
+/// ### Initializers
+/// - ``init(wrappedValue:_:)``
+/// - ``init(wrappedValue:_:transform:)``
+/// ### Getting the Value
+/// - ``wrappedValue``
+/// ### Supporting Types
+/// - ``AttributeDecodable``
 @propertyWrapper
 public struct Attribute<T>: DynamicProperty {
     @ObservedElement private var element
@@ -52,6 +61,10 @@ public struct Attribute<T>: DynamicProperty {
         self.transform = transform
     }
 
+    /// Gets the decoded value of the attribute.
+    ///
+    /// If attribute decoding fails, this will return the default value the property wrapper was constructed with.
+    /// If no default value was provided, the app will crash.
     public var wrappedValue: T {
         do {
             return try transform(element.attribute(named: name))
@@ -62,12 +75,30 @@ public struct Attribute<T>: DynamicProperty {
     }
 }
 
+/// A type that conforms to this protocol can be decoded from a DOM attribute key/value pair.
+///
+/// A number of implementations are included:
+/// 1. `Optional`, when the `Wrapped` type conforms to `AttributeDecodable`
+/// 2. `String`
+/// 3. `Bool`
+/// 4. `Double`
+/// 5. `Date`
+/// 6. Any `RawRepresentable` type with `String` raw values
+///
+/// ## Topics
+/// ### Initializers
+/// - ``init(from:)-5yds5``
+/// ### Supporting Types
+/// - ``AttributeDecodingError``
 public protocol AttributeDecodable {
     init(from attribute: LiveViewNativeCore.Attribute?) throws
 }
 
+/// An error encountered when converting a value from an attribute.
 public enum AttributeDecodingError: LocalizedError {
+    /// The attribute was not present.
     case missingAttribute(Any.Type)
+    /// The attribute had a value that couldn't be decoded.
     case badValue(Any.Type)
     
     public var errorDescription: String? {

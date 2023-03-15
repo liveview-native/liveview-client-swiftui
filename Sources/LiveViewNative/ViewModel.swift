@@ -88,7 +88,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     ///
     /// This method has no effect if the `<form>` does not have a `phx-change` event configured.
     ///
-    /// See ``LiveViewCoordinator/pushEvent(type:event:value:)`` for more information.
+    /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
     @MainActor
     public func sendChangeEvent() async throws {
         if let changeEvent = changeEvent {
@@ -100,7 +100,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     ///
     /// This method has no effect if the `<form>` does not have a `phx-submit` event configured.
     ///
-    /// See ``LiveViewCoordinator/pushEvent(type:event:value:)`` for more information.
+    /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
     @MainActor
     public func sendSubmitEvent() async throws {
         if let submitEvent = submitEvent {
