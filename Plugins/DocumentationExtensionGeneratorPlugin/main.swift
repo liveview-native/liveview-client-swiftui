@@ -10,7 +10,5 @@ struct DocumentationExtensionGeneratorPlugin: CommandPlugin {
 
         try process.run()
         process.waitUntilExit()
-        print("Done")
-        exit(0)
     }
 }

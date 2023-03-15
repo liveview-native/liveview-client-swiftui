@@ -102,6 +102,5 @@ struct DocumentationExtensionGenerator {
             """#
             try override.write(to: markdownURL, atomically: true, encoding: .utf8)
         }
-        print("Done executable")
     }
 }
