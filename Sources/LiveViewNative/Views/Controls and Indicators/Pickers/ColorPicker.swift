@@ -8,11 +8,44 @@
 #if os(iOS) || os(macOS)
 import SwiftUI
 
+/// Presents a system color picker when tapped.
+///
+/// The color is stored as a map with the keys `r`, `g`, `b`, and optionally `a`.
+///
+/// ```html
+/// <ColorPicker selection="favorite_color" supports-opacity>
+///     Favorite Color
+/// </ColorPicker>
+/// ```
+///
+/// ```elixir
+/// defmodule MyAppWeb.FavoriteColor do
+///   native_binding :favorite_color, Map, %{ "r" => 1, "g" => 0, "b" => 1, "a" => 1 }
+/// end
+/// ```
+///
+/// > Selected colors are in the sRGB color space.
+///
+/// ## Attributes
+/// ``supportsOpacity``
+///
+/// ## Bindings
+/// * ``selection``
 struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
+    /// The ``LiveBinding`` that stores the color value.
+    ///
+    /// The color is stored as a map with the keys `r`, `g`, `b`, and optionally `a`.
+    ///
+    /// ```elixir
+    /// defmodule MyAppWeb.FavoriteColor do
+    ///   native_binding :favorite_color, Map, %{ "r" => 1, "g" => 0, "b" => 1, "a" => 1 }
+    /// end
+    /// ```
     @LiveBinding(attribute: "selection") private var selection: CodableColor = .init(r: 0, g: 0, b: 0, a: 1)
+    /// Enables the selection of transparent colors.
     @Attribute("supports-opacity") private var supportsOpacity: Bool
     
     struct CodableColor: Codable {
@@ -23,7 +56,7 @@ struct ColorPicker<R: RootRegistry>: View {
         
         var cgColor: CGColor {
             get {
-                .init(red: r, green: g, blue: b, alpha: a ?? 1)
+                .init(srgbRed: r, green: g, blue: b, alpha: a ?? 1)
             }
             set {
                 guard let components = newValue.components else { return }
@@ -48,12 +81,8 @@ struct ColorPicker<R: RootRegistry>: View {
             selection: $selection.cgColor,
             supportsOpacity: supportsOpacity
         ) {
-            label
+            context.buildChildren(of: element)
         }
-    }
-    
-    private var label: some View {
-        context.buildChildren(of: element, withTagName: "label", namespace: "ColorPicker", includeDefaultSlot: true)
     }
 }
 #endif
