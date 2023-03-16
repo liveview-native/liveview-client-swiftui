@@ -11,12 +11,77 @@ import CoreTransferable
 
 fileprivate let itemsDecoder = JSONDecoder()
 
+/// Opens a system share sheet when tapped.
+///
+/// Provide an ``item`` or list of ``items`` to share.
+///
+/// ```html
+/// <ShareLink
+///     item="https://dockyard.com"
+///     subject="Check out DockYard's website"
+///     message="Here's a link to the DockYard homepage"
+/// />
+/// ```
+///
+/// Use a `SharePreview` element to override the title, image, and icon for an item.
+///
+/// ```html
+/// <ShareLink
+///     item="https://dockyard.com"
+///     subject="Check out DockYard's website"
+///     message="Here's a link to the DockYard homepage"
+/// >
+///     <SharePreview title="DockYard Homepage">
+///         <SharePreview:image><Image name="dockyard" /></SharePreview:image>
+///         <SharePreview:icon><Image name="dockyard" /></SharePreview:icon>
+///     </SharePreview>
+/// </ShareLink>
+/// ```
+///
+/// Use a JSON-encoded list of ``items`` to share multiple values.
+/// Set the `item` attribute of each `SharePreview` to connect it to the correct item.
+///
+/// ```html
+/// <ShareLink
+///     items='["https://dockyard.com", "https://news.ycombinator.com", "https://apple.com"]'
+///     subject="Check out these websites"
+///     message="Here are links to our favorite websites"
+/// >
+///     <SharePreview item="https://dockyard.com" title="DockYard">
+///         <SharePreview:image><Image name="dockyard" /></SharePreview:image>
+///         <SharePreview:icon><Image name="dockyard" /></SharePreview:icon>
+///     </SharePreview>
+///     <SharePreview item="https://news.ycombinator.com" title="Hacker News">
+///         <SharePreview:image><Image name="hackernews" /></SharePreview:image>
+///         <SharePreview:icon><Image name="hackernews" /></SharePreview:icon>
+///     </SharePreview>
+///     <SharePreview item="https://apple.com" title="Apple">
+///         <SharePreview:image><Image name="apple" /></SharePreview:image>
+///         <SharePreview:icon><Image name="apple" /></SharePreview:icon>
+///     </SharePreview>
+/// </ShareLink>
+/// ```
+///
+/// > Only `String` types can be shared.
+///
+/// ## Attributes
+/// * ``subject``
+/// * ``message``
+/// * ``items``
+/// * ``item``
+///
+/// ## Topics
+/// ### Sharing Multiple Items
+/// * ``items``
 struct ShareLink<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
+    /// The title to use when sharing to a service with a subject field.
     @Attribute("subject", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var subject: SwiftUI.Text?
+    /// The description to use when sharing to a service with a message field.
     @Attribute("message", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var message: SwiftUI.Text?
+    /// A JSON-encoded list of strings to share.
     @Attribute(
         "items",
         transform: {
@@ -26,6 +91,7 @@ struct ShareLink<R: RootRegistry>: View {
             })
         }
     ) private var items: [String]?
+    /// A string to share.
     @Attribute("item") private var item: String?
     
     init(element: ElementNode, context: LiveContext<R>) {
