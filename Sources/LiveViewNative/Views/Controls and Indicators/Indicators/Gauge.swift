@@ -8,13 +8,40 @@
 #if !os(tvOS)
 import SwiftUI
 
+/// Displays a value within a range.
+///
+/// Several child elements can be used to customize how ``Gauge`` is displayed.
+///
+/// ```html
+/// <Gauge value="0.5">
+///     <Gauge:label>50%</Gauge:label>
+///     <Gauge:current-value-label>0.5</Gauge:current-value-label>
+///     <Gauge:minimum-value-label>0</Gauge:minimum-value-label>
+///     <Gauge:maximum-value-label>1</Gauge:maximum-value-label>
+/// </Gauge>
+/// ```
+///
+/// ## Attributes
+/// * ``value``
+/// * ``lowerBound``
+/// * ``upperBound``
+/// * ``style``
+///
+/// ## Children
+/// * `current-value-label` - Describes the current value.
+/// * `minimum-value-label` - Describes the lowest possible value.
+/// * `maximum-value-label` - Describes the highest possible value.
 struct Gauge<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     let context: LiveContext<R>
     
+    /// The current value of the gauge.
     @Attribute("value") private var value: Double = 0
+    /// The lowest possible value of the gauge.
     @Attribute("lower-bound") private var lowerBound: Double = 0
+    /// The highest possible value of the gauge.
     @Attribute("upper-bound") private var upperBound: Double = 1
+    /// The style to apply to this gauge.
     @Attribute("gauge-style") private var style: GaugeStyle = .automatic
     
     init(element: ElementNode, context: LiveContext<R>) {
@@ -56,12 +83,18 @@ struct Gauge<R: RootRegistry>: View {
     }
 }
 
+/// A style for a ``Gauge`` element.
 fileprivate enum GaugeStyle: String, AttributeDecodable {
+    /// `accessory-circular-capacity`
     case accessoryCircularCapacity = "accessory-circular-capacity"
+    /// `accessory-linear-capacity`
     case accessoryLinearCapacity = "accessory-linear-capacity"
+    /// `accessory-circular`
     case accessoryCircular = "accessory-circular"
     case automatic
+    /// `linear-capacity`
     case linearCapacity = "linear-capacity"
+    /// `accessory-linear`
     case accessoryLinear = "accessory-linear"
 }
 
