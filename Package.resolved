@@ -5,7 +5,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/liveviewnative/liveview-native-core-swift.git",
       "state" : {
-        "branch" : "ffea1b5",
+        "branch" : "main",
         "revision" : "ffea1b5ff768fd2eeea5d4bdfae606b18517f880"
       }
     },
