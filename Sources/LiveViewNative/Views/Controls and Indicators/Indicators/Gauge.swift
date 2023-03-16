@@ -23,9 +23,9 @@ struct Gauge<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Group {
-            if context.hasChild(of: element, withTagName: "current-value-label", namespace: "gauge") ||
-               context.hasChild(of: element, withTagName: "minimum-value-label", namespace: "gauge") ||
-               context.hasChild(of: element, withTagName: "maximum-value-label", namespace: "gauge")
+            if context.hasChild(of: element, withTagName: "current-value-label", namespace: "Gauge") ||
+               context.hasChild(of: element, withTagName: "minimum-value-label", namespace: "Gauge") ||
+               context.hasChild(of: element, withTagName: "maximum-value-label", namespace: "Gauge")
             {
                 SwiftUI.Gauge(
                     value: self.value,
@@ -33,11 +33,11 @@ struct Gauge<R: RootRegistry>: View {
                 ) {
                     label
                 } currentValueLabel: {
-                    context.buildChildren(of: element, withTagName: "current-value-label", namespace: "gauge")
+                    context.buildChildren(of: element, withTagName: "current-value-label", namespace: "Gauge")
                 } minimumValueLabel: {
-                    context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "gauge")
+                    context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "Gauge")
                 } maximumValueLabel: {
-                    context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "gauge")
+                    context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "Gauge")
                 }
             } else {
                 SwiftUI.Gauge(
@@ -52,7 +52,7 @@ struct Gauge<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element, withTagName: "label", namespace: "gauge", includeDefaultSlot: true)
+        context.buildChildren(of: element, withTagName: "label", namespace: "Gauge", includeDefaultSlot: true)
     }
 }
 

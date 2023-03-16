@@ -19,9 +19,9 @@ struct Menu<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Menu {
-            context.buildChildren(of: element, withTagName: "content", namespace: "menu")
+            context.buildChildren(of: element, withTagName: "content", namespace: "Menu")
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "menu", includeDefaultSlot: true)
+            context.buildChildren(of: element, withTagName: "label", namespace: "Menu", includeDefaultSlot: true)
         }
         .applyMenuStyle(style)
     }

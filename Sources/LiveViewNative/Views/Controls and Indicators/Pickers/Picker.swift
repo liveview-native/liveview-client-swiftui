@@ -19,9 +19,9 @@ struct Picker<R: RootRegistry>: View {
     
     var body: some View {
         SwiftUI.Picker(selection: $value) {
-            context.buildChildren(of: element, withTagName: "content", namespace: "picker", includeDefaultSlot: false)
+            context.buildChildren(of: element, withTagName: "content", namespace: "Picker", includeDefaultSlot: false)
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "picker", includeDefaultSlot: false)
+            context.buildChildren(of: element, withTagName: "label", namespace: "Picker", includeDefaultSlot: false)
         }
         .applyPickerStyle(style)
     }

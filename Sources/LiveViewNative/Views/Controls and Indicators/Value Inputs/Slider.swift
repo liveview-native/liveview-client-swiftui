@@ -28,22 +28,22 @@ struct Slider<R: RootRegistry>: View {
                 in: lowerBound...upperBound,
                 step: step
             ) {
-                context.buildChildren(of: element, withTagName: "label", namespace: "slider", includeDefaultSlot: true)
+                context.buildChildren(of: element, withTagName: "label", namespace: "Slider", includeDefaultSlot: true)
             } minimumValueLabel: {
-                context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "slider")
+                context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "Slider")
             } maximumValueLabel: {
-                context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "slider")
+                context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "Slider")
             }
         } else {
             SwiftUI.Slider(
                 value: $value,
                 in: lowerBound...upperBound
             ) {
-                context.buildChildren(of: element, withTagName: "label", namespace: "slider", includeDefaultSlot: true)
+                context.buildChildren(of: element, withTagName: "label", namespace: "Slider", includeDefaultSlot: true)
             } minimumValueLabel: {
-                context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "slider")
+                context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "Slider")
             } maximumValueLabel: {
-                context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "slider")
+                context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "Slider")
             }
         }
     }

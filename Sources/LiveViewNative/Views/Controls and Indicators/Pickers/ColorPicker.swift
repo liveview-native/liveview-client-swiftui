@@ -53,7 +53,7 @@ struct ColorPicker<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element, withTagName: "label", namespace: "color-picker", includeDefaultSlot: true)
+        context.buildChildren(of: element, withTagName: "label", namespace: "ColorPicker", includeDefaultSlot: true)
     }
 }
 #endif

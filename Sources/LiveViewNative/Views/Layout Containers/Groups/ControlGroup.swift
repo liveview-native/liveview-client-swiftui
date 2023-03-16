@@ -20,9 +20,9 @@ struct ControlGroup<R: RootRegistry>: View {
 
     public var body: some View {
         SwiftUI.ControlGroup {
-            context.buildChildren(of: element, withTagName: "content", namespace: "control-group", includeDefaultSlot: true)
+            context.buildChildren(of: element, withTagName: "content", namespace: "ControlGroup", includeDefaultSlot: true)
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "control-group")
+            context.buildChildren(of: element, withTagName: "label", namespace: "ControlGroup")
         }
         .applyControlGroupStyle(style)
     }

@@ -16,11 +16,11 @@ final class CollectionContainerTests: XCTestCase {
     func testList() throws {
         try assertMatch(
             #"""
-            <list>
-                <text id="0">0</text>
-                <text id="1">1</text>
-                <text id="2">2</text>
-            </list>
+            <List>
+                <Text id="0">0</Text>
+                <Text id="1">1</Text>
+                <Text id="2">2</Text>
+            </List>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -32,7 +32,7 @@ final class CollectionContainerTests: XCTestCase {
         }
     }
     func testListStyles() throws {
-        let content = #"<text id="0">0</text><text id="1">1</text><text id="2">2</text>"#
+        let content = #"<Text id="0">0</Text><Text id="1">1</Text><Text id="2">2</Text>"#
         let list = List {
             Text("0")
             Text("1")
@@ -40,7 +40,7 @@ final class CollectionContainerTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <list list-style="automatic">\#(content)</list>
+            <List list-style="automatic">\#(content)</List>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -48,7 +48,7 @@ final class CollectionContainerTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <list list-style="plain">\#(content)</list>
+            <List list-style="plain">\#(content)</List>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -57,7 +57,7 @@ final class CollectionContainerTests: XCTestCase {
 #if os(iOS) || os(macOS)
         try assertMatch(
             #"""
-            <list list-style="sidebar">\#(content)</list>
+            <List list-style="sidebar">\#(content)</List>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -65,7 +65,7 @@ final class CollectionContainerTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <list list-style="inset">\#(content)</list>
+            <List list-style="inset">\#(content)</List>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -75,7 +75,7 @@ final class CollectionContainerTests: XCTestCase {
 #if os(iOS)
         try assertMatch(
             #"""
-            <list list-style="inset-grouped">\#(content)</list>
+            <List list-style="inset-grouped">\#(content)</List>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -85,7 +85,7 @@ final class CollectionContainerTests: XCTestCase {
 #if os(iOS) || os(tvOS)
         try assertMatch(
             #"""
-            <list list-style="grouped">\#(content)</list>
+            <List list-style="grouped">\#(content)</List>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -99,11 +99,11 @@ final class CollectionContainerTests: XCTestCase {
     func testSection() throws {
         try assertMatch(
             #"""
-            <section>
-                <section:header>Header</section:header>
-                <section:content>Content</section:content>
-                <section:footer>Footer</section:footer>
-            </section>
+            <Section>
+                <Section:header>Header</Section:header>
+                <Section:content>Content</Section:content>
+                <Section:footer>Footer</Section:footer>
+            <Section>
             """#
         ) {
             Section {
@@ -116,11 +116,11 @@ final class CollectionContainerTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <section>
-                <section:header>Header</section:header>
+            <Section>
+                <Section:header>Header</Section:header>
                 Content
-                <section:footer>Footer</section:footer>
-            </section>
+                <Section:footer>Footer</Section:footer>
+            </Section>
             """#
         ) {
             Section {
@@ -144,30 +144,30 @@ final class CollectionContainerTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <table>
-                <table:columns>
-                    <table-column>A</table-column>
-                    <table-column>B</table-column>
-                    <table-column>C</table-column>
-                </table:columns>
-                <table:rows>
-                    <table-row id="1">
-                        <text>A1</text>
-                        <text>B1</text>
-                        <text>C1</text>
-                    </table-row>
-                    <table-row id="2">
-                        <text>A2</text>
-                        <text>B2</text>
-                        <text>C2</text>
-                    </table-row>
-                    <table-row id="3">
-                        <text>A3</text>
-                        <text>B3</text>
-                        <text>C3</text>
-                    </table-row>
-                </table:rows>
-            </table>
+            <Table>
+                <Table:columns>
+                    <TableColumn>A</TableColumn>
+                    <TableColumn>B</TableColumn>
+                    <TableColumn>C</TableColumn>
+                </Table:columns>
+                <Table:rows>
+                    <TableRow id="1">
+                        <Text>A1</Text>
+                        <Text>B1</Text>
+                        <Text>C1</Text>
+                    </TableRow>
+                    <TableRow id="2">
+                        <Text>A2</Text>
+                        <Text>B2</Text>
+                        <Text>C2</Text>
+                    </TableRow>
+                    <TableRow id="3">
+                        <Text>A3</Text>
+                        <Text>B3</Text>
+                        <Text>C3</Text>
+                    </TableRow>
+                </Table:rows>
+            </Table>
             """#,
             environment: { environment in
                 #if os(iOS)

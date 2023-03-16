@@ -14,26 +14,11 @@ final class StackTests: XCTestCase {
     func testVStack() throws {
         try assertMatch(
             #"""
-            <v-stack>
-                <text>A</text>
-                <text>B</text>
-                <text>C</text>
-            </v-stack>
-            """#
-        ) {
-            VStack {
-                Text("A")
-                Text("B")
-                Text("C")
-            }
-        }
-        try assertMatch(
-            #"""
-            <vstack>
-                <text>A</text>
-                <text>B</text>
-                <text>C</text>
-            </vstack>
+            <VStack>
+                <Text>A</Text>
+                <Text>B</Text>
+                <Text>C</Text>
+            </VStack>
             """#
         ) {
             VStack {
@@ -47,26 +32,11 @@ final class StackTests: XCTestCase {
     func testHStack() throws {
         try assertMatch(
             #"""
-            <h-stack>
-                <text>A</text>
-                <text>B</text>
-                <text>C</text>
-            </h-stack>
-            """#
-        ) {
-            HStack {
-                Text("A")
-                Text("B")
-                Text("C")
-            }
-        }
-        try assertMatch(
-            #"""
-            <hstack>
-                <text>A</text>
-                <text>B</text>
-                <text>C</text>
-            </hstack>
+            <HStack>
+                <Text>A</Text>
+                <Text>B</Text>
+                <Text>C</Text>
+            </HStack>
             """#
         ) {
             HStack {
@@ -80,26 +50,11 @@ final class StackTests: XCTestCase {
     func testZStack() throws {
         try assertMatch(
             #"""
-            <z-stack>
-                <text>A</text>
-                <text>B</text>
-                <text>C</text>
-            </z-stack>
-            """#
-        ) {
-            ZStack {
-                Text("A")
-                Text("B")
-                Text("C")
-            }
-        }
-        try assertMatch(
-            #"""
-            <zstack>
-                <text>A</text>
-                <text>B</text>
-                <text>C</text>
-            </zstack>
+            <ZStack>
+                <Text>A</Text>
+                <Text>B</Text>
+                <Text>C</Text>
+            </ZStack>
             """#
         ) {
             ZStack {

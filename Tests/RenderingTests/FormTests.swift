@@ -16,11 +16,11 @@ final class FormTests: XCTestCase {
     func testForm() throws {
         try assertMatch(
             #"""
-            <form>
-                <text id="0">0</text>
-                <text id="1">1</text>
-                <text id="2">2</text>
-            </form>
+            <Form>
+                <Text id="0">0</Text>
+                <Text id="1">1</Text>
+                <Text id="2">2</Text>
+            </Form>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -34,9 +34,9 @@ final class FormTests: XCTestCase {
 
     func testFormStyles() throws {
         let markupContent = #"""
-        <text id="0">0</text>
-        <text id="1">1</text>
-        <text id="2">2</text>
+        <Text id="0">0</Text>
+        <Text id="1">1</Text>
+        <Text id="2">2</Text>
         """#
         @ViewBuilder
         var content: some View {
@@ -45,7 +45,7 @@ final class FormTests: XCTestCase {
             Text("2")
         }
         try assertMatch(
-            #"<form form-style="automatic">\#(markupContent)</form>"#,
+            #"<Form form-style="automatic">\#(markupContent)</Form>"#,
             size: .init(width: 300, height: 300)
         ) {
             Form {
@@ -54,7 +54,7 @@ final class FormTests: XCTestCase {
             .formStyle(.automatic)
         }
         try assertMatch(
-            #"<form form-style="columns">\#(markupContent)</form>"#,
+            #"<Form form-style="columns">\#(markupContent)</Form>"#,
             size: .init(width: 300, height: 300)
         ) {
             Form {
@@ -63,7 +63,7 @@ final class FormTests: XCTestCase {
             .formStyle(.columns)
         }
         try assertMatch(
-            #"<form form-style="grouped">\#(markupContent)</form>"#,
+            #"<Form form-style="grouped">\#(markupContent)</Form>"#,
             size: .init(width: 300, height: 300)
         ) {
             Form {
@@ -78,10 +78,10 @@ final class FormTests: XCTestCase {
     func testLabeledContent() throws {
         try assertMatch(
             #"""
-            <labeled-content>
-                <labeled-content:label>Label</labeled-content:label>
+            <LabeledContent>
+                <LabeledContent:label>Label</LabeledContent:label>
                 Content
-            </labeled-content>
+            </LabeledContent>
             """#,
             size: .init(width: 300, height: 100)
         ) {
@@ -96,10 +96,10 @@ final class FormTests: XCTestCase {
     func testLabeledContentSlots() throws {
         try assertMatch(
             #"""
-            <labeled-content>
-                <labeled-content:label>Label</labeled-content:label>
-                <labeled-content:content>Content</labeled-content:content>
-            </labeled-content>
+            <LabeledContent>
+                <LabeledContent:label>Label</LabeledContent:label>
+                <LabeledContent:content>Content</LabeledContent:content>
+            </LabeledContent>
             """#,
             size: .init(width: 300, height: 100)
         ) {
@@ -113,7 +113,7 @@ final class FormTests: XCTestCase {
     
     func testLabeledContentFormat() throws {
         try assertMatch(
-            #"<labeled-content value="100" format="currency" currency-code="usd">Label</labeled-content>"#,
+            #"<LabeledContent value="100" format="currency" currency-code="usd">Label</LabeledContent>"#,
             size: .init(width: 300, height: 100)
         ) {
             LabeledContent("Label", value: 100, format: .currency(code: "usd"))

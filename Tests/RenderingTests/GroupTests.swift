@@ -16,14 +16,14 @@ final class GroupTests: XCTestCase {
     func testGroupBox() throws {
         try assertMatch(
             #"""
-            <group-box>
-                <group-box:label>
+            <GroupBox>
+                <GroupBox:label>
                     Label
-                </group-box:label>
-                <group-box:content>
+                </GroupBox:label>
+                <GroupBox:content>
                     Content
-                </group-box:content>
-            </group-box>
+                </GroupBox:content>
+            </GroupBox>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -38,12 +38,12 @@ final class GroupTests: XCTestCase {
     func testGroupBoxDefaultSlot() throws {
         try assertMatch(
             #"""
-            <group-box>
-                <group-box:label>
+            <GroupBox>
+                <GroupBox:label>
                     Label
-                </group-box:label>
+                </GroupBox:label>
                 Content
-            </group-box>
+            </GroupBox>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -58,9 +58,9 @@ final class GroupTests: XCTestCase {
     func testGroupBoxTitle() throws {
         try assertMatch(
             #"""
-            <group-box title="Label">
+            <GroupBox title="Label">
                 Content
-            </group-box>
+            </GroupBox>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -75,11 +75,11 @@ final class GroupTests: XCTestCase {
     func testControlGroup() throws {
         try assertMatch(
             #"""
-            <control-group>
-                <button>Action #1</button>
-                <button>Action #2</button>
-                <button>Action #3</button>
-            </control-group>
+            <ControlGroup>
+                <Button>Action #1</Button>
+                <Button>Action #2</Button>
+                <Button>Action #3</Button>
+            </ControlGroup>
             """#
         ) {
             ControlGroup {
@@ -93,16 +93,16 @@ final class GroupTests: XCTestCase {
     func testControlGroupSlots() throws {
         try assertMatch(
             #"""
-            <control-group>
-                <control-group:label>
+            <ControlGroup>
+                <ControlGroup:label>
                     Label
-                </control-group:label>
-                <control-group:content>
-                    <button>Action #1</button>
-                    <button>Action #2</button>
-                    <button>Action #3</button>
-                </control-group:content>
-            </control-group>
+                </ControlGroup:label>
+                <ControlGroup:content>
+                    <Button>Action #1</Button>
+                    <Button>Action #2</Button>
+                    <Button>Action #3</Button>
+                </ControlGroup:content>
+            </ControlGroup>
             """#
         ) {
             ControlGroup {
@@ -118,11 +118,11 @@ final class GroupTests: XCTestCase {
     func testControlGroupStyles() throws {
         try assertMatch(
             #"""
-            <control-group control-group-style="automatic">
-                <button>Action #1</button>
-                <button>Action #2</button>
-                <button>Action #3</button>
-            </control-group>
+            <ControlGroup control-group-style="automatic">
+                <Button>Action #1</Button>
+                <Button>Action #2</Button>
+                <Button>Action #3</Button>
+            </ControlGroup>
             """#
         ) {
             ControlGroup {
@@ -134,11 +134,11 @@ final class GroupTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <control-group control-group-style="navigation">
-                <button>Action #1</button>
-                <button>Action #2</button>
-                <button>Action #3</button>
-            </control-group>
+            <ControlGroup control-group-style="navigation">
+                <Button>Action #1</Button>
+                <Button>Action #2</Button>
+                <Button>Action #3</Button>
+            </ControlGroup>
             """#
         ) {
             ControlGroup {
@@ -154,10 +154,10 @@ final class GroupTests: XCTestCase {
     func testDisclosureGroup() throws {
         try assertMatch(
             #"""
-            <disclosure-group>
-                <disclosure-group:label>Expandable Section</disclosure-group:label>
+            <DisclosureGroup>
+                <DisclosureGroup:label>Expandable Section</DisclosureGroup:label>
                 Content
-            </disclosure-group>
+            </DisclosureGroup>
             """#
         ) {
             DisclosureGroup {
@@ -171,10 +171,10 @@ final class GroupTests: XCTestCase {
     func testDisclosureGroupSlots() throws {
         try assertMatch(
             #"""
-            <disclosure-group>
-                <disclosure-group:label>Expandable Section</disclosure-group:label>
-                <disclosure-group:content>Content</disclosure-group:content>
-            </disclosure-group>
+            <DisclosureGroup>
+                <DisclosureGroup:label>Expandable Section</DisclosureGroup:label>
+                <DisclosureGroup:content>Content</DisclosureGroup:content>
+            </DisclosureGroup>
             """#
         ) {
             DisclosureGroup {

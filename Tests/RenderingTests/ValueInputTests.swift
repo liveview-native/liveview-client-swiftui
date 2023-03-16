@@ -14,24 +14,24 @@ final class ValueInputTests: XCTestCase {
     // MARK: Slider
     
     func testSliderSimple() throws {
-        try assertMatch(#"<slider />"#, size: .init(width: 100, height: 100)) {
+        try assertMatch(#"<Slider />"#, size: .init(width: 100, height: 100)) {
             Slider(value: .constant(0))
         }
     }
     
     func testSliderLabels() throws {
         try assertMatch(#"""
-<slider>
-    <slider:label>
-        <text>Label</text>
-    </slider:label>
-    <slider:minimum-value-label>
-        <text>Min</text>
-    </slider:minimum-value-label>
-    <slider:maximum-value-label>
-        <text>Max</text>
-    </slider:maximum-value-label>
-</slider>
+<Slider>
+    <Slider:label>
+        <Text>Label</Text>
+    </Slider:label>
+    <Slider:minimum-value-label>
+        <Text>Min</Text>
+    </Slider:minimum-value-label>
+    <Slider:maximum-value-label>
+        <Text>Max</Text>
+    </Slider:maximum-value-label>
+</Slider>
 """#, size: .init(width: 300, height: 100)) {
             Slider(value: .constant(0)) {
                 Text("Label")
@@ -46,7 +46,7 @@ final class ValueInputTests: XCTestCase {
     // MARK: Toggle
     
     func testToggleSimple() throws {
-        try assertMatch(#"<toggle>Switch</toggle>"#) {
+        try assertMatch(#"<Toggle>Switch</Toggle>"#) {
             Toggle("Switch", isOn: .constant(false))
         }
     }
@@ -54,7 +54,7 @@ final class ValueInputTests: XCTestCase {
     // MARK: Stepper
     
     func testStepperSimple() throws {
-        try assertMatch(#"<stepper>Stepper Label</stepper>"#) {
+        try assertMatch(#"<Stepper>Stepper Label</Stepper>"#) {
             Stepper(value: .constant(0)) {
                 Text("Stepper Label")
             }

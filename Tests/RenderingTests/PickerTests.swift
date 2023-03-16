@@ -16,9 +16,9 @@ final class PickerTests: XCTestCase {
     func testColorPicker() throws {
         try assertMatch(
             #"""
-            <color-picker>
-                <color-picker:label>Foreground</color-picker:label>
-            </color-picker>
+            <ColorPicker>
+                <ColorPicker:label>Foreground</ColorPicker:label>
+            </ColorPicker>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -31,9 +31,9 @@ final class PickerTests: XCTestCase {
     func testColorPickerDefaultSlot() throws {
         try assertMatch(
             #"""
-            <color-picker>
+            <ColorPicker>
                 Background
-            </color-picker>
+            </ColorPicker>
             """#,
             size: .init(width: 300, height: 300)
         ) {
@@ -47,14 +47,14 @@ final class PickerTests: XCTestCase {
     func testPicker() throws {
         try assertMatch(
             #"""
-            <picker value="paperplane" picker-style="automatic">
-                <picker:label><text>Pick an icon</text></picker:label>
-                <picker:content>
-                    <label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><text>paperplane</text></label>
-                    <label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><text>graduationcap</text></label>
-                    <label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><text>ellipsis.bubble</text></label>
-                </picker:content>
-            </picker>
+            <Picker value="paperplane" picker-style="automatic">
+                <Picker:label><Text>Pick an icon</Text></Picker:label>
+                <Picker:content>
+                    <Label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><Text>paperplane</Text></Label>
+                    <Label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><Text>graduationcap</Text></Label>
+                    <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
+                </Picker:content>
+            </Picker>
             """#) {
                 Picker(selection: .constant("paperplane")) {
                     ForEach(["paperplane", "graduationcap", "ellipsis.bubble"], id: \.self) { name in
@@ -75,14 +75,14 @@ final class PickerTests: XCTestCase {
         
         try assertMatch(
             #"""
-            <picker value="paperplane" picker-style="inline">
-                <picker:label><text>Pick an icon</text></picker:label>
-                <picker:content>
-                    <label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><text>paperplane</text></label>
-                    <label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><text>graduationcap</text></label>
-                    <label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><text>ellipsis.bubble</text></label>
-                </picker:content>
-            </picker>
+            <Picker value="paperplane" picker-style="inline">
+                <Picker:label><Text>Pick an icon</Text></Picker:label>
+                <Picker:content>
+                    <Label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><Text>paperplane</Text></Label>
+                    <Label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><Text>graduationcap</Text></Label>
+                    <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
+                </Picker:content>
+            </Picker>
             """#) {
                 Picker(selection: .constant("paperplane")) {
                     ForEach(["paperplane", "graduationcap", "ellipsis.bubble"], id: \.self) { name in
@@ -107,13 +107,13 @@ final class PickerTests: XCTestCase {
         let date = DateComponents(calendar: .current, year: 2023, month: 1, day: 1, hour: 8, minute: 30, second: 42).date!
         try assertMatch(
             #"""
-            <vstack>
-                <date-picker value="\#(date.formatted(.elixirDateTime))" date-picker-style="compact">
-                    <text>Pick a date</text>
-                </date-picker>
-                <date-picker value="\#(date.formatted(.elixirDateTime))" date-picker-style="graphical" />
-                <date-picker value="\#(date.formatted(.elixirDateTime))" date-picker-style="wheel" displayed-components="date" />
-            </vstack>
+            <VStack>
+                <DatePicker value="\#(date.formatted(.elixirDateTime))" date-picker-style="compact">
+                    <Text>Pick a date</Text>
+                </DatePicker>
+                <DatePicker value="\#(date.formatted(.elixirDateTime))" date-picker-style="graphical" />
+                <DatePicker value="\#(date.formatted(.elixirDateTime))" date-picker-style="wheel" displayed-components="date" />
+            </VStack>
             """#) {
                 VStack {
                     DatePicker(selection: .constant(date), displayedComponents: [.date, .hourAndMinute]) {
@@ -135,9 +135,9 @@ final class PickerTests: XCTestCase {
         let end = DateComponents(calendar: .current, year: 2023, month: 1, day: 31).date!
         try assertMatch(
             #"""
-            <multi-date-picker start="2023-01-01" end="2023-01-31">
-                <text>Pick some dates</text>
-            </mult-date-picker>
+            <MultiDatePicker start="2023-01-01" end="2023-01-31">
+                <Text>Pick some dates</Text>
+            </MultDatePicker>
             """#) {
                 MultiDatePicker(selection: .constant([]), in: start..<end) {
                     Text("Pick some dates")

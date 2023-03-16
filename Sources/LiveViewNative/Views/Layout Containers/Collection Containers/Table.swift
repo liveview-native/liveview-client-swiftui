@@ -24,9 +24,9 @@ struct Table<R: RootRegistry>: View {
     
     public var body: some View {
         let rows = element.elementChildren()
-            .filter { $0.tag == "rows" && $0.namespace == "table" }
+            .filter { $0.tag == "rows" && $0.namespace == "Table" }
             .flatMap { $0.elementChildren() }
-            .compactMap { $0.tag == "table-row" ? TableRow(element: $0) : nil }
+            .compactMap { $0.tag == "TableRow" ? TableRow(element: $0) : nil }
         let columns = self.columns
         return SwiftUI.Group {
             switch columns.count {
@@ -125,9 +125,9 @@ struct Table<R: RootRegistry>: View {
     
     private var columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>] {
         let columnElements = element.elementChildren()
-            .filter { $0.tag == "columns" && $0.namespace == "table" }
+            .filter { $0.tag == "columns" && $0.namespace == "Table" }
             .flatMap { $0.elementChildren() }
-            .filter { $0.tag == "table-column" }
+            .filter { $0.tag == "TableColumn" }
         return columnElements.enumerated().map { item in
             TableColumn(item.element.innerText(), sortUsing: TableColumnSort(id: item.element.attributeValue(for: "id") ?? String(item.offset), order: .forward)) { (row: TableRow) in
                 let rowChildren = row.element.children()

@@ -14,11 +14,11 @@ final class SeparatorTests: XCTestCase {
     func testSpacer() throws {
         try assertMatch(
             #"""
-            <h-stack>
-                <text>A</text>
-                <spacer />
-                <text>B</text>
-            </h-stack>
+            <HStack>
+                <Text>A</Text>
+                <Spacer />
+                <Text>B</Text>
+            </HStack>
             """#,
             size: .init(width: 100, height: 50)
         ) {
@@ -33,11 +33,11 @@ final class SeparatorTests: XCTestCase {
     func testDivider() throws {
         try assertMatch(
             #"""
-            <v-stack>
-                <text>A</text>
-                <divider />
-                <text>B</text>
-            </v-stack>
+            <VStack>
+                <Text>A</Text>
+                <Divider />
+                <Text>B</Text>
+            </VStack>
             """#
         ) {
             VStack {
