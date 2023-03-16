@@ -35,7 +35,7 @@ struct ShareLink<R: RootRegistry>: View {
     public var body: some View {
         let useDefaultLabel = element.children().filter({
             guard let element = $0.asElement() else { return true }
-            return element.tag != "share-link-preview"
+            return element.tag != "SharePreview"
         }).isEmpty
         if let items {
             let previews = previews(for: items)
@@ -212,7 +212,7 @@ struct ShareLink<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element, withTagName: "label", namespace: "share-link", includeDefaultSlot: true)
+        context.buildChildren(of: element, withTagName: "label", namespace: "ShareLink", includeDefaultSlot: true)
     }
     
     /// The set of values used to create the `SharePreview` for each item.
@@ -261,16 +261,16 @@ struct ShareLink<R: RootRegistry>: View {
     private func previews(for items: [String]) -> PreviewBranch<String>? {
         // Collect the `share-link:preview` values for each item, and the default if present.
         var previews: ([String: PreviewData], default: PreviewData?) = element.elementChildren()
-            .filter({ $0.tag == "share-link-preview" })
+            .filter({ $0.tag == "SharePreview" })
             .reduce(into: ([:], default: nil)) { pairs, element in
                 let title = element.attributeValue(for: "title") ?? ""
                 let image = element.elementChildren()
-                    .first(where: { $0.tag == "image" && $0.namespace == "share-link-preview" })?
+                    .first(where: { $0.tag == "image" && $0.namespace == "SharePreview" })?
                     .elementChildren()
                     .first
                     .flatMap({ Image(overrideElement: $0, context: context).image })
                 let icon = element.elementChildren()
-                    .first(where: { $0.tag == "icon" && $0.namespace == "share-link-preview" })?
+                    .first(where: { $0.tag == "icon" && $0.namespace == "SharePreview" })?
                     .elementChildren()
                     .first
                     .flatMap({ Image(overrideElement: $0, context: context).image })
