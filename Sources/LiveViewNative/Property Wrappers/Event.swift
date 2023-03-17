@@ -12,7 +12,7 @@ import LiveViewNativeCore
 /// A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.
 ///
 /// Specify the attribute that contains the event name and an event type to create the wrapper.
-/// Then, call the wrapped value with a payload and completion handler.
+/// Then, call the wrapped value with a payload and optionally a completion handler.
 ///
 /// ```swift
 /// struct MyCounterElement: View {
@@ -20,9 +20,7 @@ import LiveViewNativeCore
 ///
 ///     var body: some View {
 ///         MyCounterView(onIncrement: {
-///             increment(["new-value": 10]) {
-///                 // on complete
-///             }
+///             increment(["new-value": 10])
 ///         })
 ///     }
 /// }
@@ -36,6 +34,14 @@ import LiveViewNativeCore
 ///
 /// Any `phx-debounce` or `phx-throttle` attributes on this element will be respected automatically.
 ///
+///## Topics
+///### Initializers
+///- ``init(_:type:)``
+///- ``init(event:type:)``
+///### Instance Properties
+///- ``wrappedValue``
+///### Supporting Types
+///- ``EventHandler``
 @propertyWrapper
 public struct Event: DynamicProperty {
     @ObservedElement private var element: ElementNode
@@ -111,24 +117,32 @@ public struct Event: DynamicProperty {
     
     /// Sends the event with a given payload and completion handler.
     ///
-    /// After declaring an event, call the `wrappedValue` with a JSON-encodable payload and completion handler.
+    /// After declaring an event, call the `wrappedValue` with a JSON-encodable payload and optionally a completion handler.
     /// ```swift
     /// @Event("phx-click", type: "click") private var click
     ///
-    /// click(["count": clickCount]) {
+    /// click(value: ["count": clickCount]) {
     ///     print("Event completed")
     /// }
     /// ```
-    public var wrappedValue: (Any, @escaping () -> ()) -> () {
-        { value, didSend in
-            guard let event = self.event ?? self.name.flatMap(element.attributeValue(for:)) else {
+    public var wrappedValue: EventHandler {
+        EventHandler(owner: self)
+    }
+    
+    /// An action that you invoke to send an event to the server.
+    @MainActor
+    public struct EventHandler {
+        let owner: Event
+        
+        public func callAsFunction(value: Any, didSend: (() -> Void)? = nil) {
+            guard let event = owner.event ?? owner.name.flatMap(owner.element.attributeValue(for:)) else {
                 return
             }
-            handler.bind(element: element, elementWillChange: $element)
-            handler.currentEvent.send({
+            owner.handler.bind(element: owner.element, elementWillChange: owner.$element)
+            owner.handler.currentEvent.send({
                 Task {
-                    try await coordinatorEnvironment?.pushEvent(type, event, value, element.attributeValue(for: "phx-target").flatMap(Int.init))
-                    didSend()
+                    try await owner.coordinatorEnvironment?.pushEvent(owner.type, event, value, owner.element.attributeValue(for: "phx-target").flatMap(Int.init))
+                    didSend?()
                 }
             })
         }
