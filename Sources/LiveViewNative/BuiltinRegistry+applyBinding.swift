@@ -85,7 +85,7 @@ fileprivate struct ScenePhaseObserver<Content: View>: View {
         content
             .onChange(of: scenePhase) { newValue in
                 guard newValue == target else { return }
-                _event.wrappedValue(value) {}
+                _event.wrappedValue(value: value) {}
             }
     }
 }
@@ -110,7 +110,7 @@ fileprivate struct FocusObserver<Content: View>: View {
             .focused($isFocused)
             .onChange(of: isFocused) { newValue in
                 guard newValue == target else { return }
-                _event.wrappedValue(value) {}
+                _event.wrappedValue(value: value) {}
             }
     }
 }
@@ -129,7 +129,7 @@ fileprivate struct TapGestureView<Content: View>: View {
     var body: some View {
         content
             .onTapGesture {
-                _event.wrappedValue(value) {}
+                _event.wrappedValue(value: value) {}
             }
     }
 }

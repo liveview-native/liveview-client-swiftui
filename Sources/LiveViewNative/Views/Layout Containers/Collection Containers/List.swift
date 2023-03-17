@@ -61,7 +61,7 @@ struct List<R: RootRegistry>: View {
             var meta = element.buildPhxValuePayload()
             // todo: what about multiple indicies?
             meta["index"] = indices.first!
-            delete(meta) {}
+            delete(value: meta) {}
         }
     }
     
@@ -70,7 +70,7 @@ struct List<R: RootRegistry>: View {
             var meta = element.buildPhxValuePayload()
             meta["index"] = indices.first!
             meta["destination"] = index
-            move(meta) {
+            move(value: meta) {
                 Task {
 #if os(iOS) || os(tvOS)
                     // Workaround to fix items not following the order from the backend when changed during edit mode.

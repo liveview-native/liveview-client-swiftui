@@ -60,17 +60,18 @@ extension TextFieldProtocol {
     }
     
     /// Use `@FocusState` to send `phx-focus` and `phx-blur` events.
+    @MainActor
     func handleFocus(_ isFocused: Bool) {
         if isFocused {
-            focusEvent.wrappedValue(
+            focusEvent.wrappedValue(value:
                 element.buildPhxValuePayload()
                     .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
-            ) {}
+            )
         } else {
-            blurEvent.wrappedValue(
+            blurEvent.wrappedValue(value:
                 element.buildPhxValuePayload()
                     .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
-            ) {}
+            )
         }
     }
     

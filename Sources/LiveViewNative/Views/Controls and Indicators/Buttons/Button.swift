@@ -37,7 +37,7 @@ import SwiftUI
             action()
             return
         }
-        click(element.buildPhxValuePayload()) {}
+        click(value: element.buildPhxValuePayload()) {}
     }
 }
 
