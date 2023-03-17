@@ -7,7 +7,7 @@
 
 import XCTest
 import SwiftUI
-@testable import LiveViewNative
+import LiveViewNative
 
 @MainActor
 final class TextTests: XCTestCase {
