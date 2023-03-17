@@ -8,14 +8,145 @@
 #if os(iOS) || os(macOS)
 import SwiftUI
 
+/// A container organized by rows and columns.
+///
+/// Use `<TableColumn>` elements in the `columns` child, and `<TableRow>` elements in the `rows` child to build the table's content.
+///
+/// Each `<TableRow>` should have the same number of children as columns in the table.
+///
+/// > Precondition: `<TableRow>` must have an `id` attribute.
+///
+/// ```html
+/// <Table>
+///     <Table:columns>
+///         <TableColumn id="name">Name</TableColumn>
+///         <TableColumn id="description">Description</TableColumn>
+///         <TableColumn id="length">Length</TableColumn>
+///     </Table:columns>
+///     <Table:rows>
+///         <TableRow id="basketball">
+///             <Text>Basketball</Text>
+///             <Text>Players attempt to throw a ball into an elevated basket.</Text>
+///             <Text>48 min</Text>
+///         </TableRow>
+///         <TableRow id="soccer">
+///             <Text>Soccer</Text>
+///             <Text>Players attempt to kick a ball into a goal.</Text>
+///             <Text>90 min</Text>
+///         </TableRow>
+///         <TableRow id="football">
+///             <Text>Football</Text>
+///             <Text>Players attempt to throw a ball into an end zone.</Text>
+///             <Text>60 min</Text>
+///         </TableRow>
+///     </Table:rows>
+/// </Table>
+/// ```
+///
+/// ### Sorting Tables
+/// Use the ``sortOrder`` binding to handle changes in the sorting options.
+///
+/// ```html
+/// <Table sort-order="sports_sort_order">
+///     ...
+///     <Table:rows>
+///         <%= for sport <- Enum.sort_by(
+///             @sports,
+///             fn sport -> sport[hd(@sports_sort_order)["id"]] end,
+///             (if hd(@sports_sort_order)["order"], do: &</2, else: &>/2)
+///         ) do %>
+///             <TableRow id={sport["id"]}>
+///                 <text><%= sport["name"] %></text>
+///                 <text><%= sport["description"] %></text>
+///                 <text><%= sport["length"] %></text>
+///             </TableRow>
+///         <% end %>
+///     </Table:rows>
+/// </Table>
+/// ```
+///
+/// ```elixir
+/// defmodule MyAppWeb.SportsLive do
+///   native_binding :sports_sort_order, List, []
+/// end
+/// ```
+///
+/// ### Selecting Rows
+/// Use the ``selection`` binding to synchronize the selected row(s) with the LiveView.
+///
+/// ```html
+/// <Table selection="selected_sports">
+///     ...
+/// </Table>
+/// ```
+///
+/// ```elixir
+/// defmodule MyAppWeb.SportsLive do
+///   native_binding :selected_sports, List, []
+/// end
+/// ```
+///
+/// ## Attributes
+/// * ``style``
+///
+/// ## Bindings
+/// * ``selection``
+/// * ``sortOrder``
+///
+/// ## Children
+/// * `columns` - Up to 10 `<TableColumn>` elements that describe the possible columns.
+/// * `rows` -  An arbitrary number of `<TableRow>` elements, each with a unique `id` attribute.
+///
+/// ## Topics
+/// ### Sorting Tables
+/// * ``sortOrder``
+///
+/// ### Selecting Rows
+/// * ``selection``
 struct Table<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     private let context: LiveContext<R>
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     
+    /// Synchronizes the selected rows with the server.
+    ///
+    /// To allow an arbitrary number of rows to be selected, use the `List` type for the binding.
+    /// Use an empty list as the default value to start with no selection.
+    ///
+    /// ```elixir
+    /// defmodule MyAppWeb.SportsLive do
+    ///   native_binding :selected_sports, List, []
+    /// end
+    /// ```
+    ///
+    /// To only allow a single selection, use the `String` type for the binding.
+    /// Use `nil` as the default value to start with no selection.
+    ///
+    /// ```elixir
+    /// defmodule MyAppWeb.SportsLive do
+    ///   native_binding :selected_sport, String, nil
+    /// end
+    /// ```
     @LiveBinding(attribute: "selection") private var selection = Selection.multiple([])
+    /// Synchronizes the columns to sort by with the server.
+    ///
+    /// The order is serialized as a list of maps with an `id` and `order` property.
+    ///
+    /// ```json
+    /// [
+    ///     {
+    ///         "id": string,
+    ///         "order": boolean
+    ///     },
+    ///     ...
+    /// ]
+    /// ```
+    ///
+    /// The value of `id` matches the `id` attribute of the `<TableColumn>`, or its index if there is no `id` attribute.
+    /// The value of `order` matches [`Foundation.SortOrder`](https://developer.apple.com/documentation/Foundation/SortOrder).
     @LiveBinding(attribute: "sort-order") private var sortOrder = [TableColumnSort]()
     
+    /// The style to apply to this table.
     @Attribute("table-style") private var style: TableStyle = .automatic
     
     init(element: ElementNode, context: LiveContext<R>) {
