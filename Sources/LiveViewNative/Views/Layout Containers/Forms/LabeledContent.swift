@@ -7,11 +7,49 @@
 
 import SwiftUI
 
+/// Presents an element with an associated label.
+///
+/// Use the `content` and `label` children to create this element.
+///
+/// ```html
+/// <LabeledContent>
+///     <LabeledContent:label>Price</LabeledContent:label>
+///     <LabeledContent:content>$100.00</LabeledContent:content>
+/// </LabeledContent>
+/// ```
+///
+/// ### Formatting Values
+/// A value can be automatically formatted when the ``format`` attribute is used.
+/// In this case, all child elements are used as the label, and the `value` attribute stores the content.
+///
+/// For more details on formatting options, see ``Text``.
+///
+/// ```html
+/// <LabeledContent value={100} format="currency" currency-code="usd">
+///     Price
+/// </LabeledContent>
+/// ```
+///
+/// ## Attributes
+/// * ``format``
+/// * ``style``
+///
+/// ## Children
+/// * `content` - The element to label.
+/// * `label` - A description of the content.
+///
+/// ## See Also
+/// ### Formatting Values
+/// * ``Text``
 struct LabeledContent<R: RootRegistry>: View {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
+    /// Automatically formats the value of the `value` attribute.
+    ///
+    /// For more details on formatting options, see ``Text``.
     @Attribute("format") private var format: String?
+    /// The style to use for this labeled content.
     @Attribute("labeled-content-style") private var style: LabeledContentStyle = .automatic
     
     var body: some View {
