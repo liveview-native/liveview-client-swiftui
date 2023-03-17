@@ -16,10 +16,10 @@ final class LayoutContainerTests: XCTestCase {
     func testViewThatFits() throws {
         try assertMatch(
             #"""
-            <view-that-fits axes="horizontal">
-                <text>Long post content, takes up most of the space</text>
-                <text>Shorter version</text>
-            </view-that-fits>
+            <ViewThatFits axes="horizontal">
+                <Text>Long post content, takes up most of the space</Text>
+                <Text>Shorter version</Text>
+            </ViewThatFits>
             """#,
             size: .init(width: 300, height: 100)
         ) {
@@ -30,10 +30,10 @@ final class LayoutContainerTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <view-that-fits>
-                <text>Long post content, takes up most of the space</text>
-                <text>Shorter version</text>
-            </view-that-fits>
+            <ViewThatFits>
+                <Text>Long post content, takes up most of the space</Text>
+                <Text>Shorter version</Text>
+            </ViewThatFits>
             """#,
             size: .init(width: 500, height: 100)
         ) {

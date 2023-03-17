@@ -117,13 +117,13 @@ struct Text<R: RootRegistry>: View {
             return element.children().reduce(into: SwiftUI.Text("")) { prev, next in
                 if let element = next.asElement() {
                     switch element.tag {
-                    case "text":
+                    case "Text":
                         prev = prev + Self(overrideElement: element, context: context).body
-                    case "link":
+                    case "Link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
-                    case "image":
+                    case "Image":
                         prev = prev + SwiftUI.Text(Image(overrideElement: element, context: context).image)
                     default:
                         break

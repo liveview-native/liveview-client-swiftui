@@ -19,11 +19,11 @@ struct Section<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Section {
-            context.buildChildren(of: element, withTagName: "content", namespace: "section", includeDefaultSlot: true)
+            context.buildChildren(of: element, withTagName: "content", namespace: "Section", includeDefaultSlot: true)
         } header: {
-            context.buildChildren(of: element, withTagName: "header", namespace: "section")
+            context.buildChildren(of: element, withTagName: "header", namespace: "Section")
         } footer: {
-            context.buildChildren(of: element, withTagName: "footer", namespace: "section")
+            context.buildChildren(of: element, withTagName: "footer", namespace: "Section")
         }
         #if os(macOS)
             .collapsible(collapsible)

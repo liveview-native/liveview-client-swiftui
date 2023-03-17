@@ -14,14 +14,14 @@ final class MenuTests: XCTestCase {
     #if !os(watchOS)
     func testSimple() throws {
         try assertMatch(#"""
-<menu>
-    <menu:label>
-        <text>Open Menu</text>
-    </menu:label>
-    <menu:content>
-        <text>Menu Content</text>
-    </menu:content>
-</menu>
+<Menu>
+    <Menu:label>
+        <Text>Open Menu</Text>
+    </Menu:label>
+    <Menu:content>
+        <Text>Menu Content</Text>
+    </Menu:content>
+</Menu>
 """#) {
             Menu {
                 Text("Menu Content")
@@ -33,12 +33,12 @@ final class MenuTests: XCTestCase {
     
     func testDefaultSlot() throws {
         try assertMatch(#"""
-<menu>
-    <text>Open Menu</text>
-    <menu:content>
-        <text>Menu Content</text>
-    </menu:content>
-</menu>
+<Menu>
+    <Text>Open Menu</Text>
+    <Menu:content>
+        <Text>Menu Content</Text>
+    </Menu:content>
+</Menu>
 """#) {
             Menu {
                 Text("Menu Content")
@@ -50,15 +50,15 @@ final class MenuTests: XCTestCase {
     
     func testSlotPrecedence() throws {
         try assertMatch(#"""
-<menu>
-    <text>Default Slot</text>
-    <menu:label>
-        <text>Open Menu</text>
-    </menu:label>
-    <menu:content>
-        <text>Menu Content</text>
-    </menu:content>
-</menu>
+<Menu>
+    <Text>Default Slot</Text>
+    <Menu:label>
+        <Text>Open Menu</Text>
+    </Menu:label>
+    <Menu:content>
+        <Text>Menu Content</Text>
+    </Menu:content>
+</Menu>
 """#) {
             Menu {
                 Text("Menu Content")

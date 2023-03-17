@@ -27,9 +27,9 @@ struct GroupBox<R: RootRegistry>: View {
                 }
             } else {
                 SwiftUI.GroupBox {
-                    context.buildChildren(of: element, withTagName: "content", namespace: "group-box", includeDefaultSlot: true)
+                    context.buildChildren(of: element, withTagName: "content", namespace: "GroupBox", includeDefaultSlot: true)
                 } label: {
-                    context.buildChildren(of: element, withTagName: "label", namespace: "group-box")
+                    context.buildChildren(of: element, withTagName: "label", namespace: "GroupBox")
                 }
             }
         }

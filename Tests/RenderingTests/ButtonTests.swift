@@ -12,19 +12,19 @@ import SwiftUI
 @MainActor
 final class ButtonTests: XCTestCase {
     func testButtonSimple() throws {
-        try assertMatch(#"<button>Click Me</button>"#) {
+        try assertMatch(#"<Button>Click Me</Button>"#) {
             Button("Click Me") {}
         }
     }
     func testButtonComplexBody() throws {
         try assertMatch(
             #"""
-            <button>
-                <h-stack>
-                    <image system-name="circle.fill" />
-                    <text>Tap Here</text>
-                </h-stack>
-            </button>
+            <Button>
+                <HStack>
+                    <Image system-name="circle.fill" />
+                    <Text>Tap Here</Text>
+                </HStack>
+            </Button>
             """#
         ) {
             Button(action: {}) {
@@ -36,33 +36,33 @@ final class ButtonTests: XCTestCase {
         }
     }
     func testButtonStyles() throws {
-        try assertMatch(#"<button button-style="automatic">Click Me</button>"#) {
+        try assertMatch(#"<Button button-style="automatic">Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.automatic)
         }
-        try assertMatch(#"<button button-style="bordered">Click Me</button>"#) {
+        try assertMatch(#"<Button button-style="bordered">Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.bordered)
         }
-        try assertMatch(#"<button button-style="bordered-prominent">Click Me</button>"#) {
+        try assertMatch(#"<Button button-style="bordered-prominent">Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.borderedProminent)
         }
-        try assertMatch(#"<button button-style="borderless">Click Me</button>"#) {
+        try assertMatch(#"<Button button-style="borderless">Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.borderless)
         }
-        try assertMatch(#"<button button-style="plain">Click Me</button>"#) {
+        try assertMatch(#"<Button button-style="plain">Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.plain)
         }
     }
 
     func testRenameButton() throws {
-        try assertMatch(#"<rename-button />"#) {
+        try assertMatch(#"<RenameButton />"#) {
             RenameButton()
         }
-        try assertMatch(#"<rename-button modifiers='[{"type":"rename_action","event":"rename","target":null}]' />"#) {
+        try assertMatch(#"<RenameButton modifiers='[{"type":"rename_action","event":"rename","target":null}]' />"#) {
             RenameButton()
                 .renameAction {}
         }

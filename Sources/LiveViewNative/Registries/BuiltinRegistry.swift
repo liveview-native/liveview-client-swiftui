@@ -23,147 +23,147 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     @ViewBuilder
     static func lookup<R: RootRegistry>(_ name: String, _ element: ElementNode, context: LiveContext<R>) -> some View {
         switch name {
-        case "async-image":
+        case "AsyncImage":
             AsyncImage(element: element, context: context)
-        case "button":
+        case "Button":
             Button<R>(element: element, context: context, action: nil)
-        case "capsule":
+        case "Capsule":
             Shape(element: element, context: context, shape: Capsule(from: element))
-        case "circle":
+        case "Circle":
             Shape(element: element, context: context, shape: Circle())
-        case "color":
+        case "Color":
             Color(context: context)
 #if os(iOS) || os(macOS)
-        case "color-picker":
+        case "ColorPicker":
             ColorPicker(element: element, context: context)
 #endif
-        case "container-relative-shape":
+        case "ContainerRelativeShape":
             Shape(element: element, context: context, shape: ContainerRelativeShape())
 #if os(iOS) || os(macOS)
-        case "control-group":
+        case "ControlGroup":
             ControlGroup(element: element, context: context)
 #endif
 #if os(iOS) || os(macOS)
-        case "date-picker":
+        case "DatePicker":
             DatePicker(context: context)
 #endif
 #if os(iOS) || os(macOS)
-        case "disclosure-group":
+        case "DisclosureGroup":
             DisclosureGroup(context: context)
 #endif
-        case "divider":
+        case "Divider":
             Divider()
 #if os(iOS)
-        case "edit-button":
+        case "EditButton":
             EditButton()
 #endif
-        case "ellipse":
+        case "Ellipse":
             Shape(element: element, context: context, shape: Ellipse())
-        case "form":
+        case "Form":
             Form(context: context)
 #if !os(tvOS)
-        case "gauge":
+        case "Gauge":
             Gauge(element: element, context: context)
 #endif
-        case "group":
+        case "Group":
             Group(element: element, context: context)
-        case "grid":
+        case "Grid":
             Grid(element: element, context: context)
-        case "grid-row":
+        case "GridRow":
             GridRow(element: element, context: context)
 #if os(iOS) || os(macOS)
-        case "group-box":
+        case "GroupBox":
             GroupBox(element: element, context: context)
 #endif
 #if os(macOS)
-        case "h-split-view":
+        case "HSplitView":
             HSplitView(context: context)
 #endif
-        case "h-stack", "hstack":
+        case "HStack":
             HStack<R>(element: element, context: context)
-        case "image":
+        case "Image":
             Image(element: element, context: context)
-        case "label":
+        case "Label":
             Label(element: element, context: context)
-        case "labeled-content":
+        case "LabeledContent":
             LabeledContent(context: context)
-        case "lazy-h-grid":
+        case "LazyHGrid":
             LazyHGrid(element: element, context: context)
-        case "lazy-h-stack", "lazy-hstack":
+        case "LazyHStack":
             LazyHStack(element: element, context: context)
-        case "lazy-v-grid":
+        case "LazyVGrid":
             LazyVGrid(element: element, context: context)
-        case "lazy-v-stack", "lazy-vstack":
+        case "LazyVStack":
             LazyVStack(element: element, context: context)
-        case "link":
+        case "Link":
             Link(element: element, context: context)
-        case "list":
+        case "List":
             List<R>(element: element, context: context)
 #if !os(watchOS)
-        case "menu":
+        case "Menu":
             Menu(element: element, context: context)
 #endif
 #if os(iOS)
-        case "multi-date-picker":
+        case "MultiDatePicker":
             MultiDatePicker<R>(context: context)
 #endif
-        case "navigation-link":
+        case "NavigationLink":
             NavigationLink(element: element, context: context)
 #if os(iOS) || os(macOS)
-        case "paste-button":
+        case "PasteButton":
             PasteButton(context: context)
 #endif
-        case "progress-view":
+        case "ProgressView":
             ProgressView(element: element, context: context)
-        case "picker":
+        case "Picker":
             Picker(context: context)
-        case "rectangle":
+        case "Rectangle":
             Shape(element: element, context: context, shape: Rectangle())
-        case "rename-button":
+        case "RenameButton":
             RenameButton()
-        case "rounded-rectangle":
+        case "RoundedRectangle":
             Shape(element: element, context: context, shape: RoundedRectangle(from: element))
-        case "scroll-view":
+        case "ScrollView":
             ScrollView<R>(element: element, context: context)
-        case "section":
+        case "Section":
             Section(element: element, context: context)
-        case "secure-field":
+        case "SecureField":
             SecureField<R>(element: element, context: context)
-        case "share-link":
+        case "ShareLink":
             ShareLink(element: element, context: context)
-        case "slider":
+        case "Slider":
             Slider(element: element, context: context)
-        case "stepper":
+        case "Stepper":
             Stepper(element: element, context: context)
-        case "spacer":
+        case "Spacer":
             Spacer(element: element, context: context)
 #if os(iOS) || os(macOS)
-        case "table":
+        case "Table":
             Table(element: element, context: context)
 #endif
-        case "text":
+        case "Text":
             Text(context: context)
 #if os(iOS) || os(macOS)
-        case "text-editor":
+        case "TextEditor":
             TextEditor(element: element, context: context)
 #endif
-        case "text-field":
+        case "TextField":
             TextField<R>(element: element, context: context)
 #if os(watchOS)
-        case "text-field-link":
+        case "TextFieldLink":
             TextFieldLink(context: context)
 #endif
-        case "toggle":
+        case "Toggle":
             Toggle(element: element, context: context)
 #if os(macOS)
-        case "v-split-view":
+        case "VSplitView":
             VSplitView(context: context)
 #endif
-        case "v-stack", "vstack":
+        case "VStack":
             VStack<R>(element: element, context: context)
-        case "view-that-fits":
+        case "ViewThatFits":
             ViewThatFits(element: element, context: context)
-        case "z-stack", "zstack":
+        case "ZStack":
             ZStack<R>(element: element, context: context)
         default:
             // log here that view type cannot be found

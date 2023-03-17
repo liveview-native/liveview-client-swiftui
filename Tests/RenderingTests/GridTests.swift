@@ -14,25 +14,25 @@ final class GridTests: XCTestCase {
     func testGrid() throws {
         try assertMatch(
             #"""
-            <grid>
-                <grid-row alignment="top">
-                    <text>Row 1</text>
-                    <rectangle fill-color="system-red" />
-                </grid-row>
-                <divider />
-                <grid-row>
-                    <text>Row 2</text>
-                    <rectangle fill-color="system-green" />
-                    <rectangle fill-color="system-green" />
-                </grid-row>
-                <divider />
-                <grid-row alignment="bottom">
-                    <text>Row 3</text>
-                    <rectangle fill-color="system-blue" />
-                    <rectangle fill-color="system-blue" />
-                    <rectangle fill-color="system-blue" />
-                </grid-row>
-            </grid>
+            <Grid>
+                <GridRow alignment="top">
+                    <Text>Row 1</Text>
+                    <Rectangle fill-color="system-red" />
+                </GridRow>
+                <Divider />
+                <GridRow>
+                    <Text>Row 2</Text>
+                    <Rectangle fill-color="system-green" />
+                    <Rectangle fill-color="system-green" />
+                </GridRow>
+                <Divider />
+                <GridRow alignment="bottom">
+                    <Text>Row 3</Text>
+                    <Rectangle fill-color="system-blue" />
+                    <Rectangle fill-color="system-blue" />
+                    <Rectangle fill-color="system-blue" />
+                </GridRow>
+            </Grid>
             """#,
             size: .init(width: 400, height: 400)
         ) {
@@ -62,14 +62,14 @@ final class GridTests: XCTestCase {
     func testLazyVGrid() throws {
         try assertMatch(
             #"""
-            <lazy-v-grid columns="[{&quot;fixed&quot;:null,&quot;adaptive&quot;:null,&quot;flexible&quot;:{&quot;minimum&quot;:10,&quot;maximum&quot;:100},&quot;spacing&quot;:8,&quot;alignment&quot;:&quot;center&quot;},{&quot;flexible&quot;:null,&quot;adaptive&quot;:null,&quot;fixed&quot;:50,&quot;spacing&quot;:16,&quot;alignment&quot;:&quot;trailing&quot;}]">
-                <rectangle />
-                <rectangle />
-                <rectangle />
-                <rectangle />
-                <rectangle />
-                <rectangle />
-            </lazy-v-grid>
+            <LazyVGrid columns="[{&quot;fixed&quot;:null,&quot;adaptive&quot;:null,&quot;flexible&quot;:{&quot;minimum&quot;:10,&quot;maximum&quot;:100},&quot;spacing&quot;:8,&quot;alignment&quot;:&quot;center&quot;},{&quot;flexible&quot;:null,&quot;adaptive&quot;:null,&quot;fixed&quot;:50,&quot;spacing&quot;:16,&quot;alignment&quot;:&quot;trailing&quot;}]">
+                <Rectangle />
+                <Rectangle />
+                <Rectangle />
+                <Rectangle />
+                <Rectangle />
+                <Rectangle />
+            </LazyVGrid>
             """#,
             size: .init(width: 500, height: 500)
         ) {
@@ -90,14 +90,14 @@ final class GridTests: XCTestCase {
     func testLazyHGrid() throws {
         try assertMatch(
             #"""
-            <lazy-h-grid rows="[{&quot;fixed&quot;:null,&quot;adaptive&quot;:null,&quot;flexible&quot;:{&quot;minimum&quot;:10,&quot;maximum&quot;:100},&quot;spacing&quot;:8,&quot;alignment&quot;:&quot;center&quot;},{&quot;flexible&quot;:null,&quot;adaptive&quot;:null,&quot;fixed&quot;:50,&quot;spacing&quot;:16,&quot;alignment&quot;:&quot;trailing&quot;}]">
-                <rectangle />
-                <rectangle />
-                <rectangle />
-                <rectangle />
-                <rectangle />
-                <rectangle />
-            </lazy-h-grid>
+            <LazyHGrid rows="[{&quot;fixed&quot;:null,&quot;adaptive&quot;:null,&quot;flexible&quot;:{&quot;minimum&quot;:10,&quot;maximum&quot;:100},&quot;spacing&quot;:8,&quot;alignment&quot;:&quot;center&quot;},{&quot;flexible&quot;:null,&quot;adaptive&quot;:null,&quot;fixed&quot;:50,&quot;spacing&quot;:16,&quot;alignment&quot;:&quot;trailing&quot;}]">
+                <Rectangle />
+                <Rectangle />
+                <Rectangle />
+                <Rectangle />
+                <Rectangle />
+                <Rectangle />
+            </LazyHGrid>
             """#,
             size: .init(width: 500, height: 500)
         ) {

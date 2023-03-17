@@ -28,9 +28,9 @@ struct LabeledContent<R: RootRegistry>: View {
                 }
             } else {
                 SwiftUI.LabeledContent {
-                    context.buildChildren(of: element, withTagName: "content", namespace: "labeled-content", includeDefaultSlot: true)
+                    context.buildChildren(of: element, withTagName: "content", namespace: "LabeledContent", includeDefaultSlot: true)
                 } label: {
-                    context.buildChildren(of: element, withTagName: "label", namespace: "labeled-content")
+                    context.buildChildren(of: element, withTagName: "label", namespace: "LabeledContent")
                 }
             }
         }

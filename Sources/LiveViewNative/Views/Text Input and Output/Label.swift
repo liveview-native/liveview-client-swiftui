@@ -20,12 +20,12 @@ struct Label<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Label {
-            context.buildChildren(of: element, withTagName: "title", namespace: "label", includeDefaultSlot: true)
+            context.buildChildren(of: element, withTagName: "title", namespace: "Label", includeDefaultSlot: true)
         } icon: {
             if let systemImage {
                 SwiftUI.Image(systemName: systemImage)
             } else {
-                context.buildChildren(of: element, withTagName: "icon", namespace: "label")
+                context.buildChildren(of: element, withTagName: "icon", namespace: "Label")
             }
         }
         .applyLabelStyle(style)

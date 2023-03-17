@@ -22,9 +22,9 @@ struct DisclosureGroup<R: RootRegistry>: View {
 
     public var body: some View {
         SwiftUI.DisclosureGroup(isExpanded: $isExpanded) {
-            context.buildChildren(of: element, withTagName: "content", namespace: "disclosure-group", includeDefaultSlot: true)
+            context.buildChildren(of: element, withTagName: "content", namespace: "DisclosureGroup", includeDefaultSlot: true)
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "disclosure-group", includeDefaultSlot: false)
+            context.buildChildren(of: element, withTagName: "label", namespace: "DisclosureGroup", includeDefaultSlot: false)
         }
         .applyDisclosureGroupStyle(style)
     }
