@@ -9,14 +9,10 @@ import SwiftUI
 
 struct Label<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("system-image") private var systemImage: String?
     @Attribute("label-style") private var style: LabelStyle = .automatic
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         SwiftUI.Label {

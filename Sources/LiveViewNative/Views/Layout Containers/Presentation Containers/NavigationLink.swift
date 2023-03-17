@@ -11,16 +11,12 @@ import Combine
 @available(iOS 16.0, *)
 struct NavigationLink<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     @EnvironmentObject private var navCoordinator: NavigationCoordinator<R>
     @State private var doNavigationCancellable: AnyCancellable?
     
     @Attribute("destination") private var destination: String
     @Attribute("disabled") private var disabled: Bool
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     @ViewBuilder
     public var body: some View {

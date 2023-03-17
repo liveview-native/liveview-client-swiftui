@@ -33,7 +33,7 @@ import SwiftUI
 /// * ``selection``
 struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     /// The ``LiveBinding`` that stores the color value.
     ///
@@ -70,10 +70,6 @@ struct ColorPicker<R: RootRegistry>: View {
                 }
             }
         }
-    }
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
     }
     
     public var body: some View {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LazyVGrid<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute(
         "columns",
@@ -22,10 +22,6 @@ struct LazyVGrid<R: RootRegistry>: View {
     @Attribute("spacing") private var spacing: Double?
     @Attribute("pinned-views") private var pinnedViews: PinnedScrollableViews = []
     
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
-
     public var body: some View {
         SwiftUI.LazyVGrid(
             columns: columns,

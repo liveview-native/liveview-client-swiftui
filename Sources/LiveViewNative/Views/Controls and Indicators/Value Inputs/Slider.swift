@@ -60,7 +60,7 @@ import SwiftUI
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 struct Slider<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @FormState(default: 0) var value: Double
     
@@ -70,10 +70,6 @@ struct Slider<R: RootRegistry>: View {
     @Attribute("upper-bound") private var upperBound: Double = 1
     /// The distance between allowed values.
     @Attribute("step") private var step: Double.Stride?
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         if let step {

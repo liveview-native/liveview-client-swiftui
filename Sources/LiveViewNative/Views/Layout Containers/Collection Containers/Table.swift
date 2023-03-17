@@ -105,7 +105,7 @@ import SwiftUI
 /// * ``selection``
 struct Table<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     
     /// Synchronizes the selected rows with the server.
@@ -148,10 +148,6 @@ struct Table<R: RootRegistry>: View {
     
     /// The style to apply to this table.
     @Attribute("table-style") private var style: TableStyle = .automatic
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         let rows = element.elementChildren()
@@ -265,7 +261,7 @@ struct Table<R: RootRegistry>: View {
                 if rowChildren.indices.contains(item.offset) {
                     context.coordinator.builder.fromNodes(
                         [rowChildren[item.offset]],
-                        context: context
+                        context: context.storage
                     )
                     .environment(\.coordinatorEnvironment, coordinatorEnvironment)
                 }

@@ -9,20 +9,16 @@ import SwiftUI
 
 struct LabeledContent<R: RootRegistry>: View {
     @ObservedElement private var element
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("format") private var format: String?
     @Attribute("labeled-content-style") private var style: LabeledContentStyle = .automatic
-    
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
         SwiftUI.Group {
             if format != nil {
                 SwiftUI.LabeledContent {
-                    Text(context: context)
+                    Text<R>()
                 } label: {
                     context.buildChildren(of: element)
                 }

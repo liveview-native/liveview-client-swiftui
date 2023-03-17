@@ -10,15 +10,11 @@ import SwiftUI
 
 struct DisclosureGroup<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @LiveBinding(attribute: "is-expanded") private var isExpanded = false
     
     @Attribute("disclosure-group-style") private var style: DisclosureGroupStyle = .automatic
-
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
 
     public var body: some View {
         SwiftUI.DisclosureGroup(isExpanded: $isExpanded) {

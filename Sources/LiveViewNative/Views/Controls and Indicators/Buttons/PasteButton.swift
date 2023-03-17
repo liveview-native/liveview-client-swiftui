@@ -27,7 +27,7 @@ import SwiftUI
 /// * ``click``
 struct PasteButton<R: RootRegistry>: View {
     @ObservedElement private var element
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     /// Event sent when tapped.
     ///
@@ -43,10 +43,6 @@ struct PasteButton<R: RootRegistry>: View {
     /// }
     /// ```
     @Event("phx-click", type: "click") private var click
-    
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
         SwiftUI.PasteButton(payloadType: String.self) { strings in

@@ -9,14 +9,10 @@ import SwiftUI
 
 struct ViewThatFits<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("axes") private var axes: Axis.Set = [.horizontal, .vertical]
     
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
-
     public var body: some View {
         SwiftUI.ViewThatFits(
             in: axes

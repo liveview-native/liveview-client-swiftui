@@ -146,7 +146,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     /// If you are using SwiftUI's `onReceive` modifier, applying `receive(on:)` to the publisher is not necessary.
     /// ```swift
     /// struct MyView: View {
-    ///     let context: LiveContext<EmptyRegistry>
+    ///     @LiveContext<EmptyRegistry> var context
     ///     @State private var text = "Hello"
     ///     var body: some View {
     ///         Text(text)

@@ -9,16 +9,12 @@ import SwiftUI
 
 struct LazyVStack<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("alignment") private var alignment: HorizontalAlignment = .center
     @Attribute("spacing") private var spacing: Double?
     @Attribute("pinned-views") private var pinnedViews: PinnedScrollableViews = []
     
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
-
     public var body: some View {
         SwiftUI.LazyVStack(
             alignment: alignment,

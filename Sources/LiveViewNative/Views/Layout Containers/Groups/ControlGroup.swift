@@ -10,13 +10,9 @@ import SwiftUI
 
 struct ControlGroup<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("control-group-style") private var style: ControlGroupStyle = .automatic
-
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
 
     public var body: some View {
         SwiftUI.ControlGroup {

@@ -8,15 +8,11 @@
 import SwiftUI
 
 protocol TextFieldProtocol: View {
-    associatedtype R: RootRegistry
     var element: ElementNode { get }
-    var context: LiveContext<R> { get }
     var value: String? { get nonmutating set }
     
     var focusEvent: Event { get }
     var blurEvent: Event { get }
-    
-    init(element: ElementNode, context: LiveContext<R>)
 }
 
 extension TextFieldProtocol {
@@ -38,10 +34,6 @@ extension TextFieldProtocol {
                 value = $0
             }
         }
-    }
-    
-    var label: some View {
-        context.buildChildren(of: element)
     }
     
     var axis: Axis {

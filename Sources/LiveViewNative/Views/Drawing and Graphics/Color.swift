@@ -8,9 +8,8 @@
 import SwiftUI
 import LiveViewNativeCore
 
-struct Color<R: RootRegistry>: View {
+struct Color: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
     
     @Attribute("opacity") private var opacity: Double = 1
     
@@ -21,10 +20,6 @@ struct Color<R: RootRegistry>: View {
     @Attribute("blue") private var blue: Double?
     
     @Attribute("color-space") private var colorSpace: SwiftUI.Color.RGBColorSpace = .sRGB
-    
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
         if let named = name.flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) {

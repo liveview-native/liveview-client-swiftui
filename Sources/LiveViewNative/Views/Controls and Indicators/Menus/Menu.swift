@@ -35,14 +35,10 @@ import SwiftUI
 /// * `content` - Elements displayed when expanded.
 struct Menu<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     /// The style to apply to this menu.
     @Attribute("menu-style") private var style: MenuStyle = .automatic
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         SwiftUI.Menu {

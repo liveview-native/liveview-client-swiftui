@@ -58,7 +58,7 @@ import SwiftUI
 /// - ``countsDown``
 struct ProgressView<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     /// The start date for a timer.
     ///
@@ -83,10 +83,6 @@ struct ProgressView<R: RootRegistry>: View {
     @Attribute("total") private var total: Double = 1
     /// The style to apply to this progress view.
     @Attribute("progress-view-style") private var style: ProgressViewStyle = .automatic
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         SwiftUI.Group {
