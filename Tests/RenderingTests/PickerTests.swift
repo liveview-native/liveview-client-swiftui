@@ -15,11 +15,7 @@ final class PickerTests: XCTestCase {
     // MARK: ColorPicker
     func testColorPicker() throws {
         try assertMatch(
-            #"""
-            <ColorPicker>
-                <ColorPicker:label>Foreground</ColorPicker:label>
-            </ColorPicker>
-            """#,
+            #"<ColorPicker>Foreground</ColorPicker>"#,
             size: .init(width: 300, height: 300)
         ) {
             ColorPicker(selection: .constant(.init(red: 0, green: 0, blue: 0, alpha: 1))) {
