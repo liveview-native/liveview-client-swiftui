@@ -9,15 +9,11 @@ import SwiftUI
 
 struct AsyncImage<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("url") private var url: String?
     @Attribute("scale") private var scale: Double?
     @Attribute("content-mode", transform: { $0?.value == "fill" ? .fill : .fit }) private var contentMode: ContentMode
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         // todo: do we want to customize the loading state for this

@@ -10,13 +10,12 @@ import LiveViewNativeCore
 
 extension BuiltinRegistry {
     @ViewBuilder
-    static func applyBinding<R: CustomRegistry>(
+    static func applyBinding(
         _ binding: AttributeName,
         event: String,
         value: Payload,
         to view: some View,
-        element: ElementNode,
-        context: LiveContext<R>
+        element: ElementNode
     ) -> some View {
         ProvidedBindingsReader(
             binding: binding.rawValue,

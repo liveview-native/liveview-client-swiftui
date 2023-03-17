@@ -10,17 +10,13 @@ import SwiftUI
 
 struct Table<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     
     @LiveBinding(attribute: "selection") private var selection = Selection.multiple([])
     @LiveBinding(attribute: "sort-order") private var sortOrder = [TableColumnSort]()
     
     @Attribute("table-style") private var style: TableStyle = .automatic
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         let rows = element.elementChildren()
@@ -134,7 +130,7 @@ struct Table<R: RootRegistry>: View {
                 if rowChildren.indices.contains(item.offset) {
                     context.coordinator.builder.fromNodes(
                         [rowChildren[item.offset]],
-                        context: context
+                        context: context.storage
                     )
                     .environment(\.coordinatorEnvironment, coordinatorEnvironment)
                 }

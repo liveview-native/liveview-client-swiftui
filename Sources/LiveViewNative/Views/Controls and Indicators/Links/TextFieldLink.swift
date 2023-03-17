@@ -25,16 +25,12 @@ import SwiftUI
 @available(watchOS 9.0, *)
 struct TextFieldLink<R: RootRegistry>: View {
     @ObservedElement var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     @FormState var value: String?
     
     /// Describes the reason for requesting text input.
     @Attribute("prompt", transform: { $0?.value.flatMap(SwiftUI.Text.init) })
     private var prompt: SwiftUI.Text?
-    
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
 #if os(watchOS)

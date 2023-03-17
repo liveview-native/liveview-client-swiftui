@@ -23,6 +23,12 @@
 - <doc:AttributesVsModifiers>
 - <doc:SupportedModifiers>
 
+### Custom DOM Elements and Attributes
+
+- <doc:AddCustomElement>
+- <doc:AddCustomModifier>
+- ``CustomRegistry``
+
 ### Working with the DOM
 
 - ``ElementNode``
@@ -30,12 +36,6 @@
 - ``Attribute``
 - ``Event``
 - ``LiveBinding``
-
-### Custom DOM Elements and Attributes
-
-- <doc:AddCustomElement>
-- <doc:AddCustomModifier>
-- ``CustomRegistry``
 - ``LiveContext``
 
 ### Form Controls

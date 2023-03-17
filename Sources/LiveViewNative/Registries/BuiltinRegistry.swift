@@ -20,36 +20,37 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     
     static let attributeDecoder = JSONDecoder()
     
+    // note: the context parameter is unused, but it needs to be there for swift to infer the generic type R
     @ViewBuilder
-    static func lookup<R: RootRegistry>(_ name: String, _ element: ElementNode, context: LiveContext<R>) -> some View {
+    static func lookup<R: RootRegistry>(_ name: String, _ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         switch name {
         case "AsyncImage":
-            AsyncImage(element: element, context: context)
+            AsyncImage<R>()
         case "Button":
-            Button<R>(element: element, context: context, action: nil)
+            Button<R>(action: nil)
         case "Capsule":
-            Shape(element: element, context: context, shape: Capsule(from: element))
+            Shape(shape: Capsule(from: element))
         case "Circle":
-            Shape(element: element, context: context, shape: Circle())
+            Shape(shape: Circle())
         case "Color":
-            Color(context: context)
+            Color()
 #if os(iOS) || os(macOS)
         case "ColorPicker":
-            ColorPicker(element: element, context: context)
+            ColorPicker<R>()
 #endif
         case "ContainerRelativeShape":
-            Shape(element: element, context: context, shape: ContainerRelativeShape())
+            Shape(shape: ContainerRelativeShape())
 #if os(iOS) || os(macOS)
         case "ControlGroup":
-            ControlGroup(element: element, context: context)
+            ControlGroup<R>()
 #endif
 #if os(iOS) || os(macOS)
         case "DatePicker":
-            DatePicker(context: context)
+            DatePicker<R>()
 #endif
 #if os(iOS) || os(macOS)
         case "DisclosureGroup":
-            DisclosureGroup(context: context)
+            DisclosureGroup<R>()
 #endif
         case "Divider":
             Divider()
@@ -58,113 +59,113 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             EditButton()
 #endif
         case "Ellipse":
-            Shape(element: element, context: context, shape: Ellipse())
+            Shape(shape: Ellipse())
         case "Form":
-            Form(context: context)
+            Form<R>()
 #if !os(tvOS)
         case "Gauge":
-            Gauge(element: element, context: context)
+            Gauge<R>()
 #endif
         case "Group":
-            Group(element: element, context: context)
+            Group<R>()
         case "Grid":
-            Grid(element: element, context: context)
+            Grid<R>()
         case "GridRow":
-            GridRow(element: element, context: context)
+            GridRow<R>()
 #if os(iOS) || os(macOS)
         case "GroupBox":
-            GroupBox(element: element, context: context)
+            GroupBox<R>()
 #endif
 #if os(macOS)
         case "HSplitView":
-            HSplitView(context: context)
+            HSplitView<R>()
 #endif
         case "HStack":
-            HStack<R>(element: element, context: context)
+            HStack<R>()
         case "Image":
-            Image(element: element, context: context)
+            Image()
         case "Label":
-            Label(element: element, context: context)
+            Label<R>()
         case "LabeledContent":
-            LabeledContent(context: context)
+            LabeledContent<R>()
         case "LazyHGrid":
-            LazyHGrid(element: element, context: context)
+            LazyHGrid<R>()
         case "LazyHStack":
-            LazyHStack(element: element, context: context)
+            LazyHStack<R>()
         case "LazyVGrid":
-            LazyVGrid(element: element, context: context)
+            LazyVGrid<R>()
         case "LazyVStack":
-            LazyVStack(element: element, context: context)
+            LazyVStack<R>()
         case "Link":
-            Link(element: element, context: context)
+            Link<R>()
         case "List":
-            List<R>(element: element, context: context)
+            List<R>()
 #if !os(watchOS)
         case "Menu":
-            Menu(element: element, context: context)
+            Menu<R>()
 #endif
 #if os(iOS)
         case "MultiDatePicker":
-            MultiDatePicker<R>(context: context)
+            MultiDatePicker<R>()
 #endif
         case "NavigationLink":
-            NavigationLink(element: element, context: context)
+            NavigationLink<R>()
 #if os(iOS) || os(macOS)
         case "PasteButton":
-            PasteButton(context: context)
+            PasteButton<R>()
 #endif
         case "ProgressView":
-            ProgressView(element: element, context: context)
+            ProgressView<R>()
         case "Picker":
-            Picker(context: context)
+            Picker<R>()
         case "Rectangle":
-            Shape(element: element, context: context, shape: Rectangle())
+            Shape(shape: Rectangle())
         case "RenameButton":
             RenameButton()
         case "RoundedRectangle":
-            Shape(element: element, context: context, shape: RoundedRectangle(from: element))
+            Shape(shape: RoundedRectangle(from: element))
         case "ScrollView":
-            ScrollView<R>(element: element, context: context)
+            ScrollView<R>()
         case "Section":
-            Section(element: element, context: context)
+            Section<R>()
         case "SecureField":
-            SecureField<R>(element: element, context: context)
+            SecureField<R>()
         case "ShareLink":
-            ShareLink(element: element, context: context)
+            ShareLink<R>()
         case "Slider":
-            Slider(element: element, context: context)
+            Slider<R>()
         case "Stepper":
-            Stepper(element: element, context: context)
+            Stepper<R>()
         case "Spacer":
-            Spacer(element: element, context: context)
+            Spacer()
 #if os(iOS) || os(macOS)
         case "Table":
-            Table(element: element, context: context)
+            Table<R>()
 #endif
         case "Text":
-            Text(context: context)
+            Text<R>()
 #if os(iOS) || os(macOS)
         case "TextEditor":
-            TextEditor(element: element, context: context)
+            TextEditor()
 #endif
         case "TextField":
-            TextField<R>(element: element, context: context)
+            TextField<R>()
 #if os(watchOS)
         case "TextFieldLink":
-            TextFieldLink(context: context)
+            TextFieldLink<R>()
 #endif
         case "Toggle":
-            Toggle(element: element, context: context)
+            Toggle<R>()
 #if os(macOS)
         case "VSplitView":
-            VSplitView(context: context)
+            VSplitView<R>()
 #endif
         case "VStack":
-            VStack<R>(element: element, context: context)
+            VStack<R>()
         case "ViewThatFits":
-            ViewThatFits(element: element, context: context)
+            ViewThatFits<R>()
         case "ZStack":
-            ZStack<R>(element: element, context: context)
+            ZStack<R>()
         default:
             // log here that view type cannot be found
             EmptyView()

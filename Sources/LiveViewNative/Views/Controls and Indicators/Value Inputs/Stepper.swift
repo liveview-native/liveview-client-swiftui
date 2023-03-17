@@ -41,7 +41,7 @@ import SwiftUI
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 struct Stepper<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @FormState(default: 0) var value: Double
     
@@ -51,10 +51,6 @@ struct Stepper<R: RootRegistry>: View {
     @Attribute("lower-bound") private var lowerBound: Double?
     /// The highest allowed value.
     @Attribute("upper-bound") private var upperBound: Double?
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         if let lowerBound,

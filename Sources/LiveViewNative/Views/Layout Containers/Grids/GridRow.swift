@@ -9,13 +9,9 @@ import SwiftUI
 
 struct GridRow<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("alignment") private var alignment: VerticalAlignment?
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
 
     public var body: some View {
         SwiftUI.GridRow(alignment: alignment) {

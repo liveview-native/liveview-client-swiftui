@@ -7,18 +7,14 @@
 
 import SwiftUI
 
-struct Image<R: RootRegistry>: View {
+struct Image: View {
     @ObservedElement private var observedElement: ElementNode
     private let overrideElement: ElementNode?
     private var element: ElementNode {
         overrideElement ?? observedElement
     }
     
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.overrideElement = nil
-    }
-    
-    init(overrideElement: ElementNode, context: LiveContext<R>) {
+    init(overrideElement: ElementNode? = nil) {
         self.overrideElement = overrideElement
     }
     

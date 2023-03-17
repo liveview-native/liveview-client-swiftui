@@ -33,7 +33,7 @@ import SwiftUI
 /// * `maximum-value-label` - Describes the highest possible value.
 struct Gauge<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     /// The current value of the gauge.
     @Attribute("value") private var value: Double = 0
@@ -43,10 +43,6 @@ struct Gauge<R: RootRegistry>: View {
     @Attribute("upper-bound") private var upperBound: Double = 1
     /// The style to apply to this gauge.
     @Attribute("gauge-style") private var style: GaugeStyle = .automatic
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         SwiftUI.Group {

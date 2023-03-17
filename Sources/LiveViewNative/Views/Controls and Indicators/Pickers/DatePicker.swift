@@ -10,7 +10,7 @@ import SwiftUI
 import LiveViewNativeCore
 
 struct DatePicker<R: RootRegistry>: View {
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     @ObservedElement private var element
     @FormState(default: CodableDate()) private var value: CodableDate
     @Attribute("start") private var start: Date?
@@ -36,10 +36,6 @@ struct DatePicker<R: RootRegistry>: View {
         } set: { newValue in
             value.date = newValue
         }
-    }
-    
-    init(context: LiveContext<R>) {
-        self.context = context
     }
     
     var body: some View {

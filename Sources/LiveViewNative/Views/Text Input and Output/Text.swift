@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Text<R: RootRegistry>: View {
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     // The view that's in the SwiftUI view tree needs to observe an element to respond to DOM changes,
     // but we also need to construct a Text view with a specific element to handle nested <text>s.
@@ -20,13 +20,8 @@ struct Text<R: RootRegistry>: View {
         overrideElement ?? observedElement
     }
     
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
-    
-    private init(overrideElement: ElementNode, context: LiveContext<R>) {
+    init(overrideElement: ElementNode? = nil) {
         self.overrideElement = overrideElement
-        self.context = context
     }
     
     public var body: SwiftUI.Text {
@@ -118,13 +113,13 @@ struct Text<R: RootRegistry>: View {
                 if let element = next.asElement() {
                     switch element.tag {
                     case "Text":
-                        prev = prev + Self(overrideElement: element, context: context).body
+                        prev = prev + Self(overrideElement: element).body
                     case "Link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
                     case "Image":
-                        prev = prev + SwiftUI.Text(Image(overrideElement: element, context: context).image)
+                        prev = prev + SwiftUI.Text(Image(overrideElement: element).image)
                     default:
                         break
                     }

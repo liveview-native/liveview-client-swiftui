@@ -66,12 +66,12 @@ public protocol AggregateRegistry: RootRegistry {
 }
 
 extension AggregateRegistry {
-    public static func lookup(_ name: Registries.TagName, element: ElementNode, context: LiveContext<Root>) -> some View {
-        return Registries.lookup(name, element: element, context: context)
+    public static func lookup(_ name: Registries.TagName, element: ElementNode) -> some View {
+        return Registries.lookup(name, element: element)
     }
 
-    public static func decodeModifier(_ type: Registries.ModifierType, from decoder: Decoder, context: LiveContext<Root>) throws -> some ViewModifier {
-        return try Registries.decodeModifier(type, from: decoder, context: context)
+    public static func decodeModifier(_ type: Registries.ModifierType, from decoder: Decoder) throws -> some ViewModifier {
+        return try Registries.decodeModifier(type, from: decoder)
     }
 
     public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
@@ -110,23 +110,23 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
     
     public typealias TagName = _EitherRawString<First.TagName, Second.TagName>
 
-    public static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<First.Root>) -> some View {
+    public static func lookup(_ name: TagName, element: ElementNode) -> some View {
         switch name {
         case .first(let name):
-            First.lookup(name, element: element, context: context)
+            First.lookup(name, element: element)
         case .second(let name):
-            Second.lookup(name, element: element, context: context)
+            Second.lookup(name, element: element)
         }
     }
 
     public typealias ModifierType = _EitherRawString<First.ModifierType, Second.ModifierType>
 
-    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<First.Root>) throws -> some ViewModifier {
+    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch type {
         case .first(let type):
-            try First.decodeModifier(type, from: decoder, context: context)
+            try First.decodeModifier(type, from: decoder)
         case .second(let type):
-            try Second.decodeModifier(type, from: decoder, context: context)
+            try Second.decodeModifier(type, from: decoder)
         }
     }
 

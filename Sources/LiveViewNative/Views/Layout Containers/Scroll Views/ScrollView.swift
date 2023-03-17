@@ -9,17 +9,13 @@ import SwiftUI
 
 struct ScrollView<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("axes") private var axes: Axis.Set = .vertical
     @Attribute("shows-indicators") private var showsIndicators: Bool
     
     @Attribute("scroll-position") private var scrollPosition: String?
     @Attribute("scroll-position-anchor") private var scrollPositionAnchor: UnitPoint?
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         SwiftUI.ScrollViewReader { proxy in

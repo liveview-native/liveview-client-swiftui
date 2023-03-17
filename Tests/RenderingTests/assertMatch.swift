@@ -42,7 +42,8 @@ extension XCTestCase {
         let document = try LiveViewNativeCore.Document.parse(markup)
         let viewTree = session.rootCoordinator.builder.fromNodes(
             document[document.root()].children(),
-            context: LiveContext(coordinator: session.rootCoordinator, url: session.url)
+            coordinator: session.rootCoordinator,
+            url: session.url
         ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
         
         guard let markupImage = snapshot(

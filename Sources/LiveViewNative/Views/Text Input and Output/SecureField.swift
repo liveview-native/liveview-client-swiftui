@@ -9,16 +9,12 @@ import SwiftUI
 
 struct SecureField<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> var context
     @FormState var value: String?
     @FocusState private var isFocused: Bool
     
     let focusEvent = Event("phx-focus", type: "focus")
     let blurEvent = Event("phx-blur", type: "blur")
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
         SwiftUI.SecureField(
@@ -37,6 +33,10 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
 #endif
             .applySubmitLabel(submitLabel)
             .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+    }
+    
+    var label: some View {
+        context.buildChildren(of: element)
     }
 }
 

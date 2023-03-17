@@ -8,14 +8,10 @@
 import SwiftUI
 
 struct Picker<R: RootRegistry>: View {
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     @ObservedElement private var element
     @FormState private var value: String?
     @Attribute("picker-style") private var style: PickerStyle = .automatic
-    
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
         SwiftUI.Picker(selection: $value) {

@@ -17,6 +17,10 @@ private struct ElementKey: EnvironmentKey {
     static let defaultValue: ElementNode? = nil
 }
 
+private struct LiveContextStorageKey: EnvironmentKey {
+    static var defaultValue: Any? = nil
+}
+
 /// Provides access to ``LiveViewCoordinator`` properties via the environment.
 /// This exists to type-erase the coordinator, since environment properties can't be generic.
 struct CoordinatorEnvironment {
@@ -52,5 +56,11 @@ extension EnvironmentValues {
     var coordinatorEnvironment: CoordinatorEnvironment? {
         get { self[CoordinatorEnvironment.Key.self] }
         set { self[CoordinatorEnvironment.Key.self] = newValue }
+    }
+    
+    // This property should only be accessed via the `@LiveContext` property wrapper.
+    var anyLiveContextStorage: Any? {
+        get { self[LiveContextStorageKey.self] }
+        set { self[LiveContextStorageKey.self] = newValue }
     }
 }

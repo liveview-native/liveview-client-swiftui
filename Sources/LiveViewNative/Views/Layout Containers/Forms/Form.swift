@@ -9,13 +9,9 @@ import SwiftUI
 
 struct Form<R: RootRegistry>: View {
     @ObservedElement private var element
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute("form-style") private var style: FormStyle = .automatic
-    
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
         SwiftUI.Form {

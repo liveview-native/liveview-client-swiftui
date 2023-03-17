@@ -14,7 +14,7 @@ struct Shape<S: SwiftUI.Shape>: View {
     @Attribute("fill-color", transform: { $0?.value.flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) }) private var fillColor: SwiftUI.Color?
     @Attribute("stroke-color", transform: { $0?.value.flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) }) private var strokeColor: SwiftUI.Color?
     
-    init(element: ElementNode, context: LiveContext<some RootRegistry>, shape: S) {
+    init(shape: S) {
         self.shape = shape
     }
     

@@ -44,9 +44,6 @@ import Combine
 /// struct IntField: View {
 ///     @FormState private var value: Int?
 ///
-///     init(element: ElementNode, context: LiveContext<some CustomRegistry>) {
-///     }
-///
 ///     var body: some View {
 ///         TextField("My number", value: $value, format: .number)
 ///     }

@@ -8,9 +8,8 @@
 #if os(iOS) || os(macOS)
 import SwiftUI
 
-struct TextEditor<R: RootRegistry>: TextFieldProtocol {
+struct TextEditor: TextFieldProtocol {
     @ObservedElement var element: ElementNode
-    let context: LiveContext<R>
     @FormState var value: String?
     @FocusState private var isFocused: Bool
     @LiveBinding(attribute: "find-presented") private var isFindPresented = false
@@ -19,10 +18,6 @@ struct TextEditor<R: RootRegistry>: TextFieldProtocol {
     let blurEvent = Event("phx-blur", type: "blur")
     @Attribute("find-disabled") private var findDisabled: Bool
     @Attribute("replace-disabled") private var replaceDisabled: Bool
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
         SwiftUI.TextEditor(text: textBinding)

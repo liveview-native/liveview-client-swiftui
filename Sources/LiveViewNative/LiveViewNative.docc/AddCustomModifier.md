@@ -21,7 +21,7 @@ struct MyRegistry: RootRegistry {
 }
 ```
 
-To define the view modifier for this attributes, implement the ``CustomRegistry/decodeModifier(_:from:context:)-4cqvs`` method. This method is automatically treated as a ``ViewModifierBuilder``, so simply construct your modifier rather than returning it.
+To define the view modifier for this attributes, implement the ``CustomRegistry/decodeModifier(_:from:)-9gliz`` method. This method is automatically treated as a ``ViewModifierBuilder``, so simply construct your modifier rather than returning it.
 
 In the following example, a modifier like `{"type": "my_font", "size": 22}` could be used to apply the custom font named "My Font" with a fixed size of 22pt.
 
@@ -31,7 +31,7 @@ struct MyRegistry: RootRegistry {
         case myFont = "my_font"
     }
 
-    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<MyRegistry>) throws -> some ViewModifier {
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch name {
         case .myFont:
             try MyFontModifier(from: decoder)

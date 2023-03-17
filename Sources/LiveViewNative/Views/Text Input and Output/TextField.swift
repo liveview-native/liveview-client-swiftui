@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TextField<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> var context
     @FormState var value: String?
     @FocusState private var isFocused: Bool
     
@@ -34,10 +34,6 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
             }
         }
     ) private var nameStyle: PersonNameComponents.FormatStyle.Style?
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     var body: some View {
         field
@@ -153,5 +149,9 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                 label
             }
         }
+    }
+    
+    var label: some View {
+        context.buildChildren(of: element)
     }
 }

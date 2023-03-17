@@ -29,16 +29,12 @@ import SwiftUI
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 struct Toggle<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @FormState(default: false) var value: Bool
     
     /// The style to apply to this toggle.
     @Attribute("toggle-style") private var style: ToggleStyle = .automatic
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         SwiftUI.Toggle(isOn: $value) {

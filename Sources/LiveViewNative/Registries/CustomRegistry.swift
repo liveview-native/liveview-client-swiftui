@@ -101,7 +101,7 @@ public protocol CustomRegistry {
     /// - Parameter element: The element that a view should be created for.
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
-    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Root>) -> CustomView
+    static func lookup(_ name: TagName, element: ElementNode) -> CustomView
     
     /// This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.
     ///
@@ -113,7 +113,7 @@ public protocol CustomRegistry {
     /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
     /// - Throws: If decoding the modifier fails.
     @ViewModifierBuilder
-    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Root>) throws -> CustomModifier
+    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> CustomModifier
     
     /// This method is called when it needs a view to display while connecting to the live view.
     ///
@@ -151,13 +151,13 @@ extension EmptyRegistry: RootRegistry {
 }
 extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Never {
     /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/TagName`` type alias, this implementation will be used.
-    public static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<Root>) -> Never {
+    public static func lookup(_ name: TagName, element: ElementNode) -> Never {
         fatalError()
     }
 }
 extension CustomRegistry where ModifierType == EmptyRegistry.None, CustomModifier == EmptyModifier {
     /// A default implementation that does not provide any custom modifiers. If you omit the ``CustomRegistry/ModifierType`` type alias, this implementation will be used.
-    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Root>) -> EmptyModifier {
+    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder) -> EmptyModifier {
         EmptyModifier()
     }
 }

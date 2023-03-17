@@ -9,7 +9,7 @@ import SwiftUI
 
 struct List<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     #if os(iOS) || os(tvOS)
     @Environment(\.editMode) var editMode
     #endif
@@ -20,10 +20,6 @@ struct List<R: RootRegistry>: View {
     @LiveBinding(attribute: "selection") private var selection = Selection.single(nil)
     
     @Attribute("list-style") private var style: ListStyle = .automatic
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         list
@@ -51,7 +47,7 @@ struct List<R: RootRegistry>: View {
     }
     
     private var content: some View {
-        forEach(nodes: element.children(), context: context)
+        forEach(nodes: element.children(), context: context.storage)
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }

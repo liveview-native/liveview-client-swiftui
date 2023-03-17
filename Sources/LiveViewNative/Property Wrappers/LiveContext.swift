@@ -8,29 +8,40 @@
 import SwiftUI
 import LiveViewNativeCore
 
-/// The context provides information at initialization-time to views in a LiveView.
-public struct LiveContext<R: RootRegistry> {
-    /// The coordinator corresponding to the live view in which thie view is being constructed.
-    public let coordinator: LiveViewCoordinator<R>
-    
-    /// The URL of the live view this context belongs to.
-    public let url: URL
-    
-    // @EnvironmentObject is not suitable for FormModel because views that need the form model don't
-    // necessarily want to re-render on every single change.
-    /// The model of the nearest ancestor `<live-form>` element, or `nil` if there is no such element.
-    public private(set) var formModel: FormModel?
-    
-    init(coordinator: LiveViewCoordinator<R>, url: URL, formModel: FormModel? = nil) {
-        self.coordinator = coordinator
-        self.url = url
-        self.formModel = formModel
+/// The context provides additional information to elements within a live view.
+///
+/// This property wrapper uses the SwiftUI environment to provide the context information, so you do not initialize it yourself.
+///
+/// ```swift
+/// struct MyElement<R: RootRegistry>: View {
+///     @LiveContext<R> var context
+///     var body: some View {
+///         Text("My URL is \(context.url)")
+///     }
+/// }
+/// ```
+@propertyWrapper
+public struct LiveContext<R: RootRegistry>: DynamicProperty {
+    @Environment(\.anyLiveContextStorage) private var anyStorage
+    var storage: LiveContextStorage<R> {
+        anyStorage as! LiveContextStorage<R>
     }
     
-    @_spi(LiveForm) public func with(formModel: FormModel) -> LiveContext<R> {
-        var copy = self
-        copy.formModel = formModel
-        return copy
+    /// The coordinator corresponding to the live view in which thie view is being constructed.
+    public var coordinator: LiveViewCoordinator<R> {
+        storage.coordinator
+    }
+    
+    /// The URL of the live view this context belongs to.
+    public var url: URL {
+        storage.url
+    }
+    
+    public var wrappedValue: Self {
+        self
+    }
+    
+    public init() {
     }
     
     /// Builds a view representing the given element in the current context.
@@ -39,12 +50,12 @@ public struct LiveContext<R: RootRegistry> {
     public func buildElement(_ element: ElementNode) -> some View {
         // can't use coordinator.builder.fromElement here, as it causes an infinitely recursive type when used with custom attributes
         // so use ElementView to break the cycle
-        return ElementView(element: element, context: self)
+        return ElementView(element: element, context: storage)
     }
     
     /// Builds a view representing the children of the current element in the current context.
     public func buildChildren(of element: ElementNode) -> some View {
-        return coordinator.builder.fromNodes(element.children(), context: self)
+        return coordinator.builder.fromNodes(element.children(), context: storage)
     }
     
     private static func elementWithName(
@@ -106,9 +117,14 @@ public struct LiveContext<R: RootRegistry> {
                     return true
                 }
             })
-            return coordinator.builder.fromNodes(defaultSlotChildren, context: self)
+            return coordinator.builder.fromNodes(defaultSlotChildren, context: storage)
         } else {
-            return coordinator.builder.fromNodes(namedSlotChildren.flatMap { $0.children() }, context: self)
+            return coordinator.builder.fromNodes(namedSlotChildren.flatMap { $0.children() }, context: storage)
         }
     }
+}
+
+struct LiveContextStorage<R: RootRegistry> {
+    let coordinator: LiveViewCoordinator<R>
+    let url: URL
 }

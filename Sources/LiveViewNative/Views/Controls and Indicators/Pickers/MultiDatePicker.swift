@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MultiDatePicker<R: RootRegistry>: View {
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     @ObservedElement private var element
     @Attribute("start") private var start: Date?
     @Attribute("end") private var end: Date?
@@ -21,10 +21,6 @@ struct MultiDatePicker<R: RootRegistry>: View {
         } set: {
             self.dates = Set($0.map(SelectedDate.init(dateComponents:)))
         }
-    }
-    
-    init(context: LiveContext<R>) {
-        self.context = context
     }
     
     var body: some View {

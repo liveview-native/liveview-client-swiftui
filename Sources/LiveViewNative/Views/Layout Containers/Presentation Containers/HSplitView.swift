@@ -10,11 +10,7 @@ import SwiftUI
 
 struct HSplitView<R: RootRegistry>: View {
     @ObservedElement private var element
-    let context: LiveContext<R>
-    
-    init(context: LiveContext<R>) {
-        self.context = context
-    }
+    @LiveContext<R> private var context
     
     var body: some View {
         SwiftUI.HSplitView {

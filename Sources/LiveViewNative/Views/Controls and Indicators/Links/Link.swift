@@ -21,14 +21,10 @@ import SwiftUI
 /// * ``destination``
 struct Link<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     /// A valid URL to open when tapped.
     @Attribute("destination", transform: { $0?.value.flatMap(URL.init(string:)) }) private var destination: URL?
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         SwiftUI.Link(

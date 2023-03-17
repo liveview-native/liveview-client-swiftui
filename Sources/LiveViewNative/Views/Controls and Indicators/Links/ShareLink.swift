@@ -75,7 +75,7 @@ fileprivate let itemsDecoder = JSONDecoder()
 /// * ``items``
 struct ShareLink<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     /// The title to use when sharing to a service with a subject field.
     @Attribute("subject", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var subject: SwiftUI.Text?
@@ -93,10 +93,6 @@ struct ShareLink<R: RootRegistry>: View {
     ) private var items: [String]?
     /// A string to share.
     @Attribute("item") private var item: String?
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
     
     public var body: some View {
         let useDefaultLabel = element.children().filter({
@@ -334,12 +330,12 @@ struct ShareLink<R: RootRegistry>: View {
                     .first(where: { $0.tag == "image" && $0.namespace == "SharePreview" })?
                     .elementChildren()
                     .first
-                    .flatMap({ Image(overrideElement: $0, context: context).image })
+                    .flatMap({ Image(overrideElement: $0).image })
                 let icon = element.elementChildren()
                     .first(where: { $0.tag == "icon" && $0.namespace == "SharePreview" })?
                     .elementChildren()
                     .first
-                    .flatMap({ Image(overrideElement: $0, context: context).image })
+                    .flatMap({ Image(overrideElement: $0).image })
                 
                 let data = PreviewData(
                     title: title,

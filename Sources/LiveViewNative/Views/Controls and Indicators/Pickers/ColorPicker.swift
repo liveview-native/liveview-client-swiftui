@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @LiveBinding(attribute: "selection") private var selection: CodableColor = .init(r: 0, g: 0, b: 0, a: 1)
     @Attribute("supports-opacity") private var supportsOpacity: Bool
@@ -37,10 +37,6 @@ struct ColorPicker<R: RootRegistry>: View {
                 }
             }
         }
-    }
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
     }
     
     public var body: some View {

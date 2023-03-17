@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LazyHGrid<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
-    private let context: LiveContext<R>
+    @LiveContext<R> private var context
     
     @Attribute(
         "rows",
@@ -21,10 +21,6 @@ struct LazyHGrid<R: RootRegistry>: View {
     @Attribute("alignment") private var alignment: VerticalAlignment = .center
     @Attribute("spacing") private var spacing: Double?
     @Attribute("pinned-views") private var pinnedViews: PinnedScrollableViews = []
-    
-    init(element: ElementNode, context: LiveContext<R>) {
-        self.context = context
-    }
 
     public var body: some View {
         SwiftUI.LazyHGrid(
