@@ -56,6 +56,16 @@ let package = Package(
                 ]
             ),
             dependencies: [.target(name: "DocumentationExtensionGenerator")]
+        ),
+        .plugin(
+            name: "SortDocumentationJSONPlugin",
+            capability: .command(
+                intent: .custom(verb: "sort-documentation-json", description: ""),
+                permissions: [
+                    .writeToPackageDirectory(reason: "This command sorts the JSON files in the docs repo folder")
+                ]
+            ),
+            dependencies: []
         )
     ]
 )
