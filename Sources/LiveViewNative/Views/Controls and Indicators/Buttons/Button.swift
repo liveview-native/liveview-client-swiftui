@@ -27,7 +27,6 @@ import SwiftUI
 /// 
 /// ## Events
 /// * ``click``
-@_documentation(visibility: public)
 @_spi(LiveForm)
 public struct Button<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
@@ -36,14 +35,11 @@ public struct Button<R: RootRegistry>: View {
     private let action: (() -> Void)?
     
     /// Event triggered when tapped.
-    @_documentation(visibility: public)
     @Event("phx-click", type: "click") private var click
     
     /// Boolean attribute that indicates whether the button is tappable.
-    @_documentation(visibility: public)
     @Attribute("disabled") private var disabled: Bool
     /// The style to apply to this button.
-    @_documentation(visibility: public)
     @Attribute("button-style") private var buttonStyle: ButtonStyle = .automatic
     
     @_spi(LiveForm) public init(action: (() -> Void)?) {
@@ -69,18 +65,12 @@ public struct Button<R: RootRegistry>: View {
 }
 
 /// A style for the ``Button`` element.
-@_documentation(visibility: public)
 fileprivate enum ButtonStyle: String, AttributeDecodable {
-    @_documentation(visibility: public)
     case automatic
-    @_documentation(visibility: public)
     case bordered
     /// `bordered-prominent`
-    @_documentation(visibility: public)
     case borderedProminent = "bordered-prominent"
-    @_documentation(visibility: public)
     case borderless
-    @_documentation(visibility: public)
     case plain
 }
 
