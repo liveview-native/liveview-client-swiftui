@@ -58,11 +58,7 @@ xcrun swift package plugin --allow-writing-to-package-directory sort-documentati
 
 echo "Generating tutorial repo..."
 
-pushd util/generate_tutorial_repo
-cargo build &> $output
-[[ "$verbose" == "1" ]] && flags="-v" || flags=""
-./target/debug/generate_tutorial_repo --repo ../../tutorial --package ../.. $flags
-popd
+swift run TutorialRepoGenerator tutorial &> $output
 
 echo -e "\x1B[1mDocs updated, commit the result in the docs/ directory.\x1B[0m"
 echo -e "\x1B[1mTutorial repo updated, force-push the result in the tutorial/ directory.\x1B[0m"

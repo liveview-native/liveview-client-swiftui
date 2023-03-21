@@ -10,12 +10,39 @@
       }
     },
     {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "fee6933f37fde9a5e12a1e4aeaa93fe60116ff2a",
+        "version" : "1.2.2"
+      }
+    },
+    {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-cmark.git",
+      "state" : {
+        "branch" : "gfm",
+        "revision" : "86aeb491675de6f077a3a6df6cbcac1a25dcbee1"
+      }
+    },
+    {
       "identity" : "swift-docc-symbolkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-docc-symbolkit.git",
       "state" : {
         "branch" : "main",
         "revision" : "ccbbd881d75d3ca503daf8cf3b5d78adbf647da9"
+      }
+    },
+    {
+      "identity" : "swift-markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-markdown.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ad0b81fed55c4a72fdaeb5535884bd2886de96f4"
       }
     },
     {
