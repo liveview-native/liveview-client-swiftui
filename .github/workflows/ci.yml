@@ -14,12 +14,12 @@ jobs:
         shell: bash
         run: |
           sudo xcode-select --switch /Applications/Xcode_14.2.app
-          xcodebuild test -scheme LiveViewNative -sdk iphonesimulator16.2 -destination "OS=16.2,name=iPhone 14 Pro"
+          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.2 -destination "OS=16.2,name=iPhone 14 Pro"
       - name: Build for macOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative -sdk macosx13.1 -destination "platform=macOS"
+          xcodebuild -scheme LiveViewNative-Package -sdk macosx13.1 -destination "platform=macOS"
       - name: Build for watchOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative -sdk watchsimulator9.1 -destination "OS=9.1,name=Apple Watch Series 8 (45mm)"
+          xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.1 -destination "OS=9.1,name=Apple Watch Series 8 (45mm)"

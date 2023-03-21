@@ -7,15 +7,39 @@
 
 import SwiftUI
 
-@_spi(LiveForm) public struct Button<R: RootRegistry>: View {
+/// `<button>`, sends events when tapped.
+///
+/// Use the `phx-click` attribute to specify which event to fire on tap.
+///
+/// ```html
+/// <button phx-click="my_event" phx-value-extra="more info">Click Me!</button>
+/// ```
+///
+/// ```elixir
+/// def handle_event("my_event", %{ "extra" => extra }, socket) do
+///     {:noreply, assign(socket, value: extra)}
+/// end
+/// ```
+/// 
+/// ## Attributes
+/// * ``disabled``
+/// * ``buttonStyle``
+/// 
+/// ## Events
+/// * ``click``
+@_spi(LiveForm)
+public struct Button<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     // used internaly by PhxSubmitButton
     private let action: (() -> Void)?
     
+    /// Event triggered when tapped.
     @Event("phx-click", type: "click") private var click
     
+    /// Boolean attribute that indicates whether the button is tappable.
     @Attribute("disabled") private var disabled: Bool
+    /// The style to apply to this button.
     @Attribute("button-style") private var buttonStyle: ButtonStyle = .automatic
     
     @_spi(LiveForm) public init(action: (() -> Void)?) {
@@ -40,9 +64,11 @@ import SwiftUI
     }
 }
 
+/// A style for the ``Button`` element.
 fileprivate enum ButtonStyle: String, AttributeDecodable {
     case automatic
     case bordered
+    /// `bordered-prominent`
     case borderedProminent = "bordered-prominent"
     case borderless
     case plain

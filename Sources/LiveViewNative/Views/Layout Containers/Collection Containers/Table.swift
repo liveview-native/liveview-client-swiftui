@@ -150,105 +150,111 @@ struct Table<R: RootRegistry>: View {
     @Attribute("table-style") private var style: TableStyle = .automatic
     
     public var body: some View {
-        let rows = element.elementChildren()
-            .filter { $0.tag == "rows" && $0.namespace == "Table" }
-            .flatMap { $0.elementChildren() }
-            .compactMap { $0.tag == "TableRow" ? TableRow(element: $0) : nil }
-        let columns = self.columns
-        return SwiftUI.Group {
-            switch columns.count {
-            case 1:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                }
-            case 2:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                }
-            case 3:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                }
-            case 4:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                }
-            case 5:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                }
-            case 6:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                }
-            case 7:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                    columns[6]
-                }
-            case 8:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                    columns[6]
-                    columns[7]
-                }
-            case 9:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                    columns[6]
-                    columns[7]
-                    columns[8]
-                }
-            case 10:
-                SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
-                    columns[0]
-                    columns[1]
-                    columns[2]
-                    columns[3]
-                    columns[4]
-                    columns[5]
-                    columns[6]
-                    columns[7]
-                    columns[8]
-                    columns[9]
-                }
-            default:
-                fatalError("Too many columns in table: \(columns.count)")
-            }
+        SwiftUI.Group {
+            table(rows: self.rows, columns: self.columns)
         }
         .applyTableStyle(style)
     }
     
+    @ViewBuilder
+    private func table(rows: [TableRow], columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>]) -> some View {
+        switch columns.count {
+        case 1:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+            }
+        case 2:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+            }
+        case 3:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+                columns[2]
+            }
+        case 4:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+                columns[2]
+                columns[3]
+            }
+        case 5:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+                columns[2]
+                columns[3]
+                columns[4]
+            }
+        case 6:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+                columns[2]
+                columns[3]
+                columns[4]
+                columns[5]
+            }
+        case 7:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+                columns[2]
+                columns[3]
+                columns[4]
+                columns[5]
+                columns[6]
+            }
+        case 8:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+                columns[2]
+                columns[3]
+                columns[4]
+                columns[5]
+                columns[6]
+                columns[7]
+            }
+        case 9:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+                columns[2]
+                columns[3]
+                columns[4]
+                columns[5]
+                columns[6]
+                columns[7]
+                columns[8]
+            }
+        case 10:
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+                columns[0]
+                columns[1]
+                columns[2]
+                columns[3]
+                columns[4]
+                columns[5]
+                columns[6]
+                columns[7]
+                columns[8]
+                columns[9]
+            }
+        default:
+            fatalError("Too many columns in table: \(columns.count)")
+        }
+    }
+    
+    private var rows: [TableRow] {
+        element.elementChildren()
+            .filter { $0.tag == "rows" && $0.namespace == "Table" }
+            .flatMap { $0.elementChildren() }
+            .compactMap { $0.tag == "TableRow" ? TableRow(element: $0) : nil }
+    }
     
     private var columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>] {
         let columnElements = element.elementChildren()

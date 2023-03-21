@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "swift-docc-symbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-docc-symbolkit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ccbbd881d75d3ca503daf8cf3b5d78adbf647da9"
+      }
+    },
+    {
       "identity" : "swiftphoenixclient",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davidstump/SwiftPhoenixClient.git",
