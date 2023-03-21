@@ -28,6 +28,7 @@ struct Executable {
     }
     
     func execute(_ argumentSet: ArgumentSet) throws {
+        #if os(macOS)
         let process = Process()
         process.executableURL = executableURL
         process.currentDirectoryURL = currentDirectoryURL
@@ -39,6 +40,7 @@ struct Executable {
         guard process.terminationReason == .exit && process.terminationStatus == 0 else {
             throw ExecutableError("\(process.terminationReason):\(process.terminationStatus)")
         }
+        #endif
     }
     
     struct ExecutableError: LocalizedError {
