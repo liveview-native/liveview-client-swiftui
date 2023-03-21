@@ -2,17 +2,8 @@ import SwiftUI
 import LiveViewNative
 
 struct CatRatingView: View {
-    @ObservedElement var element: ElementNode
-    let context: LiveContext<MyRegistry>
-    
-    var score: Int {
-        if let str = element.attributeValue(for: "score"),
-           let score = Int(str) {
-            return score
-        } else {
-            return 0
-        }
-    }
+    @Attribute("score", transform: { Int($0?.value ?? "") ?? 0 }) private var score: Int
+    @LiveContext<MyRegistry> private var context
     
     var body: some View {
     }

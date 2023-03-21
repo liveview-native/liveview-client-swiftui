@@ -1,15 +1,15 @@
 import SwiftUI
 import LiveViewNative
 
-struct MyRegistry: CustomRegistry {
+struct MyRegistry: RootRegistry {
     enum TagName: String {
-        case catRating = "cat-rating"
+        case catRating = "CatRating"
     }
     
-    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {
+    static func lookup(_ name: TagName, element: ElementNode) -> some View {
         switch name {
         case .catRating:
-            CatRatingView(context: context)
+            CatRatingView()
         }
     }
 }

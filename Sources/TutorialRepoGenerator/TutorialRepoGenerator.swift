@@ -27,6 +27,9 @@ struct TutorialRepoGenerator: ParsableCommand {
     @Option(help: "Argument passed to `git remote add origin`.")
     private var remoteOrigin: String = "git@github.com:liveview-native/ios-tutorial.git"
     
+    @Flag(help: "Disable build checks performed after each section.")
+    private var noCompile = false
+    
     mutating func run() throws {
         // Setup executables with correct working directories.
         let git = Executable("git", currentDirectoryURL: repoPath)
@@ -44,7 +47,13 @@ struct TutorialRepoGenerator: ParsableCommand {
         try git.commit(message: "Initial commit")
         
         // Commit each `.tutorial` file's changes to the repo.
-        for (offset, tutorial) in try FileManager.default.contentsOfDirectory(at: tutorialsPath, includingPropertiesForKeys: nil).enumerated() where tutorial.pathExtension == "tutorial" {
+        for (offset, tutorial) in try FileManager.default.contentsOfDirectory(
+            at: tutorialsPath,
+            includingPropertiesForKeys: nil
+        )
+            .sorted(by: { $0.absoluteString.localizedStandardCompare($1.absoluteString) == .orderedAscending })
+            .enumerated()
+        where tutorial.pathExtension == "tutorial" {
             // Parse like DocC to handle directives.
             let document = try Document(parsing: tutorial, options: [.parseBlockDirectives, .parseSymbolLinks])
             
@@ -55,34 +64,45 @@ struct TutorialRepoGenerator: ParsableCommand {
             guard let title = visitor.tutorialTitle
             else { fatalError("Expected tutorial to have an @Intro(title:) directive.") }
             
+            var changedProjects = Set<Project>()
             for step in visitor.steps {
-                guard let project = step.0["project"].flatMap(Project.init)
+                guard step.0["skip"] != "true",
+                      let project = step.0["project"].flatMap(Project.init)
                 else { continue }
+                
                 let destination = repoPath.appending(components: project.path, step.0["path"] ?? step.2)
                 
                 // Copy the changed files into the repo.
                 try FileManager.default.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
                 try Data(contentsOf: step.1).write(to: destination, options: [])
+                
+                changedProjects.insert(project)
             }
             
             // Ensure the backend builds.
-            try mix("deps.get")
-            try mix.compile()
+            if changedProjects.contains(.backend) && !noCompile {
+                try mix("deps.get")
+                try mix.compile()
+            }
 
             // Ensure the app builds.
-            try xcodebuild(
-                scheme: Project.app.path,
-                target: Project.app.path,
-                sdk: "iphonesimulator16.2",
-                destination: "OS=16.2,name=iPhone 14 Pro",
-                derivedDataPath: "DerivedData",
-                CODE_SIGN_IDENTITY: "",
-                CODE_SIGNING_REQUIRED: "NO"
-            )
+            if changedProjects.contains(.app) && !noCompile {
+                try xcodebuild(
+                    scheme: Project.app.path,
+                    target: Project.app.path,
+                    sdk: "iphonesimulator16.2",
+                    destination: "OS=16.2,name=iPhone 14 Pro",
+                    derivedDataPath: "DerivedData",
+                    CODE_SIGN_IDENTITY: "",
+                    CODE_SIGNING_REQUIRED: "NO"
+                )
+            }
 
             // Commit the section.
-            try git.add(".")
-            try git.commit(message: "Section \(offset): \(title)")
+            if !changedProjects.isEmpty {
+                try git.add(".")
+                try git.commit(message: "Section \(offset + 1): \(title)")
+            }
         }
     }
     
@@ -151,11 +171,11 @@ struct TutorialRepoGenerator: ParsableCommand {
                     ZeroOrMore(.whitespace)
                     "="
                     ZeroOrMore(.whitespace)
-                    "\""
+                    Optionally("\"")
                     Capture {
-                        ZeroOrMore(.anyNonNewline)
+                        ZeroOrMore(CharacterClass.anyOf("\"\n").inverted)
                     }
-                    "\""
+                    Optionally("\"")
                     Anchor.endOfLine
                 }
                 self.settings = Dictionary(uniqueKeysWithValues: blockDirective.child(at: 0)!.format().replacing(try! Regex("“|”"), with: "\"").matches(of: stepSetting).map {

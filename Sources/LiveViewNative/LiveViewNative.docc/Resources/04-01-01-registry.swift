@@ -1,5 +1,5 @@
 import SwiftUI
 import LiveViewNative
 
-struct MyRegistry: CustomRegistry {
+struct MyRegistry: RootRegistry {
 }

@@ -68,7 +68,7 @@
                     project = "app"
                     path = "LVNTutorialApp/ContentView.swift"
                 }
-                @Code(name: "ContentView.swift", file: 04-01-04-coordinator.swift)
+                @Code(name: "ContentView.swift", file: 04-01-04-session.swift)
             }
         }
     }
