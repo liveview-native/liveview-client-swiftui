@@ -1,6 +1,9 @@
 import SymbolKit
 import Foundation
 import RegexBuilder
+import OSLog
+
+let logger = Logger(subsystem: "LiveViewNative", category: "DocumentationExtensionGenerator")
 
 @main
 struct DocumentationExtensionGenerator {
@@ -61,11 +64,6 @@ struct DocumentationExtensionGenerator {
                 && [attributeID, eventID].contains(symbol.declarationFragments![1].preciseIdentifier)
                 && !Self.denylist.contains(symbol.pathComponents.joined(separator: "/"))
         {
-            let location = symbol[mixin: SymbolGraph.Symbol.Location.self]!
-            let fromStart = try String(contentsOf: location.url!)
-                .split(separator: "\n", omittingEmptySubsequences: false)
-                .dropFirst(location.position.line - 1)
-                .joined(separator: "\n")
             let expression = Regex {
                 "@"
                 ChoiceOf {
@@ -81,8 +79,24 @@ struct DocumentationExtensionGenerator {
                 ZeroOrMore(.whitespace)
                 "\""
             }
-            guard let displayName = try expression.firstMatch(in: fromStart)?.output.1
-            else { continue }
+            
+            // scan backwards from the declaration until we find the @Attribute
+            let location = symbol[mixin: SymbolGraph.Symbol.Location.self]!
+            let upToDeclaration = try String(contentsOf: location.url!)
+                .split(separator: "\n", omittingEmptySubsequences: false)
+                .prefix(location.position.line + 1)
+                .joined(separator: "\n")
+            var displayName: Substring?
+            var index = upToDeclaration.endIndex
+            repeat {
+                index = upToDeclaration.index(before: index)
+                if let match = upToDeclaration[index...].firstMatch(of: expression) {
+                    displayName = match.output.1
+                    break
+                }
+            } while index > upToDeclaration.startIndex
+            
+            guard let displayName else { continue }
             
             let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
             
