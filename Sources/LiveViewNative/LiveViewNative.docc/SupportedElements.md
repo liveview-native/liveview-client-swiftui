@@ -15,7 +15,7 @@ LiveViewNative supports DOM elements similar to but distinct from their Web coun
 
 ### Content
 
-- <doc:Text>
+- ``Text``
 - <doc:Image>
 - <doc:AsyncImage>
 - <doc:NavigationLink>
