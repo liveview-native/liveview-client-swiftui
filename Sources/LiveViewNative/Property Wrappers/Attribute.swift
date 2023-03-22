@@ -85,6 +85,7 @@ public struct Attribute<T>: DynamicProperty {
 /// 4. `Int`
 /// 5. `Date`
 /// 6. Any `RawRepresentable` type with `String` raw values
+/// 7. SwiftUI's `Color`
 ///
 /// ## Topics
 /// ### Initializers
@@ -178,6 +179,14 @@ extension AttributeDecodable where Self: RawRepresentable, RawValue == String {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let value = Self(rawValue: attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = value
+    }
+}
+
+extension SwiftUI.Color: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let value = SwiftUI.Color(fromNamedOrCSSHex: attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
         self = value
     }
 }
