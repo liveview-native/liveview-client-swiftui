@@ -40,8 +40,9 @@ struct CoordinatorEnvironment {
     }
 }
 
+/// Additional values provided in the environment within Live Views.
 extension EnvironmentValues {
-    /// The model for the nearest ancestor `<form>` element (or `nil`, if there is no such element).
+    /// The model for the nearest ancestor `<live-form>` element (or `nil`, if there is no such element).
     public var formModel: FormModel? {
         get { self[FormModelKey.self] }
         set { self[FormModelKey.self] = newValue }

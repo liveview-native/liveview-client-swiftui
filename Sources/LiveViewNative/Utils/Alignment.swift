@@ -8,6 +8,20 @@
 import SwiftUI
 import LiveViewNativeCore
 
+/// Decodes a 2-axis alignment from a string.
+///
+/// Possible values:
+/// - `top-leading`
+/// - `top`
+/// - `top-trailing`
+/// - `leading`
+/// - `center`
+/// - `trailing`
+/// - `bottom-leading`
+/// - `bottom`
+/// - `bottom-trailing`
+/// - `leading-last-text-baseline`
+/// - `trailing-last-text-baseline`
 extension Alignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -55,6 +69,12 @@ extension Alignment: Decodable, AttributeDecodable {
     }
 }
 
+/// Decodes a horizontal alignment from a string.
+///
+/// Possible values:
+/// - `leading`
+/// - `center`
+/// - `trailing`
 extension HorizontalAlignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -86,6 +106,12 @@ extension HorizontalAlignment: Decodable, AttributeDecodable {
     }
 }
 
+/// Decodes a vertical alignment from a string.
+///
+/// Possible values:
+/// - `top`
+/// - `center`
+/// - `bottom`
 extension VerticalAlignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
