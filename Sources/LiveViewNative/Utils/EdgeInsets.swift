@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+/// Decodes edge insets from a single value or a dictionary.
+///
+/// If a single double value is provided, that value is used for the insets on all sides.
+/// Otherwise, the value must be dictionary with optional `top`, `bottom`, `leading`, and `trailing` values representing the inset on each side.
 extension EdgeInsets: Decodable {
     public init(from decoder: Decoder) throws {
         if let singleValueContainer = try? decoder.singleValueContainer(),

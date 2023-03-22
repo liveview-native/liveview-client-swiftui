@@ -112,6 +112,9 @@ public enum AttributeDecodingError: LocalizedError {
     }
 }
 
+/// Decodes an optional value (where the wrapped type is itself ``AttributeDecodable``) type from an attribute.
+///
+/// If the attribute is not provided, or the wrapped type could not be initialized from it, the result is `nil`.
 extension Optional: AttributeDecodable where Wrapped: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attribute else {
@@ -127,6 +130,7 @@ extension Optional: AttributeDecodable where Wrapped: AttributeDecodable {
     }
 }
 
+/// Decodes a string from an attribute, if the attribute is present.
 extension String: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
@@ -134,12 +138,15 @@ extension String: AttributeDecodable {
     }
 }
 
+/// Decodes a boolean from an attribute.
+/// The value is `true` if the attribute is present (regardless of value) and `false` otherwise.
 extension Bool: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         self = attribute != nil
     }
 }
 
+/// Decodes a double from an attribute, if it is present.
 extension Double: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
@@ -148,6 +155,7 @@ extension Double: AttributeDecodable {
     }
 }
 
+/// Decodes an integer from an attribute, if it is present.
 extension Int: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
@@ -156,6 +164,8 @@ extension Int: AttributeDecodable {
     }
 }
 
+/// Decodes a date from an attribute, if it is present.
+/// The value is interpreted as an Elixir-style ISO 8601 date with an optional time component.
 extension Date: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
@@ -163,6 +173,7 @@ extension Date: AttributeDecodable {
     }
 }
 
+/// Decodes any `String` raw representable type from an attribute, if it is present.
 extension AttributeDecodable where Self: RawRepresentable, RawValue == String {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }

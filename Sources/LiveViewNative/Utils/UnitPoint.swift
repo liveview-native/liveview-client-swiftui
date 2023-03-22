@@ -9,6 +9,21 @@ import SwiftUI
 import LiveViewNativeCore
 import RegexBuilder
 
+/// Decodes a unit point from a string value.
+///
+/// The value may be a named constant, or a comma-separated X/Y pair (e.g., `0,0.25`).
+///
+/// Named values:
+/// - `zero`
+/// - `center`
+/// - `leading`
+/// - `trailing`
+/// - `top`
+/// - `bottom`
+/// - `top-leading`
+/// - `top-trailing`
+/// - `bottom-leading`
+/// - `bottom-trailing`
 extension UnitPoint: Decodable, AttributeDecodable {
     public init(from value: String) throws {
         switch value {

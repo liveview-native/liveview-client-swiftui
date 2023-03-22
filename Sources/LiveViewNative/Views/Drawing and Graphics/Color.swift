@@ -71,7 +71,18 @@ extension SwiftUI.Color.RGBColorSpace: AttributeDecodable, Decodable {
     }
 }
 
+/// Helpers for creating a SwiftUI `Color`.
 extension SwiftUI.Color: Decodable {
+    /// Decodes a color from one of several possible formats.
+    ///
+    /// The encoded value may be a dictionary containing an RGB color space (one of `srgb`, `srgb-linear`, or `display-p3`) in the `rgb_color_space_key`.
+    /// The dictionary must also contain either:
+    /// - The `red`, `green`, and `blue` keys, each with a double value between 0 and 1.
+    /// - The `white` key with a double value between 0 and 1.
+    /// 
+    /// The dictionary may also contain an `opacity` key with a double between 0 and 1.
+    ///
+    /// The encoded value may also be a string, which is decoded using ``init(fromNamedOrCSSHex:)``.
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
@@ -95,6 +106,7 @@ extension SwiftUI.Color: Decodable {
         }
     }
     
+    /// Constructs a Color from a CSS-style hex color (e.g., `#f2cb49`).
     public init?(fromCSSHex string: String?) {
         guard let string = string else {
             return nil
@@ -110,6 +122,31 @@ extension SwiftUI.Color: Decodable {
         }
     }
     
+    /// Constructs a Color from a named color or a CSS hex color (see ``init(fromCSSHex:)``).
+    ///
+    /// The named system colors supported are:
+    /// - `system-black`
+    /// - `system-blue`
+    /// - `system-brown`
+    /// - `system-clear`
+    /// - `system-cyan`
+    /// - `system-gray`
+    /// - `system-green`
+    /// - `system-indigo`
+    /// - `system-mint`
+    /// - `system-orange`
+    /// - `system-pink`
+    /// - `system-purple`
+    /// - `system-red`
+    /// - `system-teal`
+    /// - `system-white`
+    /// - `system-yellow`
+    /// - `system-accent`
+    /// - `system-primary`
+    /// - `system-secondary`
+    ///
+    /// A color that is neither a system name nor a hex color is interpreted as a named color defined in the application's asset catalog.
+    /// See the SwiftUI documentation for more information.
     public init?(fromNamedOrCSSHex string: String?) {
         switch string {
         case nil:
