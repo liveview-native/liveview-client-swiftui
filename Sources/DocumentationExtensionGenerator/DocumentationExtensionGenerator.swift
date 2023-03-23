@@ -116,5 +116,48 @@ struct DocumentationExtensionGenerator {
             """#
             try override.write(to: markdownURL, atomically: true, encoding: .utf8)
         }
+        
+        // MARK: ViewModifier function name overrides
+        for symbol in symbolGraph.symbols.values
+            where symbol.kind.identifier == .struct
+                && symbolGraph.relationships.contains(where: { $0.source == symbol.identifier.precise && $0.targetFallback == "SwiftUI.ViewModifier" })
+                && !Self.denylist.contains(symbol.pathComponents.joined(separator: "/"))
+        {
+            let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
+            
+            let markdownURL = extensionsURL
+                .appending(path: symbol.pathComponents.joined(separator: "/"))
+                .appendingPathExtension("md")
+            
+            try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            
+            let expression = Regex {
+                ChoiceOf {
+                    Anchor.startOfLine
+                    "a"..."z"
+                }
+                "A"..."Z"
+            }
+            let functionName = symbol.pathComponents.last!
+                .replacing("Modifier", with: "")
+                .replacing(expression) { match in
+                    switch match.output.count {
+                    case 2:
+                        return "\(match.output[match.startIndex])_\(match.output[match.output.index(before: match.output.endIndex)])".lowercased()
+                    default:
+                        return match.output.lowercased()
+                    }
+                }
+
+            let override = #"""
+            # ``\#(symbolPath)``
+
+            @Metadata {
+                @DocumentationExtension(mergeBehavior: append)
+                @DisplayName("\#(functionName)", style: symbol)
+            }
+            """#
+            try override.write(to: markdownURL, atomically: true, encoding: .utf8)
+        }
     }
 }
