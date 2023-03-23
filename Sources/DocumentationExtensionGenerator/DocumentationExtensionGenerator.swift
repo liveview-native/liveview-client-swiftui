@@ -134,7 +134,6 @@ struct DocumentationExtensionGenerator {
                         return match.output.lowercased()
                     }
                 }
-            print(functionName)
 
             let override = #"""
             # ``\#(symbolPath)``
