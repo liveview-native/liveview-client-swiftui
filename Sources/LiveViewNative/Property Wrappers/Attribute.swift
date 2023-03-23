@@ -82,6 +82,7 @@ public struct Attribute<T>: DynamicProperty {
 /// 2. `String`
 /// 3. `Bool`
 /// 4. `Double`
+/// 4. `Int`
 /// 5. `Date`
 /// 6. Any `RawRepresentable` type with `String` raw values
 ///
