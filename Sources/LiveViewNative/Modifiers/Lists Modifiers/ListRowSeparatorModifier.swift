@@ -23,7 +23,9 @@ struct ListRowSeparatorModifier: ViewModifier, Decodable, Equatable {
             self.visibility = .automatic
             self.edges = .all
         default:
-            self = try! BuiltinRegistry.attributeDecoder.decode(ListRowSeparatorModifier.self, from: value.data(using: .utf8)!)
+            let attributeDecoder = JSONDecoder()
+
+            self = try! attributeDecoder.decode(ListRowSeparatorModifier.self, from: value.data(using: .utf8)!)
         }
     }
     
