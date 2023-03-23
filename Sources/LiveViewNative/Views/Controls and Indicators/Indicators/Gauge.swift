@@ -31,17 +31,32 @@ import SwiftUI
 /// * `current-value-label` - Describes the current value.
 /// * `minimum-value-label` - Describes the lowest possible value.
 /// * `maximum-value-label` - Describes the highest possible value.
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct Gauge<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// The current value of the gauge.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("value") private var value: Double = 0
     /// The lowest possible value of the gauge.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("lower-bound") private var lowerBound: Double = 0
     /// The highest possible value of the gauge.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("upper-bound") private var upperBound: Double = 1
     /// The style to apply to this gauge.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("gauge-style") private var style: GaugeStyle = .automatic
     
     public var body: some View {
@@ -80,6 +95,9 @@ struct Gauge<R: RootRegistry>: View {
 }
 
 /// A style for a ``Gauge`` element.
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 fileprivate enum GaugeStyle: String, AttributeDecodable {
     /// `accessory-circular-capacity`
     case accessoryCircularCapacity = "accessory-circular-capacity"

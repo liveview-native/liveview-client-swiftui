@@ -5,7 +5,6 @@
 //  Created by Carson Katri on 2/21/23.
 //
 
-#if os(iOS) || os(macOS)
 import SwiftUI
 
 /// A container organized by rows and columns.
@@ -103,6 +102,10 @@ import SwiftUI
 ///
 /// ### Selecting Rows
 /// * ``selection``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
+@available(iOS 16.0, macOS 13.0, *)
 struct Table<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -127,6 +130,9 @@ struct Table<R: RootRegistry>: View {
     ///   native_binding :selected_sport, String, nil
     /// end
     /// ```
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @LiveBinding(attribute: "selection") private var selection = Selection.multiple([])
     /// Synchronizes the columns to sort by with the server.
     ///
@@ -144,18 +150,27 @@ struct Table<R: RootRegistry>: View {
     ///
     /// The value of `id` matches the `id` attribute of the `<TableColumn>`, or its index if there is no `id` attribute.
     /// The value of `order` matches [`Foundation.SortOrder`](https://developer.apple.com/documentation/Foundation/SortOrder).
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @LiveBinding(attribute: "sort-order") private var sortOrder = [TableColumnSort]()
     
     /// The style to apply to this table.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("table-style") private var style: TableStyle = .automatic
     
     public var body: some View {
+        #if os(iOS) || os(macOS)
         SwiftUI.Group {
             table(rows: self.rows, columns: self.columns)
         }
         .applyTableStyle(style)
+        #endif
     }
     
+    #if os(iOS) || os(macOS)
     @ViewBuilder
     private func table(rows: [TableRow], columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>]) -> some View {
         switch columns.count {
@@ -280,6 +295,7 @@ struct Table<R: RootRegistry>: View {
             )
         }
     }
+    #endif
 }
 
 fileprivate struct TableRow: Identifiable {
@@ -304,6 +320,7 @@ fileprivate struct TableColumnSort: SortComparator, Codable, Equatable {
     }
 }
 
+#if os(iOS) || os(macOS)
 fileprivate extension SwiftUI.Table where Value == TableRow, Rows == TableForEachContent<[TableRow]> {
     init(
         rows: [TableRow],
@@ -319,20 +336,28 @@ fileprivate extension SwiftUI.Table where Value == TableRow, Rows == TableForEac
         }
     }
 }
+#endif
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 fileprivate enum TableStyle: String, AttributeDecodable {
     case automatic
     case inset
     #if os(macOS)
+    /// `inset-alternating`
     case insetAlternating = "inset-alternating"
     case bordered
+    /// `bordered-alternating`
     case borderedAlternating = "bordered-alternating"
     #endif
 }
 
 fileprivate extension View {
+    @available(iOS 16.0, macOS 13.0, *)
     @ViewBuilder
     func applyTableStyle(_ style: TableStyle) -> some View {
+#if os(iOS) || os(macOS)
         switch style {
         case .automatic:
             self.tableStyle(.automatic)
@@ -351,7 +376,6 @@ fileprivate extension View {
             self.tableStyle(.bordered(alternatesRowBackgrounds: true))
 #endif
         }
+#endif
     }
 }
-
-#endif

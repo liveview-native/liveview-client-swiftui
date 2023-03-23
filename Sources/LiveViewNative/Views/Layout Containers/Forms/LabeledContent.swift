@@ -41,6 +41,9 @@ import SwiftUI
 /// ## See Also
 /// ### Formatting Values
 /// * ``Text``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct LabeledContent<R: RootRegistry>: View {
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -48,8 +51,14 @@ struct LabeledContent<R: RootRegistry>: View {
     /// Automatically formats the value of the `value` attribute.
     ///
     /// For more details on formatting options, see ``Text``.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("format") private var format: String?
     /// The style to use for this labeled content.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("labeled-content-style") private var style: LabeledContentStyle = .automatic
     
     var body: some View {
@@ -72,6 +81,9 @@ struct LabeledContent<R: RootRegistry>: View {
     }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 private enum LabeledContentStyle: String, AttributeDecodable {
     case automatic
 }

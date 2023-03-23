@@ -39,6 +39,9 @@ import SwiftUI
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct Stepper<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -46,10 +49,19 @@ struct Stepper<R: RootRegistry>: View {
     @FormState(default: 0) var value: Double
     
     /// The amount to increment/decrement the value by.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("step") private var step: Double = 1
     /// The lowest allowed value.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("lower-bound") private var lowerBound: Double?
     /// The highest allowed value.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("upper-bound") private var upperBound: Double?
     
     public var body: some View {

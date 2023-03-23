@@ -27,6 +27,9 @@ import SwiftUI
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct Toggle<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -34,6 +37,9 @@ struct Toggle<R: RootRegistry>: View {
     @FormState(default: false) var value: Bool
     
     /// The style to apply to this toggle.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("toggle-style") private var style: ToggleStyle = .automatic
     
     public var body: some View {
@@ -44,6 +50,9 @@ struct Toggle<R: RootRegistry>: View {
     }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 fileprivate enum ToggleStyle: String, AttributeDecodable {
     case automatic
     case button

@@ -4,7 +4,6 @@
 //
 //  Created by Carson Katri on 1/19/23.
 //
-#if !os(watchOS)
 import SwiftUI
 
 /// Tappable element that expands to reveal a list of options.
@@ -33,23 +32,35 @@ import SwiftUI
 /// ## Children
 /// * `label` - Describes the content of the menu.
 /// * `content` - Elements displayed when expanded.
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
+@available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
 struct Menu<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// The style to apply to this menu.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("menu-style") private var style: MenuStyle = .automatic
     
     public var body: some View {
+        #if !os(watchOS)
         SwiftUI.Menu {
             context.buildChildren(of: element, withTagName: "content", namespace: "Menu")
         } label: {
             context.buildChildren(of: element, withTagName: "label", namespace: "Menu", includeDefaultSlot: true)
         }
         .applyMenuStyle(style)
+        #endif
     }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 fileprivate enum MenuStyle: String, AttributeDecodable {
     case automatic
     /// `borderless-button`
@@ -58,8 +69,10 @@ fileprivate enum MenuStyle: String, AttributeDecodable {
 }
 
 fileprivate extension View {
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
     @ViewBuilder
     func applyMenuStyle(_ style: MenuStyle) -> some View {
+#if !os(watchOS)
         switch style {
         case .automatic:
             self.menuStyle(.automatic)
@@ -68,6 +81,6 @@ fileprivate extension View {
         case .button:
             self.menuStyle(.button)
         }
+#endif
     }
 }
-#endif

@@ -20,6 +20,11 @@ struct DocumentationExtensionGenerator {
         
         let extensionsURL = packageDirectory.appending(path: "Sources/LiveViewNative/LiveViewNative.docc/DocumentationExtensions")
         
+        try viewCategories(
+            directory: packageDirectory.appending(path: "Sources/LiveViewNative/Views"),
+            output: extensionsURL
+        )
+        
         // MARK: View element name overrides and SwiftUI links
         for symbol in symbolGraph.symbols.values
             where symbol.kind.identifier == .struct
@@ -158,6 +163,38 @@ struct DocumentationExtensionGenerator {
             }
             """#
             try override.write(to: markdownURL, atomically: true, encoding: .utf8)
+        }
+    }
+    
+    static func viewCategories(directory: URL, output: URL) throws {
+        for category in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
+            where category.hasDirectoryPath
+        {
+            let fileName = category.lastPathComponent.capitalized.replacing(" ", with: "")
+            var categoryFile = ["# \(category.lastPathComponent)", "## Topics"]
+            for subCategory in try FileManager.default.contentsOfDirectory(at: category, includingPropertiesForKeys: nil)
+            where subCategory.hasDirectoryPath {
+                categoryFile.append("### \(subCategory.lastPathComponent)")
+                for file in try FileManager.default.contentsOfDirectory(at: subCategory, includingPropertiesForKeys: nil)
+                    where file.pathExtension == "swift"
+                {
+                    categoryFile.append("- ``\(file.deletingPathExtension().lastPathComponent)``")
+                }
+            }
+            for file in try FileManager.default.contentsOfDirectory(at: category, includingPropertiesForKeys: nil)
+                where file.pathExtension == "swift"
+            {
+                if !categoryFile.contains("### Views") {
+                    categoryFile.append("### Views")
+                }
+                categoryFile.append("- ``\(file.deletingPathExtension().lastPathComponent)``")
+            }
+            try categoryFile.joined(separator: "\n")
+                .write(
+                    to: output.appending(path: fileName).appendingPathExtension("md"),
+                    atomically: true,
+                    encoding: .utf8
+                )
         }
     }
 }

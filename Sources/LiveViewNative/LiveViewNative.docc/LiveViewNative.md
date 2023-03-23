@@ -70,9 +70,17 @@ be found at <https://hexdocs.pm/live_view_native_swift_ui>.
 
 ### Building a Live View Template
 
-- <doc:SupportedElements>
 - <doc:AttributesVsModifiers>
 - <doc:SupportedModifiers>
+
+### Supported Elements
+
+- <doc:ControlsAndIndicators>
+- <doc:DrawingAndGraphics>
+- <doc:Images>
+- <doc:LayoutContainers>
+- <doc:Shapes>
+- <doc:TextInputAndOutput>
 
 ### Custom DOM Elements and Attributes
 

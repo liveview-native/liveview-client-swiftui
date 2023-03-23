@@ -5,7 +5,6 @@
 //  Created by Carson Katri on 2/14/23.
 //
 
-#if os(iOS) || os(macOS)
 import SwiftUI
 
 /// Presents a system color picker when tapped.
@@ -31,6 +30,10 @@ import SwiftUI
 ///
 /// ## Bindings
 /// * ``selection``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
+@available(iOS 16.0, macOS 13.0, *)
 struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -44,8 +47,14 @@ struct ColorPicker<R: RootRegistry>: View {
     ///   native_binding :favorite_color, Map, %{ "r" => 1, "g" => 0, "b" => 1, "a" => 1 }
     /// end
     /// ```
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @LiveBinding(attribute: "selection") private var selection: CodableColor = .init(r: 0, g: 0, b: 0, a: 1)
     /// Enables the selection of transparent colors.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("supports-opacity") private var supportsOpacity: Bool
     
     struct CodableColor: Codable {
@@ -73,12 +82,13 @@ struct ColorPicker<R: RootRegistry>: View {
     }
     
     public var body: some View {
+        #if os(iOS) || os(macOS)
         SwiftUI.ColorPicker(
             selection: $selection.cgColor,
             supportsOpacity: supportsOpacity
         ) {
             context.buildChildren(of: element)
         }
+        #endif
     }
 }
-#endif
