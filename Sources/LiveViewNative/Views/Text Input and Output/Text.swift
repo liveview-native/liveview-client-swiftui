@@ -14,11 +14,11 @@ import SwiftUI
 /// ### Raw Strings
 /// Using text content or the `verbatim` attribute will display the given string.
 /// ```html
-/// <Text>Hello</text>
+/// <Text>Hello</Text>
 /// <Text verbatim="Hello"/>
 /// ```
 /// ### Dates
-/// Provide an an ISO 8601 date (with optional time) in the `date` attribute, and optionally a `Text.DateStyle` in the `date-style` attribute.
+/// Provide an ISO 8601 date (with optional time) in the `date` attribute, and optionally a `Text.DateStyle` in the `date-style` attribute.
 /// Valid date styles are `date` (default), `time`, `relative`, `offset`, and `timer`.
 /// The displayed date is formatted with the user's locale.
 /// ```html
