@@ -5,7 +5,6 @@
 //  Created by Carson Katri on 2/14/23.
 //
 
-#if os(iOS) || os(macOS)
 import SwiftUI
 
 /// Presents a system color picker when tapped.
@@ -34,6 +33,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 16.0, macOS 13.0, *)
 struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -82,12 +82,13 @@ struct ColorPicker<R: RootRegistry>: View {
     }
     
     public var body: some View {
+        #if os(iOS) || os(macOS)
         SwiftUI.ColorPicker(
             selection: $selection.cgColor,
             supportsOpacity: supportsOpacity
         ) {
             context.buildChildren(of: element)
         }
+        #endif
     }
 }
-#endif
