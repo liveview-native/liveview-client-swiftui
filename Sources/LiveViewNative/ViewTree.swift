@@ -71,8 +71,8 @@ struct ViewTreeBuilder<R: RootRegistry> {
     fileprivate func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
         let jsonStr = element.attributeValue(for: "modifiers")
-        let modified = applyModifiers(encoded: jsonStr, to: view, context: context)
-        let bound = applyBindings(to: modified, element: element)
+        let modified = applyModifiers(encoded: jsonStr, to: view, element: element, context: context)
+        let bound = applyBindings(to: modified, element: element, context: context)
         let withID = applyID(element: element, to: bound)
         return withID
             .environment(\.element, element)
@@ -93,14 +93,17 @@ struct ViewTreeBuilder<R: RootRegistry> {
         if let tagName = R.TagName(rawValue: element.tag) {
             R.lookup(tagName, element: element)
         } else {
-            BuiltinRegistry.lookup(element.tag, element, context: context)
-        }
+            BuiltinRegistry<R>.lookup(element.tag, element, context: context)
+        } 
     }
     
-    private func applyModifiers(encoded: String?, to view: some View, context: LiveContextStorage<R>) -> some View {
+    private func applyModifiers(encoded: String?, to view: some View, element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let modifiers: [ModifierContainer<R>]
         if let encoded {
             let decoder = JSONDecoder()
+            decoder.userInfo[.liveContext!] = context
+            decoder.userInfo[.elementNode!] = element
+
             if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
                 modifiers = decoded
             } else {
@@ -109,19 +112,21 @@ struct ViewTreeBuilder<R: RootRegistry> {
         } else {
             modifiers = []
         }
-        return view.applyModifiers(modifiers[...])
+        return view.applyModifiers(modifiers[...], element: element, context: context)
     }
     
     @ViewBuilder
-    private func applyBindings(
+    private func applyBindings<R: RootRegistry>(
         to view: some View,
-        element: ElementNode
+        element: ElementNode,
+        context: LiveContextStorage<R>
     ) -> some View {
         view.applyBindings(
             element.attributes.filter({
                 $0.name.rawValue.starts(with: "phx-") && $0.value != nil
             })[...],
-            element: element
+            element: element,
+            context: context
         )
     }
 }
@@ -140,7 +145,7 @@ extension ViewTreeBuilder {
 }
 
 enum ModifierContainer<R: RootRegistry>: Decodable {
-    case builtin(BuiltinRegistry.BuiltinModifier)
+    case builtin(BuiltinRegistry<R>.BuiltinModifier)
     case custom(R.CustomModifier)
     case error(ErrorModifier)
     
@@ -153,9 +158,9 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
             } catch {
                 self = .error(ErrorModifier(type: type.rawValue, error: error))
             }
-        } else if let type = BuiltinRegistry.ModifierType(rawValue: type) {
+        } else if let type = BuiltinRegistry<R>.ModifierType(rawValue: type) {
             do {
-                self = .builtin(try BuiltinRegistry.decodeModifier(type, from: decoder))
+                self = .builtin(try BuiltinRegistry<R>.decodeModifier(type, from: decoder))
             } catch {
                 self = .error(ErrorModifier(type: type.rawValue, error: error))
             }
@@ -185,51 +190,54 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
 private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     let modifiers: ArraySlice<ModifierContainer<R>>
+    let element: ElementNode
+    let context: LiveContextStorage<R>
 
     var body: some View {
         let remaining = modifiers.dropFirst()
         // force-unwrap is okay, this view is never constructed with an empty slice
         parent.modifier(modifiers.first!.modifier)
-            .applyModifiers(remaining)
+            .applyModifiers(remaining, element: element, context: context)
     }
 }
 
-private struct BindingApplicator<Parent: View>: View {
+private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     let bindings: ArraySlice<LiveViewNativeCore.Attribute>
     let element: ElementNode
+    let context: LiveContextStorage<R>
 
     var body: some View {
         let remaining = bindings.dropFirst()
         // force-unwrap is okay, this view is never constructed with an empty slice
         let binding = bindings.first!
-        BuiltinRegistry.applyBinding(
+        BuiltinRegistry<R>.applyBinding(
             binding.name,
             event: binding.value!,
             value: element.buildPhxValuePayload(),
             to: parent,
             element: element
         )
-            .applyBindings(remaining, element: element)
+        .applyBindings(remaining, element: element, context: context)
     }
 }
 
 private extension View {
     @ViewBuilder
-    func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<ModifierContainer<R>>) -> some View {
+    func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<ModifierContainer<R>>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
         if modifiers.isEmpty {
             self
         } else {
-            ModifierApplicator(parent: self, modifiers: modifiers)
+            ModifierApplicator(parent: self, modifiers: modifiers, element: element, context: context)
         }
     }
     
     @ViewBuilder
-    func applyBindings(_ bindings: ArraySlice<LiveViewNativeCore.Attribute>, element: ElementNode) -> some View {
+    func applyBindings<R: RootRegistry>(_ bindings: ArraySlice<LiveViewNativeCore.Attribute>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
         if bindings.isEmpty {
             self
         } else {
-            BindingApplicator(parent: self, bindings: bindings, element: element)
+            BindingApplicator(parent: self, bindings: bindings, element: element, context: context)
         }
     }
 }
@@ -259,4 +267,9 @@ func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveConte
     return ForEach(elements, id: \.1) {
         ElementView<R>(element: $0.0, context: context)
     }
+}
+
+extension CodingUserInfoKey {
+    static let elementNode = CodingUserInfoKey(rawValue: "elementNode")
+    static let liveContext = CodingUserInfoKey(rawValue: "liveContext")
 }
