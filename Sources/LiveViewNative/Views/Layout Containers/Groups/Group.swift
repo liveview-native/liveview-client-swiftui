@@ -38,6 +38,9 @@ import SwiftUI
 ///     <Text>11</Text>
 /// </VStack>
 /// ```
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct Group<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
