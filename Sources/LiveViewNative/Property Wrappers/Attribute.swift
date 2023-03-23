@@ -82,6 +82,7 @@ public struct Attribute<T>: DynamicProperty {
 /// 2. `String`
 /// 3. `Bool`
 /// 4. `Double`
+/// 4. `Int`
 /// 5. `Date`
 /// 6. Any `RawRepresentable` type with `String` raw values
 ///
@@ -140,6 +141,14 @@ extension Bool: AttributeDecodable {
 }
 
 extension Double: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}
+
+extension Int: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
