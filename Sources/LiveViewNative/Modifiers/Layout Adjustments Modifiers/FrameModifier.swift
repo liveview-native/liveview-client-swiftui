@@ -41,7 +41,9 @@ enum FrameModifier: ViewModifier, Decodable, Equatable {
     }
         
     init(string value: String) {
-        self = try! BuiltinRegistry.attributeDecoder.decode(Self.self, from: value.data(using: .utf8)!)
+        let attributeDecoder = JSONDecoder()
+
+        self = try! attributeDecoder.decode(Self.self, from: value.data(using: .utf8)!)
     }
     
     func body(content: Content) -> some View {

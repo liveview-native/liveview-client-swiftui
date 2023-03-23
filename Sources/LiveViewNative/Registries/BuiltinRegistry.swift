@@ -16,10 +16,7 @@ protocol BuiltinRegistryProtocol {
     static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> BuiltinModifier
 }
 
-struct BuiltinRegistry: BuiltinRegistryProtocol {
-    
-    static let attributeDecoder = JSONDecoder()
-    
+struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
     // note: the context parameter is unused, but it needs to be there for swift to infer the generic type R
     @ViewBuilder
     static func lookup<R: RootRegistry>(_ name: String, _ element: ElementNode, context: LiveContextStorage<R>) -> some View {
@@ -173,10 +170,11 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             EmptyView()
         }
     }
-    
+
     enum ModifierType: String {
         case animation
         case aspectRatio = "aspect_ratio"
+        case background = "background"
         case backgroundStyle = "background_style"
         case bold
         case contentTransition = "content_transition"
@@ -211,7 +209,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case tint
         case transition
     }
-    
+
     @ViewModifierBuilder
     static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch type {
@@ -219,6 +217,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try AnimationModifier(from: decoder)
         case .aspectRatio:
             try AspectRatioModifier(from: decoder)
+        case .background:
+            try BackgroundModifier<R>(from: decoder)
         case .backgroundStyle:
             try BackgroundStyleModifier(from: decoder)
         case .bold:
@@ -284,7 +284,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case .tint:
             try TintModifier(from: decoder)
         case .transition:
-            try TransitionModifier(from: decoder)
+            try TransitionModifier<R>(from: decoder)
         }
     }
 }

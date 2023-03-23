@@ -30,7 +30,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct TransitionModifier: ViewModifier, Decodable {
+struct TransitionModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// The transition to apply.
     ///
     /// See ``LiveViewNative/SwiftUI/AnyTransition`` for more information on creating transitions.
@@ -42,7 +42,7 @@ struct TransitionModifier: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.transition = try container.decodeIfPresent(AnyTransition.self, forKey: .transition) ?? .identity
+        self.transition = (try? AnyTransition(from: container.nestedContainer(keyedBy: AnyTransition.CodingKeys.self, forKey: .transition), in: R.self)) ?? .identity
     }
 
     func body(content: Content) -> some View {

@@ -102,9 +102,8 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-extension AnyTransition: Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+extension AnyTransition {
+    init<R: RootRegistry>(from container: KeyedDecodingContainer<CodingKeys>, in _: R.Type = R.self) throws {
         switch try container.decode(TransitionType.self, forKey: .type) {
         case .identity:
             self = .identity
@@ -136,34 +135,41 @@ extension AnyTransition: Decodable {
         case .asymmetric:
             let properties = try container.nestedContainer(keyedBy: CodingKeys.Asymmetric.self, forKey: .properties)
             self = .asymmetric(
-                insertion: try properties.decode(Self.self, forKey: .insertion),
-                removal: try properties.decode(Self.self, forKey: .removal)
+                insertion: try Self(from: try properties.nestedContainer(keyedBy: CodingKeys.self, forKey: .insertion), in: R.self),
+                removal: try Self(from: try properties.nestedContainer(keyedBy: CodingKeys.self, forKey: .removal), in: R.self)
             )
         case .combined:
-            let transitions = try container.nestedContainer(keyedBy: CodingKeys.Combined.self, forKey: .properties).decode([Self].self, forKey: .transitions)
+            var transitionsContainer = try container.nestedContainer(keyedBy: CodingKeys.Combined.self, forKey: .properties)
+                .nestedUnkeyedContainer(forKey: .transitions)
+            var transitions = [Self]()
+            while !transitionsContainer.isAtEnd {
+                transitions.append(try Self(from: transitionsContainer.nestedContainer(keyedBy: CodingKeys.self), in: R.self))
+            }
             self = transitions.dropFirst().reduce(transitions.first!, { $0.combined(with: $1) })
         case .animation:
             let properties = try container.nestedContainer(keyedBy: CodingKeys.Animation.self, forKey: .properties)
-            self = try properties.decode(Self.self, forKey: .transition)
+            self = try Self(from: properties.nestedContainer(keyedBy: CodingKeys.self, forKey: .transition), in: R.self)
                 .animation(properties.decode(Animation.self, forKey: .animation))
         case .modifier:
             let properties = try container.nestedContainer(keyedBy: CodingKeys.Modifier.self, forKey: .properties)
             self = .modifier(
-                active: AppliedModifiers(try properties.decode(String.self, forKey: .active).replacingOccurrences(of: "&quot;", with: "\"")),
-                identity: AppliedModifiers(try properties.decode(String.self, forKey: .identity).replacingOccurrences(of: "&quot;", with: "\""))
+                active: AppliedModifiers<R>(try properties.decode(String.self, forKey: .active).replacingOccurrences(of: "&quot;", with: "\"")),
+                identity: AppliedModifiers<R>(try properties.decode(String.self, forKey: .identity).replacingOccurrences(of: "&quot;", with: "\""))
             )
         }
     }
     
-    private struct AppliedModifiers: ViewModifier {
+    private struct AppliedModifiers<R: RootRegistry>: ViewModifier {
         let data: Data
+        @ObservedElement private var element
+        @LiveContext<R> private var context
         
         init(_ json: String) {
             self.data = Data(json.utf8)
         }
         
         func body(content: Content) -> some View {
-            content.applyModifiers((try! JSONDecoder().decode([ModifierContainer<EmptyRegistry>].self, from: data))[...])
+            content.applyModifiers((try! JSONDecoder().decode([ModifierContainer<R>].self, from: data))[...], element: element, context: context.storage)
         }
     }
     
