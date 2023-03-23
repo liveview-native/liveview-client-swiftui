@@ -97,9 +97,9 @@
             }
             
             @Step {
-                Then, to the `<h-stack>`, add a spacer and a button.
+                Then, to the `<HStack>`, add a spacer and a button.
                 
-                The content of the button will be an `<image>`, which can be used to display an SF Symbol. In our case, we'll use either the filled or unfilled star depending on whether the cat is favorited. We'll also use the `symbol-color` attribute to tint it gold when the cat is favorited.
+                The content of the button will be an `<Image>`, which can be used to display an SF Symbol. In our case, we'll use either the filled or unfilled star depending on whether the cat is favorited. We'll also use the `symbol-color` attribute to tint it gold when the cat is favorited.
                 
                 @Comment {
                     project = "backend"

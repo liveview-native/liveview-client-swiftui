@@ -1,3 +1,3 @@
-<v-stack modifiers={[%{"type" => "navigation_title", "title" => @name}] |> Jason.encode!}>
-  <async-image src={"/images/cats/#{@name}.jpg"} modifiers='[{"type": "frame", "width": 300, "height": 300}]' />
-</v-stack>
+<VStack modifiers={navigation_title(@native, title: @name)}>
+  <AsyncImage src={"/images/cats/#{@name}.jpg"} modifiers={frame(@native, width: 300, height: 300)} />
+</VStack>

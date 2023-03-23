@@ -22,11 +22,11 @@ done
 echo "Building docs..."
 mkdir -p docc_build
 # build the docs once to get the symbol graph.
-xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build -toolchain swift &> $output
+xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build &> $output
 # generate the documentation extensions.
-xcrun -toolchain swift swift package plugin --allow-writing-to-package-directory generate-documentation-extensions &> $output || :
+xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions &> $output || :
 # build the docs again with the extensions.
-xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build -toolchain swift &> $output
+xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build &> $output
 
 # create worktree
 if [ ! -d docs ]; then
@@ -54,18 +54,11 @@ EOF
 # for every change
 echo "Sorting JSON..."
 
-pushd util/sort_json
-cargo build --release &> $output
-./target/release/sort_json ../../docs
-popd
+xcrun swift package plugin --allow-writing-to-package-directory sort-documentation-json &> $output
 
 echo "Generating tutorial repo..."
 
-pushd util/generate_tutorial_repo
-cargo build &> $output
-[[ "$verbose" == "1" ]] && flags="-v" || flags=""
-./target/debug/generate_tutorial_repo --repo ../../tutorial --package ../.. $flags
-popd
+swift run TutorialRepoGenerator --repo-path tutorial &> $output
 
 echo -e "\x1B[1mDocs updated, commit the result in the docs/ directory.\x1B[0m"
 echo -e "\x1B[1mTutorial repo updated, force-push the result in the tutorial/ directory.\x1B[0m"

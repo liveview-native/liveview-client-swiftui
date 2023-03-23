@@ -1,14 +1,6 @@
 defmodule LvnTutorialWeb.CatsListLive do
   use LvnTutorialWeb, :live_view
-  require EEx
-
-  EEx.function_from_file(
-    :def,
-    :render,
-    "lib/lvn_tutorial_web/live/cats_list_live.ios.heex",
-    [:assigns],
-    engine: Phoenix.LiveView.HTMLEngine
-  )
+  use LiveViewNative.LiveView
 
   @cats [
     "Clenil",
@@ -30,5 +22,9 @@ defmodule LvnTutorialWeb.CatsListLive do
 
   def mount(_params, _session, socket) do
     {:ok, assign(socket, cats: @cats)}
+  end
+
+  def render(assigns) do
+    render_native(assigns)
   end
 end

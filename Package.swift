@@ -23,6 +23,8 @@ let package = Package(
         .package(url: "https://github.com/liveviewnative/liveview-native-core-swift.git", branch: "main"),
 
         .package(url: "https://github.com/apple/swift-docc-symbolkit.git", branch: "main"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.2"),
+        .package(url: "https://github.com/apple/swift-markdown.git", branch: "main"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -56,6 +58,37 @@ let package = Package(
                 ]
             ),
             dependencies: [.target(name: "DocumentationExtensionGenerator")]
-        )
+        ),
+
+        .plugin(
+            name: "SortDocumentationJSONPlugin",
+            capability: .command(
+                intent: .custom(verb: "sort-documentation-json", description: ""),
+                permissions: [
+                    .writeToPackageDirectory(reason: "This command sorts the JSON files in the docs repo folder")
+                ]
+            ),
+            dependencies: []
+        ),
+
+        // Unfortunately, this tool cannot be a plugin due to limitations on network access.
+        // Once SwiftPM supports plugins with network access, this can become a plugin again.
+        .executableTarget(
+            name: "TutorialRepoGenerator",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "Markdown", package: "swift-markdown"),
+            ]
+        ),
+        // .plugin(
+        //     name: "TutorialRepoGeneratorPlugin",
+        //     capability: .command(
+        //         intent: .custom(verb: "generate-tutorial-repo", description: ""),
+        //         permissions: [
+        //             .writeToPackageDirectory(reason: "This command generates a repo for the tutorial that has a commit for each step")
+        //         ]
+        //     ),
+        //     dependencies: [.target(name: "TutorialRepoGenerator")]
+        // )
     ]
 )
