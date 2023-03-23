@@ -25,11 +25,11 @@ defmodule LiveViewNativeSwiftUi.MixProject do
     [
       {:jason, "~> 1.2"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:live_view_native_platform, git: "https://github.com/liveviewnative/live_view_native_platform.git", branch: "tag-engine"}
+      {:live_view_native_platform, git: "https://github.com/liveview-native/live_view_native_platform.git", branch: "tag-engine"}
     ]
   end
 
-  @source_url "https://github.com/liveviewnative/live_view_native_swift_ui"
+  @source_url "https://github.com/liveview-native/liveview-client-swiftui"
 
   # Hex package configuration
   defp package do
