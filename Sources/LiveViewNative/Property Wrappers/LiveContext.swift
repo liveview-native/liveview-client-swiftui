@@ -65,8 +65,8 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         { child in
             if case let .element(element) = child.data,
                element.namespace == nil,
-               element.tag == "template",
-               element.attributes.contains(where: { $0.id.rawValue == "#\(tagName)" })
+               element.tag == "template" && element.attributes.contains(where: { $0.id.rawValue == "#\(tagName)" })
+                || element.tag == tagName
             {
                 return true
             } else {
