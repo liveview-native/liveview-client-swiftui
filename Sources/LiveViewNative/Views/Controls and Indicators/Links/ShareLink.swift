@@ -73,15 +73,27 @@ fileprivate let itemsDecoder = JSONDecoder()
 /// ## Topics
 /// ### Sharing Multiple Items
 /// * ``items``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct ShareLink<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// The title to use when sharing to a service with a subject field.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("subject", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var subject: SwiftUI.Text?
     /// The description to use when sharing to a service with a message field.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("message", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var message: SwiftUI.Text?
     /// A JSON-encoded list of strings to share.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute(
         "items",
         transform: {
@@ -92,6 +104,9 @@ struct ShareLink<R: RootRegistry>: View {
         }
     ) private var items: [String]?
     /// A string to share.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("item") private var item: String?
     
     public var body: some View {

@@ -103,6 +103,9 @@ import SwiftUI
 ///
 /// ### Selecting Rows
 /// * ``selection``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct Table<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -127,6 +130,9 @@ struct Table<R: RootRegistry>: View {
     ///   native_binding :selected_sport, String, nil
     /// end
     /// ```
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @LiveBinding(attribute: "selection") private var selection = Selection.multiple([])
     /// Synchronizes the columns to sort by with the server.
     ///
@@ -144,9 +150,15 @@ struct Table<R: RootRegistry>: View {
     ///
     /// The value of `id` matches the `id` attribute of the `<TableColumn>`, or its index if there is no `id` attribute.
     /// The value of `order` matches [`Foundation.SortOrder`](https://developer.apple.com/documentation/Foundation/SortOrder).
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @LiveBinding(attribute: "sort-order") private var sortOrder = [TableColumnSort]()
     
     /// The style to apply to this table.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("table-style") private var style: TableStyle = .automatic
     
     public var body: some View {
@@ -320,12 +332,17 @@ fileprivate extension SwiftUI.Table where Value == TableRow, Rows == TableForEac
     }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 fileprivate enum TableStyle: String, AttributeDecodable {
     case automatic
     case inset
     #if os(macOS)
+    /// `inset-alternating`
     case insetAlternating = "inset-alternating"
     case bordered
+    /// `bordered-alternating`
     case borderedAlternating = "bordered-alternating"
     #endif
 }

@@ -22,6 +22,9 @@ import SwiftUI
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 @available(watchOS 9.0, *)
 struct TextFieldLink<R: RootRegistry>: View {
     @ObservedElement var element: ElementNode
@@ -29,6 +32,9 @@ struct TextFieldLink<R: RootRegistry>: View {
     @FormState var value: String?
     
     /// Describes the reason for requesting text input.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("prompt", transform: { $0?.value.flatMap(SwiftUI.Text.init) })
     private var prompt: SwiftUI.Text?
     

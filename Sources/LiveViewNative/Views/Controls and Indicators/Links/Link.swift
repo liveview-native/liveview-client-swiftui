@@ -19,11 +19,17 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``destination``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct Link<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// A valid URL to open when tapped.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("destination", transform: { $0?.value.flatMap(URL.init(string:)) }) private var destination: URL?
     
     public var body: some View {

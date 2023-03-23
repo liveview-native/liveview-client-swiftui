@@ -33,11 +33,17 @@ import SwiftUI
 /// ## Children
 /// * `label` - Describes the content of the menu.
 /// * `content` - Elements displayed when expanded.
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct Menu<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// The style to apply to this menu.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("menu-style") private var style: MenuStyle = .automatic
     
     public var body: some View {
@@ -50,6 +56,9 @@ struct Menu<R: RootRegistry>: View {
     }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 fileprivate enum MenuStyle: String, AttributeDecodable {
     case automatic
     /// `borderless-button`

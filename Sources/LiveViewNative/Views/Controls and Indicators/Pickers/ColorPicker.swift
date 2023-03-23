@@ -31,6 +31,9 @@ import SwiftUI
 ///
 /// ## Bindings
 /// * ``selection``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -44,8 +47,14 @@ struct ColorPicker<R: RootRegistry>: View {
     ///   native_binding :favorite_color, Map, %{ "r" => 1, "g" => 0, "b" => 1, "a" => 1 }
     /// end
     /// ```
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @LiveBinding(attribute: "selection") private var selection: CodableColor = .init(r: 0, g: 0, b: 0, a: 1)
     /// Enables the selection of transparent colors.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("supports-opacity") private var supportsOpacity: Bool
     
     struct CodableColor: Codable {
