@@ -8,7 +8,12 @@ let logger = Logger(subsystem: "LiveViewNative", category: "DocumentationExtensi
 @main
 struct DocumentationExtensionGenerator {
     static let denylist = [
-        "LiveView"
+        "LiveView",
+        "Shape",
+    ]
+    
+    static let categoryDenyList = [
+        "Shapes"
     ]
     
     static func main() throws {
@@ -169,6 +174,7 @@ struct DocumentationExtensionGenerator {
     static func viewCategories(directory: URL, output: URL) throws {
         for category in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
             where category.hasDirectoryPath
+                  && !Self.categoryDenyList.contains(category.lastPathComponent)
         {
             let fileName = category.lastPathComponent.capitalized.replacing(" ", with: "")
             var categoryFile = ["# \(category.lastPathComponent)", "## Topics"]
