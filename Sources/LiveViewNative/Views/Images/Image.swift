@@ -28,6 +28,10 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 struct Image: View {
+    /// When enabled, resizes the Image to fill all available space
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("resizable") private var resizable: Bool
     @ObservedElement private var observedElement: ElementNode
     private let overrideElement: ElementNode?
