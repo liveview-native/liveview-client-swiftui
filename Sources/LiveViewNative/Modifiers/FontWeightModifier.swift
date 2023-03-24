@@ -1,5 +1,5 @@
 //
-//  FontWeight.swift
+//  FontWeightModifier.swift
 // LiveViewNative
 //
 //  Created by May Matyi on 2/17/23.
