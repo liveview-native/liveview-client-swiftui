@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct AspectRatioModifier: ViewModifier, Decodable {
-    private let aspectRatio: CGSize
+    private let aspectRatio: CGSize?
     private let contentMode: ContentMode
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.aspectRatio = try container.decode(CGSize.self, forKey: .aspectRatio)
+        self.aspectRatio = try container.decodeIfPresent(CGSize.self, forKey: .aspectRatio)
 
         switch try container.decode(String.self, forKey: .contentMode) {
         case "fill":
@@ -27,7 +27,11 @@ struct AspectRatioModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        content.aspectRatio(self.aspectRatio, contentMode: self.contentMode)
+        if let aspectRatio {
+            content.aspectRatio(aspectRatio, contentMode: contentMode)
+        } else {
+            content.aspectRatio(contentMode: contentMode)
+        }
     }
 
     enum CodingKeys: String, CodingKey {
