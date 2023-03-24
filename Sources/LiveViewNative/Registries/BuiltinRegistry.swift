@@ -174,6 +174,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     
     enum ModifierType: String {
         case backgroundStyle = "background_style"
+        case bold
         case fontWeight = "font_weight"
         case foregroundStyle = "foreground_style"
         case frame
@@ -181,6 +182,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case gridCellColumns = "grid_cell_columns"
         case gridCellUnsizedAxes = "grid_cell_unsized_axes"
         case gridColumnAlignment = "grid_column_alignment"
+        case italic
         case listRowInsets = "list_row_insets"
         case listRowSeparator = "list_row_separator"
         case navigationTitle = "navigation_title"
@@ -195,6 +197,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         switch type {
         case .backgroundStyle:
             try BackgroundStyleModifier(from: decoder)
+        case .bold:
+            try BoldModifier(from: decoder)
         case .foregroundStyle:
             try ForegroundStyleModifier(from: decoder)
         case .fontWeight:
@@ -209,6 +213,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try GridCellUnsizedAxesModifier(from: decoder)
         case .gridColumnAlignment:
             try GridColumnAlignmentModifier(from: decoder)
+        case .italic:
+            try ItalicModifier(from: decoder)
         case .listRowInsets:
             try ListRowInsetsModifier(from: decoder)
         case .listRowSeparator:

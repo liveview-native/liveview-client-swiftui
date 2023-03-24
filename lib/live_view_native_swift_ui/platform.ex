@@ -26,9 +26,11 @@ defmodule LiveViewNativeSwiftUi.Platform do
         platform_modifiers: [
           background: Modifiers.Background,
           background_style: Modifiers.BackgroundStyle,
+          bold: Modifiers.Bold,
           font_weight: Modifiers.FontWeight,
           foreground_style: Modifiers.ForegroundStyle,
           frame: Modifiers.Frame,
+          italic: Modifiers.Italic,
           list_row_insets: Modifiers.ListRowInsets,
           list_row_separator: Modifiers.ListRowSeparator,
           navigation_title: Modifiers.NavigationTitle,
