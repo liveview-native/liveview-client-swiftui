@@ -173,6 +173,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     }
     
     enum ModifierType: String {
+        case aspectRatio = "aspect_ratio"
         case backgroundStyle = "background_style"
         case bold
         case fontWeight = "font_weight"
@@ -195,6 +196,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     @ViewModifierBuilder
     static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch type {
+        case .aspectRatio:
+            try AspectRatioModifier(from: decoder)
         case .backgroundStyle:
             try BackgroundStyleModifier(from: decoder)
         case .bold:

@@ -28,6 +28,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 struct Image: View {
+    @Attribute("resizable") private var resizable: Bool
     @ObservedElement private var observedElement: ElementNode
     private let overrideElement: ElementNode?
     private var element: ElementNode {
@@ -41,6 +42,7 @@ struct Image: View {
     public var body: some View {
         image
             // todo: this probably only works for symbols
+            .resizableIfPresent(resizable: resizable)
             .scaledIfPresent(scale: symbolScale)
             .foregroundColor(symbolColor)
     }
@@ -113,6 +115,14 @@ extension Image {
 }
 
 fileprivate extension SwiftUI.Image {
+    func resizableIfPresent(resizable: Bool) -> SwiftUI.Image {
+        if resizable {
+            return self.resizable()
+        } else {
+            return self
+        }
+    }
+
     @ViewBuilder
     func scaledIfPresent(scale: SwiftUI.Image.Scale?) -> some View {
         if let scale = scale {
