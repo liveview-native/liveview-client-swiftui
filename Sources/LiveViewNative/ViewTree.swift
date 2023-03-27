@@ -101,8 +101,6 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let modifiers: [ModifierContainer<R>]
         if let encoded {
             let decoder = JSONDecoder()
-            decoder.userInfo[.liveContext!] = context
-            decoder.userInfo[.elementNode!] = element
 
             if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
                 modifiers = decoded
@@ -267,9 +265,4 @@ func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveConte
     return ForEach(elements, id: \.1) {
         ElementView<R>(element: $0.0, context: context)
     }
-}
-
-extension CodingUserInfoKey {
-    static let elementNode = CodingUserInfoKey(rawValue: "elementNode")
-    static let liveContext = CodingUserInfoKey(rawValue: "liveContext")
 }
