@@ -93,7 +93,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
         if let tagName = R.TagName(rawValue: element.tag) {
             R.lookup(tagName, element: element)
         } else {
-            BuiltinRegistry<R>.lookup(element.tag, element, context: context)
+            BuiltinRegistry<R>.lookup(element.tag, element)
         } 
     }
     

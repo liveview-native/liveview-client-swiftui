@@ -19,7 +19,7 @@ protocol BuiltinRegistryProtocol {
 struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
     // note: the context parameter is unused, but it needs to be there for swift to infer the generic type R
     @ViewBuilder
-    static func lookup<R: RootRegistry>(_ name: String, _ element: ElementNode, context: LiveContextStorage<R>) -> some View {
+    static func lookup(_ name: String, _ element: ElementNode) -> some View {
         switch name {
         case "AsyncImage":
             AsyncImage<R>()
