@@ -39,7 +39,7 @@ struct DocumentationExtensionGenerator {
             let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
             
             let markdownURL = extensionsURL
-                .appending(path: symbol.pathComponents.joined(separator: "/"))
+                .appending(path: symbol.pathComponents.joined(separator: "-"))
                 .appendingPathExtension("md")
             
             try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
@@ -111,7 +111,7 @@ struct DocumentationExtensionGenerator {
             let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
             
             let markdownURL = extensionsURL
-                .appending(path: symbol.pathComponents.joined(separator: "/"))
+                .appending(path: symbol.pathComponents.joined(separator: "-"))
                 .appendingPathExtension("md")
             
             try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
