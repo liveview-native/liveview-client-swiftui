@@ -17,6 +17,12 @@ struct DocumentationExtensionGenerator {
         "Shapes"
     ]
     
+    static let categoryAdditions = [
+        ["Controls and Indicators", "Buttons"]: [
+            "<doc:RenameButton>",
+        ]
+    ]
+    
     static func main() throws {
         let packageDirectory = URL(filePath: FileManager.default.currentDirectoryPath)
         let symbolsURL = packageDirectory.appending(path: "docc_build/Build/Intermediates.noindex/LiveViewNative.build/Debug-iphoneos/LiveViewNative.build/symbol-graph/swift/arm64-apple-ios/LiveViewNative.symbols.json", directoryHint: .notDirectory)
@@ -225,6 +231,9 @@ struct DocumentationExtensionGenerator {
                 {
                     categoryFile.append("- ``\(file.deletingPathExtension().lastPathComponent)``")
                 }
+                for addition in categoryAdditions[[category.lastPathComponent, subCategory.lastPathComponent], default: []] {
+                    categoryFile.append("- \(addition)")
+                }
             }
             for file in try FileManager.default.contentsOfDirectory(at: category, includingPropertiesForKeys: nil)
                 where file.pathExtension == "swift"
@@ -234,6 +243,9 @@ struct DocumentationExtensionGenerator {
                     categoryFile.append("### Views")
                 }
                 categoryFile.append("- ``\(file.deletingPathExtension().lastPathComponent)``")
+                for addition in categoryAdditions[[category.lastPathComponent], default: []] {
+                    categoryFile.append("- \(addition)")
+                }
             }
             try categoryFile.joined(separator: "\n")
                 .write(
