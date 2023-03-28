@@ -10,6 +10,7 @@ struct DocumentationExtensionGenerator {
     static let denylist = [
         "LiveView",
         "Shape",
+        "TextFieldProtocol",
     ]
     
     static let categoryDenyList = [
@@ -183,12 +184,14 @@ struct DocumentationExtensionGenerator {
                 categoryFile.append("### \(subCategory.lastPathComponent)")
                 for file in try FileManager.default.contentsOfDirectory(at: subCategory, includingPropertiesForKeys: nil)
                     where file.pathExtension == "swift"
+                        && !Self.denylist.contains(file.deletingPathExtension().lastPathComponent)
                 {
                     categoryFile.append("- ``\(file.deletingPathExtension().lastPathComponent)``")
                 }
             }
             for file in try FileManager.default.contentsOfDirectory(at: category, includingPropertiesForKeys: nil)
                 where file.pathExtension == "swift"
+                    && !Self.denylist.contains(file.deletingPathExtension().lastPathComponent)
             {
                 if !categoryFile.contains("### Views") {
                     categoryFile.append("### Views")
