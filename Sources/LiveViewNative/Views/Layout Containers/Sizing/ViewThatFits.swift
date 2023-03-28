@@ -7,10 +7,34 @@
 
 import SwiftUI
 
+/// Chooses the first child that fits in the available space.
+///
+/// Child elements are evaluated in order, and the first child that fits in the available space along ``axes`` is displayed.
+///
+/// ```html
+/// <ViewThatFits>
+///     <Text>Long text content ... </Text>
+///     <Image system-name="doc.text" />
+/// </ViewThatFits>
+/// ```
+///
+/// In the above example, if the text content is too large to fit on screen the icon will be displayed instead.
+///
+/// ## Attributes
+/// * ``axes``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct ViewThatFits<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
+    /// The axes to check each child's size along. Defaults to `all`.
+    ///
+    /// See ``LiveViewNative/SwiftUI/Axis/Set``
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("axes") private var axes: Axis.Set = [.horizontal, .vertical]
     
     public var body: some View {

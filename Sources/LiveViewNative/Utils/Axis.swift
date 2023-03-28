@@ -8,6 +8,12 @@
 import SwiftUI
 import LiveViewNativeCore
 
+/// A set of axes.
+///
+/// Possible values:
+/// * `horizontal`
+/// * `vertical`
+/// * `all` - both `horizontal` and `vertical`
 extension Axis.Set: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
