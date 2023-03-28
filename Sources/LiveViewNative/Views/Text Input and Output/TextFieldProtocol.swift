@@ -7,14 +7,20 @@
 
 import SwiftUI
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 protocol TextFieldProtocol: View {
     var element: ElementNode { get }
     var value: String? { get nonmutating set }
     
-    var focusEvent: Event { get }
-    var blurEvent: Event { get }
+    var focusEvent: Event.EventHandler { get }
+    var blurEvent: Event.EventHandler { get }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 extension TextFieldProtocol {
     func valueBinding<S: ParseableFormatStyle>(format: S) -> Binding<S.FormatInput?> where S.FormatOutput == String {
         .init {
@@ -28,14 +34,18 @@ extension TextFieldProtocol {
         Binding {
             value ?? ""
         } set: {
-            if $0.isEmpty {
-                value = nil
-            } else {
-                value = $0
-            }
+            value = $0
         }
     }
     
+    /// The axis to scroll when the content doesn't fit.
+    ///
+    /// Possible values:
+    /// * `horizontal`
+    /// * `vertical`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     var axis: Axis {
         switch element.attributeValue(for: "axis") {
         case "horizontal":
@@ -47,6 +57,10 @@ extension TextFieldProtocol {
         }
     }
     
+    /// Additional text with guidance on what to enter.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     var prompt: SwiftUI.Text? {
         element.attributeValue(for: "prompt").map(SwiftUI.Text.init)
     }
@@ -55,18 +69,22 @@ extension TextFieldProtocol {
     @MainActor
     func handleFocus(_ isFocused: Bool) {
         if isFocused {
-            focusEvent.wrappedValue(value:
+            focusEvent(value:
                 element.buildPhxValuePayload()
                     .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
             )
         } else {
-            blurEvent.wrappedValue(value:
+            blurEvent(value:
                 element.buildPhxValuePayload()
                     .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
             )
         }
     }
     
+    /// The style to apply to this field.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     var textFieldStyle: TextFieldStyle {
         if let s = element.attributeValue(for: "text-field-style"),
            let style = TextFieldStyle(rawValue: s) {
@@ -76,6 +94,14 @@ extension TextFieldProtocol {
         }
     }
     
+    /// Indicates if autocorrection should be enabled.
+    ///
+    /// Possible values:
+    /// * `yes`
+    /// * `no`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     var disableAutocorrection: Bool? {
         switch element.attributeValue(for: "autocorrection") {
         case "no":
@@ -87,8 +113,22 @@ extension TextFieldProtocol {
         }
     }
     
-#if !os(macOS)
+    #if os(macOS)
+    typealias TextInputAutocapitalization = Never
+    #endif
+    
+    /// The boundaries to capitalize on.
+    ///
+    /// Possible values:
+    /// * `sentences`
+    /// * `words`
+    /// * `characters`
+    /// * `never`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     var autocapitalization: TextInputAutocapitalization? {
+        #if !os(macOS)
         switch element.attributeValue(for: "autocapitalization") {
         case "sentences":
             return .sentences
@@ -101,11 +141,35 @@ extension TextFieldProtocol {
         default:
             return nil
         }
+        #else
+        fatalError()
+        #endif
     }
-#endif
     
-#if os(iOS) || os(tvOS)
+    #if !os(iOS) && !os(tvOS)
+    typealias UIKeyboardType = Never
+    #endif
+    
+    /// The type of keyboard to display.
+    ///
+    /// Possible values:
+    /// * `ascii-capable`
+    /// * `numbers-and-punctuation`
+    /// * `url`
+    /// * `number-pad`
+    /// * `phone-pad`
+    /// * `name-phone-pad`
+    /// * `email-address`
+    /// * `decimal-pad`
+    /// * `twitter`
+    /// * `web-search`
+    /// * `ascii-capable-number-pad`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(iOS 16.0, tvOS 16.0, *)
     var keyboard: UIKeyboardType? {
+        #if os(iOS) || os(tvOS)
         switch element.attributeValue(for: "keyboard") {
         case "ascii-capable":
             return .asciiCapable
@@ -132,9 +196,26 @@ extension TextFieldProtocol {
         default:
             return nil
         }
+        #else
+        fatalError()
+        #endif
     }
-#endif
     
+    /// The label to display on the keyboard submit button.
+    ///
+    /// Possible values:
+    /// * `done`
+    /// * `go`
+    /// * `send`
+    /// * `join`
+    /// * `route`
+    /// * `search`
+    /// * `return`
+    /// * `next`
+    /// * `continue`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     var submitLabel: SubmitLabel? {
         switch element.attributeValue(for: "submit-label") {
         case "done":
@@ -161,15 +242,31 @@ extension TextFieldProtocol {
     }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 enum TextFieldStyle: String {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case plain
-#if !os(watchOS)
+    /// `rounded-border`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(iOS 16.0, tvOS 16.0, macOS 13.0, *)
     case roundedBorder = "rounded-border"
-#endif
-#if os(macOS)
+
+    /// `square-border`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(macOS 13.0, *)
     case squareBorder = "square-border"
-#endif
 }
 
 extension View {
@@ -180,14 +277,14 @@ extension View {
             self.textFieldStyle(.automatic)
         case .plain:
             self.textFieldStyle(.plain)
-#if !os(watchOS)
         case .roundedBorder:
+            #if !os(watchOS)
             self.textFieldStyle(.roundedBorder)
-#endif
-#if os(macOS)
+            #endif
         case .squareBorder:
+            #if os(macOS)
             self.textFieldStyle(.squareBorder)
-#endif
+            #endif
         }
     }
     

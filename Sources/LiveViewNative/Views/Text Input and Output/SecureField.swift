@@ -7,14 +7,49 @@
 
 import SwiftUI
 
+/// A form element for entering private text.
+///
+/// This element is similar to ``TextField`` but for secure text, such as passwords.
+///
+/// ```html
+/// <SecureField prompt="Required" value-binding="password">
+///     Password
+/// </SecureField>
+/// ```
+///
+/// ## Attributes
+/// * ``TextFieldProtocol/prompt``
+/// * ``TextFieldProtocol/disableAutocorrection``
+/// * ``TextFieldProtocol/autocapitalization``
+/// * ``TextFieldProtocol/keyboard``
+/// * ``TextFieldProtocol/submitLabel``
+/// * ``TextFieldProtocol/textFieldStyle``
+///
+/// ## Events
+/// * ``focusEvent``
+/// * ``blurEvent``
+///
+/// ## See Also
+/// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct SecureField<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
     @LiveContext<R> var context
     @FormState var value: String?
     @FocusState private var isFocused: Bool
     
-    let focusEvent = Event("phx-focus", type: "focus")
-    let blurEvent = Event("phx-blur", type: "blur")
+    /// Sends an event when the field gains focus.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @Event("phx-focus", type: "focus") var focusEvent
+    /// Sends an event when the field loses focus.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @Event("phx-blur", type: "blur") var blurEvent
     
     var body: some View {
         SwiftUI.SecureField(

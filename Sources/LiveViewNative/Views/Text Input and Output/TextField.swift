@@ -13,8 +13,8 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     @FormState var value: String?
     @FocusState private var isFocused: Bool
     
-    let focusEvent = Event("phx-focus", type: "focus")
-    let blurEvent = Event("phx-blur", type: "blur")
+    @Event("phx-focus", type: "focus") var focusEvent
+    @Event("phx-blur", type: "blur") var blurEvent
     @Attribute("format") private var format: String?
     @Attribute("currency-code") private var currencyCode: String?
     @Attribute(
