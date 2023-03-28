@@ -152,8 +152,17 @@ struct ProgressView<R: RootRegistry>: View {
 @_documentation(visibility: public)
 #endif
 fileprivate enum ProgressViewStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case linear
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case circular
 }
 

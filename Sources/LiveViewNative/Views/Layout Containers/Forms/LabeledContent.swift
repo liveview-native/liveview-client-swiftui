@@ -85,6 +85,9 @@ struct LabeledContent<R: RootRegistry>: View {
 @_documentation(visibility: public)
 #endif
 private enum LabeledContentStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
 }
 

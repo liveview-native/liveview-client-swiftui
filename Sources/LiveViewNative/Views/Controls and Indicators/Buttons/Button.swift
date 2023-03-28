@@ -81,11 +81,26 @@ public struct Button<R: RootRegistry>: View {
 @_documentation(visibility: public)
 #endif
 fileprivate enum ButtonStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case bordered
     /// `bordered-prominent`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case borderedProminent = "bordered-prominent"
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case borderless
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case plain
 }
 

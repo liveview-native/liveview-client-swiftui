@@ -54,12 +54,23 @@ struct Toggle<R: RootRegistry>: View {
 @_documentation(visibility: public)
 #endif
 fileprivate enum ToggleStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case button
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case `switch`
-#if os(macOS)
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(macOS 13.0, *)
     case checkbox
-#endif
 }
 
 fileprivate extension View {
@@ -72,10 +83,10 @@ fileprivate extension View {
             self.toggleStyle(.button)
         case .`switch`:
             self.toggleStyle(.switch)
-#if os(macOS)
         case .checkbox:
+            #if os(macOS)
             self.toggleStyle(.checkbox)
-#endif
+            #endif
         }
     }
 }

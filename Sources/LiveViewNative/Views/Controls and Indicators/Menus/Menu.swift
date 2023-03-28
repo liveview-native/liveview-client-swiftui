@@ -62,9 +62,18 @@ struct Menu<R: RootRegistry>: View {
 @_documentation(visibility: public)
 #endif
 fileprivate enum MenuStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
     /// `borderless-button`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case borderlessButton = "borderless-button"
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case button
 }
 
