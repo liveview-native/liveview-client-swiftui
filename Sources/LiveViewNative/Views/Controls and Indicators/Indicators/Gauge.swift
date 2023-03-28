@@ -100,15 +100,33 @@ struct Gauge<R: RootRegistry>: View {
 #endif
 fileprivate enum GaugeStyle: String, AttributeDecodable {
     /// `accessory-circular-capacity`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case accessoryCircularCapacity = "accessory-circular-capacity"
     /// `accessory-linear-capacity`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case accessoryLinearCapacity = "accessory-linear-capacity"
     /// `accessory-circular`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case accessoryCircular = "accessory-circular"
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
     /// `linear-capacity`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case linearCapacity = "linear-capacity"
     /// `accessory-linear`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case accessoryLinear = "accessory-linear"
 }
 

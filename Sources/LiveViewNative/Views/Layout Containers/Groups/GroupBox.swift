@@ -85,6 +85,9 @@ struct GroupBox<R: RootRegistry>: View {
 @_documentation(visibility: public)
 #endif
 fileprivate enum GroupBoxStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
 }
 

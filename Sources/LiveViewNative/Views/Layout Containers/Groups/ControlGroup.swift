@@ -60,7 +60,13 @@ struct ControlGroup<R: RootRegistry>: View {
 @_documentation(visibility: public)
 #endif
 fileprivate enum ControlGroupStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case navigation
 }
 

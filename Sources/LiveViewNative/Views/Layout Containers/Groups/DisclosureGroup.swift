@@ -79,7 +79,13 @@ struct DisclosureGroup<R: RootRegistry>: View {
     }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 fileprivate enum DisclosureGroupStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
 }
 

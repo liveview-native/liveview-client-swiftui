@@ -169,6 +169,43 @@ struct DocumentationExtensionGenerator {
             """#
             try override.write(to: markdownURL, atomically: true, encoding: .utf8)
         }
+        
+        // MARK: View style case name overrides
+        let attributeDecodableID = symbolGraph.symbols.values.first(where: { $0.pathComponents == ["AttributeDecodable"] })!.identifier.precise
+        
+        for symbol in symbolGraph.symbols.values
+            where symbol.kind.identifier == .case
+            && symbolGraph.relationships.contains(where: { caseRelationship in
+                caseRelationship.source == symbol.identifier.precise
+                    && caseRelationship.kind == .memberOf
+                    && (symbolGraph.symbols[caseRelationship.target]?.pathComponents.last?.hasSuffix("Style") == true)
+                    && symbolGraph.relationships.contains(where: {
+                        return $0.source == caseRelationship.target
+                            && $0.kind == .conformsTo
+                            && $0.target == attributeDecodableID
+                    })
+            })
+        {
+            guard let rawValue = symbol.docComment?.lines.first?.text.replacing("`", with: "") else { continue }
+            
+            let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
+            
+            let markdownURL = extensionsURL
+                .appending(path: symbol.pathComponents.joined(separator: "-"))
+                .appendingPathExtension("md")
+            
+            try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+            
+            let override = #"""
+            # ``\#(symbolPath)``
+
+            @Metadata {
+                @DocumentationExtension(mergeBehavior: append)
+                @DisplayName("\#(rawValue)", style: symbol)
+            }
+            """#
+            try override.write(to: markdownURL, atomically: true, encoding: .utf8)
+        }
     }
     
     static func viewCategories(directory: URL, output: URL) throws {

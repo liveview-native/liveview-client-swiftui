@@ -342,40 +342,62 @@ fileprivate extension SwiftUI.Table where Value == TableRow, Rows == TableForEac
 @_documentation(visibility: public)
 #endif
 fileprivate enum TableStyle: String, AttributeDecodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case inset
-    #if os(macOS)
+    
     /// `inset-alternating`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(macOS 13.0, *)
     case insetAlternating = "inset-alternating"
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(macOS 13.0, *)
     case bordered
     /// `bordered-alternating`
-    case borderedAlternating = "bordered-alternating"
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
     #endif
+    @available(macOS 13.0, *)
+    case borderedAlternating = "bordered-alternating"
+
 }
 
 fileprivate extension View {
     @available(iOS 16.0, macOS 13.0, *)
     @ViewBuilder
     func applyTableStyle(_ style: TableStyle) -> some View {
-#if os(iOS) || os(macOS)
         switch style {
         case .automatic:
+            #if os(iOS) || os(macOS)
             self.tableStyle(.automatic)
+            #endif
         case .inset:
-#if os(macOS)
+            #if os(macOS)
             self.tableStyle(.inset(alternatesRowBackgrounds: false))
-#else
+            #elseif os(iOS)
             self.tableStyle(.inset)
-#endif
-#if os(macOS)
+            #endif
         case .insetAlternating:
+            #if os(macOS)
             self.tableStyle(.inset(alternatesRowBackgrounds: true))
+            #endif
         case .bordered:
+            #if os(macOS)
             self.tableStyle(.bordered(alternatesRowBackgrounds: false))
+            #endif
         case .borderedAlternating:
+            #if os(macOS)
             self.tableStyle(.bordered(alternatesRowBackgrounds: true))
-#endif
+            #endif
         }
-#endif
     }
 }

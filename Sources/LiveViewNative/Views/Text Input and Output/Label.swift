@@ -69,10 +69,28 @@ struct Label<R: RootRegistry>: View {
     }
 }
 
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 fileprivate enum LabelStyle: String, AttributeDecodable {
+    /// `icon-only`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case iconOnly = "icon-only"
+    /// `title-only`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case titleOnly = "title-only"
+    /// `title-and-icon`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case titleAndIcon = "title-and-icon"
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic = "automatic"
 }
 
