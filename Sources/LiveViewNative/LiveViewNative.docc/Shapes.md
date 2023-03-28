@@ -2,6 +2,9 @@
 ## Topics
 ### Views
 - ``Shape``
+- ``LiveViewNative/SwiftUI/Capsule``
+- <doc:Circle>
+- <doc:ContainerRelativeShape>
+- <doc:Ellipse>
 - <doc:Rectangle>
 - ``LiveViewNative/SwiftUI/RoundedRectangle``
-- ``LiveViewNative/SwiftUI/Capsule``
