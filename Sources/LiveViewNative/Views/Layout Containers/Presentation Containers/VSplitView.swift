@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// Each element in the container will be in a separate resizable section.
 ///
-/// If the element is not flexible, the section will only be able to shrink.
+/// If the element does not take up all available space, the section will only be able to shrink.
 ///
 /// ```html
 /// <VSplitView>
