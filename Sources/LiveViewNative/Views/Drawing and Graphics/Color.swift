@@ -8,17 +8,85 @@
 import SwiftUI
 import LiveViewNativeCore
 
+/// A rectangle with a particular fill color.
+///
+/// Color's appearance is equivalent to a <doc:Rectangle> with a `fill-color`.
+///
+/// Create a color with ``red``, ``green``, ``blue``, and ``opacity`` components.
+///
+/// ```html
+/// <Color red={1} green={0} blue={0.5} />
+/// ```
+///
+/// A color can also be created by its ``name``. Named colors can be declared in the app's asset catalog.
+///
+/// ```html
+/// <Color name="MyAppColor" opacity={0.5} />
+/// ```
+///
+/// The ``name`` attribute can also be used to create a system color or a CSS hex color.
+///
+/// ```html
+/// <Color name="system-red" />
+/// <Color name="#ff0000" />
+/// ```
+///
+/// See ``LiveViewNative/SwiftUI/Color/init(fromNamedOrCSSHex:)`` for more details.
+///
+/// ## Attributes
+/// * ``red``
+/// * ``green``
+/// * ``blue``
+/// * ``name``
+/// * ``opacity``
+/// * ``colorSpace``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct Color: View {
     @ObservedElement private var element: ElementNode
     
+    /// The alpha channel of the color, in the range `0` to `1`.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("opacity") private var opacity: Double = 1
     
+    /// A named color in the project's asset catalog, system color, or CSS hex color.
+    ///
+    /// ## See Also
+    /// ### Color
+    /// - ``LiveViewNative/SwiftUI/Color/init(fromNamedOrCSSHex:)``
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("name") private var name: String?
     
+    /// The red channel of the color, in the range `0` to `1`.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("red") private var red: Double?
+    /// The green channel of the color, in the range `0` to `1`.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("green") private var green: Double?
+    /// The blue channel of the color, in the range `0` to `1`.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("blue") private var blue: Double?
     
+    /// The color space this color is in.
+    ///
+    /// Possible values:
+    /// * `srgb`
+    /// * `srgb-linear`
+    /// * `display-p3`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("color-space") private var colorSpace: SwiftUI.Color.RGBColorSpace = .sRGB
     
     var body: some View {
