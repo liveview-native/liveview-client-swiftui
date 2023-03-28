@@ -7,14 +7,84 @@
 
 import SwiftUI
 
+/// A form element for entering text.
+///
+/// Any children of the field will be used as the label.
+///
+/// ```html
+/// <TextField value-binding="first_name">
+///     First Name
+/// </TextField>
+/// ```
+///
+/// You can style the label by using elements inside.
+///
+/// ```html
+/// <TextField value-binding="last_name">
+///     <Text font-weight="bold" font="caption">Last Name</Text>
+/// </TextField>
+/// ```
+///
+/// ### Input Configuration
+/// Use the available attributes to configure how text is input.
+///
+/// ```html
+/// <TextField
+///     value-binding="value"
+///     autocorrection="no"
+///     autocapitalization="words"
+///     keyboard="web-search"
+///     submit-label="continue"
+/// >
+///     Enter Text
+/// </TextField>
+/// ```
+///
+/// ### Formatting Values
+/// Use the ``format`` attribute to input values such as numbers and URLs.
+///
+/// ```html
+/// <TextField
+///     value-binding="amount"
+///     format="currency"
+///     currency-code="usd"
+///     keyboard="decimal-pad"
+/// >
+///     Enter Amount
+/// </TextField>
+/// ```
+///
+/// ### Secure Input
+/// To input private text, such as a password, use ``SecureField``.
+///
+/// ## Attributes
+/// * ``format``
+/// * ``currencyCode``
+/// * ``nameStyle``
+/// * ``TextFieldProtocol/prompt``
+/// * ``TextFieldProtocol/disableAutocorrection``
+/// * ``TextFieldProtocol/autocapitalization``
+/// * ``TextFieldProtocol/keyboard``
+/// * ``TextFieldProtocol/submitLabel``
+/// * ``TextFieldProtocol/textFieldStyle``
+///
+/// ## Events
+/// * ``focusEvent``
+/// * ``blurEvent``
+///
+/// ## See Also
+/// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct TextField<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
     @LiveContext<R> var context
     @FormState var value: String?
     @FocusState private var isFocused: Bool
     
-    let focusEvent = Event("phx-focus", type: "focus")
-    let blurEvent = Event("phx-blur", type: "blur")
+    @Event("phx-focus", type: "focus") var focusEvent
+    @Event("phx-blur", type: "blur") var blurEvent
     @Attribute("format") private var format: String?
     @Attribute("currency-code") private var currencyCode: String?
     @Attribute(
