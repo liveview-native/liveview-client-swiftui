@@ -82,6 +82,16 @@ be found at <https://hexdocs.pm/live_view_native_swift_ui>.
 - <doc:Shapes>
 - <doc:TextInputAndOutput>
 
+### Supported Modifiers
+- <doc:DocumentsModifiers>
+- <doc:DrawingAndGraphicsModifiers>
+- <doc:LayoutAdjustmentsModifiers>
+- <doc:LayoutFundamentalsModifiers>
+- <doc:ListsModifiers>
+- <doc:NavigationModifiers>
+- <doc:TextInputAndOutputModifiers>
+- <doc:ViewFundamentalsModifiers>
+
 ### Custom DOM Elements and Attributes
 
 - <doc:AddCustomElement>

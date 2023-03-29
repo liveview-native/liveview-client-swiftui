@@ -34,7 +34,14 @@ struct DocumentationExtensionGenerator {
         
         try viewCategories(
             directory: packageDirectory.appending(path: "Sources/LiveViewNative/Views"),
-            output: extensionsURL
+            output: extensionsURL,
+            fallbackSubcategory: "Views"
+        )
+        
+        try viewCategories(
+            directory: packageDirectory.appending(path: "Sources/LiveViewNative/Modifiers"),
+            output: extensionsURL,
+            fallbackSubcategory: "Modifiers"
         )
         
         // MARK: View element name overrides and SwiftUI links
@@ -215,7 +222,7 @@ struct DocumentationExtensionGenerator {
         }
     }
     
-    static func viewCategories(directory: URL, output: URL) throws {
+    static func viewCategories(directory: URL, output: URL, fallbackSubcategory: String) throws {
         for category in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
             where category.hasDirectoryPath
                   && !Self.categoryDenyList.contains(category.lastPathComponent)
@@ -239,8 +246,8 @@ struct DocumentationExtensionGenerator {
                 where file.pathExtension == "swift"
                     && !Self.denylist.contains(file.deletingPathExtension().lastPathComponent)
             {
-                if !categoryFile.contains("### Views") {
-                    categoryFile.append("### Views")
+                if !categoryFile.contains("### \(fallbackSubcategory)") {
+                    categoryFile.append("### \(fallbackSubcategory)")
                 }
                 categoryFile.append("- ``\(file.deletingPathExtension().lastPathComponent)``")
                 for addition in categoryAdditions[[category.lastPathComponent], default: []] {
