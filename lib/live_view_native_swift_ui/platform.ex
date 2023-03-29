@@ -41,6 +41,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           list_row_separator: Modifiers.ListRowSeparator,
           matched_geometry_effect: Modifiers.MatchedGeometryEffect,
           navigation_title: Modifiers.NavigationTitle,
+          opacity: Modifiers.Opacity,
           padding: Modifiers.Padding,
           refreshable: Modifiers.Refreshable,
           rotation_3d_effect: Modifiers.Rotation3DEffect,

@@ -195,6 +195,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case listRowSeparator = "list_row_separator"
         case matchedGeometryEffect = "matched_geometry_effect"
         case navigationTitle = "navigation_title"
+        case opacity
         case padding
         case refreshable
         case renameAction = "rename_action"
@@ -250,6 +251,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try MatchedGeometryEffectModifier(from: decoder)
         case .navigationTitle:
             try NavigationTitleModifier(from: decoder)
+        case .opacity:
+            try OpacityModifier(from: decoder)
         case .padding:
             try PaddingModifier(from: decoder)
         case .refreshable:
