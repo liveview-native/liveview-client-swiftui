@@ -52,30 +52,9 @@ struct ToolbarVisibilityModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        switch try container.decode(String.self, forKey: .visibility) {
-        case "automatic": self.visibility = .automatic
-        case "hidden": self.visibility = .hidden
-        case "visible": self.visibility = .visible
-        default: fatalError("Unknown value for visibility")
-        }
-
-        switch try container.decode(String.self, forKey: .bars) {
-        case "automatic": self.bars = .automatic
-        #if os(iOS)
-        case "bottom_bar": self.bars = .bottomBar
-        #endif
-        #if !os(macOS)
-        case "navigation_bar": self.bars = .navigationBar
-        #endif
-        #if os(iOS) || os(tvOS)
-        case "tab_bar": self.bars = .tabBar
-        #endif
-        #if os(macOS)
-        case "window_toolbar": self.bars = .windowToolbar
-        #endif
-        default: fatalError("Unknown value for bars")
-        }
-
+        self.visibility = try container.decode(Visibility.self, forKey: .visibility)
+        
+        self.bars = try container.decode(ToolbarPlacement.self, forKey: .bars)
     }
 
     func body(content: Content) -> some View {
