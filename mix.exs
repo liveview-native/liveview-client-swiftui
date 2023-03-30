@@ -25,7 +25,7 @@ defmodule LiveViewNativeSwiftUi.MixProject do
     [
       {:jason, "~> 1.2"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:live_view_native_platform, git: "https://github.com/liveview-native/live_view_native_platform.git", branch: "tag-engine"}
+      {:live_view_native_platform, "~> 0.0.5"}
     ]
   end
 
