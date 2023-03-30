@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+/// Sets the opacity for any element.
+///
+/// ```html
+/// <Text
+///     modifiers={
+///         opacity(@native, opacity: 0.5)
+///     }
+/// >Hello World!</Text>
+/// ```
+///
+/// ## Arguments
+/// * ``opacity``
 struct OpacityModifier: ViewModifier, Decodable, Equatable {
     private let opacity: Double?
     
