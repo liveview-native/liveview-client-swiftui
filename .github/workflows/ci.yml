@@ -3,23 +3,23 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: [self-hosted, tartelet]
     steps:
       - uses: actions/checkout@v2
       - name: Run tests on iOS Simulator
         shell: bash
         run: |
-          sudo xcode-select --switch /Applications/Xcode_14.2.app
-          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.2 -destination "OS=16.2,name=iPhone 14 Pro"
+          sudo xcode-select --switch /Applications/Xcode_14.3.app
+          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro"
       - name: Build for macOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk macosx13.1 -destination "platform=macOS"
+          xcodebuild -scheme LiveViewNative-Package -sdk macosx13.3 -destination "platform=macOS"
       - name: Build for watchOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.1 -destination "OS=9.1,name=Apple Watch Series 8 (45mm)"
+          xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
