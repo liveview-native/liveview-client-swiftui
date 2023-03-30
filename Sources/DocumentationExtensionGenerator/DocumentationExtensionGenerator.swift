@@ -51,7 +51,7 @@ struct DocumentationExtensionGenerator {
         // MARK: View element name overrides and SwiftUI links
         for symbol in symbolGraph.symbols.values
             where symbol.kind.identifier == .struct
-                && symbolGraph.relationships.contains(where: { $0.source == symbol.identifier.precise && $0.targetFallback == "SwiftUI.View" })
+        && symbolGraph.relationships.contains(where: { $0.source == symbol.identifier.precise && ["SwiftUI.View", "SwiftUI.ToolbarContent"].contains($0.targetFallback) })
                 && !Self.denylist.contains(symbol.pathComponents.joined(separator: "/"))
         {
             let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
