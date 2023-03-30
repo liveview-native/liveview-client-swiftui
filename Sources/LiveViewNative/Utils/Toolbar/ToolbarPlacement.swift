@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+/// The placement of a toolbar.
+///
+/// Possible values:
+/// * `automatic`
+/// * `bottom_bar`
+/// * `navigation_bar`
+/// * `tab_bar`
+/// * `window_toolbar`
 extension ToolbarPlacement: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
