@@ -36,6 +36,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           list_row_separator: Modifiers.ListRowSeparator,
           navigation_title: Modifiers.NavigationTitle,
           padding: Modifiers.Padding,
+          tag: Modifiers.Tag,
           tint: Modifiers.Tint,
 
           # grid
