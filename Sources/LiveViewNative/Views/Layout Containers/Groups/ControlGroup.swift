@@ -30,6 +30,10 @@ import SwiftUI
 /// ## Children
 /// * `label` - Describes the content of the control group.
 /// * `content` - Controls to be grouped together.
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``ControlGroupStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

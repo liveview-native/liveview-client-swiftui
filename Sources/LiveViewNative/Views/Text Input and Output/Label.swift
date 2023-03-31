@@ -33,6 +33,10 @@ import SwiftUI
 /// ## Attributes
 /// * ``systemImage``
 /// * ``style``
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``LabelStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

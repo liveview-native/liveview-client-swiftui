@@ -41,6 +41,10 @@ import SwiftUI
 /// ## Children
 /// * `label` - Describes the content of the group box.
 /// * `content` - The elements to group together.
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``GroupBoxStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

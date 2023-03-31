@@ -32,6 +32,10 @@ import SwiftUI
 /// ## Children
 /// * `label` - Describes the content of the menu.
 /// * `content` - Elements displayed when expanded.
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``MenuStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
