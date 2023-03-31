@@ -19,6 +19,7 @@ struct DocumentationExtensionGenerator {
     
     static let categoryAdditions = [
         ["Controls and Indicators", "Buttons"]: [
+            "<doc:EditButton>",
             "<doc:RenameButton>",
         ]
     ]
