@@ -5,13 +5,47 @@
 //  Created by Shadowfacts on 3/8/23.
 //
 
-#if os(iOS)
 import SwiftUI
 
+/// A control that allows the user to pick multiple dates (not datetimes).
+///
+/// ```html
+/// <MultiDatePicker value-binding="dates" start="2023-01-01" end="2023-02-01">
+///     <Text>Pick as many dates as you like!</Text>
+/// </MultiDatePicker>
+/// ```
+///
+/// The element's children are used as the control's label.
+///
+/// ```elixir
+/// defmodule MyAppWeb.DatesLive do
+///     native_binding :dates, List, ["2023-01-15"]
+/// end
+/// ```
+///
+/// The value is a list of date strings of the form "yyyy-MM-dd".
+///
+/// - Note: This control only supports using a ``LiveBinding`` for the value, and not the `value` attribute or form data.
+///
+/// ## Attributes
+/// - ``start``
+/// - ``end``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
+@available(iOS 16.0, *)
 struct MultiDatePicker<R: RootRegistry>: View {
     @LiveContext<R> private var context
     @ObservedElement private var element
+    /// The start date (inclusive) of the picker's range.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("start") private var start: Date?
+    /// The end date (**exclusive**) of the picker's range.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("end") private var end: Date?
     @LiveBinding(attribute: "value-binding") private var dates: Set<SelectedDate> = []
     
@@ -24,6 +58,7 @@ struct MultiDatePicker<R: RootRegistry>: View {
     }
     
     var body: some View {
+        #if os(iOS)
         if let start, let end {
             SwiftUI.MultiDatePicker(selection: dateComponents, in: start..<end) {
                 context.buildChildren(of: element)
@@ -41,6 +76,7 @@ struct MultiDatePicker<R: RootRegistry>: View {
                 context.buildChildren(of: element)
             }
         }
+        #endif
     }
     
     struct SelectedDate: Codable, Equatable, Hashable {
@@ -64,4 +100,3 @@ struct MultiDatePicker<R: RootRegistry>: View {
         }
     }
 }
-#endif
