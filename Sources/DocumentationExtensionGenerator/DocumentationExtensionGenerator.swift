@@ -21,7 +21,10 @@ struct DocumentationExtensionGenerator {
         ["Controls and Indicators", "Buttons"]: [
             "<doc:EditButton>",
             "<doc:RenameButton>",
-        ]
+        ],
+        ["Layout Containers", "Separators"]: [
+            "<doc:Divider>",
+        ],
     ]
     
     static func main() throws {
