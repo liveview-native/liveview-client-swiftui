@@ -18,6 +18,11 @@ protocol TextFieldProtocol: View {
     var blurEvent: Event.EventHandler { get }
 }
 
+/// Common behaviors and supporting types for text fields.
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``TextFieldStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

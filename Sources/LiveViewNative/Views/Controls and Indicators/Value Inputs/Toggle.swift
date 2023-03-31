@@ -27,6 +27,10 @@ import SwiftUI
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``ToggleStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

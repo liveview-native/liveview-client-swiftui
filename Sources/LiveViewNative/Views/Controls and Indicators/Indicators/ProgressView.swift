@@ -56,6 +56,9 @@ import SwiftUI
 /// - ``timerIntervalStart``
 /// - ``timerIntervalEnd``
 /// - ``countsDown``
+///
+/// ### Supporting Types
+/// - ``ProgressViewStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

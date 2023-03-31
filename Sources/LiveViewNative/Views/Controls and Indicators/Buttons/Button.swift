@@ -27,6 +27,10 @@ import SwiftUI
 /// 
 /// ## Events
 /// * ``click``
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``ButtonStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

@@ -102,6 +102,9 @@ import SwiftUI
 ///
 /// ### Selecting Rows
 /// * ``selection``
+///
+/// ### Supporting Types
+/// - ``TableStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

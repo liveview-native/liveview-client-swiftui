@@ -47,6 +47,10 @@ import SwiftUI
 /// ## Children
 /// * `label` - Describes the content of the disclosure group.
 /// * `content` - The elements below the fold.
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``DisclosureGroupStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

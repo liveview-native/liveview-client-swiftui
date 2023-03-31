@@ -41,6 +41,10 @@ import SwiftUI
 /// ## See Also
 /// ### Formatting Values
 /// * ``Text``
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``LabeledContentStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

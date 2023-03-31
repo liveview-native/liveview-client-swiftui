@@ -31,6 +31,10 @@ import SwiftUI
 /// * `current-value-label` - Describes the current value.
 /// * `minimum-value-label` - Describes the lowest possible value.
 /// * `maximum-value-label` - Describes the highest possible value.
+///
+/// ## Topics
+/// ### Supporting Types
+/// - ``GaugeStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
