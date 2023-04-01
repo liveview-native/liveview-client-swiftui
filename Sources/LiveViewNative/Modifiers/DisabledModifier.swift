@@ -22,7 +22,10 @@ import SwiftUI
 /// ## Arguments
 /// * ``disabled``
 struct DisabledModifier: ViewModifier, Decodable, Equatable {
-    private let disabled: Bool?
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    private let disabled: Bool
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
