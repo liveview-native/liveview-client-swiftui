@@ -31,9 +31,6 @@ struct OpacityModifier: ViewModifier, Decodable, Equatable {
         self.opacity = try container.decode(Double.self, forKey: .opacity)
     }
     
-    init(opacity: Double) {
-        self.opacity = opacity
-    }
     
     func body(content: Content) -> some View {
         content.opacity(opacity!)
