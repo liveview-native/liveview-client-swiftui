@@ -33,9 +33,6 @@ struct DisabledModifier: ViewModifier, Decodable, Equatable {
         self.disabled = try container.decode(Bool.self, forKey: .disabled)
     }
     
-    init(disabled: Bool) {
-        self.disabled = disabled
-    }
     
     func body(content: Content) -> some View {
         content.disabled(disabled!)
