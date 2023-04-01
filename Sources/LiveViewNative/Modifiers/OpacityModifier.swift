@@ -23,7 +23,10 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 struct OpacityModifier: ViewModifier, Decodable, Equatable {
-    private let opacity: Double?
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    private let opacity: Double
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -33,7 +36,7 @@ struct OpacityModifier: ViewModifier, Decodable, Equatable {
     
     
     func body(content: Content) -> some View {
-        content.opacity(opacity!)
+        content.opacity(opacity)
     }
     
     enum CodingKeys: String, CodingKey {
