@@ -19,6 +19,9 @@ import SwiftUI
 ///
 /// ## Arguments
 /// * ``opacity``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct OpacityModifier: ViewModifier, Decodable, Equatable {
     private let opacity: Double?
     
