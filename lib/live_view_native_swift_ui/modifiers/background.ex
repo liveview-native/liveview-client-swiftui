@@ -1,6 +1,8 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.Background do
   use LiveViewNativePlatform.Modifier
 
+  alias LiveViewNativeSwiftUi.Types.KeyName
+
   modifier_schema "background" do
     field :alignment, Ecto.Enum, values: ~w(
       bottom
@@ -15,6 +17,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Background do
       trailing
       trailing_first_text_baseline
     )a
-    field :content, :string
+    field :content, KeyName
   end
 end

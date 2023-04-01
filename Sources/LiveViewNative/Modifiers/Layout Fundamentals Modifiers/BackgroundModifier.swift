@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```html
 /// <HStack>
-///   <Image system-name="heart.fill" modifiers={@native |> background(alignment: :center, content: "bg_content")}>
+///   <Image system-name="heart.fill" modifiers={@native |> background(alignment: :center, content: :bg_content)}>
 ///     <background:bg_content>
 ///       <Circle />
 ///     </background:bg_content>
