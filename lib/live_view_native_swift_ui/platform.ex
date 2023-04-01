@@ -50,6 +50,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           status_bar_hidden: Modifiers.StatusBarHidden,
           strikethrough: Modifiers.Strikethrough,
           tag: Modifiers.Tag,
+          text_case: Modifiers.TextCase,
           text_selection: Modifiers.TextSelection,
           tint: Modifiers.Tint,
           transition: Modifiers.Transition,
