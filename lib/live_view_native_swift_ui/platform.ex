@@ -31,6 +31,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           bold: Modifiers.Bold,
           content_transition: Modifiers.ContentTransition,
           disabled: Modifiers.Disabled,
+          dynamic_type_size: Modifiers.DynamicTypeSize,
           font_weight: Modifiers.FontWeight,
           font_width: Modifiers.FontWidth,
           font: Modifiers.Font,
