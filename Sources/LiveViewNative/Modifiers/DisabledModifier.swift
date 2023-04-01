@@ -35,7 +35,7 @@ struct DisabledModifier: ViewModifier, Decodable, Equatable {
     
     
     func body(content: Content) -> some View {
-        content.disabled(disabled!)
+        content.disabled(disabled)
     }
     
     enum CodingKeys: String, CodingKey {
