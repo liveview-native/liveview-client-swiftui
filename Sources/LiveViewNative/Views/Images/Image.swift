@@ -48,7 +48,7 @@ struct Image: View {
             // todo: this probably only works for symbols
             .resizableIfPresent(resizable: resizable)
             .scaledIfPresent(scale: symbolScale)
-            .foregroundColor(symbolColor)
+            .foregroundColorIfPresent(color: symbolColor)
     }
     
     var image: SwiftUI.Image {
@@ -131,6 +131,17 @@ fileprivate extension SwiftUI.Image {
     func scaledIfPresent(scale: SwiftUI.Image.Scale?) -> some View {
         if let scale = scale {
             self.imageScale(scale)
+        } else {
+            self
+        }
+    }
+}
+
+fileprivate extension View {
+    @ViewBuilder
+    func foregroundColorIfPresent(color: SwiftUI.Color?) -> some View {
+        if let color = color {
+            self.foregroundColor(color)
         } else {
             self
         }
