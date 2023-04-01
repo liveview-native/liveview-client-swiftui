@@ -7,6 +7,23 @@
 
 import SwiftUI
 
+/// Renders nested content within the background of an element.
+///
+/// Nested content is referenced by its namespace using the `content` argument. 
+///
+/// ```html
+/// <HStack>
+///   <Image system-name="heart.fill" modifiers={@native |> background(alignment: :center, content: "bg_content")}>
+///     <background:bg_content>
+///       <Circle />
+///     </background:bg_content>
+///   </Image>
+/// </HStack>
+/// ```
+///
+/// ## Arguments
+/// * ``alignment``
+/// * ``content``
 struct BackgroundModifier<R: RootRegistry>: ViewModifier, Decodable {
     @ObservedElement private var element
     @LiveContext<R> private var context
