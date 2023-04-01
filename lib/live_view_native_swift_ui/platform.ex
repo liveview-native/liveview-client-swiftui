@@ -47,6 +47,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           refreshable: Modifiers.Refreshable,
           rotation_3d_effect: Modifiers.Rotation3DEffect,
           rotation_effect: Modifiers.RotationEffect,
+          status_bar_hidden: Modifiers.StatusBarHidden,
           strikethrough: Modifiers.Strikethrough,
           tag: Modifiers.Tag,
           text_selection: Modifiers.TextSelection,
