@@ -205,6 +205,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case statusBarHidden = "status_bar_hidden"
         case strikethrough
         case tag
+        case textCase = "text_case"
         case textSelection = "text_selection"
         case tint
         case transition
@@ -273,6 +274,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try StrikethroughModifier(from: decoder)
         case .tag:
             try TagModifier(from: decoder)
+        case .textCase:
+            try TextCaseModifier(from: decoder)
         case .textSelection:
             try TextSelectionModifier(from: decoder)
         case .tint:
