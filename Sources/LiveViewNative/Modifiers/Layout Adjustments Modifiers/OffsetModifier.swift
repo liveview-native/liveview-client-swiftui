@@ -22,7 +22,6 @@ import SwiftUI
 /// ## Arguments
 /// * ``x``: The offset to apply to the x axis.
 /// * ``y``: The offset to apply to the y axis.
-
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
