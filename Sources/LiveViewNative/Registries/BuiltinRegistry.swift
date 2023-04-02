@@ -195,6 +195,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case listRowSeparator = "list_row_separator"
         case matchedGeometryEffect = "matched_geometry_effect"
         case monospaced
+        case monospacedDigit = "monospaced_digit"
         case navigationTitle = "navigation_title"
         case opacity
         case padding
@@ -260,6 +261,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try MatchedGeometryEffectModifier(from: decoder)
         case .monospaced:
             try MonospacedModifier(from: decoder)
+        case .monospacedDigit:
+            try MonospacedDigitModifier(from: decoder)
         case .navigationTitle:
             try NavigationTitleModifier(from: decoder)
         case .opacity:
