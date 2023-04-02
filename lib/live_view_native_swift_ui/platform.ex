@@ -42,6 +42,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           list_row_insets: Modifiers.ListRowInsets,
           list_row_separator: Modifiers.ListRowSeparator,
           matched_geometry_effect: Modifiers.MatchedGeometryEffect,
+          monospaced: Modifiers.Monospaced,
           navigation_title: Modifiers.NavigationTitle,
           opacity: Modifiers.Opacity,
           padding: Modifiers.Padding,
