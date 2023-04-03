@@ -13,13 +13,13 @@ import SwiftUI
 /// 
 /// ```html
 /// <Text
-///     modifiers={toolbar_title_menu(@native, content: "my-menu")}
+///     modifiers={toolbar_title_menu(@native, content: :my_menu)}
 /// >
 ///     ...
-///     <toolbar_title_menu:my-menu>
+///     <toolbar_title_menu:my_menu>
 ///         <Button phx-click="duplicate">Duplicate</Button>
 ///         <Button phx-click="print">Print</Button>
-///     </toolbar_title_menu:my-menu>
+///     </toolbar_title_menu:my_menu>
 /// </Text>
 /// ```
 ///

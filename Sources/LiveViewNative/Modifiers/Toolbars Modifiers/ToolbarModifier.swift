@@ -13,16 +13,16 @@ import LiveViewNativeCore
 /// Use the available toolbar elements to place items in the toolbar.
 ///
 /// ```html
-/// <Text modifiers={toolbar(@native, content: "my-toolbar-content")}>
+/// <Text modifiers={toolbar(@native, content: :my_toolbar_content)}>
 ///     ...
-///     <toolbar:my-toolbar-content>
+///     <toolbar:my_toolbar_content>
 ///         <ToolbarItem placement="confirmation-action">
 ///             <Button phx-click="save">Save</Button>
 ///         </ToolbarItem>
 ///         <ToolbarItem placement="cancellation-action">
 ///             <Button phx-click="cancel">Cancel</Button>
 ///         </ToolbarItem>
-///     </toolbar:my-toolbar-content>
+///     </toolbar:my_toolbar_content>
 /// </Text>
 /// ```
 ///
@@ -41,9 +41,9 @@ import LiveViewNativeCore
 /// - Note: ``ToolbarItemGroup`` cannot be used in a customizable toolbar.
 ///
 /// ```html
-/// <Text modifiers={toolbar(@native, id: "my-main-bar", content: "editable-bar")}>
+/// <Text modifiers={toolbar(@native, id: "my-main-bar", content: :editable_bar)}>
 ///     ...
-///     <toolbar:editable-bar>
+///     <toolbar:editable_bar>
 ///         <ToolbarItem id="search" placement="secondary-action">
 ///             <TextField text-field-style="rounded-border">Search for photos...</TextField>
 ///         </ToolbarItem>
@@ -56,7 +56,7 @@ import LiveViewNativeCore
 ///         <ToolbarItem id="spacer" visibility="hidden">
 ///             <Spacer />
 ///         </ToolbarItem>
-///     </toolbar:editable-bar>
+///     </toolbar:editable_bar>
 /// </Text>
 /// ```
 ///
@@ -158,14 +158,10 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
     
     @ToolbarContentBuilder
     fileprivate func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some ToolbarContent {
-        switch node.data {
-        case .root:
-            fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
-        case .leaf:
-            fatalError("ToolbarTreeBuilder.fromNode may not be called with a leaf node")
-        case .element(let element):
-            let node = ElementNode(node: node, data: element)
-            Self.lookup(node)
+        if case .element(let element) = node.data {
+            Self.lookup(ElementNode(node: node, data: element))
+        } else {
+            fatalError("ToolbarTreeBuilder.fromNode may not be called with a root or leaf node")
         }
     }
     
@@ -223,14 +219,10 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
     
     @ToolbarContentBuilder
     fileprivate func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some CustomizableToolbarContent {
-        switch node.data {
-        case .root:
-            fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
-        case .leaf:
-            fatalError("ToolbarTreeBuilder.fromNode may not be called with a leaf node")
-        case .element(let element):
-            let node = ElementNode(node: node, data: element)
-            Self.lookup(node)
+        if case .element(let element) = node.data {
+            Self.lookup(ElementNode(node: node, data: element))
+        } else {
+            fatalError("CustomizableToolbarTreeBuilder.fromNode may not be called with a root or leaf node")
         }
     }
     

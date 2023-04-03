@@ -11,8 +11,8 @@ import SwiftUI
 /// 
 /// ```html
 /// <Text modifiers={
-///     toolbar(content: "my-toolbar")
-///     |> toolbar_visibility(visibility: :hidden, bars: :)
+///     toolbar(content: :my_toolbar)
+///     |> toolbar_visibility(visibility: :hidden, bars: :bottom_bar)
 /// }>
 ///     ...
 /// </Text>
