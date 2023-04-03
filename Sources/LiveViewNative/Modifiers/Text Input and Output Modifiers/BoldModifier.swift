@@ -9,11 +9,14 @@ import SwiftUI
 
 struct BoldModifier: ViewModifier, Decodable {
     /// Enables/disables the bold effect.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     private var active: Bool
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.active = try container.decodeIfPresent(Bool.self, forKey: .active) ?? true
+        self.active = try container.decode(Bool.self, forKey: .active)
     }
 
     func body(content: Content) -> some View {
