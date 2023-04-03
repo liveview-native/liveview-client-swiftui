@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct ItalicModifier: ViewModifier, Decodable {
+    /// Enables/disables the italic effect.
+    private var active: Bool
+    
     init(from decoder: Decoder) throws {
-        self
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.active = try container.decodeIfPresent(Bool.self, forKey: .active) ?? true
     }
 
     func body(content: Content) -> some View {
-        content.italic()
+        content.italic(active)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case active
     }
 }
