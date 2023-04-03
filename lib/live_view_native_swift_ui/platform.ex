@@ -24,6 +24,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
         modifiers: %LiveViewNativeSwiftUi.Modifiers{stack: []},
         platform_id: :ios,
         platform_modifiers: [
+          animation: Modifiers.Animation,
           aspect_ratio: Modifiers.AspectRatio,
           background: Modifiers.Background,
           background_style: Modifiers.BackgroundStyle,
@@ -34,6 +35,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           italic: Modifiers.Italic,
           list_row_insets: Modifiers.ListRowInsets,
           list_row_separator: Modifiers.ListRowSeparator,
+          matched_geometry_effect: Modifiers.MatchedGeometryEffect,
           navigation_title: Modifiers.NavigationTitle,
           padding: Modifiers.Padding,
           tag: Modifiers.Tag,
