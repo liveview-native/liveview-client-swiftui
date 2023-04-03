@@ -70,8 +70,8 @@ struct ViewTreeBuilder<R: RootRegistry> {
     
     fileprivate func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
-        let jsonStr = element.attributeValue(for: "modifiers")
-        let modified = applyModifiers(encoded: jsonStr, to: view, context: context)
+//        let jsonStr = element.attributeValue(for: "modifiers")
+        let modified = view.applyModifiers(R.self)
         let bound = applyBindings(to: modified, element: element)
         let withID = applyID(element: element, to: bound)
         return withID
@@ -181,6 +181,27 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
     }
 }
 
+private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
+    let parent: Parent
+    @ObservedElement private var element
+    
+    var body: some View {
+        let modifiers: [ModifierContainer<R>]
+        if let encoded = element.attributeValue(for: "modifiers") {
+            let decoder = JSONDecoder()
+            if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
+                modifiers = decoded
+            } else {
+                modifiers = []
+            }
+        } else {
+            modifiers = []
+        }
+        return parent
+            .applyModifiers(modifiers[...])
+    }
+}
+
 // this view is required to to break the infinitely-recursive type that occurs if the body of this view is inlined into applyAttributes(_:context:)
 private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
@@ -215,6 +236,10 @@ private struct BindingApplicator<Parent: View>: View {
 }
 
 private extension View {
+    func applyModifiers<R: RootRegistry>(_: R.Type = R.self) -> some View {
+        ModifierObserver<Self, R>(parent: self)
+    }
+    
     @ViewBuilder
     func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<ModifierContainer<R>>) -> some View {
         if modifiers.isEmpty {

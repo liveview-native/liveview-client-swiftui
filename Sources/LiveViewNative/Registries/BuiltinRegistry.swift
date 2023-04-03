@@ -108,6 +108,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case "MultiDatePicker":
             MultiDatePicker<R>()
 #endif
+        case "NamespaceContext":
+            NamespaceContext<R>()
         case "NavigationLink":
             NavigationLink<R>()
 #if os(iOS) || os(macOS)
@@ -173,6 +175,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     }
     
     enum ModifierType: String {
+        case animation
         case aspectRatio = "aspect_ratio"
         case backgroundStyle = "background_style"
         case bold
@@ -186,6 +189,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case italic
         case listRowInsets = "list_row_insets"
         case listRowSeparator = "list_row_separator"
+        case matchedGeometryEffect = "matched_geometry_effect"
         case navigationTitle = "navigation_title"
         case padding
         case renameAction = "rename_action"
@@ -196,6 +200,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
     @ViewModifierBuilder
     static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch type {
+        case .animation:
+            try AnimationModifier(from: decoder)
         case .aspectRatio:
             try AspectRatioModifier(from: decoder)
         case .backgroundStyle:
@@ -222,6 +228,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try ListRowInsetsModifier(from: decoder)
         case .listRowSeparator:
             try ListRowSeparatorModifier(from: decoder)
+        case .matchedGeometryEffect:
+            try MatchedGeometryEffectModifier(from: decoder)
         case .navigationTitle:
             try NavigationTitleModifier(from: decoder)
         case .padding:
