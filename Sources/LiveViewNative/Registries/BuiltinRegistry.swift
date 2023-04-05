@@ -195,6 +195,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case renameAction = "rename_action"
         case tag
         case tint
+        case transition
     }
     
     @ViewModifierBuilder
@@ -240,6 +241,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try TagModifier(from: decoder)
         case .tint:
             try TintModifier(from: decoder)
+        case .transition:
+            try TransitionModifier(from: decoder)
         }
     }
 }
