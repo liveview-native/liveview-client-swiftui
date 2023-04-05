@@ -7,26 +7,32 @@
 
 import SwiftUI
 
-/// Applies a transition when an element is inserted or removed.
+/// Applies a transition when an element's content changes.
 ///
 /// Specify a ``transition`` to apply to the element.
 ///
 /// ```html
-/// <%= if @show do %>
-///     <Text modifiers={transition(@native, transition: :scale)}>Scaled</Text>
-/// <% end %>
+/// <Text
+///     modifiers={
+///         @native
+///             |> content_transition(transition: :numeric_text)
+///             |> animation(value: @count)
+///     }
+/// >
+///     <%= @count %>
+/// </Text>
 /// ```
 ///
-/// In this example, whenever the `<Text>` element is shown/hidden it will scale up/down.
+/// In this example, whenever the text content changes it will fade between the new numbers.
 ///
-/// See ``LiveViewNative/SwiftUI/AnyTransition`` for more details on what transitions are available.
+/// See ``LiveViewNative/SwiftUI/ContentTransition`` for more details on what content transitions are available.
 ///
 /// ## Arguments
 /// * ``transition``
 ///
 /// ## See Also
-/// ### Creating Transitions
-/// * ``LiveViewNative/SwiftUI/AnyTransition``
+/// ### Creating Content Transitions
+/// * ``LiveViewNative/SwiftUI/ContentTransition``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
