@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+/// A value that represents a side.
+///
+/// Possible values:
+/// * `top`
+/// * `leading`
+/// * `bottom`
+/// * `trailing`
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 extension Edge: Decodable {
     public init(from decoder: Decoder) throws {
         switch try decoder.singleValueContainer().decode(String.self) {

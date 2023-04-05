@@ -7,6 +7,82 @@
 
 import SwiftUI
 
+/// Configuration for the ``TransitionModifier`` modifier.
+///
+/// In their simplest form, transitions can be created with an atom. More complex transitions can have properties.
+///
+/// ```elixir
+/// :opacity
+/// {:move, [edge: :bottom]} # move in/out from the bottom edge
+/// [:scale, :opacity] # multiple transitions combined
+/// {:asymmetric, [insertion: :scale, removal: :opacity]} # different transition for insert/remove
+/// ```
+///
+/// ## Transitions
+/// Transitions with no required arguments can be represented with an atom.
+///
+/// ```elixir
+/// :opacity
+/// ```
+///
+/// To pass arguments, use a tuple with a keyword list as the second element.
+///
+/// ```elixir
+/// {:move, [edge: :bottom]}
+/// ```
+///
+/// Multiple animations can be combined by using a list.
+///
+/// ```elixir
+/// [:scale, :opacity] # scale up/down while fading in/out
+/// ```
+///
+/// A different animation can be applied to a transition by using a tuple where the first element is the transition, and the second is an animation.
+///
+/// ```elixir
+/// {:scale, :spring}
+/// ```
+///
+/// See ``LiveViewNative/SwiftUI/Animation`` for more details on creating animations.
+///
+/// ### :identity
+/// See [`SwiftUI.AnyTransition.default`](https://developer.apple.com/documentation/swiftui/anytransition/identity) for more details on this transition.
+///
+/// ### :move
+/// Arguments:
+/// * `edge` (required) - The side to move in/out from. See ``LiveViewNative/SwiftUI/Edge`` for possible values.
+///
+/// See [`SwiftUI.AnyTransition.move`](https://developer.apple.com/documentation/swiftui/anytransition/move(edge:)) for more details on this transition.
+///
+/// ### :offset
+/// Arguments:
+/// * `x` (required) - The horizontal offset
+/// * `y` (required) - The vertical offset
+///
+/// See [`SwiftUI.AnyTransition.offset`](https://developer.apple.com/documentation/swiftui/anytransition/offset(_:)) for more details on this transition.
+///
+/// ### :opacity
+/// See [`SwiftUI.AnyTransition.opacity`](https://developer.apple.com/documentation/swiftui/anytransition/opacity) for more details on this transition.
+///
+/// ### :scale
+/// Arguments:
+/// * `scale` - The scale amount in the range `0-1`
+/// * `anchor` - The ``LiveViewNative/SwiftUI/UnitPoint`` to scale from
+///
+/// See [`SwiftUI.AnyTransition.scale`](https://developer.apple.com/documentation/swiftui/anytransition/scale(scale:anchor:)) for more details on this transition.
+///
+/// ### :slide
+/// See [`SwiftUI.AnyTransition.slide`](https://developer.apple.com/documentation/swiftui/anytransition/slide) for more details on this transition.
+///
+/// ### :asymmetric
+/// Arguments:
+/// * `insertion` (required) - The transition to apply when the element is inserted
+/// * `removal` (required) - The transition to apply when the element is removed
+///
+/// See [`SwiftUI.AnyTransition.asymmetric`](https://developer.apple.com/documentation/swiftui/anytransition/asymmetric(insertion:removal:)) for more details on this transition.
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 extension AnyTransition: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

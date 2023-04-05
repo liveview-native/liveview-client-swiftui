@@ -8,6 +8,25 @@
 import SwiftUI
 
 /// Applies a transition when an element is inserted or removed.
+///
+/// Specify a ``transition`` to apply to the element.
+///
+/// ```html
+/// <%= if @show do %>
+///     <Text modifiers={transition(@native, transition: :scale)}>Scaled</Text>
+/// <% end %>
+/// ```
+///
+/// In this example, whenever the `<Text>` element is shown/hidden it will scale up/down.
+///
+/// See ``LiveViewNative/SwiftUI/AnyTransition`` for more details on what transitions are available.
+///
+/// ## Arguments
+/// * ``transition``
+///
+/// ## See Also
+/// ### Creating Transitions
+/// * ``LiveViewNative/SwiftUI/Transition``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
