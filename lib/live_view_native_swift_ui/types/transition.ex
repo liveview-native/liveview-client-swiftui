@@ -16,6 +16,21 @@ defmodule LiveViewNativeSwiftUi.Types.Transition do
     {:ok, r} = cast(removal)
     {:ok, %__MODULE__{ type: :asymmetric, properties: %{ insertion: i, removal: r } }}
   end
+  def cast({
+    :modifier,
+    [
+      active: %LiveViewNativePlatform.Context{ modifiers: active },
+      identity: %LiveViewNativePlatform.Context{ modifiers: identity }
+    ]
+  }) do
+    {:ok, %__MODULE__{
+      type: :modifier,
+      properties: %{
+        active: Phoenix.HTML.Safe.to_iodata(active) |> IO.iodata_to_binary,
+        identity: Phoenix.HTML.Safe.to_iodata(identity) |> IO.iodata_to_binary
+      }
+    }}
+  end
   def cast({value, [ {k, _} | _ ] = properties}) when is_atom(value) and is_atom(k) do
     {:ok, %__MODULE__{ type: value, properties: Enum.into(properties, %{}) }}
   end

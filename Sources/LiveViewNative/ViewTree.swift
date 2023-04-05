@@ -235,7 +235,7 @@ private struct BindingApplicator<Parent: View>: View {
     }
 }
 
-private extension View {
+extension View {
     func applyModifiers<R: RootRegistry>(_: R.Type = R.self) -> some View {
         ModifierObserver<Self, R>(parent: self)
     }

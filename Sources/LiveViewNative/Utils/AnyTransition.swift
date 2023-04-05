@@ -74,12 +74,31 @@ import SwiftUI
 /// ### :slide
 /// See [`SwiftUI.AnyTransition.slide`](https://developer.apple.com/documentation/swiftui/anytransition/slide) for more details on this transition.
 ///
+/// ### :push
+/// Arguments:
+/// * `edge` - The side to push from
+///
+/// See [`SwiftUI.AnyTransition.push`](https://developer.apple.com/documentation/swiftui/anytransition/push(from:)) for more details on this transition.
+///
 /// ### :asymmetric
 /// Arguments:
 /// * `insertion` (required) - The transition to apply when the element is inserted
 /// * `removal` (required) - The transition to apply when the element is removed
 ///
 /// See [`SwiftUI.AnyTransition.asymmetric`](https://developer.apple.com/documentation/swiftui/anytransition/asymmetric(insertion:removal:)) for more details on this transition.
+///
+/// ### :modifier
+/// Arguments:
+/// * `active` (required) - The modifier to apply when the transition is active
+/// * `identity` (required) - The modifier to apply when the transition is done
+///
+/// The arguments to this transition should be modifier stacks.
+///
+/// ```elixir
+/// {:modifier, [active: foreground_style(@native, primary: {:color, :red}), identity: foreground_style(@native, primary: {:color, :green})]}
+/// ```
+///
+/// See [`SwiftUI.AnyTransition.modifier`](https://developer.apple.com/documentation/swiftui/anytransition/modifier(active:identity:)) for more details on this transition.
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -127,6 +146,24 @@ extension AnyTransition: Decodable {
             let properties = try container.nestedContainer(keyedBy: CodingKeys.Animation.self, forKey: .properties)
             self = try properties.decode(Self.self, forKey: .transition)
                 .animation(properties.decode(Animation.self, forKey: .animation))
+        case .modifier:
+            let properties = try container.nestedContainer(keyedBy: CodingKeys.Modifier.self, forKey: .properties)
+            self = .modifier(
+                active: AppliedModifiers(try properties.decode(String.self, forKey: .active).replacingOccurrences(of: "&quot;", with: "\"")),
+                identity: AppliedModifiers(try properties.decode(String.self, forKey: .identity).replacingOccurrences(of: "&quot;", with: "\""))
+            )
+        }
+    }
+    
+    private struct AppliedModifiers: ViewModifier {
+        let data: Data
+        
+        init(_ json: String) {
+            self.data = Data(json.utf8)
+        }
+        
+        func body(content: Content) -> some View {
+            content.applyModifiers((try! JSONDecoder().decode([ModifierContainer<EmptyRegistry>].self, from: data))[...])
         }
     }
     
@@ -141,6 +178,7 @@ extension AnyTransition: Decodable {
         case asymmetric
         case combined
         case animation
+        case modifier
     }
     
     enum CodingKeys: String, CodingKey {
@@ -177,6 +215,11 @@ extension AnyTransition: Decodable {
         enum Animation: String, CodingKey {
             case transition
             case animation
+        }
+        
+        enum Modifier: String, CodingKey {
+            case active
+            case identity
         }
     }
 }
