@@ -26,7 +26,7 @@ import SwiftUI
 ///
 /// ## See Also
 /// ### Creating Transitions
-/// * ``LiveViewNative/SwiftUI/Transition``
+/// * ``LiveViewNative/SwiftUI/AnyTransition``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
