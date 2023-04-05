@@ -37,6 +37,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           navigation_title: Modifiers.NavigationTitle,
           padding: Modifiers.Padding,
           tag: Modifiers.Tag,
+          text_selection: Modifiers.TextSelection,
           tint: Modifiers.Tint,
 
           # grid
