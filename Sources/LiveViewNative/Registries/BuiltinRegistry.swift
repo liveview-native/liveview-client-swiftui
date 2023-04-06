@@ -189,6 +189,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case navigationTitle = "navigation_title"
         case padding
         case renameAction = "rename_action"
+        case rotation3DEffect = "rotation_3d_effect"
         case tag
         case tint
     }
@@ -228,6 +229,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try PaddingModifier(from: decoder)
         case .renameAction:
             try RenameActionModifier(from: decoder)
+        case .rotation3DEffect:
+            try Rotation3DEffectModifier(from: decoder)
         case .tag:
             try TagModifier(from: decoder)
         case .tint:
