@@ -197,6 +197,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case renameAction = "rename_action"
         case rotation3DEffect = "rotation_3d_effect"
         case rotationEffect = "rotation_effect"
+        case strikethrough
         case tag
         case textSelection = "text_selection"
         case tint
@@ -250,6 +251,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try Rotation3DEffectModifier(from: decoder)
         case .rotationEffect:
             try RotationEffectModifier(from: decoder)
+        case .strikethrough:
+            try StrikethroughModifier(from: decoder)
         case .tag:
             try TagModifier(from: decoder)
         case .textSelection:
