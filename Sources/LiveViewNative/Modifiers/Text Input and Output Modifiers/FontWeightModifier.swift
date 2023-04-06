@@ -7,33 +7,35 @@
 
 import SwiftUI
 
+/// Changes the font weight for child elements.
+///
+/// Pass a ``LiveViewNative/SwiftUI/Font/Weight`` to the ``weight`` argument to change the value.
+///
+/// ```html
+/// <Text modifiers={font_weight(@native, weight: :bold)}>
+///     Hello, world!
+/// </Text>
+/// ```
+///
+/// See ``LiveViewNative/SwiftUI/Font/Weight`` for more details on creating font weights.
+///
+/// ## Arguments
+/// * ``weight``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct FontWeightModifier: ViewModifier, Decodable, Equatable {
+    /// The font weight to use for child elements.
+    ///
+    /// See ``LiveViewNative/SwiftUI/Font/Weight`` for more details on creating font weights.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     private let weight: Font.Weight?
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        switch try container.decode(String.self, forKey: .weight) {
-        case "black":
-            self.weight = .black
-        case "bold":
-            self.weight = .bold
-        case "heavy":
-            self.weight = .heavy
-        case "light":
-            self.weight = .light
-        case "medium":
-            self.weight = .medium
-        case "regular":
-            self.weight = .regular
-        case "semibold":
-            self.weight = .semibold
-        case "thin":
-            self.weight = .thin
-        case "ultra_light":
-            self.weight = .ultraLight
-        default:
-            throw DecodingError.dataCorruptedError(forKey: .weight, in: container, debugDescription: "invalid value for weight")
-        }
+        self.weight = try container.decode(Font.Weight.self, forKey: .weight)
     }
     
     init(weight: Font.Weight) {
