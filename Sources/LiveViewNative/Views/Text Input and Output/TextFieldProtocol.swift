@@ -90,12 +90,12 @@ extension TextFieldProtocol {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    var textFieldStyle: TextFieldStyle {
+    var textFieldStyle: TextFieldStyle? {
         if let s = element.attributeValue(for: "text-field-style"),
            let style = TextFieldStyle(rawValue: s) {
             return style
         } else {
-            return .automatic
+            return nil
         }
     }
     
@@ -250,7 +250,7 @@ extension TextFieldProtocol {
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-enum TextFieldStyle: String {
+enum TextFieldStyle: String, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -276,7 +276,7 @@ enum TextFieldStyle: String {
 
 extension View {
     @ViewBuilder
-    func applyTextFieldStyle(_ style: TextFieldStyle) -> some View {
+    func applyTextFieldStyle(_ style: TextFieldStyle?) -> some View {
         switch style {
         case .automatic:
             self.textFieldStyle(.automatic)
@@ -290,6 +290,8 @@ extension View {
             #if os(macOS)
             self.textFieldStyle(.squareBorder)
             #endif
+        case nil:
+            self
         }
     }
     
