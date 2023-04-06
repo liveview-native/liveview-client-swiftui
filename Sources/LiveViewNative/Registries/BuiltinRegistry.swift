@@ -182,6 +182,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case gridCellUnsizedAxes = "grid_cell_unsized_axes"
         case gridColumnAlignment = "grid_column_alignment"
         case italic
+        case labelStyle = "label_style"
         case listRowInsets = "list_row_insets"
         case listRowSeparator = "list_row_separator"
         case navigationTitle = "navigation_title"
@@ -218,6 +219,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try GridColumnAlignmentModifier(from: decoder)
         case .italic:
             try ItalicModifier(from: decoder)
+        case .labelStyle:
+            try LabelStyleModifier<R>(from: decoder)
         case .listRowInsets:
             try ListRowInsetsModifier(from: decoder)
         case .listRowSeparator:

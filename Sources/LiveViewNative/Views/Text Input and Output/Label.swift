@@ -57,7 +57,7 @@ struct Label<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Attribute("label-style") private var style: LabelStyle = .automatic
+    @Attribute("label-style") private var style: LabelStyle?
     
     public var body: some View {
         SwiftUI.Label {
@@ -100,7 +100,7 @@ fileprivate enum LabelStyle: String, AttributeDecodable {
 
 fileprivate extension View {
     @ViewBuilder
-    func applyLabelStyle(_ style: LabelStyle) -> some View {
+    func applyLabelStyle(_ style: LabelStyle?) -> some View {
         switch style {
         case .iconOnly:
             self.labelStyle(.iconOnly)
@@ -110,6 +110,8 @@ fileprivate extension View {
             self.labelStyle(.titleAndIcon)
         case .automatic:
             self.labelStyle(.automatic)
+        case nil:
+            self
         }
     }
 }

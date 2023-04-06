@@ -88,13 +88,23 @@ struct ViewTreeBuilder<R: RootRegistry> {
         }
     }
     
-    @ViewBuilder
+    struct CreateView: View {
+        let element: ElementNode
+        let context: LiveContextStorage<R>
+        @Environment(\.tokenElements) private var tokenElements
+        
+        var body: some View {
+            if let tagName = R.TagName(rawValue: element.tag) {
+                R.lookup(tagName, element: element)
+            } else if let token = tokenElements[element.tag] {
+                token()
+            } else {
+                BuiltinRegistry<R>.lookup(element.tag, element)
+            }
+        }
+    }
     private func createView(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
-        if let tagName = R.TagName(rawValue: element.tag) {
-            R.lookup(tagName, element: element)
-        } else {
-            BuiltinRegistry<R>.lookup(element.tag, element)
-        } 
+        return CreateView(element: element, context: context)
     }
     
     private func applyModifiers(encoded: String?, to view: some View, element: ElementNode, context: LiveContextStorage<R>) -> some View {
@@ -264,5 +274,23 @@ func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveConte
     }
     return ForEach(elements, id: \.1) {
         ElementView<R>(element: $0.0, context: context)
+    }
+}
+
+fileprivate extension EnvironmentValues {
+    private enum TokenElementsKey: EnvironmentKey {
+        static let defaultValue = [String:() -> AnyView]()
+    }
+    var tokenElements: [String:() -> AnyView] {
+        get { self[TokenElementsKey.self] }
+        set { self[TokenElementsKey.self] = newValue }
+    }
+}
+
+extension View {
+    func tokenElements(_ elements: [String:() -> AnyView]) -> some View {
+        self.transformEnvironment(\.tokenElements) { tokenElements in
+            tokenElements.merge(elements, uniquingKeysWith: { $1 })
+        }
     }
 }
