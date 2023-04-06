@@ -73,9 +73,14 @@ struct Text<R: RootRegistry>: View {
     }
     
     public var body: SwiftUI.Text {
-        text
-            .font(effectiveFont)
-            .foregroundColor(textColor)
+        var result = text
+        if let effectiveFont {
+            result = result.font(effectiveFont)
+        }
+        if let textColor {
+            result = result.foregroundColor(textColor)
+        }
+        return result
     }
     
     private func formatDate(_ date: String) -> Date? {
