@@ -42,6 +42,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           padding: Modifiers.Padding,
           rotation_3d_effect: Modifiers.Rotation3DEffect,
           rotation_effect: Modifiers.RotationEffect,
+          strikethrough: Modifiers.Strikethrough,
           tag: Modifiers.Tag,
           text_selection: Modifiers.TextSelection,
           tint: Modifiers.Tint,
