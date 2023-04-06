@@ -32,6 +32,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           content_transition: Modifiers.ContentTransition,
           font: Modifiers.Font,
           font_weight: Modifiers.FontWeight,
+          font_width: Modifiers.FontWidth,
           foreground_style: Modifiers.ForegroundStyle,
           frame: Modifiers.Frame,
           hue_rotation: Modifiers.HueRotation,
