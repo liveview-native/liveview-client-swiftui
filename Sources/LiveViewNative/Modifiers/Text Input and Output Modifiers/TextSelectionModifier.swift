@@ -22,6 +22,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 16.0, macOS 13.0, *)
 struct TextSelectionModifier: ViewModifier, Decodable {
     /// Sets the selectability of the element.
     #if swift(>=5.8)
@@ -36,11 +37,15 @@ struct TextSelectionModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
+        #if os(iOS) || os(macOS)
         if selectable {
             content.textSelection(.enabled)
         } else {
             content.textSelection(.disabled)
         }
+        #else
+        content
+        #endif
     }
 
     enum CodingKeys: String, CodingKey {
