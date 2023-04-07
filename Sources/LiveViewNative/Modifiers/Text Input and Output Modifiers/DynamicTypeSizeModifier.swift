@@ -20,11 +20,12 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``size``: The size of the dynamic type.
+/// * ``size``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 struct DynamicTypeSizeModifier: ViewModifier, Decodable, Equatable {
+    /// The size of the dynamic type.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
