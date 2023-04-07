@@ -20,11 +20,12 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``textCase``: One of the `Text.Case` enumerations.
+/// * ``textCase``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 struct TextCaseModifier: ViewModifier, Decodable, Equatable {
+    /// One of the `Text.Case` enumerations.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
