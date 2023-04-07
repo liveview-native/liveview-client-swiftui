@@ -24,7 +24,6 @@ import SwiftUI
 #endif
 struct MonospacedDigitModifier: ViewModifier, Decodable, Equatable {
     init(from decoder: Decoder) throws {
-        self
     }
 
     func body(content: Content) -> some View {
