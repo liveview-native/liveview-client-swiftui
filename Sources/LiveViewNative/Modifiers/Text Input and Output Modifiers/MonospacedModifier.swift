@@ -21,11 +21,12 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``isActive``: A boolean that indicates whether the monospaced font should be used.
+/// * ``isActive``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 struct MonospacedModifier: ViewModifier, Decodable, Equatable {
+    /// A boolean that indicates whether the monospaced font should be used.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
