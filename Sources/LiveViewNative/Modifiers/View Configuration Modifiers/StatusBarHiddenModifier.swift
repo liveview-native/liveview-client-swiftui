@@ -20,11 +20,12 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``hidden``: A boolean indicating whether to hide the status bar.
+/// * ``hidden``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 struct StatusBarHiddenModifier: ViewModifier, Decodable, Equatable {
+    /// A boolean indicating whether to hide the status bar.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
