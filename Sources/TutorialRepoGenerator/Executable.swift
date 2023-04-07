@@ -7,6 +7,30 @@
 
 import Foundation
 
+#if os(macOS)
+private var currentProcess: Process? {
+    willSet {
+        if currentProcess != nil && newValue != nil {
+            fatalError("Executable cannot be used concurrently")
+        }
+    }
+}
+private var hasSetupSignalHandlers = false
+private func setupSignalHandlers() {
+    guard !hasSetupSignalHandlers else { return }
+    hasSetupSignalHandlers = true
+    signal(SIGINT, handleSignal)
+    signal(SIGTERM, handleSignal)
+    signal(SIGKILL, handleSignal)
+}
+private func handleSignal(_ signal: Int32) {
+    if let currentProcess {
+        kill(currentProcess.processIdentifier, SIGKILL)
+    }
+    exit(1)
+}
+#endif
+
 /// A type that represents a command that can be called with arguments.
 @dynamicMemberLookup
 @dynamicCallable
@@ -33,9 +57,15 @@ struct Executable {
         process.executableURL = executableURL
         process.currentDirectoryURL = currentDirectoryURL
         process.arguments = argumentSet.arguments
+        process.qualityOfService = .userInitiated
+        
+        currentProcess = process
+        setupSignalHandlers()
 
         try process.run()
         process.waitUntilExit()
+        
+        currentProcess = nil
         
         guard process.terminationReason == .exit && process.terminationStatus == 0 else {
             throw ExecutableError("\(process.terminationReason):\(process.terminationStatus)")
