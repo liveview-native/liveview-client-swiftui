@@ -6,6 +6,14 @@ if [ ! -f "Package.swift" ]; then
 	exit 1
 fi
 
+if pgrep -x "Xcode" > /dev/null; then
+	echo -ne "\x1B[1mQuitting Xcode before running this script is recommended.\x1B[0m "
+	read -p "Quit now (y/n)? " quit_xcode
+	if [[ $quit_xcode =~ ^[yY] ]]; then
+		osascript -e 'quit app "Xcode"' || :
+	fi
+fi
+
 verbose=0
 
 while getopts "v" opt; do
