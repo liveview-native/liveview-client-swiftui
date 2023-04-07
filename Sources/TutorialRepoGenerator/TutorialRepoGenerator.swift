@@ -90,8 +90,7 @@ struct TutorialRepoGenerator: ParsableCommand {
                 try xcodebuild(
                     scheme: Project.app.path,
                     target: Project.app.path,
-                    sdk: "iphonesimulator16.2",
-                    destination: "OS=16.2,name=iPhone 14 Pro",
+                    destination: "generic/platform=iOS",
                     derivedDataPath: "DerivedData",
                     CODE_SIGN_IDENTITY: "",
                     CODE_SIGNING_REQUIRED: "NO"
