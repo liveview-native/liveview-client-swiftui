@@ -24,10 +24,19 @@ import SwiftUI
 /// ## Arguments
 /// * ``alignment``
 /// * ``content``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct BackgroundModifier<R: RootRegistry>: ViewModifier, Decodable {
     @ObservedElement private var element
     @LiveContext<R> private var context
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     let alignment: Alignment
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     let content: String
 
     init(from decoder: Decoder) throws {
