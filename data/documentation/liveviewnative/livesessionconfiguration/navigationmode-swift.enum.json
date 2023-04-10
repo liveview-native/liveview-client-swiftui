@@ -1,452 +1,472 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Possible modes for live view navigation.",
-      "type": "text"
+      "text" : "Possible modes for live view navigation.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "enum"
+        "kind" : "keyword",
+        "text" : "enum"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "NavigationMode"
+        "kind" : "identifier",
+        "text" : "NavigationMode"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "NavigationMode"
+        "kind" : "identifier",
+        "text" : "NavigationMode"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Enumeration",
-    "symbolKind": "enum",
-    "title": "LiveSessionConfiguration.NavigationMode"
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "LiveSessionConfiguration.NavigationMode"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "enum"
+              "kind" : "keyword",
+              "text" : "enum"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "NavigationMode"
+              "kind" : "identifier",
+              "text" : "NavigationMode"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration" : {
+      "abstract" : [
         {
-          "text": "An object that configures the behavior of a ",
-          "type": "text"
+          "text" : "An object that configures the behavior of a ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration"
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum" : {
+      "abstract" : [
         {
-          "text": "Possible modes for live view navigation.",
-          "type": "text"
+          "text" : "Possible modes for live view navigation.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "enum"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "NavigationMode"
+          "kind" : "identifier",
+          "text" : "NavigationMode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "NavigationMode"
+          "kind" : "identifier",
+          "text" : "NavigationMode"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration.NavigationMode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum"
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration.NavigationMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Tab": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/disabled" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "struct"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "Tab"
+          "text" : "Navigation is entirely disabled. The live view will stay on the URL it was initially connected to.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Tab",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "Tab"
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "disabled"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration.NavigationMode.Tab",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tab"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/disabled",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration.NavigationMode.disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum\/disabled"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/disabled": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/enabled" : {
+      "abstract" : [
         {
-          "text": "Navigation is entirely disabled. The live view will stay on the URL it was initially connected to.",
-          "type": "text"
+          "text" : "Navigation is fully enabled. Both replace and push redirects are allowed.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "case"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "disabled"
+          "kind" : "identifier",
+          "text" : "enabled"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/disabled",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionConfiguration.NavigationMode.disabled",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/disabled"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/enabled",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration.NavigationMode.enabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum\/enabled"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/enabled": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/replaceOnly" : {
+      "abstract" : [
         {
-          "text": "Navigation is fully enabled. Both replace and push redirects are allowed.",
-          "type": "text"
-        }
-      ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "case"
+          "text" : "Only live redirects with ",
+          "type" : "text"
         },
         {
-          "kind": "text",
-          "text": " "
+          "code" : "replace: true",
+          "type" : "codeVoice"
         },
         {
-          "kind": "identifier",
-          "text": "enabled"
+          "text" : " are allowed.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/enabled",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionConfiguration.NavigationMode.enabled",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/enabled"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "replaceOnly"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/replaceOnly",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration.NavigationMode.replaceOnly",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum\/replaceonly"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/replaceOnly": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/splitView" : {
+      "abstract" : [
         {
-          "text": "Only live redirects with ",
-          "type": "text"
+          "text" : "Navigation is fully enabled and uses a ",
+          "type" : "text"
         },
         {
-          "code": "replace: true",
-          "type": "codeVoice"
+          "code" : "NavigationSplitView",
+          "type" : "codeVoice"
         },
         {
-          "text": " are allowed.",
-          "type": "text"
+          "text" : " for the UI.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "case"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "replaceOnly"
+          "kind" : "identifier",
+          "text" : "splitView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/replaceOnly",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionConfiguration.NavigationMode.replaceOnly",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/replaceonly"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/splitView",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration.NavigationMode.splitView",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum\/splitview"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/splitView": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/Tab" : {
+      "abstract" : [
         {
-          "text": "Navigation is fully enabled and uses a ",
-          "type": "text"
+          "text" : "A top level tab for use with the ",
+          "type" : "text"
         },
         {
-          "code": "NavigationSplitView",
-          "type": "codeVoice"
+          "code" : ".tabView",
+          "type" : "codeVoice"
         },
         {
-          "text": " for the UI.",
-          "type": "text"
+          "text" : " navigation mode.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "splitView"
+          "kind" : "identifier",
+          "text" : "Tab"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/splitView",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionConfiguration.NavigationMode.splitView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/splitview"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/Tab",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Tab"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration.NavigationMode.Tab",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum\/tab"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/tabView(tabs:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/tabView(tabs:)" : {
+      "abstract" : [
         {
-          "text": "Navigation is fully enabled and uses a ",
-          "type": "text"
+          "text" : "Navigation is fully enabled and uses a ",
+          "type" : "text"
         },
         {
-          "code": "TabView",
-          "type": "codeVoice"
+          "code" : "TabView",
+          "type" : "codeVoice"
         },
         {
-          "text": " to switch between routes.",
-          "type": "text"
+          "text" : " with the given tabs at the top level.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "case"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "tabView"
+          "kind" : "identifier",
+          "text" : "tabView"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "tabs"
+          "kind" : "externalParam",
+          "text" : "tabs"
         },
         {
-          "kind": "text",
-          "text": ": ["
+          "kind" : "text",
+          "text" : ": ["
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO3TabV",
-          "text": "Tab"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO3TabV",
+          "text" : "Tab"
         },
         {
-          "kind": "text",
-          "text": "])"
+          "kind" : "text",
+          "text" : "])"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/tabView(tabs:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionConfiguration.NavigationMode.tabView(tabs:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum/tabview(tabs:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/tabView(tabs:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration.NavigationMode.tabView(tabs:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum\/tabview(tabs:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
         {
-          "text": "The session coordinator object handles the initial connection, as well as navigation.",
-          "type": "text"
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator"
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "topicSections": [
+  "sections" : [
+
+  ],
+  "topicSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/Tab"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/Tab"
       ],
-      "title": "Structures"
+      "title" : "Structures"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/disabled",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/enabled",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/replaceOnly",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/splitView",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum/tabView(tabs:)"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/disabled",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/enabled",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/replaceOnly",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/splitView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum\/tabView(tabs:)"
       ],
-      "title": "Enumeration Cases"
+      "title" : "Enumeration Cases"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

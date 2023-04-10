@@ -1,833 +1,1038 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "The context provides information at initialization-time to views in a LiveView.",
-      "type": "text"
+      "text" : "The context provides additional information to elements within a live view.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A7ContextV",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A7ContextV",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "struct"
+        "kind" : "keyword",
+        "text" : "struct"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "LiveContext"
+        "kind" : "identifier",
+        "text" : "LiveContext"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "LiveContext"
+        "kind" : "identifier",
+        "text" : "LiveContext"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Structure",
-    "symbolKind": "struct",
-    "title": "LiveContext"
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "LiveContext"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "struct"
+              "kind" : "attribute",
+              "text" : "@propertyWrapper"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "LiveContext"
+              "kind" : "keyword",
+              "text" : "struct"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "genericParameter",
-              "text": "R"
+              "kind" : "identifier",
+              "text" : "LiveContext"
             },
             {
-              "kind": "text",
-              "text": "> "
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "keyword",
-              "text": "where"
+              "kind" : "genericParameter",
+              "text" : "R"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : "> "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "R"
+              "kind" : "keyword",
+              "text" : "where"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative12RootRegistryP",
-              "text": "RootRegistry"
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This property wrapper uses the SwiftUI environment to provide the context information, so you do not initialize it yourself.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "struct MyElement<R: RootRegistry>: View {",
+            "    @LiveContext<R> var context",
+            "    var body: some View {",
+            "        Text(\"My URL is \\(context.url)\")",
+            "    }",
+            "}"
+          ],
+          "syntax" : "swift",
+          "type" : "codeListing"
+        }
+      ],
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP",
+      "title" : "SwiftUI.DynamicProperty",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "text": "Use the ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": " protocol to define how DOM elements are converted to SwiftUI views.",
-          "type": "text"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement",
-      "kind": "article",
-      "role": "article",
-      "title": "Adding Custom Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/addcustomelement"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute" : {
+      "abstract" : [
         {
-          "text": "Use the ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": " protocol to define how custom modifiers in the DOM are handled.",
-          "type": "text"
+          "text" : "A property wrapper that decodes an attribute of an element.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier",
-      "kind": "article",
-      "role": "article",
-      "title": "Adding Custom Modifiers",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/addcustommodifier"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Attribute"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Attribute"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Attribute",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attribute"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
         {
-          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
-          "type": "text"
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "role": "symbol",
-      "title": "CustomRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry"
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode" : {
+      "abstract" : [
         {
-          "text": "The context provides information at initialization-time to views in a LiveView.",
-          "type": "text"
+          "text" : "A wrapper for an element-containing DOM node and its associated data.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveContext"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveContext"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "role": "symbol",
-      "title": "LiveContext",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext"
+      "role" : "symbol",
+      "title" : "ElementNode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event" : {
+      "abstract" : [
         {
-          "text": "Builds a view representing the children of the current element in the current context.",
-          "type": "text"
+          "text" : "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "buildChildren"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "externalParam",
-          "text": "of"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-          "text": "ElementNode"
-        },
-        {
-          "kind": "text",
-          "text": ") -> "
-        },
-        {
-          "kind": "keyword",
-          "text": "some"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI4ViewP",
-          "text": "View"
+          "kind" : "identifier",
+          "text" : "Event"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "buildChildren(of:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/buildchildren(of:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Event"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Event",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:withTagName:namespace:includeDefaultSlot:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding" : {
+      "abstract" : [
         {
-          "text": "Builds a view representing only the children of the element which have the given tag name.",
-          "type": "text"
+          "text" : "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "buildChildren"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "externalParam",
-          "text": "of"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-          "text": "ElementNode"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "withTagName"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "namespace"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": "?, "
-        },
-        {
-          "kind": "externalParam",
-          "text": "includeDefaultSlot"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:Sb",
-          "text": "Bool"
-        },
-        {
-          "kind": "text",
-          "text": ") -> "
-        },
-        {
-          "kind": "keyword",
-          "text": "some"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI4ViewP",
-          "text": "View"
+          "kind" : "identifier",
+          "text" : "LiveBinding"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/buildchildren(of:withtagname:namespace:includedefaultslot:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveBinding"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveBinding",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livebinding"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext" : {
+      "abstract" : [
         {
-          "text": "Builds a view representing the given element in the current context.",
-          "type": "text"
+          "text" : "The context provides additional information to elements within a live view.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "buildElement"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-          "text": "ElementNode"
-        },
-        {
-          "kind": "text",
-          "text": ") -> "
-        },
-        {
-          "kind": "keyword",
-          "text": "some"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI4ViewP",
-          "text": "View"
+          "kind" : "identifier",
+          "text" : "LiveContext"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "buildElement(_:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/buildelement(_:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveContext"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveContext",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:)" : {
+      "abstract" : [
         {
-          "text": "The coordinator corresponding to the live view in which thie view is being constructed.",
-          "type": "text"
+          "text" : "Builds a view representing the children of the current element in the current context.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "let"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "coordinator"
+          "kind" : "identifier",
+          "text" : "buildChildren"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0aB11CoordinatorC",
-          "text": "LiveViewCoordinator"
+          "kind" : "externalParam",
+          "text" : "of"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A7ContextV1Rxmfp",
-          "text": "R"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+          "text" : "ElementNode"
         },
         {
-          "kind": "text",
-          "text": ">"
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "coordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/coordinator"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildChildren(of:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/buildchildren(of:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/formModel": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:withTagName:namespace:includeDefaultSlot:)" : {
+      "abstract" : [
         {
-          "text": "The model of the nearest ancestor ",
-          "type": "text"
-        },
-        {
-          "code": "<live-form>",
-          "type": "codeVoice"
-        },
-        {
-          "text": " element, or ",
-          "type": "text"
-        },
-        {
-          "code": "nil",
-          "type": "codeVoice"
-        },
-        {
-          "text": " if there is no such element.",
-          "type": "text"
+          "text" : "Builds a view representing only the children of the element which have the given tag name.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "formModel"
+          "kind" : "identifier",
+          "text" : "buildChildren"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9FormModelC",
-          "text": "FormModel"
+          "kind" : "externalParam",
+          "text" : "of"
         },
         {
-          "kind": "text",
-          "text": "?"
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+          "text" : "ElementNode"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "withTagName"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "namespace"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?, "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "includeDefaultSlot"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/formModel",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "formModel",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/formmodel"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/buildchildren(of:withtagname:namespace:includedefaultslot:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/hasChild(of:withTagName:namespace:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildElement(_:)" : {
+      "abstract" : [
         {
-          "text": "Checks whether the element has any children with the given tag.",
-          "type": "text"
+          "text" : "Builds a view representing the given element in the current context.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "hasChild"
+          "kind" : "identifier",
+          "text" : "buildElement"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "of"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+          "text" : "ElementNode"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ") -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-          "text": "ElementNode"
+          "kind" : "keyword",
+          "text" : "some"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "externalParam",
-          "text": "withTagName"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "namespace"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": "?) -> "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:Sb",
-          "text": "Bool"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/hasChild(of:withTagName:namespace:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "hasChild(of:withTagName:namespace:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/haschild(of:withtagname:namespace:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildElement(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildElement(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/buildelement(_:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/url": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/coordinator" : {
+      "abstract" : [
         {
-          "text": "The URL of the live view this context belongs to.",
-          "type": "text"
+          "text" : "The coordinator corresponding to the live view in which thie view is being constructed.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "let"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "url"
+          "kind" : "identifier",
+          "text" : "coordinator"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:10Foundation3URLV",
-          "text": "URL"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0aB11CoordinatorC",
+          "text" : "LiveViewCoordinator"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A7ContextV1Rxmfp",
+          "text" : "R"
+        },
+        {
+          "kind" : "text",
+          "text" : ">"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/url",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "url",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/url"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/coordinator",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "coordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/coordinator"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
-      "abstract": [
-        {
-          "text": "The session coordinator object handles the initial connection, as well as navigation.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/DynamicProperty-Implementations" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "class"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/DynamicProperty-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "DynamicProperty Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/dynamicproperty-implementations"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasChild(of:withTagName:namespace:)" : {
+      "abstract" : [
         {
-          "text": "A root registry is a ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": " type that can be used directly as the registry for a ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": ".",
-          "type": "text"
+          "text" : "Checks whether the element has any children with the given tag.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "RootRegistry"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+          "kind" : "identifier",
+          "text" : "hasChild"
+        },
         {
-          "kind": "identifier",
-          "text": "RootRegistry"
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "of"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+          "text" : "ElementNode"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "withTagName"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "namespace"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?) -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
         }
       ],
-      "role": "symbol",
-      "title": "RootRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/rootregistry"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasChild(of:withTagName:namespace:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "hasChild(of:withTagName:namespace:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/haschild(of:withtagname:namespace:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/init()" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "()"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/init()",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init()",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/init()"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/url" : {
+      "abstract" : [
+        {
+          "text" : "The URL of the live view this context belongs to.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "url"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation3URLV",
+          "text" : "URL"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/url",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "url",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/url"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/wrappedValue" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "wrappedValue"
+        },
+        {
+          "kind" : "text",
+          "text" : ": `Self`"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/wrappedValue",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "wrappedValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/wrappedvalue"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement" : {
+      "abstract" : [
+        {
+          "text" : "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ObservedElement"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ObservedElement"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ObservedElement",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
-  },
-  "sections": [],
-  "seeAlsoSections": [
+  "relationshipsSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement",
-        "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP"
       ],
-      "title": "Custom DOM Elements and Attributes"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "topicSections": [
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/coordinator",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/formModel",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/url"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding"
       ],
-      "title": "Instance Properties"
+      "title" : "Working with the DOM"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/init()"
+      ],
+      "title" : "Initializers"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/hasChild(of:withTagName:namespace:)"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/coordinator",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/url",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/wrappedValue"
       ],
-      "title": "Instance Methods"
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildElement(_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasChild(of:withTagName:namespace:)"
+      ],
+      "title" : "Instance Methods"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/DynamicProperty-Implementations"
+      ],
+      "title" : "Default Implementations"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livecontext"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livecontext"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

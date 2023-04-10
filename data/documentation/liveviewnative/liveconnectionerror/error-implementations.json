@@ -1,121 +1,170 @@
 {
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/Error-Implementations"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/Error-Implementations"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "collectionGroup",
-    "title": "Error Implementations"
+    "role" : "collectionGroup",
+    "title" : "Error Implementations"
   },
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "enum"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveConnectionError"
+          "text" : "An error that occurred when connecting to a live view.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "LiveConnectionError"
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveConnectionError"
         }
       ],
-      "role": "symbol",
-      "title": "LiveConnectionError",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveconnectionerror"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveConnectionError"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveConnectionError",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/localizedDescription": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/localizedDescription" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "localizedDescription"
+          "kind" : "identifier",
+          "text" : "localizedDescription"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/localizedDescription",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "localizedDescription",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveconnectionerror/localizeddescription"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/localizedDescription",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "localizedDescription",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/localizeddescription"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "topicSections": [
+  "sections" : [
+
+  ],
+  "topicSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/localizedDescription"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/localizedDescription"
       ],
-      "title": "Instance Properties"
+      "title" : "Instance Properties"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/liveconnectionerror/error-implementations"
+      "paths" : [
+        "\/documentation\/liveviewnative\/liveconnectionerror\/error-implementations"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

@@ -1,0 +1,332 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:m:s:e:s:SS14LiveViewNativeE4fromSS0abC4Core9AttributeVSg_tKcfc",
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Extended Module",
+    "symbolKind" : "extension",
+    "title" : "Swift"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
+      "abstract" : [
+        {
+          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "Swift",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Bool" : {
+      "abstract" : [
+        {
+          "text" : "Decodes a boolean from an attribute.",
+          "type" : "text"
+        },
+        {
+          "text" : " ",
+          "type" : "text"
+        },
+        {
+          "text" : "The value is ",
+          "type" : "text"
+        },
+        {
+          "code" : "true",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " if the attribute is present (regardless of value) and ",
+          "type" : "text"
+        },
+        {
+          "code" : "false",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " otherwise.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Bool",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Bool"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Bool",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/bool"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Double" : {
+      "abstract" : [
+        {
+          "text" : "Decodes a double from an attribute, if it is present.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Sd",
+          "text" : "Double"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Double",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Double"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Double",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/double"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Int" : {
+      "abstract" : [
+        {
+          "text" : "Decodes an integer from an attribute, if it is present.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Si",
+          "text" : "Int"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Int",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Int"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Int",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/int"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Optional" : {
+      "abstract" : [
+        {
+          "text" : "Decodes an optional value (where the wrapped type is itself ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ") type from an attribute.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Sq",
+          "text" : "Optional"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Optional",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Optional"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Optional",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/optional"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String" : {
+      "abstract" : [
+        {
+          "text" : "Decodes a string from an attribute, if the attribute is present.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "String"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "String",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/string"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Bool",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Double",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Int",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String"
+      ],
+      "title" : "Extended Structures"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Optional"
+      ],
+      "title" : "Extended Enumerations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/swift"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

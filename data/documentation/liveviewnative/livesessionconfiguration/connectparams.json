@@ -1,327 +1,334 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "A closure that is invoked by the coordinator to get the parameters that should be sent to the server when the live view connects.",
-      "type": "text"
+      "text" : "A closure that is invoked by the coordinator to get the parameters that should be sent to the server when the live view connects.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/connectParams"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/connectParams"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A20SessionConfigurationV13connectParamsSDySSypG10Foundation3URLVcSgvp",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A20SessionConfigurationV13connectParamsSDySSypG10Foundation3URLVcSgvp",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "var"
+        "kind" : "keyword",
+        "text" : "var"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "connectParams"
+        "kind" : "identifier",
+        "text" : "connectParams"
       },
       {
-        "kind": "text",
-        "text": ": (("
+        "kind" : "text",
+        "text" : ": (("
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:10Foundation3URLV",
-        "text": "URL"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:10Foundation3URLV",
+        "text" : "URL"
       },
       {
-        "kind": "text",
-        "text": ") -> ["
+        "kind" : "text",
+        "text" : ") -> ["
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:SS",
-        "text": "String"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
       },
       {
-        "kind": "text",
-        "text": " : "
+        "kind" : "text",
+        "text" : " : "
       },
       {
-        "kind": "keyword",
-        "text": "Any"
+        "kind" : "keyword",
+        "text" : "Any"
       },
       {
-        "kind": "text",
-        "text": "])?"
+        "kind" : "text",
+        "text" : "])?"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Property",
-    "symbolKind": "property",
-    "title": "connectParams"
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "connectParams"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "var"
+              "kind" : "keyword",
+              "text" : "var"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "connectParams"
+              "kind" : "identifier",
+              "text" : "connectParams"
             },
             {
-              "kind": "text",
-              "text": ": (("
+              "kind" : "text",
+              "text" : ": (("
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:10Foundation3URLV",
-              "text": "URL"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:10Foundation3URLV",
+              "text" : "URL"
             },
             {
-              "kind": "text",
-              "text": ") -> ["
+              "kind" : "text",
+              "text" : ") -> ["
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SS",
-              "text": "String"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "kind": "keyword",
-              "text": "Any"
+              "kind" : "keyword",
+              "text" : "Any"
             },
             {
-              "kind": "text",
-              "text": "])?"
+              "kind" : "text",
+              "text" : "])?"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "discussion",
-          "level": 2,
-          "text": "Discussion",
-          "type": "heading"
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "The closure receives the URL of the live view being connected to. If live navigation is performed, it will be invoked multiple times with different URLs.",
-              "type": "text"
+              "text" : "The closure receives the URL of the live view being connected to. If live navigation is performed, it will be invoked multiple times with different URLs.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "By default, no connection params are provided.",
-              "type": "text"
+              "text" : "By default, no connection params are provided.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration" : {
+      "abstract" : [
         {
-          "text": "An object that configures the behavior of a ",
-          "type": "text"
+          "text" : "An object that configures the behavior of a ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration"
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/connectParams": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/connectParams" : {
+      "abstract" : [
         {
-          "text": "A closure that is invoked by the coordinator to get the parameters that should be sent to the server when the live view connects.",
-          "type": "text"
+          "text" : "A closure that is invoked by the coordinator to get the parameters that should be sent to the server when the live view connects.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "connectParams"
+          "kind" : "identifier",
+          "text" : "connectParams"
         },
         {
-          "kind": "text",
-          "text": ": (("
+          "kind" : "text",
+          "text" : ": (("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:10Foundation3URLV",
-          "text": "URL"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation3URLV",
+          "text" : "URL"
         },
         {
-          "kind": "text",
-          "text": ") -> ["
+          "kind" : "text",
+          "text" : ") -> ["
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
         },
         {
-          "kind": "text",
-          "text": " : "
+          "kind" : "text",
+          "text" : " : "
         },
         {
-          "kind": "keyword",
-          "text": "Any"
+          "kind" : "keyword",
+          "text" : "Any"
         },
         {
-          "kind": "text",
-          "text": "])?"
+          "kind" : "text",
+          "text" : "])?"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/connectParams",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "connectParams",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/connectparams"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/connectParams",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "connectParams",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/connectparams"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
         {
-          "text": "The session coordinator object handles the initial connection, as well as navigation.",
-          "type": "text"
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator"
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livesessionconfiguration/connectparams"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livesessionconfiguration\/connectparams"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

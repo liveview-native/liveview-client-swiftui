@@ -1,185 +1,278 @@
 {
-  "hierarchy": {
-    "paths": [
+  "abstract" : [
+    {
+      "text" : "The attribute had a value that couldn’t be decoded.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/badValue(_:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/badValue(_:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative22AttributeDecodingErrorO8badValueyACypXpcACmF",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative22AttributeDecodingErrorO8badValueyACypXpcACmF",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "case"
+        "kind" : "keyword",
+        "text" : "case"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "badValue"
+        "kind" : "identifier",
+        "text" : "badValue"
       },
       {
-        "kind": "text",
-        "text": "("
+        "kind" : "text",
+        "text" : "("
       },
       {
-        "kind": "keyword",
-        "text": "Any"
+        "kind" : "keyword",
+        "text" : "Any"
       },
       {
-        "kind": "text",
-        "text": ".Type)"
+        "kind" : "text",
+        "text" : ".Type)"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Case",
-    "symbolKind": "case",
-    "title": "AttributeDecodingError.badValue(_:)"
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "AttributeDecodingError.badValue(_:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "case"
+              "kind" : "keyword",
+              "text" : "case"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "badValue"
+              "kind" : "identifier",
+              "text" : "badValue"
             },
             {
-              "kind": "text",
-              "text": "("
+              "kind" : "text",
+              "text" : "("
             },
             {
-              "kind": "keyword",
-              "text": "Any"
+              "kind" : "keyword",
+              "text" : "Any"
             },
             {
-              "kind": "text",
-              "text": ".Type)"
+              "kind" : "text",
+              "text" : ".Type)"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "enum"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "AttributeDecodingError"
+          "text" : "A property wrapper that decodes an attribute of an element.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "AttributeDecodingError"
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Attribute"
         }
       ],
-      "role": "symbol",
-      "title": "AttributeDecodingError",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodingerror"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Attribute"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Attribute",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attribute"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/badValue(_:)": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "case"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "badValue"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "keyword",
-          "text": "Any"
-        },
-        {
-          "kind": "text",
-          "text": ".Type)"
+          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/badValue(_:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "AttributeDecodingError.badValue(_:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodingerror/badvalue(_:)"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError" : {
+      "abstract" : [
+        {
+          "text" : "An error encountered when converting a value from an attribute.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodingError"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodingError"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodingError",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodingerror"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/badValue(_:)" : {
+      "abstract" : [
+        {
+          "text" : "The attribute had a value that couldn’t be decoded.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "badValue"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "keyword",
+          "text" : "Any"
+        },
+        {
+          "kind" : "text",
+          "text" : ".Type)"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/badValue(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "AttributeDecodingError.badValue(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodingerror\/badvalue(_:)"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/attributedecodingerror/badvalue(_:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/attributedecodingerror\/badvalue(_:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

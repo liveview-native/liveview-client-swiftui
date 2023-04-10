@@ -1,235 +1,242 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.",
-      "type": "text"
+      "text" : "The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/urlSession"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/urlSession"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A20SessionConfigurationV03urlD0So12NSURLSessionCvp",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A20SessionConfigurationV03urlD0So12NSURLSessionCvp",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "var"
+        "kind" : "keyword",
+        "text" : "var"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "urlSession"
+        "kind" : "identifier",
+        "text" : "urlSession"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "c:objc(cs)NSURLSession",
-        "text": "URLSession"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:objc(cs)NSURLSession",
+        "text" : "URLSession"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Property",
-    "symbolKind": "property",
-    "title": "urlSession"
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "urlSession"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "var"
+              "kind" : "keyword",
+              "text" : "var"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "urlSession"
+              "kind" : "identifier",
+              "text" : "urlSession"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "c:objc(cs)NSURLSession",
-              "text": "URLSession"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:objc(cs)NSURLSession",
+              "text" : "URLSession"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration" : {
+      "abstract" : [
         {
-          "text": "An object that configures the behavior of a ",
-          "type": "text"
+          "text" : "An object that configures the behavior of a ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration"
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/urlSession": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/urlSession" : {
+      "abstract" : [
         {
-          "text": "The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.",
-          "type": "text"
+          "text" : "The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "urlSession"
+          "kind" : "identifier",
+          "text" : "urlSession"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "c:objc(cs)NSURLSession",
-          "text": "URLSession"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "c:objc(cs)NSURLSession",
+          "text" : "URLSession"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/urlSession",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "urlSession",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/urlsession"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/urlSession",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "urlSession",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/urlsession"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
         {
-          "text": "The session coordinator object handles the initial connection, as well as navigation.",
-          "type": "text"
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator"
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livesessionconfiguration/urlsession"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livesessionconfiguration\/urlsession"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

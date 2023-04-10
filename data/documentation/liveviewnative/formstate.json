@@ -1,974 +1,980 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "A property wrapper that stores the primary value of a form element.",
-      "type": "text"
+      "text" : "A property wrapper that stores the primary value of a form element.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormState"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative9FormStateV",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative9FormStateV",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "struct"
+        "kind" : "keyword",
+        "text" : "struct"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "FormState"
+        "kind" : "identifier",
+        "text" : "FormState"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "FormState"
+        "kind" : "identifier",
+        "text" : "FormState"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Structure",
-    "symbolKind": "struct",
-    "title": "FormState"
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "FormState"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "attribute",
-              "text": "@propertyWrapper"
+              "kind" : "attribute",
+              "text" : "@propertyWrapper"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "keyword",
-              "text": "struct"
+              "kind" : "keyword",
+              "text" : "struct"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "FormState"
+              "kind" : "identifier",
+              "text" : "FormState"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "genericParameter",
-              "text": "Value"
+              "kind" : "genericParameter",
+              "text" : "Value"
             },
             {
-              "kind": "text",
-              "text": "> "
+              "kind" : "text",
+              "text" : "> "
             },
             {
-              "kind": "keyword",
-              "text": "where"
+              "kind" : "keyword",
+              "text" : "where"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "Value"
+              "kind" : "typeIdentifier",
+              "text" : "Value"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative9FormValueP",
-              "text": "FormValue"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative9FormValueP",
+              "text" : "FormValue"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "overview",
-          "level": 2,
-          "text": "Overview",
-          "type": "heading"
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "This property wrapper represents the data that is considered the “value” of a form element (such as the string in a text field, or the state of a checkbox).",
-              "type": "text"
+              "text" : "This property wrapper represents the data that is considered the “value” of a form element (such as the string in a text field, or the state of a checkbox).",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "Additional data that’s tied to the form element, but is not the primary value should use SwiftUI’s ",
-              "type": "text"
+              "text" : "Additional data that’s tied to the form element, but is not the primary value should use SwiftUI’s ",
+              "type" : "text"
             },
             {
-              "code": "@State",
-              "type": "codeVoice"
+              "code" : "@State",
+              "type" : "codeVoice"
             },
             {
-              "text": " property wrapper.",
-              "type": "text"
+              "text" : " property wrapper.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "anchor": "Value-Storage",
-          "level": 3,
-          "text": "Value Storage",
-          "type": "heading"
+          "anchor" : "Value-Storage",
+          "level" : 3,
+          "text" : "Value Storage",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "When a ",
-              "type": "text"
+              "text" : "When a ",
+              "type" : "text"
             },
             {
-              "code": "value-binding",
-              "type": "codeVoice"
+              "code" : "value-binding",
+              "type" : "codeVoice"
             },
             {
-              "text": " attribute is provided on the element, the value of that attributed is treated as the name of a ",
-              "type": "text"
+              "text" : " attribute is provided on the element, the value of that attributed is treated as the name of a ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
-              "isActive": true,
-              "type": "reference"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text": " to use as the value storage.",
-              "type": "text"
+              "text" : " to use as the value storage.",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
-              "isActive": true,
-              "type": "reference"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text": " is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.",
-              "type": "text"
+              "text" : " is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "When the element this properrty wrapper is placed on is located of inside a ",
-              "type": "text"
+              "text" : "When the element this properrty wrapper is placed on is located of inside a ",
+              "type" : "text"
             },
             {
-              "code": "<live-form>",
-              "type": "codeVoice"
+              "code" : "<live-form>",
+              "type" : "codeVoice"
             },
             {
-              "text": " and it has a ",
-              "type": "text"
+              "text" : " and it has a ",
+              "type" : "text"
             },
             {
-              "code": "name",
-              "type": "codeVoice"
+              "code" : "name",
+              "type" : "codeVoice"
             },
             {
-              "text": " attribute, the value will be stored on that form’s ",
-              "type": "text"
+              "text" : " attribute, the value will be stored on that form’s ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-              "isActive": true,
-              "type": "reference"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text": ".",
-              "type": "text"
+              "text" : ".",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "The key used in the form model is the element’s ",
-              "type": "text"
+              "text" : "The key used in the form model is the element’s ",
+              "type" : "text"
             },
             {
-              "code": "name",
-              "type": "codeVoice"
+              "code" : "name",
+              "type" : "codeVoice"
             },
             {
-              "text": " attribute.",
-              "type": "text"
+              "text" : " attribute.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "If the element is not located inside of a form, the value will be stored directly by the property wrapper.",
-              "type": "text"
+              "text" : "If the element is not located inside of a form, the value will be stored directly by the property wrapper.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "In all three cases, ",
-              "type": "text"
+              "text" : "In all three cases, ",
+              "type" : "text"
             },
             {
-              "code": "FormState",
-              "type": "codeVoice"
+              "code" : "FormState",
+              "type" : "codeVoice"
             },
             {
-              "text": " uses the nearest ancestor DOM element, following the semantics of ",
-              "type": "text"
+              "text" : " uses the nearest ancestor DOM element, following the semantics of ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
-              "isActive": true,
-              "type": "reference"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text": ".",
-              "type": "text"
+              "text" : ".",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "See those docs for more information about how the element is obtained.",
-              "type": "text"
+              "text" : "See those docs for more information about how the element is obtained.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "anchor": "Default-Value",
-          "level": 3,
-          "text": "Default Value",
-          "type": "heading"
+          "anchor" : "Default-Value",
+          "level" : 3,
+          "text" : "Default Value",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "If the value is using a ",
-              "type": "text"
+              "text" : "If the value is using a ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
-              "isActive": true,
-              "type": "reference"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text": ", the default value of the binding will be provided by the server outside of the element.",
-              "type": "text"
+              "text" : ", the default value of the binding will be provided by the server outside of the element.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Otherwise, when the value is accessed for the first time, the framework will try to use the element’s ",
-              "type": "text"
+              "text" : "Otherwise, when the value is accessed for the first time, the framework will try to use the element’s ",
+              "type" : "text"
             },
             {
-              "code": "value",
-              "type": "codeVoice"
+              "code" : "value",
+              "type" : "codeVoice"
             },
             {
-              "text": " attribute, if possible.",
-              "type": "text"
+              "text" : " attribute, if possible.",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "If the element does not have a ",
-              "type": "text"
+              "text" : "If the element does not have a ",
+              "type" : "text"
             },
             {
-              "code": "value",
-              "type": "codeVoice"
+              "code" : "value",
+              "type" : "codeVoice"
             },
             {
-              "text": " attribute, or the ",
-              "type": "text"
+              "text" : " attribute, or the ",
+              "type" : "text"
             },
             {
-              "code": "Value",
-              "type": "codeVoice"
+              "code" : "Value",
+              "type" : "codeVoice"
             },
             {
-              "text": " type could not be constructed from the string representation,",
-              "type": "text"
+              "text" : " type could not be constructed from the string representation,",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "it will use the default value the property wrapper was initialized with. Before the state is first updated, changes to the element’s ",
-              "type": "text"
+              "text" : "it will use the default value the property wrapper was initialized with. Before the state is first updated, changes to the element’s ",
+              "type" : "text"
             },
             {
-              "code": "value",
-              "type": "codeVoice"
+              "code" : "value",
+              "type" : "codeVoice"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "attribute will be reflected in the property wrapper’s value.",
-              "type": "text"
+              "text" : "attribute will be reflected in the property wrapper’s value.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "anchor": "Change-Events",
-          "level": 3,
-          "text": "Change Events",
-          "type": "heading"
+          "anchor" : "Change-Events",
+          "level" : 3,
+          "text" : "Change Events",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "If the element has a ",
-              "type": "text"
+              "text" : "If the element has a ",
+              "type" : "text"
             },
             {
-              "code": "phx-change",
-              "type": "codeVoice"
+              "code" : "phx-change",
+              "type" : "codeVoice"
             },
             {
-              "text": " event set, ",
-              "type": "text"
+              "text" : " event set, ",
+              "type" : "text"
             },
             {
-              "code": "@FormState",
-              "type": "codeVoice"
+              "code" : "@FormState",
+              "type" : "codeVoice"
             },
             {
-              "text": " will send change events when its value changes. Change events can be turned off by constructing the property wrapper with ",
-              "type": "text"
+              "text" : " will send change events when its value changes. Change events can be turned off by constructing the property wrapper with ",
+              "type" : "text"
             },
             {
-              "code": "sendChangeEvents: false",
-              "type": "codeVoice"
+              "code" : "sendChangeEvents: false",
+              "type" : "codeVoice"
             },
             {
-              "text": ".",
-              "type": "text"
+              "text" : ".",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "anchor": "Usage",
-          "level": 2,
-          "text": "Usage",
-          "type": "heading"
+          "anchor" : "Usage",
+          "level" : 2,
+          "text" : "Usage",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "To use this property wrapper, the wrapped type must implement the ",
-              "type": "text"
+              "text" : "To use this property wrapper, the wrapped type must implement the ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
-              "isActive": true,
-              "type": "reference"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text": " protocol to define how values are converted",
-              "type": "text"
+              "text" : " protocol to define how values are converted",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "to/from the serialized form data representation.",
-              "type": "text"
+              "text" : "to\/from the serialized form data representation.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "code": [
+          "code" : [
             "struct IntField: View {",
             "    @FormState private var value: Int?",
-            "",
-            "    init(element: ElementNode, context: LiveContext<some CustomRegistry>) {",
-            "    }",
             "",
             "    var body: some View {",
             "        TextField(\"My number\", value: $value, format: .number)",
             "    }",
             "}"
           ],
-          "syntax": "swift",
-          "type": "codeListing"
+          "syntax" : "swift",
+          "type" : "codeListing"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/7SwiftUI15DynamicPropertyP": {
-      "identifier": "doc://LiveViewNative/7SwiftUI15DynamicPropertyP",
-      "title": "SwiftUI.DynamicProperty",
-      "type": "unresolvable"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP",
+      "title" : "SwiftUI.DynamicProperty",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormControls": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls" : {
+      "abstract" : [
         {
-          "text": "See how to build custom form controls that integrate with the form data model and events.",
-          "type": "text"
+          "text" : "See how to build custom form controls that integrate with the form data model and events.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
-      "kind": "article",
-      "role": "article",
-      "title": "Building Form Controls",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formcontrols"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Building Form Controls",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formcontrols"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel" : {
+      "abstract" : [
         {
-          "text": "A form model stores the working copy of the data for a specific ",
-          "type": "text"
+          "text" : "A form model stores the working copy of the data for a specific ",
+          "type" : "text"
         },
         {
-          "code": "<form>",
-          "type": "codeVoice"
+          "code" : "<form>",
+          "type" : "codeVoice"
         },
         {
-          "text": " element.",
-          "type": "text"
+          "text" : " element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "FormModel"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "FormModel"
         }
       ],
-      "role": "symbol",
-      "title": "FormModel",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formmodel"
+      "role" : "symbol",
+      "title" : "FormModel",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formmodel"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that stores the primary value of a form element.",
-          "type": "text"
+          "text" : "A property wrapper that stores the primary value of a form element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormState"
+          "kind" : "identifier",
+          "text" : "FormState"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormState"
+          "kind" : "identifier",
+          "text" : "FormState"
         }
       ],
-      "role": "symbol",
-      "title": "FormState",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate"
+      "role" : "symbol",
+      "title" : "FormState",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState/DynamicProperty-Implementations": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/DynamicProperty-Implementations",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "DynamicProperty Implementations",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate/dynamicproperty-implementations"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/DynamicProperty-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/DynamicProperty-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "DynamicProperty Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate\/dynamicproperty-implementations"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(default:sendChangeEvents:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(default:sendChangeEvents:)" : {
+      "abstract" : [
         {
-          "text": "Creates a ",
-          "type": "text"
+          "text" : "Creates a ",
+          "type" : "text"
         },
         {
-          "code": "FormState",
-          "type": "codeVoice"
+          "code" : "FormState",
+          "type" : "codeVoice"
         },
         {
-          "text": " property wrapper with a default value that will be used when no other value is present.",
-          "type": "text"
+          "text" : " property wrapper with a default value that will be used when no other value is present.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "identifier",
+          "text" : "init"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "default"
+          "kind" : "externalParam",
+          "text" : "default"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
-          "text": "Value"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative9FormStateV5Valuexmfp",
+          "text" : "Value"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "externalParam",
-          "text": "sendChangeEvents"
+          "kind" : "externalParam",
+          "text" : "sendChangeEvents"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:Sb",
-          "text": "Bool"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
         },
         {
-          "kind": "text",
-          "text": ")"
+          "kind" : "text",
+          "text" : ")"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(default:sendChangeEvents:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init(default:sendChangeEvents:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate/init(default:sendchangeevents:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(default:sendChangeEvents:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(default:sendChangeEvents:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate\/init(default:sendchangeevents:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(sendChangeEvents:)" : {
+      "abstract" : [
         {
-          "text": "Convenience initializer that creates a ",
-          "type": "text"
+          "text" : "Convenience initializer that creates a ",
+          "type" : "text"
         },
         {
-          "code": "FormState",
-          "type": "codeVoice"
+          "code" : "FormState",
+          "type" : "codeVoice"
         },
         {
-          "text": " property wrapper with ",
-          "type": "text"
+          "text" : " property wrapper with ",
+          "type" : "text"
         },
         {
-          "code": "nil",
-          "type": "codeVoice"
+          "code" : "nil",
+          "type" : "codeVoice"
         },
         {
-          "text": " as its default value.",
-          "type": "text"
+          "text" : " as its default value.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "identifier",
+          "text" : "init"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "sendChangeEvents"
+          "kind" : "externalParam",
+          "text" : "sendChangeEvents"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:Sb",
-          "text": "Bool"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
         },
         {
-          "kind": "text",
-          "text": ")"
+          "kind" : "text",
+          "text" : ")"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init(sendChangeEvents:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate/init(sendchangeevents:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(sendChangeEvents:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(sendChangeEvents:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate\/init(sendchangeevents:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/projectedValue" : {
+      "abstract" : [
         {
-          "text": "A binding to the element’s value that can be used as the storage for other views or controls.",
-          "type": "text"
+          "text" : "A binding to the element’s value that can be used as the storage for other views or controls.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "projectedValue"
+          "kind" : "identifier",
+          "text" : "projectedValue"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI7BindingV",
-          "text": "Binding"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI7BindingV",
+          "text" : "Binding"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : "<"
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
-          "text": "Value"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative9FormStateV5Valuexmfp",
+          "text" : "Value"
         },
         {
-          "kind": "text",
-          "text": ">"
+          "kind" : "text",
+          "text" : ">"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "projectedValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate/projectedvalue"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/projectedValue",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "projectedValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate\/projectedvalue"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState/wrappedValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/wrappedValue" : {
+      "abstract" : [
         {
-          "text": "The value for this form element.",
-          "type": "text"
+          "text" : "The value for this form element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "wrappedValue"
+          "kind" : "identifier",
+          "text" : "wrappedValue"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9FormStateV5Valuexmfp",
-          "text": "Value"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative9FormStateV5Valuexmfp",
+          "text" : "Value"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/wrappedValue",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "wrappedValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate/wrappedvalue"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/wrappedValue",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "wrappedValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate\/wrappedvalue"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue" : {
+      "abstract" : [
         {
-          "text": "A form value is any type that can be stored in a ",
-          "type": "text"
+          "text" : "A form value is any type that can be stored in a ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": " and used with ",
-          "type": "text"
+          "text" : " and used with ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormValue"
+          "kind" : "identifier",
+          "text" : "FormValue"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormValue"
+          "kind" : "identifier",
+          "text" : "FormValue"
         }
       ],
-      "role": "symbol",
-      "title": "FormValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formvalue"
+      "role" : "symbol",
+      "title" : "FormValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formvalue"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding" : {
+      "abstract" : [
         {
-          "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
-          "type": "text"
+          "text" : "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveBinding"
+          "kind" : "identifier",
+          "text" : "LiveBinding"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveBinding"
+          "kind" : "identifier",
+          "text" : "LiveBinding"
         }
       ],
-      "role": "symbol",
-      "title": "LiveBinding",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livebinding"
+      "role" : "symbol",
+      "title" : "LiveBinding",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livebinding"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
-          "type": "text"
+          "text" : "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ObservedElement"
+          "kind" : "identifier",
+          "text" : "ObservedElement"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ObservedElement"
+          "kind" : "identifier",
+          "text" : "ObservedElement"
         }
       ],
-      "role": "symbol",
-      "title": "ObservedElement",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/observedelement"
+      "role" : "symbol",
+      "title" : "ObservedElement",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement"
     }
   },
-  "relationshipsSections": [
+  "relationshipsSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/7SwiftUI15DynamicPropertyP"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP"
       ],
-      "kind": "relationships",
-      "title": "Conforms To",
-      "type": "conformsTo"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "seeAlsoSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormModel"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel"
       ],
-      "title": "Form Controls"
+      "title" : "Form Controls"
     }
   ],
-  "topicSections": [
+  "topicSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(default:sendChangeEvents:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(default:sendChangeEvents:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(sendChangeEvents:)"
       ],
-      "title": "Initializers"
+      "title" : "Initializers"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormState/projectedValue",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormState/wrappedValue"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/projectedValue",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/wrappedValue"
       ],
-      "title": "Instance Properties"
+      "title" : "Instance Properties"
     },
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormState/DynamicProperty-Implementations"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/DynamicProperty-Implementations"
       ],
-      "title": "Default Implementations"
+      "title" : "Default Implementations"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/formstate"
+      "paths" : [
+        "\/documentation\/liveviewnative\/formstate"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

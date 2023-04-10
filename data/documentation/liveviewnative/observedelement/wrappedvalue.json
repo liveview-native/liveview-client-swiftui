@@ -1,239 +1,246 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "The observed element in the document, with all current data.",
-      "type": "text"
+      "text" : "The observed element in the document, with all current data.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/wrappedValue"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/wrappedValue"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative15ObservedElementV12wrappedValueAA0E4NodeVvp",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative15ObservedElementV12wrappedValueAA0E4NodeVvp",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "var"
+        "kind" : "keyword",
+        "text" : "var"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "wrappedValue"
+        "kind" : "identifier",
+        "text" : "wrappedValue"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-        "text": "ElementNode"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+        "text" : "ElementNode"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Property",
-    "symbolKind": "property",
-    "title": "wrappedValue"
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "wrappedValue"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "var"
+              "kind" : "keyword",
+              "text" : "var"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "wrappedValue"
+              "kind" : "identifier",
+              "text" : "wrappedValue"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-              "text": "ElementNode"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+              "text" : "ElementNode"
             },
             {
-              "kind": "text",
-              "text": " { "
+              "kind" : "text",
+              "text" : " { "
             },
             {
-              "kind": "keyword",
-              "text": "get"
+              "kind" : "keyword",
+              "text" : "get"
             },
             {
-              "kind": "text",
-              "text": " }"
+              "kind" : "text",
+              "text" : " }"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode" : {
+      "abstract" : [
         {
-          "text": "A wrapper for an element-containing DOM node and its associated data.",
-          "type": "text"
+          "text" : "A wrapper for an element-containing DOM node and its associated data.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ElementNode"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ElementNode"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "role": "symbol",
-      "title": "ElementNode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode"
+      "role" : "symbol",
+      "title" : "ElementNode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
-          "type": "text"
+          "text" : "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ObservedElement"
+          "kind" : "identifier",
+          "text" : "ObservedElement"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ObservedElement"
+          "kind" : "identifier",
+          "text" : "ObservedElement"
         }
       ],
-      "role": "symbol",
-      "title": "ObservedElement",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/observedelement"
+      "role" : "symbol",
+      "title" : "ObservedElement",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/wrappedValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/wrappedValue" : {
+      "abstract" : [
         {
-          "text": "The observed element in the document, with all current data.",
-          "type": "text"
+          "text" : "The observed element in the document, with all current data.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "wrappedValue"
+          "kind" : "identifier",
+          "text" : "wrappedValue"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-          "text": "ElementNode"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+          "text" : "ElementNode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/wrappedValue",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "wrappedValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/observedelement/wrappedvalue"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/wrappedValue",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "wrappedValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement\/wrappedvalue"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/observedelement/wrappedvalue"
+      "paths" : [
+        "\/documentation\/liveviewnative\/observedelement\/wrappedvalue"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

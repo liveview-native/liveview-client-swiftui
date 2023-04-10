@@ -1,976 +1,1630 @@
 {
-  "hierarchy": {
-    "paths": [
-      []
+  "abstract" : [
+    {
+      "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+
+      ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "LiveViewNative",
-    "modules": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "LiveViewNative",
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "collection",
-    "roleHeading": "Framework",
-    "symbolKind": "module",
-    "title": "LiveViewNative"
+    "role" : "collection",
+    "roleHeading" : "Framework",
+    "symbolKind" : "module",
+    "title" : "LiveViewNative"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "Overview",
-          "level": 2,
-          "text": "Overview",
-          "type": "heading"
+          "anchor" : "Overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The LiveViewNative Swift package lets you use Phoenix LiveView to build native iOS apps with SwiftUI.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Installation",
+          "level" : 2,
+          "text" : "Installation",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "In Xcode, select ",
+                      "type" : "text"
+                    },
+                    {
+                      "inlineContent" : [
+                        {
+                          "text" : "File → Add Packages…",
+                          "type" : "text"
+                        }
+                      ],
+                      "type" : "emphasis"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Enter the package URL ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "https:\/\/github.com\/liveview-native\/liveview-client-swiftui",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Select ",
+                      "type" : "text"
+                    },
+                    {
+                      "inlineContent" : [
+                        {
+                          "text" : "Add Package",
+                          "type" : "text"
+                        }
+                      ],
+                      "type" : "emphasis"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "orderedList"
+        },
+        {
+          "anchor" : "Usage",
+          "level" : 2,
+          "text" : "Usage",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Create a ",
+              "type" : "text"
+            },
+            {
+              "code" : "LiveSessionCoordinator",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " and pass in the URL to your Phoenix server. Then use ",
+              "type" : "text"
+            },
+            {
+              "code" : "LiveView",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " to connect to that session.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "import SwiftUI",
+            "import LiveViewNative",
+            "",
+            "struct ContentView: View {",
+            "    @StateObject private var session = LiveSessionCoordinator(URL(string: \"http:\/\/localhost:4000\")!)",
+            "",
+            "    var body: some View {",
+            "        LiveView(session: session)",
+            "    }",
+            "}"
+          ],
+          "syntax" : "swift",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Now when you start up your app, the LiveView will automatically connect and serve your native app.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Elixir-Library",
+          "level" : 2,
+          "text" : "Elixir Library",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "This library is ",
+              "type" : "text"
+            },
+            {
+              "inlineContent" : [
+                {
+                  "text" : "experimental",
+                  "type" : "text"
+                }
+              ],
+              "type" : "strong"
+            },
+            {
+              "text" : " in the current implementation. As we continue to develop the LiveView Native ecosystem this library will likely see rapid evolution and changes.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Installation",
+          "level" : 3,
+          "text" : "Installation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "If ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/hex.pm\/docs\/publish",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ", the package can be installed",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "by adding ",
+              "type" : "text"
+            },
+            {
+              "code" : "live_view_native_swift_ui",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " to your list of dependencies in ",
+              "type" : "text"
+            },
+            {
+              "code" : "mix.exs",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ":",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "def deps do",
+            "  [",
+            "    {:live_view_native_swift_ui, \"~> 0.1.0\"}",
+            "  ]",
+            "end"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Documentation can be generated with ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/github.com\/elixir-lang\/ex_doc",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "and published on ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/hexdocs.pm",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ". Once published, the docs can",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "be found at ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/hexdocs.pm\/live_view_native_swift_ui",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ".",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Resources",
+          "level" : 2,
+          "text" : "Resources",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Browse the ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/documentation\/liveviewnative\/",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " to read about the API.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Follow the ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/tutorials\/yourfirstapp",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " to get a step-by-step walkthrough of building an app with LiveView Native.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Check out the ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "https:\/\/github.com\/liveview-native\/elixirconf_chat",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " for an example of a complete app.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AddCustomElement" : {
+      "abstract" : [
         {
-          "text": "Use the ",
-          "type": "text"
+          "text" : "Use the ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": " protocol to define how DOM elements are converted to SwiftUI views.",
-          "type": "text"
+          "text" : " protocol to define how DOM elements are converted to SwiftUI views.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement",
-      "kind": "article",
-      "role": "article",
-      "title": "Adding Custom Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/addcustomelement"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AddCustomElement",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Adding Custom Elements",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/addcustomelement"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AddCustomModifier" : {
+      "abstract" : [
         {
-          "text": "Use the ",
-          "type": "text"
+          "text" : "Use the ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": " protocol to define how custom modifiers in the DOM are handled.",
-          "type": "text"
+          "text" : " protocol to define how custom modifiers in the DOM are handled.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier",
-      "kind": "article",
-      "role": "article",
-      "title": "Adding Custom Modifiers",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/addcustommodifier"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AddCustomModifier",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Adding Custom Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/addcustommodifier"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Attribute": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that decodes an attribute of an element.",
-          "type": "text"
+          "text" : "A property wrapper that decodes an attribute of an element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "Attribute"
+          "kind" : "identifier",
+          "text" : "Attribute"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Attribute",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "Attribute"
+          "kind" : "identifier",
+          "text" : "Attribute"
         }
       ],
-      "role": "symbol",
-      "title": "Attribute",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attribute"
+      "role" : "symbol",
+      "title" : "Attribute",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attribute"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable": {
-      "abstract": [],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "protocol"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "AttributeDecodable"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributesVsModifiers" : {
+      "abstract" : [
+
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "AttributeDecodable"
-        }
-      ],
-      "role": "symbol",
-      "title": "AttributeDecodable",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodable"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributesVsModifiers",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Attributes vs. Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributesvsmodifiers"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError": {
-      "abstract": [],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "enum"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "AttributeDecodingError"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+      "abstract" : [
+
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "AttributeDecodingError"
-        }
-      ],
-      "role": "symbol",
-      "title": "AttributeDecodingError",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodingerror"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Controls and Indicators",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers",
-      "kind": "article",
-      "role": "article",
-      "title": "Attributes vs. Modifiers",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributesvsmodifiers"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
-      "abstract": [
-        {
-          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DocumentsModifiers" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "protocol"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "CustomRegistry"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "CustomRegistry"
-        }
-      ],
-      "role": "symbol",
-      "title": "CustomRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DocumentsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Documents Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/documentsmodifiers"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
-      "abstract": [
-        {
-          "text": "A wrapper for an element-containing DOM node and its associated data.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphics" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "ElementNode"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "ElementNode"
-        }
-      ],
-      "role": "symbol",
-      "title": "ElementNode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphics",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Drawing and Graphics",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/drawingandgraphics"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Event": {
-      "abstract": [
-        {
-          "text": "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "Event"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "Event"
-        }
-      ],
-      "role": "symbol",
-      "title": "Event",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/event"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Drawing and Graphics Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/drawingandgraphicsmodifiers"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormControls": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode" : {
+      "abstract" : [
         {
-          "text": "See how to build custom form controls that integrate with the form data model and events.",
-          "type": "text"
+          "text" : "A wrapper for an element-containing DOM node and its associated data.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
-      "kind": "article",
-      "role": "article",
-      "title": "Building Form Controls",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formcontrols"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ElementNode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ElementNode"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ElementNode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event" : {
+      "abstract" : [
         {
-          "text": "A form model stores the working copy of the data for a specific ",
-          "type": "text"
-        },
-        {
-          "code": "<form>",
-          "type": "codeVoice"
-        },
-        {
-          "text": " element.",
-          "type": "text"
+          "text" : "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "Event"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "Event"
         }
       ],
-      "role": "symbol",
-      "title": "FormModel",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formmodel"
+      "role" : "symbol",
+      "title" : "Event",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that stores the primary value of a form element.",
-          "type": "text"
+          "text" : "See how to build custom form controls that integrate with the form data model and events.",
+          "type" : "text"
         }
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "FormState"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "FormState"
-        }
-      ],
-      "role": "symbol",
-      "title": "FormState",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Building Form Controls",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formcontrols"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel" : {
+      "abstract" : [
         {
-          "text": "A form value is any type that can be stored in a ",
-          "type": "text"
+          "text" : "A form model stores the working copy of the data for a specific ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-          "isActive": true,
-          "type": "reference"
+          "code" : "<form>",
+          "type" : "codeVoice"
         },
         {
-          "text": " and used with ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": ".",
-          "type": "text"
+          "text" : " element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormValue"
+          "kind" : "identifier",
+          "text" : "FormModel"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormValue"
+          "kind" : "identifier",
+          "text" : "FormModel"
         }
       ],
-      "role": "symbol",
-      "title": "FormValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formvalue"
+      "role" : "symbol",
+      "title" : "FormModel",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formmodel"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState" : {
+      "abstract" : [
         {
-          "text": "See how to quickly get up and running displaying a LiveView in your app.",
-          "type": "text"
+          "text" : "A property wrapper that stores the primary value of a form element.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
-      "kind": "article",
-      "role": "article",
-      "title": "Getting Started",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/gettingstarted"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FormState"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FormState"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "FormState",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue" : {
+      "abstract" : [
         {
-          "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
-          "type": "text"
-        }
-      ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
+          "text" : "A form value is any type that can be stored in a ",
+          "type" : "text"
         },
         {
-          "kind": "text",
-          "text": " "
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "kind": "identifier",
-          "text": "LiveBinding"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
-      "kind": "symbol",
-      "navigatorTitle": [
+          "text" : " and used with ",
+          "type" : "text"
+        },
         {
-          "kind": "identifier",
-          "text": "LiveBinding"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "role": "symbol",
-      "title": "LiveBinding",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livebinding"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FormValue"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FormValue"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "FormValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formvalue"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError": {
-      "abstract": [],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "enum"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveConnectionError"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Foundation" : {
+      "abstract" : [
+
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "LiveConnectionError"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveConnectionError",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveconnectionerror"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Foundation",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "Foundation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/foundation"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted" : {
+      "abstract" : [
         {
-          "text": "The context provides information at initialization-time to views in a LiveView.",
-          "type": "text"
+          "text" : "See how to quickly get up and running displaying a LiveView in your app.",
+          "type" : "text"
         }
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveContext"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "LiveContext"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveContext",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Getting Started",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gettingstarted"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
-      "abstract": [
-        {
-          "text": "An object that configures the behavior of a ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": ".",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Images",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/images"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
-      "abstract": [
-        {
-          "text": "The session coordinator object handles the initial connection, as well as navigation.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabeledContentStyle" : {
+      "abstract" : [
+
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LabeledContentStyle"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabeledContentStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LabeledContentStyle"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator"
+      "role" : "symbol",
+      "title" : "LabeledContentStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labeledcontentstyle"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState": {
-      "abstract": [
-        {
-          "text": "The live view connection state.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutAdjustmentsModifiers" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "enum"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveSessionState"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "LiveSessionState"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveSessionState",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionstate"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutAdjustmentsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Adjustments Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutadjustmentsmodifiers"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
-      "abstract": [
-        {
-          "text": "The SwiftUI root view for a Phoenix LiveView.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveView"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "LiveView"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Containers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutcontainers"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [
-        {
-          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "class"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
-        }
-      ],
-      "role": "symbol",
-      "title": "LiveViewCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Fundamentals Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutfundamentalsmodifiers"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement": {
-      "abstract": [
-        {
-          "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "ObservedElement"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
-      "kind": "symbol",
-      "navigatorTitle": [
-        {
-          "kind": "identifier",
-          "text": "ObservedElement"
-        }
-      ],
-      "role": "symbol",
-      "title": "ObservedElement",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/observedelement"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Lists Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listsmodifiers"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Payload": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "typealias"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "Payload"
+          "text" : "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Payload",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "Payload"
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveBinding"
         }
       ],
-      "role": "symbol",
-      "title": "Payload",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/payload"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveBinding"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveBinding",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livebinding"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext" : {
+      "abstract" : [
         {
-          "text": "A root registry is a ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": " type that can be used directly as the registry for a ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": ".",
-          "type": "text"
+          "text" : "The context provides additional information to elements within a live view.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "RootRegistry"
+          "kind" : "identifier",
+          "text" : "LiveContext"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "RootRegistry"
+          "kind" : "identifier",
+          "text" : "LiveContext"
         }
       ],
-      "role": "symbol",
-      "title": "RootRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/rootregistry"
+      "role" : "symbol",
+      "title" : "LiveContext",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration" : {
+      "abstract" : [
         {
-          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
-          "type": "text"
+          "text" : "An object that configures the behavior of a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Supported Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedelements"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
         {
-          "text": "Common modifiers supported by all DOM elements.",
-          "type": "text"
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers",
-      "kind": "article",
-      "role": "article",
-      "title": "Supported Modifiers",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedmodifiers"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView" : {
+      "abstract" : [
         {
-          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
-          "type": "text"
+          "text" : "The SwiftUI root view for a Phoenix LiveView.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
-      "kind": "overview",
-      "role": "overview",
-      "title": "Your First LiveViewNative App",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveView"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveView"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveView",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveViewCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Navigation Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement" : {
+      "abstract" : [
+        {
+          "text" : "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ObservedElement"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ObservedElement"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ObservedElement",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Payload" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "typealias"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Payload"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Payload",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Payload"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Payload",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/payload"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Shapes",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shapes"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers" : {
+      "abstract" : [
+        {
+          "text" : "Common modifiers supported by all DOM elements.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Supported Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/supportedmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "Swift",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftUI",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextFieldProtocol"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextFieldProtocol"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "TextFieldProtocol",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextFieldStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextFieldStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "TextFieldStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Text Input and Output",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textinputandoutput"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Text Input and Output Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToggleStyle" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ToggleStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToggleStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ToggleStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ToggleStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/togglestyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Fundamentals Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewfundamentalsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp" : {
+      "abstract" : [
+        {
+          "text" : "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+      "kind" : "overview",
+      "role" : "overview",
+      "title" : "Your First LiveViewNative App",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp"
+    },
+    "https:\/\/github.com\/elixir-lang\/ex_doc" : {
+      "identifier" : "https:\/\/github.com\/elixir-lang\/ex_doc",
+      "title" : "ExDoc",
+      "titleInlineContent" : [
+        {
+          "text" : "ExDoc",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/github.com\/elixir-lang\/ex_doc"
+    },
+    "https:\/\/github.com\/liveview-native\/elixirconf_chat" : {
+      "identifier" : "https:\/\/github.com\/liveview-native\/elixirconf_chat",
+      "title" : "ElixirConf ’22 chat app",
+      "titleInlineContent" : [
+        {
+          "text" : "ElixirConf ’22 chat app",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/github.com\/liveview-native\/elixirconf_chat"
+    },
+    "https:\/\/hex.pm\/docs\/publish" : {
+      "identifier" : "https:\/\/hex.pm\/docs\/publish",
+      "title" : "available in Hex",
+      "titleInlineContent" : [
+        {
+          "text" : "available in Hex",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/hex.pm\/docs\/publish"
+    },
+    "https:\/\/hexdocs.pm" : {
+      "identifier" : "https:\/\/hexdocs.pm",
+      "title" : "HexDocs",
+      "titleInlineContent" : [
+        {
+          "text" : "HexDocs",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/hexdocs.pm"
+    },
+    "https:\/\/hexdocs.pm\/live_view_native_swift_ui" : {
+      "identifier" : "https:\/\/hexdocs.pm\/live_view_native_swift_ui",
+      "title" : "https:\/\/hexdocs.pm\/live_view_native_swift_ui",
+      "titleInlineContent" : [
+        {
+          "text" : "https:\/\/hexdocs.pm\/live_view_native_swift_ui",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/hexdocs.pm\/live_view_native_swift_ui"
+    },
+    "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/documentation\/liveviewnative\/" : {
+      "identifier" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/documentation\/liveviewnative\/",
+      "title" : "documentation",
+      "titleInlineContent" : [
+        {
+          "text" : "documentation",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/documentation\/liveviewnative\/"
+    },
+    "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/tutorials\/yourfirstapp" : {
+      "identifier" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/tutorials\/yourfirstapp",
+      "title" : "tutorial",
+      "titleInlineContent" : [
+        {
+          "text" : "tutorial",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/tutorials\/yourfirstapp"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "topicSections": [
+  "sections" : [
+
+  ],
+  "topicSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/tutorials/YourFirstApp",
-        "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator"
       ],
-      "title": "Essentials"
+      "title" : "Essentials"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers",
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributesVsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers"
       ],
-      "title": "Building a Live View Template"
+      "title" : "Building a Live View Template"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
-        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
-        "doc://LiveViewNative/documentation/LiveViewNative/Attribute"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphics",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput"
       ],
-      "title": "Working with the DOM"
+      "title" : "Supported Elements"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/AddCustomElement",
-        "doc://LiveViewNative/documentation/LiveViewNative/AddCustomModifier",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DocumentsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutAdjustmentsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers"
       ],
-      "title": "Custom DOM Elements and Attributes"
+      "title" : "Supported Modifiers"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormModel"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AddCustomElement",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AddCustomModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry"
       ],
-      "title": "Form Controls"
+      "title" : "Custom DOM Elements and Attributes"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodable"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext"
       ],
-      "title": "Protocols"
+      "title" : "Working with the DOM"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Event",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel"
       ],
-      "title": "Structures"
+      "title" : "Form Controls"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Payload"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol"
       ],
-      "title": "Type Aliases"
+      "title" : "Protocols"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Payload"
       ],
-      "title": "Enumerations"
+      "title" : "Type Aliases"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabeledContentStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToggleStyle"
+      ],
+      "title" : "Enumerations"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Foundation",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI"
+      ],
+      "title" : "Extended Modules"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative"
+      "paths" : [
+        "\/documentation\/liveviewnative"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

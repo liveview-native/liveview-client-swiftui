@@ -1,166 +1,175 @@
 {
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormModel"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/ObservableObject-Implementations"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel\/ObservableObject-Implementations"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "collectionGroup",
-    "title": "ObservableObject Implementations"
+    "role" : "collectionGroup",
+    "title" : "ObservableObject Implementations"
   },
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel" : {
+      "abstract" : [
         {
-          "text": "A form model stores the working copy of the data for a specific ",
-          "type": "text"
+          "text" : "A form model stores the working copy of the data for a specific ",
+          "type" : "text"
         },
         {
-          "code": "<form>",
-          "type": "codeVoice"
+          "code" : "<form>",
+          "type" : "codeVoice"
         },
         {
-          "text": " element.",
-          "type": "text"
+          "text" : " element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "FormModel"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "FormModel"
         }
       ],
-      "role": "symbol",
-      "title": "FormModel",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formmodel"
+      "role" : "symbol",
+      "title" : "FormModel",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formmodel"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormModel/objectWillChange": {
-      "abstract": [],
-      "conformance": {
-        "availabilityPrefix": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel\/objectWillChange" : {
+      "abstract" : [
+
+      ],
+      "conformance" : {
+        "availabilityPrefix" : [
           {
-            "text": "Available when",
-            "type": "text"
+            "text" : "Available when",
+            "type" : "text"
           }
         ],
-        "conformancePrefix": [
+        "conformancePrefix" : [
           {
-            "text": "Conforms when",
-            "type": "text"
+            "text" : "Conforms when",
+            "type" : "text"
           }
         ],
-        "constraints": [
+        "constraints" : [
           {
-            "code": "ObjectWillChangePublisher",
-            "type": "codeVoice"
+            "code" : "ObjectWillChangePublisher",
+            "type" : "codeVoice"
           },
           {
-            "text": " is ",
-            "type": "text"
+            "text" : " is ",
+            "type" : "text"
           },
           {
-            "code": "ObservableObjectPublisher",
-            "type": "codeVoice"
+            "code" : "ObservableObjectPublisher",
+            "type" : "codeVoice"
           },
           {
-            "text": ".",
-            "type": "text"
+            "text" : ".",
+            "type" : "text"
           }
         ]
       },
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "objectWillChange"
+          "kind" : "identifier",
+          "text" : "objectWillChange"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7Combine25ObservableObjectPublisherC",
-          "text": "ObservableObjectPublisher"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7Combine25ObservableObjectPublisherC",
+          "text" : "ObservableObjectPublisher"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel/objectWillChange",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "objectWillChange",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formmodel/objectwillchange"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel\/objectWillChange",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "objectWillChange",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formmodel\/objectwillchange"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "topicSections": [
+  "sections" : [
+
+  ],
+  "topicSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormModel/objectWillChange"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel\/objectWillChange"
       ],
-      "title": "Instance Properties"
+      "title" : "Instance Properties"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/formmodel/observableobject-implementations"
+      "paths" : [
+        "\/documentation\/liveviewnative\/formmodel\/observableobject-implementations"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

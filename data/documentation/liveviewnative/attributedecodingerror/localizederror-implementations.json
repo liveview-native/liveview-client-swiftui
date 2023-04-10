@@ -1,236 +1,326 @@
 {
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/LocalizedError-Implementations"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/LocalizedError-Implementations"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "collectionGroup",
-    "title": "LocalizedError Implementations"
+    "role" : "collectionGroup",
+    "title" : "LocalizedError Implementations"
   },
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "enum"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "AttributeDecodingError"
+          "text" : "A property wrapper that decodes an attribute of an element.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "AttributeDecodingError"
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Attribute"
         }
       ],
-      "role": "symbol",
-      "title": "AttributeDecodingError",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodingerror"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Attribute"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Attribute",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attribute"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/errorDescription-8dpp3": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "var"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "errorDescription"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": "?"
+          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/errorDescription-8dpp3",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "errorDescription",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodingerror/errordescription-8dpp3"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/failureReason": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "var"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "failureReason"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": "?"
+          "text" : "An error encountered when converting a value from an attribute.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/failureReason",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "failureReason",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodingerror/failurereason"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodingError"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodingError"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodingError",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodingerror"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/helpAnchor": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/errorDescription-8dpp3" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "helpAnchor"
+          "kind" : "identifier",
+          "text" : "errorDescription"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
         },
         {
-          "kind": "text",
-          "text": "?"
+          "kind" : "text",
+          "text" : "?"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/helpAnchor",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "helpAnchor",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodingerror/helpanchor"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/errorDescription-8dpp3",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "errorDescription",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodingerror\/errordescription-8dpp3"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/recoverySuggestion": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/failureReason" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "recoverySuggestion"
+          "kind" : "identifier",
+          "text" : "failureReason"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
         },
         {
-          "kind": "text",
-          "text": "?"
+          "kind" : "text",
+          "text" : "?"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/recoverySuggestion",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "recoverySuggestion",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributedecodingerror/recoverysuggestion"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/failureReason",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "failureReason",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodingerror\/failurereason"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/helpAnchor" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "helpAnchor"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/helpAnchor",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "helpAnchor",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodingerror\/helpanchor"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/recoverySuggestion" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "recoverySuggestion"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/recoverySuggestion",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "recoverySuggestion",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodingerror\/recoverysuggestion"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "topicSections": [
+  "sections" : [
+
+  ],
+  "topicSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/errorDescription-8dpp3",
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/failureReason",
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/helpAnchor",
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributeDecodingError/recoverySuggestion"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/errorDescription-8dpp3",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/failureReason",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/helpAnchor",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodingError\/recoverySuggestion"
       ],
-      "title": "Instance Properties"
+      "title" : "Instance Properties"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/attributedecodingerror/localizederror-implementations"
+      "paths" : [
+        "\/documentation\/liveviewnative\/attributedecodingerror\/localizederror-implementations"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

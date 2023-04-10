@@ -1,450 +1,457 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Get or create a ",
-      "type": "text"
+      "text" : "Get or create a ",
+      "type" : "text"
     },
     {
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-      "isActive": true,
-      "type": "reference"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
-      "text": " for the given ",
-      "type": "text"
+      "text" : " for the given ",
+      "type" : "text"
     },
     {
-      "code": "<live-form>",
-      "type": "codeVoice"
+      "code" : "<live-form>",
+      "type" : "codeVoice"
     },
     {
-      "text": ".",
-      "type": "text"
+      "text" : ".",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewModel"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel/getForm(elementID:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewModel\/getForm(elementID:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0aB5ModelC7getForm9elementIDAA0fD0CSS_tF",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0aB5ModelC7getForm9elementIDAA0fD0CSS_tF",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "func"
+        "kind" : "keyword",
+        "text" : "func"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "getForm"
+        "kind" : "identifier",
+        "text" : "getForm"
       },
       {
-        "kind": "text",
-        "text": "("
+        "kind" : "text",
+        "text" : "("
       },
       {
-        "kind": "externalParam",
-        "text": "elementID"
+        "kind" : "externalParam",
+        "text" : "elementID"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:SS",
-        "text": "String"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
       },
       {
-        "kind": "text",
-        "text": ") -> "
+        "kind" : "text",
+        "text" : ") -> "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative9FormModelC",
-        "text": "FormModel"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative9FormModelC",
+        "text" : "FormModel"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Method",
-    "symbolKind": "method",
-    "title": "getForm(elementID:)"
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "getForm(elementID:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "func"
+              "kind" : "keyword",
+              "text" : "func"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "getForm"
+              "kind" : "identifier",
+              "text" : "getForm"
             },
             {
-              "kind": "text",
-              "text": "("
+              "kind" : "text",
+              "text" : "("
             },
             {
-              "kind": "externalParam",
-              "text": "elementID"
+              "kind" : "externalParam",
+              "text" : "elementID"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "id"
+              "kind" : "internalParam",
+              "text" : "id"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SS",
-              "text": "String"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
             },
             {
-              "kind": "text",
-              "text": ") -> "
+              "kind" : "text",
+              "text" : ") -> "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative9FormModelC",
-              "text": "FormModel"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative9FormModelC",
+              "text" : "FormModel"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "discussion",
-          "level": 2,
-          "text": "Discussion",
-          "type": "heading"
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "The element parameter must be the form element. To get the form model for an element within a form, use the ",
-                  "type": "text"
+                  "text" : "The element parameter must be the form element. To get the form model for an element within a form, use the ",
+                  "type" : "text"
                 },
                 {
-                  "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
-                  "isActive": true,
-                  "type": "reference"
+                  "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext",
+                  "isActive" : true,
+                  "type" : "reference"
                 },
                 {
-                  "text": " or the ",
-                  "type": "text"
+                  "text" : " or the ",
+                  "type" : "text"
                 },
                 {
-                  "code": "\\.formModel",
-                  "type": "codeVoice"
+                  "code" : "\\.formModel",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text": " environment value.",
-                  "type": "text"
+                  "text" : " environment value.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "name": "Important",
-          "style": "important",
-          "type": "aside"
+          "name" : "Important",
+          "style" : "important",
+          "type" : "aside"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel" : {
+      "abstract" : [
         {
-          "text": "A form model stores the working copy of the data for a specific ",
-          "type": "text"
+          "text" : "A form model stores the working copy of the data for a specific ",
+          "type" : "text"
         },
         {
-          "code": "<form>",
-          "type": "codeVoice"
+          "code" : "<form>",
+          "type" : "codeVoice"
         },
         {
-          "text": " element.",
-          "type": "text"
+          "text" : " element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "FormModel"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "FormModel"
         }
       ],
-      "role": "symbol",
-      "title": "FormModel",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formmodel"
+      "role" : "symbol",
+      "title" : "FormModel",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formmodel"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext" : {
+      "abstract" : [
         {
-          "text": "The context provides information at initialization-time to views in a LiveView.",
-          "type": "text"
+          "text" : "The context provides additional information to elements within a live view.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveContext"
+          "kind" : "identifier",
+          "text" : "LiveContext"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveContext"
+          "kind" : "identifier",
+          "text" : "LiveContext"
         }
       ],
-      "role": "symbol",
-      "title": "LiveContext",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext"
+      "role" : "symbol",
+      "title" : "LiveContext",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView" : {
+      "abstract" : [
         {
-          "text": "The SwiftUI root view for a Phoenix LiveView.",
-          "type": "text"
+          "text" : "The SwiftUI root view for a Phoenix LiveView.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "role": "symbol",
-      "title": "LiveView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview"
+      "role" : "symbol",
+      "title" : "LiveView",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewModel" : {
+      "abstract" : [
         {
-          "text": "The working-copy data model for a ",
-          "type": "text"
+          "text" : "The working-copy data model for a ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveViewModel"
+          "kind" : "identifier",
+          "text" : "LiveViewModel"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewModel",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveViewModel"
+          "kind" : "identifier",
+          "text" : "LiveViewModel"
         }
       ],
-      "role": "symbol",
-      "title": "LiveViewModel",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewmodel"
+      "role" : "symbol",
+      "title" : "LiveViewModel",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewmodel"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel/getForm(elementID:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewModel\/getForm(elementID:)" : {
+      "abstract" : [
         {
-          "text": "Get or create a ",
-          "type": "text"
+          "text" : "Get or create a ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": " for the given ",
-          "type": "text"
+          "text" : " for the given ",
+          "type" : "text"
         },
         {
-          "code": "<live-form>",
-          "type": "codeVoice"
+          "code" : "<live-form>",
+          "type" : "codeVoice"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "getForm"
+          "kind" : "identifier",
+          "text" : "getForm"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "elementID"
+          "kind" : "externalParam",
+          "text" : "elementID"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
         },
         {
-          "kind": "text",
-          "text": ") -> "
+          "kind" : "text",
+          "text" : ") -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative9FormModelC",
-          "text": "FormModel"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative9FormModelC",
+          "text" : "FormModel"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewModel/getForm(elementID:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "getForm(elementID:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewmodel/getform(elementid:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewModel\/getForm(elementID:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "getForm(elementID:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewmodel\/getform(elementid:)"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/liveviewmodel/getform(elementid:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/liveviewmodel\/getform(elementid:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

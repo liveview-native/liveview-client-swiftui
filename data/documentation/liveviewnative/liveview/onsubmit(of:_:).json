@@ -1,374 +1,385 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Inherited from ",
-      "type": "text"
+      "text" : "Inherited from ",
+      "type" : "text"
     },
     {
-      "code": "View.onSubmit(of:_:)",
-      "type": "codeVoice"
+      "code" : "View.onSubmit(of:_:)",
+      "type" : "codeVoice"
     },
     {
-      "text": ".",
-      "type": "text"
+      "text" : ".",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/View-Implementations"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/onSubmit(of:_:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/onSubmit(of:_:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "extendedModule": "SwiftUI",
-    "externalID": "s:7SwiftUI4ViewPAAE8onSubmit2of_QrAA0E8TriggersV_yyctF::SYNTHESIZED::s:14LiveViewNative0aB0V",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftUI",
+    "externalID" : "s:7SwiftUI4ViewPAAE8onSubmit2of_QrAA0E8TriggersV_yyctF::SYNTHESIZED::s:14LiveViewNative0aB0V",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "func"
+        "kind" : "keyword",
+        "text" : "func"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "onSubmit"
+        "kind" : "identifier",
+        "text" : "onSubmit"
       },
       {
-        "kind": "text",
-        "text": "("
+        "kind" : "text",
+        "text" : "("
       },
       {
-        "kind": "externalParam",
-        "text": "of"
+        "kind" : "externalParam",
+        "text" : "of"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI14SubmitTriggersV",
-        "text": "SubmitTriggers"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI14SubmitTriggersV",
+        "text" : "SubmitTriggers"
       },
       {
-        "kind": "text",
-        "text": ", (() -> "
+        "kind" : "text",
+        "text" : ", (() -> "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:s4Voida",
-        "text": "Void"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s4Voida",
+        "text" : "Void"
       },
       {
-        "kind": "text",
-        "text": ")) -> "
+        "kind" : "text",
+        "text" : ")) -> "
       },
       {
-        "kind": "keyword",
-        "text": "some"
+        "kind" : "keyword",
+        "text" : "some"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI4ViewP",
-        "text": "View"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI4ViewP",
+        "text" : "View"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "platforms": [
+    "platforms" : [
       {
-        "beta": false,
-        "deprecated": false,
-        "introducedAt": "15.0",
-        "name": "iOS",
-        "unavailable": false
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "15.0",
+        "name" : "iOS",
+        "unavailable" : false
       },
       {
-        "beta": false,
-        "deprecated": false,
-        "introducedAt": "12.0",
-        "name": "macOS",
-        "unavailable": false
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "12.0",
+        "name" : "macOS",
+        "unavailable" : false
       },
       {
-        "beta": false,
-        "deprecated": false,
-        "introducedAt": "15.0",
-        "name": "tvOS",
-        "unavailable": false
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "15.0",
+        "name" : "tvOS",
+        "unavailable" : false
       },
       {
-        "beta": false,
-        "deprecated": false,
-        "introducedAt": "8.0",
-        "name": "watchOS",
-        "unavailable": false
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "8.0",
+        "name" : "watchOS",
+        "unavailable" : false
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Method",
-    "symbolKind": "method",
-    "title": "onSubmit(of:_:)"
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "onSubmit(of:_:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "func"
+              "kind" : "keyword",
+              "text" : "func"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "onSubmit"
+              "kind" : "identifier",
+              "text" : "onSubmit"
             },
             {
-              "kind": "text",
-              "text": "("
+              "kind" : "text",
+              "text" : "("
             },
             {
-              "kind": "externalParam",
-              "text": "of"
+              "kind" : "externalParam",
+              "text" : "of"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "triggers"
+              "kind" : "internalParam",
+              "text" : "triggers"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI14SubmitTriggersV",
-              "text": "SubmitTriggers"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI14SubmitTriggersV",
+              "text" : "SubmitTriggers"
             },
             {
-              "kind": "text",
-              "text": " = .text, "
+              "kind" : "text",
+              "text" : " = .text, "
             },
             {
-              "kind": "externalParam",
-              "text": "_"
+              "kind" : "externalParam",
+              "text" : "_"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "action"
+              "kind" : "internalParam",
+              "text" : "action"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "keyword",
-              "text": "@escaping"
+              "kind" : "keyword",
+              "text" : "@escaping"
             },
             {
-              "kind": "text",
-              "text": " (() -> "
+              "kind" : "text",
+              "text" : " (() -> "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:s4Voida",
-              "text": "Void"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s4Voida",
+              "text" : "Void"
             },
             {
-              "kind": "text",
-              "text": ")) -> "
+              "kind" : "text",
+              "text" : ")) -> "
             },
             {
-              "kind": "keyword",
-              "text": "some"
+              "kind" : "keyword",
+              "text" : "some"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI4ViewP",
-              "text": "View"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI4ViewP",
+              "text" : "View"
             },
             {
-              "kind": "text",
-              "text": "\n"
+              "kind" : "text",
+              "text" : "\n"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView" : {
+      "abstract" : [
         {
-          "text": "The SwiftUI root view for a Phoenix LiveView.",
-          "type": "text"
+          "text" : "The SwiftUI root view for a Phoenix LiveView.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "role": "symbol",
-      "title": "LiveView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview"
+      "role" : "symbol",
+      "title" : "LiveView",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "View Implementations",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview/view-implementations"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/onSubmit(of:_:)": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/onSubmit(of:_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "onSubmit"
+          "kind" : "identifier",
+          "text" : "onSubmit"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "of"
+          "kind" : "externalParam",
+          "text" : "of"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI14SubmitTriggersV",
-          "text": "SubmitTriggers"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI14SubmitTriggersV",
+          "text" : "SubmitTriggers"
         },
         {
-          "kind": "text",
-          "text": ", (() -> "
+          "kind" : "text",
+          "text" : ", (() -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:s4Voida",
-          "text": "Void"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s4Voida",
+          "text" : "Void"
         },
         {
-          "kind": "text",
-          "text": ")) -> "
+          "kind" : "text",
+          "text" : ")) -> "
         },
         {
-          "kind": "keyword",
-          "text": "some"
+          "kind" : "keyword",
+          "text" : "some"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI4ViewP",
-          "text": "View"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/onSubmit(of:_:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "onSubmit(of:_:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview/onsubmit(of:_:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/onSubmit(of:_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "onSubmit(of:_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview\/onsubmit(of:_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/View-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/View-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview\/view-implementations"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/liveview/onsubmit(of:_:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/liveview\/onsubmit(of:_:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

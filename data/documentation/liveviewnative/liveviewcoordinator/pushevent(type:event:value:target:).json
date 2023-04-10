@@ -1,617 +1,779 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Pushes a LiveView event with the given name and payload to the server.",
-      "type": "text"
+      "text" : "Pushes a LiveView event with the given name and payload to the server.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:target:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/pushEvent(type:event:value:target:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0aB11CoordinatorC9pushEvent4type5event5value6targetySS_SSypSiSgtYaKF",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0aB11CoordinatorC9pushEvent4type5event5value6targetySS_SSypSiSgtYaKF",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "func"
+        "kind" : "keyword",
+        "text" : "func"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "pushEvent"
+        "kind" : "identifier",
+        "text" : "pushEvent"
       },
       {
-        "kind": "text",
-        "text": "("
+        "kind" : "text",
+        "text" : "("
       },
       {
-        "kind": "externalParam",
-        "text": "type"
+        "kind" : "externalParam",
+        "text" : "type"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:SS",
-        "text": "String"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "externalParam",
-        "text": "event"
+        "kind" : "externalParam",
+        "text" : "event"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:SS",
-        "text": "String"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "externalParam",
-        "text": "value"
+        "kind" : "externalParam",
+        "text" : "value"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "keyword",
-        "text": "Any"
+        "kind" : "keyword",
+        "text" : "Any"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "externalParam",
-        "text": "target"
+        "kind" : "externalParam",
+        "text" : "target"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:Si",
-        "text": "Int"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Si",
+        "text" : "Int"
       },
       {
-        "kind": "text",
-        "text": "?) "
+        "kind" : "text",
+        "text" : "?) "
       },
       {
-        "kind": "keyword",
-        "text": "async"
+        "kind" : "keyword",
+        "text" : "async"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "keyword",
-        "text": "throws"
+        "kind" : "keyword",
+        "text" : "throws"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Method",
-    "symbolKind": "method",
-    "title": "pushEvent(type:event:value:target:)"
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "pushEvent(type:event:value:target:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "func"
+              "kind" : "keyword",
+              "text" : "func"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "pushEvent"
+              "kind" : "identifier",
+              "text" : "pushEvent"
             },
             {
-              "kind": "text",
-              "text": "("
+              "kind" : "text",
+              "text" : "("
             },
             {
-              "kind": "externalParam",
-              "text": "type"
+              "kind" : "externalParam",
+              "text" : "type"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SS",
-              "text": "String"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "externalParam",
-              "text": "event"
+              "kind" : "externalParam",
+              "text" : "event"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SS",
-              "text": "String"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "externalParam",
-              "text": "value"
+              "kind" : "externalParam",
+              "text" : "value"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "keyword",
-              "text": "Any"
+              "kind" : "keyword",
+              "text" : "Any"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "externalParam",
-              "text": "target"
+              "kind" : "externalParam",
+              "text" : "target"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:Si",
-              "text": "Int"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Si",
+              "text" : "Int"
             },
             {
-              "kind": "text",
-              "text": "? = nil) "
+              "kind" : "text",
+              "text" : "? = nil) "
             },
             {
-              "kind": "keyword",
-              "text": "async"
+              "kind" : "keyword",
+              "text" : "async"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "keyword",
-              "text": "throws"
+              "kind" : "keyword",
+              "text" : "throws"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "kind": "parameters",
-      "parameters": [
+      "kind" : "parameters",
+      "parameters" : [
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "The type of event that is being sent (e.g., ",
-                  "type": "text"
+                  "text" : "The type of event that is being sent (e.g., ",
+                  "type" : "text"
                 },
                 {
-                  "code": "click",
-                  "type": "codeVoice"
+                  "code" : "click",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text": " or ",
-                  "type": "text"
+                  "text" : " or ",
+                  "type" : "text"
                 },
                 {
-                  "code": "form",
-                  "type": "codeVoice"
+                  "code" : "form",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text": "). Note: this is not currently used by the LiveView backend.",
-                  "type": "text"
+                  "text" : "). Note: this is not currently used by the LiveView backend.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "name": "type"
+          "name" : "type"
         },
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "The name of the LiveView event handler that the event is being dispatched to.",
-                  "type": "text"
+                  "text" : "The name of the LiveView event handler that the event is being dispatched to.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "name": "event"
+          "name" : "event"
         },
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "The event value to provide to the backend event handler. The value ",
-                  "type": "text"
+                  "text" : "The event value to provide to the backend event handler. The value ",
+                  "type" : "text"
                 },
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "must",
-                      "type": "text"
+                      "text" : "must",
+                      "type" : "text"
                     }
                   ],
-                  "type": "emphasis"
+                  "type" : "emphasis"
                 },
                 {
-                  "text": " be  serializable using ",
-                  "type": "text"
+                  "text" : " be  serializable using ",
+                  "type" : "text"
                 },
                 {
-                  "code": "JSONSerialization",
-                  "type": "codeVoice"
+                  "code" : "JSONSerialization",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text": ".",
-                  "type": "text"
+                  "text" : ".",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "name": "value"
+          "name" : "value"
         },
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "The value of the ",
-                  "type": "text"
+                  "text" : "The value of the ",
+                  "type" : "text"
                 },
                 {
-                  "code": "phx-target",
-                  "type": "codeVoice"
+                  "code" : "phx-target",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text": " attribute.",
-                  "type": "text"
+                  "text" : " attribute.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "name": "target"
+          "name" : "target"
         }
       ]
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "discussion",
-          "level": 2,
-          "text": "Discussion",
-          "type": "heading"
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "This is an asynchronous function that completes when the server finishes processing the event and returns a response.",
-              "type": "text"
+              "text" : "This is an asynchronous function that completes when the server finishes processing the event and returns a response.",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "The client view tree will be updated automatically when the response is received.",
-              "type": "text"
+              "text" : "The client view tree will be updated automatically when the response is received.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "",
-                  "type": "text"
+                  "text" : "",
+                  "type" : "text"
                 },
                 {
-                  "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)",
-                  "isActive": true,
-                  "type": "reference"
+                  "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/eventError(_:)",
+                  "isActive" : true,
+                  "type" : "reference"
                 },
                 {
-                  "text": " if an error is encountered sending the event or processing it on the backend, ",
-                  "type": "text"
+                  "text" : " if an error is encountered sending the event or processing it on the backend, ",
+                  "type" : "text"
                 },
                 {
-                  "code": "CancellationError",
-                  "type": "codeVoice"
+                  "code" : "CancellationError",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text": " if the coordinator navigates to a different page while the event is being handled",
-                  "type": "text"
+                  "text" : " if the coordinator navigates to a different page while the event is being handled",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "name": "Throws",
-          "style": "note",
-          "type": "aside"
+          "name" : "Throws",
+          "style" : "note",
+          "type" : "aside"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/eventError(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "case"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "eventError"
+          "kind" : "identifier",
+          "text" : "eventError"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:18SwiftPhoenixClient7MessageC",
-          "text": "Message"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:18SwiftPhoenixClient7MessageC",
+          "text" : "Message"
         },
         {
-          "kind": "text",
-          "text": ")"
+          "kind" : "text",
+          "text" : ")"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveConnectionError/eventError(_:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveConnectionError.eventError(_:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveconnectionerror/eventerror(_:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/eventError(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveConnectionError.eventError(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/eventerror(_:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator" : {
+      "abstract" : [
         {
-          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
-          "type": "text"
+          "text" : "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
         }
       ],
-      "role": "symbol",
-      "title": "LiveViewCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator"
+      "role" : "symbol",
+      "title" : "LiveViewCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:target:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/handleEvent(_:handler:)" : {
+      "abstract" : [
         {
-          "text": "Pushes a LiveView event with the given name and payload to the server.",
-          "type": "text"
+          "text" : "Permanently registers a handler for a server-sent LiveView event.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "pushEvent"
+          "kind" : "identifier",
+          "text" : "handleEvent"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "type"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "externalParam",
+          "text" : "handler"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ": ("
         },
         {
-          "kind": "externalParam",
-          "text": "event"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative7Payloada",
+          "text" : "Payload"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ") -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s4Voida",
+          "text" : "Void"
         },
         {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "value"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "keyword",
-          "text": "Any"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "target"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:Si",
-          "text": "Int"
-        },
-        {
-          "kind": "text",
-          "text": "?) "
-        },
-        {
-          "kind": "keyword",
-          "text": "async"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "keyword",
-          "text": "throws"
+          "kind" : "text",
+          "text" : ")"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/pushEvent(type:event:value:target:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "pushEvent(type:event:value:target:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:target:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/handleEvent(_:handler:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "handleEvent(_:handler:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator\/handleevent(_:handler:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/pushEvent(type:event:value:target:)" : {
+      "abstract" : [
+        {
+          "text" : "Pushes a LiveView event with the given name and payload to the server.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "pushEvent"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "type"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "event"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "value"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "Any"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "target"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Si",
+          "text" : "Int"
+        },
+        {
+          "kind" : "text",
+          "text" : "?) "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "async"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/pushEvent(type:event:value:target:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "pushEvent(type:event:value:target:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator\/pushevent(type:event:value:target:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/receiveEvent(_:)" : {
+      "abstract" : [
+        {
+          "text" : "Creates a publisher that can be used to listen for server-sent LiveView events.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "receiveEvent"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7Combine9PublisherP",
+          "text" : "Publisher"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative7Payloada",
+          "text" : "Payload"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s5NeverO",
+          "text" : "Never"
+        },
+        {
+          "kind" : "text",
+          "text" : ">\n"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/receiveEvent(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "receiveEvent(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator\/receiveevent(_:)"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/liveviewcoordinator/pushevent(type:event:value:target:)"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/receiveEvent(_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/handleEvent(_:handler:)"
       ],
-      "traits": [
+      "title" : "LiveView Events"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/liveviewcoordinator\/pushevent(type:event:value:target:)"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

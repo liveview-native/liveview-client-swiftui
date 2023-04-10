@@ -1,485 +1,492 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "A registry type that combines 3 registries.",
-      "type": "text"
+      "text" : "A registry type that combines 3 registries.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-        "doc://LiveViewNative/documentation/LiveViewNative/AggregateRegistry"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AggregateRegistry"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/Registry3"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry3"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative9Registry3a",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative9Registry3a",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "typealias"
+        "kind" : "keyword",
+        "text" : "typealias"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "Registry3"
+        "kind" : "identifier",
+        "text" : "Registry3"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "Registry3"
+        "kind" : "identifier",
+        "text" : "Registry3"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Type Alias",
-    "symbolKind": "typealias",
-    "title": "Registry3"
+    "role" : "symbol",
+    "roleHeading" : "Type Alias",
+    "symbolKind" : "typealias",
+    "title" : "Registry3"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "typealias"
+              "kind" : "keyword",
+              "text" : "typealias"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "Registry3"
+              "kind" : "identifier",
+              "text" : "Registry3"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "genericParameter",
-              "text": "T0"
+              "kind" : "genericParameter",
+              "text" : "T0"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "genericParameter",
-              "text": "T1"
+              "kind" : "genericParameter",
+              "text" : "T1"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "genericParameter",
-              "text": "T2"
+              "kind" : "genericParameter",
+              "text" : "T2"
             },
             {
-              "kind": "text",
-              "text": "> = "
+              "kind" : "text",
+              "text" : "> = "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative14_MultiRegistryV",
-              "text": "_MultiRegistry"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative14_MultiRegistryV",
+              "text" : "_MultiRegistry"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative14_MultiRegistryV",
-              "text": "_MultiRegistry"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative14_MultiRegistryV",
+              "text" : "_MultiRegistry"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative9Registry3a2T0xmfp",
-              "text": "T0"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative9Registry3a2T0xmfp",
+              "text" : "T0"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative9Registry3a2T1q_mfp",
-              "text": "T1"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative9Registry3a2T1q_mfp",
+              "text" : "T1"
             },
             {
-              "kind": "text",
-              "text": ">, "
+              "kind" : "text",
+              "text" : ">, "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative9Registry3a2T2q0_mfp",
-              "text": "T2"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative9Registry3a2T2q0_mfp",
+              "text" : "T2"
             },
             {
-              "kind": "text",
-              "text": "> "
+              "kind" : "text",
+              "text" : "> "
             },
             {
-              "kind": "keyword",
-              "text": "where"
+              "kind" : "keyword",
+              "text" : "where"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "T0"
+              "kind" : "typeIdentifier",
+              "text" : "T0"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP",
-              "text": "CustomRegistry"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative14CustomRegistryP",
+              "text" : "CustomRegistry"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "T1"
+              "kind" : "typeIdentifier",
+              "text" : "T1"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP",
-              "text": "CustomRegistry"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative14CustomRegistryP",
+              "text" : "CustomRegistry"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "T2"
+              "kind" : "typeIdentifier",
+              "text" : "T2"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP",
-              "text": "CustomRegistry"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative14CustomRegistryP",
+              "text" : "CustomRegistry"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "T0"
+              "kind" : "typeIdentifier",
+              "text" : "T0"
             },
             {
-              "kind": "text",
-              "text": "."
+              "kind" : "text",
+              "text" : "."
             },
             {
-              "kind": "typeIdentifier",
-              "text": "Root"
+              "kind" : "typeIdentifier",
+              "text" : "Root"
             },
             {
-              "kind": "text",
-              "text": " == "
+              "kind" : "text",
+              "text" : " == "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "T1"
+              "kind" : "typeIdentifier",
+              "text" : "T1"
             },
             {
-              "kind": "text",
-              "text": "."
+              "kind" : "text",
+              "text" : "."
             },
             {
-              "kind": "typeIdentifier",
-              "text": "Root"
+              "kind" : "typeIdentifier",
+              "text" : "Root"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "T1"
+              "kind" : "typeIdentifier",
+              "text" : "T1"
             },
             {
-              "kind": "text",
-              "text": "."
+              "kind" : "text",
+              "text" : "."
             },
             {
-              "kind": "typeIdentifier",
-              "text": "Root"
+              "kind" : "typeIdentifier",
+              "text" : "Root"
             },
             {
-              "kind": "text",
-              "text": " == "
+              "kind" : "text",
+              "text" : " == "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "T2"
+              "kind" : "typeIdentifier",
+              "text" : "T2"
             },
             {
-              "kind": "text",
-              "text": "."
+              "kind" : "text",
+              "text" : "."
             },
             {
-              "kind": "typeIdentifier",
-              "text": "Root"
+              "kind" : "typeIdentifier",
+              "text" : "Root"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AggregateRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AggregateRegistry" : {
+      "abstract" : [
         {
-          "text": "An aggregate registry combines multiple other registries together, allowing you to use tags/modifiers declared by any of them.",
-          "type": "text"
+          "text" : "An aggregate registry combines multiple other registries together, allowing you to use tags\/modifiers declared by any of them.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "AggregateRegistry"
+          "kind" : "identifier",
+          "text" : "AggregateRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AggregateRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AggregateRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "AggregateRegistry"
+          "kind" : "identifier",
+          "text" : "AggregateRegistry"
         }
       ],
-      "role": "symbol",
-      "title": "AggregateRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/aggregateregistry"
+      "role" : "symbol",
+      "title" : "AggregateRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/aggregateregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
         {
-          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
-          "type": "text"
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "role": "symbol",
-      "title": "CustomRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry"
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Registry2": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry2" : {
+      "abstract" : [
         {
-          "text": "A registry type that combines 2 registries.",
-          "type": "text"
+          "text" : "A registry type that combines 2 registries.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "typealias"
+          "kind" : "keyword",
+          "text" : "typealias"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "Registry2"
+          "kind" : "identifier",
+          "text" : "Registry2"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Registry2",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry2",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "Registry2"
+          "kind" : "identifier",
+          "text" : "Registry2"
         }
       ],
-      "role": "symbol",
-      "title": "Registry2",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/registry2"
+      "role" : "symbol",
+      "title" : "Registry2",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/registry2"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Registry3": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry3" : {
+      "abstract" : [
         {
-          "text": "A registry type that combines 3 registries.",
-          "type": "text"
+          "text" : "A registry type that combines 3 registries.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "typealias"
+          "kind" : "keyword",
+          "text" : "typealias"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "Registry3"
+          "kind" : "identifier",
+          "text" : "Registry3"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Registry3",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry3",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "Registry3"
+          "kind" : "identifier",
+          "text" : "Registry3"
         }
       ],
-      "role": "symbol",
-      "title": "Registry3",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/registry3"
+      "role" : "symbol",
+      "title" : "Registry3",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/registry3"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Registry4": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry4" : {
+      "abstract" : [
         {
-          "text": "A registry type that combines 4 registries.",
-          "type": "text"
+          "text" : "A registry type that combines 4 registries.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "typealias"
+          "kind" : "keyword",
+          "text" : "typealias"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "Registry4"
+          "kind" : "identifier",
+          "text" : "Registry4"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Registry4",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry4",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "Registry4"
+          "kind" : "identifier",
+          "text" : "Registry4"
         }
       ],
-      "role": "symbol",
-      "title": "Registry4",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/registry4"
+      "role" : "symbol",
+      "title" : "Registry4",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/registry4"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "seeAlsoSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Registry2",
-        "doc://LiveViewNative/documentation/LiveViewNative/Registry4"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry2",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Registry4"
       ],
-      "title": "Multi-Registry Types"
+      "title" : "Multi-Registry Types"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/registry3"
+      "paths" : [
+        "\/documentation\/liveviewnative\/registry3"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

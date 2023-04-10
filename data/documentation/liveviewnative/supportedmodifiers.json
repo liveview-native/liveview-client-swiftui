@@ -1,1148 +1,1144 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Common modifiers supported by all DOM elements.",
-      "type": "text"
+      "text" : "Common modifiers supported by all DOM elements.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "article",
-    "roleHeading": "Article",
-    "title": "Supported Modifiers"
+    "role" : "article",
+    "roleHeading" : "Article",
+    "title" : "Supported Modifiers"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "Overview",
-          "level": 2,
-          "text": "Overview",
-          "type": "heading"
+          "anchor" : "Overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "These attributes are supported by all elements, including custom ones. Modifiers are specified as a JSON array of objects on elements.",
-              "type": "text"
+              "text" : "These attributes are supported by all elements, including custom ones. Modifiers are specified as a JSON array of objects on elements.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "code": [
+          "code" : [
             "<h-stack modifiers='[{\"type\": \"padding\", \"all\": 16}]'>",
             "    <!-- ... -->",
-            "</h-stack>"
+            "<\/h-stack>"
           ],
-          "syntax": "html",
-          "type": "codeListing"
+          "syntax" : "html",
+          "type" : "codeListing"
         },
         {
-          "anchor": "Attributes",
-          "level": 2,
-          "text": "Attributes",
-          "type": "heading"
+          "anchor" : "Attributes",
+          "level" : 2,
+          "text" : "Attributes",
+          "type" : "heading"
         },
         {
-          "items": [
+          "items" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "navigation_title",
-                      "type": "codeVoice"
+                      "code" : "navigation_title",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ": The navigation title of the current page. Only displayed when navgiation is enabled, see ",
-                      "type": "text"
+                      "text" : ": The navigation title of the current page. Only displayed when navgiation is enabled, see ",
+                      "type" : "text"
                     },
                     {
-                      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
-                      "isActive": true,
-                      "type": "reference"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/navigationMode-swift.property",
+                      "isActive" : true,
+                      "type" : "reference"
                     },
                     {
-                      "text": ". Properties:",
-                      "type": "text"
+                      "text" : ". Properties:",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 },
                 {
-                  "items": [
+                  "items" : [
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "title",
-                              "type": "codeVoice"
+                              "code" : "title",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (string): The navigation title.",
-                              "type": "text"
+                              "text" : " (string): The navigation title.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     }
                   ],
-                  "type": "unorderedList"
+                  "type" : "unorderedList"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "frame",
-                      "type": "codeVoice"
+                      "code" : "frame",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ": A fixed size or flexible size frame around the modified view. Note that the fixed and flexible properties are mutually exclusive. All properties are optional. Properties:",
-                      "type": "text"
+                      "text" : ": A fixed size or flexible size frame around the modified view. Note that the fixed and flexible properties are mutually exclusive. All properties are optional. Properties:",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 },
                 {
-                  "items": [
+                  "items" : [
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "width",
-                              "type": "codeVoice"
+                              "code" : "width",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The width of the frame.",
-                              "type": "text"
+                              "text" : " (number): The width of the frame.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "height",
-                              "type": "codeVoice"
+                              "code" : "height",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The height of the frame.",
-                              "type": "text"
+                              "text" : " (number): The height of the frame.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "min_width",
-                              "type": "codeVoice"
+                              "code" : "min_width",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The minimum width of the frame.",
-                              "type": "text"
+                              "text" : " (number): The minimum width of the frame.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "ideal_width",
-                              "type": "codeVoice"
+                              "code" : "ideal_width",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The ideal width of the frame.",
-                              "type": "text"
+                              "text" : " (number): The ideal width of the frame.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "max_width",
-                              "type": "codeVoice"
+                              "code" : "max_width",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The maximum width of the frame.",
-                              "type": "text"
+                              "text" : " (number): The maximum width of the frame.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "min_height",
-                              "type": "codeVoice"
+                              "code" : "min_height",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The minimum height of the frame.",
-                              "type": "text"
+                              "text" : " (number): The minimum height of the frame.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "ideal_height",
-                              "type": "codeVoice"
+                              "code" : "ideal_height",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The ideal height of the frame.",
-                              "type": "text"
+                              "text" : " (number): The ideal height of the frame.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "max_height",
-                              "type": "codeVoice"
+                              "code" : "max_height",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The maximum height of the frame.",
-                              "type": "text"
+                              "text" : " (number): The maximum height of the frame.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "alignment",
-                              "type": "codeVoice"
+                              "code" : "alignment",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (string): How the view is aligned within the frame. One of the following values:",
-                              "type": "text"
+                              "text" : " (string): How the view is aligned within the frame. One of the following values:",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         },
                         {
-                          "items": [
+                          "items" : [
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "top-leading",
-                                      "type": "codeVoice"
+                                      "code" : "top-leading",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "top",
-                                      "type": "codeVoice"
+                                      "code" : "top",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "top-trailing",
-                                      "type": "codeVoice"
+                                      "code" : "top-trailing",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "leading",
-                                      "type": "codeVoice"
+                                      "code" : "leading",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "center",
-                                      "type": "codeVoice"
+                                      "code" : "center",
+                                      "type" : "codeVoice"
                                     },
                                     {
-                                      "text": " (default)",
-                                      "type": "text"
+                                      "text" : " (default)",
+                                      "type" : "text"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "trailing",
-                                      "type": "codeVoice"
+                                      "code" : "trailing",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "bottom-leading",
-                                      "type": "codeVoice"
+                                      "code" : "bottom-leading",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "bottom",
-                                      "type": "codeVoice"
+                                      "code" : "bottom",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "bottom-trailing",
-                                      "type": "codeVoice"
+                                      "code" : "bottom-trailing",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "leading-last-text-baseline",
-                                      "type": "codeVoice"
+                                      "code" : "leading-last-text-baseline",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "trailing-last-text-baseline",
-                                      "type": "codeVoice"
+                                      "code" : "trailing-last-text-baseline",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             }
                           ],
-                          "type": "unorderedList"
+                          "type" : "unorderedList"
                         }
                       ]
                     }
                   ],
-                  "type": "unorderedList"
+                  "type" : "unorderedList"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "padding",
-                      "type": "codeVoice"
+                      "code" : "padding",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ": The padding to apply around the edges of the view. All properties are optional. Properties:",
-                      "type": "text"
+                      "text" : ": The padding to apply around the edges of the view. All properties are optional. Properties:",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 },
                 {
-                  "items": [
+                  "items" : [
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "all",
-                              "type": "codeVoice"
+                              "code" : "all",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The padding for all edges. If used, other properties are ignored.",
-                              "type": "text"
+                              "text" : " (number): The padding for all edges. If used, other properties are ignored.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "top",
-                              "type": "codeVoice"
+                              "code" : "top",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The top edge padding.",
-                              "type": "text"
+                              "text" : " (number): The top edge padding.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "bottom",
-                              "type": "codeVoice"
+                              "code" : "bottom",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The bottom edge padding.",
-                              "type": "text"
+                              "text" : " (number): The bottom edge padding.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "leading",
-                              "type": "codeVoice"
+                              "code" : "leading",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The leading edge padding.",
-                              "type": "text"
+                              "text" : " (number): The leading edge padding.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "trailing",
-                              "type": "codeVoice"
+                              "code" : "trailing",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The trailing edge padding.",
-                              "type": "text"
+                              "text" : " (number): The trailing edge padding.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     }
                   ],
-                  "type": "unorderedList"
+                  "type" : "unorderedList"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "list_row_separator",
-                      "type": "codeVoice"
+                      "code" : "list_row_separator",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ": The configuration for the separator of this list row. Properties:",
-                      "type": "text"
+                      "text" : ": The configuration for the separator of this list row. Properties:",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 },
                 {
-                  "items": [
+                  "items" : [
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "visibility",
-                              "type": "codeVoice"
+                              "code" : "visibility",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": ": The separator visibility. Possible values:",
-                              "type": "text"
+                              "text" : ": The separator visibility. Possible values:",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         },
                         {
-                          "items": [
+                          "items" : [
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "hidden",
-                                      "type": "codeVoice"
+                                      "code" : "hidden",
+                                      "type" : "codeVoice"
                                     },
                                     {
-                                      "text": ": The separator is hidden.",
-                                      "type": "text"
+                                      "text" : ": The separator is hidden.",
+                                      "type" : "text"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "visible",
-                                      "type": "codeVoice"
+                                      "code" : "visible",
+                                      "type" : "codeVoice"
                                     },
                                     {
-                                      "text": ": The separator is shown.",
-                                      "type": "text"
+                                      "text" : ": The separator is shown.",
+                                      "type" : "text"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "automatic",
-                                      "type": "codeVoice"
+                                      "code" : "automatic",
+                                      "type" : "codeVoice"
                                     },
                                     {
-                                      "text": ": The separator visibility is determined automatically by the platform.",
-                                      "type": "text"
+                                      "text" : ": The separator visibility is determined automatically by the platform.",
+                                      "type" : "text"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             }
                           ],
-                          "type": "unorderedList"
+                          "type" : "unorderedList"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "edges",
-                              "type": "codeVoice"
+                              "code" : "edges",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": ": Which edges the list separator visibility applies to. Possible values:",
-                              "type": "text"
+                              "text" : ": Which edges the list separator visibility applies to. Possible values:",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         },
                         {
-                          "items": [
+                          "items" : [
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "top",
-                                      "type": "codeVoice"
+                                      "code" : "top",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "bottom",
-                                      "type": "codeVoice"
+                                      "code" : "bottom",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             },
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "code": "all",
-                                      "type": "codeVoice"
+                                      "code" : "all",
+                                      "type" : "codeVoice"
                                     },
                                     {
-                                      "text": " (default)",
-                                      "type": "text"
+                                      "text" : " (default)",
+                                      "type" : "text"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             }
                           ],
-                          "type": "unorderedList"
+                          "type" : "unorderedList"
                         }
                       ]
                     }
                   ],
-                  "type": "unorderedList"
+                  "type" : "unorderedList"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "list_row_inset",
-                      "type": "codeVoice"
+                      "code" : "list_row_inset",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ": Insets for the list row, overriding the default insets. Properties:",
-                      "type": "text"
+                      "text" : ": Insets for the list row, overriding the default insets. Properties:",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 },
                 {
-                  "items": [
+                  "items" : [
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "all",
-                              "type": "codeVoice"
+                              "code" : "all",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The inset for all edges. If used, other properties are ignored.",
-                              "type": "text"
+                              "text" : " (number): The inset for all edges. If used, other properties are ignored.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "top",
-                              "type": "codeVoice"
+                              "code" : "top",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The top inset.",
-                              "type": "text"
+                              "text" : " (number): The top inset.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "bottom",
-                              "type": "codeVoice"
+                              "code" : "bottom",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The bottom inset.",
-                              "type": "text"
+                              "text" : " (number): The bottom inset.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "leading",
-                              "type": "codeVoice"
+                              "code" : "leading",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The leading inset.",
-                              "type": "text"
+                              "text" : " (number): The leading inset.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "trailing",
-                              "type": "codeVoice"
+                              "code" : "trailing",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (number): The trailing inset.",
-                              "type": "text"
+                              "text" : " (number): The trailing inset.",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     }
                   ],
-                  "type": "unorderedList"
+                  "type" : "unorderedList"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "tint",
-                      "type": "codeVoice"
+                      "code" : "tint",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ": The tint color of this view and all nested views. Properties:",
-                      "type": "text"
+                      "text" : ": The tint color of this view and all nested views. Properties:",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 },
                 {
-                  "items": [
+                  "items" : [
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "code": "color",
-                              "type": "codeVoice"
+                              "code" : "color",
+                              "type" : "codeVoice"
                             },
                             {
-                              "text": " (string): The tint color. See ",
-                              "type": "text"
+                              "text" : " (string): The tint color. See ",
+                              "type" : "text"
                             },
                             {
-                              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors",
-                              "isActive": true,
-                              "type": "reference"
+                              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers#Specifying-Colors",
+                              "isActive" : true,
+                              "type" : "reference"
                             },
                             {
-                              "text": ".",
-                              "type": "text"
+                              "text" : ".",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     }
                   ],
-                  "type": "unorderedList"
+                  "type" : "unorderedList"
                 }
               ]
             }
           ],
-          "type": "unorderedList"
+          "type" : "unorderedList"
         },
         {
-          "anchor": "Specifying-Colors",
-          "level": 2,
-          "text": "Specifying Colors",
-          "type": "heading"
+          "anchor" : "Specifying-Colors",
+          "level" : 2,
+          "text" : "Specifying Colors",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Any attribute that accepts a color can be provided with:",
-              "type": "text"
+              "text" : "Any attribute that accepts a color can be provided with:",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "items": [
+          "items" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "a CSS-style hexadecimal RGB color (e.g. ",
-                      "type": "text"
+                      "text" : "a CSS-style hexadecimal RGB color (e.g. ",
+                      "type" : "text"
                     },
                     {
-                      "code": "#ff33cc",
-                      "type": "codeVoice"
+                      "code" : "#ff33cc",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ")",
-                      "type": "text"
+                      "text" : ")",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "a named SwiftUI system color (prefix the SwiftUI property name with ",
-                      "type": "text"
+                      "text" : "a named SwiftUI system color (prefix the SwiftUI property name with ",
+                      "type" : "text"
                     },
                     {
-                      "code": "system-",
-                      "type": "codeVoice"
+                      "code" : "system-",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ", e.g., ",
-                      "type": "text"
+                      "text" : ", e.g., ",
+                      "type" : "text"
                     },
                     {
-                      "code": "system-aqua",
-                      "type": "codeVoice"
+                      "code" : "system-aqua",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " or ",
-                      "type": "text"
+                      "text" : " or ",
+                      "type" : "text"
                     },
                     {
-                      "code": "system-accent",
-                      "type": "codeVoice"
+                      "code" : "system-accent",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ")",
-                      "type": "text"
+                      "text" : ")",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             }
           ],
-          "type": "unorderedList"
+          "type" : "unorderedList"
         },
         {
-          "anchor": "Shape-Attributes",
-          "level": 2,
-          "text": "Shape Attributes",
-          "type": "heading"
+          "anchor" : "Shape-Attributes",
+          "level" : 2,
+          "text" : "Shape Attributes",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "These attributes are common to all ",
-              "type": "text"
+              "text" : "These attributes are common to all ",
+              "type" : "text"
             },
             {
-              "text": "doc:SupportedElements#Shapes",
-              "type": "text"
+              "text" : "doc:SupportedElements#Shapes",
+              "type" : "text"
             },
             {
-              "text": ":",
-              "type": "text"
+              "text" : ":",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "items": [
+          "items" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "fill-color",
-                      "type": "codeVoice"
+                      "code" : "fill-color",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ": The color this shape is filled with (mutually exclusive with ",
-                      "type": "text"
+                      "text" : ": The color this shape is filled with (mutually exclusive with ",
+                      "type" : "text"
                     },
                     {
-                      "code": "stroke-color",
-                      "type": "codeVoice"
+                      "code" : "stroke-color",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ", see ",
-                      "type": "text"
+                      "text" : ", see ",
+                      "type" : "text"
                     },
                     {
-                      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors",
-                      "isActive": true,
-                      "type": "reference"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers#Specifying-Colors",
+                      "isActive" : true,
+                      "type" : "reference"
                     },
                     {
-                      "text": ")",
-                      "type": "text"
+                      "text" : ")",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "stroke-color",
-                      "type": "codeVoice"
+                      "code" : "stroke-color",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ": The color this shape is stroked with (mutually exclusive with ",
-                      "type": "text"
+                      "text" : ": The color this shape is stroked with (mutually exclusive with ",
+                      "type" : "text"
                     },
                     {
-                      "code": "fill-color",
-                      "type": "codeVoice"
+                      "code" : "fill-color",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ", see ",
-                      "type": "text"
+                      "text" : ", see ",
+                      "type" : "text"
                     },
                     {
-                      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors",
-                      "isActive": true,
-                      "type": "reference"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers#Specifying-Colors",
+                      "isActive" : true,
+                      "type" : "reference"
                     },
                     {
-                      "text": ")",
-                      "type": "text"
+                      "text" : ")",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             }
           ],
-          "type": "unorderedList"
+          "type" : "unorderedList"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers",
-      "kind": "article",
-      "role": "article",
-      "title": "Attributes vs. Modifiers",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/attributesvsmodifiers"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property": {
-      "abstract": [
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "text": "Whether this coordinators allows its live view to navigate.",
-          "type": "text"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributesVsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributesVsModifiers",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Attributes vs. Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributesvsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/navigationMode-swift.property" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "var"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "navigationMode"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
-          "text": "NavigationMode"
+          "text" : "Whether this session allows its live view to navigate.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "navigationMode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.property"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
-      "abstract": [
+      "fragments" : [
         {
-          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
-          "type": "text"
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "navigationMode"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
+          "text" : "NavigationMode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Supported Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedelements"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/navigationMode-swift.property",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "navigationMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.property"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors",
-      "kind": "section",
-      "title": "Specifying Colors",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedmodifiers#Specifying-Colors"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers#Specifying-Colors" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SupportedModifiers#Specifying-Colors",
+      "kind" : "section",
+      "title" : "Specifying Colors",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/supportedmodifiers#Specifying-Colors"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "seeAlsoSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-        "doc://LiveViewNative/documentation/LiveViewNative/AttributesVsModifiers"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributesVsModifiers"
       ],
-      "title": "Building a Live View Template"
+      "title" : "Building a Live View Template"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/supportedmodifiers"
+      "paths" : [
+        "\/documentation\/liveviewnative\/supportedmodifiers"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

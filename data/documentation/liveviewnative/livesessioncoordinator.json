@@ -1,700 +1,797 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "The session coordinator object handles the initial connection, as well as navigation.",
-      "type": "text"
+      "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A18SessionCoordinatorC",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A18SessionCoordinatorC",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "class"
+        "kind" : "keyword",
+        "text" : "class"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "LiveSessionCoordinator"
+        "kind" : "identifier",
+        "text" : "LiveSessionCoordinator"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "LiveSessionCoordinator"
+        "kind" : "identifier",
+        "text" : "LiveSessionCoordinator"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Class",
-    "symbolKind": "class",
-    "title": "LiveSessionCoordinator"
+    "role" : "symbol",
+    "roleHeading" : "Class",
+    "symbolKind" : "class",
+    "title" : "LiveSessionCoordinator"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "class"
+              "kind" : "attribute",
+              "text" : "@"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:ScM",
+              "text" : "MainActor"
             },
             {
-              "kind": "identifier",
-              "text": "LiveSessionCoordinator"
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "keyword",
+              "text" : "class"
             },
             {
-              "kind": "genericParameter",
-              "text": "R"
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "text",
-              "text": "> "
+              "kind" : "identifier",
+              "text" : "LiveSessionCoordinator"
             },
             {
-              "kind": "keyword",
-              "text": "where"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "genericParameter",
+              "text" : "R"
             },
             {
-              "kind": "typeIdentifier",
-              "text": "R"
+              "kind" : "text",
+              "text" : "> "
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "keyword",
+              "text" : "where"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative12RootRegistryP",
-              "text": "RootRegistry"
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/7Combine16ObservableObjectP": {
-      "identifier": "doc://LiveViewNative/7Combine16ObservableObjectP",
-      "title": "Combine.ObservableObject",
-      "type": "unresolvable"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7Combine16ObservableObjectP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7Combine16ObservableObjectP",
+      "title" : "Combine.ObservableObject",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
         {
-          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
-          "type": "text"
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "role": "symbol",
-      "title": "CustomRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry"
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted" : {
+      "abstract" : [
         {
-          "text": "See how to quickly get up and running displaying a LiveView in your app.",
-          "type": "text"
+          "text" : "See how to quickly get up and running displaying a LiveView in your app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
-      "kind": "article",
-      "role": "article",
-      "title": "Getting Started",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/gettingstarted"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Getting Started",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gettingstarted"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError" : {
+      "abstract" : [
         {
-          "text": "An object that configures the behavior of a ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": ".",
-          "type": "text"
+          "text" : "An error that occurred when connecting to a live view.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveConnectionError"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveConnectionError"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration"
+      "role" : "symbol",
+      "title" : "LiveConnectionError",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration" : {
+      "abstract" : [
         {
-          "text": "The session coordinator object handles the initial connection, as well as navigation.",
-          "type": "text"
-        }
-      ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "class"
+          "text" : "An object that configures the behavior of a ",
+          "type" : "text"
         },
         {
-          "kind": "text",
-          "text": " "
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/ObservableObject-Implementations": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/ObservableObject-Implementations",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "ObservableObject Implementations",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/observableobject-implementations"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/connect()": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/connect()" : {
+      "abstract" : [
         {
-          "text": "Connects this coordinator to the LiveView channel.",
-          "type": "text"
+          "text" : "Connects this coordinator to the LiveView channel.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "connect"
+          "kind" : "identifier",
+          "text" : "connect"
         },
         {
-          "kind": "text",
-          "text": "() "
+          "kind" : "text",
+          "text" : "() "
         },
         {
-          "kind": "keyword",
-          "text": "async"
+          "kind" : "keyword",
+          "text" : "async"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/connect()",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "connect()",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/connect()"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/connect()",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "connect()",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator\/connect()"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/init(_:config:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/init(_:config:)" : {
+      "abstract" : [
         {
-          "text": "Creates a new coordinator without a custom registry.",
-          "type": "text"
+          "text" : "Creates a new coordinator without a custom registry.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "identifier",
+          "text" : "init"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:10Foundation3URLV",
-          "text": "URL"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation3URLV",
+          "text" : "URL"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "externalParam",
-          "text": "config"
+          "kind" : "externalParam",
+          "text" : "config"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV",
-          "text": "LiveSessionConfiguration"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A20SessionConfigurationV",
+          "text" : "LiveSessionConfiguration"
         },
         {
-          "kind": "text",
-          "text": ")"
+          "kind" : "text",
+          "text" : ")"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/init(_:config:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init(_:config:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/init(_:config:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/init(_:config:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(_:config:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator\/init(_:config:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/init(_:config:customRegistryType:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/init(_:config:customRegistryType:)" : {
+      "abstract" : [
         {
-          "text": "Creates a new coordinator with a custom registry.",
-          "type": "text"
+          "text" : "Creates a new coordinator with a custom registry.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "identifier",
+          "text" : "init"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:10Foundation3URLV",
-          "text": "URL"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation3URLV",
+          "text" : "URL"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "externalParam",
-          "text": "config"
+          "kind" : "externalParam",
+          "text" : "config"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV",
-          "text": "LiveSessionConfiguration"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A20SessionConfigurationV",
+          "text" : "LiveSessionConfiguration"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "externalParam",
-          "text": "customRegistryType"
+          "kind" : "externalParam",
+          "text" : "customRegistryType"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A18SessionCoordinatorC1Rxmfp",
-          "text": "R"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A18SessionCoordinatorC1Rxmfp",
+          "text" : "R"
         },
         {
-          "kind": "text",
-          "text": ".Type)"
+          "kind" : "text",
+          "text" : ".Type)"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/init(_:config:customRegistryType:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init(_:config:customRegistryType:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/init(_:config:customregistrytype:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/init(_:config:customRegistryType:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(_:config:customRegistryType:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator\/init(_:config:customregistrytype:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state": {
-      "abstract": [
-        {
-          "text": "The current state of the live view connection.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/ObservableObject-Implementations" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "var"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "state"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A12SessionStateO",
-          "text": "LiveSessionState"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "state",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/state"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/ObservableObject-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ObservableObject Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator\/observableobject-implementations"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/url": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/state" : {
+      "abstract" : [
         {
-          "text": "The current URL this live view is connected to.",
-          "type": "text"
+          "text" : "The current state of the live view connection.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "url"
+          "kind" : "identifier",
+          "text" : "state"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:10Foundation3URLV",
-          "text": "URL"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A12SessionStateO",
+          "text" : "LiveSessionState"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/url",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "url",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator/url"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/state",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "state",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator\/state"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/url" : {
+      "abstract" : [
         {
-          "text": "The SwiftUI root view for a Phoenix LiveView.",
-          "type": "text"
+          "text" : "The current URL this live view is connected to.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveView"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-      "kind": "symbol",
-      "navigatorTitle": [
+          "kind" : "identifier",
+          "text" : "url"
+        },
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation3URLV",
+          "text" : "URL"
         }
       ],
-      "role": "symbol",
-      "title": "LiveView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/url",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "url",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator\/url"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState" : {
+      "abstract" : [
         {
-          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
-          "type": "text"
+          "text" : "The live view connection state.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionState"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionState"
         }
       ],
-      "role": "symbol",
-      "title": "LiveViewCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator"
+      "role" : "symbol",
+      "title" : "LiveSessionState",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionstate"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView" : {
+      "abstract" : [
         {
-          "text": "A root registry is a ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": " type that can be used directly as the registry for a ",
-          "type": "text"
-        },
-        {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
-        },
-        {
-          "text": ".",
-          "type": "text"
+          "text" : "The SwiftUI root view for a Phoenix LiveView.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "RootRegistry"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/RootRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "RootRegistry"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "role": "symbol",
-      "title": "RootRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/rootregistry"
+      "role" : "symbol",
+      "title" : "LiveView",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview"
     },
-    "doc://LiveViewNative/s8SendableP": {
-      "identifier": "doc://LiveViewNative/s8SendableP",
-      "title": "Swift.Sendable",
-      "type": "unresolvable"
-    },
-    "doc://LiveViewNative/tutorials/YourFirstApp": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator" : {
+      "abstract" : [
         {
-          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
-          "type": "text"
+          "text" : "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
-      "kind": "overview",
-      "role": "overview",
-      "title": "Your First LiveViewNative App",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveViewCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp" : {
+      "abstract" : [
+        {
+          "text" : "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+      "kind" : "overview",
+      "role" : "overview",
+      "title" : "Your First LiveViewNative App",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp"
     }
   },
-  "relationshipsSections": [
+  "relationshipsSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/7Combine16ObservableObjectP",
-        "doc://LiveViewNative/s8SendableP"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7Combine16ObservableObjectP",
+        "doc:\/\/LiveViewNative\/s8SendableP"
       ],
-      "kind": "relationships",
-      "title": "Conforms To",
-      "type": "conformsTo"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "seeAlsoSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/tutorials/YourFirstApp",
-        "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator"
       ],
-      "title": "Essentials"
+      "title" : "Essentials"
     }
   ],
-  "topicSections": [
+  "topicSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/init(_:config:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/init(_:config:customRegistryType:)"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/init(_:config:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/init(_:config:customRegistryType:)"
       ],
-      "title": "Initializers"
+      "title" : "Create a Coordinator"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/state",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/url"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/state",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/url"
       ],
-      "title": "Instance Properties"
+      "title" : "Observing Session State"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/connect()"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/connect()"
       ],
-      "title": "Instance Methods"
+      "title" : "Managing the Session"
     },
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator/ObservableObject-Implementations"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError"
       ],
-      "title": "Default Implementations"
+      "title" : "Supporting Types"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/ObservableObject-Implementations"
+      ],
+      "title" : "Default Implementations"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livesessioncoordinator"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livesessioncoordinator"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

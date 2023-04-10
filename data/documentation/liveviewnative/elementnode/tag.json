@@ -1,254 +1,261 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "The tag name of the element.",
-      "type": "text"
+      "text" : "The tag name of the element.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/tag"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/tag"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative11ElementNodeV3tagSSvp",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative11ElementNodeV3tagSSvp",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "var"
+        "kind" : "keyword",
+        "text" : "var"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "tag"
+        "kind" : "identifier",
+        "text" : "tag"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:SS",
-        "text": "String"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Property",
-    "symbolKind": "property",
-    "title": "tag"
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "tag"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "var"
+              "kind" : "keyword",
+              "text" : "var"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "tag"
+              "kind" : "identifier",
+              "text" : "tag"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SS",
-              "text": "String"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
             },
             {
-              "kind": "text",
-              "text": " { "
+              "kind" : "text",
+              "text" : " { "
             },
             {
-              "kind": "keyword",
-              "text": "get"
+              "kind" : "keyword",
+              "text" : "get"
             },
             {
-              "kind": "text",
-              "text": " }"
+              "kind" : "text",
+              "text" : " }"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode" : {
+      "abstract" : [
         {
-          "text": "A wrapper for an element-containing DOM node and its associated data.",
-          "type": "text"
+          "text" : "A wrapper for an element-containing DOM node and its associated data.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ElementNode"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ElementNode"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "role": "symbol",
-      "title": "ElementNode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode"
+      "role" : "symbol",
+      "title" : "ElementNode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/namespace": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/namespace" : {
+      "abstract" : [
         {
-          "text": "The namespace of the element.",
-          "type": "text"
+          "text" : "The namespace of the element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "namespace"
+          "kind" : "identifier",
+          "text" : "namespace"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
         },
         {
-          "kind": "text",
-          "text": "?"
+          "kind" : "text",
+          "text" : "?"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/namespace",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "namespace",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode/namespace"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/namespace",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "namespace",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode\/namespace"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/tag": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/tag" : {
+      "abstract" : [
         {
-          "text": "The tag name of the element.",
-          "type": "text"
+          "text" : "The tag name of the element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "tag"
+          "kind" : "identifier",
+          "text" : "tag"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/tag",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "tag",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode/tag"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/tag",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "tag",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode\/tag"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "seeAlsoSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/namespace"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/namespace"
       ],
-      "title": "Tag Info"
+      "title" : "Tag Info"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/elementnode/tag"
+      "paths" : [
+        "\/documentation\/liveviewnative\/elementnode\/tag"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

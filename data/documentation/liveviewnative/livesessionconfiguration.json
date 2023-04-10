@@ -1,515 +1,522 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "An object that configures the behavior of a ",
-      "type": "text"
+      "text" : "An object that configures the behavior of a ",
+      "type" : "text"
     },
     {
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "isActive": true,
-      "type": "reference"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
-      "text": ".",
-      "type": "text"
+      "text" : ".",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A20SessionConfigurationV",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A20SessionConfigurationV",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "struct"
+        "kind" : "keyword",
+        "text" : "struct"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "LiveSessionConfiguration"
+        "kind" : "identifier",
+        "text" : "LiveSessionConfiguration"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "LiveSessionConfiguration"
+        "kind" : "identifier",
+        "text" : "LiveSessionConfiguration"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Structure",
-    "symbolKind": "struct",
-    "title": "LiveSessionConfiguration"
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "LiveSessionConfiguration"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "struct"
+              "kind" : "keyword",
+              "text" : "struct"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "LiveSessionConfiguration"
+              "kind" : "identifier",
+              "text" : "LiveSessionConfiguration"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted" : {
+      "abstract" : [
         {
-          "text": "See how to quickly get up and running displaying a LiveView in your app.",
-          "type": "text"
+          "text" : "See how to quickly get up and running displaying a LiveView in your app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
-      "kind": "article",
-      "role": "article",
-      "title": "Getting Started",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/gettingstarted"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Getting Started",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gettingstarted"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration" : {
+      "abstract" : [
         {
-          "text": "An object that configures the behavior of a ",
-          "type": "text"
+          "text" : "An object that configures the behavior of a ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionConfiguration"
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration"
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/connectParams" : {
+      "abstract" : [
         {
-          "text": "Possible modes for live view navigation.",
-          "type": "text"
+          "text" : "A closure that is invoked by the coordinator to get the parameters that should be sent to the server when the live view connects.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "enum"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "NavigationMode"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum",
-      "kind": "symbol",
-      "navigatorTitle": [
+          "kind" : "identifier",
+          "text" : "connectParams"
+        },
         {
-          "kind": "identifier",
-          "text": "NavigationMode"
+          "kind" : "text",
+          "text" : ": (("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation3URLV",
+          "text" : "URL"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> ["
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : " : "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "Any"
+        },
+        {
+          "kind" : "text",
+          "text" : "])?"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionConfiguration.NavigationMode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.enum"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/connectParams",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "connectParams",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/connectparams"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/connectParams": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/init()" : {
+      "abstract" : [
         {
-          "text": "A closure that is invoked by the coordinator to get the parameters that should be sent to the server when the live view connects.",
-          "type": "text"
+          "text" : "Constructs a default, empty configuration.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "identifier",
+          "text" : "init"
         },
         {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "connectParams"
-        },
-        {
-          "kind": "text",
-          "text": ": (("
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:10Foundation3URLV",
-          "text": "URL"
-        },
-        {
-          "kind": "text",
-          "text": ") -> ["
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": " : "
-        },
-        {
-          "kind": "keyword",
-          "text": "Any"
-        },
-        {
-          "kind": "text",
-          "text": "])?"
+          "kind" : "text",
+          "text" : "()"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/connectParams",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "connectParams",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/connectparams"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/init()",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init()",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/init()"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/init()": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum" : {
+      "abstract" : [
         {
-          "text": "Constructs a default, empty configuration.",
-          "type": "text"
+          "text" : "Possible modes for live view navigation.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": "()"
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "NavigationMode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/init()",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init()",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/init()"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "NavigationMode"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration.NavigationMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.enum"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/navigationMode-swift.property" : {
+      "abstract" : [
         {
-          "text": "Whether this coordinators allows its live view to navigate.",
-          "type": "text"
+          "text" : "Whether this session allows its live view to navigate.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "navigationMode"
+          "kind" : "identifier",
+          "text" : "navigationMode"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
-          "text": "NavigationMode"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
+          "text" : "NavigationMode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "navigationMode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.property"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/navigationMode-swift.property",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "navigationMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/navigationmode-swift.property"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/urlSession": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/urlSession" : {
+      "abstract" : [
         {
-          "text": "The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.",
-          "type": "text"
+          "text" : "The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "urlSession"
+          "kind" : "identifier",
+          "text" : "urlSession"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "c:objc(cs)NSURLSession",
-          "text": "URLSession"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "c:objc(cs)NSURLSession",
+          "text" : "URLSession"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/urlSession",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "urlSession",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/urlsession"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/urlSession",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "urlSession",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration\/urlsession"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
         {
-          "text": "The session coordinator object handles the initial connection, as well as navigation.",
-          "type": "text"
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessioncoordinator"
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView" : {
+      "abstract" : [
         {
-          "text": "The SwiftUI root view for a Phoenix LiveView.",
-          "type": "text"
+          "text" : "The SwiftUI root view for a Phoenix LiveView.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "role": "symbol",
-      "title": "LiveView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview"
+      "role" : "symbol",
+      "title" : "LiveView",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator" : {
+      "abstract" : [
         {
-          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
-          "type": "text"
+          "text" : "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
         }
       ],
-      "role": "symbol",
-      "title": "LiveViewCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator"
+      "role" : "symbol",
+      "title" : "LiveViewCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp" : {
+      "abstract" : [
         {
-          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
-          "type": "text"
+          "text" : "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
-      "kind": "overview",
-      "role": "overview",
-      "title": "Your First LiveViewNative App",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+      "kind" : "overview",
+      "role" : "overview",
+      "title" : "Your First LiveViewNative App",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "seeAlsoSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/tutorials/YourFirstApp",
-        "doc://LiveViewNative/documentation/LiveViewNative/GettingStarted",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionCoordinator",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GettingStarted",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator"
       ],
-      "title": "Essentials"
+      "title" : "Essentials"
     }
   ],
-  "topicSections": [
+  "topicSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/init()"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/init()"
       ],
-      "title": "Initializers"
+      "title" : "Initializers"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/connectParams",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/urlSession"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/connectParams",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/navigationMode-swift.property",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/urlSession"
       ],
-      "title": "Instance Properties"
+      "title" : "Instance Properties"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/NavigationMode-swift.enum"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration\/NavigationMode-swift.enum"
       ],
-      "title": "Enumerations"
+      "title" : "Enumerations"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livesessionconfiguration"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livesessionconfiguration"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

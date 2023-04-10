@@ -1,291 +1,298 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "A SwiftUI ",
-      "type": "text"
+      "text" : "A SwiftUI ",
+      "type" : "text"
     },
     {
-      "code": "Binding",
-      "type": "codeVoice"
+      "code" : "Binding",
+      "type" : "codeVoice"
     },
     {
-      "text": " that provides read and write access to the underlying data.",
-      "type": "text"
+      "text" : " that provides read and write access to the underlying data.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/projectedValue"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding\/projectedValue"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A7BindingV14projectedValue7SwiftUI0D0VyxGvp",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A7BindingV14projectedValue7SwiftUI0D0VyxGvp",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "var"
+        "kind" : "keyword",
+        "text" : "var"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "projectedValue"
+        "kind" : "identifier",
+        "text" : "projectedValue"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI7BindingV",
-        "text": "Binding"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI7BindingV",
+        "text" : "Binding"
       },
       {
-        "kind": "text",
-        "text": "<"
+        "kind" : "text",
+        "text" : "<"
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
-        "text": "Value"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0A7BindingV5Valuexmfp",
+        "text" : "Value"
       },
       {
-        "kind": "text",
-        "text": ">"
+        "kind" : "text",
+        "text" : ">"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Property",
-    "symbolKind": "property",
-    "title": "projectedValue"
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "projectedValue"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "var"
+              "kind" : "keyword",
+              "text" : "var"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "projectedValue"
+              "kind" : "identifier",
+              "text" : "projectedValue"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI7BindingV",
-              "text": "Binding"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI7BindingV",
+              "text" : "Binding"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
-              "text": "Value"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0A7BindingV5Valuexmfp",
+              "text" : "Value"
             },
             {
-              "kind": "text",
-              "text": "> { "
+              "kind" : "text",
+              "text" : "> { "
             },
             {
-              "kind": "keyword",
-              "text": "get"
+              "kind" : "keyword",
+              "text" : "get"
             },
             {
-              "kind": "text",
-              "text": " }"
+              "kind" : "text",
+              "text" : " }"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "discussion",
-          "level": 2,
-          "text": "Discussion",
-          "type": "heading"
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Access this binding with the dollar sign prefix. If a property is declared as ",
-              "type": "text"
+              "text" : "Access this binding with the dollar sign prefix. If a property is declared as ",
+              "type" : "text"
             },
             {
-              "code": "@LiveBinding(name: \"value\") var value",
-              "type": "codeVoice"
+              "code" : "@LiveBinding(name: \"value\") var value",
+              "type" : "codeVoice"
             },
             {
-              "text": ", then the projected value binding can be access as ",
-              "type": "text"
+              "text" : ", then the projected value binding can be access as ",
+              "type" : "text"
             },
             {
-              "code": "$value",
-              "type": "codeVoice"
+              "code" : "$value",
+              "type" : "codeVoice"
             },
             {
-              "text": ".",
-              "type": "text"
+              "text" : ".",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding" : {
+      "abstract" : [
         {
-          "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
-          "type": "text"
+          "text" : "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveBinding"
+          "kind" : "identifier",
+          "text" : "LiveBinding"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveBinding"
+          "kind" : "identifier",
+          "text" : "LiveBinding"
         }
       ],
-      "role": "symbol",
-      "title": "LiveBinding",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livebinding"
+      "role" : "symbol",
+      "title" : "LiveBinding",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livebinding"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/projectedValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding\/projectedValue" : {
+      "abstract" : [
         {
-          "text": "A SwiftUI ",
-          "type": "text"
+          "text" : "A SwiftUI ",
+          "type" : "text"
         },
         {
-          "code": "Binding",
-          "type": "codeVoice"
+          "code" : "Binding",
+          "type" : "codeVoice"
         },
         {
-          "text": " that provides read and write access to the underlying data.",
-          "type": "text"
+          "text" : " that provides read and write access to the underlying data.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "projectedValue"
+          "kind" : "identifier",
+          "text" : "projectedValue"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI7BindingV",
-          "text": "Binding"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI7BindingV",
+          "text" : "Binding"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : "<"
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
-          "text": "Value"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A7BindingV5Valuexmfp",
+          "text" : "Value"
         },
         {
-          "kind": "text",
-          "text": ">"
+          "kind" : "text",
+          "text" : ">"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/projectedValue",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "projectedValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livebinding/projectedvalue"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding\/projectedValue",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "projectedValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livebinding\/projectedvalue"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livebinding/projectedvalue"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livebinding\/projectedvalue"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

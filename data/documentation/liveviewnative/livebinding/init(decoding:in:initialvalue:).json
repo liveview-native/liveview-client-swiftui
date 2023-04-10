@@ -1,504 +1,511 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Creates a ",
-      "type": "text"
+      "text" : "Creates a ",
+      "type" : "text"
     },
     {
-      "code": "LiveBinding",
-      "type": "codeVoice"
+      "code" : "LiveBinding",
+      "type" : "codeVoice"
     },
     {
-      "text": " by decoding its name from a container.",
-      "type": "text"
+      "text" : " by decoding its name from a container.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(decoding:in:initialValue:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding\/init(decoding:in:initialValue:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc",
+    "fragments" : [
       {
-        "kind": "identifier",
-        "text": "init"
+        "kind" : "identifier",
+        "text" : "init"
       },
       {
-        "kind": "text",
-        "text": "<"
+        "kind" : "text",
+        "text" : "<"
       },
       {
-        "kind": "genericParameter",
-        "text": "K"
+        "kind" : "genericParameter",
+        "text" : "K"
       },
       {
-        "kind": "text",
-        "text": ">("
+        "kind" : "text",
+        "text" : ">("
       },
       {
-        "kind": "externalParam",
-        "text": "decoding"
+        "kind" : "externalParam",
+        "text" : "decoding"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
-        "text": "K"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
+        "text" : "K"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "externalParam",
-        "text": "in"
+        "kind" : "externalParam",
+        "text" : "in"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:s22KeyedDecodingContainerV",
-        "text": "KeyedDecodingContainer"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s22KeyedDecodingContainerV",
+        "text" : "KeyedDecodingContainer"
       },
       {
-        "kind": "text",
-        "text": "<"
+        "kind" : "text",
+        "text" : "<"
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
-        "text": "K"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
+        "text" : "K"
       },
       {
-        "kind": "text",
-        "text": ">, "
+        "kind" : "text",
+        "text" : ">, "
       },
       {
-        "kind": "externalParam",
-        "text": "initialValue"
+        "kind" : "externalParam",
+        "text" : "initialValue"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
-        "text": "Value"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0A7BindingV5Valuexmfp",
+        "text" : "Value"
       },
       {
-        "kind": "text",
-        "text": "?) "
+        "kind" : "text",
+        "text" : "?) "
       },
       {
-        "kind": "keyword",
-        "text": "throws"
+        "kind" : "keyword",
+        "text" : "throws"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Initializer",
-    "symbolKind": "init",
-    "title": "init(decoding:in:initialValue:)"
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(decoding:in:initialValue:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "init"
+              "kind" : "keyword",
+              "text" : "init"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "genericParameter",
-              "text": "K"
+              "kind" : "genericParameter",
+              "text" : "K"
             },
             {
-              "kind": "text",
-              "text": ">("
+              "kind" : "text",
+              "text" : ">("
             },
             {
-              "kind": "externalParam",
-              "text": "decoding"
+              "kind" : "externalParam",
+              "text" : "decoding"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "key"
+              "kind" : "internalParam",
+              "text" : "key"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
-              "text": "K"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
+              "text" : "K"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "externalParam",
-              "text": "in"
+              "kind" : "externalParam",
+              "text" : "in"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "container"
+              "kind" : "internalParam",
+              "text" : "container"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:s22KeyedDecodingContainerV",
-              "text": "KeyedDecodingContainer"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s22KeyedDecodingContainerV",
+              "text" : "KeyedDecodingContainer"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
-              "text": "K"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
+              "text" : "K"
             },
             {
-              "kind": "text",
-              "text": ">, "
+              "kind" : "text",
+              "text" : ">, "
             },
             {
-              "kind": "externalParam",
-              "text": "initialValue"
+              "kind" : "externalParam",
+              "text" : "initialValue"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
-              "text": "Value"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0A7BindingV5Valuexmfp",
+              "text" : "Value"
             },
             {
-              "kind": "text",
-              "text": "? = nil) "
+              "kind" : "text",
+              "text" : "? = nil) "
             },
             {
-              "kind": "keyword",
-              "text": "throws"
+              "kind" : "keyword",
+              "text" : "throws"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "keyword",
-              "text": "where"
+              "kind" : "keyword",
+              "text" : "where"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "K"
+              "kind" : "typeIdentifier",
+              "text" : "K"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:s9CodingKeyP",
-              "text": "CodingKey"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s9CodingKeyP",
+              "text" : "CodingKey"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "discussion",
-          "level": 2,
-          "text": "Discussion",
-          "type": "heading"
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "This initializer should be used when the live binding is used as part of a view modifier.",
-              "type": "text"
+              "text" : "This initializer should be used when the live binding is used as part of a view modifier.",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "See ",
-              "type": "text"
+              "text" : "See ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
-              "isActive": true,
-              "type": "reference"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text": " for an example of how this is used.",
-              "type": "text"
+              "text" : " for an example of how this is used.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "The name key is treated as optional when decoding.",
-              "type": "text"
+              "text" : "The name key is treated as optional when decoding.",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "If a binding name is not provided, the ",
-              "type": "text"
+              "text" : "If a binding name is not provided, the ",
+              "type" : "text"
             },
             {
-              "code": "LiveBinding",
-              "type": "codeVoice"
+              "code" : "LiveBinding",
+              "type" : "codeVoice"
             },
             {
-              "text": " operates in local mode.",
-              "type": "text"
+              "text" : " operates in local mode.",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "In that mode, the ",
-              "type": "text"
+              "text" : "In that mode, the ",
+              "type" : "text"
             },
             {
-              "code": "initialValue",
-              "type": "codeVoice"
+              "code" : "initialValue",
+              "type" : "codeVoice"
             },
             {
-              "text": " is used as the initial value of the property.",
-              "type": "text"
+              "text" : " is used as the initial value of the property.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding" : {
+      "abstract" : [
         {
-          "text": "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
-          "type": "text"
+          "text" : "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveBinding"
+          "kind" : "identifier",
+          "text" : "LiveBinding"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveBinding"
+          "kind" : "identifier",
+          "text" : "LiveBinding"
         }
       ],
-      "role": "symbol",
-      "title": "LiveBinding",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livebinding"
+      "role" : "symbol",
+      "title" : "LiveBinding",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livebinding"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(decoding:in:initialValue:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding\/init(decoding:in:initialValue:)" : {
+      "abstract" : [
         {
-          "text": "Creates a ",
-          "type": "text"
+          "text" : "Creates a ",
+          "type" : "text"
         },
         {
-          "code": "LiveBinding",
-          "type": "codeVoice"
+          "code" : "LiveBinding",
+          "type" : "codeVoice"
         },
         {
-          "text": " by decoding its name from a container.",
-          "type": "text"
+          "text" : " by decoding its name from a container.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "identifier",
+          "text" : "init"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : "<"
         },
         {
-          "kind": "genericParameter",
-          "text": "K"
+          "kind" : "genericParameter",
+          "text" : "K"
         },
         {
-          "kind": "text",
-          "text": ">("
+          "kind" : "text",
+          "text" : ">("
         },
         {
-          "kind": "externalParam",
-          "text": "decoding"
+          "kind" : "externalParam",
+          "text" : "decoding"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
-          "text": "K"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
+          "text" : "K"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "externalParam",
-          "text": "in"
+          "kind" : "externalParam",
+          "text" : "in"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:s22KeyedDecodingContainerV",
-          "text": "KeyedDecodingContainer"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s22KeyedDecodingContainerV",
+          "text" : "KeyedDecodingContainer"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : "<"
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
-          "text": "K"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A7BindingV8decoding2in12initialValueACyxGqd___s22KeyedDecodingContainerVyqd__GxSgtKcs9CodingKeyRd__lufc1KL_qd__mfp",
+          "text" : "K"
         },
         {
-          "kind": "text",
-          "text": ">, "
+          "kind" : "text",
+          "text" : ">, "
         },
         {
-          "kind": "externalParam",
-          "text": "initialValue"
+          "kind" : "externalParam",
+          "text" : "initialValue"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A7BindingV5Valuexmfp",
-          "text": "Value"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A7BindingV5Valuexmfp",
+          "text" : "Value"
         },
         {
-          "kind": "text",
-          "text": "?) "
+          "kind" : "text",
+          "text" : "?) "
         },
         {
-          "kind": "keyword",
-          "text": "throws"
+          "kind" : "keyword",
+          "text" : "throws"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveBinding/init(decoding:in:initialValue:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init(decoding:in:initialValue:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livebinding/init(decoding:in:initialvalue:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding\/init(decoding:in:initialValue:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(decoding:in:initialValue:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livebinding\/init(decoding:in:initialvalue:)"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livebinding/init(decoding:in:initialvalue:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livebinding\/init(decoding:in:initialvalue:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

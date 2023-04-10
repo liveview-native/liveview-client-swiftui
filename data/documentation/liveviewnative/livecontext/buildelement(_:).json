@@ -1,396 +1,403 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Builds a view representing the given element in the current context.",
-      "type": "text"
+      "text" : "Builds a view representing the given element in the current context.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveContext"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildElement(_:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A7ContextV12buildElementyQrAA0F4NodeVF",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A7ContextV12buildElementyQrAA0F4NodeVF",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "func"
+        "kind" : "keyword",
+        "text" : "func"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "buildElement"
+        "kind" : "identifier",
+        "text" : "buildElement"
       },
       {
-        "kind": "text",
-        "text": "("
+        "kind" : "text",
+        "text" : "("
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-        "text": "ElementNode"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+        "text" : "ElementNode"
       },
       {
-        "kind": "text",
-        "text": ") -> "
+        "kind" : "text",
+        "text" : ") -> "
       },
       {
-        "kind": "keyword",
-        "text": "some"
+        "kind" : "keyword",
+        "text" : "some"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI4ViewP",
-        "text": "View"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI4ViewP",
+        "text" : "View"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Method",
-    "symbolKind": "method",
-    "title": "buildElement(_:)"
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "buildElement(_:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "func"
+              "kind" : "keyword",
+              "text" : "func"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "buildElement"
+              "kind" : "identifier",
+              "text" : "buildElement"
             },
             {
-              "kind": "text",
-              "text": "("
+              "kind" : "text",
+              "text" : "("
             },
             {
-              "kind": "externalParam",
-              "text": "_"
+              "kind" : "externalParam",
+              "text" : "_"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "element"
+              "kind" : "internalParam",
+              "text" : "element"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-              "text": "ElementNode"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+              "text" : "ElementNode"
             },
             {
-              "kind": "text",
-              "text": ") -> "
+              "kind" : "text",
+              "text" : ") -> "
             },
             {
-              "kind": "keyword",
-              "text": "some"
+              "kind" : "keyword",
+              "text" : "some"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI4ViewP",
-              "text": "View"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI4ViewP",
+              "text" : "View"
             },
             {
-              "kind": "text",
-              "text": "\n"
+              "kind" : "text",
+              "text" : "\n"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "discussion",
-          "level": 2,
-          "text": "Discussion",
-          "type": "heading"
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "If you’re building a custom container view, make sure to use ",
-                  "type": "text"
+                  "text" : "If you’re building a custom container view, make sure to use ",
+                  "type" : "text"
                 },
                 {
-                  "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)",
-                  "isActive": true,
-                  "type": "reference"
+                  "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:)",
+                  "isActive" : true,
+                  "type" : "reference"
                 },
                 {
-                  "text": ". Calling this will cause a stack overflow.",
-                  "type": "text"
+                  "text" : ". Calling this will cause a stack overflow.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "name": "Note",
-          "style": "note",
-          "type": "aside"
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode" : {
+      "abstract" : [
         {
-          "text": "A wrapper for an element-containing DOM node and its associated data.",
-          "type": "text"
+          "text" : "A wrapper for an element-containing DOM node and its associated data.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ElementNode"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ElementNode"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "role": "symbol",
-      "title": "ElementNode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode"
+      "role" : "symbol",
+      "title" : "ElementNode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext" : {
+      "abstract" : [
         {
-          "text": "The context provides information at initialization-time to views in a LiveView.",
-          "type": "text"
+          "text" : "The context provides additional information to elements within a live view.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveContext"
+          "kind" : "identifier",
+          "text" : "LiveContext"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveContext"
+          "kind" : "identifier",
+          "text" : "LiveContext"
         }
       ],
-      "role": "symbol",
-      "title": "LiveContext",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext"
+      "role" : "symbol",
+      "title" : "LiveContext",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:)" : {
+      "abstract" : [
         {
-          "text": "Builds a view representing the children of the current element in the current context.",
-          "type": "text"
+          "text" : "Builds a view representing the children of the current element in the current context.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "buildChildren"
+          "kind" : "identifier",
+          "text" : "buildChildren"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "of"
+          "kind" : "externalParam",
+          "text" : "of"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-          "text": "ElementNode"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+          "text" : "ElementNode"
         },
         {
-          "kind": "text",
-          "text": ") -> "
+          "kind" : "text",
+          "text" : ") -> "
         },
         {
-          "kind": "keyword",
-          "text": "some"
+          "kind" : "keyword",
+          "text" : "some"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI4ViewP",
-          "text": "View"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildChildren(of:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "buildChildren(of:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/buildchildren(of:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildChildren(of:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/buildchildren(of:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildElement(_:)" : {
+      "abstract" : [
         {
-          "text": "Builds a view representing the given element in the current context.",
-          "type": "text"
+          "text" : "Builds a view representing the given element in the current context.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "buildElement"
+          "kind" : "identifier",
+          "text" : "buildElement"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-          "text": "ElementNode"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+          "text" : "ElementNode"
         },
         {
-          "kind": "text",
-          "text": ") -> "
+          "kind" : "text",
+          "text" : ") -> "
         },
         {
-          "kind": "keyword",
-          "text": "some"
+          "kind" : "keyword",
+          "text" : "some"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI4ViewP",
-          "text": "View"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveContext/buildElement(_:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "buildElement(_:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livecontext/buildelement(_:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildElement(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildElement(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext\/buildelement(_:)"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livecontext/buildelement(_:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/livecontext\/buildelement(_:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

@@ -1,9 +1,9 @@
 {
-  "bundleDisplayName": "LiveViewNative",
-  "bundleIdentifier": "LiveViewNative",
-  "schemaVersion": {
-    "major": 0,
-    "minor": 1,
-    "patch": 0
+  "bundleDisplayName" : "LiveViewNative",
+  "bundleIdentifier" : "LiveViewNative",
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 1,
+    "patch" : 0
   }
 }

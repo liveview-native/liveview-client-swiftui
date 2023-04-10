@@ -1,169 +1,176 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Creates an ",
-      "type": "text"
+      "text" : "Creates an ",
+      "type" : "text"
     },
     {
-      "code": "ObservedElement",
-      "type": "codeVoice"
+      "code" : "ObservedElement",
+      "type" : "codeVoice"
     },
     {
-      "text": " that observes changes to the view’s element.",
-      "type": "text"
+      "text" : " that observes changes to the view’s element.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/init()"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/init()"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative15ObservedElementVACycfc",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative15ObservedElementVACycfc",
+    "fragments" : [
       {
-        "kind": "identifier",
-        "text": "init"
+        "kind" : "identifier",
+        "text" : "init"
       },
       {
-        "kind": "text",
-        "text": "()"
+        "kind" : "text",
+        "text" : "()"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Initializer",
-    "symbolKind": "init",
-    "title": "init()"
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init()"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "init"
+              "kind" : "keyword",
+              "text" : "init"
             },
             {
-              "kind": "text",
-              "text": "()"
+              "kind" : "text",
+              "text" : "()"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that observes changes to an element in the coordinator’s document.",
-          "type": "text"
+          "text" : "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ObservedElement"
+          "kind" : "identifier",
+          "text" : "ObservedElement"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ObservedElement"
+          "kind" : "identifier",
+          "text" : "ObservedElement"
         }
       ],
-      "role": "symbol",
-      "title": "ObservedElement",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/observedelement"
+      "role" : "symbol",
+      "title" : "ObservedElement",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/init()": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/init()" : {
+      "abstract" : [
         {
-          "text": "Creates an ",
-          "type": "text"
+          "text" : "Creates an ",
+          "type" : "text"
         },
         {
-          "code": "ObservedElement",
-          "type": "codeVoice"
+          "code" : "ObservedElement",
+          "type" : "codeVoice"
         },
         {
-          "text": " that observes changes to the view’s element.",
-          "type": "text"
+          "text" : " that observes changes to the view’s element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "identifier",
+          "text" : "init"
         },
         {
-          "kind": "text",
-          "text": "()"
+          "kind" : "text",
+          "text" : "()"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ObservedElement/init()",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init()",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/observedelement/init()"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/init()",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init()",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement\/init()"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/observedelement/init()"
+      "paths" : [
+        "\/documentation\/liveviewnative\/observedelement\/init()"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

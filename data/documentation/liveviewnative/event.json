@@ -1,430 +1,657 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
-      "type": "text"
+      "text" : "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/Event"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative5EventV",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative5EventV",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "struct"
+        "kind" : "keyword",
+        "text" : "struct"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "Event"
+        "kind" : "identifier",
+        "text" : "Event"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "Event"
+        "kind" : "identifier",
+        "text" : "Event"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Structure",
-    "symbolKind": "struct",
-    "title": "Event"
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "Event"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "attribute",
-              "text": "@propertyWrapper"
+              "kind" : "attribute",
+              "text" : "@propertyWrapper"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "keyword",
-              "text": "struct"
+              "kind" : "keyword",
+              "text" : "struct"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "Event"
+              "kind" : "identifier",
+              "text" : "Event"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "overview",
-          "level": 2,
-          "text": "Overview",
-          "type": "heading"
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Specify the attribute that contains the event name and an event type to create the wrapper.",
-              "type": "text"
+              "text" : "Specify the attribute that contains the event name and an event type to create the wrapper.",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": "Then, call the wrapped value with a payload and completion handler.",
-              "type": "text"
+              "text" : "Then, call the wrapped value with a payload and optionally a completion handler.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "code": [
+          "code" : [
             "struct MyCounterElement: View {",
             "    @Event(\"on-increment\", type: \"click\") private var increment",
             "",
             "    var body: some View {",
             "        MyCounterView(onIncrement: {",
-            "            increment([\"new-value\": 10]) {",
-            "                // on complete",
-            "            }",
+            "            increment([\"new-value\": 10])",
             "        })",
             "    }",
             "}"
           ],
-          "syntax": "swift",
-          "type": "codeListing"
+          "syntax" : "swift",
+          "type" : "codeListing"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "The element should include an attribute with the name of the event to trigger.",
-              "type": "text"
+              "text" : "The element should include an attribute with the name of the event to trigger.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "code": [
-            "<my-counter on-increment=\"increment_count\" />"
+          "code" : [
+            "<my-counter on-increment=\"increment_count\" \/>"
           ],
-          "syntax": "html",
-          "type": "codeListing"
+          "syntax" : "html",
+          "type" : "codeListing"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Any ",
-              "type": "text"
+              "text" : "Any ",
+              "type" : "text"
             },
             {
-              "code": "phx-debounce",
-              "type": "codeVoice"
+              "code" : "phx-debounce",
+              "type" : "codeVoice"
             },
             {
-              "text": " or ",
-              "type": "text"
+              "text" : " or ",
+              "type" : "text"
             },
             {
-              "code": "phx-throttle",
-              "type": "codeVoice"
+              "code" : "phx-throttle",
+              "type" : "codeVoice"
             },
             {
-              "text": " attributes on this element will be respected automatically.",
-              "type": "text"
+              "text" : " attributes on this element will be respected automatically.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/7SwiftUI15DynamicPropertyP": {
-      "identifier": "doc://LiveViewNative/7SwiftUI15DynamicPropertyP",
-      "title": "SwiftUI.DynamicProperty",
-      "type": "unresolvable"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP",
+      "title" : "SwiftUI.DynamicProperty",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Event": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
-          "type": "text"
+          "text" : "A property wrapper that decodes an attribute of an element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "Event"
+          "kind" : "identifier",
+          "text" : "Attribute"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "Event"
+          "kind" : "identifier",
+          "text" : "Attribute"
         }
       ],
-      "role": "symbol",
-      "title": "Event",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/event"
+      "role" : "symbol",
+      "title" : "Attribute",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attribute"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Event/DynamicProperty-Implementations": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event/DynamicProperty-Implementations",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "DynamicProperty Implementations",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/event/dynamicproperty-implementations"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode" : {
+      "abstract" : [
+        {
+          "text" : "A wrapper for an element-containing DOM node and its associated data.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ElementNode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ElementNode"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ElementNode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Event/init(_:type:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event" : {
+      "abstract" : [
         {
-          "text": "Retrieves the event name from a specific attribute.",
-          "type": "text"
+          "text" : "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
-          "text": "AttributeName"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "type"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ")"
+          "kind" : "identifier",
+          "text" : "Event"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event/init(_:type:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init(_:type:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/event/init(_:type:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Event"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Event",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Event/init(event:type:)": {
-      "abstract": [
-        {
-          "text": "Creates a binding to a known server-side event name.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "identifier",
-          "text": "init"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "externalParam",
-          "text": "event"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "type"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ")"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event/init(event:type:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init(event:type:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/event/init(event:type:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "DynamicProperty Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/dynamicproperty-implementations"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Event/wrappedValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler" : {
+      "abstract" : [
         {
-          "text": "Sends the event with a given payload and completion handler.",
-          "type": "text"
+          "text" : "An action that you invoke to send an event to the server.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "wrappedValue"
-        },
-        {
-          "kind": "text",
-          "text": ": ("
-        },
-        {
-          "kind": "keyword",
-          "text": "Any"
-        },
-        {
-          "kind": "text",
-          "text": ", () -> ()) -> ()"
+          "kind" : "identifier",
+          "text" : "EventHandler"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Event/wrappedValue",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "wrappedValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/event/wrappedvalue"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "EventHandler"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Event.EventHandler",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/eventhandler"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(_:type:)" : {
+      "abstract" : [
+        {
+          "text" : "Retrieves the event name from a specific attribute.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:18LiveViewNativeCore13AttributeNameV",
+          "text" : "AttributeName"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "type"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : ")"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(_:type:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(_:type:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/init(_:type:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(event:type:)" : {
+      "abstract" : [
+        {
+          "text" : "Creates a binding to a known server-side event name.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "event"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "type"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : ")"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(event:type:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(event:type:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/init(event:type:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/wrappedValue" : {
+      "abstract" : [
+        {
+          "text" : "Sends the event with a given payload and completion handler.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "wrappedValue"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/wrappedValue",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "wrappedValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/wrappedvalue"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding" : {
+      "abstract" : [
+        {
+          "text" : "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveBinding"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveBinding"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveBinding",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livebinding"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext" : {
+      "abstract" : [
+        {
+          "text" : "The context provides additional information to elements within a live view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveContext"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveContext"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveContext",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livecontext"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement" : {
+      "abstract" : [
+        {
+          "text" : "A property wrapper that observes changes to an element in the coordinator’s document.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ObservedElement"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ObservedElement"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ObservedElement",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement"
     }
   },
-  "relationshipsSections": [
+  "relationshipsSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/7SwiftUI15DynamicPropertyP"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP"
       ],
-      "kind": "relationships",
-      "title": "Conforms To",
-      "type": "conformsTo"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "topicSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Event/init(_:type:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/Event/init(event:type:)"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext"
       ],
-      "title": "Initializers"
-    },
-    {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Event/wrappedValue"
-      ],
-      "title": "Instance Properties"
-    },
-    {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Event/DynamicProperty-Implementations"
-      ],
-      "title": "Default Implementations"
+      "title" : "Working with the DOM"
     }
   ],
-  "variants": [
+  "topicSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/event"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(_:type:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(event:type:)"
       ],
-      "traits": [
+      "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/wrappedValue"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler"
+      ],
+      "title" : "Supporting Types"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/event"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

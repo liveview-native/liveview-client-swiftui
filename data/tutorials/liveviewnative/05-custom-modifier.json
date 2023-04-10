@@ -1,198 +1,190 @@
 {
-  "hierarchy": {
-    "modules": [
+  "hierarchy" : {
+    "modules" : [
       {
-        "projects": [
+        "projects" : [
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Building-the-Backend"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Creating-the-App"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Build-the-List-UI"
               }
             ]
           },
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Updating-the-Backend"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Adding-the-Favorite-Button"
               }
             ]
           },
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Building-the-Detail-View"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Adding-Navigation"
               }
             ]
           }
         ],
-        "reference": "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started"
+        "reference" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Getting-Started"
       },
       {
-        "projects": [
+        "projects" : [
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Setting-Up-the-Registry"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Update-the-GenServer"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Building-the-View"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Using-the-Element"
               }
             ]
           },
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Update-the-Backend"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Implement-the-Attribute"
               }
             ]
           },
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen#Add-the-Loading-View"
               }
             ]
           }
         ],
-        "reference": "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift"
+        "reference" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Customize-with-Swift"
       }
     ],
-    "paths": [
+    "paths" : [
       [
-        "doc://LiveViewNative/tutorials/YourFirstApp",
-        "doc://LiveViewNative/tutorials/YourFirstApp/$volume",
-        "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift"
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/$volume",
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Customize-with-Swift"
       ]
     ],
-    "reference": "doc://LiveViewNative/tutorials/YourFirstApp"
+    "reference" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp"
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier"
   },
-  "kind": "project",
-  "metadata": {
-    "category": "Live View Native",
-    "categoryPathComponent": "YourFirstApp",
-    "role": "project",
-    "title": "Add a Navigation Bar Button with a Custom Modifier"
+  "kind" : "project",
+  "metadata" : {
+    "category" : "Live View Native",
+    "categoryPathComponent" : "YourFirstApp",
+    "role" : "project",
+    "title" : "Add a Navigation Bar Button with a Custom Modifier"
   },
-  "references": {
-    "04-04-01-change-score.ex": {
-      "content": [
+  "references" : {
+    "04-04-01-change-score.ex" : {
+      "content" : [
         "defmodule LvnTutorialWeb.CatLive do",
         "  use LvnTutorialWeb, :live_view",
-        "  require EEx",
+        "  use LiveViewNative.LiveView",
         "  alias LvnTutorial.FavoritesStore",
-        "",
-        "  EEx.function_from_file(",
-        "    :def,",
-        "    :render,",
-        "    \"lib/lvn_tutorial_web/live/cat_live.ios.heex\",",
-        "    [:assigns],",
-        "    engine: Phoenix.LiveView.HTMLEngine",
-        "  )",
         "",
         "  def mount(%{\"name\" => name}, _session, socket) do",
         "    {:ok, assign(socket, name: name, score: FavoritesStore.get_score(name))}",
         "  end",
         "",
+        "  def render(assigns) do",
+        "    render_native(assigns)",
+        "  end",
+        "",
         "  def handle_event(\"change-score\", score, socket) do",
         "    FavoritesStore.set_score(socket.assigns.name, score)",
         "    {:noreply, assign(socket, score: score)}",
         "  end",
         "end"
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cat_live.ex",
-      "fileType": "ex",
-      "highlights": [],
-      "identifier": "04-04-01-change-score.ex",
-      "syntax": "ex",
-      "type": "file"
-    },
-    "04-04-02-cat-rating.ios.heex": {
-      "content": [
-        "<v-stack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @title}] |> Jason.encode!}>",
-        "  <async-image src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
-        "  <cat-rating score={@score} />",
-        "</v-stack>"
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
+
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cat_live.ios.heex",
-      "fileType": "heex",
-      "highlights": [],
-      "identifier": "04-04-02-cat-rating.ios.heex",
-      "syntax": "heex",
-      "type": "file"
+      "identifier" : "04-04-01-change-score.ex",
+      "syntax" : "elixir",
+      "type" : "file"
     },
-    "05-00-intro-header.png": {
-      "alt": "The cat detail screen with a filled star button in the top right corner.",
-      "identifier": "05-00-intro-header.png",
-      "type": "image",
-      "variants": [
+    "04-04-02-cat-rating.ios.heex" : {
+      "content" : [
+        "<VStack modifiers={navigation_title(@native, title: @title)}>",
+        "  <AsyncImage src={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "  <CatRating score={@score} \/>",
+        "<\/VStack>"
+      ],
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ios.heex",
+      "fileType" : "heex",
+      "highlights" : [
+
+      ],
+      "identifier" : "04-04-02-cat-rating.ios.heex",
+      "syntax" : "html",
+      "type" : "file"
+    },
+    "05-00-intro-header.png" : {
+      "alt" : "The cat detail screen with a filled star button in the top right corner.",
+      "identifier" : "05-00-intro-header.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/05-00-intro-header.png"
+          "url" : "\/images\/05-00-intro-header.png"
         }
       ]
     },
-    "05-01-01-assign.ex": {
-      "content": [
+    "05-01-01-assign.ex" : {
+      "content" : [
         "defmodule LvnTutorialWeb.CatLive do",
         "  use LvnTutorialWeb, :live_view",
-        "  require EEx",
+        "  use LiveViewNative.LiveView",
         "  alias LvnTutorial.FavoritesStore",
-        "",
-        "  EEx.function_from_file(",
-        "    :def,",
-        "    :render,",
-        "    \"lib/lvn_tutorial_web/live/cat_live.ios.heex\",",
-        "    [:assigns],",
-        "    engine: Phoenix.LiveView.HTMLEngine",
-        "  )",
         "",
         "  def mount(%{\"name\" => name}, _session, socket) do",
         "    {:ok,",
@@ -201,6 +193,10 @@
         "       favorite: Enum.member?(FavoritesStore.get_favorites(), name),",
         "       score: FavoritesStore.get_score(name)",
         "     )}",
+        "  end",
+        "",
+        "  def render(assigns) do",
+        "    render_native(assigns)",
         "  end",
         "",
         "  def handle_event(\"change-score\", score, socket) do",
@@ -209,46 +205,38 @@
         "  end",
         "end"
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cat_live.ex",
-      "fileType": "ex",
-      "highlights": [
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
         {
-          "line": 15
+          "line" : 7
         },
         {
-          "line": 16
+          "line" : 8
         },
         {
-          "line": 17
+          "line" : 9
         },
         {
-          "line": 18
+          "line" : 10
         },
         {
-          "line": 19
+          "line" : 11
         },
         {
-          "line": 20
+          "line" : 12
         }
       ],
-      "identifier": "05-01-01-assign.ex",
-      "syntax": "ex",
-      "type": "file"
+      "identifier" : "05-01-01-assign.ex",
+      "syntax" : "elixir",
+      "type" : "file"
     },
-    "05-01-02-toggle-favorite.ex": {
-      "content": [
+    "05-01-02-toggle-favorite.ex" : {
+      "content" : [
         "defmodule LvnTutorialWeb.CatLive do",
         "  use LvnTutorialWeb, :live_view",
-        "  require EEx",
+        "  use LiveViewNative.LiveView",
         "  alias LvnTutorial.FavoritesStore",
-        "",
-        "  EEx.function_from_file(",
-        "    :def,",
-        "    :render,",
-        "    \"lib/lvn_tutorial_web/live/cat_live.ios.heex\",",
-        "    [:assigns],",
-        "    engine: Phoenix.LiveView.HTMLEngine",
-        "  )",
         "",
         "  def mount(%{\"name\" => name}, _session, socket) do",
         "    {:ok,",
@@ -257,6 +245,10 @@
         "       favorite: Enum.member?(FavoritesStore.get_favorites(), name),",
         "       score: FavoritesStore.get_score(name)",
         "     )}",
+        "  end",
+        "",
+        "  def render(assigns) do",
+        "    render_native(assigns)",
         "  end",
         "",
         "  def handle_event(\"change-score\", score, socket) do",
@@ -270,96 +262,98 @@
         "  end",
         "end"
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cat_live.ex",
-      "fileType": "ex",
-      "highlights": [
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
         {
-          "line": 27
+          "line" : 23
         },
         {
-          "line": 28
+          "line" : 24
         },
         {
-          "line": 29
+          "line" : 25
         },
         {
-          "line": 30
+          "line" : 26
         },
         {
-          "line": 31
+          "line" : 27
         }
       ],
-      "identifier": "05-01-02-toggle-favorite.ex",
-      "syntax": "ex",
-      "type": "file"
+      "identifier" : "05-01-02-toggle-favorite.ex",
+      "syntax" : "elixir",
+      "type" : "file"
     },
-    "05-01-03-attribute.ios.heex": {
-      "content": [
-        "<v-stack modifiers={[%{\"type\" => \"navigation_title\", \"title\" => @title}, %{\"type\" => \"nav_favorite\", \"is_favorite\" => @favorite}] |> Jason.encode!}>",
-        "  <async-image src={\"/images/cats/#{@name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 300, \"height\": 300}]' />",
-        "  <cat-rating score={@score} />",
-        "</v-stack>"
+    "05-01-03-attribute.ios.heex" : {
+      "content" : [
+        "<VStack modifiers={@native |> navigation_title(title: @title) |> nav_favorite(is_favorite: @favorite)}>",
+        "  <AsyncImage src={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "  <CatRating score={@score} \/>",
+        "<\/VStack>"
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cat_live.ios.heex",
-      "fileType": "heex",
-      "highlights": [
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ios.heex",
+      "fileType" : "heex",
+      "highlights" : [
         {
-          "line": 1
+          "line" : 1
         }
       ],
-      "identifier": "05-01-03-attribute.ios.heex",
-      "syntax": "heex",
-      "type": "file"
+      "identifier" : "05-01-03-attribute.ios.heex",
+      "syntax" : "html",
+      "type" : "file"
     },
-    "05-02-01-attribute-name.swift": {
-      "content": [
+    "05-02-01-attribute-name.swift" : {
+      "content" : [
         "import SwiftUI",
         "import LiveViewNative",
         "",
-        "struct MyRegistry: CustomRegistry {",
+        "struct MyRegistry: RootRegistry {",
         "    enum TagName: String {",
-        "        case catRating = \"cat-rating\"",
+        "        case catRating = \"CatRating\"",
         "    }",
         "    enum ModifierType: String {",
         "        case navFavorite = \"nav_favorite\"",
         "    }",
         "    ",
-        "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
+        "    static func lookup(_ name: TagName, element: ElementNode) -> some View {",
         "        switch name {",
         "        case .catRating:",
-        "            CatRatingView(context: context)",
+        "            CatRatingView()",
         "        }",
         "    }",
         "}"
       ],
-      "fileName": "MyRegistry.swift",
-      "fileType": "swift",
-      "highlights": [],
-      "identifier": "05-02-01-attribute-name.swift",
-      "syntax": "swift",
-      "type": "file"
+      "fileName" : "MyRegistry.swift",
+      "fileType" : "swift",
+      "highlights" : [
+
+      ],
+      "identifier" : "05-02-01-attribute-name.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "05-02-02-decode.swift": {
-      "content": [
+    "05-02-02-decode.swift" : {
+      "content" : [
         "import SwiftUI",
         "import LiveViewNative",
         "",
-        "struct MyRegistry: CustomRegistry {",
+        "struct MyRegistry: RootRegistry {",
         "    enum TagName: String {",
-        "        case catRating = \"cat-rating\"",
+        "        case catRating = \"CatRating\"",
         "    }",
         "    enum ModifierType: String {",
         "        case navFavorite = \"nav_favorite\"",
         "    }",
         "    ",
-        "    static func lookup(_ name: TagName, element: ElementNode, context: LiveContext<MyRegistry>) -> some View {",
+        "    static func lookup(_ name: TagName, element: ElementNode) -> some View {",
         "        switch name {",
         "        case .catRating:",
-        "            CatRatingView(context: context)",
+        "            CatRatingView()",
         "        }",
         "    }",
         "    ",
-        "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder, context: LiveContext<Self>) throws -> any ViewModifier {",
+        "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {",
         "        switch type {",
         "        case .navFavorite:",
         "            return try NavFavoriteModifier(from: decoder)",
@@ -367,37 +361,37 @@
         "    }",
         "}"
       ],
-      "fileName": "MyRegistry.swift",
-      "fileType": "swift",
-      "highlights": [
+      "fileName" : "MyRegistry.swift",
+      "fileType" : "swift",
+      "highlights" : [
         {
-          "line": 18
+          "line" : 18
         },
         {
-          "line": 19
+          "line" : 19
         },
         {
-          "line": 20
+          "line" : 20
         },
         {
-          "line": 21
+          "line" : 21
         },
         {
-          "line": 22
+          "line" : 22
         },
         {
-          "line": 23
+          "line" : 23
         },
         {
-          "line": 24
+          "line" : 24
         }
       ],
-      "identifier": "05-02-02-decode.swift",
-      "syntax": "swift",
-      "type": "file"
+      "identifier" : "05-02-02-decode.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "05-02-03-empty-modifier.swift": {
-      "content": [
+    "05-02-03-empty-modifier.swift" : {
+      "content" : [
         "import SwiftUI",
         "import LiveViewNative",
         "",
@@ -406,26 +400,27 @@
         "    }",
         "}"
       ],
-      "fileName": "NavFavoriteModifier.swift",
-      "fileType": "swift",
-      "highlights": [],
-      "identifier": "05-02-03-empty-modifier.swift",
-      "syntax": "swift",
-      "type": "file"
+      "fileName" : "NavFavoriteModifier.swift",
+      "fileType" : "swift",
+      "highlights" : [
+
+      ],
+      "identifier" : "05-02-03-empty-modifier.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "05-02-04-decode-modifier.swift": {
-      "content": [
+    "05-02-04-decode-modifier.swift" : {
+      "content" : [
         "import SwiftUI",
         "import LiveViewNative",
         "",
         "struct NavFavoriteModifier: ViewModifier, Decodable {",
         "    let isFavorite: Bool",
-        "    let context: LiveContext<MyRegistry>",
+        "    @LiveContext<MyRegistry> private var context",
         "    ",
         "    init(from decoder: Decoder) throws {",
         "        let container = try decoder.container(keyedBy: CodingKeys.self)",
         "        self.isFavorite = try container.decode(Bool.self, forKey: .isFavorite)",
-        "        self.context = decoder.userInfo[.liveContext] as! LiveContext<MyRegistry>",
         "    }",
         "    ",
         "    func body(content: Content) -> some View {",
@@ -436,66 +431,62 @@
         "    }",
         "}"
       ],
-      "fileName": "NavFavoriteModifier.swift",
-      "fileType": "swift",
-      "highlights": [
+      "fileName" : "NavFavoriteModifier.swift",
+      "fileType" : "swift",
+      "highlights" : [
         {
-          "line": 5
+          "line" : 5
         },
         {
-          "line": 6
+          "line" : 6
         },
         {
-          "line": 7
+          "line" : 7
         },
         {
-          "line": 8
+          "line" : 8
         },
         {
-          "line": 9
+          "line" : 9
         },
         {
-          "line": 10
+          "line" : 10
         },
         {
-          "line": 11
+          "line" : 11
         },
         {
-          "line": 12
+          "line" : 12
         },
         {
-          "line": 13
+          "line" : 15
         },
         {
-          "line": 16
+          "line" : 16
         },
         {
-          "line": 17
+          "line" : 17
         },
         {
-          "line": 18
-        },
-        {
-          "line": 19
+          "line" : 18
         }
       ],
-      "identifier": "05-02-04-decode-modifier.swift",
-      "syntax": "swift",
-      "type": "file"
+      "identifier" : "05-02-04-decode-modifier.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "05-02-05-toolbar.swift": {
-      "content": [
+    "05-02-05-toolbar.swift" : {
+      "content" : [
         "import SwiftUI",
         "import LiveViewNative",
         "",
         "struct NavFavoriteModifier: ViewModifier, Decodable {",
         "    let isFavorite: Bool",
-        "    let context: LiveContext<MyRegistry>",
+        "    @LiveContext<MyRegistry> private var context",
         "    ",
         "    init(from decoder: Decoder) throws {",
         "        let container = try decoder.container(keyedBy: CodingKeys.self)",
         "        self.isFavorite = try container.decode(Bool.self, forKey: .isFavorite)",
-        "        self.context = decoder.userInfo[.liveContext] as! LiveContext<MyRegistry>",
         "    }",
         "    ",
         "    func body(content: Content) -> some View {",
@@ -511,42 +502,41 @@
         "    }",
         "}"
       ],
-      "fileName": "NavFavoriteModifier.swift",
-      "fileType": "swift",
-      "highlights": [
+      "fileName" : "NavFavoriteModifier.swift",
+      "fileType" : "swift",
+      "highlights" : [
         {
-          "line": 15
+          "line" : 14
         },
         {
-          "line": 16
+          "line" : 15
         },
         {
-          "line": 17
+          "line" : 16
         },
         {
-          "line": 18
+          "line" : 17
         },
         {
-          "line": 19
+          "line" : 18
         }
       ],
-      "identifier": "05-02-05-toolbar.swift",
-      "syntax": "swift",
-      "type": "file"
+      "identifier" : "05-02-05-toolbar.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "05-02-06-button.swift": {
-      "content": [
+    "05-02-06-button.swift" : {
+      "content" : [
         "import SwiftUI",
         "import LiveViewNative",
         "",
         "struct NavFavoriteModifier: ViewModifier, Decodable {",
         "    let isFavorite: Bool",
-        "    let context: LiveContext<MyRegistry>",
+        "    @LiveContext<MyRegistry> private var context",
         "    ",
         "    init(from decoder: Decoder) throws {",
         "        let container = try decoder.container(keyedBy: CodingKeys.self)",
         "        self.isFavorite = try container.decode(Bool.self, forKey: .isFavorite)",
-        "        self.context = decoder.userInfo[.liveContext] as! LiveContext<MyRegistry>",
         "    }",
         "    ",
         "    func body(content: Content) -> some View {",
@@ -569,868 +559,890 @@
         "    }",
         "}"
       ],
-      "fileName": "NavFavoriteModifier.swift",
-      "fileType": "swift",
-      "highlights": [
+      "fileName" : "NavFavoriteModifier.swift",
+      "fileType" : "swift",
+      "highlights" : [
         {
-          "line": 18
+          "line" : 17
         },
         {
-          "line": 19
+          "line" : 18
         },
         {
-          "line": 20
+          "line" : 19
         },
         {
-          "line": 21
+          "line" : 20
         },
         {
-          "line": 22
+          "line" : 21
         },
         {
-          "line": 23
+          "line" : 22
         },
         {
-          "line": 24
+          "line" : 23
         }
       ],
-      "identifier": "05-02-06-button.swift",
-      "syntax": "swift",
-      "type": "file"
+      "identifier" : "05-02-06-button.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "05-02-07-preview.mp4": {
-      "alt": null,
-      "identifier": "05-02-07-preview.mp4",
-      "poster": null,
-      "type": "video",
-      "variants": [
+    "05-02-07-preview.mp4" : {
+      "alt" : null,
+      "identifier" : "05-02-07-preview.mp4",
+      "poster" : null,
+      "type" : "video",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/videos/05-02-07-preview.mp4"
+          "url" : "\/videos\/05-02-07-preview.mp4"
         }
       ]
     },
-    "Xcode 13.3": {
-      "identifier": "Xcode 13.3",
-      "title": "Xcode 13.3",
-      "type": "xcodeRequirement",
-      "url": "https://developer.apple.com/download/applications/"
-    },
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
-      "kind": "project",
-      "role": "project",
-      "title": "Your First LiveView",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/01-initial-list"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Your First LiveView",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Build-the-List-UI" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Build the List UI",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/01-initial-list#Build-the-List-UI"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Build-the-List-UI",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Build the List UI",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list#Build-the-List-UI"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Building-the-Backend" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Building the Backend",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/01-initial-list#Building-the-Backend"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Building-the-Backend",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Building the Backend",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list#Building-the-Backend"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Creating-the-App" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Creating the App",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/01-initial-list#Creating-the-App"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Creating-the-App",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Creating the App",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list#Creating-the-App"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button" : {
+      "abstract" : [
         {
-          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
-          "type": "text"
+          "text" : "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
-      "kind": "project",
-      "role": "project",
-      "title": "Storing User Favorites",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/02-favorite-button"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Storing User Favorites",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/02-favorite-button"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Adding-the-Favorite-Button" : {
+      "abstract" : [
         {
-          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
-          "type": "text"
+          "text" : "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Adding the Favorite Button",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/02-favorite-button#Adding-the-Favorite-Button"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Adding-the-Favorite-Button",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Adding the Favorite Button",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/02-favorite-button#Adding-the-Favorite-Button"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Updating-the-Backend" : {
+      "abstract" : [
         {
-          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
-          "type": "text"
+          "text" : "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Updating the Backend",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/02-favorite-button#Updating-the-Backend"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Updating-the-Backend",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Updating the Backend",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/02-favorite-button#Updating-the-Backend"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero" : {
+      "abstract" : [
         {
-          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
-          "type": "text"
+          "text" : "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero",
-      "kind": "project",
-      "role": "project",
-      "title": "Navigation and Detail View",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/03-navigation-and-hero"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Navigation and Detail View",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/03-navigation-and-hero"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Adding-Navigation" : {
+      "abstract" : [
         {
-          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
-          "type": "text"
+          "text" : "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Adding Navigation",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/03-navigation-and-hero#Adding-Navigation"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Adding-Navigation",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Adding Navigation",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/03-navigation-and-hero#Adding-Navigation"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Building-the-Detail-View" : {
+      "abstract" : [
         {
-          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
-          "type": "text"
+          "text" : "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Building the Detail View",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/03-navigation-and-hero#Building-the-Detail-View"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Building-the-Detail-View",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Building the Detail View",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/03-navigation-and-hero#Building-the-Detail-View"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element",
-      "kind": "project",
-      "role": "project",
-      "title": "Add a Custom HTML Element",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/04-custom-element"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Add a Custom HTML Element",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Building-the-View" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Building the View",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/04-custom-element#Building-the-View"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Building-the-View",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Building the View",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element#Building-the-View"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Setting-Up-the-Registry" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Setting Up the Registry",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/04-custom-element#Setting-Up-the-Registry"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Setting-Up-the-Registry",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Setting Up the Registry",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element#Setting-Up-the-Registry"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Update-the-GenServer" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Update the GenServer",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/04-custom-element#Update-the-GenServer"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Update-the-GenServer",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Update the GenServer",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element#Update-the-GenServer"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Using-the-Element" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Using the Element",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/04-custom-element#Using-the-Element"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Using-the-Element",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Using the Element",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element#Using-the-Element"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier" : {
+      "abstract" : [
         {
-          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
-          "type": "text"
+          "text" : "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier",
-      "kind": "project",
-      "role": "project",
-      "title": "Add a Navigation Bar Button with a Custom Modifier",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/05-custom-modifier"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Add a Navigation Bar Button with a Custom Modifier",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/05-custom-modifier"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Implement-the-Attribute" : {
+      "abstract" : [
         {
-          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
-          "type": "text"
+          "text" : "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Implement the Attribute",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/05-custom-modifier#Implement-the-Attribute"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Implement-the-Attribute",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Implement the Attribute",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/05-custom-modifier#Implement-the-Attribute"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Update-the-Backend" : {
+      "abstract" : [
         {
-          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
-          "type": "text"
+          "text" : "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Update the Backend",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/05-custom-modifier#Update-the-Backend"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Update-the-Backend",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Update the Backend",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/05-custom-modifier#Update-the-Backend"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen" : {
+      "abstract" : [
         {
-          "text": "Add a more interesting loading screen that matches the style of your app.",
-          "type": "text"
+          "text" : "Add a more interesting loading screen that matches the style of your app.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen",
-      "kind": "project",
-      "role": "project",
-      "title": "Style the Loading Screen to Match Your App",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/06-custom-loading-screen"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Style the Loading Screen to Match Your App",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/06-custom-loading-screen"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen#Add-the-Loading-View" : {
+      "abstract" : [
         {
-          "text": "Add a more interesting loading screen that matches the style of your app.",
-          "type": "text"
+          "text" : "Add a more interesting loading screen that matches the style of your app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Add the Loading View",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/06-custom-loading-screen#Add-the-Loading-View"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen#Add-the-Loading-View",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Add the Loading View",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/06-custom-loading-screen#Add-the-Loading-View"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp" : {
+      "abstract" : [
         {
-          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
-          "type": "text"
+          "text" : "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
-      "kind": "overview",
-      "role": "overview",
-      "title": "Your First LiveViewNative App",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+      "kind" : "overview",
+      "role" : "overview",
+      "title" : "Your First LiveViewNative App",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift",
-      "kind": "article",
-      "role": "article",
-      "title": "Customize with Swift",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp/customize-with-swift"
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Customize-with-Swift" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Customize-with-Swift",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Customize with Swift",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp\/customize-with-swift"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started",
-      "kind": "article",
-      "role": "article",
-      "title": "Getting Started",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp/getting-started"
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Getting-Started" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Getting-Started",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Getting Started",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp\/getting-started"
+    },
+    "Xcode 13.3" : {
+      "identifier" : "Xcode 13.3",
+      "title" : "Xcode 13.3",
+      "type" : "xcodeRequirement",
+      "url" : "https:\/\/developer.apple.com\/download\/applications\/"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [
+  "sections" : [
     {
-      "backgroundImage": "05-00-intro-header.png",
-      "chapter": "Customize with Swift",
-      "content": [
+      "backgroundImage" : "05-00-intro-header.png",
+      "chapter" : "Customize with Swift",
+      "content" : [
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Use a custom modifier to add a navigation bar button to the detail view.",
-              "type": "text"
+              "text" : "Use a custom modifier to add a navigation bar button to the detail view.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "estimatedTimeInMinutes": 30,
-      "image": "05-00-intro-header.png",
-      "kind": "hero",
-      "title": "Add a Navigation Bar Button with a Custom Modifier",
-      "xcodeRequirement": "Xcode 13.3"
+      "estimatedTimeInMinutes" : 30,
+      "image" : "05-00-intro-header.png",
+      "kind" : "hero",
+      "title" : "Add a Navigation Bar Button with a Custom Modifier",
+      "xcodeRequirement" : "Xcode 13.3"
     },
     {
-      "kind": "tasks",
-      "tasks": [
+      "kind" : "tasks",
+      "tasks" : [
         {
-          "anchor": "Update-the-Backend",
-          "contentSection": [
+          "anchor" : "Update-the-Backend",
+          "contentSection" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Update the backend live view to allow it to display and change the favorite state.",
-                      "type": "text"
+                      "text" : "Update the backend live view to allow it to display and change the favorite state.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "kind": "fullWidth"
+              "kind" : "fullWidth"
             }
           ],
-          "stepsSection": [
+          "stepsSection" : [
             {
-              "caption": [],
-              "code": "04-04-01-change-score.ex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "04-04-01-change-score.ex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Open the ",
-                      "type": "text"
+                      "text" : "Open the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "cat_live.ex",
-                      "type": "codeVoice"
+                      "code" : "cat_live.ex",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " file.",
-                      "type": "text"
+                      "text" : " file.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "05-01-01-assign.ex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "05-01-01-assign.ex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Update the ",
-                      "type": "text"
+                      "text" : "Update the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "mount",
-                      "type": "codeVoice"
+                      "code" : "mount",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " callback to add an assign for whether the cat has been favorited or not.",
-                      "type": "text"
+                      "text" : " callback to add an assign for whether the cat has been favorited or not.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "05-01-02-toggle-favorite.ex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "05-01-02-toggle-favorite.ex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Then, add another event handler that the frontend will trigger to update the favorite state.",
-                      "type": "text"
+                      "text" : "Then, add another event handler that the frontend will trigger to update the favorite state.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "04-04-02-cat-rating.ios.heex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "04-04-02-cat-rating.ios.heex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Edit the ",
-                      "type": "text"
+                      "text" : "Edit the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "cat_live.ios.heex",
-                      "type": "codeVoice"
+                      "code" : "cat_live.ios.heex",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " template.",
-                      "type": "text"
+                      "text" : " template.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "05-01-03-attribute.ios.heex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "05-01-03-attribute.ios.heex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Add the custom modifier ",
-                      "type": "text"
+                      "text" : "Add the custom modifier ",
+                      "type" : "text"
                     },
                     {
-                      "code": "nav_favorite",
-                      "type": "codeVoice"
+                      "code" : "nav_favorite",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " to the ",
-                      "type": "text"
+                      "text" : " to the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "<v-stack>",
-                      "type": "codeVoice"
+                      "code" : "<v-stack>",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ". With the modifier we’ll pass the current state, so the frontend can display it in the navigation bar button.",
-                      "type": "text"
+                      "text" : ". With the modifier we’ll pass the current state, so the frontend can display it in the navigation bar button.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             }
           ],
-          "title": "Update the Backend"
+          "title" : "Update the Backend"
         },
         {
-          "anchor": "Implement-the-Attribute",
-          "contentSection": [
+          "anchor" : "Implement-the-Attribute",
+          "contentSection" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Add code for handling the ",
-                      "type": "text"
+                      "text" : "Add code for handling the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "nav_favorite",
-                      "type": "codeVoice"
+                      "code" : "nav_favorite",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " attribute to your custom registry.",
-                      "type": "text"
+                      "text" : " attribute to your custom registry.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "kind": "fullWidth"
+              "kind" : "fullWidth"
             }
           ],
-          "stepsSection": [
+          "stepsSection" : [
             {
-              "caption": [],
-              "code": "",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Edit your custom registry implementation.",
-                      "type": "text"
+                      "text" : "Edit your custom registry implementation.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "05-02-01-attribute-name.swift",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "05-02-01-attribute-name.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Replace the ",
-                      "type": "text"
+                      "text" : "Replace the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "ModifierType",
-                      "type": "codeVoice"
+                      "code" : "ModifierType",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " type alias with a new enum of the same name. This enum, similar to the ",
-                      "type": "text"
+                      "text" : " type alias with a new enum of the same name. This enum, similar to the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "TagName",
-                      "type": "codeVoice"
+                      "code" : "TagName",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " one, defines the modifiers that your registry supports.",
-                      "type": "text"
+                      "text" : " one, defines the modifiers that your registry supports.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "In the method, we’ll switch over the type, and if it’s the ",
-                      "type": "text"
+                      "text" : "In the method, we’ll switch over the type, and if it’s the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "nav_favorite",
-                      "type": "codeVoice"
+                      "code" : "nav_favorite",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " modifier, decode a ",
-                      "type": "text"
+                      "text" : " modifier, decode a ",
+                      "type" : "text"
                     },
                     {
-                      "code": "NavFavoriteModifier",
-                      "type": "codeVoice"
+                      "code" : "NavFavoriteModifier",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ". As with the ",
-                      "type": "text"
+                      "text" : ". As with the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "lookup",
-                      "type": "codeVoice"
+                      "code" : "lookup",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " method, don’t include a default branch so that the compiler ensures your switch is exhaustive.",
-                      "type": "text"
+                      "text" : " method, don’t include a default branch so that the compiler ensures your switch is exhaustive.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "05-02-02-decode.swift",
-              "content": [
+              "code" : "05-02-02-decode.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Implement the ",
-                      "type": "text"
+                      "text" : "Implement the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "decodeModifier",
-                      "type": "codeVoice"
+                      "code" : "decodeModifier",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " method. This method is invoked by the framework whenever it encounters an attribute that your registry has declared support for.",
-                      "type": "text"
+                      "text" : " method. This method is invoked by the framework whenever it encounters an attribute that your registry has declared support for.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "05-02-03-empty-modifier.swift",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "05-02-03-empty-modifier.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Create a struct called ",
-                      "type": "text"
+                      "text" : "Create a struct called ",
+                      "type" : "text"
                     },
                     {
-                      "code": "NavFavoriteModifier",
-                      "type": "codeVoice"
+                      "code" : "NavFavoriteModifier",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " that implements the ",
-                      "type": "text"
+                      "text" : " that implements the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "ViewModifier",
-                      "type": "codeVoice"
+                      "code" : "ViewModifier",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " protocol.",
-                      "type": "text"
+                      "text" : " protocol.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "isFavorite",
-                      "type": "codeVoice"
+                      "code" : "isFavorite",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " will be used to show the current state of the favorite button, and the context will let us access the coordinator so we can send an event when the button’s tapped.",
-                      "type": "text"
+                      "text" : " will be used to show the current state of the favorite button, and the context will let us access the coordinator so we can send an event when the button’s tapped.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "05-02-04-decode-modifier.swift",
-              "content": [
+              "code" : "05-02-04-decode-modifier.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Add the ",
-                      "type": "text"
+                      "text" : "Add the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "isFavorite",
-                      "type": "codeVoice"
+                      "code" : "isFavorite",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " and ",
-                      "type": "text"
+                      "text" : " and ",
+                      "type" : "text"
                     },
                     {
-                      "code": "context",
-                      "type": "codeVoice"
+                      "code" : "context",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " properties to the modifier struct.",
-                      "type": "text"
+                      "text" : " properties to the modifier struct.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "05-02-05-toolbar.swift",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "05-02-05-toolbar.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "In the body method, we’ll take the content and add to it a toolbar item placed in the trailing position of the navigation bar.",
-                      "type": "text"
+                      "text" : "In the body method, we’ll take the content and add to it a toolbar item placed in the trailing position of the navigation bar.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "With that, you can re-run the app and observe the new attribute in action!",
-                      "type": "text"
+                      "text" : "With that, you can re-run the app and observe the new attribute in action!",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "05-02-06-button.swift",
-              "content": [
+              "code" : "05-02-06-button.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "The button inside the toolbar item will display a filled or unfilled star, depending on the current state. When the button is tapped, it will trigger the ",
-                      "type": "text"
+                      "text" : "The button inside the toolbar item will display a filled or unfilled star, depending on the current state. When the button is tapped, it will trigger the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "toggle-favorite",
-                      "type": "codeVoice"
+                      "code" : "toggle-favorite",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " we set up before on the backend. We pass an empty dictionary as the value for the event, since there’s no other data we need to send.",
-                      "type": "text"
+                      "text" : " we set up before on the backend. We pass an empty dictionary as the value for the event, since there’s no other data we need to send.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": "05-02-07-preview.mp4",
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : "05-02-07-preview.mp4",
+              "type" : "step"
             }
           ],
-          "title": "Implement the Attribute"
+          "title" : "Implement the Attribute"
         }
       ]
     },
     {
-      "abstract": [
+      "abstract" : [
         {
-          "text": "Add a more interesting loading screen that matches the style of your app.",
-          "type": "text"
+          "text" : "Add a more interesting loading screen that matches the style of your app.",
+          "type" : "text"
         }
       ],
-      "action": {
-        "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen",
-        "isActive": true,
-        "overridingTitle": "Get started",
-        "overridingTitleInlineContent": [
+      "action" : {
+        "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen",
+        "isActive" : true,
+        "overridingTitle" : "Get started",
+        "overridingTitleInlineContent" : [
           {
-            "text": "Get started",
-            "type": "text"
+            "text" : "Get started",
+            "type" : "text"
           }
         ],
-        "type": "reference"
+        "type" : "reference"
       },
-      "featuredEyebrow": "Tutorial",
-      "kind": "callToAction",
-      "title": "Style the Loading Screen to Match Your App"
+      "featuredEyebrow" : "Tutorial",
+      "kind" : "callToAction",
+      "title" : "Style the Loading Screen to Match Your App"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/tutorials/liveviewnative/05-custom-modifier"
+      "paths" : [
+        "\/tutorials\/liveviewnative\/05-custom-modifier"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

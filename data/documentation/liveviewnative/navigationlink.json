@@ -1,335 +1,717 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "code": "<navigation-link>",
-      "type": "codeVoice"
-    },
-    {
-      "text": ", links to another live view page.",
-      "type": "text"
+      "text" : "A control users can tap to navigate to another live view.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative14NavigationLinkV",
+    "fragments" : [
       {
-        "name": "LiveViewNative"
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "NavigationLink"
       }
     ],
-    "role": "article",
-    "roleHeading": "Article",
-    "title": "NavigationLink"
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "NavigationLink"
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "16.0",
+        "name" : "iOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "<NavigationLink>"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "content": [
+      "declarations" : [
         {
-          "anchor": "Attributes",
-          "level": 2,
-          "text": "Attributes",
-          "type": "heading"
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "NavigationLink"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "items": [
+          "inlineContent" : [
             {
-              "content": [
+              "text" : "This only has an effect if the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " was configured with navigation enabled.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<NavigationLink destination={\"\/products\/#{@product.id}\"}>",
+            "    <Text>More Information<\/Text>",
+            "<\/NavigationLink>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Attributes",
+          "level" : 2,
+          "text" : "Attributes",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "data-phx-link",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": Must be ",
-                      "type": "text"
-                    },
-                    {
-                      "code": "redirect",
-                      "type": "codeVoice"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/destination",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "data-phx-link-state",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": How the link is presented. See ",
-                      "type": "text"
-                    },
-                    {
-                      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
-                      "isActive": true,
-                      "type": "reference"
-                    },
-                    {
-                      "text": ".",
-                      "type": "text"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/disabled",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
-                  "type": "paragraph"
-                },
-                {
-                  "items": [
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "push",
-                              "type": "codeVoice"
-                            },
-                            {
-                              "text": ": A new view is pushed onto the navigation stack",
-                              "type": "text"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "replace",
-                              "type": "codeVoice"
-                            },
-                            {
-                              "text": ": The current view is replaced.",
-                              "type": "text"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    }
-                  ],
-                  "type": "unorderedList"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "data-phx-href",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": The link destination.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "disabled",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": If present, the link is disabled.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             }
           ],
-          "type": "unorderedList"
+          "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/NavigationLink",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI4ViewP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI4ViewP",
+      "title" : "SwiftUI.View",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "code": "<async-image>",
-          "type": "codeVoice"
-        },
-        {
-          "text": ", displays images loaded from a remote URL.",
-          "type": "text"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
-      "kind": "article",
-      "role": "article",
-      "title": "AsyncImage",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/asyncimage"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Button": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
         {
-          "code": "<button>",
-          "type": "codeVoice"
-        },
-        {
-          "text": ", a tappable element.",
-          "type": "text"
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Button",
-      "kind": "article",
-      "role": "article",
-      "title": "Button",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/button"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/Image": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HSplitView" : {
+      "abstract" : [
         {
-          "code": "<image>",
-          "type": "codeVoice"
-        },
-        {
-          "text": ", displays SF Symbols or images from your app’s asset catalog.",
-          "type": "text"
+          "text" : "Container with resizable splits between elements.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Image",
-      "kind": "article",
-      "role": "article",
-      "title": "Image",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/image"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "HSplitView"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HSplitView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "HSplitView"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<HSplitView>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hsplitview"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property": {
-      "abstract": [
-        {
-          "text": "Whether this coordinators allows its live view to navigate.",
-          "type": "text"
-        }
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
+      "abstract" : [
+
       ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "var"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "navigationMode"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A20SessionConfigurationV14NavigationModeO",
-          "text": "NavigationMode"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionConfiguration/navigationMode-swift.property",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "navigationMode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionconfiguration/navigationmode-swift.property"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Containers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutcontainers"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration" : {
+      "abstract" : [
         {
-          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Supported Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedelements"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/Text": {
-      "abstract": [
-        {
-          "code": "<text>",
-          "type": "codeVoice"
+          "text" : "An object that configures the behavior of a ",
+          "type" : "text"
         },
         {
-          "text": ", displays text.",
-          "type": "text"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Text",
-      "kind": "article",
-      "role": "article",
-      "title": "Text",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/text"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionConfiguration",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionConfiguration"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionConfiguration",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionconfiguration"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink" : {
+      "abstract" : [
+        {
+          "text" : "A control users can tap to navigate to another live view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "NavigationLink"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "NavigationLink"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<NavigationLink>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationlink"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/body" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "body"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/body",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "body",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationlink\/body"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/destination" : {
+      "abstract" : [
+        {
+          "text" : "The URL of the destination live view, relative to the current live view’s URL.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "destination"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/destination",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "destination",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationlink\/destination"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/disabled" : {
+      "abstract" : [
+        {
+          "text" : "Whether the link is disabled.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "disabled"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/disabled",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationlink\/disabled"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/View-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/View-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationlink\/view-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VSplitView" : {
+      "abstract" : [
+        {
+          "text" : "Container with resizable splits between elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "VSplitView"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VSplitView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "VSplitView"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<VSplitView>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/vsplitview"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/NavigationLink" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/NavigationLink",
+      "title" : "SwiftUI.NavigationLink",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.NavigationLink",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/NavigationLink"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
-  },
-  "sections": [],
-  "seeAlsoSections": [
+  "relationshipsSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Text",
-        "doc://LiveViewNative/documentation/LiveViewNative/Image",
-        "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
-        "doc://LiveViewNative/documentation/LiveViewNative/Button"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI4ViewP"
       ],
-      "title": "Content"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "variants": [
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/navigationlink"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HSplitView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VSplitView"
       ],
-      "traits": [
+      "title" : "Presentation Containers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/body",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/destination",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/disabled"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink\/View-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/navigationlink"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

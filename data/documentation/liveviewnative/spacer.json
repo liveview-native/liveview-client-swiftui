@@ -1,214 +1,409 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "code": "<spacer>",
-      "type": "codeVoice"
-    },
-    {
-      "text": ", an empty view that can grow to take up as much space as needed.",
-      "type": "text"
+      "text" : "A view that expands to provide space between other views.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/Spacer"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative6SpacerV",
+    "fragments" : [
       {
-        "name": "LiveViewNative"
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Spacer"
       }
     ],
-    "role": "article",
-    "roleHeading": "Article",
-    "title": "Spacer"
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Spacer"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "<Spacer>"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "content": [
+      "declarations" : [
         {
-          "anchor": "Attributes",
-          "level": 2,
-          "text": "Attributes",
-          "type": "heading"
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Spacer"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "items": [
+          "code" : [
+            "<VStack>",
+            "    <Text>First<\/Text>",
+            "    <Spacer min-length=\"50\" \/>",
+            "    <Text>Second<\/Text>",
+            "<\/VStack>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
             {
-              "content": [
+              "text" : "Within horizontal and vertical stacks, the spacer only grows along the stack’s axis.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Otherwise, the spacer grows in both axes.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Attributes",
+          "level" : 2,
+          "text" : "Attributes",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "min-length",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (number): The minimum length of the spacer.",
-                      "type": "text"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/minLength",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             }
           ],
-          "type": "unorderedList"
+          "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Spacer",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI4ViewP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI4ViewP",
+      "title" : "SwiftUI.View",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/HStack": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "code": "<h-stack>",
-          "type": "codeVoice"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Divider" : {
+      "abstract" : [
+        {
+          "text" : "A visual indicator that divides two sections.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Divider",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "<Divider>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/divider"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Containers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutcontainers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer" : {
+      "abstract" : [
+        {
+          "text" : "A view that expands to provide space between other views.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "text": ", lays out children in a horizontal line.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/HStack",
-      "kind": "article",
-      "role": "article",
-      "title": "HStack",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/hstack"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/List": {
-      "abstract": [
-        {
-          "code": "<list>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", arranges its children in a vertically scrolling list.",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "Spacer"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/List",
-      "kind": "article",
-      "role": "article",
-      "title": "List",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/list"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/ScrollView": {
-      "abstract": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "code": "<scroll-view>",
-          "type": "codeVoice"
+          "kind" : "identifier",
+          "text" : "Spacer"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<Spacer>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/spacer"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/body" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "text": ", allows its content to be scrolled if it’s larger than the available space.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
-      "kind": "article",
-      "role": "article",
-      "title": "ScrollView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/scrollview"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
-      "abstract": [
-        {
-          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Supported Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedelements"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/VStack": {
-      "abstract": [
-        {
-          "code": "<v-stack>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", lays out children in a vertical line",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/VStack",
-      "kind": "article",
-      "role": "article",
-      "title": "VStack",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/vstack"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/ZStack": {
-      "abstract": [
-        {
-          "code": "<z-stack>",
-          "type": "codeVoice"
+          "kind" : "identifier",
+          "text" : "body"
         },
         {
-          "text": ", lays out children on top of each other, from back to front.",
-          "type": "text"
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
-      "kind": "article",
-      "role": "article",
-      "title": "ZStack",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/zstack"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/body",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "body",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/spacer\/body"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/minLength" : {
+      "abstract" : [
+        {
+          "text" : "The minimum size of the spacer. If not provided, the minimum length is the system spacing.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "minLength"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sd",
+          "text" : "Double"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/minLength",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "min-length",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/spacer\/minlength"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/View-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/View-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/spacer\/view-implementations"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/Spacer" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Spacer",
+      "title" : "SwiftUI.Spacer",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Spacer",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Spacer"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
-  },
-  "sections": [],
-  "seeAlsoSections": [
+  "relationshipsSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/HStack",
-        "doc://LiveViewNative/documentation/LiveViewNative/VStack",
-        "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
-        "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
-        "doc://LiveViewNative/documentation/LiveViewNative/List"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI4ViewP"
       ],
-      "title": "Layout"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "variants": [
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/spacer"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Divider"
       ],
-      "traits": [
+      "title" : "Separators"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/body",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/minLength"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Spacer\/View-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/spacer"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

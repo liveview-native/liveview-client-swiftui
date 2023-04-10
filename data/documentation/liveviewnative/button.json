@@ -1,311 +1,746 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "code": "<button>",
-      "type": "codeVoice"
+      "code" : "<button>",
+      "type" : "codeVoice"
     },
     {
-      "text": ", a tappable element.",
-      "type": "text"
+      "text" : ", sends events when tapped.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/Button"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative6ButtonV",
+    "fragments" : [
       {
-        "name": "LiveViewNative"
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Button"
       }
     ],
-    "role": "article",
-    "roleHeading": "Article",
-    "title": "Button"
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Button"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "tags" : [
+      {
+        "text" : "SPI",
+        "type" : "spi"
+      }
+    ],
+    "title" : "<Button>"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "content": [
+      "declarations" : [
         {
-          "anchor": "Attributes",
-          "level": 2,
-          "text": "Attributes",
-          "type": "heading"
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Button"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "items": [
+          "inlineContent" : [
             {
-              "content": [
+              "text" : "Use the ",
+              "type" : "text"
+            },
+            {
+              "code" : "phx-click",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " attribute to specify which event to fire on tap.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<button phx-click=\"my_event\" phx-value-extra=\"more info\">Click Me!<\/button>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "code" : [
+            "def handle_event(\"my_event\", %{ \"extra\" => extra }, socket) do",
+            "    {:noreply, assign(socket, value: extra)}",
+            "end"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Attributes",
+          "level" : 2,
+          "text" : "Attributes",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "phx-click",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": The name of the event to fire when this button is clicked.",
-                      "type": "text"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/disabled",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "disabled",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": If present, the button is disabled and un-tappable.",
-                      "type": "text"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/buttonStyle",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
-                  "type": "paragraph"
-                }
-              ]
-            },
-            {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "button-style",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": The visual style of the button (see ",
-                      "type": "text"
-                    },
-                    {
-                      "code": "SwiftUI.PrimitiveButtonStyle",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ")",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                },
-                {
-                  "items": [
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "automatic",
-                              "type": "codeVoice"
-                            },
-                            {
-                              "text": " (default)",
-                              "type": "text"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "bordered",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "bordered-prominent",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "borderless",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "plain",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    }
-                  ],
-                  "type": "unorderedList"
+                  "type" : "paragraph"
                 }
               ]
             }
           ],
-          "type": "unorderedList"
+          "type" : "unorderedList"
+        },
+        {
+          "anchor" : "Events",
+          "level" : 2,
+          "text" : "Events",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/click",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI4ViewP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI4ViewP",
+      "title" : "SwiftUI.View",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "code": "<async-image>",
-          "type": "codeVoice"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button" : {
+      "abstract" : [
+        {
+          "code" : "<button>",
+          "type" : "codeVoice"
         },
         {
-          "text": ", displays images loaded from a remote URL.",
-          "type": "text"
+          "text" : ", sends events when tapped.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
-      "kind": "article",
-      "role": "article",
-      "title": "AsyncImage",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/asyncimage"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/Image": {
-      "abstract": [
+      "fragments" : [
         {
-          "code": "<image>",
-          "type": "codeVoice"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "text": ", displays SF Symbols or images from your app’s asset catalog.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Image",
-      "kind": "article",
-      "role": "article",
-      "title": "Image",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/image"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink": {
-      "abstract": [
-        {
-          "code": "<navigation-link>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", links to another live view page.",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "Button"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
-      "kind": "article",
-      "role": "article",
-      "title": "NavigationLink",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/navigationlink"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
-      "abstract": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "Button"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Supported Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedelements"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/Text": {
-      "abstract": [
+      "role" : "symbol",
+      "tags" : [
         {
-          "code": "<text>",
-          "type": "codeVoice"
+          "text" : "SPI",
+          "type" : "spi"
+        }
+      ],
+      "title" : "<Button>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/button"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/buttonStyle" : {
+      "abstract" : [
+        {
+          "text" : "The style to apply to this button.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "text": ", displays text.",
-          "type": "text"
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "buttonStyle"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ButtonStyle33_86DE25FE7BDFB54BC1FD80BE0C37213BLLO",
+          "text" : "ButtonStyle"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Text",
-      "kind": "article",
-      "role": "article",
-      "title": "Text",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/text"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/buttonStyle",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "tags" : [
+        {
+          "text" : "SPI",
+          "type" : "spi"
+        }
+      ],
+      "title" : "button-style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/button\/buttonstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/click" : {
+      "abstract" : [
+        {
+          "text" : "Event triggered when tapped.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "click"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV",
+          "text" : "Event"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/click",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "tags" : [
+        {
+          "text" : "SPI",
+          "type" : "spi"
+        }
+      ],
+      "title" : "phx-click",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/button\/click"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/disabled" : {
+      "abstract" : [
+        {
+          "text" : "Boolean attribute that indicates whether the button is tappable.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "disabled"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/disabled",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "tags" : [
+        {
+          "text" : "SPI",
+          "type" : "spi"
+        }
+      ],
+      "title" : "disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/button\/disabled"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/View-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/View-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/button\/view-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle" : {
+      "abstract" : [
+        {
+          "text" : "A style for the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ButtonStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ButtonStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ButtonStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/buttonstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Controls and Indicators",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EditButton" : {
+      "abstract" : [
+        {
+          "text" : "Toggles the edit mode in the current environment.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EditButton",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "<EditButton>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/editbutton"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PasteButton" : {
+      "abstract" : [
+        {
+          "text" : "Sends an event with the clipboard’s contents when tapped.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PasteButton"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PasteButton",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PasteButton"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<PasteButton>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/pastebutton"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RenameButton" : {
+      "abstract" : [
+        {
+          "text" : "Performs the current rename action when pressed.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RenameButton",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "<RenameButton>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/renamebutton"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
-  },
-  "sections": [],
-  "seeAlsoSections": [
+  "relationshipsSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Text",
-        "doc://LiveViewNative/documentation/LiveViewNative/Image",
-        "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
-        "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI4ViewP"
       ],
-      "title": "Content"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "variants": [
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/button"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PasteButton",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EditButton",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RenameButton"
       ],
-      "traits": [
+      "title" : "Buttons"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle"
+      ],
+      "title" : "Supporting Types"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/buttonStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/click",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/disabled"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/View-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/button"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

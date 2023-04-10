@@ -1,214 +1,1028 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "code": "<list>",
-      "type": "codeVoice"
-    },
-    {
-      "text": ", arranges its children in a vertically scrolling list.",
-      "type": "text"
+      "text" : "Presents rows of elements.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/List"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative4ListV",
+    "fragments" : [
       {
-        "name": "LiveViewNative"
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "List"
       }
     ],
-    "role": "article",
-    "roleHeading": "Article",
-    "title": "List"
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "List"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "<List>"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "content": [
+      "declarations" : [
         {
-          "anchor": "Attributes",
-          "level": 2,
-          "text": "Attributes",
-          "type": "heading"
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "List"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "items": [
+          "inlineContent" : [
             {
-              "content": [
+              "text" : "Each element inside the list is given its own row.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
                 {
-                  "inlineContent": [
+                  "text" : "Each child element must have a unique ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "id",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " attribute.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Precondition",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "code" : [
+            "<List>",
+            "    <%= for sport <- @sports do %>",
+            "        <Text id={sport.id}><%= sport.name %><\/Text>",
+            "    <% end %>",
+            "<\/List>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Edit-Mode",
+          "level" : 3,
+          "text" : "Edit Mode",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use an ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EditButton",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " to enter edit mode. This will allow rows to be moved, selected, and deleted.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<EditButton \/>",
+            "<List> ... <\/List>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Selecting-Rows",
+          "level" : 3,
+          "text" : "Selecting Rows",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/selection",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " binding to synchronize the selected row(s) with the LiveView.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<List selection=\"selected_sports\">",
+            "    ...",
+            "<\/List>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "code" : [
+            "defmodule MyAppWeb.SportsLive do",
+            "  native_binding :selected_sports, List, []",
+            "end"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Deleting-and-Moving-Rows",
+          "level" : 3,
+          "text" : "Deleting and Moving Rows",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Set an event name for the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/delete",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " attribute to enable the system delete action.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "An event is sent with the ",
+              "type" : "text"
+            },
+            {
+              "code" : "index",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " of the item to delete.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<List phx-delete=\"on_delete\">",
+            "    ...",
+            "<\/List>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "code" : [
+            "defmodule MyAppWeb.SportsLive do",
+            "    def handle_event(\"on_delete\", %{ \"index\" => index }, socket) do",
+            "        {:noreply, assign(socket, :items, List.delete_at(socket.assigns.items, index))}",
+            "    end",
+            "end"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/move",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " event to enable the system move actions.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "An event is sent with the ",
+              "type" : "text"
+            },
+            {
+              "code" : "index",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " of the item to move and its ",
+              "type" : "text"
+            },
+            {
+              "code" : "destination",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " index.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<List phx-move=\"on_move\">",
+            "    ...",
+            "<\/List>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "code" : [
+            "defmodule MyAppWeb.SportsLive do",
+            "    def handle_event(\"on_move\", %{ \"index\" => index, \"destination\" => destination }, socket) do",
+            "        {element, list} = List.pop_at(socket.assigns.sports, index)",
+            "        moved = List.insert_at(list, (if destination > index, do: destination - 1, else: destination), element)",
+            "        {:noreply, assign(socket, :sports, moved)}",
+            "    end",
+            "end"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Attributes",
+          "level" : 2,
+          "text" : "Attributes",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
                     {
-                      "code": "phx-delete",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": " (string): The name of the event to fire when a list row is swipe-deleted. If no event is provided, deletion will be disabled.",
-                      "type": "text"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/selection",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/style",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
                 }
               ]
             }
           ],
-          "type": "unorderedList"
+          "type" : "unorderedList"
+        },
+        {
+          "anchor" : "Events",
+          "level" : 2,
+          "text" : "Events",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/delete",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/move",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/List",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI4ViewP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI4ViewP",
+      "title" : "SwiftUI.View",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/HStack": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "code": "<h-stack>",
-          "type": "codeVoice"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "text": ", lays out children in a horizontal line.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/HStack",
-      "kind": "article",
-      "role": "article",
-      "title": "HStack",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/hstack"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/ScrollView": {
-      "abstract": [
-        {
-          "code": "<scroll-view>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", allows its content to be scrolled if it’s larger than the available space.",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
-      "kind": "article",
-      "role": "article",
-      "title": "ScrollView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/scrollview"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/Spacer": {
-      "abstract": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "code": "<spacer>",
-          "type": "codeVoice"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EditButton" : {
+      "abstract" : [
+        {
+          "text" : "Toggles the edit mode in the current environment.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EditButton",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "<EditButton>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/editbutton"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Containers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutcontainers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List" : {
+      "abstract" : [
+        {
+          "text" : "Presents rows of elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "text": ", an empty view that can grow to take up as much space as needed.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Spacer",
-      "kind": "article",
-      "role": "article",
-      "title": "Spacer",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/spacer"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
-      "abstract": [
-        {
-          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Supported Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedelements"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/VStack": {
-      "abstract": [
-        {
-          "code": "<v-stack>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", lays out children in a vertical line",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "List"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/VStack",
-      "kind": "article",
-      "role": "article",
-      "title": "VStack",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/vstack"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/ZStack": {
-      "abstract": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "code": "<z-stack>",
-          "type": "codeVoice"
+          "kind" : "identifier",
+          "text" : "List"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<List>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/body" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "text": ", lays out children on top of each other, from back to front.",
-          "type": "text"
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "body"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
-      "kind": "article",
-      "role": "article",
-      "title": "ZStack",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/zstack"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/body",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "body",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list\/body"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/delete" : {
+      "abstract" : [
+        {
+          "text" : "Event sent when a row is deleted.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "delete"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV",
+          "text" : "Event"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/delete",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "phx-delete",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list\/delete"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/move" : {
+      "abstract" : [
+        {
+          "text" : "Event sent when a row is moved.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "move"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV",
+          "text" : "Event"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/move",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "phx-move",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list\/move"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/selection" : {
+      "abstract" : [
+        {
+          "text" : "Synchronizes the selected rows with the server.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "selection"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "Selection"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/selection",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "selection",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list\/selection"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/style" : {
+      "abstract" : [
+        {
+          "text" : "The style to apply to this list.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "style"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative9ListStyle029_E4934C7D0C8B51E1429ACC17F026I2C6LLO",
+          "text" : "ListStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/style",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "list-style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list\/style"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/View-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/View-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list\/view-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Section" : {
+      "abstract" : [
+        {
+          "text" : "Groups elements in a container.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Section"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Section",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Section"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<Section>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/section"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Table" : {
+      "abstract" : [
+        {
+          "text" : "A container organized by rows and columns.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Table"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Table",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Table"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<Table>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/table"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/List" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/List",
+      "title" : "SwiftUI.List",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.List",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/List"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
-  },
-  "sections": [],
-  "seeAlsoSections": [
+  "relationshipsSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/HStack",
-        "doc://LiveViewNative/documentation/LiveViewNative/VStack",
-        "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
-        "doc://LiveViewNative/documentation/LiveViewNative/Spacer",
-        "doc://LiveViewNative/documentation/LiveViewNative/ScrollView"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI4ViewP"
       ],
-      "title": "Layout"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "variants": [
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/list"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Table",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Section"
       ],
-      "traits": [
+      "title" : "Collection Containers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/body",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/delete",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/move",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/selection",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/style"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/View-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/list"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

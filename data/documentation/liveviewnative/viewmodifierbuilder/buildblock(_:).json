@@ -1,340 +1,349 @@
 {
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-        "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildBlock(_:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildBlock(_:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "static"
+        "kind" : "keyword",
+        "text" : "static"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "keyword",
-        "text": "func"
+        "kind" : "keyword",
+        "text" : "func"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "buildBlock"
+        "kind" : "identifier",
+        "text" : "buildBlock"
       },
       {
-        "kind": "text",
-        "text": "<"
+        "kind" : "text",
+        "text" : "<"
       },
       {
-        "kind": "genericParameter",
-        "text": "M"
+        "kind" : "genericParameter",
+        "text" : "M"
       },
       {
-        "kind": "text",
-        "text": ">("
+        "kind" : "text",
+        "text" : ">("
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
-        "text": "M"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
+        "text" : "M"
       },
       {
-        "kind": "text",
-        "text": ") -> "
+        "kind" : "text",
+        "text" : ") -> "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
-        "text": "M"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
+        "text" : "M"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Type Method",
-    "symbolKind": "method",
-    "title": "buildBlock(_:)"
+    "role" : "symbol",
+    "roleHeading" : "Type Method",
+    "symbolKind" : "method",
+    "title" : "buildBlock(_:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "static"
+              "kind" : "keyword",
+              "text" : "static"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "keyword",
-              "text": "func"
+              "kind" : "keyword",
+              "text" : "func"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "buildBlock"
+              "kind" : "identifier",
+              "text" : "buildBlock"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "genericParameter",
-              "text": "M"
+              "kind" : "genericParameter",
+              "text" : "M"
             },
             {
-              "kind": "text",
-              "text": ">("
+              "kind" : "text",
+              "text" : ">("
             },
             {
-              "kind": "externalParam",
-              "text": "_"
+              "kind" : "externalParam",
+              "text" : "_"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "modifier"
+              "kind" : "internalParam",
+              "text" : "modifier"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
-              "text": "M"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
+              "text" : "M"
             },
             {
-              "kind": "text",
-              "text": ") -> "
+              "kind" : "text",
+              "text" : ") -> "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
-              "text": "M"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
+              "text" : "M"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "keyword",
-              "text": "where"
+              "kind" : "keyword",
+              "text" : "where"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "M"
+              "kind" : "typeIdentifier",
+              "text" : "M"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-              "text": "ViewModifier"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI12ViewModifierP",
+              "text" : "ViewModifier"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
         {
-          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
-          "type": "text"
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "role": "symbol",
-      "title": "CustomRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry"
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder" : {
+      "abstract" : [
         {
-          "text": "A Swift result builder that allows building a single, concrete ",
-          "type": "text"
+          "text" : "A Swift result builder that allows building a single, concrete ",
+          "type" : "text"
         },
         {
-          "code": "ViewModifier",
-          "type": "codeVoice"
+          "code" : "ViewModifier",
+          "type" : "codeVoice"
         },
         {
-          "text": " from a set of conditional modifiers.",
-          "type": "text"
+          "text" : " from a set of conditional modifiers.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "enum"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ViewModifierBuilder"
+          "kind" : "identifier",
+          "text" : "ViewModifierBuilder"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ViewModifierBuilder"
+          "kind" : "identifier",
+          "text" : "ViewModifierBuilder"
         }
       ],
-      "role": "symbol",
-      "title": "ViewModifierBuilder",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/viewmodifierbuilder"
+      "role" : "symbol",
+      "title" : "ViewModifierBuilder",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewmodifierbuilder"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildBlock(_:)": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildBlock(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "static"
+          "kind" : "keyword",
+          "text" : "static"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "buildBlock"
+          "kind" : "identifier",
+          "text" : "buildBlock"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : "<"
         },
         {
-          "kind": "genericParameter",
-          "text": "M"
+          "kind" : "genericParameter",
+          "text" : "M"
         },
         {
-          "kind": "text",
-          "text": ">("
+          "kind" : "text",
+          "text" : ">("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
-          "text": "M"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
+          "text" : "M"
         },
         {
-          "kind": "text",
-          "text": ") -> "
+          "kind" : "text",
+          "text" : ") -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
-          "text": "M"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO10buildBlockyxx7SwiftUI0bD0RzlFZ1ML_xmfp",
+          "text" : "M"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildBlock(_:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "buildBlock(_:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/viewmodifierbuilder/buildblock(_:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildBlock(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildBlock(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewmodifierbuilder\/buildblock(_:)"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/viewmodifierbuilder/buildblock(_:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/viewmodifierbuilder\/buildblock(_:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

@@ -1,635 +1,819 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "A form value is any type that can be stored in a ",
-      "type": "text"
+      "text" : "A form value is any type that can be stored in a ",
+      "type" : "text"
     },
     {
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-      "isActive": true,
-      "type": "reference"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
-      "text": " and used with ",
-      "type": "text"
+      "text" : " and used with ",
+      "type" : "text"
     },
     {
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-      "isActive": true,
-      "type": "reference"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+      "isActive" : true,
+      "type" : "reference"
     },
     {
-      "text": ".",
-      "type": "text"
+      "text" : ".",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormValue"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative9FormValueP",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative9FormValueP",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "protocol"
+        "kind" : "keyword",
+        "text" : "protocol"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "FormValue"
+        "kind" : "identifier",
+        "text" : "FormValue"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "FormValue"
+        "kind" : "identifier",
+        "text" : "FormValue"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Protocol",
-    "symbolKind": "protocol",
-    "title": "FormValue"
+    "role" : "symbol",
+    "roleHeading" : "Protocol",
+    "symbolKind" : "protocol",
+    "title" : "FormValue"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "protocol"
+              "kind" : "keyword",
+              "text" : "protocol"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "FormValue"
+              "kind" : "identifier",
+              "text" : "FormValue"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:Se",
-              "text": "Decodable"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative18AttributeDecodableP",
+              "text" : "AttributeDecodable"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SE",
-              "text": "Encodable"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Se",
+              "text" : "Decodable"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SQ",
-              "text": "Equatable"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SE",
+              "text" : "Encodable"
+            },
+            {
+              "kind" : "text",
+              "text" : ", "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SQ",
+              "text" : "Equatable"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "overview",
-          "level": 2,
-          "text": "Overview",
-          "type": "heading"
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "This protocol defines the requirements for converting to/from the serialized form data representation.",
-              "type": "text"
+              "text" : "The initial value is decoded from the ",
+              "type" : "text"
             },
             {
-              "text": " ",
-              "type": "text"
+              "code" : "value",
+              "type" : "codeVoice"
             },
             {
-              "text": "There are two serialized formats: form value strings and the codable representation.",
-              "type": "text"
+              "text" : " attribute using the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " protocol.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "The form value string (",
-              "type": "text"
+              "text" : "The ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue/formValue",
-              "isActive": true,
-              "type": "reference"
+              "code" : "Codable",
+              "type" : "codeVoice"
             },
             {
-              "text": " and ",
-              "type": "text"
+              "text" : " representation is used for sending form events and when a live binding is used.",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue/init(formValue:)",
-              "isActive": true,
-              "type": "reference"
+              "text" : " ",
+              "type" : "text"
             },
             {
-              "text": ") mode is used for form values that are provided in a ",
-              "type": "text"
+              "text" : "See ",
+              "type" : "text"
             },
             {
-              "code": "value",
-              "type": "codeVoice"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
-              "text": " attribute on form controls or are stored in ",
-              "type": "text"
-            },
-            {
-              "code": "<live-form>",
-              "type": "codeVoice"
-            },
-            {
-              "text": " elements.",
-              "type": "text"
+              "text" : " for more information about how form values and live bindings interact.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "The ",
-              "type": "text"
+              "text" : "A number of out-of-the-box ",
+              "type" : "text"
             },
             {
-              "code": "Codable",
-              "type": "codeVoice"
+              "code" : "FormValue",
+              "type" : "codeVoice"
             },
             {
-              "text": " mode is used when a live binding is used with a form control.",
-              "type": "text"
-            },
-            {
-              "text": " ",
-              "type": "text"
-            },
-            {
-              "text": "See ",
-              "type": "text"
-            },
-            {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-              "isActive": true,
-              "type": "reference"
-            },
-            {
-              "text": " for more information about how form values and live bindings interact.",
-              "type": "text"
+              "text" : " implementations are provided:",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "inlineContent": [
+          "items" : [
             {
-              "text": "A number of out-of-the-box ",
-              "type": "text"
-            },
-            {
-              "code": "FormValue",
-              "type": "codeVoice"
-            },
-            {
-              "text": " implementations are provided:",
-              "type": "text"
-            }
-          ],
-          "type": "paragraph"
-        },
-        {
-          "items": [
-            {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "Optional",
-                      "type": "codeVoice"
+                      "code" : "Optional",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ", when the ",
-                      "type": "text"
+                      "text" : ", when the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "Wrapped",
-                      "type": "codeVoice"
+                      "code" : "Wrapped",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " type itself conforms to ",
-                      "type": "text"
+                      "text" : " type itself conforms to ",
+                      "type" : "text"
                     },
                     {
-                      "code": "FormValue",
-                      "type": "codeVoice"
+                      "code" : "FormValue",
+                      "type" : "codeVoice"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "String",
-                      "type": "codeVoice"
+                      "code" : "String",
+                      "type" : "codeVoice"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "Bool",
-                      "type": "codeVoice"
+                      "code" : "Bool",
+                      "type" : "codeVoice"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "Double",
-                      "type": "codeVoice"
+                      "code" : "Double",
+                      "type" : "codeVoice"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             },
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "Date",
-                      "type": "codeVoice"
+                      "code" : "Date",
+                      "type" : "codeVoice"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ]
             }
           ],
-          "type": "orderedList"
+          "type" : "orderedList"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/SE": {
-      "identifier": "doc://LiveViewNative/SE",
-      "title": "Swift.Encodable",
-      "type": "unresolvable"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/SQ": {
-      "identifier": "doc://LiveViewNative/SQ",
-      "title": "Swift.Equatable",
-      "type": "unresolvable"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
+      "abstract" : [
+        {
+          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodable"
     },
-    "doc://LiveViewNative/Se": {
-      "identifier": "doc://LiveViewNative/Se",
-      "title": "Swift.Decodable",
-      "type": "unresolvable"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls" : {
+      "abstract" : [
+        {
+          "text" : "See how to build custom form controls that integrate with the form data model and events.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Building Form Controls",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formcontrols"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel" : {
+      "abstract" : [
+        {
+          "text" : "A form model stores the working copy of the data for a specific ",
+          "type" : "text"
+        },
+        {
+          "code" : "<form>",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FormModel"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FormModel"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "FormModel",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formmodel"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormControls": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState" : {
+      "abstract" : [
         {
-          "text": "See how to build custom form controls that integrate with the form data model and events.",
-          "type": "text"
+          "text" : "A property wrapper that stores the primary value of a form element.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
-      "kind": "article",
-      "role": "article",
-      "title": "Building Form Controls",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formcontrols"
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FormState"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FormState"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "FormState",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormModel": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue" : {
+      "abstract" : [
         {
-          "text": "A form model stores the working copy of the data for a specific ",
-          "type": "text"
+          "text" : "A form value is any type that can be stored in a ",
+          "type" : "text"
         },
         {
-          "code": "<form>",
-          "type": "codeVoice"
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": " element.",
-          "type": "text"
+          "text" : " and used with ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "FormValue"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormValue",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormModel"
+          "kind" : "identifier",
+          "text" : "FormValue"
         }
       ],
-      "role": "symbol",
-      "title": "FormModel",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formmodel"
+      "role" : "symbol",
+      "title" : "FormValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formvalue"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Foundation\/Date" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that stores the primary value of a form element.",
-          "type": "text"
-        }
-      ],
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "struct"
+          "text" : "Decodes a date from an attribute, if it is present.",
+          "type" : "text"
         },
         {
-          "kind": "text",
-          "text": " "
+          "text" : " ",
+          "type" : "text"
         },
         {
-          "kind": "identifier",
-          "text": "FormState"
+          "text" : "The value is interpreted as an Elixir-style ISO 8601 date with an optional time component.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "FormState"
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:10Foundation4DateV",
+          "text" : "Date"
         }
       ],
-      "role": "symbol",
-      "title": "FormState",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Foundation\/Date",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Date"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Date",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/foundation\/date"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Bool" : {
+      "abstract" : [
         {
-          "text": "A form value is any type that can be stored in a ",
-          "type": "text"
+          "text" : "Decodes a boolean from an attribute.",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormModel",
-          "isActive": true,
-          "type": "reference"
+          "text" : " ",
+          "type" : "text"
         },
         {
-          "text": " and used with ",
-          "type": "text"
+          "text" : "The value is ",
+          "type" : "text"
         },
         {
-          "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-          "isActive": true,
-          "type": "reference"
+          "code" : "true",
+          "type" : "codeVoice"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : " if the attribute is present (regardless of value) and ",
+          "type" : "text"
+        },
+        {
+          "code" : "false",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " otherwise.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "extension"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormValue"
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Bool",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormValue"
+          "kind" : "identifier",
+          "text" : "Bool"
         }
       ],
-      "role": "symbol",
-      "title": "FormValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formvalue"
+      "role" : "symbol",
+      "title" : "Bool",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/bool"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormValue/formValue": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Double" : {
+      "abstract" : [
         {
-          "text": "Converts the value from this type to the string representation.",
-          "type": "text"
+          "text" : "Decodes a double from an attribute, if it is present.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "extension"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "formValue"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Sd",
+          "text" : "Double"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue/formValue",
-      "kind": "symbol",
-      "required": true,
-      "role": "symbol",
-      "title": "formValue",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formvalue/formvalue"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Double",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Double"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Double",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/double"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormValue/init(formValue:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Optional" : {
+      "abstract" : [
         {
-          "text": "Converts the value from the string representation to this type.",
-          "type": "text"
+          "text" : "Decodes an optional value (where the wrapped type is itself ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ") type from an attribute.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "conformance" : {
+        "availabilityPrefix" : [
+          {
+            "text" : "Available when",
+            "type" : "text"
+          }
+        ],
+        "conformancePrefix" : [
+          {
+            "text" : "Conforms when",
+            "type" : "text"
+          }
+        ],
+        "constraints" : [
+          {
+            "code" : "Wrapped",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " conforms to ",
+            "type" : "text"
+          },
+          {
+            "code" : "FormValue",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : ".",
+            "type" : "text"
+          }
+        ]
+      },
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "keyword",
+          "text" : "extension"
         },
         {
-          "kind": "text",
-          "text": "?("
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "externalParam",
-          "text": "formValue"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": ")"
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Sq",
+          "text" : "Optional"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormValue/init(formValue:)",
-      "kind": "symbol",
-      "required": true,
-      "role": "symbol",
-      "title": "init(formValue:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formvalue/init(formvalue:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Optional",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Optional"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Optional",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/optional"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String" : {
+      "abstract" : [
+        {
+          "text" : "Decodes a string from an attribute, if the attribute is present.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "String"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "String",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/string"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SE" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SE",
+      "title" : "Swift.Encodable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SQ" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SQ",
+      "title" : "Swift.Equatable",
+      "type" : "unresolvable"
     }
   },
-  "relationshipsSections": [
+  "relationshipsSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/Se",
-        "doc://LiveViewNative/SE",
-        "doc://LiveViewNative/SQ"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/SE",
+        "doc:\/\/LiveViewNative\/SQ"
       ],
-      "kind": "relationships",
-      "title": "Inherits From",
-      "type": "inheritsFrom"
-    }
-  ],
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
-  },
-  "sections": [],
-  "seeAlsoSections": [
-    {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormControls",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormModel"
-      ],
-      "title": "Form Controls"
-    }
-  ],
-  "topicSections": [
-    {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormValue/init(formValue:)"
-      ],
-      "title": "Initializers"
+      "kind" : "relationships",
+      "title" : "Inherits From",
+      "type" : "inheritsFrom"
     },
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/FormValue/formValue"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Bool",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Foundation\/Date",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Double",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Optional",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String"
       ],
-      "title": "Instance Properties"
+      "kind" : "relationships",
+      "title" : "Conforming Types",
+      "type" : "conformingTypes"
     }
   ],
-  "variants": [
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/formvalue"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormModel"
       ],
-      "traits": [
+      "title" : "Form Controls"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/formvalue"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

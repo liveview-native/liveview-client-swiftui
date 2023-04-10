@@ -1,278 +1,363 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "The live view connection state.",
-      "type": "text"
+      "text" : "The live view connection state.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0A12SessionStateO",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A12SessionStateO",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "enum"
+        "kind" : "keyword",
+        "text" : "enum"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "LiveSessionState"
+        "kind" : "identifier",
+        "text" : "LiveSessionState"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "navigatorTitle": [
+    "navigatorTitle" : [
       {
-        "kind": "identifier",
-        "text": "LiveSessionState"
+        "kind" : "identifier",
+        "text" : "LiveSessionState"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Enumeration",
-    "symbolKind": "enum",
-    "title": "LiveSessionState"
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "LiveSessionState"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "enum"
+              "kind" : "keyword",
+              "text" : "enum"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "LiveSessionState"
+              "kind" : "identifier",
+              "text" : "LiveSessionState"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError" : {
+      "abstract" : [
         {
-          "text": "The live view connection state.",
-          "type": "text"
+          "text" : "An error that occurred when connecting to a live view.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "enum"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveSessionState"
+          "kind" : "identifier",
+          "text" : "LiveConnectionError"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveSessionState"
+          "kind" : "identifier",
+          "text" : "LiveConnectionError"
         }
       ],
-      "role": "symbol",
-      "title": "LiveSessionState",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionstate"
+      "role" : "symbol",
+      "title" : "LiveConnectionError",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connected": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
         {
-          "text": "The coordinator has connected and the view tree can be rendered.",
-          "type": "text"
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "connected"
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connected",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionState.connected",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionstate/connected"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connecting": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState" : {
+      "abstract" : [
         {
-          "text": "The coordinator is attempting to connect.",
-          "type": "text"
+          "text" : "The live view connection state.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "connecting"
+          "kind" : "identifier",
+          "text" : "LiveSessionState"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connecting",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionState.connecting",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionstate/connecting"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionState"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionState",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionstate"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connectionFailed(_:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connected" : {
+      "abstract" : [
         {
-          "text": "The coordinator failed to connect and produced the given error.",
-          "type": "text"
+          "text" : "The coordinator has connected and the view tree can be rendered.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "case"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "connectionFailed"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:s5ErrorP",
-          "text": "Error"
-        },
-        {
-          "kind": "text",
-          "text": ")"
+          "kind" : "identifier",
+          "text" : "connected"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connectionFailed(_:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionState.connectionFailed(_:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionstate/connectionfailed(_:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connected",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionState.connected",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionstate\/connected"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/notConnected": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connecting" : {
+      "abstract" : [
         {
-          "text": "The coordinator has not yet connected to the live view.",
-          "type": "text"
+          "text" : "The coordinator is attempting to connect.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "case"
+          "kind" : "keyword",
+          "text" : "case"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "notConnected"
+          "kind" : "identifier",
+          "text" : "connecting"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/notConnected",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "LiveSessionState.notConnected",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/livesessionstate/notconnected"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connecting",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionState.connecting",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionstate\/connecting"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connectionFailed(_:)" : {
+      "abstract" : [
+        {
+          "text" : "The coordinator failed to connect and produced the given error.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "connectionFailed"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s5ErrorP",
+          "text" : "Error"
+        },
+        {
+          "kind" : "text",
+          "text" : ")"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connectionFailed(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionState.connectionFailed(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionstate\/connectionfailed(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/notConnected" : {
+      "abstract" : [
+        {
+          "text" : "The coordinator has not yet connected to the live view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "notConnected"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/notConnected",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveSessionState.notConnected",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessionstate\/notconnected"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "topicSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connected",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connecting",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/connectionFailed(_:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveSessionState/notConnected"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError"
       ],
-      "title": "Enumeration Cases"
+      "title" : "Supporting Types"
     }
   ],
-  "variants": [
+  "topicSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/livesessionstate"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connected",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connecting",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/connectionFailed(_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionState\/notConnected"
       ],
-      "traits": [
+      "title" : "Enumeration Cases"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/livesessionstate"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

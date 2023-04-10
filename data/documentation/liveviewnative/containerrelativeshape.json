@@ -1,0 +1,312 @@
+{
+  "abstract" : [
+    {
+      "text" : "A shape that fills an inset version of the container shape.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContainerRelativeShape"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "article",
+    "roleHeading" : "Article",
+    "title" : "ContainerRelativeShape"
+  },
+  "primaryContentSections" : [
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for supported attributes.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<ContainerRelativeShape fill-color=\"#00ff00\" \/>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/ContainerRelativeShape",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Circle" : {
+      "abstract" : [
+        {
+          "text" : "A circular shape that fills the view containing it.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Circle",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Circle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/circle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Ellipse" : {
+      "abstract" : [
+        {
+          "text" : "An elliptical shape that fills the view containing it.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Ellipse",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Ellipse",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/ellipse"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Rectangle" : {
+      "abstract" : [
+        {
+          "text" : "A rectangular shape that fills the view containing it.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Rectangle",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Rectangle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rectangle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape" : {
+      "abstract" : [
+        {
+          "text" : "A view that displays the a shape.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Shape"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Shape"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shape"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Shapes",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shapes"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Capsule" : {
+      "abstract" : [
+        {
+          "text" : "A capsule shape. A capsule is a rounded rectangle where the corner size is half of the rectangle’s smaller edge.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI7CapsuleV",
+          "text" : "Capsule"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Capsule",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Capsule"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Capsule",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/capsule"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RoundedRectangle" : {
+      "abstract" : [
+        {
+          "text" : "A rounded rectangle shape.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI16RoundedRectangleV",
+          "text" : "RoundedRectangle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RoundedRectangle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RoundedRectangle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RoundedRectangle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/roundedrectangle"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/ContainerRelativeShape" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/ContainerRelativeShape",
+      "title" : "SwiftUI.ContainerRelativeShape",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.ContainerRelativeShape",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/ContainerRelativeShape"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Capsule",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Circle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Ellipse",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Rectangle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RoundedRectangle"
+      ],
+      "title" : "Views"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/containerrelativeshape"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,262 +1,653 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "code": "<h-stack>",
-      "type": "codeVoice"
-    },
-    {
-      "text": ", lays out children in a horizontal line.",
-      "type": "text"
+      "text" : "Container that lays out its children in a horizontal line.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/HStack"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative6HStackV",
+    "fragments" : [
       {
-        "name": "LiveViewNative"
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "HStack"
       }
     ],
-    "role": "article",
-    "roleHeading": "Article",
-    "title": "HStack"
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "HStack"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "<HStack>"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "content": [
+      "declarations" : [
         {
-          "anchor": "Attributes",
-          "level": 2,
-          "text": "Attributes",
-          "type": "heading"
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "HStack"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "items": [
+          "code" : [
+            "<HStack>",
+            "    <Text>Leading<\/Text>",
+            "    <Spacer \/>",
+            "    <Text>Trailing<\/Text>",
+            "<\/HStack>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Attributes",
+          "level" : 2,
+          "text" : "Attributes",
+          "type" : "heading"
+        },
+        {
+          "items" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "code": "alignment",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": How children are aligned vertically within the stack.",
-                      "type": "text"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/alignment",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
-                  "type": "paragraph"
-                },
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
                 {
-                  "items": [
+                  "inlineContent" : [
                     {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "center",
-                              "type": "codeVoice"
-                            },
-                            {
-                              "text": " (default)",
-                              "type": "text"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "top",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "bottom",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/spacing",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
-                  "type": "unorderedList"
+                  "type" : "paragraph"
                 }
               ]
             }
           ],
-          "type": "unorderedList"
+          "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/HStack",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI4ViewP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI4ViewP",
+      "title" : "SwiftUI.View",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/List": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "code": "<list>",
-          "type": "codeVoice"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "text": ", arranges its children in a vertically scrolling list.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/List",
-      "kind": "article",
-      "role": "article",
-      "title": "List",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/list"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/ScrollView": {
-      "abstract": [
-        {
-          "code": "<scroll-view>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", allows its content to be scrolled if it’s larger than the available space.",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
-      "kind": "article",
-      "role": "article",
-      "title": "ScrollView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/scrollview"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/Spacer": {
-      "abstract": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "code": "<spacer>",
-          "type": "codeVoice"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack" : {
+      "abstract" : [
+        {
+          "text" : "Container that lays out its children in a horizontal line.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "text": ", an empty view that can grow to take up as much space as needed.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Spacer",
-      "kind": "article",
-      "role": "article",
-      "title": "Spacer",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/spacer"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
-      "abstract": [
-        {
-          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Supported Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedelements"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/VStack": {
-      "abstract": [
-        {
-          "code": "<v-stack>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", lays out children in a vertical line",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "HStack"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/VStack",
-      "kind": "article",
-      "role": "article",
-      "title": "VStack",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/vstack"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/ZStack": {
-      "abstract": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "code": "<z-stack>",
-          "type": "codeVoice"
+          "kind" : "identifier",
+          "text" : "HStack"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<HStack>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hstack"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/alignment" : {
+      "abstract" : [
+        {
+          "text" : "The vertical alignment of views within the stack. Defaults to center-aligned.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "text": ", lays out children on top of each other, from back to front.",
-          "type": "text"
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "alignment"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI17VerticalAlignmentV",
+          "text" : "VerticalAlignment"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
-      "kind": "article",
-      "role": "article",
-      "title": "ZStack",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/zstack"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/alignment",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "alignment",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hstack\/alignment"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/body" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "body"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/body",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "body",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hstack\/body"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/spacing" : {
+      "abstract" : [
+        {
+          "text" : "The spacing between views in the stack. If not provided, the stack uses the system spacing.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "spacing"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sd",
+          "text" : "Double"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/spacing",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "spacing",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hstack\/spacing"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/View-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/View-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hstack\/view-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Containers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutcontainers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VStack" : {
+      "abstract" : [
+        {
+          "text" : "Container that lays out its children in a vertical line.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "VStack"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VStack",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "VStack"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<VStack>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/vstack"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZStack" : {
+      "abstract" : [
+        {
+          "text" : "A container that lays out elements on top of each other, back to front.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ZStack"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZStack",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ZStack"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<ZStack>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/zstack"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/HStack" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/HStack",
+      "title" : "SwiftUI.HStack",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.HStack",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/HStack"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
-  },
-  "sections": [],
-  "seeAlsoSections": [
+  "relationshipsSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/VStack",
-        "doc://LiveViewNative/documentation/LiveViewNative/ZStack",
-        "doc://LiveViewNative/documentation/LiveViewNative/Spacer",
-        "doc://LiveViewNative/documentation/LiveViewNative/ScrollView",
-        "doc://LiveViewNative/documentation/LiveViewNative/List"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI4ViewP"
       ],
-      "title": "Layout"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "variants": [
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/hstack"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZStack",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VStack"
       ],
-      "traits": [
+      "title" : "Stacks"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/alignment",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/body",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/spacing"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HStack\/View-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/hstack"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

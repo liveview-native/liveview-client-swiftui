@@ -1,158 +1,167 @@
 {
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/ObservableObject-Implementations"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/ObservableObject-Implementations"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "collectionGroup",
-    "title": "ObservableObject Implementations"
+    "role" : "collectionGroup",
+    "title" : "ObservableObject Implementations"
   },
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator": {
-      "abstract": [
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "text": "The live view coordinator manages the connection to a particular LiveView on the backend.",
-          "type": "text"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator" : {
+      "abstract" : [
         {
-          "kind": "keyword",
-          "text": "class"
+          "text" : "The live view coordinator manages the connection to a particular LiveView on the backend.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveViewCoordinator"
+          "kind" : "identifier",
+          "text" : "LiveViewCoordinator"
         }
       ],
-      "role": "symbol",
-      "title": "LiveViewCoordinator",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator"
+      "role" : "symbol",
+      "title" : "LiveViewCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/objectWillChange": {
-      "abstract": [],
-      "conformance": {
-        "availabilityPrefix": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/objectWillChange" : {
+      "abstract" : [
+
+      ],
+      "conformance" : {
+        "availabilityPrefix" : [
           {
-            "text": "Available when",
-            "type": "text"
+            "text" : "Available when",
+            "type" : "text"
           }
         ],
-        "conformancePrefix": [
+        "conformancePrefix" : [
           {
-            "text": "Conforms when",
-            "type": "text"
+            "text" : "Conforms when",
+            "type" : "text"
           }
         ],
-        "constraints": [
+        "constraints" : [
           {
-            "code": "ObjectWillChangePublisher",
-            "type": "codeVoice"
+            "code" : "ObjectWillChangePublisher",
+            "type" : "codeVoice"
           },
           {
-            "text": " is ",
-            "type": "text"
+            "text" : " is ",
+            "type" : "text"
           },
           {
-            "code": "ObservableObjectPublisher",
-            "type": "codeVoice"
+            "code" : "ObservableObjectPublisher",
+            "type" : "codeVoice"
           },
           {
-            "text": ".",
-            "type": "text"
+            "text" : ".",
+            "type" : "text"
           }
         ]
       },
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "objectWillChange"
+          "kind" : "identifier",
+          "text" : "objectWillChange"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7Combine25ObservableObjectPublisherC",
-          "text": "ObservableObjectPublisher"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7Combine25ObservableObjectPublisherC",
+          "text" : "ObservableObjectPublisher"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/objectWillChange",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "objectWillChange",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveviewcoordinator/objectwillchange"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/objectWillChange",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "objectWillChange",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveviewcoordinator\/objectwillchange"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "topicSections": [
+  "sections" : [
+
+  ],
+  "topicSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveViewCoordinator/objectWillChange"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveViewCoordinator\/objectWillChange"
       ],
-      "title": "Instance Properties"
+      "title" : "Instance Properties"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/liveviewcoordinator/observableobject-implementations"
+      "paths" : [
+        "\/documentation\/liveviewnative\/liveviewcoordinator\/observableobject-implementations"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

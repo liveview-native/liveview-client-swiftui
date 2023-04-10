@@ -1,463 +1,474 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Inherited from ",
-      "type": "text"
+      "text" : "Inherited from ",
+      "type" : "text"
     },
     {
-      "code": "View.accessibilityCustomContent(_:_:importance:)",
-      "type": "codeVoice"
+      "code" : "View.accessibilityCustomContent(_:_:importance:)",
+      "type" : "codeVoice"
     },
     {
-      "text": ".",
-      "type": "text"
+      "text" : ".",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-        "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/View-Implementations"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/accessibilityCustomContent(_:_:importance:)-x7p"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/accessibilityCustomContent(_:_:importance:)-x7p"
   },
-  "kind": "symbol",
-  "metadata": {
-    "extendedModule": "SwiftUI",
-    "externalID": "s:7SwiftUI4ViewPAAE26accessibilityCustomContent__10importanceAA08ModifiedF0VyxAA31AccessibilityAttachmentModifierVGAA18LocalizedStringKeyV_ALSo08AXCustomF10ImportanceVtF::SYNTHESIZED::s:14LiveViewNative0aB0V",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftUI",
+    "externalID" : "s:7SwiftUI4ViewPAAE26accessibilityCustomContent__10importanceAA08ModifiedF0VyxAA31AccessibilityAttachmentModifierVGAA18LocalizedStringKeyV_ALSo08AXCustomF10ImportanceVtF::SYNTHESIZED::s:14LiveViewNative0aB0V",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "func"
+        "kind" : "keyword",
+        "text" : "func"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "accessibilityCustomContent"
+        "kind" : "identifier",
+        "text" : "accessibilityCustomContent"
       },
       {
-        "kind": "text",
-        "text": "("
+        "kind" : "text",
+        "text" : "("
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI18LocalizedStringKeyV",
-        "text": "LocalizedStringKey"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI18LocalizedStringKeyV",
+        "text" : "LocalizedStringKey"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI18LocalizedStringKeyV",
-        "text": "LocalizedStringKey"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI18LocalizedStringKeyV",
+        "text" : "LocalizedStringKey"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "externalParam",
-        "text": "importance"
+        "kind" : "externalParam",
+        "text" : "importance"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "c:objc(cs)AXCustomContent",
-        "text": "AXCustomContent"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:objc(cs)AXCustomContent",
+        "text" : "AXCustomContent"
       },
       {
-        "kind": "text",
-        "text": "."
+        "kind" : "text",
+        "text" : "."
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "c:@E@AXCustomContentImportance",
-        "text": "Importance"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "c:@E@AXCustomContentImportance",
+        "text" : "Importance"
       },
       {
-        "kind": "text",
-        "text": ") -> "
+        "kind" : "text",
+        "text" : ") -> "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI15ModifiedContentV",
-        "text": "ModifiedContent"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI15ModifiedContentV",
+        "text" : "ModifiedContent"
       },
       {
-        "kind": "text",
-        "text": "<"
+        "kind" : "text",
+        "text" : "<"
       },
       {
-        "kind": "typeIdentifier",
-        "text": "Self"
+        "kind" : "typeIdentifier",
+        "text" : "Self"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI31AccessibilityAttachmentModifierV",
-        "text": "AccessibilityAttachmentModifier"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI31AccessibilityAttachmentModifierV",
+        "text" : "AccessibilityAttachmentModifier"
       },
       {
-        "kind": "text",
-        "text": ">"
+        "kind" : "text",
+        "text" : ">"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "platforms": [
+    "platforms" : [
       {
-        "beta": false,
-        "deprecated": false,
-        "introducedAt": "15.0",
-        "name": "iOS",
-        "unavailable": false
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "15.0",
+        "name" : "iOS",
+        "unavailable" : false
       },
       {
-        "beta": false,
-        "deprecated": false,
-        "introducedAt": "12.0",
-        "name": "macOS",
-        "unavailable": false
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "12.0",
+        "name" : "macOS",
+        "unavailable" : false
       },
       {
-        "beta": false,
-        "deprecated": false,
-        "introducedAt": "15.0",
-        "name": "tvOS",
-        "unavailable": false
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "15.0",
+        "name" : "tvOS",
+        "unavailable" : false
       },
       {
-        "beta": false,
-        "deprecated": false,
-        "introducedAt": "8.0",
-        "name": "watchOS",
-        "unavailable": false
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "8.0",
+        "name" : "watchOS",
+        "unavailable" : false
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Method",
-    "symbolKind": "method",
-    "title": "accessibilityCustomContent(_:_:importance:)"
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "accessibilityCustomContent(_:_:importance:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "func"
+              "kind" : "keyword",
+              "text" : "func"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "accessibilityCustomContent"
+              "kind" : "identifier",
+              "text" : "accessibilityCustomContent"
             },
             {
-              "kind": "text",
-              "text": "("
+              "kind" : "text",
+              "text" : "("
             },
             {
-              "kind": "externalParam",
-              "text": "_"
+              "kind" : "externalParam",
+              "text" : "_"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "labelKey"
+              "kind" : "internalParam",
+              "text" : "labelKey"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI18LocalizedStringKeyV",
-              "text": "LocalizedStringKey"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI18LocalizedStringKeyV",
+              "text" : "LocalizedStringKey"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "externalParam",
-              "text": "_"
+              "kind" : "externalParam",
+              "text" : "_"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "valueKey"
+              "kind" : "internalParam",
+              "text" : "valueKey"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI18LocalizedStringKeyV",
-              "text": "LocalizedStringKey"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI18LocalizedStringKeyV",
+              "text" : "LocalizedStringKey"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "externalParam",
-              "text": "importance"
+              "kind" : "externalParam",
+              "text" : "importance"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "c:objc(cs)AXCustomContent",
-              "text": "AXCustomContent"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:objc(cs)AXCustomContent",
+              "text" : "AXCustomContent"
             },
             {
-              "kind": "text",
-              "text": "."
+              "kind" : "text",
+              "text" : "."
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "c:@E@AXCustomContentImportance",
-              "text": "Importance"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "c:@E@AXCustomContentImportance",
+              "text" : "Importance"
             },
             {
-              "kind": "text",
-              "text": " = .default) -> "
+              "kind" : "text",
+              "text" : " = .default) -> "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI15ModifiedContentV",
-              "text": "ModifiedContent"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI15ModifiedContentV",
+              "text" : "ModifiedContent"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "typeIdentifier",
-              "text": "Self"
+              "kind" : "typeIdentifier",
+              "text" : "Self"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI31AccessibilityAttachmentModifierV",
-              "text": "AccessibilityAttachmentModifier"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI31AccessibilityAttachmentModifierV",
+              "text" : "AccessibilityAttachmentModifier"
             },
             {
-              "kind": "text",
-              "text": ">"
+              "kind" : "text",
+              "text" : ">"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView" : {
+      "abstract" : [
         {
-          "text": "The SwiftUI root view for a Phoenix LiveView.",
-          "type": "text"
+          "text" : "The SwiftUI root view for a Phoenix LiveView.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "LiveView"
+          "kind" : "identifier",
+          "text" : "LiveView"
         }
       ],
-      "role": "symbol",
-      "title": "LiveView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview"
+      "role" : "symbol",
+      "title" : "LiveView",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/View-Implementations",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "View Implementations",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview/view-implementations"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/LiveView/accessibilityCustomContent(_:_:importance:)-x7p": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/accessibilityCustomContent(_:_:importance:)-x7p" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "accessibilityCustomContent"
+          "kind" : "identifier",
+          "text" : "accessibilityCustomContent"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI18LocalizedStringKeyV",
-          "text": "LocalizedStringKey"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI18LocalizedStringKeyV",
+          "text" : "LocalizedStringKey"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI18LocalizedStringKeyV",
-          "text": "LocalizedStringKey"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI18LocalizedStringKeyV",
+          "text" : "LocalizedStringKey"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "externalParam",
-          "text": "importance"
+          "kind" : "externalParam",
+          "text" : "importance"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "c:objc(cs)AXCustomContent",
-          "text": "AXCustomContent"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "c:objc(cs)AXCustomContent",
+          "text" : "AXCustomContent"
         },
         {
-          "kind": "text",
-          "text": "."
+          "kind" : "text",
+          "text" : "."
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "c:@E@AXCustomContentImportance",
-          "text": "Importance"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "c:@E@AXCustomContentImportance",
+          "text" : "Importance"
         },
         {
-          "kind": "text",
-          "text": ") -> "
+          "kind" : "text",
+          "text" : ") -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI15ModifiedContentV",
-          "text": "ModifiedContent"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI15ModifiedContentV",
+          "text" : "ModifiedContent"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : "<"
         },
         {
-          "kind": "typeIdentifier",
-          "text": "Self"
+          "kind" : "typeIdentifier",
+          "text" : "Self"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI31AccessibilityAttachmentModifierV",
-          "text": "AccessibilityAttachmentModifier"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI31AccessibilityAttachmentModifierV",
+          "text" : "AccessibilityAttachmentModifier"
         },
         {
-          "kind": "text",
-          "text": ">"
+          "kind" : "text",
+          "text" : ">"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/LiveView/accessibilityCustomContent(_:_:importance:)-x7p",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "accessibilityCustomContent(_:_:importance:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/liveview/accessibilitycustomcontent(_:_:importance:)-x7p"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/accessibilityCustomContent(_:_:importance:)-x7p",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "accessibilityCustomContent(_:_:importance:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview\/accessibilitycustomcontent(_:_:importance:)-x7p"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/View-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveView\/View-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveview\/view-implementations"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/liveview/accessibilitycustomcontent(_:_:importance:)-x7p"
+      "paths" : [
+        "\/documentation\/liveviewnative\/liveview\/accessibilitycustomcontent(_:_:importance:)-x7p"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

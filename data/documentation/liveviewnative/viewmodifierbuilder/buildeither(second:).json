@@ -1,507 +1,516 @@
 {
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-        "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(second:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildEither(second:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "static"
+        "kind" : "keyword",
+        "text" : "static"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "keyword",
-        "text": "func"
+        "kind" : "keyword",
+        "text" : "func"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "buildEither"
+        "kind" : "identifier",
+        "text" : "buildEither"
       },
       {
-        "kind": "text",
-        "text": "<"
+        "kind" : "text",
+        "text" : "<"
       },
       {
-        "kind": "genericParameter",
-        "text": "TrueModifier"
+        "kind" : "genericParameter",
+        "text" : "TrueModifier"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "genericParameter",
-        "text": "FalseModifier"
+        "kind" : "genericParameter",
+        "text" : "FalseModifier"
       },
       {
-        "kind": "text",
-        "text": ">("
+        "kind" : "text",
+        "text" : ">("
       },
       {
-        "kind": "externalParam",
-        "text": "second"
+        "kind" : "externalParam",
+        "text" : "second"
       },
       {
-        "kind": "text",
-        "text": ": () "
+        "kind" : "text",
+        "text" : ": () "
       },
       {
-        "kind": "keyword",
-        "text": "throws"
+        "kind" : "keyword",
+        "text" : "throws"
       },
       {
-        "kind": "text",
-        "text": " -> "
+        "kind" : "text",
+        "text" : " -> "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
-        "text": "FalseModifier"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+        "text" : "FalseModifier"
       },
       {
-        "kind": "text",
-        "text": ") "
+        "kind" : "text",
+        "text" : ") "
       },
       {
-        "kind": "keyword",
-        "text": "rethrows"
+        "kind" : "keyword",
+        "text" : "rethrows"
       },
       {
-        "kind": "text",
-        "text": " -> "
+        "kind" : "text",
+        "text" : " -> "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative20_ConditionalModifierV",
-        "text": "_ConditionalModifier"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative20_ConditionalModifierV",
+        "text" : "_ConditionalModifier"
       },
       {
-        "kind": "text",
-        "text": "<"
+        "kind" : "text",
+        "text" : "<"
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
-        "text": "TrueModifier"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
+        "text" : "TrueModifier"
       },
       {
-        "kind": "text",
-        "text": ", "
+        "kind" : "text",
+        "text" : ", "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
-        "text": "FalseModifier"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+        "text" : "FalseModifier"
       },
       {
-        "kind": "text",
-        "text": ">"
+        "kind" : "text",
+        "text" : ">"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Type Method",
-    "symbolKind": "method",
-    "title": "buildEither(second:)"
+    "role" : "symbol",
+    "roleHeading" : "Type Method",
+    "symbolKind" : "method",
+    "title" : "buildEither(second:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "static"
+              "kind" : "keyword",
+              "text" : "static"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "keyword",
-              "text": "func"
+              "kind" : "keyword",
+              "text" : "func"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "buildEither"
+              "kind" : "identifier",
+              "text" : "buildEither"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "genericParameter",
-              "text": "TrueModifier"
+              "kind" : "genericParameter",
+              "text" : "TrueModifier"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "genericParameter",
-              "text": "FalseModifier"
+              "kind" : "genericParameter",
+              "text" : "FalseModifier"
             },
             {
-              "kind": "text",
-              "text": ">("
+              "kind" : "text",
+              "text" : ">("
             },
             {
-              "kind": "externalParam",
-              "text": "second"
+              "kind" : "externalParam",
+              "text" : "second"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "attribute",
-              "text": "@autoclosure"
+              "kind" : "attribute",
+              "text" : "@autoclosure"
             },
             {
-              "kind": "text",
-              "text": " () "
+              "kind" : "text",
+              "text" : " () "
             },
             {
-              "kind": "keyword",
-              "text": "throws"
+              "kind" : "keyword",
+              "text" : "throws"
             },
             {
-              "kind": "text",
-              "text": " -> "
+              "kind" : "text",
+              "text" : " -> "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
-              "text": "FalseModifier"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+              "text" : "FalseModifier"
             },
             {
-              "kind": "text",
-              "text": ") "
+              "kind" : "text",
+              "text" : ") "
             },
             {
-              "kind": "keyword",
-              "text": "rethrows"
+              "kind" : "keyword",
+              "text" : "rethrows"
             },
             {
-              "kind": "text",
-              "text": " -> "
+              "kind" : "text",
+              "text" : " -> "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative20_ConditionalModifierV",
-              "text": "_ConditionalModifier"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative20_ConditionalModifierV",
+              "text" : "_ConditionalModifier"
             },
             {
-              "kind": "text",
-              "text": "<"
+              "kind" : "text",
+              "text" : "<"
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
-              "text": "TrueModifier"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
+              "text" : "TrueModifier"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
-              "text": "FalseModifier"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+              "text" : "FalseModifier"
             },
             {
-              "kind": "text",
-              "text": "> "
+              "kind" : "text",
+              "text" : "> "
             },
             {
-              "kind": "keyword",
-              "text": "where"
+              "kind" : "keyword",
+              "text" : "where"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "TrueModifier"
+              "kind" : "typeIdentifier",
+              "text" : "TrueModifier"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-              "text": "ViewModifier"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI12ViewModifierP",
+              "text" : "ViewModifier"
             },
             {
-              "kind": "text",
-              "text": ", "
+              "kind" : "text",
+              "text" : ", "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "FalseModifier"
+              "kind" : "typeIdentifier",
+              "text" : "FalseModifier"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI12ViewModifierP",
-              "text": "ViewModifier"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI12ViewModifierP",
+              "text" : "ViewModifier"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
         {
-          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
-          "type": "text"
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "role": "symbol",
-      "title": "CustomRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry"
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder" : {
+      "abstract" : [
         {
-          "text": "A Swift result builder that allows building a single, concrete ",
-          "type": "text"
+          "text" : "A Swift result builder that allows building a single, concrete ",
+          "type" : "text"
         },
         {
-          "code": "ViewModifier",
-          "type": "codeVoice"
+          "code" : "ViewModifier",
+          "type" : "codeVoice"
         },
         {
-          "text": " from a set of conditional modifiers.",
-          "type": "text"
+          "text" : " from a set of conditional modifiers.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "enum"
+          "kind" : "keyword",
+          "text" : "enum"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ViewModifierBuilder"
+          "kind" : "identifier",
+          "text" : "ViewModifierBuilder"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ViewModifierBuilder"
+          "kind" : "identifier",
+          "text" : "ViewModifierBuilder"
         }
       ],
-      "role": "symbol",
-      "title": "ViewModifierBuilder",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/viewmodifierbuilder"
+      "role" : "symbol",
+      "title" : "ViewModifierBuilder",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewmodifierbuilder"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(second:)": {
-      "abstract": [],
-      "fragments": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildEither(second:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "static"
+          "kind" : "keyword",
+          "text" : "static"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "buildEither"
+          "kind" : "identifier",
+          "text" : "buildEither"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : "<"
         },
         {
-          "kind": "genericParameter",
-          "text": "TrueModifier"
+          "kind" : "genericParameter",
+          "text" : "TrueModifier"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "genericParameter",
-          "text": "FalseModifier"
+          "kind" : "genericParameter",
+          "text" : "FalseModifier"
         },
         {
-          "kind": "text",
-          "text": ">("
+          "kind" : "text",
+          "text" : ">("
         },
         {
-          "kind": "externalParam",
-          "text": "second"
+          "kind" : "externalParam",
+          "text" : "second"
         },
         {
-          "kind": "text",
-          "text": ": () "
+          "kind" : "text",
+          "text" : ": () "
         },
         {
-          "kind": "keyword",
-          "text": "throws"
+          "kind" : "keyword",
+          "text" : "throws"
         },
         {
-          "kind": "text",
-          "text": " -> "
+          "kind" : "text",
+          "text" : " -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
-          "text": "FalseModifier"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+          "text" : "FalseModifier"
         },
         {
-          "kind": "text",
-          "text": ") "
+          "kind" : "text",
+          "text" : ") "
         },
         {
-          "kind": "keyword",
-          "text": "rethrows"
+          "kind" : "keyword",
+          "text" : "rethrows"
         },
         {
-          "kind": "text",
-          "text": " -> "
+          "kind" : "text",
+          "text" : " -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative20_ConditionalModifierV",
-          "text": "_ConditionalModifier"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative20_ConditionalModifierV",
+          "text" : "_ConditionalModifier"
         },
         {
-          "kind": "text",
-          "text": "<"
+          "kind" : "text",
+          "text" : "<"
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
-          "text": "TrueModifier"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ04TrueD0L_xmfp",
+          "text" : "TrueModifier"
         },
         {
-          "kind": "text",
-          "text": ", "
+          "kind" : "text",
+          "text" : ", "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
-          "text": "FalseModifier"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO11buildEither6secondAA012_ConditionalD0Vyxq_Gq_yKXK_tK7SwiftUI0bD0RzAiJR_r0_lFZ05FalseD0L_q_mfp",
+          "text" : "FalseModifier"
         },
         {
-          "kind": "text",
-          "text": ">"
+          "kind" : "text",
+          "text" : ">"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ViewModifierBuilder/buildEither(second:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "buildEither(second:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/viewmodifierbuilder/buildeither(second:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildEither(second:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildEither(second:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewmodifierbuilder\/buildeither(second:)"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/viewmodifierbuilder/buildeither(second:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/viewmodifierbuilder\/buildeither(second:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

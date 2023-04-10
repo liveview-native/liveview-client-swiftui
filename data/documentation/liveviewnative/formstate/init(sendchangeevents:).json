@@ -1,318 +1,325 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "Convenience initializer that creates a ",
-      "type": "text"
+      "text" : "Convenience initializer that creates a ",
+      "type" : "text"
     },
     {
-      "code": "FormState",
-      "type": "codeVoice"
+      "code" : "FormState",
+      "type" : "codeVoice"
     },
     {
-      "text": " property wrapper with ",
-      "type": "text"
+      "text" : " property wrapper with ",
+      "type" : "text"
     },
     {
-      "code": "nil",
-      "type": "codeVoice"
+      "code" : "nil",
+      "type" : "codeVoice"
     },
     {
-      "text": " as its default value.",
-      "type": "text"
+      "text" : " as its default value.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/FormState"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(sendChangeEvents:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative9FormStateV16sendChangeEventsACyxGSb_tcs23ExpressibleByNilLiteralRzrlufc",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative9FormStateV16sendChangeEventsACyxGSb_tcs23ExpressibleByNilLiteralRzrlufc",
+    "fragments" : [
       {
-        "kind": "identifier",
-        "text": "init"
+        "kind" : "identifier",
+        "text" : "init"
       },
       {
-        "kind": "text",
-        "text": "("
+        "kind" : "text",
+        "text" : "("
       },
       {
-        "kind": "externalParam",
-        "text": "sendChangeEvents"
+        "kind" : "externalParam",
+        "text" : "sendChangeEvents"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:Sb",
-        "text": "Bool"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:Sb",
+        "text" : "Bool"
       },
       {
-        "kind": "text",
-        "text": ")"
+        "kind" : "text",
+        "text" : ")"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Initializer",
-    "symbolKind": "init",
-    "title": "init(sendChangeEvents:)"
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(sendChangeEvents:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "init"
+              "kind" : "keyword",
+              "text" : "init"
             },
             {
-              "kind": "text",
-              "text": "("
+              "kind" : "text",
+              "text" : "("
             },
             {
-              "kind": "externalParam",
-              "text": "sendChangeEvents"
+              "kind" : "externalParam",
+              "text" : "sendChangeEvents"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:Sb",
-              "text": "Bool"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:Sb",
+              "text" : "Bool"
             },
             {
-              "kind": "text",
-              "text": " = true) "
+              "kind" : "text",
+              "text" : " = true) "
             },
             {
-              "kind": "keyword",
-              "text": "where"
+              "kind" : "keyword",
+              "text" : "where"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "typeIdentifier",
-              "text": "Value"
+              "kind" : "typeIdentifier",
+              "text" : "Value"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:s23ExpressibleByNilLiteralP",
-              "text": "ExpressibleByNilLiteral"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s23ExpressibleByNilLiteralP",
+              "text" : "ExpressibleByNilLiteral"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "kind": "parameters",
-      "parameters": [
+      "kind" : "parameters",
+      "parameters" : [
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "If ",
-                  "type": "text"
+                  "text" : "If ",
+                  "type" : "text"
                 },
                 {
-                  "code": "true",
-                  "type": "codeVoice"
+                  "code" : "true",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text": ", changes to the form state’s value will send an event to the server if the element has a ",
-                  "type": "text"
+                  "text" : ", changes to the form state’s value will send an event to the server if the element has a ",
+                  "type" : "text"
                 },
                 {
-                  "code": "phx-change",
-                  "type": "codeVoice"
+                  "code" : "phx-change",
+                  "type" : "codeVoice"
                 },
                 {
-                  "text": " attribute.",
-                  "type": "text"
+                  "text" : " attribute.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "name": "sendChangeEvents"
+          "name" : "sendChangeEvents"
         }
       ]
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "Example",
-          "level": 2,
-          "text": "Example",
-          "type": "heading"
+          "anchor" : "Example",
+          "level" : 2,
+          "text" : "Example",
+          "type" : "heading"
         },
         {
-          "code": [
+          "code" : [
             "struct MyView: View {",
             "    @FormState var value: Int?",
             "    var body: some View {",
             "        Text(\"Hello\")",
             "            .onAppear {",
-            "                print(value) // prints \"nil\"",
+            "                print(value) \/\/ prints \"nil\"",
             "            }",
             "    }",
             "}"
           ],
-          "syntax": "swift",
-          "type": "codeListing"
+          "syntax" : "swift",
+          "type" : "codeListing"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState" : {
+      "abstract" : [
         {
-          "text": "A property wrapper that stores the primary value of a form element.",
-          "type": "text"
+          "text" : "A property wrapper that stores the primary value of a form element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "FormState"
+          "kind" : "identifier",
+          "text" : "FormState"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "FormState"
+          "kind" : "identifier",
+          "text" : "FormState"
         }
       ],
-      "role": "symbol",
-      "title": "FormState",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate"
+      "role" : "symbol",
+      "title" : "FormState",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(sendChangeEvents:)" : {
+      "abstract" : [
         {
-          "text": "Convenience initializer that creates a ",
-          "type": "text"
+          "text" : "Convenience initializer that creates a ",
+          "type" : "text"
         },
         {
-          "code": "FormState",
-          "type": "codeVoice"
+          "code" : "FormState",
+          "type" : "codeVoice"
         },
         {
-          "text": " property wrapper with ",
-          "type": "text"
+          "text" : " property wrapper with ",
+          "type" : "text"
         },
         {
-          "code": "nil",
-          "type": "codeVoice"
+          "code" : "nil",
+          "type" : "codeVoice"
         },
         {
-          "text": " as its default value.",
-          "type": "text"
+          "text" : " as its default value.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "identifier",
-          "text": "init"
+          "kind" : "identifier",
+          "text" : "init"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "sendChangeEvents"
+          "kind" : "externalParam",
+          "text" : "sendChangeEvents"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:Sb",
-          "text": "Bool"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
         },
         {
-          "kind": "text",
-          "text": ")"
+          "kind" : "text",
+          "text" : ")"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/FormState/init(sendChangeEvents:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "init(sendChangeEvents:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/formstate/init(sendchangeevents:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormState\/init(sendChangeEvents:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(sendChangeEvents:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/formstate\/init(sendchangeevents:)"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "variants": [
+  "sections" : [
+
+  ],
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/formstate/init(sendchangeevents:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/formstate\/init(sendchangeevents:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

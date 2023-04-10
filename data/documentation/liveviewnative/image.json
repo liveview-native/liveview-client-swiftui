@@ -1,346 +1,598 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "code": "<image>",
-      "type": "codeVoice"
-    },
-    {
-      "text": ", displays SF Symbols or images from your app’s asset catalog.",
-      "type": "text"
+      "text" : "Displays an image.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/Image"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image"
   },
-  "kind": "article",
-  "metadata": {
-    "modules": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative5ImageV",
+    "fragments" : [
       {
-        "name": "LiveViewNative"
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "Image"
       }
     ],
-    "role": "article",
-    "roleHeading": "Article",
-    "title": "Image"
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Image"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "<Image>"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "content": [
+      "declarations" : [
         {
-          "anchor": "Attributes",
-          "level": 2,
-          "text": "Attributes",
-          "type": "heading"
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "Image"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Either ",
-              "type": "text"
-            },
-            {
-              "code": "name",
-              "type": "codeVoice"
-            },
-            {
-              "text": " or ",
-              "type": "text"
-            },
-            {
-              "code": "system-name",
-              "type": "codeVoice"
-            },
-            {
-              "text": " must be provided.",
-              "type": "text"
+              "text" : "There are two possible sources for images: system-provided images (SF Symbols) or the app’s asset catalog.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "items": [
+          "anchor" : "SF-Symbols",
+          "level" : 3,
+          "text" : "SF Symbols",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
             {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "system-name",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": The name of a system SF Symbol.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
+              "text" : "The platform provides a wide variety of symbol images which are specified with the ",
+              "type" : "text"
             },
             {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "name",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": The name of an image (or custom symbol) from your app’s asset catalog.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                }
-              ]
+              "code" : "system-name",
+              "type" : "codeVoice"
             },
             {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "symbol-scale",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": The scale the SF Symbol (including custom symbols) should be displayed at.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                },
-                {
-                  "items": [
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "small",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "medium",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    },
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "code": "large",
-                              "type": "codeVoice"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    }
-                  ],
-                  "type": "unorderedList"
-                }
-              ]
+              "text" : " attribute.",
+              "type" : "text"
             },
             {
-              "content": [
-                {
-                  "inlineContent": [
-                    {
-                      "code": "symbol-color",
-                      "type": "codeVoice"
-                    },
-                    {
-                      "text": ": The color to displa the symbol in.",
-                      "type": "text"
-                    }
-                  ],
-                  "type": "paragraph"
-                },
-                {
-                  "items": [
-                    {
-                      "content": [
-                        {
-                          "inlineContent": [
-                            {
-                              "text": "See ",
-                              "type": "text"
-                            },
-                            {
-                              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors",
-                              "isActive": true,
-                              "type": "reference"
-                            }
-                          ],
-                          "type": "paragraph"
-                        }
-                      ]
-                    }
-                  ],
-                  "type": "unorderedList"
-                }
-              ]
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/sf-symbols\/",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more information.",
+              "type" : "text"
             }
           ],
-          "type": "unorderedList"
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/symbolColor",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " and ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/symbolScale",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " attributes may also be provided.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<Image system-name=\"cloud.sun.rain\" symbol-color=\"#ff0000\" symbol-scale=\"large\" \/>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Asset-Catalog",
+          "level" : 3,
+          "text" : "Asset Catalog",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Specify the ",
+              "type" : "text"
+            },
+            {
+              "code" : "name",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " attribute to use a named image from the app’s asset catalog.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<Image name=\"MyCustomImage\" \/>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Image",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI4ViewP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI4ViewP",
+      "title" : "SwiftUI.View",
+      "type" : "unresolvable"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
         {
-          "code": "<async-image>",
-          "type": "codeVoice"
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AsyncImage" : {
+      "abstract" : [
+        {
+          "text" : "Displays an image asynchronously loaded from a URL.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "text": ", displays images loaded from a remote URL.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
-      "kind": "article",
-      "role": "article",
-      "title": "AsyncImage",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/asyncimage"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/Button": {
-      "abstract": [
-        {
-          "code": "<button>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", a tappable element.",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "AsyncImage"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Button",
-      "kind": "article",
-      "role": "article",
-      "title": "Button",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/button"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink": {
-      "abstract": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AsyncImage",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "code": "<navigation-link>",
-          "type": "codeVoice"
+          "kind" : "identifier",
+          "text" : "AsyncImage"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<AsyncImage>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/asyncimage"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image" : {
+      "abstract" : [
+        {
+          "text" : "Displays an image.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "text": ", links to another live view page.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
-      "kind": "article",
-      "role": "article",
-      "title": "NavigationLink",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/navigationlink"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements": {
-      "abstract": [
-        {
-          "text": "LiveViewNative supports DOM elements similar to but distinct from their Web counterparts.",
-          "type": "text"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedElements",
-      "kind": "article",
-      "role": "collectionGroup",
-      "title": "Supported Elements",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedelements"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/SupportedModifiers#Specifying-Colors",
-      "kind": "section",
-      "title": "Specifying Colors",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/supportedmodifiers#Specifying-Colors"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/Text": {
-      "abstract": [
-        {
-          "code": "<text>",
-          "type": "codeVoice"
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "text": ", displays text.",
-          "type": "text"
+          "kind" : "identifier",
+          "text" : "Image"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/Text",
-      "kind": "article",
-      "role": "article",
-      "title": "Text",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/text"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Image"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<Image>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/image"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/body" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "body"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/body",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "body",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/image\/body"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/resizable" : {
+      "abstract" : [
+        {
+          "text" : "When enabled, resizes the Image to fill all available space",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "resizable"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/resizable",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "resizable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/image\/resizable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/symbolColor" : {
+      "abstract" : [
+        {
+          "text" : "The foreground color of the symbol.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "symbolColor"
+        },
+        {
+          "kind" : "text",
+          "text" : ": SwiftUI"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI5ColorV",
+          "text" : "Color"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/symbolColor",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "symbolColor",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/image\/symbolcolor"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/symbolScale" : {
+      "abstract" : [
+        {
+          "text" : "The display scale of the symbol.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "symbolScale"
+        },
+        {
+          "kind" : "text",
+          "text" : ": SwiftUI"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI5ImageV",
+          "text" : "Image"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI5ImageV5ScaleO",
+          "text" : "Scale"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/symbolScale",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "symbolScale",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/image\/symbolscale"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/View-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/View-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/image\/view-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Images",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/images"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/Image" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Image",
+      "title" : "SwiftUI.Image",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Image",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Image"
+    },
+    "https:\/\/developer.apple.com\/sf-symbols\/" : {
+      "identifier" : "https:\/\/developer.apple.com\/sf-symbols\/",
+      "title" : "Apple’s documentation",
+      "titleInlineContent" : [
+        {
+          "text" : "Apple’s documentation",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/sf-symbols\/"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
-  },
-  "sections": [],
-  "seeAlsoSections": [
+  "relationshipsSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/Text",
-        "doc://LiveViewNative/documentation/LiveViewNative/AsyncImage",
-        "doc://LiveViewNative/documentation/LiveViewNative/NavigationLink",
-        "doc://LiveViewNative/documentation/LiveViewNative/Button"
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI4ViewP"
       ],
-      "title": "Content"
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
     }
   ],
-  "variants": [
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/image"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AsyncImage"
       ],
-      "traits": [
+      "title" : "Views"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/body",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/resizable",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/symbolColor",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/symbolScale"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Image\/View-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/image"
+      ],
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

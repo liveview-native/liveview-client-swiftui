@@ -1,523 +1,530 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "The value of the attribute with the given name, or ",
-      "type": "text"
+      "text" : "The value of the attribute with the given name, or ",
+      "type" : "text"
     },
     {
-      "code": "nil",
-      "type": "codeVoice"
+      "code" : "nil",
+      "type" : "codeVoice"
     },
     {
-      "text": " if there is no such attribute.",
-      "type": "text"
+      "text" : " if there is no such attribute.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributeValue(for:)"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative11ElementNodeV14attributeValue3forSSSg0abC4Core13AttributeNameV_tF",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative11ElementNodeV14attributeValue3forSSSg0abC4Core13AttributeNameV_tF",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "func"
+        "kind" : "keyword",
+        "text" : "func"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "attributeValue"
+        "kind" : "identifier",
+        "text" : "attributeValue"
       },
       {
-        "kind": "text",
-        "text": "("
+        "kind" : "text",
+        "text" : "("
       },
       {
-        "kind": "externalParam",
-        "text": "for"
+        "kind" : "externalParam",
+        "text" : "for"
       },
       {
-        "kind": "text",
-        "text": ": "
+        "kind" : "text",
+        "text" : ": "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
-        "text": "AttributeName"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:18LiveViewNativeCore13AttributeNameV",
+        "text" : "AttributeName"
       },
       {
-        "kind": "text",
-        "text": ") -> "
+        "kind" : "text",
+        "text" : ") -> "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:SS",
-        "text": "String"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
       },
       {
-        "kind": "text",
-        "text": "?"
+        "kind" : "text",
+        "text" : "?"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "role": "symbol",
-    "roleHeading": "Instance Method",
-    "symbolKind": "method",
-    "title": "attributeValue(for:)"
+    "role" : "symbol",
+    "roleHeading" : "Instance Method",
+    "symbolKind" : "method",
+    "title" : "attributeValue(for:)"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "func"
+              "kind" : "keyword",
+              "text" : "func"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "attributeValue"
+              "kind" : "identifier",
+              "text" : "attributeValue"
             },
             {
-              "kind": "text",
-              "text": "("
+              "kind" : "text",
+              "text" : "("
             },
             {
-              "kind": "externalParam",
-              "text": "for"
+              "kind" : "externalParam",
+              "text" : "for"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "internalParam",
-              "text": "name"
+              "kind" : "internalParam",
+              "text" : "name"
             },
             {
-              "kind": "text",
-              "text": ": "
+              "kind" : "text",
+              "text" : ": "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
-              "text": "AttributeName"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:18LiveViewNativeCore13AttributeNameV",
+              "text" : "AttributeName"
             },
             {
-              "kind": "text",
-              "text": ") -> "
+              "kind" : "text",
+              "text" : ") -> "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:SS",
-              "text": "String"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
             },
             {
-              "kind": "text",
-              "text": "?"
+              "kind" : "text",
+              "text" : "?"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "Discussion",
-          "level": 2,
-          "text": "Discussion",
-          "type": "heading"
+          "anchor" : "Discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Because ",
-              "type": "text"
+              "text" : "Because ",
+              "type" : "text"
             },
             {
-              "code": "AttributeName",
-              "type": "codeVoice"
+              "code" : "AttributeName",
+              "type" : "codeVoice"
             },
             {
-              "text": " conforms to ",
-              "type": "text"
+              "text" : " conforms to ",
+              "type" : "text"
             },
             {
-              "code": "ExpressibleByStringLiteral",
-              "type": "codeVoice"
+              "code" : "ExpressibleByStringLiteral",
+              "type" : "codeVoice"
             },
             {
-              "text": ", you can directly use a string literal as the attribute name:",
-              "type": "text"
+              "text" : ", you can directly use a string literal as the attribute name:",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         },
         {
-          "code": [
+          "code" : [
             "element.attributeValue(for: \"my-attr\")"
           ],
-          "syntax": "swift",
-          "type": "codeListing"
+          "syntax" : "swift",
+          "type" : "codeListing"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode" : {
+      "abstract" : [
         {
-          "text": "A wrapper for an element-containing DOM node and its associated data.",
-          "type": "text"
+          "text" : "A wrapper for an element-containing DOM node and its associated data.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "struct"
+          "kind" : "keyword",
+          "text" : "struct"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "ElementNode"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "ElementNode"
+          "kind" : "identifier",
+          "text" : "ElementNode"
         }
       ],
-      "role": "symbol",
-      "title": "ElementNode",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode"
+      "role" : "symbol",
+      "title" : "ElementNode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attribute(named:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attribute(named:)" : {
+      "abstract" : [
         {
-          "text": "The attribute with the given name, or ",
-          "type": "text"
+          "text" : "The attribute with the given name, or ",
+          "type" : "text"
         },
         {
-          "code": "nil",
-          "type": "codeVoice"
+          "code" : "nil",
+          "type" : "codeVoice"
         },
         {
-          "text": " if there is no such attribute.",
-          "type": "text"
+          "text" : " if there is no such attribute.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "attribute"
+          "kind" : "identifier",
+          "text" : "attribute"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "named"
+          "kind" : "externalParam",
+          "text" : "named"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
-          "text": "AttributeName"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:18LiveViewNativeCore13AttributeNameV",
+          "text" : "AttributeName"
         },
         {
-          "kind": "text",
-          "text": ") -> LiveViewNativeCore"
+          "kind" : "text",
+          "text" : ") -> LiveViewNativeCore"
         },
         {
-          "kind": "text",
-          "text": "."
+          "kind" : "text",
+          "text" : "."
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
-          "text": "Attribute"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:18LiveViewNativeCore9AttributeV",
+          "text" : "Attribute"
         },
         {
-          "kind": "text",
-          "text": "?"
+          "kind" : "text",
+          "text" : "?"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attribute(named:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "attribute(named:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode/attribute(named:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attribute(named:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "attribute(named:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode\/attribute(named:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributeBoolean(for:)" : {
+      "abstract" : [
         {
-          "text": "Checks for a ",
-          "type": "text"
+          "text" : "Checks for a ",
+          "type" : "text"
         },
         {
-          "identifier": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes",
-          "isActive": true,
-          "type": "reference"
+          "identifier" : "https:\/\/html.spec.whatwg.org\/multipage\/common-microsyntaxes.html#boolean-attributes",
+          "isActive" : true,
+          "type" : "reference"
         },
         {
-          "text": ".",
-          "type": "text"
+          "text" : ".",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "attributeBoolean"
+          "kind" : "identifier",
+          "text" : "attributeBoolean"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "externalParam",
-          "text": "for"
+          "kind" : "externalParam",
+          "text" : "for"
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
-          "text": "AttributeName"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:18LiveViewNativeCore13AttributeNameV",
+          "text" : "AttributeName"
         },
         {
-          "kind": "text",
-          "text": ") -> "
+          "kind" : "text",
+          "text" : ") -> "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:Sb",
-          "text": "Bool"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "attributeBoolean(for:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode/attributeboolean(for:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributeBoolean(for:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "attributeBoolean(for:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode\/attributeboolean(for:)"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributes" : {
+      "abstract" : [
         {
-          "text": "The value of the attribute with the given name, or ",
-          "type": "text"
-        },
-        {
-          "code": "nil",
-          "type": "codeVoice"
-        },
-        {
-          "text": " if there is no such attribute.",
-          "type": "text"
+          "text" : "The list of attributes present on this element.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "func"
+          "kind" : "keyword",
+          "text" : "var"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "attributeValue"
+          "kind" : "identifier",
+          "text" : "attributes"
         },
         {
-          "kind": "text",
-          "text": "("
+          "kind" : "text",
+          "text" : ": [LiveViewNativeCore"
         },
         {
-          "kind": "externalParam",
-          "text": "for"
+          "kind" : "text",
+          "text" : "."
         },
         {
-          "kind": "text",
-          "text": ": "
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:18LiveViewNativeCore9AttributeV",
+          "text" : "Attribute"
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:18LiveViewNativeCore13AttributeNameV",
-          "text": "AttributeName"
-        },
-        {
-          "kind": "text",
-          "text": ") -> "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SS",
-          "text": "String"
-        },
-        {
-          "kind": "text",
-          "text": "?"
+          "kind" : "text",
+          "text" : "]"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeValue(for:)",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "attributeValue(for:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode/attributevalue(for:)"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributes",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "attributes",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode\/attributes"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributes": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributeValue(for:)" : {
+      "abstract" : [
         {
-          "text": "The list of attributes present on this element.",
-          "type": "text"
+          "text" : "The value of the attribute with the given name, or ",
+          "type" : "text"
+        },
+        {
+          "code" : "nil",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " if there is no such attribute.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "var"
+          "kind" : "keyword",
+          "text" : "func"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "attributes"
+          "kind" : "identifier",
+          "text" : "attributeValue"
         },
         {
-          "kind": "text",
-          "text": ": [LiveViewNativeCore"
+          "kind" : "text",
+          "text" : "("
         },
         {
-          "kind": "text",
-          "text": "."
+          "kind" : "externalParam",
+          "text" : "for"
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:18LiveViewNativeCore9AttributeV",
-          "text": "Attribute"
+          "kind" : "text",
+          "text" : ": "
         },
         {
-          "kind": "text",
-          "text": "]"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:18LiveViewNativeCore13AttributeNameV",
+          "text" : "AttributeName"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributes",
-      "kind": "symbol",
-      "role": "symbol",
-      "title": "attributes",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/elementnode/attributes"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributeValue(for:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "attributeValue(for:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/elementnode\/attributevalue(for:)"
     },
-    "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes": {
-      "identifier": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes",
-      "title": "boolean attribute",
-      "titleInlineContent": [
+    "https:\/\/html.spec.whatwg.org\/multipage\/common-microsyntaxes.html#boolean-attributes" : {
+      "identifier" : "https:\/\/html.spec.whatwg.org\/multipage\/common-microsyntaxes.html#boolean-attributes",
+      "title" : "boolean attribute",
+      "titleInlineContent" : [
         {
-          "text": "boolean attribute",
-          "type": "text"
+          "text" : "boolean attribute",
+          "type" : "text"
         }
       ],
-      "type": "link",
-      "url": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes"
+      "type" : "link",
+      "url" : "https:\/\/html.spec.whatwg.org\/multipage\/common-microsyntaxes.html#boolean-attributes"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "seeAlsoSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributes",
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attribute(named:)",
-        "doc://LiveViewNative/documentation/LiveViewNative/ElementNode/attributeBoolean(for:)"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributes",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attribute(named:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ElementNode\/attributeBoolean(for:)"
       ],
-      "title": "Accessing Attributes"
+      "title" : "Accessing Attributes"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/elementnode/attributevalue(for:)"
+      "paths" : [
+        "\/documentation\/liveviewnative\/elementnode\/attributevalue(for:)"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

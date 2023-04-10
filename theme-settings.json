@@ -1,58 +1,21 @@
 {
-  "features": {
-    "docs": {}
-  },
-  "meta": {},
-  "theme": {
-    "code": {
-      "indentationWidth": 4
+  "theme" : {
+    "border-radius" : "13px",
+    "code" : {
+      "border-radius" : "22px"
     },
-    "colors": {
-      "article-background": "",
-      "button": {
-        "dark": {
-          "background": "",
-          "backgroundActive": "",
-          "backgroundHover": ""
-        },
-        "light": {
-          "background": "",
-          "backgroundActive": "",
-          "backgroundHover": ""
-        },
-        "text": ""
-      },
-      "generic-modal-background": "",
-      "grid": "",
-      "header-text": "",
-      "link": null,
-      "loading-placeholder": {
-        "background": ""
-      },
-      "not-found": {
-        "input-border": ""
-      },
-      "runtime-preview": {
-        "text": ""
-      },
-      "secondary-label": "",
-      "svg-icon": {
-        "fill-dark": "",
-        "fill-light": ""
-      },
-      "tabnav-item": {
-        "border-color": ""
-      },
-      "text": "",
-      "text-background": ""
+    "color" : {
+      "documentation-intro-accent" : "#555",
+      "documentation-intro-fill" : "radial-gradient(circle at top, #555 30%, #1d1d1f 100%)",
+      "figure-gray-secondary" : "#86868b",
+      "fill-blue" : "#0071e3"
     },
-    "style": {
-      "button": {
-        "borderRadius": null
-      }
+    "icons" : {
+      "technology" : "\/images\/lvn.svg"
     },
-    "typography": {
-      "html-font": ""
+    "toggle-border-radius-inner" : "13px",
+    "typography" : {
+      "html-font" : "system-ui, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\""
     }
   }
 }

@@ -1,0 +1,575 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative17TextFieldProtocolP",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "protocol"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "TextFieldProtocol"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "TextFieldProtocol"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Protocol",
+    "symbolKind" : "protocol",
+    "title" : "TextFieldProtocol"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "protocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "TextFieldProtocol"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI4ViewP",
+              "text" : "View"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI4ViewP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI4ViewP",
+      "title" : "SwiftUI.View",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField" : {
+      "abstract" : [
+        {
+          "text" : "A form element for entering private text.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SecureField"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SecureField"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<SecureField>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/securefield"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor" : {
+      "abstract" : [
+        {
+          "text" : "A multi-line, long-form text editor.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextEditor"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextEditor"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<TextEditor>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/texteditor"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField" : {
+      "abstract" : [
+        {
+          "text" : "A form element for entering text.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextField"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextField"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<TextField>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfield"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextFieldProtocol"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextFieldProtocol"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "TextFieldProtocol",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization" : {
+      "abstract" : [
+        {
+          "text" : "The boundaries to capitalize on.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "autocapitalization"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI27TextInputAutocapitalizationV",
+          "text" : "TextInputAutocapitalization"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "autocapitalization",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/autocapitalization"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/axis" : {
+      "abstract" : [
+        {
+          "text" : "The axis to scroll when the content doesn’t fit.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "axis"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4AxisO",
+          "text" : "Axis"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/axis",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "axis",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/axis"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection" : {
+      "abstract" : [
+        {
+          "text" : "Indicates if autocorrection should be enabled.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "disableAutocorrection"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "autocorrection",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/disableautocorrection"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard" : {
+      "abstract" : [
+        {
+          "text" : "The type of keyboard to display.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "keyboard"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "c:@E@UIKeyboardType",
+          "text" : "UIKeyboardType"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "keyboard",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/keyboard"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/prompt" : {
+      "abstract" : [
+        {
+          "text" : "Additional text with guidance on what to enter.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "prompt"
+        },
+        {
+          "kind" : "text",
+          "text" : ": SwiftUI"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4TextV",
+          "text" : "Text"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/prompt",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "prompt",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/prompt"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel" : {
+      "abstract" : [
+        {
+          "text" : "The label to display on the keyboard submit button.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "submitLabel"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI11SubmitLabelV",
+          "text" : "SubmitLabel"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "submit-label",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/submitlabel"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle" : {
+      "abstract" : [
+        {
+          "text" : "The style to apply to this field.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "textFieldStyle"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative14TextFieldStyleO",
+          "text" : "TextFieldStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "text-field-style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/textfieldstyle"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI4ViewP"
+      ],
+      "kind" : "relationships",
+      "title" : "Inherits From",
+      "type" : "inheritsFrom"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforming Types",
+      "type" : "conformingTypes"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/axis",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/prompt",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/textfieldprotocol"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

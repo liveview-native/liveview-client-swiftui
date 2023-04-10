@@ -1,151 +1,153 @@
 {
-  "hierarchy": {
-    "modules": [
+  "hierarchy" : {
+    "modules" : [
       {
-        "projects": [
+        "projects" : [
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Building-the-Backend"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Creating-the-App"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Build-the-List-UI"
               }
             ]
           },
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Updating-the-Backend"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Adding-the-Favorite-Button"
               }
             ]
           },
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Building-the-Detail-View"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Adding-Navigation"
               }
             ]
           }
         ],
-        "reference": "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started"
+        "reference" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Getting-Started"
       },
       {
-        "projects": [
+        "projects" : [
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Setting-Up-the-Registry"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Update-the-GenServer"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Building-the-View"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Using-the-Element"
               }
             ]
           },
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Update-the-Backend"
               },
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Implement-the-Attribute"
               }
             ]
           },
           {
-            "reference": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen",
-            "sections": [
+            "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen",
+            "sections" : [
               {
-                "kind": "task",
-                "reference": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View"
+                "kind" : "task",
+                "reference" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen#Add-the-Loading-View"
               }
             ]
           }
         ],
-        "reference": "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift"
+        "reference" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Customize-with-Swift"
       }
     ],
-    "paths": [
+    "paths" : [
       [
-        "doc://LiveViewNative/tutorials/YourFirstApp",
-        "doc://LiveViewNative/tutorials/YourFirstApp/$volume",
-        "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started"
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/$volume",
+        "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Getting-Started"
       ]
     ],
-    "reference": "doc://LiveViewNative/tutorials/YourFirstApp"
+    "reference" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp"
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List"
   },
-  "kind": "project",
-  "metadata": {
-    "category": "Live View Native",
-    "categoryPathComponent": "YourFirstApp",
-    "role": "project",
-    "title": "Your First LiveView"
+  "kind" : "project",
+  "metadata" : {
+    "category" : "Live View Native",
+    "categoryPathComponent" : "YourFirstApp",
+    "role" : "project",
+    "title" : "Your First LiveView"
   },
-  "references": {
-    "01-00-intro-header.png": {
-      "alt": "An iPhone app showing a list of cat images and names.",
-      "identifier": "01-00-intro-header.png",
-      "type": "image",
-      "variants": [
+  "references" : {
+    "01-00-intro-header.png" : {
+      "alt" : "An iPhone app showing a list of cat images and names.",
+      "identifier" : "01-00-intro-header.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/01-00-intro-header.png"
+          "url" : "\/images\/01-00-intro-header.png"
         }
       ]
     },
-    "01-01-01-create-project.sh": {
-      "content": [
+    "01-01-01-create-project.sh" : {
+      "content" : [
         "$ mix phx.new lvn_tutorial --no-ecto --no-gettext --no-mailer"
       ],
-      "fileName": "Terminal",
-      "fileType": "",
-      "highlights": [],
-      "identifier": "01-01-01-create-project.sh",
-      "syntax": "",
-      "type": "file"
+      "fileName" : "Terminal",
+      "fileType" : "",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-01-create-project.sh",
+      "syntax" : "",
+      "type" : "file"
     },
-    "01-01-04-router.ex": {
-      "content": [
+    "01-01-04-router.ex" : {
+      "content" : [
         "defmodule LvnTutorialWeb.Router do",
         "  use LvnTutorialWeb, :router",
         "",
@@ -162,14 +164,14 @@
         "    plug :accepts, [\"json\"]",
         "  end",
         "",
-        "  scope \"/\", LvnTutorialWeb do",
+        "  scope \"\/\", LvnTutorialWeb do",
         "    pipe_through :browser",
         "",
-        "    live \"/cats\", CatsListLive",
+        "    live \"\/cats\", CatsListLive",
         "  end",
         "",
         "  # Other scopes may use custom stacks.",
-        "  # scope \"/api\", LvnTutorialWeb do",
+        "  # scope \"\/api\", LvnTutorialWeb do",
         "  #   pipe_through :api",
         "  # end",
         "",
@@ -183,23 +185,25 @@
         "  if Mix.env() in [:dev, :test] do",
         "    import Phoenix.LiveDashboard.Router",
         "",
-        "    scope \"/\" do",
+        "    scope \"\/\" do",
         "      pipe_through :browser",
         "",
-        "      live_dashboard \"/dashboard\", metrics: LvnTutorialWeb.Telemetry",
+        "      live_dashboard \"\/dashboard\", metrics: LvnTutorialWeb.Telemetry",
         "    end",
         "  end",
         "end"
       ],
-      "fileName": "lib/lvn_tutorial_web/router.ex",
-      "fileType": "ex",
-      "highlights": [],
-      "identifier": "01-01-04-router.ex",
-      "syntax": "ex",
-      "type": "file"
+      "fileName" : "lib\/lvn_tutorial_web\/router.ex",
+      "fileType" : "ex",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-04-router.ex",
+      "syntax" : "elixir",
+      "type" : "file"
     },
-    "01-01-05-cats_list_live.ex": {
-      "content": [
+    "01-01-05-cats_list_live.ex" : {
+      "content" : [
         "defmodule LvnTutorialWeb.CatsListLive do",
         "  use LvnTutorialWeb, :live_view",
         "",
@@ -226,26 +230,20 @@
         "  end",
         "end"
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cats_list_live.ex",
-      "fileType": "ex",
-      "highlights": [],
-      "identifier": "01-01-05-cats_list_live.ex",
-      "syntax": "ex",
-      "type": "file"
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-05-cats_list_live.ex",
+      "syntax" : "elixir",
+      "type" : "file"
     },
-    "01-01-06-cats_list_live.ex": {
-      "content": [
+    "01-01-06-cats_list_live.ex" : {
+      "content" : [
         "defmodule LvnTutorialWeb.CatsListLive do",
         "  use LvnTutorialWeb, :live_view",
-        "  require EEx",
-        "",
-        "  EEx.function_from_file(",
-        "    :def,",
-        "    :render,",
-        "    \"lib/lvn_tutorial_web/live/cats_list_live.ios.heex\",",
-        "    [:assigns],",
-        "    engine: Phoenix.LiveView.HTMLEngine",
-        "  )",
+        "  use LiveViewNative.LiveView",
         "",
         "  @cats [",
         "    \"Clenil\",",
@@ -268,123 +266,119 @@
         "  def mount(_params, _session, socket) do",
         "    {:ok, assign(socket, cats: @cats)}",
         "  end",
+        "",
+        "  def render(assigns) do",
+        "    render_native(assigns)",
+        "  end",
         "end"
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cats_list_live.ex",
-      "fileType": "ex",
-      "highlights": [
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
         {
-          "line": 3
+          "line" : 3
         },
         {
-          "line": 5
+          "line" : 26
         },
         {
-          "line": 6
+          "line" : 27
         },
         {
-          "line": 7
+          "line" : 28
         },
         {
-          "line": 8
-        },
-        {
-          "line": 9
-        },
-        {
-          "line": 10
-        },
-        {
-          "line": 11
-        },
-        {
-          "line": 12
+          "line" : 29
         }
       ],
-      "identifier": "01-01-06-cats_list_live.ex",
-      "syntax": "ex",
-      "type": "file"
+      "identifier" : "01-01-06-cats_list_live.ex",
+      "syntax" : "elixir",
+      "type" : "file"
     },
-    "01-01-07-cats_list_live.ios.heex": {
-      "content": [
-        "<text>Hello, world!</text>"
+    "01-01-07-cats_list_live.ios.heex" : {
+      "content" : [
+        "<Text>Hello, world!<\/Text>"
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cats_list_live.ios.heex",
-      "fileType": "heex",
-      "highlights": [],
-      "identifier": "01-01-07-cats_list_live.ios.heex",
-      "syntax": "heex",
-      "type": "file"
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
+      "fileType" : "heex",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-07-cats_list_live.ios.heex",
+      "syntax" : "html",
+      "type" : "file"
     },
-    "01-01-08-live-template.html.heex": {
-      "content": [
+    "01-01-08-live-template.html.heex" : {
+      "content" : [
         "<%= @inner_content %>"
       ],
-      "fileName": "lib/lvn_tutorial_web/templates/layout/live.html.heex",
-      "fileType": "heex",
-      "highlights": [],
-      "identifier": "01-01-08-live-template.html.heex",
-      "syntax": "heex",
-      "type": "file"
+      "fileName" : "lib\/lvn_tutorial_web\/templates\/layout\/live.html.heex",
+      "fileType" : "heex",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-08-live-template.html.heex",
+      "syntax" : "html",
+      "type" : "file"
     },
-    "01-02-01-create-project.png": {
-      "alt": "The New Project dialog with the iOS, App, and Next buttons highlighted.",
-      "identifier": "01-02-01-create-project.png",
-      "type": "image",
-      "variants": [
+    "01-02-01-create-project.png" : {
+      "alt" : "The New Project dialog with the iOS, App, and Next buttons highlighted.",
+      "identifier" : "01-02-01-create-project.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/01-02-01-create-project.png"
+          "url" : "\/images\/01-02-01-create-project.png"
         }
       ]
     },
-    "01-02-02-create-project.png": {
-      "alt": "The New Project options dialog for a project named LVNTutorial using Swift, SwiftUI, and without Core Data or tests.",
-      "identifier": "01-02-02-create-project.png",
-      "type": "image",
-      "variants": [
+    "01-02-02-create-project.png" : {
+      "alt" : "The New Project options dialog for a project named LVNTutorial using Swift, SwiftUI, and without Core Data or tests.",
+      "identifier" : "01-02-02-create-project.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/01-02-02-create-project.png"
+          "url" : "\/images\/01-02-02-create-project.png"
         }
       ]
     },
-    "01-02-03-add-package.png": {
-      "alt": "The Add Package window in Xcode with the search field, dependency rule, and Add button highlighted.",
-      "identifier": "01-02-03-add-package.png",
-      "type": "image",
-      "variants": [
+    "01-02-03-add-package.png" : {
+      "alt" : "The Add Package window in Xcode with the search field, dependency rule, and Add button highlighted.",
+      "identifier" : "01-02-03-add-package.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/01-02-03-add-package.png"
+          "url" : "\/images\/01-02-03-add-package.png"
         }
       ]
     },
-    "01-02-04-save.png": {
-      "alt": "The Save panel.",
-      "identifier": "01-02-04-save.png",
-      "type": "image",
-      "variants": [
+    "01-02-04-save.png" : {
+      "alt" : "The Save panel.",
+      "identifier" : "01-02-04-save.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/01-02-04-save.png"
+          "url" : "\/images\/01-02-04-save.png"
         }
       ]
     },
-    "01-02-05-initial-view.swift": {
-      "content": [
+    "01-02-05-initial-view.swift" : {
+      "content" : [
         "import SwiftUI",
         "",
         "struct ContentView: View {",
@@ -399,21 +393,23 @@
         "    }",
         "}"
       ],
-      "fileName": "ContentView.swift",
-      "fileType": "swift",
-      "highlights": [],
-      "identifier": "01-02-05-initial-view.swift",
-      "syntax": "swift",
-      "type": "file"
+      "fileName" : "ContentView.swift",
+      "fileType" : "swift",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-02-05-initial-view.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "01-02-06-coordinator.swift": {
-      "content": [
+    "01-02-06-session.swift" : {
+      "content" : [
         "import SwiftUI",
         "import LiveViewNative",
         "",
         "@MainActor",
         "struct ContentView: View {",
-        "    @State var coordinator = LiveViewCoordinator(URL(string: \"http://localhost:4000/cats\")!)",
+        "    @StateObject private var session = LiveSessionCoordinator(URL(string: \"http:\/\/localhost:4000\/cats\")!)",
         "",
         "    var body: some View {",
         "        VStack {",
@@ -425,1292 +421,1310 @@
         "    }",
         "}"
       ],
-      "fileName": "ContentView.swift",
-      "fileType": "swift",
-      "highlights": [
+      "fileName" : "ContentView.swift",
+      "fileType" : "swift",
+      "highlights" : [
         {
-          "line": 2
+          "line" : 2
         },
         {
-          "line": 4
+          "line" : 4
         },
         {
-          "line": 6
+          "line" : 6
         },
         {
-          "line": 7
+          "line" : 7
         }
       ],
-      "identifier": "01-02-06-coordinator.swift",
-      "syntax": "swift",
-      "type": "file"
+      "identifier" : "01-02-06-session.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "01-02-07-liveview.swift": {
-      "content": [
+    "01-02-07-liveview.swift" : {
+      "content" : [
         "import SwiftUI",
         "import LiveViewNative",
         "",
         "@MainActor",
         "struct ContentView: View {",
-        "    @State var coordinator = LiveViewCoordinator(URL(string: \"http://localhost:4000/cats\")!)",
+        "    @StateObject private var session = LiveSessionCoordinator(URL(string: \"http:\/\/localhost:4000\/cats\")!)",
         "",
         "    var body: some View {",
-        "        LiveView(coordinator: coordinator)",
+        "        LiveView(session: session)",
         "    }",
         "}"
       ],
-      "fileName": "ContentView.swift",
-      "fileType": "swift",
-      "highlights": [
+      "fileName" : "ContentView.swift",
+      "fileType" : "swift",
+      "highlights" : [
         {
-          "line": 9
+          "line" : 9
         }
       ],
-      "identifier": "01-02-07-liveview.swift",
-      "syntax": "swift",
-      "type": "file"
+      "identifier" : "01-02-07-liveview.swift",
+      "syntax" : "swift",
+      "type" : "file"
     },
-    "01-02-08-preview.png": {
-      "alt": "Screenshot of an app displaying the text \\\"Hello, world!\\\"",
-      "identifier": "01-02-08-preview.png",
-      "type": "image",
-      "variants": [
+    "01-02-08-preview.png" : {
+      "alt" : "Screenshot of an app displaying the text \\\"Hello, world!\\\"",
+      "identifier" : "01-02-08-preview.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/01-02-08-preview.png"
+          "url" : "\/images\/01-02-08-preview.png"
         }
       ]
     },
-    "01-03-01-list.ios.heex": {
-      "content": [
-        "<list>",
+    "01-03-01-list.ios.heex" : {
+      "content" : [
+        "<List>",
         "  <%= for name <- @cats do %>",
-        "    <text id={name}><%= name %></text>",
+        "    <Text id={name}><%= name %><\/Text>",
         "  <% end %>",
-        "</list>",
+        "<\/List>",
         ""
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cats_list_live.ios.heex",
-      "fileType": "heex",
-      "highlights": [],
-      "identifier": "01-03-01-list.ios.heex",
-      "syntax": "heex",
-      "type": "file"
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
+      "fileType" : "heex",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-03-01-list.ios.heex",
+      "syntax" : "html",
+      "type" : "file"
     },
-    "01-03-02-list-preview.png": {
-      "alt": "The cat names we added earlier displayed as an iOS-styled list.",
-      "identifier": "01-03-02-list-preview.png",
-      "type": "image",
-      "variants": [
+    "01-03-02-list-preview.png" : {
+      "alt" : "The cat names we added earlier displayed as an iOS-styled list.",
+      "identifier" : "01-03-02-list-preview.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/01-03-02-list-preview.png"
+          "url" : "\/images\/01-03-02-list-preview.png"
         }
       ]
     },
-    "01-03-03-images.ios.heex": {
-      "content": [
-        "<list>",
+    "01-03-03-images.ios.heex" : {
+      "content" : [
+        "<List>",
         "  <%= for name <- @cats do %>",
-        "    <h-stack id={name}>",
-        "      <async-image src={\"/images/cats/#{name}.jpg\"} modifiers='[{\"type\": \"frame\", \"width\": 100, \"height\": 100}]' />",
-        "      <text><%= name %></text>",
-        "    </h-stack>",
+        "    <HStack id={name}>",
+        "      <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "      <Text><%= name %><\/Text>",
+        "    <\/HStack>",
         "  <% end %>",
-        "</list>",
+        "<\/List>",
         ""
       ],
-      "fileName": "lib/lvn_tutorial_web/live/cats_list_live.ios.heex",
-      "fileType": "heex",
-      "highlights": [
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
+      "fileType" : "heex",
+      "highlights" : [
         {
-          "line": 3
+          "line" : 3
         },
         {
-          "line": 4
+          "line" : 4
         },
         {
-          "line": 5
+          "line" : 5
         },
         {
-          "line": 6
+          "line" : 6
         }
       ],
-      "identifier": "01-03-03-images.ios.heex",
-      "syntax": "heex",
-      "type": "file"
+      "identifier" : "01-03-03-images.ios.heex",
+      "syntax" : "html",
+      "type" : "file"
     },
-    "01-03-04-images-preview.png": {
-      "alt": "The list of cats with images of each cat to the left of their name.",
-      "identifier": "01-03-04-images-preview.png",
-      "type": "image",
-      "variants": [
+    "01-03-04-images-preview.png" : {
+      "alt" : "The list of cats with images of each cat to the left of their name.",
+      "identifier" : "01-03-04-images-preview.png",
+      "type" : "image",
+      "variants" : [
         {
-          "traits": [
+          "traits" : [
             "1x",
             "light"
           ],
-          "url": "/images/01-03-04-images-preview.png"
+          "url" : "\/images\/01-03-04-images-preview.png"
         }
       ]
     },
-    "Xcode 13.3": {
-      "identifier": "Xcode 13.3",
-      "title": "Xcode 13.3",
-      "type": "xcodeRequirement",
-      "url": "https://developer.apple.com/download/applications/"
+    "cats.zip" : {
+      "checksum" : "6dc6645807391a9ddb24b6f651286d7922180fc5dd09b9b9c462fcb90ca2dcc05f4f7fe8ec1fdc7aa7727e14a94fa387269fb098cb228e2dbc3d31b2e3f17766",
+      "identifier" : "cats.zip",
+      "type" : "download",
+      "url" : "\/downloads\/cats.zip"
     },
-    "cats.zip": {
-      "checksum": "6dc6645807391a9ddb24b6f651286d7922180fc5dd09b9b9c462fcb90ca2dcc05f4f7fe8ec1fdc7aa7727e14a94fa387269fb098cb228e2dbc3d31b2e3f17766",
-      "identifier": "cats.zip",
-      "type": "download",
-      "url": "/downloads/cats.zip"
-    },
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
-      "kind": "project",
-      "role": "project",
-      "title": "Your First LiveView",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/01-initial-list"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Your First LiveView",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Build-the-List-UI" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Build-the-List-UI",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Build the List UI",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/01-initial-list#Build-the-List-UI"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Build-the-List-UI",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Build the List UI",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list#Build-the-List-UI"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Building-the-Backend" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Building-the-Backend",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Building the Backend",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/01-initial-list#Building-the-Backend"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Building-the-Backend",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Building the Backend",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list#Building-the-Backend"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Creating-the-App" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List#Creating-the-App",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Creating the App",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/01-initial-list#Creating-the-App"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List#Creating-the-App",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Creating the App",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list#Creating-the-App"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button" : {
+      "abstract" : [
         {
-          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
-          "type": "text"
+          "text" : "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
-      "kind": "project",
-      "role": "project",
-      "title": "Storing User Favorites",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/02-favorite-button"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Storing User Favorites",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/02-favorite-button"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Adding-the-Favorite-Button" : {
+      "abstract" : [
         {
-          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
-          "type": "text"
+          "text" : "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Adding-the-Favorite-Button",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Adding the Favorite Button",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/02-favorite-button#Adding-the-Favorite-Button"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Adding-the-Favorite-Button",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Adding the Favorite Button",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/02-favorite-button#Adding-the-Favorite-Button"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Updating-the-Backend" : {
+      "abstract" : [
         {
-          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
-          "type": "text"
+          "text" : "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button#Updating-the-Backend",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Updating the Backend",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/02-favorite-button#Updating-the-Backend"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button#Updating-the-Backend",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Updating the Backend",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/02-favorite-button#Updating-the-Backend"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero" : {
+      "abstract" : [
         {
-          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
-          "type": "text"
+          "text" : "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero",
-      "kind": "project",
-      "role": "project",
-      "title": "Navigation and Detail View",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/03-navigation-and-hero"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Navigation and Detail View",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/03-navigation-and-hero"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Adding-Navigation" : {
+      "abstract" : [
         {
-          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
-          "type": "text"
+          "text" : "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Adding-Navigation",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Adding Navigation",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/03-navigation-and-hero#Adding-Navigation"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Adding-Navigation",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Adding Navigation",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/03-navigation-and-hero#Adding-Navigation"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Building-the-Detail-View" : {
+      "abstract" : [
         {
-          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
-          "type": "text"
+          "text" : "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero#Building-the-Detail-View",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Building the Detail View",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/03-navigation-and-hero#Building-the-Detail-View"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero#Building-the-Detail-View",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Building the Detail View",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/03-navigation-and-hero#Building-the-Detail-View"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element",
-      "kind": "project",
-      "role": "project",
-      "title": "Add a Custom HTML Element",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/04-custom-element"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Add a Custom HTML Element",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Building-the-View" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Building-the-View",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Building the View",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/04-custom-element#Building-the-View"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Building-the-View",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Building the View",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element#Building-the-View"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Setting-Up-the-Registry" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Setting-Up-the-Registry",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Setting Up the Registry",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/04-custom-element#Setting-Up-the-Registry"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Setting-Up-the-Registry",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Setting Up the Registry",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element#Setting-Up-the-Registry"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Update-the-GenServer" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Update-the-GenServer",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Update the GenServer",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/04-custom-element#Update-the-GenServer"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Update-the-GenServer",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Update the GenServer",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element#Update-the-GenServer"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Using-the-Element" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element#Using-the-Element",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Using the Element",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/04-custom-element#Using-the-Element"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element#Using-the-Element",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Using the Element",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element#Using-the-Element"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier" : {
+      "abstract" : [
         {
-          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
-          "type": "text"
+          "text" : "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier",
-      "kind": "project",
-      "role": "project",
-      "title": "Add a Navigation Bar Button with a Custom Modifier",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/05-custom-modifier"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Add a Navigation Bar Button with a Custom Modifier",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/05-custom-modifier"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Implement-the-Attribute" : {
+      "abstract" : [
         {
-          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
-          "type": "text"
+          "text" : "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Implement-the-Attribute",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Implement the Attribute",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/05-custom-modifier#Implement-the-Attribute"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Implement-the-Attribute",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Implement the Attribute",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/05-custom-modifier#Implement-the-Attribute"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Update-the-Backend" : {
+      "abstract" : [
         {
-          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
-          "type": "text"
+          "text" : "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier#Update-the-Backend",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Update the Backend",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/05-custom-modifier#Update-the-Backend"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier#Update-the-Backend",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Update the Backend",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/05-custom-modifier#Update-the-Backend"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen" : {
+      "abstract" : [
         {
-          "text": "Add a more interesting loading screen that matches the style of your app.",
-          "type": "text"
+          "text" : "Add a more interesting loading screen that matches the style of your app.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen",
-      "kind": "project",
-      "role": "project",
-      "title": "Style the Loading Screen to Match Your App",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/06-custom-loading-screen"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Style the Loading Screen to Match Your App",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/06-custom-loading-screen"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen#Add-the-Loading-View" : {
+      "abstract" : [
         {
-          "text": "Add a more interesting loading screen that matches the style of your app.",
-          "type": "text"
+          "text" : "Add a more interesting loading screen that matches the style of your app.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen#Add-the-Loading-View",
-      "kind": "section",
-      "role": "pseudoSymbol",
-      "title": "Add the Loading View",
-      "type": "section",
-      "url": "/tutorials/liveviewnative/06-custom-loading-screen#Add-the-Loading-View"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen#Add-the-Loading-View",
+      "kind" : "section",
+      "role" : "pseudoSymbol",
+      "title" : "Add the Loading View",
+      "type" : "section",
+      "url" : "\/tutorials\/liveviewnative\/06-custom-loading-screen#Add-the-Loading-View"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp" : {
+      "abstract" : [
         {
-          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
-          "type": "text"
+          "text" : "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
-      "kind": "overview",
-      "role": "overview",
-      "title": "Your First LiveViewNative App",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+      "kind" : "overview",
+      "role" : "overview",
+      "title" : "Your First LiveViewNative App",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp/Customize-with-Swift",
-      "kind": "article",
-      "role": "article",
-      "title": "Customize with Swift",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp/customize-with-swift"
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Customize-with-Swift" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Customize-with-Swift",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Customize with Swift",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp\/customize-with-swift"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp/Getting-Started",
-      "kind": "article",
-      "role": "article",
-      "title": "Getting Started",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp/getting-started"
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Getting-Started" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp\/Getting-Started",
+      "kind" : "article",
+      "role" : "article",
+      "title" : "Getting Started",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp\/getting-started"
     },
-    "https://developer.apple.com/download/applications/": {
-      "identifier": "https://developer.apple.com/download/applications/",
-      "title": "Xcode",
-      "titleInlineContent": [
+    "https:\/\/developer.apple.com\/download\/applications\/" : {
+      "identifier" : "https:\/\/developer.apple.com\/download\/applications\/",
+      "title" : "Xcode",
+      "titleInlineContent" : [
         {
-          "text": "Xcode",
-          "type": "text"
+          "text" : "Xcode",
+          "type" : "text"
         }
       ],
-      "type": "link",
-      "url": "https://developer.apple.com/download/applications/"
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/download\/applications\/"
     },
-    "https://elixir-lang.org/install.html": {
-      "identifier": "https://elixir-lang.org/install.html",
-      "title": "Elixir",
-      "titleInlineContent": [
+    "https:\/\/elixir-lang.org\/install.html" : {
+      "identifier" : "https:\/\/elixir-lang.org\/install.html",
+      "title" : "Elixir",
+      "titleInlineContent" : [
         {
-          "text": "Elixir",
-          "type": "text"
+          "text" : "Elixir",
+          "type" : "text"
         }
       ],
-      "type": "link",
-      "url": "https://elixir-lang.org/install.html"
+      "type" : "link",
+      "url" : "https:\/\/elixir-lang.org\/install.html"
     },
-    "https://liveviewnative.github.io/liveview-client-swiftui/downloads/cats.zip": {
-      "identifier": "https://liveviewnative.github.io/liveview-client-swiftui/downloads/cats.zip",
-      "title": "project files",
-      "titleInlineContent": [
+    "https:\/\/liveviewnative.github.io\/liveview-client-swiftui\/downloads\/cats.zip" : {
+      "identifier" : "https:\/\/liveviewnative.github.io\/liveview-client-swiftui\/downloads\/cats.zip",
+      "title" : "project files",
+      "titleInlineContent" : [
         {
-          "text": "project files",
-          "type": "text"
+          "text" : "project files",
+          "type" : "text"
         }
       ],
-      "type": "link",
-      "url": "https://liveviewnative.github.io/liveview-client-swiftui/downloads/cats.zip"
+      "type" : "link",
+      "url" : "https:\/\/liveviewnative.github.io\/liveview-client-swiftui\/downloads\/cats.zip"
     },
-    "https://www.phoenixframework.org/": {
-      "identifier": "https://www.phoenixframework.org/",
-      "title": "Phoenix",
-      "titleInlineContent": [
+    "https:\/\/www.phoenixframework.org\/" : {
+      "identifier" : "https:\/\/www.phoenixframework.org\/",
+      "title" : "Phoenix",
+      "titleInlineContent" : [
         {
-          "text": "Phoenix",
-          "type": "text"
+          "text" : "Phoenix",
+          "type" : "text"
         }
       ],
-      "type": "link",
-      "url": "https://www.phoenixframework.org/"
+      "type" : "link",
+      "url" : "https:\/\/www.phoenixframework.org\/"
+    },
+    "Xcode 13.3" : {
+      "identifier" : "Xcode 13.3",
+      "title" : "Xcode 13.3",
+      "type" : "xcodeRequirement",
+      "url" : "https:\/\/developer.apple.com\/download\/applications\/"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [
+  "sections" : [
     {
-      "backgroundImage": "01-00-intro-header.png",
-      "chapter": "Getting Started",
-      "content": [
+      "backgroundImage" : "01-00-intro-header.png",
+      "chapter" : "Getting Started",
+      "content" : [
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-              "type": "text"
+              "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "estimatedTimeInMinutes": 30,
-      "image": "01-00-intro-header.png",
-      "kind": "hero",
-      "projectFiles": "cats.zip",
-      "title": "Your First LiveView",
-      "xcodeRequirement": "Xcode 13.3"
+      "estimatedTimeInMinutes" : 30,
+      "image" : "01-00-intro-header.png",
+      "kind" : "hero",
+      "projectFiles" : "cats.zip",
+      "title" : "Your First LiveView",
+      "xcodeRequirement" : "Xcode 13.3"
     },
     {
-      "kind": "tasks",
-      "tasks": [
+      "kind" : "tasks",
+      "tasks" : [
         {
-          "anchor": "Building-the-Backend",
-          "contentSection": [
+          "anchor" : "Building-the-Backend",
+          "contentSection" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Before we start the native frontend, we’ll build a simple backend to serve the data.",
-                      "type": "text"
+                      "text" : "Before we start the native frontend, we’ll build a simple backend to serve the data.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 },
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Make sure you have all the prerequisites installed:",
-                      "type": "text"
+                      "text" : "Make sure you have all the prerequisites installed:",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 },
                 {
-                  "items": [
+                  "items" : [
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "identifier": "https://developer.apple.com/download/applications/",
-                              "isActive": true,
-                              "type": "reference"
+                              "identifier" : "https:\/\/developer.apple.com\/download\/applications\/",
+                              "isActive" : true,
+                              "type" : "reference"
                             },
                             {
-                              "text": " 13.3 or newer",
-                              "type": "text"
+                              "text" : " 13.3 or newer",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "identifier": "https://elixir-lang.org/install.html",
-                              "isActive": true,
-                              "type": "reference"
+                              "identifier" : "https:\/\/elixir-lang.org\/install.html",
+                              "isActive" : true,
+                              "type" : "reference"
                             },
                             {
-                              "text": " 1.12 or newer",
-                              "type": "text"
+                              "text" : " 1.12 or newer",
+                              "type" : "text"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         }
                       ]
                     },
                     {
-                      "content": [
+                      "content" : [
                         {
-                          "inlineContent": [
+                          "inlineContent" : [
                             {
-                              "identifier": "https://www.phoenixframework.org/",
-                              "isActive": true,
-                              "type": "reference"
+                              "identifier" : "https:\/\/www.phoenixframework.org\/",
+                              "isActive" : true,
+                              "type" : "reference"
                             }
                           ],
-                          "type": "paragraph"
+                          "type" : "paragraph"
                         },
                         {
-                          "items": [
+                          "items" : [
                             {
-                              "content": [
+                              "content" : [
                                 {
-                                  "inlineContent": [
+                                  "inlineContent" : [
                                     {
-                                      "text": "Run ",
-                                      "type": "text"
+                                      "text" : "Run ",
+                                      "type" : "text"
                                     },
                                     {
-                                      "code": "mix archive.install hex phx_new",
-                                      "type": "codeVoice"
+                                      "code" : "mix archive.install hex phx_new",
+                                      "type" : "codeVoice"
                                     }
                                   ],
-                                  "type": "paragraph"
+                                  "type" : "paragraph"
                                 }
                               ]
                             }
                           ],
-                          "type": "unorderedList"
+                          "type" : "unorderedList"
                         }
                       ]
                     }
                   ],
-                  "type": "unorderedList"
+                  "type" : "unorderedList"
                 }
               ],
-              "kind": "fullWidth"
+              "kind" : "fullWidth"
             }
           ],
-          "stepsSection": [
+          "stepsSection" : [
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "For this project, we don’t need most of the usual dependencies Phoenix includes, so we pass the command line flags to omit them.",
-                      "type": "text"
+                      "text" : "For this project, we don’t need most of the usual dependencies Phoenix includes, so we pass the command line flags to omit them.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "01-01-01-create-project.sh",
-              "content": [
+              "code" : "01-01-01-create-project.sh",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "On the command line, create a new Phoenix project and then open the created ",
-                      "type": "text"
+                      "text" : "On the command line, create a new Phoenix project and then open the created ",
+                      "type" : "text"
                     },
                     {
-                      "code": "lvn_tutorial",
-                      "type": "codeVoice"
+                      "code" : "lvn_tutorial",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " directory in your text editor of choice.",
-                      "type": "text"
+                      "text" : " directory in your text editor of choice.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "01-01-04-router.ex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "01-01-04-router.ex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "In the router, add a live route for the “/cats” path that points to the live view we’ll create next.",
-                      "type": "text"
+                      "text" : "In the router, add a live route for the “\/cats” path that points to the live view we’ll create next.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Make sure to download the ",
-                      "type": "text"
+                      "text" : "Make sure to download the ",
+                      "type" : "text"
                     },
                     {
-                      "identifier": "https://liveviewnative.github.io/liveview-client-swiftui/downloads/cats.zip",
-                      "isActive": true,
-                      "type": "reference"
+                      "identifier" : "https:\/\/liveviewnative.github.io\/liveview-client-swiftui\/downloads\/cats.zip",
+                      "isActive" : true,
+                      "type" : "reference"
                     },
                     {
-                      "text": " for this tutorial and copy the ",
-                      "type": "text"
+                      "text" : " for this tutorial and copy the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "cats",
-                      "type": "codeVoice"
+                      "code" : "cats",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " folder into the ",
-                      "type": "text"
+                      "text" : " folder into the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "priv/static/images",
-                      "type": "codeVoice"
+                      "code" : "priv\/static\/images",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " folder of your Phoenix project.",
-                      "type": "text"
+                      "text" : " folder of your Phoenix project.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "01-01-05-cats_list_live.ex",
-              "content": [
+              "code" : "01-01-05-cats_list_live.ex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "For now, all that we need in the live view is our list of cats and a mount handler to assign it to the socket, so the list is accessible from the template later.",
-                      "type": "text"
+                      "text" : "For now, all that we need in the live view is our list of cats and a mount handler to assign it to the socket, so the list is accessible from the template later.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "01-01-06-cats_list_live.ex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "01-01-06-cats_list_live.ex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "We’ll also use ",
-                      "type": "text"
+                      "text" : "We’ll also use ",
+                      "type" : "text"
                     },
                     {
-                      "code": "EEx.function_from_file",
-                      "type": "codeVoice"
+                      "code" : "EEx.function_from_file",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " to define our render implementation to use a different file than the default one.",
-                      "type": "text"
+                      "text" : " to define our render implementation to use a different file than the default one.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "01-01-07-cats_list_live.ios.heex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "01-01-07-cats_list_live.ios.heex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "In the template itself, we’ll start with just a simple message. In the next section, we’ll come back and build the full UI.",
-                      "type": "text"
+                      "text" : "In the template itself, we’ll start with just a simple message. In the next section, we’ll come back and build the full UI.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "01-01-08-live-template.html.heex",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "01-01-08-live-template.html.heex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Lastly, we need to tweak the ",
-                      "type": "text"
+                      "text" : "Lastly, we need to tweak the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "live.html.heex",
-                      "type": "codeVoice"
+                      "code" : "live.html.heex",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " layout to remove the extraneous HTML that the native frontend doesn’t need.",
-                      "type": "text"
+                      "text" : " layout to remove the extraneous HTML that the native frontend doesn’t need.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             }
           ],
-          "title": "Building the Backend"
+          "title" : "Building the Backend"
         },
         {
-          "anchor": "Creating-the-App",
-          "contentSection": [
+          "anchor" : "Creating-the-App",
+          "contentSection" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Let’s create the iOS app and setup LiveView Native.",
-                      "type": "text"
+                      "text" : "Let’s create the iOS app and setup LiveView Native.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "kind": "fullWidth"
+              "kind" : "fullWidth"
             }
           ],
-          "stepsSection": [
+          "stepsSection" : [
             {
-              "caption": [],
-              "code": null,
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : null,
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Create a new iOS App project in Xcode (File -> New -> Project…).",
-                      "type": "text"
+                      "text" : "Create a new iOS App project in Xcode (File -> New -> Project…).",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": "01-02-01-create-project.png",
-              "runtimePreview": null,
-              "type": "step"
+              "media" : "01-02-01-create-project.png",
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "If you haven’t used Xcode before, you may see an “Add Team” button. You can sign in with your Apple ID to test on your own devices, but you don’t need to sign in to develop or use the iOS Simulator.",
-                      "type": "text"
+                      "text" : "If you haven’t used Xcode before, you may see an “Add Team” button. You can sign in with your Apple ID to test on your own devices, but you don’t need to sign in to develop or use the iOS Simulator.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": null,
-              "content": [
+              "code" : null,
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Make sure to select Swift as the language and SwiftUI as the interface.",
-                      "type": "text"
+                      "text" : "Make sure to select Swift as the language and SwiftUI as the interface.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": "01-02-02-create-project.png",
-              "runtimePreview": null,
-              "type": "step"
+              "media" : "01-02-02-create-project.png",
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Xcode may prompt you to sign in with GitHub. If so, follow its instructions to login and create an access token.",
-                      "type": "text"
+                      "text" : "Xcode may prompt you to sign in with GitHub. If so, follow its instructions to login and create an access token.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": null,
-              "content": [
+              "code" : null,
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Add a new Swift package dependency by selecting File -> Add Packages…, and in the search field, enter ",
-                      "type": "text"
+                      "text" : "Add a new Swift package dependency by selecting File -> Add Packages…, and in the search field, enter ",
+                      "type" : "text"
                     },
                     {
-                      "code": "https://github.com/liveviewnative/liveview-client-swiftui",
-                      "type": "codeVoice"
+                      "code" : "https:\/\/github.com\/liveviewnative\/liveview-client-swiftui",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ", and click Add Package.",
-                      "type": "text"
+                      "text" : ", and click Add Package.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": "01-02-03-add-package.png",
-              "runtimePreview": null,
-              "type": "step"
+              "media" : "01-02-03-add-package.png",
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "This is a separate project from the Phoenix application, and they don’t share files. If you wish to version control them together, you can place them in another folder and create a Git repo there.",
-                      "type": "text"
+                      "text" : "This is a separate project from the Phoenix application, and they don’t share files. If you wish to version control them together, you can place them in another folder and create a Git repo there.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": null,
-              "content": [
+              "code" : null,
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Save the Xcode project alongside the Phoenix one you created earlier.",
-                      "type": "text"
+                      "text" : "Save the Xcode project alongside the Phoenix one you created earlier.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": "01-02-04-save.png",
-              "runtimePreview": null,
-              "type": "step"
+              "media" : "01-02-04-save.png",
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [],
-              "code": "01-02-05-initial-view.swift",
-              "content": [
+              "caption" : [
+
+              ],
+              "code" : "01-02-05-initial-view.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Open the ",
-                      "type": "text"
+                      "text" : "Open the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "ContentView.swift",
-                      "type": "codeVoice"
+                      "code" : "ContentView.swift",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " file that the Xcode template created for you.",
-                      "type": "text"
+                      "text" : " file that the Xcode template created for you.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "The coordinator handles all networking for the LiveView, and so only one instance of it should exist. We use a ",
-                      "type": "text"
+                      "text" : "The coordinator handles all networking for the LiveView, and so only one instance of it should exist. We use a ",
+                      "type" : "text"
                     },
                     {
-                      "code": "@State",
-                      "type": "codeVoice"
+                      "code" : "@State",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " variable for this so that the coordinator isn’t re-created if SwiftUI re-creates the containing view.",
-                      "type": "text"
+                      "text" : " variable for this so that the coordinator isn’t re-created if SwiftUI re-creates the containing view.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "01-02-06-coordinator.swift",
-              "content": [
+              "code" : "01-02-06-session.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Then, import the LiveViewNative package and add the coordinator as a ",
-                      "type": "text"
+                      "text" : "Then, import the LiveViewNative package and add the session as a ",
+                      "type" : "text"
                     },
                     {
-                      "code": "@State",
-                      "type": "codeVoice"
+                      "code" : "@StateObject",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " variable, using the URL of your Phoenix project.",
-                      "type": "text"
+                      "text" : " variable, using the URL of your Phoenix project.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": null,
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Then, you can run the app in the Simulator and see it connecting to your Phoenix app. Make sure you’ve started the Phoenix server with ",
-                      "type": "text"
+                      "text" : "Then, you can run the app in the Simulator and see it connecting to your Phoenix app. Make sure you’ve started the Phoenix server with ",
+                      "type" : "text"
                     },
                     {
-                      "code": "mix phx.server",
-                      "type": "codeVoice"
+                      "code" : "mix phx.server",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": "!",
-                      "type": "text"
+                      "text" : "!",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "01-02-07-liveview.swift",
-              "content": [
+              "code" : "01-02-07-liveview.swift",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Lastly, add the ",
-                      "type": "text"
+                      "text" : "Lastly, add the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "LiveView",
-                      "type": "codeVoice"
+                      "code" : "LiveView",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " to your view’s body, passing in the coordinator.",
-                      "type": "text"
+                      "text" : " to your view’s body, passing in the coordinator.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": "01-02-08-preview.png",
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : "01-02-08-preview.png",
+              "type" : "step"
             },
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "Once you’ve got the app running, try updating the text in your HEEX template to see Live Reload refresh your app automatically!",
-                  "type": "text"
+                  "text" : "Once you’ve got the app running, try updating the text in your HEEX template to see Live Reload refresh your app automatically!",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "title": "Creating the App"
+          "title" : "Creating the App"
         },
         {
-          "anchor": "Build-the-List-UI",
-          "contentSection": [
+          "anchor" : "Build-the-List-UI",
+          "contentSection" : [
             {
-              "content": [
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Now that you’ve got the iOS app up and running, lets build out the user interface to display our data.",
-                      "type": "text"
+                      "text" : "Now that you’ve got the iOS app up and running, lets build out the user interface to display our data.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "kind": "fullWidth"
+              "kind" : "fullWidth"
             }
           ],
-          "stepsSection": [
+          "stepsSection" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "Pro tip: LiveViewNative supports Live Reload, so you can work on your HEEX template side-by-side with the iOS Simulator and see it update automatically.",
-                  "type": "text"
+                  "text" : "Pro tip: LiveViewNative supports Live Reload, so you can work on your HEEX template side-by-side with the iOS Simulator and see it update automatically.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Note that each element inside a ",
-                      "type": "text"
+                      "text" : "Note that each element inside a ",
+                      "type" : "text"
                     },
                     {
-                      "code": "<list>",
-                      "type": "codeVoice"
+                      "code" : "<List>",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " needs to have a unique ",
-                      "type": "text"
+                      "text" : " needs to have a unique ",
+                      "type" : "text"
                     },
                     {
-                      "code": "id",
-                      "type": "codeVoice"
+                      "code" : "id",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " attribute. Here, we just use the cat’s name.",
-                      "type": "text"
+                      "text" : " attribute. Here, we just use the cat’s name.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "01-03-01-list.ios.heex",
-              "content": [
+              "code" : "01-03-01-list.ios.heex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "In the HEEX template, replace the ",
-                      "type": "text"
+                      "text" : "In the HEEX template, replace the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "<text>",
-                      "type": "codeVoice"
+                      "code" : "<Text>",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " element with a ",
-                      "type": "text"
+                      "text" : " element with a ",
+                      "type" : "text"
                     },
                     {
-                      "code": "<list>",
-                      "type": "codeVoice"
+                      "code" : "<List>",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": ". In the list, we’ll iterate through the ",
-                      "type": "text"
+                      "text" : ". In the list, we’ll iterate through the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "@cats",
-                      "type": "codeVoice"
+                      "code" : "@cats",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " list we created earlier, and for each one we’ll render a text element with the cat’s name.",
-                      "type": "text"
+                      "text" : " list we created earlier, and for each one we’ll render a text element with the cat’s name.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": "01-03-02-list-preview.png",
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : "01-03-02-list-preview.png",
+              "type" : "step"
             },
             {
-              "caption": [
+              "caption" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "We also use the ",
-                      "type": "text"
+                      "text" : "We also use the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "frame",
-                      "type": "codeVoice"
+                      "code" : "frame",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " modifier to set the size of the image to 100×100 points.",
-                      "type": "text"
+                      "text" : " modifier to set the size of the image to 100×100 points.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "code": "01-03-03-images.ios.heex",
-              "content": [
+              "code" : "01-03-03-images.ios.heex",
+              "content" : [
                 {
-                  "inlineContent": [
+                  "inlineContent" : [
                     {
-                      "text": "Then, let’s replace the ",
-                      "type": "text"
+                      "text" : "Then, let’s replace the ",
+                      "type" : "text"
                     },
                     {
-                      "code": "<text>",
-                      "type": "codeVoice"
+                      "code" : "<Text>",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " element in the list with an ",
-                      "type": "text"
+                      "text" : " element in the list with an ",
+                      "type" : "text"
                     },
                     {
-                      "code": "<h-stack>",
-                      "type": "codeVoice"
+                      "code" : "<HStack>",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " (used to layout elements in a horizontal row). Inside the stack, we’ll have an ",
-                      "type": "text"
+                      "text" : " (used to layout elements in a horizontal row). Inside the stack, we’ll have an ",
+                      "type" : "text"
                     },
                     {
-                      "code": "<async-image>",
-                      "type": "codeVoice"
+                      "code" : "<AsyncImage>",
+                      "type" : "codeVoice"
                     },
                     {
-                      "text": " element which loads the remote cat image from the server and then the cat’s name as before.",
-                      "type": "text"
+                      "text" : " element which loads the remote cat image from the server and then the cat’s name as before.",
+                      "type" : "text"
                     }
                   ],
-                  "type": "paragraph"
+                  "type" : "paragraph"
                 }
               ],
-              "media": null,
-              "runtimePreview": "01-03-04-images-preview.png",
-              "type": "step"
+              "media" : null,
+              "runtimePreview" : "01-03-04-images-preview.png",
+              "type" : "step"
             },
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "Congratulations! You’ve built your first LiveView iOS app!",
-                  "type": "text"
+                  "text" : "Congratulations! You’ve built your first LiveView iOS app!",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "title": "Build the List UI"
+          "title" : "Build the List UI"
         }
       ]
     },
     {
-      "abstract": [
+      "abstract" : [
         {
-          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
-          "type": "text"
+          "text" : "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type" : "text"
         }
       ],
-      "action": {
-        "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
-        "isActive": true,
-        "overridingTitle": "Get started",
-        "overridingTitleInlineContent": [
+      "action" : {
+        "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button",
+        "isActive" : true,
+        "overridingTitle" : "Get started",
+        "overridingTitleInlineContent" : [
           {
-            "text": "Get started",
-            "type": "text"
+            "text" : "Get started",
+            "type" : "text"
           }
         ],
-        "type": "reference"
+        "type" : "reference"
       },
-      "featuredEyebrow": "Tutorial",
-      "kind": "callToAction",
-      "title": "Storing User Favorites"
+      "featuredEyebrow" : "Tutorial",
+      "kind" : "callToAction",
+      "title" : "Storing User Favorites"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/tutorials/liveviewnative/01-initial-list"
+      "paths" : [
+        "\/tutorials\/liveviewnative\/01-initial-list"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

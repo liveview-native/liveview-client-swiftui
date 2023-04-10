@@ -1,311 +1,315 @@
 {
-  "hierarchy": {
-    "paths": [],
-    "reference": "doc://LiveViewNative/tutorials/YourFirstApp"
+  "hierarchy" : {
+    "paths" : [
+
+    ],
+    "reference" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp"
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/tutorials/YourFirstApp"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp"
   },
-  "kind": "overview",
-  "metadata": {
-    "category": "Live View Native",
-    "categoryPathComponent": "YourFirstApp",
-    "estimatedTime": "3hr 0min",
-    "role": "overview",
-    "title": "Your First LiveViewNative App"
+  "kind" : "overview",
+  "metadata" : {
+    "category" : "Live View Native",
+    "categoryPathComponent" : "YourFirstApp",
+    "estimatedTime" : "3hr 0min",
+    "role" : "overview",
+    "title" : "Your First LiveViewNative App"
   },
-  "references": {
-    "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List": {
-      "abstract": [
+  "references" : {
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List" : {
+      "abstract" : [
         {
-          "text": "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
-          "type": "text"
+          "text" : "In this tutorial, you’ll build a simple LiveView app to show a list of cute cats.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
-      "kind": "project",
-      "role": "project",
-      "title": "Your First LiveView",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/01-initial-list"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Your First LiveView",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/01-initial-list"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button" : {
+      "abstract" : [
         {
-          "text": "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
-          "type": "text"
+          "text" : "Now that you’ve built a simple app to display a list, let’s add a bit of interactivity. To each list row, we’ll add a favorite button that can be used to pin cats to the top of the list.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
-      "kind": "project",
-      "role": "project",
-      "title": "Storing User Favorites",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/02-favorite-button"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Storing User Favorites",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/02-favorite-button"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero" : {
+      "abstract" : [
         {
-          "text": "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
-          "type": "text"
+          "text" : "The list of cats is great, but the images are a little small. Let’s add a detail view so we can see them nice and big!",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero",
-      "kind": "project",
-      "role": "project",
-      "title": "Navigation and Detail View",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/03-navigation-and-hero"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Navigation and Detail View",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/03-navigation-and-hero"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element" : {
+      "abstract" : [
         {
-          "text": "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
-          "type": "text"
+          "text" : "Let’s add a custom control that allows users to assign specific star ratings to cats in our app.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element",
-      "kind": "project",
-      "role": "project",
-      "title": "Add a Custom HTML Element",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/04-custom-element"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Add a Custom HTML Element",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/04-custom-element"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier" : {
+      "abstract" : [
         {
-          "text": "Use a custom modifier to add a navigation bar button to the detail view.",
-          "type": "text"
+          "text" : "Use a custom modifier to add a navigation bar button to the detail view.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier",
-      "kind": "project",
-      "role": "project",
-      "title": "Add a Navigation Bar Button with a Custom Modifier",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/05-custom-modifier"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Add a Navigation Bar Button with a Custom Modifier",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/05-custom-modifier"
     },
-    "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen" : {
+      "abstract" : [
         {
-          "text": "Add a more interesting loading screen that matches the style of your app.",
-          "type": "text"
+          "text" : "Add a more interesting loading screen that matches the style of your app.",
+          "type" : "text"
         }
       ],
-      "estimatedTime": "30min",
-      "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen",
-      "kind": "project",
-      "role": "project",
-      "title": "Style the Loading Screen to Match Your App",
-      "type": "topic",
-      "url": "/tutorials/liveviewnative/06-custom-loading-screen"
+      "estimatedTime" : "30min",
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen",
+      "kind" : "project",
+      "role" : "project",
+      "title" : "Style the Loading Screen to Match Your App",
+      "type" : "topic",
+      "url" : "\/tutorials\/liveviewnative\/06-custom-loading-screen"
     },
-    "doc://LiveViewNative/tutorials/YourFirstApp": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp" : {
+      "abstract" : [
         {
-          "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
-          "type": "text"
+          "text" : "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+          "type" : "text"
         }
       ],
-      "identifier": "doc://LiveViewNative/tutorials/YourFirstApp",
-      "kind": "overview",
-      "role": "overview",
-      "title": "Your First LiveViewNative App",
-      "type": "topic",
-      "url": "/tutorials/yourfirstapp"
+      "identifier" : "doc:\/\/LiveViewNative\/tutorials\/YourFirstApp",
+      "kind" : "overview",
+      "role" : "overview",
+      "title" : "Your First LiveViewNative App",
+      "type" : "topic",
+      "url" : "\/tutorials\/yourfirstapp"
     },
-    "https://github.com/liveviewnative/ios-tutorial": {
-      "identifier": "https://github.com/liveviewnative/ios-tutorial",
-      "title": "The completed project",
-      "titleInlineContent": [
+    "https:\/\/github.com\/liveviewnative\/ios-tutorial" : {
+      "identifier" : "https:\/\/github.com\/liveviewnative\/ios-tutorial",
+      "title" : "The completed project",
+      "titleInlineContent" : [
         {
-          "text": "The completed project",
-          "type": "text"
+          "text" : "The completed project",
+          "type" : "text"
         }
       ],
-      "type": "link",
-      "url": "https://github.com/liveviewnative/ios-tutorial"
+      "type" : "link",
+      "url" : "https:\/\/github.com\/liveviewnative\/ios-tutorial"
     },
-    "https://github.com/liveviewnative/ios-tutorial/commits/main": {
-      "identifier": "https://github.com/liveviewnative/ios-tutorial/commits/main",
-      "title": "View the full project after each section",
-      "titleInlineContent": [
+    "https:\/\/github.com\/liveviewnative\/ios-tutorial\/commits\/main" : {
+      "identifier" : "https:\/\/github.com\/liveviewnative\/ios-tutorial\/commits\/main",
+      "title" : "View the full project after each section",
+      "titleInlineContent" : [
         {
-          "text": "View the full project after each section",
-          "type": "text"
+          "text" : "View the full project after each section",
+          "type" : "text"
         }
       ],
-      "type": "link",
-      "url": "https://github.com/liveviewnative/ios-tutorial/commits/main"
+      "type" : "link",
+      "url" : "https:\/\/github.com\/liveviewnative\/ios-tutorial\/commits\/main"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [
+  "sections" : [
     {
-      "action": {
-        "identifier": "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
-        "isActive": true,
-        "overridingTitle": "Get started",
-        "overridingTitleInlineContent": [
+      "action" : {
+        "identifier" : "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List",
+        "isActive" : true,
+        "overridingTitle" : "Get started",
+        "overridingTitleInlineContent" : [
           {
-            "text": "Get started",
-            "type": "text"
+            "text" : "Get started",
+            "type" : "text"
           }
         ],
-        "type": "reference"
+        "type" : "reference"
       },
-      "backgroundImage": "",
-      "content": [
+      "backgroundImage" : "",
+      "content" : [
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
-              "type": "text"
+              "text" : "A step-by-step guide to building your first app with LiveViewNative. Learn how to display data, handle navigation, build interactions, and more.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "image": "",
-      "kind": "hero",
-      "title": "Your First LiveViewNative App"
+      "image" : "",
+      "kind" : "hero",
+      "title" : "Your First LiveViewNative App"
     },
     {
-      "chapters": [
+      "chapters" : [
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "Build a LiveViewNative app to display a list of cool cats. Then, add a favorite button to let users save their favorite ones. Finally, add a detail page to show more information about each cat.",
-                  "type": "text"
+                  "text" : "Build a LiveViewNative app to display a list of cool cats. Then, add a favorite button to let users save their favorite ones. Finally, add a detail page to show more information about each cat.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "image": "",
-          "name": "Getting Started",
-          "tutorials": [
-            "doc://LiveViewNative/tutorials/LiveViewNative/01-Initial-List",
-            "doc://LiveViewNative/tutorials/LiveViewNative/02-Favorite-Button",
-            "doc://LiveViewNative/tutorials/LiveViewNative/03-Navigation-and-Hero"
+          "image" : "",
+          "name" : "Getting Started",
+          "tutorials" : [
+            "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/01-Initial-List",
+            "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/02-Favorite-Button",
+            "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/03-Navigation-and-Hero"
           ]
         },
         {
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "Take your app to the next level by using the LiveViewNative Swift API to customize how your LiveView looks and functions.",
-                  "type": "text"
+                  "text" : "Take your app to the next level by using the LiveViewNative Swift API to customize how your LiveView looks and functions.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             }
           ],
-          "image": "",
-          "name": "Customize with Swift",
-          "tutorials": [
-            "doc://LiveViewNative/tutorials/LiveViewNative/04-Custom-Element",
-            "doc://LiveViewNative/tutorials/LiveViewNative/05-Custom-Modifier",
-            "doc://LiveViewNative/tutorials/LiveViewNative/06-Custom-Loading-Screen"
+          "image" : "",
+          "name" : "Customize with Swift",
+          "tutorials" : [
+            "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/04-Custom-Element",
+            "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/05-Custom-Modifier",
+            "doc:\/\/LiveViewNative\/tutorials\/LiveViewNative\/06-Custom-Loading-Screen"
           ]
         }
       ],
-      "content": [],
-      "image": null,
-      "kind": "volume",
-      "name": null
+      "content" : [
+
+      ],
+      "image" : null,
+      "kind" : "volume",
+      "name" : null
     },
     {
-      "content": [
+      "content" : [
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "More resources for using LiveView Native.",
-              "type": "text"
+              "text" : "More resources for using LiveView Native.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "kind": "resources",
-      "tiles": [
+      "kind" : "resources",
+      "tiles" : [
         {
-          "action": {
-            "destination": "https://github.com/liveviewnative/ios-tutorial",
-            "title": "View more",
-            "type": "link"
+          "action" : {
+            "destination" : "https:\/\/github.com\/liveviewnative\/ios-tutorial",
+            "title" : "View more",
+            "type" : "link"
           },
-          "content": [
+          "content" : [
             {
-              "inlineContent": [
+              "inlineContent" : [
                 {
-                  "text": "Find the full sample code for the project you’ll build in this tutorial.",
-                  "type": "text"
+                  "text" : "Find the full sample code for the project you’ll build in this tutorial.",
+                  "type" : "text"
                 }
               ],
-              "type": "paragraph"
+              "type" : "paragraph"
             },
             {
-              "items": [
+              "items" : [
                 {
-                  "content": [
+                  "content" : [
                     {
-                      "inlineContent": [
+                      "inlineContent" : [
                         {
-                          "identifier": "https://github.com/liveviewnative/ios-tutorial",
-                          "isActive": true,
-                          "type": "reference"
+                          "identifier" : "https:\/\/github.com\/liveviewnative\/ios-tutorial",
+                          "isActive" : true,
+                          "type" : "reference"
                         }
                       ],
-                      "type": "paragraph"
+                      "type" : "paragraph"
                     }
                   ]
                 },
                 {
-                  "content": [
+                  "content" : [
                     {
-                      "inlineContent": [
+                      "inlineContent" : [
                         {
-                          "identifier": "https://github.com/liveviewnative/ios-tutorial/commits/main",
-                          "isActive": true,
-                          "type": "reference"
+                          "identifier" : "https:\/\/github.com\/liveviewnative\/ios-tutorial\/commits\/main",
+                          "isActive" : true,
+                          "type" : "reference"
                         }
                       ],
-                      "type": "paragraph"
+                      "type" : "paragraph"
                     }
                   ]
                 }
               ],
-              "type": "unorderedList"
+              "type" : "unorderedList"
             }
           ],
-          "identifier": "sampleCode",
-          "title": "Sample Code"
+          "identifier" : "sampleCode",
+          "title" : "Sample Code"
         }
       ]
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/tutorials/yourfirstapp"
+      "paths" : [
+        "\/tutorials\/yourfirstapp"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }

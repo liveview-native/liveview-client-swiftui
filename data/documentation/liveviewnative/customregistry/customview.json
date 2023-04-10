@@ -1,431 +1,337 @@
 {
-  "abstract": [
+  "abstract" : [
     {
-      "text": "The type of view this registry returns from the ",
-      "type": "text"
+      "text" : "The type of view this registry returns from the ",
+      "type" : "text"
     },
     {
-      "code": "lookup",
-      "type": "codeVoice"
+      "code" : "lookup",
+      "type" : "codeVoice"
     },
     {
-      "text": " method.",
-      "type": "text"
+      "text" : " method.",
+      "type" : "text"
     }
   ],
-  "hierarchy": {
-    "paths": [
+  "hierarchy" : {
+    "paths" : [
       [
-        "doc://LiveViewNative/documentation/LiveViewNative",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry"
       ]
     ]
   },
-  "identifier": {
-    "interfaceLanguage": "swift",
-    "url": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/CustomView"
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry\/CustomView"
   },
-  "kind": "symbol",
-  "metadata": {
-    "externalID": "s:14LiveViewNative14CustomRegistryP0dB0Qa",
-    "fragments": [
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative14CustomRegistryP0dB0Qa",
+    "fragments" : [
       {
-        "kind": "keyword",
-        "text": "associatedtype"
+        "kind" : "keyword",
+        "text" : "associatedtype"
       },
       {
-        "kind": "text",
-        "text": " "
+        "kind" : "text",
+        "text" : " "
       },
       {
-        "kind": "identifier",
-        "text": "CustomView"
+        "kind" : "identifier",
+        "text" : "CustomView"
       },
       {
-        "kind": "text",
-        "text": " : "
+        "kind" : "text",
+        "text" : " : "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:7SwiftUI4ViewP",
-        "text": "View"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI4ViewP",
+        "text" : "View"
       },
       {
-        "kind": "text",
-        "text": " = "
+        "kind" : "text",
+        "text" : " = "
       },
       {
-        "kind": "typeIdentifier",
-        "preciseIdentifier": "s:s5NeverO",
-        "text": "Never"
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s5NeverO",
+        "text" : "Never"
       }
     ],
-    "modules": [
+    "modules" : [
       {
-        "name": "LiveViewNative"
+        "name" : "LiveViewNative"
       }
     ],
-    "required": true,
-    "role": "symbol",
-    "roleHeading": "Associated Type",
-    "symbolKind": "associatedtype",
-    "title": "CustomView"
+    "required" : true,
+    "role" : "symbol",
+    "roleHeading" : "Associated Type",
+    "symbolKind" : "associatedtype",
+    "title" : "CustomView"
   },
-  "primaryContentSections": [
+  "primaryContentSections" : [
     {
-      "declarations": [
+      "declarations" : [
         {
-          "languages": [
+          "languages" : [
             "swift"
           ],
-          "platforms": [
+          "platforms" : [
             "iOS"
           ],
-          "tokens": [
+          "tokens" : [
             {
-              "kind": "keyword",
-              "text": "associatedtype"
+              "kind" : "keyword",
+              "text" : "associatedtype"
             },
             {
-              "kind": "text",
-              "text": " "
+              "kind" : "text",
+              "text" : " "
             },
             {
-              "kind": "identifier",
-              "text": "CustomView"
+              "kind" : "identifier",
+              "text" : "CustomView"
             },
             {
-              "kind": "text",
-              "text": " : "
+              "kind" : "text",
+              "text" : " : "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:7SwiftUI4ViewP",
-              "text": "View"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI4ViewP",
+              "text" : "View"
             },
             {
-              "kind": "text",
-              "text": " = "
+              "kind" : "text",
+              "text" : " = "
             },
             {
-              "kind": "typeIdentifier",
-              "preciseIdentifier": "s:s5NeverO",
-              "text": "Never"
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s5NeverO",
+              "text" : "Never"
             }
           ]
         }
       ],
-      "kind": "declarations"
+      "kind" : "declarations"
     },
     {
-      "content": [
+      "content" : [
         {
-          "anchor": "discussion",
-          "level": 2,
-          "text": "Discussion",
-          "type": "heading"
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
         },
         {
-          "inlineContent": [
+          "inlineContent" : [
             {
-              "text": "Generally, implementors will use an opaque return type on their ",
-              "type": "text"
+              "text" : "Generally, implementors will use an opaque return type on their ",
+              "type" : "text"
             },
             {
-              "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg",
-              "isActive": true,
-              "type": "reference"
+              "code" : "lookup(_:element:context:)-5bvqg",
+              "type" : "codeVoice"
             },
             {
-              "text": " implementations and this will be inferred automatically.",
-              "type": "text"
+              "text" : " implementations and this will be inferred automatically.",
+              "type" : "text"
             }
           ],
-          "type": "paragraph"
+          "type" : "paragraph"
         }
       ],
-      "kind": "content"
+      "kind" : "content"
     }
   ],
-  "references": {
-    "doc://LiveViewNative/documentation/LiveViewNative": {
-      "abstract": [],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative",
-      "kind": "symbol",
-      "role": "collection",
-      "title": "LiveViewNative",
-      "type": "topic",
-      "url": "/documentation/liveviewnative"
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
         {
-          "text": "A custom registry allows clients to include custom view types in the LiveView DOM.",
-          "type": "text"
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "protocol"
+          "kind" : "keyword",
+          "text" : "protocol"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry",
-      "kind": "symbol",
-      "navigatorTitle": [
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
         {
-          "kind": "identifier",
-          "text": "CustomRegistry"
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
         }
       ],
-      "role": "symbol",
-      "title": "CustomRegistry",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry"
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/CustomView": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry\/CustomView" : {
+      "abstract" : [
         {
-          "text": "The type of view this registry returns from the ",
-          "type": "text"
+          "text" : "The type of view this registry returns from the ",
+          "type" : "text"
         },
         {
-          "code": "lookup",
-          "type": "codeVoice"
+          "code" : "lookup",
+          "type" : "codeVoice"
         },
         {
-          "text": " method.",
-          "type": "text"
+          "text" : " method.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "associatedtype"
+          "kind" : "keyword",
+          "text" : "associatedtype"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "CustomView"
+          "kind" : "identifier",
+          "text" : "CustomView"
         },
         {
-          "kind": "text",
-          "text": " : "
+          "kind" : "text",
+          "text" : " : "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:7SwiftUI4ViewP",
-          "text": "View"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4ViewP",
+          "text" : "View"
         },
         {
-          "kind": "text",
-          "text": " = "
+          "kind" : "text",
+          "text" : " = "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:s5NeverO",
-          "text": "Never"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s5NeverO",
+          "text" : "Never"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/CustomView",
-      "kind": "symbol",
-      "required": true,
-      "role": "symbol",
-      "title": "CustomView",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/customview"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry\/CustomView",
+      "kind" : "symbol",
+      "required" : true,
+      "role" : "symbol",
+      "title" : "CustomView",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry\/customview"
     },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName": {
-      "abstract": [
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry\/TagName" : {
+      "abstract" : [
         {
-          "text": "A type representing the tag names that this registry type can provide views for.",
-          "type": "text"
+          "text" : "A type representing the tag names that this registry type can provide views for.",
+          "type" : "text"
         }
       ],
-      "fragments": [
+      "fragments" : [
         {
-          "kind": "keyword",
-          "text": "associatedtype"
+          "kind" : "keyword",
+          "text" : "associatedtype"
         },
         {
-          "kind": "text",
-          "text": " "
+          "kind" : "text",
+          "text" : " "
         },
         {
-          "kind": "identifier",
-          "text": "TagName"
+          "kind" : "identifier",
+          "text" : "TagName"
         },
         {
-          "kind": "text",
-          "text": " : "
+          "kind" : "text",
+          "text" : " : "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:SY",
-          "text": "RawRepresentable"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SY",
+          "text" : "RawRepresentable"
         },
         {
-          "kind": "text",
-          "text": " = "
+          "kind" : "text",
+          "text" : " = "
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV",
-          "text": "EmptyRegistry"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative13EmptyRegistryV",
+          "text" : "EmptyRegistry"
         },
         {
-          "kind": "text",
-          "text": "."
+          "kind" : "text",
+          "text" : "."
         },
         {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative13EmptyRegistryV4NoneV",
-          "text": "None"
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative13EmptyRegistryV4NoneV",
+          "text" : "None"
         }
       ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
-      "kind": "symbol",
-      "required": true,
-      "role": "symbol",
-      "title": "TagName",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/tagname"
-    },
-    "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg": {
-      "abstract": [
-        {
-          "text": "This method is called by LiveView Native when it needs to construct a custom view.",
-          "type": "text"
-        }
-      ],
-      "defaultImplementations": 1,
-      "fragments": [
-        {
-          "kind": "keyword",
-          "text": "static"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "keyword",
-          "text": "func"
-        },
-        {
-          "kind": "text",
-          "text": " "
-        },
-        {
-          "kind": "identifier",
-          "text": "lookup"
-        },
-        {
-          "kind": "text",
-          "text": "("
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP7TagNameQa",
-          "text": "TagName"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "element"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative11ElementNodeV",
-          "text": "ElementNode"
-        },
-        {
-          "kind": "text",
-          "text": ", "
-        },
-        {
-          "kind": "externalParam",
-          "text": "context"
-        },
-        {
-          "kind": "text",
-          "text": ": "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative0A7ContextV",
-          "text": "LiveContext"
-        },
-        {
-          "kind": "text",
-          "text": "<"
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP4RootQa",
-          "text": "Root"
-        },
-        {
-          "kind": "text",
-          "text": ">) -> "
-        },
-        {
-          "kind": "typeIdentifier",
-          "preciseIdentifier": "s:14LiveViewNative14CustomRegistryP0dB0Qa",
-          "text": "CustomView"
-        }
-      ],
-      "identifier": "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg",
-      "kind": "symbol",
-      "required": true,
-      "role": "symbol",
-      "title": "lookup(_:element:context:)",
-      "type": "topic",
-      "url": "/documentation/liveviewnative/customregistry/lookup(_:element:context:)-5bvqg"
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry\/TagName",
+      "kind" : "symbol",
+      "required" : true,
+      "role" : "symbol",
+      "title" : "TagName",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry\/tagname"
     }
   },
-  "schemaVersion": {
-    "major": 0,
-    "minor": 3,
-    "patch": 0
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
   },
-  "sections": [],
-  "seeAlsoSections": [
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
     {
-      "generated": true,
-      "identifiers": [
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/TagName",
-        "doc://LiveViewNative/documentation/LiveViewNative/CustomRegistry/lookup(_:element:context:)-5bvqg"
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry\/TagName"
       ],
-      "title": "Custom Tags"
+      "title" : "Custom Tags"
     }
   ],
-  "variants": [
+  "variants" : [
     {
-      "paths": [
-        "/documentation/liveviewnative/customregistry/customview"
+      "paths" : [
+        "\/documentation\/liveviewnative\/customregistry\/customview"
       ],
-      "traits": [
+      "traits" : [
         {
-          "interfaceLanguage": "swift"
+          "interfaceLanguage" : "swift"
         }
       ]
     }
