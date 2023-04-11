@@ -7,6 +7,7 @@
 
 import SwiftUI
 import LiveViewNativeCore
+import Combine
 
 /// A property wrapper that decodes an attribute of an element.
 ///

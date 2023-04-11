@@ -40,6 +40,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           matched_geometry_effect: Modifiers.MatchedGeometryEffect,
           navigation_title: Modifiers.NavigationTitle,
           padding: Modifiers.Padding,
+          refreshable: Modifiers.Refreshable,
           rotation_3d_effect: Modifiers.Rotation3DEffect,
           rotation_effect: Modifiers.RotationEffect,
           strikethrough: Modifiers.Strikethrough,
