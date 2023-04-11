@@ -40,6 +40,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           padding: Modifiers.Padding,
           tag: Modifiers.Tag,
           tint: Modifiers.Tint,
+          transition: Modifiers.Transition,
 
           # grid
           grid_cell_anchor: Modifiers.GridCellAnchor,
