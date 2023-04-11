@@ -187,6 +187,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case gridCellColumns = "grid_cell_columns"
         case gridCellUnsizedAxes = "grid_cell_unsized_axes"
         case gridColumnAlignment = "grid_column_alignment"
+        case hueRotation = "hue_rotation"
         case italic
         case listRowInsets = "list_row_insets"
         case listRowSeparator = "list_row_separator"
@@ -194,6 +195,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case navigationTitle = "navigation_title"
         case padding
         case renameAction = "rename_action"
+        case rotation3DEffect = "rotation_3d_effect"
+        case rotationEffect = "rotation_effect"
         case tag
         case textSelection = "text_selection"
         case tint
@@ -227,6 +230,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try GridCellUnsizedAxesModifier(from: decoder)
         case .gridColumnAlignment:
             try GridColumnAlignmentModifier(from: decoder)
+        case .hueRotation:
+            try HueRotationModifier(from: decoder)
         case .italic:
             try ItalicModifier(from: decoder)
         case .listRowInsets:
@@ -241,6 +246,10 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try PaddingModifier(from: decoder)
         case .renameAction:
             try RenameActionModifier(from: decoder)
+        case .rotation3DEffect:
+            try Rotation3DEffectModifier(from: decoder)
+        case .rotationEffect:
+            try RotationEffectModifier(from: decoder)
         case .tag:
             try TagModifier(from: decoder)
         case .textSelection:
