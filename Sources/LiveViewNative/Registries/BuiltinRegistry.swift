@@ -180,6 +180,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case backgroundStyle = "background_style"
         case bold
         case contentTransition = "content_transition"
+        case font
         case fontWeight = "font_weight"
         case foregroundStyle = "foreground_style"
         case frame
@@ -220,6 +221,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try ContentTransitionModifier(from: decoder)
         case .foregroundStyle:
             try ForegroundStyleModifier(from: decoder)
+        case .font:
+            try FontModifier(from: decoder)
         case .fontWeight:
             try FontWeightModifier(from: decoder)
         case .frame:
