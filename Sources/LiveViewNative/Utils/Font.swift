@@ -202,49 +202,23 @@ extension Font: Decodable {
 /// * `bold`
 /// * `heavy`
 /// * `black`
-///
-/// You can also use the numeric value for the associated weight, such as `400` for regular and `900` for `black`.
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 extension Font.Weight: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let name = try? container.decode(String.self) {
-            switch name {
-            case "ultra_light": self = .ultraLight
-            case "thin": self = .thin
-            case "light": self = .light
-            case "regular": self = .regular
-            case "medium": self = .medium
-            case "semibold": self = .semibold
-            case "bold": self = .bold
-            case "heavy": self = .heavy
-            case "black": self = .black
-            default: throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unknown weight named \(name)"))
-            }
-        } else {
-            switch try container.decode(Int.self) {
-            case 100:
-                self = .ultraLight
-            case 200:
-                self = .thin
-            case 300:
-                self = .light
-            case 400:
-                self = .regular
-            case 500:
-                self = .medium
-            case 600:
-                self = .semibold
-            case 700:
-                self = .bold
-            case 800:
-                self = .heavy
-            case 900:
-                self = .black
-            case let `default`: throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unknown weight \(`default`)"))
-            }
+        switch try container.decode(String.self) {
+        case "ultra_light": self = .ultraLight
+        case "thin": self = .thin
+        case "light": self = .light
+        case "regular": self = .regular
+        case "medium": self = .medium
+        case "semibold": self = .semibold
+        case "bold": self = .bold
+        case "heavy": self = .heavy
+        case "black": self = .black
+        case let `default`: throw DecodingError.dataCorrupted(.init(codingPath: [], debugDescription: "Unknown weight named \(`default`)"))
         }
     }
 }
