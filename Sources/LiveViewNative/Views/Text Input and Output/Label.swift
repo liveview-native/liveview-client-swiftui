@@ -51,12 +51,12 @@ struct Label<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Label {
-            context.buildChildren(of: element, withTagName: "title", namespace: "Label", includeDefaultSlot: true)
+            context.buildChildren(of: element, withID: "title", includeDefaultSlot: true)
         } icon: {
             if let systemImage {
                 SwiftUI.Image(systemName: systemImage)
             } else {
-                context.buildChildren(of: element, withTagName: "icon", namespace: "Label")
+                context.buildChildren(of: element, withID: "icon")
             }
         }
     }

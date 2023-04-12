@@ -60,11 +60,11 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     
     private static func elementWithName(
         _ tagName: String,
-        namespace: String?
+        id: String
     ) -> (NodeChildrenSequence.Element) -> Bool {
         { child in
             if case let .element(element) = child.data,
-               element.namespace == namespace,
+               element.attributes.first(where: { $0.name == "id" })?.value == id,
                element.tag == tagName
             {
                 return true
@@ -75,44 +75,41 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     }
     
     /// Checks whether the element has any children with the given tag.
-    public func hasChild(
+    public func hasTemplate(
         of element: ElementNode,
-        withTagName tagName: String,
-        namespace: String? = nil
+        withID id: String
     ) -> Bool {
-        element.children().contains(where: Self.elementWithName(tagName, namespace: namespace))
+        element.children().contains(where: Self.elementWithName("template", id: id))
     }
     
     /// Builds a view representing only the children of the element which have the given tag name.
     ///
     /// This can be use to build views which have multiple types of children, such as how Menu takes content and a label:
     /// ```html
-    /// <Menu>
-    ///     <Menu:content>
-    ///         <Button phx-click="clicked">Hello</Button>
-    ///     </Menu:content>
-    ///     <Menu:label>
+    /// <menu>
+    ///     <template id={:content}>
+    ///         <button phx-click="clicked">Hello</button>
+    ///     </template>
+    ///     <template id={:label}>
     ///         My Menu
-    ///     </Menu:label>
-    /// </Menu>
+    ///     </template>
+    /// </menu>
     /// ```
     ///
     /// - Parameter element: The element whose children to consider.
-    /// - Parameter withTagName: The name of the tag to build children from.
-    /// - Parameter namespace: The namespace of the tag to build children from.
-    /// - Parameter includeDefaultSlot: Whether to use all un-namespaced children if there are no children with the correct tag name and namespace.
+    /// - Parameter id: The ID of the `<template>` containing the children.
+    /// - Parameter includeDefaultSlot: Whether to use all other children if there is no `<template>` with the correct id.
     public func buildChildren(
         of element: ElementNode,
-        withTagName tagName: String,
-        namespace: String? = nil,
+        withID id: String,
         includeDefaultSlot: Bool = false
     ) -> some View {
         let children = element.children()
-        let namedSlotChildren = self.children(of: element, withTagName: tagName, namespace: namespace)
+        let namedSlotChildren = children.filter(Self.elementWithName("template", id: id))
         if namedSlotChildren.isEmpty && includeDefaultSlot {
             let defaultSlotChildren = children.filter({
                 if case let .element(element) = $0.data {
-                    return element.namespace != namespace
+                    return element.tag != "template"
                 } else {
                     return true
                 }

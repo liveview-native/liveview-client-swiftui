@@ -51,9 +51,9 @@ struct ControlGroup<R: RootRegistry>: View {
     public var body: some View {
         #if os(iOS) || os(macOS)
         SwiftUI.ControlGroup {
-            context.buildChildren(of: element, withTagName: "content", namespace: "ControlGroup", includeDefaultSlot: true)
+            context.buildChildren(of: element, withID: "content", includeDefaultSlot: true)
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "ControlGroup")
+            context.buildChildren(of: element, withID: "label")
         }
         .applyControlGroupStyle(style)
         #endif

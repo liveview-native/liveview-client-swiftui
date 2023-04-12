@@ -53,9 +53,9 @@ struct Menu<R: RootRegistry>: View {
     public var body: some View {
         #if !os(watchOS)
         SwiftUI.Menu {
-            context.buildChildren(of: element, withTagName: "content", namespace: "Menu")
+            context.buildChildren(of: element, withID: "content")
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "Menu", includeDefaultSlot: true)
+            context.buildChildren(of: element, withID: "label", includeDefaultSlot: true)
         }
         .applyMenuStyle(style)
         #endif
