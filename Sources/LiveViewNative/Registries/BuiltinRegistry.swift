@@ -204,6 +204,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case monospacedDigit = "monospaced_digit"
         case navigationTitle = "navigation_title"
         case opacity
+        case onHover = "on_hover"
         case padding
         case position
         case refreshable
@@ -287,6 +288,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try NavigationTitleModifier(from: decoder)
         case .opacity:
             try OpacityModifier(from: decoder)
+        case .onHover:
+            try OnHoverModifier(from: decoder)
         case .padding:
             try PaddingModifier(from: decoder)
         case .position:
