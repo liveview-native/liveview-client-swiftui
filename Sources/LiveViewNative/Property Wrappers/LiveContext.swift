@@ -58,14 +58,13 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         return coordinator.builder.fromNodes(element.children(), context: storage)
     }
     
-    private static func elementWithName(
-        _ tagName: String,
-        id: String
+    private static func isTemplateElement(
+        _ template: String
     ) -> (NodeChildrenSequence.Element) -> Bool {
         { child in
             if case let .element(element) = child.data,
-               element.attributes.first(where: { $0.name == "id" })?.value == id,
-               element.tag == tagName
+               element.attributes.first(where: { $0.name == "template" })?.value == template
+                || element.attributes.contains(where: { $0.name == .init(stringLiteral: "#\(template)") })
             {
                 return true
             } else {
@@ -79,7 +78,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         of element: ElementNode,
         withID id: String
     ) -> Bool {
-        element.children().contains(where: Self.elementWithName("template", id: id))
+        element.children().contains(where: Self.isTemplateElement(id))
     }
     
     /// Builds a view representing only the children of the element which have the given tag name.
@@ -105,11 +104,12 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         includeDefaultSlot: Bool = false
     ) -> some View {
         let children = element.children()
-        let namedSlotChildren = children.filter(Self.elementWithName("template", id: id))
+        let namedSlotChildren = children.filter(Self.isTemplateElement(id))
         if namedSlotChildren.isEmpty && includeDefaultSlot {
             let defaultSlotChildren = children.filter({
                 if case let .element(element) = $0.data {
-                    return element.tag != "template"
+                    return (element.attributes.first(where: { $0.name == "template" })?.value != id)
+                        && !element.attributes.contains(where: { $0.name == .init(stringLiteral: "#\(id)") })
                 } else {
                     return true
                 }
