@@ -182,6 +182,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case contentTransition = "content_transition"
         case font
         case fontWeight = "font_weight"
+        case fontWidth = "font_width"
         case foregroundStyle = "foreground_style"
         case frame
         case gridCellAnchor = "grid_cell_anchor"
@@ -225,6 +226,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try FontModifier(from: decoder)
         case .fontWeight:
             try FontWeightModifier(from: decoder)
+        case .fontWidth:
+            try FontWidthModifier(from: decoder)
         case .frame:
             try FrameModifier(from: decoder)
         case .gridCellAnchor:
