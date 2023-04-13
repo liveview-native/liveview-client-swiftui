@@ -178,6 +178,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case animation
         case aspectRatio = "aspect_ratio"
         case backgroundStyle = "background_style"
+        case blur
         case bold
         case contentTransition = "content_transition"
         case disabled
@@ -221,6 +222,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try AspectRatioModifier(from: decoder)
         case .backgroundStyle:
             try BackgroundStyleModifier(from: decoder)
+        case .blur:
+            try BlurModifier(from: decoder)
         case .bold:
             try BoldModifier(from: decoder)
         case .contentTransition:
