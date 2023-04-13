@@ -38,10 +38,50 @@ struct TextFieldStyleModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        content.applyTextFieldStyle(style)
+        switch style {
+        case .automatic:
+            content.textFieldStyle(.automatic)
+        case .plain:
+            content.textFieldStyle(.plain)
+        case .roundedBorder:
+            #if !os(watchOS)
+            content.textFieldStyle(.roundedBorder)
+            #endif
+        case .squareBorder:
+            #if os(macOS)
+            content.textFieldStyle(.squareBorder)
+            #endif
+        }
     }
 
     enum CodingKeys: String, CodingKey {
         case style
     }
+}
+
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
+private enum TextFieldStyle: String, Decodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    case plain
+    /// `rounded-border`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(iOS 16.0, tvOS 16.0, macOS 13.0, *)
+    case roundedBorder = "rounded_border"
+
+    /// `square-border`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(macOS 13.0, *)
+    case squareBorder = "square_border"
 }
