@@ -14,7 +14,7 @@ import SwiftUI
 /// See ``LiveViewNative/SwiftUI/ListItemTint`` for more details on creating tints.
 ///
 /// ```html
-/// <List modifiers={list_item_tint(@native, tint: :monochrome)}>
+/// <List>
 ///     <Label system-image="gear" id="gear">Default</Label>
 ///     <Label
 ///         modifiers={list_item_tint(@native, tint: :monochrome)}
