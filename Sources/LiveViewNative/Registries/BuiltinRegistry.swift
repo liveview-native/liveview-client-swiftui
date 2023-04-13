@@ -193,6 +193,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case italic
         case listRowInsets = "list_row_insets"
         case listRowSeparator = "list_row_separator"
+        case listStyle = "list_style"
         case matchedGeometryEffect = "matched_geometry_effect"
         case navigationTitle = "navigation_title"
         case padding
@@ -246,6 +247,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try ListRowInsetsModifier(from: decoder)
         case .listRowSeparator:
             try ListRowSeparatorModifier(from: decoder)
+        case .listStyle:
+            try ListStyleModifier(from: decoder)
         case .matchedGeometryEffect:
             try MatchedGeometryEffectModifier(from: decoder)
         case .navigationTitle:
