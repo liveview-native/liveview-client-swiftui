@@ -85,7 +85,6 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``selection``
-/// * ``style``
 ///
 /// ## Events
 /// * ``delete``
