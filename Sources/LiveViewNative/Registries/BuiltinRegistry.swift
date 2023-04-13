@@ -199,6 +199,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case navigationTitle = "navigation_title"
         case opacity
         case padding
+        case position
         case refreshable
         case renameAction = "rename_action"
         case rotation3DEffect = "rotation_3d_effect"
@@ -263,6 +264,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try OpacityModifier(from: decoder)
         case .padding:
             try PaddingModifier(from: decoder)
+        case .position:
+            try PositionModifier(from: decoder)
         case .refreshable:
             try RefreshableModifier(from: decoder)
         case .renameAction:
