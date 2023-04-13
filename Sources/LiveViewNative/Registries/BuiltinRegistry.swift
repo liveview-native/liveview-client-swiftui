@@ -193,6 +193,7 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
         case gridColumnAlignment = "grid_column_alignment"
         case hueRotation = "hue_rotation"
         case italic
+        case layoutPriority = "layout_priority"
         case listRowInsets = "list_row_insets"
         case listRowSeparator = "list_row_separator"
         case matchedGeometryEffect = "matched_geometry_effect"
@@ -251,6 +252,8 @@ struct BuiltinRegistry: BuiltinRegistryProtocol {
             try HueRotationModifier(from: decoder)
         case .italic:
             try ItalicModifier(from: decoder)
+        case .layoutPriority:
+            try LayoutPriorityModifier(from: decoder)
         case .listRowInsets:
             try ListRowInsetsModifier(from: decoder)
         case .listRowSeparator:

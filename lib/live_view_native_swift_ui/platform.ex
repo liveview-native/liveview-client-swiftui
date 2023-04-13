@@ -39,6 +39,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           frame: Modifiers.Frame,
           hue_rotation: Modifiers.HueRotation,
           italic: Modifiers.Italic,
+          layout_priority: Modifiers.LayoutPriority,
           list_row_insets: Modifiers.ListRowInsets,
           list_row_separator: Modifiers.ListRowSeparator,
           matched_geometry_effect: Modifiers.MatchedGeometryEffect,
