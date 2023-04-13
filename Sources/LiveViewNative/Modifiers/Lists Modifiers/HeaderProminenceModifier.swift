@@ -37,12 +37,7 @@ struct HeaderProminenceModifier: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        switch try container.decode(String.self, forKey: .prominence) {
-        case "increased": self.prominence = .increased
-        case "standard": self.prominence = .standard
-        case let `default`: throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "unknown prominence '\(`default`)'"))
-        }
-
+        self.prominence = try container.decode(Prominence.self, forKey: .prominence)
     }
 
     func body(content: Content) -> some View {
