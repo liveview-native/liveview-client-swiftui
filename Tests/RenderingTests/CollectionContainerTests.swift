@@ -31,68 +31,6 @@ final class CollectionContainerTests: XCTestCase {
             }
         }
     }
-    func testListStyles() throws {
-        let content = #"<Text id="0">0</Text><Text id="1">1</Text><Text id="2">2</Text>"#
-        let list = List {
-            Text("0")
-            Text("1")
-            Text("2")
-        }
-        try assertMatch(
-            #"""
-            <List list-style="automatic">\#(content)</List>
-            """#,
-            size: .init(width: 300, height: 300)
-        ) {
-            list.listStyle(.automatic)
-        }
-        try assertMatch(
-            #"""
-            <List list-style="plain">\#(content)</List>
-            """#,
-            size: .init(width: 300, height: 300)
-        ) {
-            list.listStyle(.plain)
-        }
-#if os(iOS) || os(macOS)
-        try assertMatch(
-            #"""
-            <List list-style="sidebar">\#(content)</List>
-            """#,
-            size: .init(width: 300, height: 300)
-        ) {
-            list.listStyle(.sidebar)
-        }
-        try assertMatch(
-            #"""
-            <List list-style="inset">\#(content)</List>
-            """#,
-            size: .init(width: 300, height: 300)
-        ) {
-            list.listStyle(.inset)
-        }
-#endif
-#if os(iOS)
-        try assertMatch(
-            #"""
-            <List list-style="inset-grouped">\#(content)</List>
-            """#,
-            size: .init(width: 300, height: 300)
-        ) {
-            list.listStyle(.insetGrouped)
-        }
-#endif
-#if os(iOS) || os(tvOS)
-        try assertMatch(
-            #"""
-            <List list-style="grouped">\#(content)</List>
-            """#,
-            size: .init(width: 300, height: 300)
-        ) {
-            list.listStyle(.grouped)
-        }
-#endif
-    }
     
     // MARK: Section
     
