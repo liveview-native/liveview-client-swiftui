@@ -68,6 +68,15 @@
                }
                @Code(name: "config.exs", file: 01-01-03-config01.exs)
            }
+
+           @Step {
+               Edit the `router.ex` file in the created project.
+               
+               @Comment {
+                   skip = true
+               }
+               @Code(name: "router.ex", file: 01-01-04-router.ex)
+           }
             
             @Step {
                 In the router, add a live route for the "/cats" path that points to the live view we'll create next.
@@ -75,7 +84,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/router.ex", file: 01-01-04-router.ex)
+                @Code(name: "lib/lvn_tutorial_web/router.ex", file: 01-01-04-router01.ex)
             }
             
             @Step {
