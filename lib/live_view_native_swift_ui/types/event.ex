@@ -9,7 +9,6 @@ defmodule LiveViewNativeSwiftUi.Types.Event do
   def cast(value) when is_map(value) do
     value = value
       |> Map.update(:params, Jason.encode!(Map.new()), fn params -> Jason.encode!(params) end)
-    dbg value
     {:ok, struct(__MODULE__, value)}
   end
   def cast(_), do: :error
