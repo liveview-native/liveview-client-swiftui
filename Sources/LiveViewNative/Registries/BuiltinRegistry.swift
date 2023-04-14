@@ -207,6 +207,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case strikethrough
         case tag
         case textCase = "text_case"
+        case textFieldStyle = "text_field_style"
         case textSelection = "text_selection"
         case tint
         case transition
@@ -285,6 +286,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try TagModifier(from: decoder)
         case .textCase:
             try TextCaseModifier(from: decoder)
+        case .textFieldStyle:
+            try TextFieldStyleModifier(from: decoder)
         case .textSelection:
             try TextSelectionModifier(from: decoder)
         case .tint:

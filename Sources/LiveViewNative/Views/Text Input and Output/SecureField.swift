@@ -23,7 +23,6 @@ import SwiftUI
 /// * ``TextFieldProtocol/autocapitalization``
 /// * ``TextFieldProtocol/keyboard``
 /// * ``TextFieldProtocol/submitLabel``
-/// * ``TextFieldProtocol/textFieldStyle``
 ///
 /// ## Events
 /// * ``focusEvent``
@@ -60,7 +59,6 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
         }
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .applyTextFieldStyle(textFieldStyle)
             .applyAutocorrectionDisabled(disableAutocorrection)
 #if os(iOS) || os(tvOS)
             .textInputAutocapitalization(autocapitalization)

@@ -86,19 +86,6 @@ extension TextFieldProtocol {
         }
     }
     
-    /// The style to apply to this field.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    var textFieldStyle: TextFieldStyle {
-        if let s = element.attributeValue(for: "text-field-style"),
-           let style = TextFieldStyle(rawValue: s) {
-            return style
-        } else {
-            return .automatic
-        }
-    }
-    
     /// Indicates if autocorrection should be enabled.
     ///
     /// Possible values:
@@ -247,52 +234,7 @@ extension TextFieldProtocol {
     }
 }
 
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-enum TextFieldStyle: String {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case plain
-    /// `rounded-border`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, tvOS 16.0, macOS 13.0, *)
-    case roundedBorder = "rounded-border"
-
-    /// `square-border`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(macOS 13.0, *)
-    case squareBorder = "square-border"
-}
-
 extension View {
-    @ViewBuilder
-    func applyTextFieldStyle(_ style: TextFieldStyle) -> some View {
-        switch style {
-        case .automatic:
-            self.textFieldStyle(.automatic)
-        case .plain:
-            self.textFieldStyle(.plain)
-        case .roundedBorder:
-            #if !os(watchOS)
-            self.textFieldStyle(.roundedBorder)
-            #endif
-        case .squareBorder:
-            #if os(macOS)
-            self.textFieldStyle(.squareBorder)
-            #endif
-        }
-    }
-    
     @ViewBuilder
     func applyAutocorrectionDisabled(_ disableAutocorrection: Bool?) -> some View {
         if let disableAutocorrection {

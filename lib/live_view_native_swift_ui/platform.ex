@@ -54,6 +54,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           strikethrough: Modifiers.Strikethrough,
           tag: Modifiers.Tag,
           text_case: Modifiers.TextCase,
+          text_field_style: Modifiers.TextFieldStyle,
           text_selection: Modifiers.TextSelection,
           tint: Modifiers.Tint,
           transition: Modifiers.Transition,
