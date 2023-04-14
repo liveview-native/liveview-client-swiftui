@@ -126,7 +126,7 @@
            }
 
             @Step {
-                Lastly, we need to tweak the `live.html.heex` layout to remove the extraneous HTML that the native frontend doesn't need.
+                Lastly, we need to tweak the `app.html.heex` layout to remove the extraneous HTML that the native frontend doesn't need.
                 
                 @Comment {
                     project = "backend"
