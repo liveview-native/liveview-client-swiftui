@@ -57,7 +57,7 @@
                @Comment {
                    skip = true
                }
-               @Code(name: "config.exs", file: 01-01-03-config.exs)
+               @Code(name: "config/config.exs", file: 01-01-03-config.exs)
            }
                
            @Step {
@@ -66,7 +66,7 @@
                @Comment {
                    project = "backend"
                }
-               @Code(name: "config.exs", file: 01-01-03-config01.exs)
+               @Code(name: "config/config.exs", file: 01-01-03-config01.exs)
            }
 
            @Step {
