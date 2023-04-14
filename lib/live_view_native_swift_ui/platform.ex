@@ -52,6 +52,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           navigation_title: Modifiers.NavigationTitle,
           opacity: Modifiers.Opacity,
           padding: Modifiers.Padding,
+          position: Modifiers.Position,
           refreshable: Modifiers.Refreshable,
           rotation_3d_effect: Modifiers.Rotation3DEffect,
           rotation_effect: Modifiers.RotationEffect,
