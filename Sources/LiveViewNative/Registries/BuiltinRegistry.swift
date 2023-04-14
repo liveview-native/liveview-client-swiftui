@@ -177,6 +177,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case background = "background"
         case backgroundStyle = "background_style"
         case bold
+        case baselineOffset = "baseline_offset"
         case contentTransition = "content_transition"
         case disabled
         case dynamicTypeSize = "dynamic_type_size"
@@ -227,6 +228,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try BackgroundStyleModifier(from: decoder)
         case .bold:
             try BoldModifier(from: decoder)
+        case .baselineOffset:
+            try BaselineOffsetModifier(from: decoder)
         case .contentTransition:
             try ContentTransitionModifier(from: decoder)
         case .disabled:
