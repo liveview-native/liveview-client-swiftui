@@ -192,6 +192,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case gridCellColumns = "grid_cell_columns"
         case gridCellUnsizedAxes = "grid_cell_unsized_axes"
         case gridColumnAlignment = "grid_column_alignment"
+        case headerProminence = "header_prominence"
         case hueRotation = "hue_rotation"
         case italic
         case layoutPriority = "layout_priority"
@@ -262,6 +263,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try GridCellUnsizedAxesModifier(from: decoder)
         case .gridColumnAlignment:
             try GridColumnAlignmentModifier(from: decoder)
+        case .headerProminence:
+            try HeaderProminenceModifier(from: decoder)
         case .hueRotation:
             try HueRotationModifier(from: decoder)
         case .italic:
