@@ -84,8 +84,6 @@ final class PickerTests: XCTestCase {
                     ForEach(["paperplane", "graduationcap", "ellipsis.bubble"], id: \.self) { name in
                         Label {
                             Text(name)
-                                // the Picker imposes a slightly different font by default, but our Text view uses nil, so match that
-                                .font(nil)
                         } icon: {
                             Image(systemName: name)
                         }
