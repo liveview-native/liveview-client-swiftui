@@ -182,6 +182,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case contentTransition = "content_transition"
         case disabled
         case dynamicTypeSize = "dynamic_type_size"
+        case fixedSize = "fixed_size"
         case font
         case fontWeight = "font_weight"
         case fontWidth = "font_width"
@@ -241,6 +242,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try DynamicTypeSizeModifier(from: decoder)
         case .foregroundStyle:
             try ForegroundStyleModifier(from: decoder)
+        case .fixedSize:
+            try FixedSizeModifier(from: decoder)
         case .font:
             try FontModifier(from: decoder)
         case .fontWeight:
