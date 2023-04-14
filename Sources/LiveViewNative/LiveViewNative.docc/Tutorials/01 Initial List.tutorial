@@ -48,7 +48,7 @@
                @Comment {
                    project = "backend"
                }
-               @Code(name: "mix.exs", file: 01-01-02-mix01.ex)
+               @Code(name: "mix.exs", file: 01-01-09-mix.exs)
            }
 
            @Step {
@@ -66,7 +66,7 @@
                @Comment {
                    project = "backend"
                }
-               @Code(name: "config/config.exs", file: 01-01-03-config01.exs)
+               @Code(name: "config/config.exs", file: 01-01-10-config.exs)
            }
 
            @Step {
@@ -84,7 +84,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/router.ex", file: 01-01-04-router01.ex)
+                @Code(name: "lib/lvn_tutorial_web/router.ex", file: 01-01-12-router.ex)
             }
             
             @Step {
@@ -117,12 +117,21 @@
             }
             
             @Step {
+               Edit the `app.html.heex` file in the created project.
+               
+               @Comment {
+                   skip = true
+               }
+               @Code(name: "lib/lvn_tutorial_web/templates/layout/app.html.heex", file: 01-01-08-app-template.html.heex)
+           }
+
+            @Step {
                 Lastly, we need to tweak the `live.html.heex` layout to remove the extraneous HTML that the native frontend doesn't need.
                 
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/templates/layout/live.html.heex", file: 01-01-08-live-template.html.heex)
+                @Code(name: "lib/lvn_tutorial_web/templates/layout/app.html.heex", file: 01-01-13-app-template.html.heex)
             }
         }
     }
