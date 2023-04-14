@@ -85,7 +85,6 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``selection``
-/// * ``style``
 ///
 /// ## Events
 /// * ``delete``
@@ -169,19 +168,7 @@ struct List<R: RootRegistry>: View {
     #endif
     @LiveBinding(attribute: "selection") private var selection = Selection.single(nil)
     
-    /// The style to apply to this list.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("list-style") private var style: ListStyle = .automatic
-    
     public var body: some View {
-        list
-            .applyListStyle(style)
-    }
-    
-    @ViewBuilder
-    private var list: some View {
         #if os(watchOS)
         SwiftUI.List {
             content
@@ -235,47 +222,6 @@ struct List<R: RootRegistry>: View {
 #endif
                 }
             }
-        }
-    }
-}
-
-fileprivate enum ListStyle: String, AttributeDecodable {
-    case automatic
-    case plain
-#if os(iOS) || os(macOS)
-    case sidebar
-    case inset
-#endif
-#if os(iOS)
-    case insetGrouped = "inset-grouped"
-#endif
-#if os(iOS) || os(tvOS)
-    case grouped
-#endif
-}
-
-private extension View {
-    @ViewBuilder
-    func applyListStyle(_ style: ListStyle) -> some View {
-        switch style {
-        case .automatic:
-            self.listStyle(.automatic)
-        case .plain:
-            self.listStyle(.plain)
-#if os(iOS) || os(macOS)
-        case .sidebar:
-            self.listStyle(.sidebar)
-        case .inset:
-            self.listStyle(.inset)
-#endif
-#if os(iOS)
-        case .insetGrouped:
-            self.listStyle(.insetGrouped)
-#endif
-#if os(iOS) || os(tvOS)
-        case .grouped:
-            self.listStyle(.grouped)
-#endif
         }
     }
 }
