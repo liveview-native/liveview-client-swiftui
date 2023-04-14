@@ -28,6 +28,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
           aspect_ratio: Modifiers.AspectRatio,
           background: Modifiers.Background,
           background_style: Modifiers.BackgroundStyle,
+          blur: Modifiers.Blur,
           bold: Modifiers.Bold,
           baseline_offset: Modifiers.BaselineOffset,
           content_transition: Modifiers.ContentTransition,

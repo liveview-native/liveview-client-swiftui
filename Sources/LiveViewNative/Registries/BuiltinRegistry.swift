@@ -176,6 +176,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case aspectRatio = "aspect_ratio"
         case background = "background"
         case backgroundStyle = "background_style"
+        case blur
         case bold
         case baselineOffset = "baseline_offset"
         case contentTransition = "content_transition"
@@ -226,6 +227,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try BackgroundModifier<R>(from: decoder)
         case .backgroundStyle:
             try BackgroundStyleModifier(from: decoder)
+        case .blur:
+            try BlurModifier(from: decoder)
         case .bold:
             try BoldModifier(from: decoder)
         case .baselineOffset:
