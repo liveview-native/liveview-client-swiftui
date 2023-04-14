@@ -50,6 +50,24 @@
                }
                @Code(name: "mix.exs", file: 01-01-03-dependencies.ex)
            }
+
+           @Step {
+               Edit the `config.exs` file in the created project.
+               
+               @Comment {
+                   skip = true
+               }
+               @Code(name: "config.exs", file: 01-01-04-config.exs)
+           }
+               
+           @Step {
+               Next, add the config for `live_view_native`.
+               
+               @Comment {
+                   project = "backend"
+               }
+               @Code(name: "config.exs", file: 01-01-04-config01.exs)
+           }
             
             @Step {
                 In the router, add a live route for the "/cats" path that points to the live view we'll create next.
