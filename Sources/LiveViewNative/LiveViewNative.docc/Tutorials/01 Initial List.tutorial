@@ -31,25 +31,25 @@
                 @Code(name: "Terminal", file: 01-01-01-create-project.sh)
             }
                 
-<!--            @Step {-->
-<!--                Edit the `mix.exs` file in the created project.-->
-<!--                -->
-<!--                @Comment {-->
-<!--                    skip = true-->
-<!--                }-->
-<!--                @Code(name: "mix.exs", file: 01-01-02-mix.exs)-->
-<!--            }-->
-<!--                -->
-<!--            @Step {-->
-<!--                Next, add the `live_view_native` and `live_view_native_swift_ui` libraries as dependencies. -->
-<!--                -->
-<!--                These packages provide supporting functions for applying SwiftUI modifiers to elements from within HEEx templates.-->
-<!--                -->
-<!--                @Comment {-->
-<!--                    project = "backend"-->
-<!--                }-->
-<!--                @Code(name: "mix.exs", file: 01-01-03-dependencies.ex)-->
-<!--            }-->
+           @Step {
+               Edit the `mix.exs` file in the created project.
+               
+               @Comment {
+                   skip = true
+               }
+               @Code(name: "mix.exs", file: 01-01-02-mix.exs)
+           }
+               
+           @Step {
+               Next, add the `live_view_native` and `live_view_native_swift_ui` libraries as dependencies. 
+               
+               These packages provide supporting functions for applying SwiftUI modifiers to elements from within HEEx templates.
+               
+               @Comment {
+                   project = "backend"
+               }
+               @Code(name: "mix.exs", file: 01-01-03-dependencies.ex)
+           }
             
             @Step {
                 In the router, add a live route for the "/cats" path that points to the live view we'll create next.
