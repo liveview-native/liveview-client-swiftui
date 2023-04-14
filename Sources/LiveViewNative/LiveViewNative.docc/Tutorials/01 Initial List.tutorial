@@ -48,7 +48,7 @@
                @Comment {
                    project = "backend"
                }
-               @Code(name: "mix.exs", file: 01-01-03-dependencies.ex)
+               @Code(name: "mix.exs", file: 01-01-02-mix01.ex)
            }
 
            @Step {
