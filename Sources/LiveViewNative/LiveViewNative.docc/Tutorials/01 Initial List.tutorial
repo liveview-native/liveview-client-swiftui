@@ -75,7 +75,7 @@
                @Comment {
                    skip = true
                }
-               @Code(name: "router.ex", file: 01-01-04-router.ex)
+               @Code(name: "lib/lvn_tutorial_web/router.ex", file: 01-01-04-router.ex)
            }
             
             @Step {
