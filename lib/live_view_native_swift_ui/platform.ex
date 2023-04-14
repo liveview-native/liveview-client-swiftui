@@ -1,12 +1,16 @@
 defmodule LiveViewNativeSwiftUi.Platform do
   import LiveViewNativePlatform.Utils,
-    only: [check_dependency!: 1, check_platform!: 2, run_command!: 3]
+    only: [
+      check_dependency!: 1,
+      check_platform!: 2,
+      run_command!: 3
+    ]
 
   defstruct [
     :app_name,
     :bundle_name,
-    :custom_modifiers,
     :project_path,
+    custom_modifiers: [],
     default_simulator_device: "iPhone 13",
     default_simulator_os: "iOS",
     default_simulator_os_version: "16-0",
@@ -16,67 +20,11 @@ defmodule LiveViewNativeSwiftUi.Platform do
   defimpl LiveViewNativePlatform do
     require Logger
 
-    alias LiveViewNativeSwiftUi.Modifiers
-
     def context(struct) do
-      %LiveViewNativePlatform.Context{
-        custom_modifiers: struct.custom_modifiers || [],
-        modifiers: %LiveViewNativeSwiftUi.Modifiers{stack: []},
-        platform_id: :ios,
-        platform_modifiers: [
-          animation: Modifiers.Animation,
-          aspect_ratio: Modifiers.AspectRatio,
-          background: Modifiers.Background,
-          background_style: Modifiers.BackgroundStyle,
-          blur: Modifiers.Blur,
-          bold: Modifiers.Bold,
-          baseline_offset: Modifiers.BaselineOffset,
-          content_transition: Modifiers.ContentTransition,
-          disabled: Modifiers.Disabled,
-          dynamic_type_size: Modifiers.DynamicTypeSize,
-          fixed_size: Modifiers.FixedSize,
-          font_weight: Modifiers.FontWeight,
-          font_width: Modifiers.FontWidth,
-          font: Modifiers.Font,
-          foreground_style: Modifiers.ForegroundStyle,
-          frame: Modifiers.Frame,
-          header_prominence: Modifiers.HeaderProminence,
-          hue_rotation: Modifiers.HueRotation,
-          italic: Modifiers.Italic,
-          layout_priority: Modifiers.LayoutPriority,
-          list_row_insets: Modifiers.ListRowInsets,
-          list_row_separator: Modifiers.ListRowSeparator,
-          list_style: Modifiers.ListStyle,
-          matched_geometry_effect: Modifiers.MatchedGeometryEffect,
-          monospaced: Modifiers.Monospaced,
-          monospaced_digit: Modifiers.MonospacedDigit,
-          navigation_title: Modifiers.NavigationTitle,
-          opacity: Modifiers.Opacity,
-          padding: Modifiers.Padding,
-          position: Modifiers.Position,
-          refreshable: Modifiers.Refreshable,
-          rotation_3d_effect: Modifiers.Rotation3DEffect,
-          rotation_effect: Modifiers.RotationEffect,
-          status_bar_hidden: Modifiers.StatusBarHidden,
-          strikethrough: Modifiers.Strikethrough,
-          tag: Modifiers.Tag,
-          text_case: Modifiers.TextCase,
-          text_field_style: Modifiers.TextFieldStyle,
-          text_selection: Modifiers.TextSelection,
-          tint: Modifiers.Tint,
-          transition: Modifiers.Transition,
-
-          # grid
-          grid_cell_anchor: Modifiers.GridCellAnchor,
-          grid_cell_columns: Modifiers.GridCellColumns,
-          grid_cell_unsized_axes: Modifiers.GridCellUnsizedAxes,
-          grid_column_alignment: Modifiers.GridColumnAlignment,
-
-          rename_action: Modifiers.RenameAction
-        ],
-        tag_handler: LiveViewNative.TagEngine,
-        template_namespace: SwiftUi
-      }
+      LiveViewNativePlatform.Context.define(:ios,
+        custom_modifiers: struct.custom_modifiers,
+        otp_app: :live_view_native_swift_ui
+      )
     end
 
     def start_simulator(struct, opts \\ []) do
