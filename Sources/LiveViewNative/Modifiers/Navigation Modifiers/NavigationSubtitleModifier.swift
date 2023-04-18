@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Configures the view’s subtitle for purposes of navigation. Only supported on macOS.
+/// Configures the view’s subtitle for purposes of navigation.
 ///
 /// ```html
 /// <VStack modifiers={navigation_subtitle(@native, subtitle: "Subtitle Label")}>
