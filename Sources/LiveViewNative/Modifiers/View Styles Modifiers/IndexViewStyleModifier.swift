@@ -7,13 +7,32 @@
 
 import SwiftUI
 
-/// <#Documentation#>
+/// Sets the style of the index view in a ``TabView``.
+///
+/// See ``IndexViewStyle`` for a list of possible values.
+///
+/// ```html
+/// <TabView
+///     modifiers={
+///         @native
+///             |> tab_view_style(style: :page)
+///             |> index_view_style(style: :page_always)
+///     }
+/// >
+///     ...
+/// </TabView>
+/// ```
+///
+/// ## Arguments
+/// * ``style``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 @available(iOS 16.0, watchOS 9.0, *)
 struct IndexViewStyleModifier: ViewModifier, Decodable {
-    /// <#Documentation#>
+    /// The style to apply to the index view of a ``TabView``.
+    ///
+    /// See ``IndexViewStyle`` for the list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -47,6 +66,10 @@ struct IndexViewStyleModifier: ViewModifier, Decodable {
     }
 }
 
+/// A style to apply to the index view of a ``TabView`` with the ``IndexViewStyleModifier`` modifier.
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 @available(iOS 16.0, watchOS 9.0, *)
 private enum IndexViewStyle: String, Decodable {
     case page

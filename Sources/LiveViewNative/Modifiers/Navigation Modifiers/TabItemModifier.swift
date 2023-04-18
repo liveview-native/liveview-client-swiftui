@@ -7,12 +7,28 @@
 
 import SwiftUI
 
-/// <#Documentation#>
+/// Provides a label for the pages of a ``TabView``.
+///
+/// Use a ``Label`` element, or a ``Text`` and ``Image`` element as children of the modifier.
+///
+/// ```html
+/// <TabView>
+///     <Rectangle modifiers={tab_item(@native, label: :my_label}>
+///         <tab_item:my_label>
+///             <Image system-name="person.crop.circle.fill" />
+///             <Text>Profile</Text>
+///         </tab_item:my_label>
+///     </Rectangle>
+/// </TabView>
+/// ```
+///
+/// ## Arguments
+/// * ``label``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 struct TabItemModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// <#Documentation#>
+    /// The name of the content to use for the tab item.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif

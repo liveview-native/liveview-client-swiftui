@@ -7,12 +7,25 @@
 
 import SwiftUI
 
-/// <#Documentation#>
+/// Sets the style of a ``TabView``.
+///
+/// See ``TabViewStyle`` for a list of possible values.
+///
+/// ```html
+/// <TabView modifiers={tab_view_style(@native, style: :page)}>
+///     ...
+/// </TabView>
+/// ```
+///
+/// ## Arguments
+/// * ``style``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 struct TabViewStyleModifier: ViewModifier, Decodable {
-    /// <#Documentation#>
+    /// The style to apply to the ``TabView``.
+    ///
+    /// See ``TabViewStyle`` for the list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -56,14 +69,35 @@ struct TabViewStyleModifier: ViewModifier, Decodable {
     }
 }
 
+/// A style to apply to a ``TabView`` with the ``TabViewStyleModifier`` modifier.
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 private enum TabViewStyle: String, Decodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @available(watchOS 9.0, *)
     case carousel
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @available(iOS 16.0, watchOS 9.0, *)
     case page
+    /// `page_always`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @available(iOS 16.0, watchOS 9.0, *)
     case pageAlways = "page_always"
+    /// `page_never`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @available(iOS 16.0, watchOS 9.0, *)
     case pageNever = "page_never"
 }
