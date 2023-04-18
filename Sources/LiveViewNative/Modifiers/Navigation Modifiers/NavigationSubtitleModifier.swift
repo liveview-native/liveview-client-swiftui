@@ -29,7 +29,6 @@ struct NavigationSubtitleModifier: ViewModifier, Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
         self.subtitle = try container.decode(String.self, forKey: .subtitle)
     }
 
