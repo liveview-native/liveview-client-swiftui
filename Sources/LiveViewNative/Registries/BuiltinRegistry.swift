@@ -195,6 +195,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case headerProminence = "header_prominence"
         case hueRotation = "hue_rotation"
         case italic
+        case kerning
         case layoutPriority = "layout_priority"
         case listItemTint = "list_item_tint"
         case listRowInsets = "list_row_insets"
@@ -272,6 +273,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try HueRotationModifier(from: decoder)
         case .italic:
             try ItalicModifier(from: decoder)
+        case .kerning:
+            try KerningModifier(from: decoder)
         case .layoutPriority:
             try LayoutPriorityModifier(from: decoder)
         case .listItemTint:
