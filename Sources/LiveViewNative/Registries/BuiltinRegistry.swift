@@ -221,6 +221,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case tag
         case textCase = "text_case"
         case textFieldStyle = "text_field_style"
+        case textInputAutoCapitalization = "text_input_auto_capitalization"
         case textSelection = "text_selection"
         case tint
         case tracking
@@ -328,6 +329,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try TextCaseModifier(from: decoder)
         case .textFieldStyle:
             try TextFieldStyleModifier(from: decoder)
+        case .textInputAutoCapitalization:
+            try TextInputAutocapitalizationModifier(from: decoder)
         case .textSelection:
             try TextSelectionModifier(from: decoder)
         case .tint:
