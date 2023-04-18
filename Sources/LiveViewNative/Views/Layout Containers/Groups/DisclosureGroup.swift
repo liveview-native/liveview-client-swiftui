@@ -68,9 +68,9 @@ struct DisclosureGroup<R: RootRegistry>: View {
     public var body: some View {
 #if os(iOS) || os(macOS)
         SwiftUI.DisclosureGroup(isExpanded: $isExpanded) {
-            context.buildChildren(of: element, withID: "content", includeDefaultSlot: true)
+            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
         } label: {
-            context.buildChildren(of: element, withID: "label", includeDefaultSlot: false)
+            context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: false)
         }
 #endif
     }

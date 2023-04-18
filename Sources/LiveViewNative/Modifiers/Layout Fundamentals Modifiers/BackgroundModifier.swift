@@ -48,7 +48,7 @@ struct BackgroundModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.background(alignment: alignment) {
-            context.buildChildren(of: element, withTagName: self.content, namespace: "background")
+            context.buildChildren(of: element, forTemplate: self.content)
         }
     }
 

@@ -67,11 +67,11 @@ struct Section<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Section {
-            context.buildChildren(of: element, withID: "content", includeDefaultSlot: true)
+            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
         } header: {
-            context.buildChildren(of: element, withID: "header")
+            context.buildChildren(of: element, forTemplate: "header")
         } footer: {
-            context.buildChildren(of: element, withID: "footer")
+            context.buildChildren(of: element, forTemplate: "footer")
         }
         #if os(macOS)
             .collapsible(collapsible)

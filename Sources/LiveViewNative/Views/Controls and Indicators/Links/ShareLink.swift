@@ -289,7 +289,7 @@ struct ShareLink<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element, withID: "label", includeDefaultSlot: true)
+        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
     }
     
     /// The set of values used to create the `SharePreview` for each item.

@@ -55,9 +55,9 @@ struct Gauge<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Group {
-            if context.hasTemplate(of: element, withID: "current-value-label") ||
-               context.hasTemplate(of: element, withID: "minimum-value-label") ||
-               context.hasTemplate(of: element, withID: "maximum-value-label")
+            if context.hasTemplate(of: element, withName: "current-value-label") ||
+               context.hasTemplate(of: element, withName: "minimum-value-label") ||
+               context.hasTemplate(of: element, withName: "maximum-value-label")
             {
                 SwiftUI.Gauge(
                     value: self.value,
@@ -65,11 +65,11 @@ struct Gauge<R: RootRegistry>: View {
                 ) {
                     label
                 } currentValueLabel: {
-                    context.buildChildren(of: element, withID: "current-value-label")
+                    context.buildChildren(of: element, forTemplate: "current-value-label")
                 } minimumValueLabel: {
-                    context.buildChildren(of: element, withID: "minimum-value-label")
+                    context.buildChildren(of: element, forTemplate: "minimum-value-label")
                 } maximumValueLabel: {
-                    context.buildChildren(of: element, withID: "maximum-value-label")
+                    context.buildChildren(of: element, forTemplate: "maximum-value-label")
                 }
             } else {
                 SwiftUI.Gauge(
@@ -83,7 +83,7 @@ struct Gauge<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element, withID: "label", includeDefaultSlot: true)
+        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
     }
 }
 #endif
