@@ -21,6 +21,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(macOS 13.0, *)
 struct NavigationSubtitleModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
