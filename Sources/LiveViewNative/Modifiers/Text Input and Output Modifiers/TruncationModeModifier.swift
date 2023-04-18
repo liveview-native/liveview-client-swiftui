@@ -24,7 +24,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct TruncationModifier: ViewModifier, Decodable, Equatable {
+struct TruncationModeModifier: ViewModifier, Decodable, Equatable {
     /// One of the `Text.TruncationMode` enumerations.
     #if swift(>=5.8)
     @_documentation(visibility: public)

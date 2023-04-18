@@ -225,7 +225,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case tint
         case tracking
         case transition
-        case truncation
+        case truncationMode = "truncation_mode"
     }
 
     @ViewModifierBuilder
@@ -337,8 +337,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try TrackingModifier(from: decoder)
         case .transition:
             try TransitionModifier<R>(from: decoder)
-        case .truncation:
-            try TruncationModifier(from: decoder)
+        case .truncationMode:
+            try TruncationModeModifier(from: decoder)
         }
     }
 }
