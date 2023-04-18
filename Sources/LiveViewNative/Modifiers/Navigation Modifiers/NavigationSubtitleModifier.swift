@@ -36,6 +36,8 @@ struct NavigationSubtitleModifier: ViewModifier, Decodable {
     func body(content: Content) -> some View {
         #if os(macOS)
         content.navigationSubtitle(subtitle)
+        #else
+        content
         #endif
     }
 
