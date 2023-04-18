@@ -174,6 +174,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
     enum ModifierType: String {
         case animation
         case aspectRatio = "aspect_ratio"
+        case autocorrectionDisabled = "autocorrection_disabled"
         case background = "background"
         case backgroundStyle = "background_style"
         case blur
@@ -234,6 +235,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try AnimationModifier(from: decoder)
         case .aspectRatio:
             try AspectRatioModifier(from: decoder)
+        case .autocorrectionDisabled:
+            try AutocorrectionDisabledModifier(from: decoder)
         case .background:
             try BackgroundModifier<R>(from: decoder)
         case .backgroundStyle:
