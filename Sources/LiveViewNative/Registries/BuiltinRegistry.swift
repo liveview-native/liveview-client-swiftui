@@ -206,6 +206,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case minimumScaleFactor = "minimum_scale_factor"
         case monospaced
         case monospacedDigit = "monospaced_digit"
+        case multilineTextAlignment = "multiline_text_alignment"
         case navigationSubtitle = "navigation_subtitle"
         case navigationTitle = "navigation_title"
         case opacity
@@ -298,6 +299,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try MonospacedModifier(from: decoder)
         case .monospacedDigit:
             try MonospacedDigitModifier(from: decoder)
+        case .multilineTextAlignment:
+            try MultilineTextAlignmenteModifier(from: decoder)
         case .navigationSubtitle:
             try NavigationSubtitleModifier(from: decoder)
         case .navigationTitle:
