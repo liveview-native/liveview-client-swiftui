@@ -183,6 +183,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case disabled
         case dynamicTypeSize = "dynamic_type_size"
         case fixedSize = "fixed_size"
+        case flipsForRightToLeftLayoutDirection = "flips_for_right_to_left_layout_direction"
         case font
         case fontWeight = "font_weight"
         case fontWidth = "font_width"
@@ -245,16 +246,18 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try DisabledModifier(from: decoder)
         case .dynamicTypeSize:
             try DynamicTypeSizeModifier(from: decoder)
-        case .foregroundStyle:
-            try ForegroundStyleModifier(from: decoder)
         case .fixedSize:
             try FixedSizeModifier(from: decoder)
+        case .flipsForRightToLeftLayoutDirection:
+            try FlipsForRightToLeftLayoutDirectionModifier(from: decoder)
         case .font:
             try FontModifier(from: decoder)
         case .fontWeight:
             try FontWeightModifier(from: decoder)
         case .fontWidth:
             try FontWidthModifier(from: decoder)
+        case .foregroundStyle:
+            try ForegroundStyleModifier(from: decoder)
         case .frame:
             try FrameModifier(from: decoder)
         case .gridCellAnchor:
