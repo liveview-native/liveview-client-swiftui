@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Sets whether this view mirrors its contents horizontally when the layout direction is right-to-left.
+/// Sets the spacing, or kerning, between characters for the text in this view.
 ///
 /// ```html
 /// <Text modifiers={kerning(@native, kerning: true)}>
