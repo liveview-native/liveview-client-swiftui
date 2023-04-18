@@ -220,6 +220,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case textFieldStyle = "text_field_style"
         case textSelection = "text_selection"
         case tint
+        case tracking
         case transition
     }
 
@@ -322,6 +323,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try TextSelectionModifier(from: decoder)
         case .tint:
             try TintModifier(from: decoder)
+        case .tracking:
+            try TrackingModifier(from: decoder)
         case .transition:
             try TransitionModifier<R>(from: decoder)
         }
