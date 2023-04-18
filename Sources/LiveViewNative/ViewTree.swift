@@ -28,23 +28,41 @@ struct ViewTreeBuilder<R: RootRegistry> {
         case 1:
             f(e[0], c)
         case 2:
-            TupleView((f(e[0], c), f(e[1], c)))
+            ForEach(0..<2) {
+                f(e[$0], c)
+            }
         case 3:
-            TupleView((f(e[0], c), f(e[1], c), f(e[2], c)))
+            ForEach(0..<3) {
+                f(e[$0], c)
+            }
         case 4:
-            TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c)))
+            ForEach(0..<4) {
+                f(e[$0], c)
+            }
         case 5:
-            TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c)))
+            ForEach(0..<5) {
+                f(e[$0], c)
+            }
         case 6:
-            TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c)))
+            ForEach(0..<6) {
+                f(e[$0], c)
+            }
         case 7:
-            TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c)))
+            ForEach(0..<7) {
+                f(e[$0], c)
+            }
         case 8:
-            TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c)))
+            ForEach(0..<8) {
+                f(e[$0], c)
+            }
         case 9:
-            TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c)))
+            ForEach(0..<9) {
+                f(e[$0], c)
+            }
         case 10:
-            TupleView((f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(e[9], c)))
+            ForEach(0..<10) {
+                f(e[$0], c)
+            }
         default:
             forEach(nodes: nodes, context: c)
         }
