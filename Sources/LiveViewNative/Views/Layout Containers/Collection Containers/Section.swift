@@ -26,14 +26,14 @@ import SwiftUI
 ///
 /// ```html
 /// <Section>
-///     <Section:header>Group #1</Section:header>
-///     <Section:content>Item #1</Section:content>
-///     <Section:footer>The first group ends here</Section:footer>
+///     <Text #header>Group #1</Text>
+///     <Text #content>Item #1</Text>
+///     <Text #footer>The first group ends here</Text>
 /// </Section>
 /// <Section>
-///     <Section:header>Group #2</Section:header>
-///     <Section:content>Item #1</Section:content>
-///     <Section:footer>The second group ends here</Section:footer>
+///     <Text #header>Group #2</Text>
+///     <Text #content>Item #1</Text>
+///     <Text #footer>The second group ends here</Text>
 /// </Section>
 /// ```
 ///

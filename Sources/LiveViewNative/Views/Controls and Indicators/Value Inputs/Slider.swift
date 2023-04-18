@@ -39,10 +39,10 @@ import SwiftUI
 /// Customize the appearance of the slider with the children `label`, `minimum-value-label` and `maximum-value-label`.
 ///
 /// ```html
-/// <Slider value-binding="progress">
-///     <Slider:label>Percent Completed</Slider:label>
-///     <Slider:minimum-value-label>0%</Slider:minimum-value-label>
-///     <Slider:maximum-value-label>100%</Slider:maximum-value-label>
+/// <Slider value-binding="value">
+///     <Text #label>Percent Completed</Text>
+///     <Text #minimum-value-label>0%</Text>
+///     <Text #maximum-value-label>100%</Text>
 /// </Slider>
 /// ```
 ///

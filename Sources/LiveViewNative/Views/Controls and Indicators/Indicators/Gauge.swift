@@ -14,10 +14,10 @@ import SwiftUI
 ///
 /// ```html
 /// <Gauge value="0.5">
-///     <Gauge:label>50%</Gauge:label>
-///     <Gauge:current-value-label>0.5</Gauge:current-value-label>
-///     <Gauge:minimum-value-label>0</Gauge:minimum-value-label>
-///     <Gauge:maximum-value-label>1</Gauge:maximum-value-label>
+///     <Text #label>50%</Text>
+///     <Text #current-value-label>0.5</Text>
+///     <Text #minimum-value-label>0</Text>
+///     <Text #maximum-value-label>1</Text>
 /// </Gauge>
 /// ```
 ///

@@ -13,12 +13,8 @@ import SwiftUI
 ///
 /// ```html
 /// <Label>
-///     <Label:title>
-///         <Text>John Doe</Text>
-///     </Label:title>
-///     <Label:icon>
-///         <Image system-name="person.crop.circle.fill" />
-///     </Label:icon>
+///     <Text #title>John Doe</Text>
+///     <Image #icon system-name="person.crop.circle.fill" />
 /// </Label>
 /// ```
 ///

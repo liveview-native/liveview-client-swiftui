@@ -15,14 +15,12 @@ import SwiftUI
 ///
 /// ```html
 /// <Picker value-binding="transport" picker-style="menu">
-///     <Picker:content>
+///     <Text #label>Transportation</Text>
+///     <Group #content>
 ///         <Label system-image="car" modifiers={tag(@native, tag: "car")}>Car</Label>
 ///         <Label system-image="bus" modifiers={tag(@native, tag: "bus")}>Bus</Label>
 ///         <Label system-image="tram" modifiers={tag(@native, tag: "tram")}>Tram</Label>
-///     </Picker:content>
-///     <Picker:label>
-///         <Text>Transportation</Text>
-///     </Picker:label>
+///     </Group>
 /// </Picker>
 /// ```
 ///
