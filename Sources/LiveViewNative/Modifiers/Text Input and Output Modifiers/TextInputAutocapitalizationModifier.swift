@@ -23,6 +23,12 @@ import SwiftUI
 @available(iOS 16.0, watchOS 9.0, *)
 struct TextInputAutocapitalizationModifier: ViewModifier, Decodable, Equatable {
     /// One of the capitalizing behaviors defined in the `TextInputAutocapitalization` struct or nil.
+    ///
+    /// Possible values:
+    /// * `characters`
+    /// * `sentences`
+    /// * `words`
+    /// * `never`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
