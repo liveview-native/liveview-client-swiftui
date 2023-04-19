@@ -30,6 +30,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case bold
         case baselineOffset = "baseline_offset"
         case contentTransition = "content_transition"
+        case controlSize = "control_size"
         case cornerRadius = "corner_radius"
         case disabled
         case dynamicTypeSize = "dynamic_type_size"
@@ -100,6 +101,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try BaselineOffsetModifier(from: decoder)
         case .contentTransition:
             try ContentTransitionModifier(from: decoder)
+        case .controlSize:
+            try ControlSizeModifier(from: decoder)
         case .cornerRadius:
             try CornerRadiusModifier(from: decoder)
         case .disabled:
