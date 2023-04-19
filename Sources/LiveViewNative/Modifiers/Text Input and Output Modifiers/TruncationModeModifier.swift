@@ -12,7 +12,7 @@ import SwiftUI
 /// ```html
 /// <Text
 ///     modifiers={
-///         truncationMode(@native, mode: :tail)
+///         truncation_mode(@native, mode: :tail)
 ///     }
 /// >
 ///   This text is truncated at the end if it overflows
