@@ -28,7 +28,7 @@ struct AutocorrectionDisabledModifier: ViewModifier, Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.disable = try container.decodeIfPresent(Bool.self, forKey: .disable) ?? true
+        self.disable = try container.decode(Bool.self, forKey: .disable)
     }
 
     func body(content: Content) -> some View {
