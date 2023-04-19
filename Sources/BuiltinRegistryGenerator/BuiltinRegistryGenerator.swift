@@ -23,7 +23,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
     ]
     
     static let additionalViews = [
-        "Capsule": "Shape(shape: Capsule())",
+        "Capsule": "Shape(shape: Capsule(from: element))",
         "Circle": "Shape(shape: Circle())",
         "ContainerRelativeShape": "Shape(shape: ContainerRelativeShape())",
         "Divider": "Divider()",
