@@ -198,6 +198,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case italic
         case kerning
         case layoutPriority = "layout_priority"
+        case lineLimit = "line_limit"
         case listItemTint = "list_item_tint"
         case listRowInsets = "list_row_insets"
         case listRowSeparator = "list_row_separator"
@@ -282,6 +283,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try KerningModifier(from: decoder)
         case .layoutPriority:
             try LayoutPriorityModifier(from: decoder)
+        case .lineLimit:
+            try LineLimitModifier(from: decoder)
         case .listItemTint:
             try ListItemTintModifier(from: decoder)
         case .listRowInsets:
