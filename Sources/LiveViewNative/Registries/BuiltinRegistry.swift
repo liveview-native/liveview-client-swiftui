@@ -69,6 +69,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case rotation3DEffect = "rotation_3d_effect"
         case rotationEffect = "rotation_effect"
         case scaledToFill = "scaled_to_fill"
+        case scaledToFit = "scaled_to_fit"
         case statusBarHidden = "status_bar_hidden"
         case strikethrough
         case tag
@@ -177,6 +178,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try RotationEffectModifier(from: decoder)
         case .scaledToFill:
             try ScaledToFillModifier(from: decoder)
+        case .scaledToFit:
+            try ScaledToFitModifier(from: decoder)
         case .statusBarHidden:
             try StatusBarHiddenModifier(from: decoder)
         case .strikethrough:
