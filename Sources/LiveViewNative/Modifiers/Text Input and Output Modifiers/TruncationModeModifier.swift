@@ -26,6 +26,11 @@ import SwiftUI
 #endif
 struct TruncationModeModifier: ViewModifier, Decodable, Equatable {
     /// One of the `Text.TruncationMode` enumerations.
+    ///
+    /// Possible values:
+    /// * `head`
+    /// * `middle`
+    /// * `tail`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
