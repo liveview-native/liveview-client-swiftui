@@ -217,6 +217,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case renameAction = "rename_action"
         case rotation3DEffect = "rotation_3d_effect"
         case rotationEffect = "rotation_effect"
+        case scaleEffect = "scale_effect"
         case statusBarHidden = "status_bar_hidden"
         case strikethrough
         case tag
@@ -321,6 +322,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try Rotation3DEffectModifier(from: decoder)
         case .rotationEffect:
             try RotationEffectModifier(from: decoder)
+        case .scaleEffect:
+            try ScaleEffectEffectModifier(from: decoder)
         case .statusBarHidden:
             try StatusBarHiddenModifier(from: decoder)
         case .strikethrough:
