@@ -33,6 +33,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case disabled
         case dynamicTypeSize = "dynamic_type_size"
         case fixedSize = "fixed_size"
+        case flipsForRightToLeftLayoutDirection = "flips_for_right_to_left_layout_direction"
         case font
         case fontWeight = "font_weight"
         case fontWidth = "font_width"
@@ -45,15 +46,21 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case headerProminence = "header_prominence"
         case hueRotation = "hue_rotation"
         case italic
+        case kerning
         case layoutPriority = "layout_priority"
+        case lineLimit = "line_limit"
+        case listItemTint = "list_item_tint"
         case listRowInsets = "list_row_insets"
         case listRowSeparator = "list_row_separator"
         case listStyle = "list_style"
         case matchedGeometryEffect = "matched_geometry_effect"
+        case minimumScaleFactor = "minimum_scale_factor"
         case monospaced
         case monospacedDigit = "monospaced_digit"
+        case navigationSubtitle = "navigation_subtitle"
         case navigationTitle = "navigation_title"
         case opacity
+        case onHover = "on_hover"
         case padding
         case position
         case refreshable
@@ -67,6 +74,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case textFieldStyle = "text_field_style"
         case textSelection = "text_selection"
         case tint
+        case tracking
         case transition
     }
 
@@ -93,16 +101,18 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try DisabledModifier(from: decoder)
         case .dynamicTypeSize:
             try DynamicTypeSizeModifier(from: decoder)
-        case .foregroundStyle:
-            try ForegroundStyleModifier(from: decoder)
         case .fixedSize:
             try FixedSizeModifier(from: decoder)
+        case .flipsForRightToLeftLayoutDirection:
+            try FlipsForRightToLeftLayoutDirectionModifier(from: decoder)
         case .font:
             try FontModifier(from: decoder)
         case .fontWeight:
             try FontWeightModifier(from: decoder)
         case .fontWidth:
             try FontWidthModifier(from: decoder)
+        case .foregroundStyle:
+            try ForegroundStyleModifier(from: decoder)
         case .frame:
             try FrameModifier(from: decoder)
         case .gridCellAnchor:
@@ -119,8 +129,14 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try HueRotationModifier(from: decoder)
         case .italic:
             try ItalicModifier(from: decoder)
+        case .kerning:
+            try KerningModifier(from: decoder)
         case .layoutPriority:
             try LayoutPriorityModifier(from: decoder)
+        case .lineLimit:
+            try LineLimitModifier(from: decoder)
+        case .listItemTint:
+            try ListItemTintModifier(from: decoder)
         case .listRowInsets:
             try ListRowInsetsModifier(from: decoder)
         case .listRowSeparator:
@@ -129,14 +145,20 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try ListStyleModifier(from: decoder)
         case .matchedGeometryEffect:
             try MatchedGeometryEffectModifier(from: decoder)
+        case .minimumScaleFactor:
+            try MinimumScaleFactorModifier(from: decoder)
         case .monospaced:
             try MonospacedModifier(from: decoder)
         case .monospacedDigit:
             try MonospacedDigitModifier(from: decoder)
+        case .navigationSubtitle:
+            try NavigationSubtitleModifier(from: decoder)
         case .navigationTitle:
             try NavigationTitleModifier(from: decoder)
         case .opacity:
             try OpacityModifier(from: decoder)
+        case .onHover:
+            try OnHoverModifier(from: decoder)
         case .padding:
             try PaddingModifier(from: decoder)
         case .position:
@@ -163,6 +185,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try TextSelectionModifier(from: decoder)
         case .tint:
             try TintModifier(from: decoder)
+        case .tracking:
+            try TrackingModifier(from: decoder)
         case .transition:
             try TransitionModifier<R>(from: decoder)
         }
