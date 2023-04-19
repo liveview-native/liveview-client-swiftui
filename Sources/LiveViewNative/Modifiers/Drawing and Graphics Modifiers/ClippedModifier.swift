@@ -27,7 +27,7 @@ struct ClippedModifier: ViewModifier, Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.antialiased = try container.decodeIfPresent(Bool.self, forKey: .antialiased) ?? false
+        self.antialiased = try container.decode(Bool.self, forKey: .antialiased)
     }
 
     func body(content: Content) -> some View {
