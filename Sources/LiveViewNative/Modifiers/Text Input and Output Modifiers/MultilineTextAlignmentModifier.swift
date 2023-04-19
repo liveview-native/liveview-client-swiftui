@@ -27,6 +27,11 @@ import SwiftUI
 #endif
 struct MultilineTextAlignmenteModifier: ViewModifier, Decodable, Equatable {
     /// One of the `TextAlignment` enumerations.
+    ///
+    /// Possible values:
+    /// * `center`
+    /// * `leading`
+    /// * `trailing`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
