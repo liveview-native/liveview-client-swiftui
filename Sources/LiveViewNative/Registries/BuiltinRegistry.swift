@@ -29,8 +29,10 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case blur
         case bold
         case baselineOffset = "baseline_offset"
+        case buttonStyle = "button_style"
         case contentTransition = "content_transition"
         case cornerRadius = "corner_radius"
+        case datePickerStyle = "date_picker_style"
         case disabled
         case dynamicTypeSize = "dynamic_type_size"
         case fixedSize = "fixed_size"
@@ -40,6 +42,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case fontWidth = "font_width"
         case foregroundStyle = "foreground_style"
         case frame
+        case gaugeStyle = "gauge_style"
         case gridCellAnchor = "grid_cell_anchor"
         case gridCellColumns = "grid_cell_columns"
         case gridCellUnsizedAxes = "grid_cell_unsized_axes"
@@ -63,7 +66,9 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case opacity
         case onHover = "on_hover"
         case padding
+        case pickerStyle = "picker_style"
         case position
+        case progressViewStyle = "progress_view_style"
         case refreshable
         case renameAction = "rename_action"
         case rotation3DEffect = "rotation_3d_effect"
@@ -76,6 +81,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case textFieldStyle = "text_field_style"
         case textSelection = "text_selection"
         case tint
+        case toggleStyle = "toggle_style"
         case tracking
         case transition
     }
@@ -97,10 +103,14 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try BoldModifier(from: decoder)
         case .baselineOffset:
             try BaselineOffsetModifier(from: decoder)
+        case .buttonStyle:
+            try ButtonStyleModifier(from: decoder)
         case .contentTransition:
             try ContentTransitionModifier(from: decoder)
         case .cornerRadius:
             try CornerRadiusModifier(from: decoder)
+        case .datePickerStyle:
+            try DatePickerStyleModifier(from: decoder)
         case .disabled:
             try DisabledModifier(from: decoder)
         case .dynamicTypeSize:
@@ -119,6 +129,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try ForegroundStyleModifier(from: decoder)
         case .frame:
             try FrameModifier(from: decoder)
+        case .gaugeStyle:
+            try GaugeStyleModifier(from: decoder)
         case .gridCellAnchor:
             try GridCellAnchorModifier(from: decoder)
         case .gridCellColumns:
@@ -165,8 +177,12 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try OnHoverModifier(from: decoder)
         case .padding:
             try PaddingModifier(from: decoder)
+        case .pickerStyle:
+            try PickerStyleModifier(from: decoder)
         case .position:
             try PositionModifier(from: decoder)
+        case .progressViewStyle:
+            try ProgressViewStyleModifier(from: decoder)
         case .refreshable:
             try RefreshableModifier(from: decoder)
         case .renameAction:
@@ -191,6 +207,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try TextSelectionModifier(from: decoder)
         case .tint:
             try TintModifier(from: decoder)
+        case .toggleStyle:
+            try ToggleStyleModifier(from: decoder)
         case .tracking:
             try TrackingModifier(from: decoder)
         case .transition:

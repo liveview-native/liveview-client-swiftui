@@ -41,7 +41,6 @@ import SwiftUI
 /// * ``timerIntervalStart``
 /// * ``timerIntervalEnd``
 /// * ``countsDown``
-/// * ``style``
 ///
 /// ## Children
 /// * `label` - Describes the purpose of the element.
@@ -56,9 +55,6 @@ import SwiftUI
 /// - ``timerIntervalStart``
 /// - ``timerIntervalEnd``
 /// - ``countsDown``
-///
-/// ### Supporting Types
-/// - ``ProgressViewStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -102,11 +98,6 @@ struct ProgressView<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @Attribute("total") private var total: Double = 1
-    /// The style to apply to this progress view.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("progress-view-style") private var style: ProgressViewStyle = .automatic
     
     public var body: some View {
         SwiftUI.Group {
@@ -146,39 +137,6 @@ struct ProgressView<R: RootRegistry>: View {
                     context.buildChildren(of: element, withTagName: "label", namespace: "ProgressView", includeDefaultSlot: true)
                 }
             }
-        }
-        .applyProgressViewStyle(style)
-    }
-}
-
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum ProgressViewStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case linear
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case circular
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    func applyProgressViewStyle(_ style: ProgressViewStyle) -> some View {
-        switch style {
-        case .automatic:
-            self.progressViewStyle(.automatic)
-        case .linear:
-            self.progressViewStyle(.linear)
-        case .circular:
-            self.progressViewStyle(.circular)
         }
     }
 }

@@ -43,7 +43,7 @@ final class PickerTests: XCTestCase {
     func testPicker() throws {
         try assertMatch(
             #"""
-            <Picker value="paperplane" picker-style="automatic">
+            <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "automatic"}]'>
                 <Picker:label><Text>Pick an icon</Text></Picker:label>
                 <Picker:content>
                     <Label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><Text>paperplane</Text></Label>
@@ -71,7 +71,7 @@ final class PickerTests: XCTestCase {
         
         try assertMatch(
             #"""
-            <Picker value="paperplane" picker-style="inline">
+            <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "inline"}]'>
                 <Picker:label><Text>Pick an icon</Text></Picker:label>
                 <Picker:content>
                     <Label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><Text>paperplane</Text></Label>
@@ -102,11 +102,11 @@ final class PickerTests: XCTestCase {
         try assertMatch(
             #"""
             <VStack>
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" date-picker-style="compact">
+                <DatePicker value="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "compact"}]'>
                     <Text>Pick a date</Text>
                 </DatePicker>
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" date-picker-style="graphical" />
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" date-picker-style="wheel" displayed-components="date" />
+                <DatePicker value="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "graphical"}]' />
+                <DatePicker value="\#(date.formatted(.elixirDateTime))" displayed-components="date" modifiers='[{"type": "date_picker_style", "style": "wheel"}]' />
             </VStack>
             """#) {
                 VStack {

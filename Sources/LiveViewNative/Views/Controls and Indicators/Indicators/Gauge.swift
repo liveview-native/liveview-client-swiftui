@@ -25,16 +25,11 @@ import SwiftUI
 /// * ``value``
 /// * ``lowerBound``
 /// * ``upperBound``
-/// * ``style``
 ///
 /// ## Children
 /// * `current-value-label` - Describes the current value.
 /// * `minimum-value-label` - Describes the lowest possible value.
 /// * `maximum-value-label` - Describes the highest possible value.
-///
-/// ## Topics
-/// ### Supporting Types
-/// - ``GaugeStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -57,11 +52,6 @@ struct Gauge<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @Attribute("upper-bound") private var upperBound: Double = 1
-    /// The style to apply to this gauge.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("gauge-style") private var style: GaugeStyle = .automatic
     
     public var body: some View {
         SwiftUI.Group {
@@ -90,67 +80,10 @@ struct Gauge<R: RootRegistry>: View {
                 }
             }
         }
-        .applyGaugeStyle(style)
     }
     
     private var label: some View {
         context.buildChildren(of: element, withTagName: "label", namespace: "Gauge", includeDefaultSlot: true)
-    }
-}
-
-/// A style for a ``Gauge`` element.
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum GaugeStyle: String, AttributeDecodable {
-    /// `accessory-circular-capacity`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case accessoryCircularCapacity = "accessory-circular-capacity"
-    /// `accessory-linear-capacity`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case accessoryLinearCapacity = "accessory-linear-capacity"
-    /// `accessory-circular`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case accessoryCircular = "accessory-circular"
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-    /// `linear-capacity`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case linearCapacity = "linear-capacity"
-    /// `accessory-linear`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case accessoryLinear = "accessory-linear"
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    func applyGaugeStyle(_ style: GaugeStyle) -> some View {
-        switch style {
-        case .accessoryCircularCapacity:
-            self.gaugeStyle(.accessoryCircularCapacity)
-        case .accessoryLinearCapacity:
-            self.gaugeStyle(.accessoryLinearCapacity)
-        case .accessoryCircular:
-            self.gaugeStyle(.accessoryCircular)
-        case .automatic:
-            self.gaugeStyle(.automatic)
-        case .linearCapacity:
-            self.gaugeStyle(.linearCapacity)
-        case .accessoryLinear:
-            self.gaugeStyle(.accessoryLinear)
-        }
     }
 }
 #endif
