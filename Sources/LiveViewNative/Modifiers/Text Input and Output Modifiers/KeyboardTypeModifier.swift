@@ -22,6 +22,19 @@ import SwiftUI
 #endif
 struct KeyboardTypeModifier: ViewModifier, Decodable, Equatable {
     /// One of the `UIKeyboardType` enumerations.
+    ///
+    /// Possible values:
+    /// * `default`
+    /// * `ascii_capable`
+    /// * `numbers_and_punctuation`
+    /// * `url`
+    /// * `number_pad`
+    /// * `name_phone_pad`
+    /// * `email_address`
+    /// * `decimal_pad`
+    /// * `twitter`
+    /// * `web_search`
+    /// * `ascii_capable_number_pad`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
