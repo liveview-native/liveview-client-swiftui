@@ -1,8 +1,8 @@
 <List modifiers={navigation_title(@native, title: "Cats!")}>
   <%= for {name, favorite} <- @cats_and_favorites do %>
-    <NavigationLink id={name} data-phx-link="redirect" data-phx-link-state="push" data-phx-href={Routes.live_path(@socket, LvnTutorialWeb.CatLive, name)}>
+    <NavigationLink id={name} destination={"/cats/#{name}"}>
       <HStack>
-        <AsyncImage src={"/images/cats/#{name}.jpg"} modifiers={frame(@native, width: 100, height: 100)} />
+        <AsyncImage url={"/images/cats/#{name}.jpg"} modifiers={frame(@native, width: 100, height: 100)} />
         <Text><%= name %></Text>
         <Spacer />
         <Button phx-click="toggle-favorite" phx-value-name={name}>
