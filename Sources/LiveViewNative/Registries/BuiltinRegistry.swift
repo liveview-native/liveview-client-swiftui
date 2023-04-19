@@ -30,6 +30,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case bold
         case baselineOffset = "baseline_offset"
         case contentTransition = "content_transition"
+        case controlSize = "control_size"
         case cornerRadius = "corner_radius"
         case disabled
         case dynamicTypeSize = "dynamic_type_size"
@@ -69,6 +70,7 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
         case rotation3DEffect = "rotation_3d_effect"
         case rotationEffect = "rotation_effect"
         case scaleEffect = "scale_effect"
+        case scaledToFill = "scaled_to_fill"
         case scaledToFit = "scaled_to_fit"
         case statusBarHidden = "status_bar_hidden"
         case strikethrough
@@ -100,6 +102,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try BaselineOffsetModifier(from: decoder)
         case .contentTransition:
             try ContentTransitionModifier(from: decoder)
+        case .controlSize:
+            try ControlSizeModifier(from: decoder)
         case .cornerRadius:
             try CornerRadiusModifier(from: decoder)
         case .disabled:
@@ -178,6 +182,8 @@ struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
             try RotationEffectModifier(from: decoder)
         case .scaleEffect:
             try ScaleEffectEffectModifier(from: decoder)
+        case .scaledToFill:
+            try ScaledToFillModifier(from: decoder)
         case .scaledToFit:
             try ScaledToFitModifier(from: decoder)
         case .statusBarHidden:
