@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeCore
 
-/// Changes the anchor point of an element in a grid.
+/// Adds items to the system toolbar.
 ///
 /// Use the available toolbar elements to place items in the toolbar.
 ///
