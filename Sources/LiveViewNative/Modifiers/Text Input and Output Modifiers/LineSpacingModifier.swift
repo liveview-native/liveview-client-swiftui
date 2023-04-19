@@ -37,6 +37,6 @@ struct LineSpacingModifier: ViewModifier, Decodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case lineSpacing
+        case lineSpacing = "line_spacing"
     }
 }
