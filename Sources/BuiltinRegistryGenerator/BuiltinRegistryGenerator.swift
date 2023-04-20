@@ -102,7 +102,6 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         let contents = try String(contentsOf: path)
         // struct [name] <_ : RootRegistry>
         return contents.contains {
-            ZeroOrMore(.any)
             "struct"
             OneOrMore(.whitespace)
             name
