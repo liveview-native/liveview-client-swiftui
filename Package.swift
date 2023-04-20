@@ -42,7 +42,10 @@ let package = Package(
                 "SwiftPhoenixClient",
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
             ],
-            swiftSettings: swiftSettings
+            swiftSettings: swiftSettings,
+            plugins: [
+                .plugin(name: "BuiltinRegistryGeneratorPlugin")
+            ]
         ),
         .testTarget(
             name: "LiveViewNativeTests",
@@ -51,6 +54,18 @@ let package = Package(
         .testTarget(
             name: "RenderingTests",
             dependencies: ["LiveViewNative"]
+        ),
+        
+        .executableTarget(
+            name: "BuiltinRegistryGenerator",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ]
+        ),
+        .plugin(
+            name: "BuiltinRegistryGeneratorPlugin",
+            capability: .buildTool(),
+            dependencies: [.target(name: "BuiltinRegistryGenerator")]
         ),
 
         .executableTarget(
