@@ -243,7 +243,7 @@ public struct Event: DynamicProperty, Decodable {
     public struct EventHandler {
         let owner: Event
         
-        public func callAsFunction(value: Any, didSend: (() -> Void)? = nil) {
+        public func callAsFunction(value: Any = [String:String](), didSend: (() -> Void)? = nil) {
             Task {
                 try await self.callAsFunction(value: value)
                 didSend?()
