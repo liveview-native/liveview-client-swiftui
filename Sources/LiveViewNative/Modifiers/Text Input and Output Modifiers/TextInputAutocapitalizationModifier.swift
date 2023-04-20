@@ -54,15 +54,16 @@ struct TextInputAutocapitalizationModifier: ViewModifier, Decodable, Equatable {
     }
     
     func body(content: Content) -> some View {
+        #if os(iOS) || os(watchOS)
         var autocapitalization: TextInputAutocapitalization?
         if let autocapitalizationType {
             autocapitalization = TextInputAutocapitalization(autocapitalizationType)
         }
 
+        return content.textInputAutocapitalization(autocapitalization)
+        #else
         return content
-            #if os(iOS) || os(watchOS)
-            .textInputAutocapitalization(autocapitalization)
-            #endif
+        #endif
     }
     
     enum CodingKeys: String, CodingKey {
