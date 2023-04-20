@@ -29,6 +29,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 16.0, macOS 13.0, *)
 struct ListSectionSeparatorModifier: ViewModifier, Decodable {
     /// The visibility of the dividers.
     ///
@@ -63,7 +64,10 @@ struct ListSectionSeparatorModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        content.listSectionSeparator(visibility, edges: edges)
+        content
+            #if os(iOS) || os(macOS)
+            .listSectionSeparator(visibility, edges: edges)
+            #endif
     }
 
     enum CodingKeys: String, CodingKey {
