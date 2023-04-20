@@ -22,6 +22,10 @@ import SwiftUI
 #endif
 @available(iOS 16.0, watchOS 9.0, tvOS 16.0, *)
 struct TextInputAutocapitalizationModifier: ViewModifier, Decodable {
+    #if os(macOS)
+    typealias TextInputAutocapitalization = Never
+    #endif
+
     /// One of the capitalizing behaviors defined in the `TextInputAutocapitalization` struct or nil.
     ///
     /// Possible values:
@@ -32,39 +36,36 @@ struct TextInputAutocapitalizationModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @available(iOS 16.0, watchOS 9.0, tvOS 16.0, *)
-    private let autocapitalizationType: UITextAutocapitalizationType?
+    private let autocapitalization: TextInputAutocapitalization?
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
+        #if os(iOS) || os(watchOS) || os(tvOS)
         switch try container.decodeIfPresent(String.self, forKey: .autocapitalization) {
         case "characters":
-            self.autocapitalizationType = .allCharacters
+            self.autocapitalization = .characters
         case "sentences":
-            self.autocapitalizationType = .sentences
+            self.autocapitalization = .sentences
         case "words":
-            self.autocapitalizationType = .words
+            self.autocapitalization = .words
         case "never":
-            self.autocapitalizationType = UITextAutocapitalizationType.none
+            self.autocapitalization = .never
         case .none:
-            self.autocapitalizationType = nil
+            self.autocapitalization = nil
         default:
             throw DecodingError.dataCorruptedError(forKey: .autocapitalization, in: container, debugDescription: "invalid value for \(CodingKeys.autocapitalization.rawValue)")
         }
+        #else
+        fatalError()
+        #endif
     }
     
     func body(content: Content) -> some View {
-        #if os(iOS) || os(watchOS) || os(tvOS)
-        var autocapitalization: TextInputAutocapitalization?
-        if let autocapitalizationType {
-            autocapitalization = TextInputAutocapitalization(autocapitalizationType)
-        }
-
-        return content.textInputAutocapitalization(autocapitalization)
-        #else
-        return content
-        #endif
+        content
+            #if os(iOS) || os(watchOS) || os(tvOS)
+            .textInputAutocapitalization(autocapitalization)
+            #endif
     }
     
     enum CodingKeys: String, CodingKey {
