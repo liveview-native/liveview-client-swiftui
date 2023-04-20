@@ -1,5 +1,5 @@
 //
-//  GestureOptions.swift
+//  GestureMask.swift
 //  
 //
 //  Created by Carson Katri on 4/20/23.
