@@ -14,6 +14,7 @@ jobs:
         shell: bash
         run: |
           sudo xcode-select --switch /Applications/Xcode_14.3.app
+          xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
           xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro"
       - name: Build for macOS
         shell: bash
