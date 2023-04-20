@@ -36,23 +36,23 @@ final class ButtonTests: XCTestCase {
         }
     }
     func testButtonStyles() throws {
-        try assertMatch(#"<Button button-style="automatic">Click Me</Button>"#) {
+        try assertMatch(#"<Button modifiers='[{"type": "button_style", "style": "automatic"}]'>Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.automatic)
         }
-        try assertMatch(#"<Button button-style="bordered">Click Me</Button>"#) {
+        try assertMatch(#"<Button modifiers='[{"type": "button_style", "style": "bordered"}]'>Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.bordered)
         }
-        try assertMatch(#"<Button button-style="bordered-prominent">Click Me</Button>"#) {
+        try assertMatch(#"<Button modifiers='[{"type": "button_style", "style": "bordered_prominent"}]'>Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.borderedProminent)
         }
-        try assertMatch(#"<Button button-style="borderless">Click Me</Button>"#) {
+        try assertMatch(#"<Button modifiers='[{"type": "button_style", "style": "borderless"}]'>Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.borderless)
         }
-        try assertMatch(#"<Button button-style="plain">Click Me</Button>"#) {
+        try assertMatch(#"<Button modifiers='[{"type": "button_style", "style": "plain"}]'>Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.plain)
         }

@@ -27,11 +27,6 @@ import LiveViewNativeCore
 /// - ``start``
 /// - ``end``
 /// - ``components``
-/// - ``style``
-///
-/// ## Topics
-/// ### Supporting Types
-/// - ``DatePickerStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -78,11 +73,6 @@ struct DatePicker<R: RootRegistry>: View {
     #if !os(iOS) && !os(macOS)
     typealias DatePickerComponents = Never
     #endif
-    ///The style of the date picker.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("date-picker-style") private var style: DatePickerStyle = .automatic
     
     private var dateBinding: Binding<Date> {
         Binding {
@@ -98,22 +88,18 @@ struct DatePicker<R: RootRegistry>: View {
             SwiftUI.DatePicker(selection: dateBinding, in: start...end, displayedComponents: components) {
                 context.buildChildren(of: element)
             }
-            .applyDatePickerStyle(style)
         } else if let start {
             SwiftUI.DatePicker(selection: dateBinding, in: start..., displayedComponents: components) {
                 context.buildChildren(of: element)
             }
-            .applyDatePickerStyle(style)
         } else if let end {
             SwiftUI.DatePicker(selection: dateBinding, in: ...end, displayedComponents: components) {
                 context.buildChildren(of: element)
             }
-            .applyDatePickerStyle(style)
         } else {
             SwiftUI.DatePicker(selection: dateBinding, displayedComponents: components) {
                 context.buildChildren(of: element)
             }
-            .applyDatePickerStyle(style)
         }
 #endif
     }
@@ -146,67 +132,3 @@ private struct CodableDate: FormValue {
     }
 }
 
-/// The style of a ``DatePicker``.
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-private enum DatePickerStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 13.0, *)
-    case automatic
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 13.0, *)
-    case compact
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, tvOS 16.0, watchOS 9.0, macOS 13.0, *)
-    case graphical
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, *)
-    case wheel
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(macOS 13.0, *)
-    case field
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(macOS 13.0, *)
-    case stepperField = "stepper-field"
-}
-
-#if os(iOS) || os(macOS)
-private extension View {
-    @ViewBuilder
-    func applyDatePickerStyle(_ style: DatePickerStyle?) -> some View {
-        switch style {
-        case .automatic, nil:
-            self.datePickerStyle(.automatic)
-        case .compact:
-            self.datePickerStyle(.compact)
-        case .graphical:
-            self.datePickerStyle(.graphical)
-        case .wheel:
-#if os(iOS)
-            self.datePickerStyle(.wheel)
-#endif
-        case .field:
-#if os(macOS)
-            self.datePickerStyle(.field)
-#endif
-        case .stepperField:
-#if os(macOS)
-            self.datePickerStyle(.stepperField)
-#endif
-        }
-    }
-}
-#endif

@@ -32,16 +32,9 @@ import SwiftUI
 /// end
 /// ```
 ///
-/// ## Attributes
-/// - ``style``
-///
 /// ## Children
 /// - `content`
 /// - `label`
-///
-/// ## Topics
-/// ### Supporting Types
-/// - ``PickerStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -49,11 +42,6 @@ struct Picker<R: RootRegistry>: View {
     @LiveContext<R> private var context
     @ObservedElement private var element
     @FormState private var value: String?
-    /// The visual style of this picker.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("picker-style") private var style: PickerStyle = .automatic
     
     var body: some View {
         SwiftUI.Picker(selection: $value) {
@@ -61,76 +49,6 @@ struct Picker<R: RootRegistry>: View {
         } label: {
             context.buildChildren(of: element, withTagName: "label", namespace: "Picker", includeDefaultSlot: false)
         }
-        .applyPickerStyle(style)
     }
     
-}
-
-/// The visual style of a ``Picker`` element.
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-private enum PickerStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-    case inline
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, macOS 13.0, *)
-    case menu
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
-    case navigationLink = "navigation-link"
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(macOS 13.0, *)
-    case radioGroup = "radio-group"
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, tvOS 16.0, macOS 13.0, *)
-    case segmented
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(iOS 16.0, watchOS 9.0, *)
-    case wheel
-}
-
-private extension View {
-    @ViewBuilder
-    func applyPickerStyle(_ style: PickerStyle) -> some View {
-        switch style {
-        case .automatic:
-            self.pickerStyle(.automatic)
-        case .inline:
-            self.pickerStyle(.inline)
-        case .menu:
-#if os(iOS) || os(macOS)
-            self.pickerStyle(.menu)
-#endif
-        case .navigationLink:
-#if !os(macOS)
-            self.pickerStyle(.navigationLink)
-#endif
-        case .radioGroup:
-#if os(macOS)
-            self.pickerStyle(.radioGroup)
-#endif
-        case .segmented:
-#if !os(watchOS)
-            self.pickerStyle(.segmented)
-#endif
-        case .wheel:
-#if os(iOS) || os(watchOS)
-            self.pickerStyle(.wheel)
-#endif
-        }
-    }
 }

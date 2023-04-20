@@ -23,14 +23,9 @@ import SwiftUI
 /// 
 /// ## Attributes
 /// * ``disabled``
-/// * ``buttonStyle``
 /// 
 /// ## Events
 /// * ``click``
-///
-/// ## Topics
-/// ### Supporting Types
-/// - ``ButtonStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -52,11 +47,6 @@ public struct Button<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @Attribute("disabled") private var disabled: Bool
-    /// The style to apply to this button.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("button-style") private var buttonStyle: ButtonStyle = .automatic
     
     @_spi(LiveForm) public init(action: (() -> Void)? = nil) {
         self.action = action
@@ -66,7 +56,6 @@ public struct Button<R: RootRegistry>: View {
         SwiftUI.Button(action: self.handleClick) {
             context.buildChildren(of: element)
         }
-        .applyButtonStyle(buttonStyle)
         .disabled(disabled)
         .preference(key: ProvidedBindingsKey.self, value: ["phx-click"])
     }
@@ -77,51 +66,5 @@ public struct Button<R: RootRegistry>: View {
             return
         }
         click(value: element.buildPhxValuePayload()) {}
-    }
-}
-
-/// A style for the ``Button`` element.
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum ButtonStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case bordered
-    /// `bordered-prominent`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case borderedProminent = "bordered-prominent"
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case borderless
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case plain
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    func applyButtonStyle(_ style: ButtonStyle) -> some View {
-        switch style {
-        case .automatic:
-            self.buttonStyle(.automatic)
-        case .bordered:
-            self.buttonStyle(.bordered)
-        case .borderedProminent:
-            self.buttonStyle(.borderedProminent)
-        case .borderless:
-            self.buttonStyle(.borderless)
-        case .plain:
-            self.buttonStyle(.plain)
-        }
     }
 }
