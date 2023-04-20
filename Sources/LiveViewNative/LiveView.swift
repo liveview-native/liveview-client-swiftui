@@ -119,7 +119,7 @@ public struct LiveView<R: RootRegistry>: View {
     @State private var selectedTab: URL?
     @ViewBuilder
     private func tabView(_ tabs: [LiveSessionConfiguration.NavigationMode.Tab]) -> some View {
-        TabView(selection: $selectedTab) {
+        SwiftUI.TabView(selection: $selectedTab) {
             ForEach(tabs) { tab in
                 NavigationStack(path: $session.navigationPath) {
                     NavStackEntryView(.init(url: selectedTab ?? session.url, coordinator: rootCoordinator))
