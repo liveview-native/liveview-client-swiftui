@@ -44,6 +44,13 @@ import SwiftUI
 /// {:hierarchical, :tertiary}
 /// ```
 ///
+/// ### :material
+/// See ``LiveViewNative/SwiftUI/Material`` for a list of possible values.
+///
+/// ```elixir
+/// {:material, :regular}
+/// ```
+///
 /// ## Modifiers
 /// A third element can be contained in the style tuple. This element is a list of modifiers.
 ///
@@ -81,6 +88,8 @@ extension AnyShapeStyle: Decodable {
             self = Self(try container.decode(LinearGradient.self, forKey: .style))
         case .hierarchical:
             self = Self(try container.decode(HierarchicalShapeStyle.self, forKey: .style))
+        case .material:
+            self = Self(try container.decode(Material.self, forKey: .style))
         }
         
         var modifiers = try container.nestedUnkeyedContainer(forKey: .modifiers)
@@ -107,6 +116,7 @@ extension AnyShapeStyle: Decodable {
         case color
         case linearGradient
         case hierarchical
+        case material
     }
     
     enum Modifier: String, Decodable {

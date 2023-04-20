@@ -30,6 +30,7 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   defp cast_style({:color, value}), do: Color.cast(value)
   defp cast_style({:linear_gradient, value}), do: LinearGradient.cast(value)
   defp cast_style({:hierarchical, value}), do: {:ok, value}
+  defp cast_style({:material, value}), do: {:ok, value}
   defp cast_style(_), do: :error
 
   defp cast_modifier({type, properties}), do: %{ "type" => type, "properties" => properties }
