@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Changes the capitalization of the text for any element.
+/// Sets the keyboard type for this view.
 ///
 /// ```html
 /// <TextField modifiers={keyboard_type(@native, type: :email_address)}>
