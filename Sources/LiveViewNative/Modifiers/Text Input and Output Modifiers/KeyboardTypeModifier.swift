@@ -20,7 +20,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-@available(iOS 16.0, *)
+@available(iOS 16.0, tvOS 16.0, *)
 struct KeyboardTypeModifier: ViewModifier, Decodable, Equatable {
     /// One of the `UIKeyboardType` enumerations.
     ///
@@ -39,6 +39,7 @@ struct KeyboardTypeModifier: ViewModifier, Decodable, Equatable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
+    @available(iOS 16.0, tvOS 16.0, *)
     private let type: UIKeyboardType
     
     init(from decoder: Decoder) throws {
@@ -74,7 +75,7 @@ struct KeyboardTypeModifier: ViewModifier, Decodable, Equatable {
     
     func body(content: Content) -> some View {
         content
-            #if os(iOS)
+            #if os(iOS) || os(tvOS)
             .keyboardType(type)
             #endif
     }
