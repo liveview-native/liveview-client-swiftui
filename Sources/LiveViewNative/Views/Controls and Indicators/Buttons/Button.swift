@@ -48,7 +48,7 @@ public struct Button<R: RootRegistry>: View {
     #endif
     @Attribute("disabled") private var disabled: Bool
     
-    @_spi(LiveForm) public init(action: (() -> Void)?) {
+    @_spi(LiveForm) public init(action: (() -> Void)? = nil) {
         self.action = action
     }
     
