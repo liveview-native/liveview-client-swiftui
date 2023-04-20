@@ -43,6 +43,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 16.0, macOS 13.0, *)
 struct ListRowSeparatorTintModifier: ViewModifier, Decodable {
     /// The tint color to apply.
     #if swift(>=5.8)
@@ -74,7 +75,10 @@ struct ListRowSeparatorTintModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        content.listRowSeparatorTint(color, edges: edges)
+        content
+            #if os(iOS) || os(macOS)
+            .listRowSeparatorTint(color, edges: edges)
+            #endif
     }
 
     enum CodingKeys: String, CodingKey {
