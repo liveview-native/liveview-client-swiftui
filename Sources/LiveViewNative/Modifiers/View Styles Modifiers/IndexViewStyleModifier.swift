@@ -52,9 +52,15 @@ struct IndexViewStyleModifier: ViewModifier, Decodable {
         case .page:
             content.indexViewStyle(.page)
         case .pageAlways:
-            content.indexViewStyle(.page(backgroundDisplayMode: .always))
+            content
+                #if !os(watchOS)
+                .indexViewStyle(.page(backgroundDisplayMode: .always))
+                #endif
         case .pageInteractive:
-            content.indexViewStyle(.page(backgroundDisplayMode: .interactive))
+            content
+                #if !os(watchOS)
+                .indexViewStyle(.page(backgroundDisplayMode: .interactive))
+                #endif
         case .pageNever:
             content.indexViewStyle(.page(backgroundDisplayMode: .never))
         }
@@ -72,8 +78,25 @@ struct IndexViewStyleModifier: ViewModifier, Decodable {
 #endif
 @available(iOS 16.0, watchOS 9.0, *)
 private enum IndexViewStyle: String, Decodable {
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case page
+    /// `page_always`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(iOS 16.0, *)
     case pageAlways = "page_always"
+    /// `page_interactive`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(iOS 16.0, *)
     case pageInteractive = "page_interactive"
+    /// `page_never`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case pageNever = "page_never"
 }
