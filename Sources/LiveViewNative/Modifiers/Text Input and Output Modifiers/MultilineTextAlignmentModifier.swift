@@ -25,7 +25,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct MultilineTextAlignmenteModifier: ViewModifier, Decodable, Equatable {
+struct MultilineTextAlignmentModifier: ViewModifier, Decodable, Equatable {
     /// One of the `TextAlignment` enumerations.
     ///
     /// Possible values:
