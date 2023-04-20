@@ -20,8 +20,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-@available(iOS 16.0, watchOS 9.0, *)
-@available(macOS, unavailable)
+@available(iOS 16.0, watchOS 9.0, tvOS 16.0, *)
 struct TextInputAutocapitalizationModifier: ViewModifier, Decodable, Equatable {
     /// One of the capitalizing behaviors defined in the `TextInputAutocapitalization` struct or nil.
     ///
@@ -33,6 +32,7 @@ struct TextInputAutocapitalizationModifier: ViewModifier, Decodable, Equatable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
+    @available(iOS 16.0, watchOS 9.0, tvOS 16.0, *)
     private let autocapitalizationType: UITextAutocapitalizationType?
     
     init(from decoder: Decoder) throws {
@@ -55,7 +55,7 @@ struct TextInputAutocapitalizationModifier: ViewModifier, Decodable, Equatable {
     }
     
     func body(content: Content) -> some View {
-        #if os(iOS) || os(watchOS)
+        #if os(iOS) || os(watchOS) || os(tvOS)
         var autocapitalization: TextInputAutocapitalization?
         if let autocapitalizationType {
             autocapitalization = TextInputAutocapitalization(autocapitalizationType)
