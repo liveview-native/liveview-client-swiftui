@@ -73,7 +73,10 @@ struct KeyboardTypeModifier: ViewModifier, Decodable, Equatable {
     }
     
     func body(content: Content) -> some View {
-        content.keyboardType(type)
+        content
+            #if os(iOS) || os(tvOS)
+            .keyboardType(type)
+            #endif
     }
     
     enum CodingKeys: String, CodingKey {
