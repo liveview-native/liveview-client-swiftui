@@ -58,7 +58,7 @@ public struct Button<R: RootRegistry>: View {
     #endif
     @Attribute("button-style") private var buttonStyle: ButtonStyle = .automatic
     
-    @_spi(LiveForm) public init(action: (() -> Void)?) {
+    @_spi(LiveForm) public init(action: (() -> Void)? = nil) {
         self.action = action
     }
     
