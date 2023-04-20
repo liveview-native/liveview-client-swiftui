@@ -22,15 +22,9 @@ final class ValueInputTests: XCTestCase {
     func testSliderLabels() throws {
         try assertMatch(#"""
 <Slider>
-    <Slider:label>
-        <Text>Label</Text>
-    </Slider:label>
-    <Slider:minimum-value-label>
-        <Text>Min</Text>
-    </Slider:minimum-value-label>
-    <Slider:maximum-value-label>
-        <Text>Max</Text>
-    </Slider:maximum-value-label>
+    <Text template="label">Label</Text>
+    <Text template="minimum-value-label">Min</Text>
+    <Text template="maximum-value-label">Max</Text>
 </Slider>
 """#, size: .init(width: 300, height: 100)) {
             Slider(value: .constant(0)) {

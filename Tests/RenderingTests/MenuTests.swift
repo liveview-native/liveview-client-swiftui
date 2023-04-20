@@ -15,12 +15,12 @@ final class MenuTests: XCTestCase {
     func testSimple() throws {
         try assertMatch(#"""
 <Menu>
-    <Menu:label>
-        <Text>Open Menu</Text>
-    </Menu:label>
-    <Menu:content>
-        <Text>Menu Content</Text>
-    </Menu:content>
+    <Text template="label">
+        Open Menu
+    </Text>
+    <Text template="content">
+        Menu Content
+    </Text>
 </Menu>
 """#) {
             Menu {
@@ -34,10 +34,10 @@ final class MenuTests: XCTestCase {
     func testDefaultSlot() throws {
         try assertMatch(#"""
 <Menu>
-    <Text>Open Menu</Text>
-    <Menu:content>
-        <Text>Menu Content</Text>
-    </Menu:content>
+    <Text template="label">Open Menu</Text>
+    <Text>
+        Menu Content
+    </Text>
 </Menu>
 """#) {
             Menu {
@@ -52,12 +52,12 @@ final class MenuTests: XCTestCase {
         try assertMatch(#"""
 <Menu>
     <Text>Default Slot</Text>
-    <Menu:label>
-        <Text>Open Menu</Text>
-    </Menu:label>
-    <Menu:content>
-        <Text>Menu Content</Text>
-    </Menu:content>
+    <Text template="label">
+        Open Menu
+    </Text>
+    <Text template="content">
+        Menu Content
+    </Text>
 </Menu>
 """#) {
             Menu {

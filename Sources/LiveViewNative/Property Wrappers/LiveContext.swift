@@ -110,8 +110,9 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         if namedSlotChildren.isEmpty && includeDefaultSlot {
             let defaultSlotChildren = children.filter({
                 if case let .element(element) = $0.data {
-                    return (element.attributes.first(where: { $0.name == "template" })?.value != template)
-                        && !element.attributes.contains(where: { $0.name.rawValue.hasPrefix("#") })
+                    return !element.attributes.contains(where: {
+                        $0.name.rawValue == "template" || $0.name.rawValue.hasPrefix("#")
+                    })
                 } else {
                     return true
                 }
