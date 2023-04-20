@@ -8,16 +8,16 @@ import SwiftUI
 
 /// A shape style that creates a gradient between two points.
 ///
-/// To create this shape style, pass in a ``LiveViewNative/SwiftUI/Gradient``.
+/// To create this shape style, create a map or keyword list with the `gradient` key set to a ``LiveViewNative/SwiftUI/Gradient`` value.
 ///
 /// ```elixir
-/// {:linear_gradient, [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}]}
+/// [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}]
 /// ```
 ///
-/// Use the `start_point` and `end_point` options to customize the gradient further.
+/// Use the `start_point` and `end_point` keys to customize the gradient further.
 ///
 /// ```elixir
-/// {:linear_gradient, [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}, start_point: {0, 0}, end_point: {1, 1}]}
+/// [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}, start_point: {0, 0}, end_point: {1, 1}]
 /// ```
 ///
 /// See ``LiveViewNative/SwiftUI/UnitPoint`` for more details on creating the start/end points.

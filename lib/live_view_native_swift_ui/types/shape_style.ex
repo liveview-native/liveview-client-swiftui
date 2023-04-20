@@ -1,6 +1,6 @@
 defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   @derive Jason.Encoder
-  defstruct [:concrete_style, :style]
+  defstruct [:concrete_style, :style, :modifiers]
 
   use LiveViewNativePlatform.Modifier.Type
   def type, do: :map
@@ -12,7 +12,11 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   def cast({concrete_style, style, modifiers}) do
     case cast_style({concrete_style, style}) do
       {:ok, cast_style} ->
-        {:ok, %__MODULE__{concrete_style: concrete_style, style: cast_style}}
+        {:ok, %__MODULE__{
+          concrete_style: concrete_style,
+          style: cast_style,
+          modifiers: Enum.map(modifiers, &cast_modifier/1)
+        }}
 
       :error ->
         :error
@@ -27,4 +31,6 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   defp cast_style({:linear_gradient, value}), do: LinearGradient.cast(value)
   defp cast_style({:hierarchical, value}), do: {:ok, value}
   defp cast_style(_), do: :error
+
+  defp cast_modifier({type, properties}), do: %{ "type" => type, "properties" => properties }
 end
