@@ -21,7 +21,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 @available(iOS 16.0, watchOS 9.0, tvOS 16.0, *)
-struct TextInputAutocapitalizationModifier: ViewModifier, Decodable, Equatable {
+struct TextInputAutocapitalizationModifier: ViewModifier, Decodable {
     /// One of the capitalizing behaviors defined in the `TextInputAutocapitalization` struct or nil.
     ///
     /// Possible values:
