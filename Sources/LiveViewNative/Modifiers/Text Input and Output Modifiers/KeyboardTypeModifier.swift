@@ -22,6 +22,10 @@ import SwiftUI
 #endif
 @available(iOS 16.0, tvOS 16.0, *)
 struct KeyboardTypeModifier: ViewModifier, Decodable {
+    #if !os(iOS) && !os(tvOS)
+    typealias UIKeyboardType = Never
+    #endif
+
     /// One of the `UIKeyboardType` enumerations.
     ///
     /// Possible values:
@@ -39,12 +43,12 @@ struct KeyboardTypeModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @available(iOS 16.0, tvOS 16.0, *)
     private let type: UIKeyboardType
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
+        #if os(iOS) || os(tvOS)
         switch try container.decode(String.self, forKey: .type) {
         case "default":
             self.type = .default
@@ -71,6 +75,9 @@ struct KeyboardTypeModifier: ViewModifier, Decodable {
         default:
             throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "invalid value for \(CodingKeys.type.rawValue)")
         }
+        #else
+        fatalError()
+        #endif
     }
     
     func body(content: Content) -> some View {
