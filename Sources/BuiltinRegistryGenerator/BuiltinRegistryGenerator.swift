@@ -19,7 +19,10 @@ struct BuiltinRegistryGenerator: ParsableCommand {
     static let denylist = [
         "Shape",
         "TextFieldProtocol",
-        "NamespaceContext"
+        "NamespaceContext",
+        "ToolbarItem",
+        "ToolbarItemGroup",
+        "ToolbarTitleMenu",
     ]
     
     static let additionalViews = [
