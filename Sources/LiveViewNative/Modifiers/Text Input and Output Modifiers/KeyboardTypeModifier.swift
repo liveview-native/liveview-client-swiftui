@@ -21,7 +21,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 @available(iOS 16.0, tvOS 16.0, *)
-struct KeyboardTypeModifier: ViewModifier, Decodable, Equatable {
+struct KeyboardTypeModifier: ViewModifier, Decodable {
     /// One of the `UIKeyboardType` enumerations.
     ///
     /// Possible values:
