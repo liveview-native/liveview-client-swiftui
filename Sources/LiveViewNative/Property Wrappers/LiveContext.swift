@@ -89,7 +89,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     /// ```html
     /// <menu>
     ///     <menu:content>
-    ///         <button phx-click="clicked">Hello</button>
+    ///         <Button phx-click="clicked">Hello</Button>
     ///     </menu:content>
     ///     <menu:label>
     ///         My Menu

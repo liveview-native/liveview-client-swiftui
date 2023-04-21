@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-/// `<button>`, sends events when tapped.
+/// `<Button>`, sends events when tapped.
 ///
 /// Use the `phx-click` attribute to specify which event to fire on tap.
 ///
 /// ```html
-/// <button phx-click="my_event" phx-value-extra="more info">Click Me!</button>
+/// <Button phx-click="my_event" phx-value-extra="more info">Click Me!</Button>
 /// ```
 ///
 /// ```elixir
