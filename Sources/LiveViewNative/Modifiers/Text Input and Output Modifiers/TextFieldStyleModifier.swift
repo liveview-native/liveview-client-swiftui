@@ -71,14 +71,13 @@ private enum TextFieldStyle: String, Decodable {
     @_documentation(visibility: public)
     #endif
     case plain
-    /// `rounded-border`
+    /// `rounded_border`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     @available(iOS 16.0, tvOS 16.0, macOS 13.0, *)
     case roundedBorder = "rounded_border"
-
-    /// `square-border`
+    /// `square_border`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
