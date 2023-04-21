@@ -59,7 +59,7 @@ struct Text<R: RootRegistry>: View {
     @LiveContext<R> private var context
     
     // The view that's in the SwiftUI view tree needs to observe an element to respond to DOM changes,
-    // but we also need to construct a Text view with a specific element to handle nested <text>s.
+    // but we also need to construct a Text view with a specific element to handle nested <Text>s.
     // The `element` property returns the effective one, avoiding accessing the @ObservedElement when not
     // installed in a view.
     @ObservedElement private var observedElement: ElementNode

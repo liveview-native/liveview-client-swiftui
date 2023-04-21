@@ -52,7 +52,7 @@ import Combine
 /// <my-toggle is-on="toggle_binding" />
 ///
 /// <Button modifiers='[{"type": "my_alert", "is_active": "alert_shown"}]'>
-///     <text>Present alert</text>
+///     <Text>Present alert</Text>
 /// </Button>
 /// ```
 ///
