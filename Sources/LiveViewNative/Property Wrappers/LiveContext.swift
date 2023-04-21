@@ -87,14 +87,14 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     ///
     /// This can be use to build views which have multiple types of children, such as how Menu takes content and a label:
     /// ```html
-    /// <menu>
-    ///     <menu:content>
+    /// <Menu>
+    ///     <Menu:content>
     ///         <Button phx-click="clicked">Hello</Button>
-    ///     </menu:content>
-    ///     <menu:label>
+    ///     </Menu:content>
+    ///     <Menu:label>
     ///         My Menu
-    ///     </menu:label>
-    /// </menu>
+    ///     </Menu:label>
+    /// </Menu>
     /// ```
     ///
     /// - Parameter element: The element whose children to consider.
