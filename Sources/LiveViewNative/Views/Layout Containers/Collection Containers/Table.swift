@@ -55,9 +55,9 @@ import SwiftUI
 ///             (if hd(@sports_sort_order)["order"], do: &</2, else: &>/2)
 ///         ) do %>
 ///             <TableRow id={sport["id"]}>
-///                 <text><%= sport["name"] %></text>
-///                 <text><%= sport["description"] %></text>
-///                 <text><%= sport["length"] %></text>
+///                 <Text><%= sport["name"] %></Text>
+///                 <Text><%= sport["description"] %></Text>
+///                 <Text><%= sport["length"] %></Text>
 ///             </TableRow>
 ///         <% end %>
 ///     </Table:rows>
