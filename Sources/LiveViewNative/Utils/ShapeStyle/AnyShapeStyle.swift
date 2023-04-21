@@ -30,6 +30,13 @@ import SwiftUI
 /// {:color, :blue}
 /// ```
 ///
+/// ### :angular_gradient
+/// See ``LiveViewNative/SwiftUI/AngularGradient`` for details on creating this style.
+///
+/// ```elixir
+/// {:angular_gradient, [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}, angle: {:degrees, 45}]}
+/// ```
+///
 /// ### :linear_gradient
 /// See ``LiveViewNative/SwiftUI/LinearGradient`` for details on creating this style.
 ///
@@ -84,6 +91,8 @@ extension AnyShapeStyle: Decodable {
         switch try container.decode(ConcreteStyle.self, forKey: .concreteStyle) {
         case .color:
             self = Self(try container.decode(SwiftUI.Color.self, forKey: .style))
+        case .angularGradient:
+            self = Self(try container.decode(AngularGradient.self, forKey: .style))
         case .linearGradient:
             self = Self(try container.decode(LinearGradient.self, forKey: .style))
         case .hierarchical:
@@ -114,7 +123,8 @@ extension AnyShapeStyle: Decodable {
     
     enum ConcreteStyle: String, Decodable {
         case color
-        case linearGradient
+        case angularGradient = "angular_gradient"
+        case linearGradient = "linear_gradient"
         case hierarchical
         case material
     }
