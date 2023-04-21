@@ -130,7 +130,7 @@ public struct Event: DynamicProperty, Decodable {
     ///
     /// A `Button` may handle the `phx-click` event.
     /// ```html
-    /// <button phx-click="my_event_name" />
+    /// <Button phx-click="my_event_name" />
     /// ```
     /// Using this initializer, the event name would be identified by the value of the `phx-click` attribute:
     /// ```swift
