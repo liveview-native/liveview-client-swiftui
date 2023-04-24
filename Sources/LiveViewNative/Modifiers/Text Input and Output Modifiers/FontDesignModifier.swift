@@ -45,7 +45,11 @@ struct FontDesignModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        content.font(.system(size: UIFont.labelFontSize, design: design))
+        if #available(iOS 16.1, *) {
+            content.fontDesign(design)
+        } else {
+            content
+        }
     }
     
     enum CodingKeys: String, CodingKey {
