@@ -1,0 +1,32 @@
+//
+//  LuminanceToAlphaModifier.swift
+//  LiveViewNative
+//
+//  Created by Dylan.Ginsburg on 4/24/23.
+//
+
+import SwiftUI
+
+/// Adds a luminance to alpha effect to this view.
+///
+/// Use this modifier to create a semitransparent mask, with the opacity of each part of the modified view controlled by the luminance of the corresponding part of the original view. Regions of lower luminance become more transparent, while higher luminance yields greater opacity.
+///
+/// ```html
+/// <Image
+///     system-name="heart.fill"
+///     modifiers={
+///         @native
+///             |> background(alignment: :center, content: :heart_bg)
+///             |> foreground_style(primary: {:color, :white})
+///             |> luminance_to_alpha()
+///     }
+/// >
+/// ```
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
+struct LuminanceToAlphaModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        return content.luminanceToAlpha()
+    }
+}
