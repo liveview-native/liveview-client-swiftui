@@ -25,7 +25,6 @@ import SwiftUI
 ///         <Circle modifiers={@native |> frame(width: 32, height: 32) |> foreground_style(primary: {:color, :red})} />
 ///     </background:heart_bg>
 /// </Image>
-
 /// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)
