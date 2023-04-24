@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Configures the view’s subtitle for purposes of navigation.
+/// Configures the title display mode for this view.
 ///
 /// ```html
 /// <VStack
