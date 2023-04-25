@@ -9,6 +9,7 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   alias LiveViewNativeSwiftUi.Types.AngularGradient
   alias LiveViewNativeSwiftUi.Types.EllipticalGradient
   alias LiveViewNativeSwiftUi.Types.LinearGradient
+  alias LiveViewNativeSwiftUi.Types.RadialGradient
 
   def cast({concrete_style, style}), do: cast({concrete_style, style, []})
   def cast({concrete_style, style, modifiers}) do
@@ -33,6 +34,7 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   defp cast_style({:angular_gradient, value}), do: AngularGradient.cast(value)
   defp cast_style({:elliptical_gradient, value}), do: EllipticalGradient.cast(value)
   defp cast_style({:linear_gradient, value}), do: LinearGradient.cast(value)
+  defp cast_style({:radial_gradient, value}), do: RadialGradient.cast(value)
   defp cast_style({:hierarchical, value}), do: {:ok, value}
   defp cast_style({:material, value}), do: {:ok, value}
   defp cast_style(_), do: :error

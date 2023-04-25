@@ -13,14 +13,14 @@ import SwiftUI
 /// Specify an `start_radius_fraction` and `end_radius_fraction` to customize the ellipse.
 ///
 /// ```elixir
-/// [gradient: {:stops, [:pink, :blue]}]
-/// [gradient: {:stops, [:pink, :blue]}, start_radius_fraction: 0.5, end_radius_fraction: 1.0]
+/// [gradient: {:colors, [:pink, :blue]}]
+/// [gradient: {:colors, [:pink, :blue]}, start_radius_fraction: 0.5, end_radius_fraction: 1.0]
 /// ```
 /// 
 /// Set the `center` argument to a ``LiveViewNative/SwiftUI/UnitPoint`` value to offset the origin of the ellipse.
 ///
 /// ```elixir
-/// [gradient: {:stops, [:pink, :blue]}, center: {0, 0}]
+/// [gradient: {:colors, [:pink, :blue]}, center: {0, 0}]
 /// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)

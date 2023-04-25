@@ -34,14 +34,28 @@ import SwiftUI
 /// See ``LiveViewNative/SwiftUI/AngularGradient`` for details on creating this style.
 ///
 /// ```elixir
-/// {:angular_gradient, [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}, angle: {:degrees, 45}]}
+/// {:angular_gradient, [gradient: {:colors, [:pink, :blue]}, angle: {:degrees, 45}]}
+/// ```
+///
+/// ### :elliptical_gradient
+/// See ``LiveViewNative/SwiftUI/EllipticalGradient`` for details on creating this style.
+///
+/// ```elixir
+/// {:elliptical_gradient, [gradient: {:colors, [:pink, :blue]}]}
 /// ```
 ///
 /// ### :linear_gradient
 /// See ``LiveViewNative/SwiftUI/LinearGradient`` for details on creating this style.
 ///
 /// ```elixir
-/// {:linear_gradient, [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}]}
+/// {:linear_gradient, [gradient: {:colors, [:pink, :blue]}]}
+/// ```
+///
+/// ### :radial_gradient
+/// See ``LiveViewNative/SwiftUI/RadialGradient`` for details on creating this style.
+///
+/// ```elixir
+/// {:radial_gradient, [gradient: {:colors, [:pink, :blue]}, start_radius: 0, end_radius: 100]}
 /// ```
 ///
 /// ### :hierarchical
@@ -97,6 +111,8 @@ extension AnyShapeStyle: Decodable {
             self = Self(try container.decode(EllipticalGradient.self, forKey: .style))
         case .linearGradient:
             self = Self(try container.decode(LinearGradient.self, forKey: .style))
+        case .radialGradient:
+            self = Self(try container.decode(RadialGradient.self, forKey: .style))
         case .hierarchical:
             self = Self(try container.decode(HierarchicalShapeStyle.self, forKey: .style))
         case .material:
@@ -128,6 +144,7 @@ extension AnyShapeStyle: Decodable {
         case angularGradient = "angular_gradient"
         case ellipticalGradient = "elliptical_gradient"
         case linearGradient = "linear_gradient"
+        case radialGradient = "radial_gradient"
         case hierarchical
         case material
     }

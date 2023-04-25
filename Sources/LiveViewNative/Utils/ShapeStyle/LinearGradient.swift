@@ -11,13 +11,13 @@ import SwiftUI
 /// To create this shape style, create a map or keyword list with the `gradient` key set to a ``LiveViewNative/SwiftUI/Gradient`` value.
 ///
 /// ```elixir
-/// [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}]
+/// [gradient: {:colors, [:pink, :blue]}]
 /// ```
 ///
 /// Use the `start_point` and `end_point` keys to customize the gradient further.
 ///
 /// ```elixir
-/// [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}, start_point: {0, 0}, end_point: {1, 1}]
+/// [gradient: {:colors, [:pink, :blue]}, start_point: {0, 0}, end_point: {1, 1}]
 /// ```
 ///
 /// See ``LiveViewNative/SwiftUI/UnitPoint`` for more details on creating the start/end points.

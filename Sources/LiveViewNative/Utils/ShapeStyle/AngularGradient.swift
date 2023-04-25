@@ -14,8 +14,8 @@ import SwiftUI
 /// Provide a `start_angle` and `end_angle` to describe a partial rotation.
 ///
 /// ```elixir
-/// [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}, angle: {:degrees, 45}]
-/// [gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}, start_angle: {:degrees, 45}, end_angle: {:degrees, 90}]
+/// [gradient: {:colors, [:pink, :blue, 0.9]}, angle: {:degrees, 45}]
+/// [gradient: {:colors, [:pink, :blue, 0.9]}, start_angle: {:degrees, 45}, end_angle: {:degrees, 90}]
 /// ```
 /// 
 /// See ``LiveViewNative/SwiftUI/Angle`` for more details on creating angles.
