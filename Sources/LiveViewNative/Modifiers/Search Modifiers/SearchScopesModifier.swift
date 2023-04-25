@@ -45,6 +45,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 16, macOS 13, tvOS 16, *)
 struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// Synchronizes the active scope with the server.
     #if swift(>=5.8)
