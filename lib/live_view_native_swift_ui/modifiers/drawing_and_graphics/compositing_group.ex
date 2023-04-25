@@ -3,4 +3,3 @@ defmodule LiveViewNativeSwiftUi.Modifiers.CompositingGroup do
 
   modifier_schema "compositing_group"
 end
-
