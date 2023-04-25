@@ -11,13 +11,14 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   alias LiveViewNativeSwiftUi.Types.LinearGradient
   alias LiveViewNativeSwiftUi.Types.RadialGradient
   alias LiveViewNativeSwiftUi.Types.ImagePaint
+  alias LiveViewNativeSwiftUi.Types.ShadowStyle
 
   @static_styles [:selection, :separator, :tint, :foreground, :background]
 
   def cast(value) when value in @static_styles do
     {:ok, %__MODULE__{ concrete_style: value, style: nil, modifiers: [] }}
   end
-  def cast({value, modifiers}) when value in @static_styles do
+  def cast({value, modifiers}) when value in @static_styles and is_list(modifiers) do
     {:ok, %__MODULE__{ concrete_style: value, style: nil, modifiers: Enum.map(modifiers, &cast_modifier/1) }}
   end
   def cast({concrete_style, style}), do: cast({concrete_style, style, []})
@@ -49,5 +50,10 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   defp cast_style({:image, value}), do: ImagePaint.cast(value)
   defp cast_style(_), do: :error
 
+  defp cast_modifier({:shadow, shadow_style}) do
+    with {:ok, shadow_style} <- ShadowStyle.cast(shadow_style) do
+      %{ "type" => :shadow, "properties" => shadow_style }
+    end
+  end
   defp cast_modifier({type, properties}), do: %{ "type" => type, "properties" => properties }
 end

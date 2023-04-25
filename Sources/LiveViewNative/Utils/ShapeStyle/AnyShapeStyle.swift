@@ -151,6 +151,14 @@ import SwiftUI
 /// ```elixir
 /// {:blend_mode, :multiply}
 /// ```
+///
+/// ### :shadow
+/// Arguments:
+/// * `shadow_style` (required) - The ``LiveViewNative/SwiftUI/ShadowStyle`` to apply.
+///
+/// ```elixir
+/// {:shadow, {:drop, [radius: 10]}}
+/// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -201,6 +209,8 @@ extension AnyShapeStyle: Decodable {
                 self = Self(self.opacity(try modifier.decode(Double.self, forKey: .properties)))
             case .blendMode:
                 self = Self(self.blendMode(try modifier.decode(BlendMode.self, forKey: .properties)))
+            case .shadow:
+                self = Self(self.shadow(try modifier.decode(ShadowStyle.self, forKey: .properties)))
             }
         }
     }
@@ -240,5 +250,6 @@ extension AnyShapeStyle: Decodable {
     enum Modifier: String, Decodable {
         case opacity
         case blendMode = "blend_mode"
+        case shadow
     }
 }
