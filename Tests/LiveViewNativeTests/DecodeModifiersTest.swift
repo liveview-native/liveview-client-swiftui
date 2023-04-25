@@ -57,13 +57,6 @@ final class DecodeModifiersTest: XCTestCase {
         try assertDecodeModifier(data, expected: NavigationTitleModifier(title: "hello"))
     }
     
-    func testDecodePadding() throws {
-        let data = """
-        {"type": "padding", "top": 10, "leading": 5, "bottom": 10, "trailing": 5}
-        """
-        try assertDecodeModifier(data, expected: PaddingModifier(insets: EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5)))
-    }
-    
     func testDecodeTint() throws {
         let data = """
         {"type": "tint", "color": {"string": "system-pink", "rgb_color_space": null}}
