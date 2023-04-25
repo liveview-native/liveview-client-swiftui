@@ -21,7 +21,6 @@ extension EdgeInsets: Decodable {
             if let f = try container.decodeIfPresent(CGFloat.self, forKey: .all) {
                 self = EdgeInsets(top: f, leading: f, bottom: f, trailing: f)
             } else {
-                // TODO: support null for system default padding (requires separate "mode" since default can't be represented by EdgeInsets)
                 var insets = EdgeInsets()
                 if let f = try container.decodeIfPresent(CGFloat.self, forKey: .top) {
                     insets.top = f
