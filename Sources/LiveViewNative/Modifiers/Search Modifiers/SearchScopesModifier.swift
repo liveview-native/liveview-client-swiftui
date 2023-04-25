@@ -63,7 +63,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     #endif
     private let activation: String?
     
-    @available(iOS 16.4, *)
+    @available(iOS 16.4, macOS 13.3, watchOS 9.4, *)
     private var searchScopeActivation: SearchScopeActivation {
         switch activation {
         case "automatic": return .automatic
@@ -91,7 +91,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        if #available(iOS 16.4, *) {
+        if #available(iOS 16.4, macOS 13.3, watchOS 9.4, *) {
             content.searchScopes($active, activation: searchScopeActivation) {
                 context.buildChildren(of: element, withTagName: scopes, namespace: "search_scopes")
             }

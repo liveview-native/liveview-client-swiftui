@@ -48,7 +48,10 @@ struct SearchCompletionModifier: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         if let token {
-            content.searchCompletion(SearchToken(token))
+            content
+                #if os(iOS) || os(macOS)
+                .searchCompletion(SearchToken(token))
+                #endif
         } else if let completion {
             content.searchCompletion(completion)
         }

@@ -121,9 +121,15 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
         
         switch try container.decodeIfPresent(String.self, forKey: .placement) ?? "automatic" {
         case "automatic": self.placement = .automatic
+        #if os(iOS) || os(watchOS)
         case "navigation_bar_drawer": self.placement = .navigationBarDrawer
+        #endif
+        #if os(iOS)
         case "navigation_bar_drawer_always": self.placement = .navigationBarDrawer(displayMode: .always)
+        #endif
+        #if os(iOS) || os(macOS)
         case "sidebar": self.placement = .sidebar
+        #endif
         case "toolbar": self.placement = .toolbar
         case let `default`: throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "unknown placement '\(`default`)'"))
         }
@@ -132,16 +138,21 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
+        #if os(iOS) || os(macOS)
         if let suggestedTokens {
             content
                 .searchable(text: $text, tokens: $tokens, suggestedTokens: .constant(suggestedTokens), placement: placement, prompt: prompt) { token in
                     context.buildChildren(of: element, withTagName: token.value, namespace: "searchable")
                 }
         } else {
-            content.searchable(text: $text, tokens: $tokens, placement: placement, prompt: prompt) { token in
-                context.buildChildren(of: element, withTagName: token.value, namespace: "searchable")
-            }
+            content
+                .searchable(text: $text, tokens: $tokens, placement: placement, prompt: prompt) { token in
+                    context.buildChildren(of: element, withTagName: token.value, namespace: "searchable")
+                }
         }
+        #else
+        content.searchable(text: $text, placement: placement, prompt: prompt)
+        #endif
     }
 
     enum CodingKeys: String, CodingKey {
