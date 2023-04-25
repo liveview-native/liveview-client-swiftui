@@ -8,8 +8,8 @@
 import SwiftUI
 
 /// Overrides the preferred color scheme for the presentation.
-/// (This modifier propagates up to the nearest presentation container
-/// rather than modifying the content directly.)
+/// - Note: This modifier propagates up to the nearest presentation container
+/// rather than modifying the content directly.
 ///
 /// ```html
 /// <VStack
