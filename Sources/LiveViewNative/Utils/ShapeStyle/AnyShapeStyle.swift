@@ -93,6 +93,8 @@ extension AnyShapeStyle: Decodable {
             self = Self(try container.decode(SwiftUI.Color.self, forKey: .style))
         case .angularGradient:
             self = Self(try container.decode(AngularGradient.self, forKey: .style))
+        case .ellipticalGradient:
+            self = Self(try container.decode(EllipticalGradient.self, forKey: .style))
         case .linearGradient:
             self = Self(try container.decode(LinearGradient.self, forKey: .style))
         case .hierarchical:
@@ -124,6 +126,7 @@ extension AnyShapeStyle: Decodable {
     enum ConcreteStyle: String, Decodable {
         case color
         case angularGradient = "angular_gradient"
+        case ellipticalGradient = "elliptical_gradient"
         case linearGradient = "linear_gradient"
         case hierarchical
         case material
