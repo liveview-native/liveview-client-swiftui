@@ -91,7 +91,8 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        if #available(iOS 16.4, macOS 13.3, watchOS 9.4, *) {
+        #if os(iOS) || os(macOS) || os(tvOS)
+        if #available(iOS 16.4, macOS 13.3, tvOS 16.4, *) {
             content.searchScopes($active, activation: searchScopeActivation) {
                 context.buildChildren(of: element, withTagName: scopes, namespace: "search_scopes")
             }
@@ -100,6 +101,9 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
                 context.buildChildren(of: element, withTagName: scopes, namespace: "search_scopes")
             }
         }
+        #else
+        content
+        #endif
     }
 
     enum CodingKeys: String, CodingKey {
