@@ -68,6 +68,8 @@ import SwiftUI
 /// ### :material
 /// See ``LiveViewNative/SwiftUI/Material`` for a list of possible values.
 ///
+/// - Note: Materials are only available on iOS and macOS.
+///
 /// ```elixir
 /// {:material, :regular}
 /// ```
@@ -77,6 +79,45 @@ import SwiftUI
 ///
 /// ```elixir
 /// {:image, [image: {:system, "basketball.fill"}]}
+/// ```
+///
+/// ### :selection
+/// The selection color in the current context.
+///
+/// - Note: Only available on iOS and macOS
+///
+/// ```elixir
+/// :selection
+/// ```
+///
+/// ### :separator
+/// The separator color in the current context.
+///
+/// - Note: Only available on macOS
+///
+/// ```elixir
+/// :separator
+/// ```
+///
+/// ### :tint
+/// The tint color in the current context.
+///
+/// ```elixir
+/// :tint
+/// ```
+///
+/// ### :foreground
+/// The foreground style in the current context.
+///
+/// ```elixir
+/// :foreground
+/// ```
+///
+/// ### :background
+/// The background style in the current context.
+///
+/// ```elixir
+/// :background
 /// ```
 ///
 /// ## Modifiers
@@ -122,10 +163,26 @@ extension AnyShapeStyle: Decodable {
             self = Self(try container.decode(RadialGradient.self, forKey: .style))
         case .hierarchical:
             self = Self(try container.decode(HierarchicalShapeStyle.self, forKey: .style))
+        #if os(iOS) || os(macOS)
         case .material:
             self = Self(try container.decode(Material.self, forKey: .style))
+        #endif
         case .image:
             self = Self(try container.decode(ImagePaint.self, forKey: .style))
+        #if os(iOS) || os(macOS)
+        case .selection:
+            self = Self(SelectionShapeStyle())
+        #endif
+        #if os(macOS)
+        case .separator:
+            self = Self(SeparatorShapeStyle())
+        #endif
+        case .tint:
+            self = Self(TintShapeStyle())
+        case .foreground:
+            self = Self(ForegroundStyle())
+        case .background:
+            self = Self(BackgroundStyle())
         }
         
         var modifiers = try container.nestedUnkeyedContainer(forKey: .modifiers)
@@ -155,8 +212,19 @@ extension AnyShapeStyle: Decodable {
         case linearGradient = "linear_gradient"
         case radialGradient = "radial_gradient"
         case hierarchical
+        #if os(iOS) || os(macOS)
         case material
+        #endif
         case image
+        #if os(iOS) || os(macOS)
+        case selection
+        #endif
+        #if os(macOS)
+        case separator
+        #endif
+        case tint
+        case foreground
+        case background
     }
     
     enum Modifier: String, Decodable {

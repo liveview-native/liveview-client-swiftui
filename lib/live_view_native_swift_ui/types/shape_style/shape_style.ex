@@ -12,6 +12,14 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   alias LiveViewNativeSwiftUi.Types.RadialGradient
   alias LiveViewNativeSwiftUi.Types.ImagePaint
 
+  @static_styles [:selection, :separator, :tint, :foreground, :background]
+
+  def cast(value) when value in @static_styles do
+    {:ok, %__MODULE__{ concrete_style: value, style: nil, modifiers: [] }}
+  end
+  def cast({value, modifiers}) when value in @static_styles do
+    {:ok, %__MODULE__{ concrete_style: value, style: nil, modifiers: Enum.map(modifiers, &cast_modifier/1) }}
+  end
   def cast({concrete_style, style}), do: cast({concrete_style, style, []})
   def cast({concrete_style, style, modifiers}) do
     case cast_style({concrete_style, style}) do

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS) || os(macOS)
 /// A translucent shape style.
 ///
 /// Use material to create blur effects.
@@ -34,12 +35,11 @@ extension Material: Decodable {
             self = .thick
         case "ultra_thick":
             self = .ultraThick
-        #if os(iOS) || os(macOS)
         case "bar":
             self = .bar
-        #endif
         case let `default`:
             throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "unknown material '\(`default`)'"))
         }
     }
 }
+#endif
