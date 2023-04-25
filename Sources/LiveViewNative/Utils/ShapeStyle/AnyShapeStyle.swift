@@ -143,6 +143,14 @@ import SwiftUI
 /// ```elixir
 /// {:opacity, 0.5}
 /// ```
+///
+/// ### :blend_mode
+/// Arguments:
+/// * `blend_mode` (required) - The ``LiveViewNative/SwiftUI/BlendMode`` to use for this style.
+///
+/// ```elixir
+/// {:blend_mode, :multiply}
+/// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -191,6 +199,8 @@ extension AnyShapeStyle: Decodable {
             switch try modifier.decode(Modifier.self, forKey: .type) {
             case .opacity:
                 self = Self(self.opacity(try modifier.decode(Double.self, forKey: .properties)))
+            case .blendMode:
+                self = Self(self.blendMode(try modifier.decode(BlendMode.self, forKey: .properties)))
             }
         }
     }
@@ -229,5 +239,6 @@ extension AnyShapeStyle: Decodable {
     
     enum Modifier: String, Decodable {
         case opacity
+        case blendMode = "blend_mode"
     }
 }
