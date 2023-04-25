@@ -38,7 +38,7 @@ final class DecodeModifiersTest: XCTestCase {
     
     func testDecodeListRowInsets() throws {
         let data = """
-        {"type": "list_row_insets", "all": 10}
+        {"type": "list_row_insets", "insets": 10}
         """
         try assertDecodeModifier(data, expected: ListRowInsetsModifier(insets: EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)))
     }
