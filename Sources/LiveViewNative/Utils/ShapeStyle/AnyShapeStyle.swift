@@ -72,6 +72,13 @@ import SwiftUI
 /// {:material, :regular}
 /// ```
 ///
+/// ### :image
+/// See ``LiveViewNative/SwiftUI/ImagePaint`` for details on creating this style.
+///
+/// ```elixir
+/// {:image, [image: {:system, "basketball.fill"}]}
+/// ```
+///
 /// ## Modifiers
 /// A third element can be contained in the style tuple. This element is a list of modifiers.
 ///
@@ -117,6 +124,8 @@ extension AnyShapeStyle: Decodable {
             self = Self(try container.decode(HierarchicalShapeStyle.self, forKey: .style))
         case .material:
             self = Self(try container.decode(Material.self, forKey: .style))
+        case .image:
+            self = Self(try container.decode(ImagePaint.self, forKey: .style))
         }
         
         var modifiers = try container.nestedUnkeyedContainer(forKey: .modifiers)
@@ -147,6 +156,7 @@ extension AnyShapeStyle: Decodable {
         case radialGradient = "radial_gradient"
         case hierarchical
         case material
+        case image
     }
     
     enum Modifier: String, Decodable {
