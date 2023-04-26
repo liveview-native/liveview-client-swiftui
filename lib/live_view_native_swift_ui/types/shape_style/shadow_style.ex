@@ -33,3 +33,4 @@ defmodule LiveViewNativeSwiftUi.Types.ShadowStyle do
   end
 
   defp cast_color(with_type), do: with_type
+end
