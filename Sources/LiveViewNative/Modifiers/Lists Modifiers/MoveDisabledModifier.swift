@@ -19,7 +19,7 @@ import SwiftUI
 ///
 /// ## Arguments
 /// * ``is_disabled``
-struct MoveDisabledModifier: ViewModifier, Decodable, Equatable {
+struct MoveDisabledModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
