@@ -42,6 +42,16 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
     ]
     
+    var platformFamilyName: String? {
+        ProcessInfo.processInfo.environment["PLATFORM_FAMILY_NAME"]
+    }
+    
+    var deploymentTarget: Double? {
+        ProcessInfo.processInfo.environment["DEPLOYMENT_TARGET_SETTING_NAME"]
+            .flatMap { ProcessInfo.processInfo.environment[$0] }
+            .flatMap(Double.init(_:))
+    }
+    
     func run() throws {
         let views = try views
             .map(URL.init(fileURLWithPath:))
@@ -162,14 +172,11 @@ struct BuiltinRegistryGenerator: ParsableCommand {
                 if let version = condition[version] {
                     // Only wrap in `if #available` when the check is higher than the minimum supported version.
                     // This avoids unnecessary type erasure.
-                    switch condition[platform] {
-                    case "iOS" where version > 16,
-                        "tvOS" where version > 16,
-                        "macOS" where version > 13,
-                        "watchOS" where version > 9:
+                    if let platformFamilyName,
+                       let deploymentTarget,
+                       condition[platform] == platformFamilyName && version > deploymentTarget
+                    {
                         return availability
-                    default:
-                        break
                     }
                 }
             }
