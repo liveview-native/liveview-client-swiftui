@@ -22,6 +22,7 @@ defmodule LiveViewNativeSwiftUi.Types.ImagePaint do
             source_rect: source_rect,
             scale: value[:scale] || 1
           }}
+
         {:system, system_image} ->
           {:ok, %__MODULE__{
             image: nil,
@@ -29,6 +30,9 @@ defmodule LiveViewNativeSwiftUi.Types.ImagePaint do
             source_rect: source_rect,
             scale: value[:scale] || 1
           }}
+
+        _ ->
+          :error        
       end
     else
       _ ->
