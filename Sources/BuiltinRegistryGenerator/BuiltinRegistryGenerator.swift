@@ -42,10 +42,6 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
     ]
     
-    static let modifierAvailability = [
-        "FontDesignModifier": "iOS 16.1, watchOS 9.1, *"
-    ]
-    
     func run() throws {
         let views = try views
             .map(URL.init(fileURLWithPath:))
