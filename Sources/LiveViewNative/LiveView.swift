@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WebKit
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
@@ -54,12 +55,7 @@ public struct LiveView<R: RootRegistry>: View {
                         if let error = error as? LiveConnectionError,
                            case let .initialFetchUnexpectedResponse(_, trace?) = error
                         {
-                            SwiftUI.ScrollView {
-                                SwiftUI.Text(trace)
-                                    .font(.caption.monospaced())
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                            }
+                            ErrorView(html: trace)
                         } else {
                             SwiftUI.VStack {
                                 SwiftUI.Text("Connection Failed")
