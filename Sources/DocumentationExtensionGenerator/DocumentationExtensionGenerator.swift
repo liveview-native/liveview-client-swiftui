@@ -229,14 +229,3 @@ struct DocumentationExtensionGenerator: ParsableCommand {
         }
     }
 }
-
-extension Dictionary {
-    mutating func popAll(where condition: ((key: Key, value: Value)) -> Bool) -> Self {
-        var result = Self()
-        for (key, value) in self where condition((key: key, value: value)) {
-            guard let value = self.removeValue(forKey: key) else { continue }
-            result[key] = value
-        }
-        return result
-    }
-}
