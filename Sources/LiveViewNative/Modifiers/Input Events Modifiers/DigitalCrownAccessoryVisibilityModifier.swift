@@ -40,18 +40,7 @@ struct DigitalCrownAccessoryVisibilityModifier: ViewModifier, Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        #if os(watchOS)
-        switch try container.decode(String.self, forKey: .visibility) {
-        case "automatic": self.visibility = .automatic
-        case "visible": self.visibility = .visible
-        case "hidden": self.visibility = .hidden
-        default:
-            throw DecodingError.dataCorruptedError(forKey: .visibility, in: container, debugDescription: "invalid value for \(CodingKeys.visibility.rawValue)")
-        }
-        #else
-        fatalError()
-        #endif
+        self.visibility = try container.decode(Visibility.self, forKey: .visibility)
     }
     
     func body(content: Content) -> some View {
