@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import WebKit
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
