@@ -21,7 +21,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
     require Logger
 
     def context(struct) do
-      LiveViewNativePlatform.Context.define(:ios,
+      LiveViewNativePlatform.Context.define(:swiftui,
         custom_modifiers: struct.custom_modifiers,
         otp_app: :live_view_native_swift_ui
       )
