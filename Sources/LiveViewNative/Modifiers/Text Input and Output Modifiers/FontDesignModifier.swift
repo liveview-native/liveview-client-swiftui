@@ -45,7 +45,7 @@ struct FontDesignModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        if #available(iOS 16.1, *) {
+        if #available(iOS 16.1, watchOS 9.1, *) {
             content.fontDesign(design)
         } else {
             content
