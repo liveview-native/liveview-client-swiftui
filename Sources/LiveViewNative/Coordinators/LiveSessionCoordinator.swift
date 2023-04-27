@@ -133,7 +133,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             let doc = try SwiftSoup.parse(html)
             try self.extractDOMValues(doc)
         } catch {
-            internalState = .connectionFailed(LiveConnectionError.initialParseError)
+            internalState = .connectionFailed(error)
             return
         }
         
@@ -183,14 +183,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> Void {
         let metaRes = try doc.select("meta[name=\"csrf-token\"]")
         guard !metaRes.isEmpty() else {
-            throw LiveConnectionError.initialParseError
+            throw LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken)
         }
         self.phxCSRFToken = try metaRes[0].attr("content")
         self.liveReloadEnabled = !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
         
         let mainDivRes = try doc.select("div[data-phx-main]")
         guard !mainDivRes.isEmpty() else {
-            throw LiveConnectionError.initialParseError
+            throw LiveConnectionError.initialParseError(missingOrInvalid: .phxMain)
         }
         let mainDiv = mainDivRes[0]
         self.phxSession = try mainDiv.attr("data-phx-session")
