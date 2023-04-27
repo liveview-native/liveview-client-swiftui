@@ -254,7 +254,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         var connectParams = session.config.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = session.phxCSRFToken
-        connectParams["_platform"] = "ios"
+        connectParams["_platform"] = "swiftui"
         
         let params: Payload = [
             "session": session.phxSession,
