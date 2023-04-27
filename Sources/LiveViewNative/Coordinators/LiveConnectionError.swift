@@ -11,7 +11,7 @@ import SwiftPhoenixClient
 /// An error that occurred when connecting to a live view.
 public enum LiveConnectionError: Error, LocalizedError {
     case initialFetchError(Error)
-    case initialFetchUnexpectedResponse(URLResponse)
+    case initialFetchUnexpectedResponse(URLResponse, String? = nil)
     /// An error encountered when parsing the initial HTML.
     case initialParseError(missingOrInvalid: InitialParseComponent)
     case socketError(Error)
@@ -22,8 +22,10 @@ public enum LiveConnectionError: Error, LocalizedError {
         switch self {
         case .initialFetchError(let error):
             return "initialFetchError(\(error))"
-        case .initialFetchUnexpectedResponse(let resp):
+        case .initialFetchUnexpectedResponse(let resp, nil):
             return "initialFetchUnexpectedResponse(\(resp))"
+        case .initialFetchUnexpectedResponse(let resp, let trace?):
+            return "initialFetchUnexpectedResponse(\(resp), \(trace))"
         case .initialParseError(let missingOrInvalid):
             return "Initial parse error: missing or invalid \(missingOrInvalid)"
         case .socketError(let error):

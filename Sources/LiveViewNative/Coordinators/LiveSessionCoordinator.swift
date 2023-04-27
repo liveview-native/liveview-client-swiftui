@@ -176,7 +176,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
            let html = String(data: data, encoding: .utf8) {
             return html
         } else {
-            throw LiveConnectionError.initialFetchUnexpectedResponse(resp)
+            if let html = String(data: data, encoding: .utf8),
+               let document = try? SwiftSoup.parse(html),
+               let markdownError = try? document.select(#"textarea[role="copy-contents"]"#).first()?.html()
+            {
+                throw LiveConnectionError.initialFetchUnexpectedResponse(resp, markdownError)
+            } else {
+                throw LiveConnectionError.initialFetchUnexpectedResponse(resp)
+            }
         }
     }
     
