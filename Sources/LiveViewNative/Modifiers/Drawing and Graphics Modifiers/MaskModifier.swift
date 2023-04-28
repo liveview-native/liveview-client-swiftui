@@ -32,6 +32,8 @@ import SwiftUI
 #endif
 struct MaskModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// The alignment in relation to this view.
+    ///
+    /// See ``LiveViewNative/SwiftUI/Alignment``.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
