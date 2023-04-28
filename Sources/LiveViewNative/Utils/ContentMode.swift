@@ -21,7 +21,7 @@ extension ContentMode: Decodable {
         switch value {
         case "fill":
             self = .fill
-        case "fitty":
+        case "fit":
             self = .fit
         default:
             throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Unknown \(String(describing: decoder.codingPath.last)): \(value)"))
