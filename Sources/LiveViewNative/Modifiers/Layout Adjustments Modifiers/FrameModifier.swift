@@ -41,7 +41,7 @@ enum FrameModifier: ViewModifier, Decodable, Equatable {
     }
         
     init(string value: String) {
-        let attributeDecoder = JSONDecoder()
+        let attributeDecoder = LVN.JSONDecoder()
 
         self = try! attributeDecoder.decode(Self.self, from: value.data(using: .utf8)!)
     }
@@ -59,11 +59,11 @@ enum FrameModifier: ViewModifier, Decodable, Equatable {
         case alignment
         case width
         case height
-        case minWidth = "min_width"
-        case idealWidth = "ideal_width"
-        case maxWidth = "max_width"
-        case minHeight = "min_height"
-        case idealHeight = "ideal_height"
-        case maxHeight = "max_height"
+        case minWidth
+        case idealWidth
+        case maxWidth
+        case minHeight
+        case idealHeight
+        case maxHeight
     }
 }

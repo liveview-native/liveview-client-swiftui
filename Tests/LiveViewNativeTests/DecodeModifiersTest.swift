@@ -11,7 +11,7 @@ import SwiftUI
 
 final class DecodeModifiersTest: XCTestCase {
 
-    let decoder = JSONDecoder()
+    let decoder = LVN.JSONDecoder()
     
     private func assertDecodeModifier<T: ViewModifier & Equatable>(_ json: String, expected: T) throws
     where T: Decodable

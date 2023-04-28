@@ -169,7 +169,7 @@ extension AnyTransition {
         }
         
         func body(content: Content) -> some View {
-            content.applyModifiers((try! JSONDecoder().decode([ModifierContainer<R>].self, from: data))[...], element: element, context: context.storage)
+            content.applyModifiers((try! LVN.JSONDecoder().decode([ModifierContainer<R>].self, from: data))[...], element: element, context: context.storage)
         }
     }
     

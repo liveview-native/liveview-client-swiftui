@@ -54,7 +54,7 @@ struct LazyHGrid<R: RootRegistry>: View {
         "rows",
         transform: {
             guard let value = $0?.value?.data(using: .utf8) else { throw AttributeDecodingError.missingAttribute([GridItem].self) }
-            return try JSONDecoder().decode([GridItem].self, from: value)
+            return try LVN.JSONDecoder().decode([GridItem].self, from: value)
         }
     ) private var rows: [GridItem]
     /// The alignment between rows.

@@ -100,7 +100,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
     private func applyModifiers(encoded: String?, to view: some View, element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let modifiers: [ModifierContainer<R>]
         if let encoded {
-            let decoder = JSONDecoder()
+            let decoder = LVN.JSONDecoder()
 
             if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
                 modifiers = decoded
@@ -192,7 +192,7 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     var body: some View {
         let modifiers: [ModifierContainer<R>]
         if let encoded = element.attributeValue(for: "modifiers") {
-            let decoder = JSONDecoder()
+            let decoder = LVN.JSONDecoder()
             if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
                 modifiers = decoded
             } else {
