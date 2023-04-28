@@ -57,7 +57,7 @@ struct GestureModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let action: Event
+    @Event private var action: Event.EventHandler
     
     /// The priority of the gesture. Defaults to `low`.
     ///
@@ -79,7 +79,7 @@ struct GestureModifier<R: RootRegistry>: ViewModifier, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.gesture = try container.decode(AnyGesture<Any>.self, forKey: .gesture)
-        self.action = try container.decode(Event.self, forKey: .action)
+        self._action = try container.decode(Event.self, forKey: .action)
         self.priority = try container.decode(GesturePriority.self, forKey: .priority)
         self.mask = try container.decode(GestureMask.self, forKey: .mask)
     }
@@ -87,7 +87,7 @@ struct GestureModifier<R: RootRegistry>: ViewModifier, Decodable {
     func body(content: Content) -> some View {
         let gesture = self.gesture
             .onEnded { value in
-                self.action.wrappedValue(value: value)
+                self.action(value: value)
             }
         switch priority {
         case .low:

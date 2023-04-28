@@ -37,17 +37,17 @@ struct RefreshableModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let action: Event
+    @Event private var action: Event.EventHandler
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.action = try container.decode(Event.self, forKey: .action)
+        self._action = try container.decode(Event.self, forKey: .action)
     }
 
     func body(content: Content) -> some View {
         content.refreshable {
-            try? await self.action.wrappedValue.callAsFunction()
+            try? await self.action.callAsFunction()
         }
     }
 
