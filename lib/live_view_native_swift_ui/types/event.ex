@@ -5,11 +5,16 @@ defmodule LiveViewNativeSwiftUi.Types.Event do
   use LiveViewNativePlatform.Modifier.Type
   def type, do: :map
 
-  def cast(event) when is_bitstring(event), do: {:ok, %__MODULE__{ event: event }}
+  def cast(nil), do: {:ok, nil}
+  def cast(event) when is_bitstring(event), do: {:ok, %__MODULE__{event: event}}
+
   def cast(value) when is_map(value) do
-    value = value
+    value =
+      value
       |> Map.update(:params, Jason.encode!(Map.new()), fn params -> Jason.encode!(params) end)
+
     {:ok, struct(__MODULE__, value)}
   end
+
   def cast(_), do: :error
 end
