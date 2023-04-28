@@ -19,10 +19,6 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``TextFieldProtocol/prompt``
-/// * ``TextFieldProtocol/disableAutocorrection``
-/// * ``TextFieldProtocol/autocapitalization``
-/// * ``TextFieldProtocol/keyboard``
-/// * ``TextFieldProtocol/submitLabel``
 ///
 /// ## Events
 /// * ``focusEvent``
@@ -59,12 +55,6 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
         }
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .applyAutocorrectionDisabled(disableAutocorrection)
-#if os(iOS) || os(tvOS)
-            .textInputAutocapitalization(autocapitalization)
-            .applyKeyboardType(keyboard)
-#endif
-            .applySubmitLabel(submitLabel)
             .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
     }
     

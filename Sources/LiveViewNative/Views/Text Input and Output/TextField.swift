@@ -25,33 +25,26 @@ import SwiftUI
 /// </TextField>
 /// ```
 ///
-/// ### Input Configuration
-/// Use the available attributes to configure how text is input.
-///
-/// ```html
-/// <TextField
-///     value-binding="value"
-///     autocorrection="no"
-///     autocapitalization="words"
-///     keyboard="web-search"
-///     submit-label="continue"
-/// >
-///     Enter Text
-/// </TextField>
-/// ```
-///
 /// ### Formatting Values
 /// Use the ``format`` attribute to input values such as numbers and URLs.
 ///
 /// ```html
-/// <TextField
-///     value-binding="amount"
-///     format="currency"
-///     currency-code="usd"
-///     keyboard="decimal-pad"
-/// >
-///     Enter Amount
-/// </TextField>
+/// <VStack>
+///     <TextField
+///         value-binding="amount"
+///         format="currency"
+///         currency-code="usd"
+///     >
+///         Enter Amount
+///     </TextField>
+///
+///     <TextField
+///         value-binding="bank_address"
+///         axis="vertical"
+///     >
+///         Enter Bank Address
+///     </TextField>
+/// </VStack>
 /// ```
 ///
 /// ### Secure Input
@@ -61,11 +54,8 @@ import SwiftUI
 /// * ``format``
 /// * ``currencyCode``
 /// * ``nameStyle``
+/// * ``TextFieldProtocol/axis``
 /// * ``TextFieldProtocol/prompt``
-/// * ``TextFieldProtocol/disableAutocorrection``
-/// * ``TextFieldProtocol/autocapitalization``
-/// * ``TextFieldProtocol/keyboard``
-/// * ``TextFieldProtocol/submitLabel``
 ///
 /// ## Events
 /// * ``focusEvent``
@@ -108,14 +98,6 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
         field
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .applyAutocorrectionDisabled(disableAutocorrection)
-#if !os(macOS)
-            .textInputAutocapitalization(autocapitalization)
-#endif
-#if os(iOS) || os(tvOS)
-            .applyKeyboardType(keyboard)
-#endif
-            .applySubmitLabel(submitLabel)
             .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
     }
     
