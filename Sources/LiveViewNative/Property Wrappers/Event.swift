@@ -234,6 +234,11 @@ public struct Event: DynamicProperty, Decodable {
         EventHandler(owner: self)
     }
     
+    /// A closure that triggers the event without any additional payload or waiting for completion.
+    public var projectedValue: () -> Void {
+        return { wrappedValue() }
+    }
+    
     public func update() {
         handler.update(debounce: debounce ?? debounceAttribute, throttle: throttle ?? throttleAttribute)
     }
