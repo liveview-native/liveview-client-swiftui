@@ -31,7 +31,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 struct MaskModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// The alignment in relation to this view.
+    /// The alignment in relation to this view. Defaults to ``center``
     ///
     /// See ``LiveViewNative/SwiftUI/Alignment``.
     #if swift(>=5.8)
