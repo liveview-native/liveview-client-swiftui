@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// The size classes that apply to controls.
+/// Constants that define how a view’s content fills the available space.
 ///
 /// Possible values:
 /// * `fill`
