@@ -25,6 +25,24 @@ import SwiftUI
 /// </TextField>
 /// ```
 ///
+/// ### Input Configuration
+/// Use modifiers to configure how text is input.
+///
+/// ```html
+/// <TextField
+///     value-binding="value"
+///     modifiers={
+///         @native
+///         |> autocorrection_disabled(disable: true)
+///         |> text_input_autocapitalization(autocapitalization: :words)
+///         |> keyboard_type(type: :web_search)
+///         |> submit_label(submit_label: :search)
+///     }
+/// >
+///     Enter Search Text
+/// </TextField>
+/// ```
+///
 /// ### Formatting Values
 /// Use the ``format`` attribute to input values such as numbers and URLs.
 ///
@@ -34,6 +52,7 @@ import SwiftUI
 ///         value-binding="amount"
 ///         format="currency"
 ///         currency-code="usd"
+///         modifier={@native |> keyboard_type(type: :decimal_pad)}
 ///     >
 ///         Enter Amount
 ///     </TextField>
