@@ -7,8 +7,12 @@
 
 import SwiftUI
 
-struct TintModifier: ViewModifier, Decodable {
+struct TintModifier: ViewModifier, Decodable, Equatable {
     private let color: SwiftUI.Color?
+    
+    init(color: SwiftUI.Color) {
+        self.color = color
+    }
     
     func body(content: Content) -> some View {
         content.tint(color)

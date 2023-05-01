@@ -33,6 +33,10 @@ struct ListRowInsetsModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let insets: EdgeInsets?
     
+    init(insets: EdgeInsets) {
+        self.insets = insets
+    }
+    
     func body(content: Content) -> some View {
         content.listRowInsets(insets)
     }
