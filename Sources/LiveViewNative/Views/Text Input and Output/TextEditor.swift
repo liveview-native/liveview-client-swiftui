@@ -16,10 +16,6 @@ import SwiftUI
 /// ## Attributes
 /// - ``findDisabled``
 /// - ``replaceDisabled``
-/// - ``TextFieldProtocol/disableAutocorrection``
-/// - ``TextFieldProtocol/autocapitalization``
-/// - ``TextFieldProtocol/submitLabel``
-/// - ``TextFieldProtocol/keyboard``
 /// ## Events
 /// - ``focusEvent``
 /// - ``blurEvent``
@@ -64,11 +60,7 @@ struct TextEditor: TextFieldProtocol {
 #if os(iOS) || os(macOS)
         SwiftUI.TextEditor(text: textBinding)
             .focused($isFocused)
-            .applyAutocorrectionDisabled(disableAutocorrection)
-            .applySubmitLabel(submitLabel)
 #if os(iOS)
-            .textInputAutocapitalization(autocapitalization)
-            .applyKeyboardType(keyboard)
             .findNavigator(isPresented: $isFindPresented)
             .findDisabled(findDisabled)
             .replaceDisabled(replaceDisabled)
