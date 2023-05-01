@@ -27,14 +27,14 @@ import SwiftUI
 #endif
 @available(watchOS 9.0, *)
 struct DigitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier, Decodable {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
     /// A reference to the element that contains the accessory view.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     let content: String
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -46,6 +46,8 @@ struct DigitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier, Decodable {
             #if os(watchOS)
             .digitalCrownAccessory {
                 context.buildChildren(of: element, withTagName: self.content, namespace: "digital_crown_accessory")
+                    .environment(\.coordinatorEnvironment, coordinatorEnvironment)
+                    .environment(\.anyLiveContextStorage, context)
             }
             #endif
     }
