@@ -29,28 +29,16 @@ import SwiftUI
 struct DigitalCrownAccessoryVisibilityModifier: ViewModifier, Decodable {
     /// The visibility of the digital crown accessory.
     ///
-    /// Possible values:
-    /// * `automatic`
-    /// * `visible`
-    /// * `hidden`
+    /// See ``LiveViewNative/SwiftUI/Visibility`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     private let visibility: Visibility
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.visibility = try container.decode(Visibility.self, forKey: .visibility)
-    }
     
     func body(content: Content) -> some View {
         content
             #if os(watchOS)
             .digitalCrownAccessory(visibility)
             #endif
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case visibility
     }
 }
