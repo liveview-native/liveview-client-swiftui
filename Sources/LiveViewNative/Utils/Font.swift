@@ -184,7 +184,7 @@ extension Font: Decodable {
         enum Custom: String, CodingKey {
             case name
             case size
-            case fixedSize = "fixed_size"
+            case fixedSize
             case style
         }
     }

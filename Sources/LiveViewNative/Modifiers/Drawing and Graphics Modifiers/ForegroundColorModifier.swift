@@ -26,17 +26,7 @@ struct ForegroundColorModifier: ViewModifier, Decodable {
     #endif
     private var color: SwiftUI.Color
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.color = try container.decode(SwiftUI.Color.self, forKey: .color)
-    }
-
     func body(content: Content) -> some View {
         content.foregroundColor(color)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case color
     }
 }

@@ -34,18 +34,8 @@ struct HeaderProminenceModifier: ViewModifier, Decodable {
     #endif
     private let prominence: Prominence
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.prominence = try container.decode(Prominence.self, forKey: .prominence)
-    }
-
     func body(content: Content) -> some View {
         content.headerProminence(prominence)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case prominence
     }
 }
 

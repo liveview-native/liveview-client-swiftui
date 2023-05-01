@@ -31,17 +31,7 @@ struct CoordinateSpaceModifier<R: RootRegistry>: ViewModifier, Decodable {
     #endif
     private let name: String
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.name = try container.decode(String.self, forKey: .name)
-    }
-
     func body(content: Content) -> some View {
         content.coordinateSpace(name: name)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case name
     }
 }

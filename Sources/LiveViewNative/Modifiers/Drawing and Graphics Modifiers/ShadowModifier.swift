@@ -45,24 +45,8 @@ struct ShadowModifier: ViewModifier, Decodable {
     @_documentation(visibility: public)
     #endif
     private let y: CGFloat
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.color = try container.decode(SwiftUI.Color.self, forKey: .color)
-        self.radius = try container.decode(CGFloat.self, forKey: .radius)
-        self.x = try container.decode(CGFloat.self, forKey: .x)
-        self.y = try container.decode(CGFloat.self, forKey: .y)
-    }
     
     func body(content: Content) -> some View {
         content.shadow(color: color, radius: radius, x: x, y: y)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case color
-        case radius
-        case x
-        case y
     }
 }

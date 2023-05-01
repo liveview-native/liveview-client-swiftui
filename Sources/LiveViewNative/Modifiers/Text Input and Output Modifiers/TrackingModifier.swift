@@ -30,17 +30,7 @@ struct TrackingModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let tracking: CGFloat
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.tracking = try container.decode(Double.self, forKey: .tracking)
-    }
-    
-    
     func body(content: Content) -> some View {
         content.tracking(tracking)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case tracking
     }
 }

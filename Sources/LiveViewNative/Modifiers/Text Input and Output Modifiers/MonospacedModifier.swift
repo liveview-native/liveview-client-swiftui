@@ -32,17 +32,7 @@ struct MonospacedModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let isActive: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.isActive = try container.decode(Bool.self, forKey: .isActive)
-    }
-
     func body(content: Content) -> some View {
         return content.monospaced(isActive)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case isActive = "is_active"
     }
 }

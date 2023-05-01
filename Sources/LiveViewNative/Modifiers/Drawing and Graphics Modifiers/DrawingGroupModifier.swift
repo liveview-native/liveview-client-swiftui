@@ -67,6 +67,6 @@ struct DrawingGroupModifier: ViewModifier, Decodable {
     
     enum CodingKeys: String, CodingKey {
         case opaque
-        case colorMode = "color_mode"
+        case colorMode
     }
 }

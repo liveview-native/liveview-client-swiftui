@@ -33,20 +33,7 @@ struct FontWeightModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let weight: Font.Weight?
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.weight = try container.decode(Font.Weight.self, forKey: .weight)
-    }
-    
-    init(weight: Font.Weight) {
-        self.weight = weight
-    }
-
     func body(content: Content) -> some View {
         content.fontWeight(weight)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case weight
     }
 }

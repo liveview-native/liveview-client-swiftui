@@ -39,19 +39,9 @@ struct RefreshableModifier: ViewModifier, Decodable {
     #endif
     private let action: Event
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.action = try container.decode(Event.self, forKey: .action)
-    }
-
     func body(content: Content) -> some View {
         content.refreshable {
             try? await self.action.wrappedValue.callAsFunction()
         }
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case action
     }
 }

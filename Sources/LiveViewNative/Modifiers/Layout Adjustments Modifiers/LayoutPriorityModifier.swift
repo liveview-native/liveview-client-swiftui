@@ -35,18 +35,8 @@ struct LayoutPriorityModifier: ViewModifier, Decodable {
     #endif
     private let value: Double
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.value = try container.decode(Double.self, forKey: .value)
-    }
-
     func body(content: Content) -> some View {
         content.layoutPriority(value)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case value
     }
 }
 

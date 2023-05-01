@@ -46,12 +46,6 @@ struct OnHoverModifier: ViewModifier, Decodable {
     #endif
     private let action: Event
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.action = try container.decode(Event.self, forKey: .action)
-    }
-
     func body(content: Content) -> some View {
         content
             #if os(iOS) || os(macOS)
@@ -61,9 +55,5 @@ struct OnHoverModifier: ViewModifier, Decodable {
                 }
             }
             #endif
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case action
     }
 }

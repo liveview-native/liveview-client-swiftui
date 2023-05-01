@@ -29,16 +29,7 @@ struct LineLimitModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let number: Int?
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.number = try container.decodeIfPresent(Int.self, forKey: .number)
-    }
-    
     func body(content: Content) -> some View {
         content.lineLimit(number)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case number
     }
 }

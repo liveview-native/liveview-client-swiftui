@@ -34,11 +34,6 @@ struct TextContentTypeModifier: ViewModifier, Decodable {
     #endif
     private let textContentType: TextContentType?
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.textContentType = try container.decodeIfPresent(TextContentType.self, forKey: .textContentType)
-    }
-
     func body(content: Content) -> some View {
         switch textContentType {
         #if !os(macOS)
@@ -109,10 +104,6 @@ struct TextContentTypeModifier: ViewModifier, Decodable {
         default:
             content
         }
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case textContentType = "text_content_type"
     }
 }
 

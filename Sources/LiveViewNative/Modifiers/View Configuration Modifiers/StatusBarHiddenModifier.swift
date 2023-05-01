@@ -32,19 +32,9 @@ struct StatusBarHiddenModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let hidden: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.hidden = try container.decode(Bool.self, forKey: .hidden)
-    }
-
     func body(content: Content) -> some View {
         #if os(iOS)
         content.statusBarHidden(hidden)
         #endif
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case hidden
     }
 }

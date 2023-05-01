@@ -63,7 +63,7 @@ struct NavigationBarTitleDisplayModeModifier: ViewModifier, Decodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case displayMode = "display_mode"
+        case displayMode
     }
 }
 

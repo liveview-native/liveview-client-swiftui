@@ -33,20 +33,7 @@ struct ListRowInsetsModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let insets: EdgeInsets?
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.insets = try container.decodeIfPresent(EdgeInsets.self, forKey: .insets)
-    }
-    
-    init(insets: EdgeInsets) {
-        self.insets = insets
-    }
-    
     func body(content: Content) -> some View {
         content.listRowInsets(insets)
-    }
-    
-    enum CodingKeys: CodingKey {
-        case insets
     }
 }

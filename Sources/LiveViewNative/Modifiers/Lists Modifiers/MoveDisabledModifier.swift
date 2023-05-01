@@ -25,16 +25,7 @@ struct MoveDisabledModifier: ViewModifier, Decodable {
     #endif
     private let isDisabled: Bool
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.isDisabled = try container.decode(Bool.self, forKey: .isDisabled)
-    }
-    
     func body(content: Content) -> some View {
         content.moveDisabled(isDisabled)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case isDisabled = "is_disabled"
     }
 }

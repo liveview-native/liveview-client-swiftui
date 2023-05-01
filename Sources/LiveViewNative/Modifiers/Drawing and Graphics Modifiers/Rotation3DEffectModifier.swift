@@ -94,7 +94,7 @@ struct Rotation3DEffectModifier: ViewModifier, Decodable {
         case angle
         case axis
         case anchor
-        case anchorZ = "anchor_z"
+        case anchorZ
         case perspective
         
         enum Axis: String, CodingKey {

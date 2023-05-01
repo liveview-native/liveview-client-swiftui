@@ -27,21 +27,11 @@ struct HiddenModifier: ViewModifier, Decodable {
     #endif
     private var isActive: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.isActive = try container.decode(Bool.self, forKey: .isActive)
-    }
-
     func body(content: Content) -> some View {
         if isActive {
             content.hidden()
         } else {
             content
         }
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case isActive = "is_active"
     }
 }

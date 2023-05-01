@@ -158,7 +158,7 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     enum CodingKeys: String, CodingKey {
         case text
         case tokens
-        case suggestedTokens = "suggested_tokens"
+        case suggestedTokens
         case placement
         case prompt
         case token

@@ -33,17 +33,7 @@ struct FontModifier: ViewModifier, Decodable {
     #endif
     private let font: Font
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.font = try container.decode(Font.self, forKey: .font)
-    }
-
     func body(content: Content) -> some View {
         content.font(font)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case font
     }
 }

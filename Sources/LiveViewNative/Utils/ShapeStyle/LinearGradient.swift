@@ -18,7 +18,7 @@ extension LinearGradient: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case gradient
-        case startPoint = "start_point"
-        case endPoint = "end_point"
+        case startPoint
+        case endPoint
     }
 }

@@ -27,18 +27,7 @@ struct DisabledModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let disabled: Bool
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.disabled = try container.decode(Bool.self, forKey: .disabled)
-    }
-    
-    
     func body(content: Content) -> some View {
         content.disabled(disabled)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case disabled
     }
 }

@@ -31,16 +31,7 @@ struct NavigationBarBackButtonHiddenModifier: ViewModifier, Decodable {
     #endif
     private let hidesBackButton: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.hidesBackButton = try container.decode(Bool.self, forKey: .hidesBackButton)
-    }
-
     func body(content: Content) -> some View {
         content.navigationBarBackButtonHidden(hidesBackButton)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case hidesBackButton = "hides_back_button"
     }
 }

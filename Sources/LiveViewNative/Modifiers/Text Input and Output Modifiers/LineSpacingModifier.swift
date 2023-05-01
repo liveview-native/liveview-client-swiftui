@@ -27,16 +27,7 @@ struct LineSpacingModifier: ViewModifier, Decodable {
     #endif
     private let lineSpacing: CGFloat
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.lineSpacing = try container.decode(CGFloat.self, forKey: .lineSpacing)
-    }
-
     func body(content: Content) -> some View {
         content.lineSpacing(lineSpacing)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case lineSpacing = "line_spacing"
     }
 }
