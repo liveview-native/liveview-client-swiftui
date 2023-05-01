@@ -12,10 +12,13 @@ import SwiftUI
 /// Use this method to customize the visibility of a Digital Crown accessory View created with the ``digital_crown_accessory`` modifier.
 ///
 /// ```html
-/// <List modifiers={@native |> digital_crown_accessory(content: :dca_view)}>
-///     ...
+/// <List modifiers={
+///     @native
+///     |> digital_crown_accessory(content: :dca_view)
+///     |> digital_crown_accessory_visibility(visibility: :visible)
+/// }>
 ///     <digital_crown_accessory:dca_view>
-///         <Image system-name="heart.fill" modifiers={@native |> digital_crown_accessory_visibility(visibility: :visible)} />
+///         <Image system-name="heart.fill" />
 ///     </digital_crown_accessory:dca_view>
 /// </List>
 /// ```
