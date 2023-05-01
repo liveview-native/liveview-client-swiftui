@@ -35,6 +35,7 @@ struct DigitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
