@@ -12,10 +12,13 @@ import SwiftUI
 /// Nested content is referenced by its namespace using the `content` argument.
 ///
 /// ```html
-/// <List modifiers={@native |> digital_crown_accessory(content: :dca_view)}>
-///     ...
+/// <List modifiers={
+///     @native
+///     |> digital_crown_accessory(content: :dca_view)
+///     |> digital_crown_accessory_visibility(visibility: :visible)
+/// }>
 ///     <digital_crown_accessory:dca_view>
-///         <Image system-name="heart.fill" modifiers={@native |> digital_crown_accessory_visibility(visibility: :visible)} />
+///         <Image system-name="heart.fill" />
 ///     </digital_crown_accessory:dca_view>
 /// </List>
 /// ```
