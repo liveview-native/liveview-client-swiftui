@@ -64,12 +64,6 @@ struct DisclosureGroup<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @LiveBinding(attribute: "is-expanded") private var isExpanded = false
-    
-    /// The style to apply to this disclosure group.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("disclosure-group-style") private var style: DisclosureGroupStyle = .automatic
 
     public var body: some View {
 #if os(iOS) || os(macOS)
@@ -77,29 +71,6 @@ struct DisclosureGroup<R: RootRegistry>: View {
             context.buildChildren(of: element, withTagName: "content", namespace: "DisclosureGroup", includeDefaultSlot: true)
         } label: {
             context.buildChildren(of: element, withTagName: "label", namespace: "DisclosureGroup", includeDefaultSlot: false)
-        }
-        .applyDisclosureGroupStyle(style)
-#endif
-    }
-}
-
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum DisclosureGroupStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    func applyDisclosureGroupStyle(_ style: DisclosureGroupStyle) -> some View {
-#if os(iOS) || os(macOS)
-        switch style {
-        case .automatic:
-            self.disclosureGroupStyle(.automatic)
         }
 #endif
     }
