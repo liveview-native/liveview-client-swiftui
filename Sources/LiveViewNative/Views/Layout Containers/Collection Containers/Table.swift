@@ -263,8 +263,7 @@ struct Table<R: RootRegistry>: View {
                 columns[9]
             }
         default:
-            // Too many columns in table
-            Optional<AnyView>.none
+            ErrorView<R>(TableError.badColumnCount(columns.count))
         }
     }
     
@@ -300,6 +299,17 @@ struct Table<R: RootRegistry>: View {
         }
     }
     #endif
+}
+
+enum TableError: LocalizedError {
+    case badColumnCount(Int)
+    
+    var errorDescription: String? {
+        switch self {
+        case let .badColumnCount(count):
+            return "\(count) is an invalid number of columns for <Table>. Only 1-10 columns are supported."
+        }
+    }
 }
 
 fileprivate struct TableRow: Identifiable {

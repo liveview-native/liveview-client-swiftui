@@ -145,7 +145,7 @@ extension ViewTreeBuilder {
 enum ModifierContainer<R: RootRegistry>: Decodable {
     case builtin(BuiltinRegistry<R>.BuiltinModifier)
     case custom(R.CustomModifier)
-    case error(ErrorModifier)
+    case error(ErrorModifier<R>)
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -154,16 +154,16 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
             do {
                 self = .custom(try R.decodeModifier(type, from: decoder))
             } catch {
-                self = .error(ErrorModifier(type: type.rawValue, error: error))
+                self = .error(ErrorModifier<R>(type: type.rawValue, error: error))
             }
         } else if let type = BuiltinRegistry<R>.ModifierType(rawValue: type) {
             do {
                 self = .builtin(try BuiltinRegistry<R>.decodeModifier(type, from: decoder))
             } catch {
-                self = .error(ErrorModifier(type: type.rawValue, error: error))
+                self = .error(ErrorModifier<R>(type: type.rawValue, error: error))
             }
         } else {
-            self = .error(ErrorModifier(type: type, error: ViewTreeBuilder<R>.Error.unknownModifierType))
+            self = .error(ErrorModifier<R>(type: type, error: ViewTreeBuilder<R>.Error.unknownModifierType))
         }
     }
     
@@ -277,18 +277,55 @@ internal struct ElementView<R: RootRegistry>: View {
     }
 }
 
-// not fileprivate because List needs ot use it so it has access to ForEach modifiers
-func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContextStorage<R>) -> ForEach<[(ElementNode, String)], String, some View> {
-    let elements = nodes.compactMap { (node) -> (ElementNode, String)? in
-        guard let element = node.asElement() else {
-            return nil
+private enum ForEachElement: Identifiable {
+    case element(ElementNode, String)
+    case error(Error)
+    
+    var id: String {
+        switch self {
+        case .element(_, let id):
+            return id
+        case .error(let error):
+            return error.localizedDescription
         }
-        guard let id = element.attributeValue(for: "id") else {
-            return nil
-        }
-        return (element, id)
     }
-    return ForEach(elements, id: \.1) {
-        ElementView<R>(element: $0.0, context: context)
+}
+// not fileprivate because List needs to use it so it has access to ForEach modifiers
+func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContextStorage<R>) -> some DynamicViewContent {
+    let elements: [ForEachElement]
+    do {
+        elements = try nodes.map { (node) -> ForEachElement in
+            guard let element = node.asElement() else {
+                throw ForEachViewError.invalidNode
+            }
+            guard let id = element.attributeValue(for: "id") else {
+                throw ForEachViewError.missingID
+            }
+            return .element(element, id)
+        }
+    } catch {
+        elements = [.error(error)]
+    }
+    return ForEach(elements) {
+        switch $0 {
+        case .element(let element, _):
+            ElementView<R>(element: element, context: context)
+        case let .error(error):
+            ErrorView<R>(error)
+        }
+    }
+}
+
+enum ForEachViewError: LocalizedError {
+    case invalidNode
+    case missingID
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidNode:
+            return "node in list or parent with more than 10 children must be an element"
+        case .missingID:
+            return "element in list or parent with more than 10 children must have an id"
+        }
     }
 }

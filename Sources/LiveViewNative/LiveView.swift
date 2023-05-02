@@ -54,7 +54,7 @@ public struct LiveView<R: RootRegistry>: View {
                         if let error = error as? LiveConnectionError,
                            case let .initialFetchUnexpectedResponse(_, trace?) = error
                         {
-                            ErrorView(html: trace)
+                            ErrorView<R>(html: trace)
                         } else {
                             SwiftUI.VStack {
                                 SwiftUI.Text("Connection Failed")
