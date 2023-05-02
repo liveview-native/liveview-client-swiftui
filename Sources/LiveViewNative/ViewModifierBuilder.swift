@@ -29,8 +29,33 @@ public enum ViewModifierBuilder {
     {
         _ConditionalModifier(storage: .falseModifier(try second()))
     }
+    
+    public static func buildOptional<M>(_ component: M?) -> _ConditionalModifier<M, EmptyModifier> where M: ViewModifier {
+        _ConditionalModifier(storage: component.map({ .trueModifier($0) }) ?? .falseModifier(.init()))
+    }
+    
+    public static func buildLimitedAvailability<M>(_ component: M) -> _AnyViewModifier where M: ViewModifier {
+        _AnyViewModifier(component)
+    }
 }
 
+/// A type-erased `ViewModifier`.
+public struct _AnyViewModifier: ViewModifier {
+    let apply: (any View) -> AnyView
+    
+    init(_ modifier: some ViewModifier) {
+        func applyModifier(_ view: some View) -> AnyView {
+            AnyView(view.modifier(modifier))
+        }
+        self.apply = { applyModifier($0) }
+    }
+    
+    public func body(content: Content) -> some View {
+        apply(content)
+    }
+}
+
+/// A `ViewModifier` that switches between two possible modifier types.
 @frozen public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier
     where TrueModifier: ViewModifier, FalseModifier: ViewModifier
 {

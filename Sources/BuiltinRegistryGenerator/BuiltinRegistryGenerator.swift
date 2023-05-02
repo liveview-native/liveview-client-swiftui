@@ -19,7 +19,10 @@ struct BuiltinRegistryGenerator: ParsableCommand {
     static let denylist = [
         "Shape",
         "TextFieldProtocol",
-        "NamespaceContext"
+        "NamespaceContext",
+        "ToolbarItem",
+        "ToolbarItemGroup",
+        "ToolbarTitleMenu",
     ]
     
     static let additionalViews = [
@@ -38,6 +41,16 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "RenameButton": "RenameButton()",
         "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
     ]
+    
+    var platformFamilyName: String? {
+        ProcessInfo.processInfo.environment["PLATFORM_FAMILY_NAME"]
+    }
+    
+    var deploymentTarget: Double? {
+        ProcessInfo.processInfo.environment["DEPLOYMENT_TARGET_SETTING_NAME"]
+            .flatMap { ProcessInfo.processInfo.environment[$0] }
+            .flatMap(Double.init(_:))
+    }
     
     func run() throws {
         let views = try views
@@ -117,12 +130,75 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         }
     }
     
+    func availability(path: URL) throws -> String? {
+        let name = path.deletingPathExtension().lastPathComponent
+        let contents = try String(contentsOf: path)
+        // @available(_)
+        // struct [name]
+        let availability = Reference(Substring.self)
+        if let match = contents.firstMatch(of: Regex {
+            "@available("
+            Capture(as: availability) {
+                ZeroOrMore(.any, .reluctant)
+            }
+            ")"
+            OneOrMore(.whitespace)
+            "struct"
+            OneOrMore(.whitespace)
+            name
+        }) {
+            // [platform] [version], ...
+            let platform = Reference(Substring.self)
+            let version = Reference(Double?.self)
+            let expression = Regex {
+                Capture(as: platform) {
+                    OneOrMore(.word)
+                }
+                Optionally {
+                    OneOrMore(.whitespace)
+                    Capture(as: version) {
+                        OneOrMore(.digit)
+                        Optionally {
+                            "."
+                            OneOrMore(.digit)
+                        }
+                    } transform: {
+                        Double($0)
+                    }
+                }
+            }
+            let availability = String(match[availability])
+            for condition in availability.matches(of: expression) {
+                if let version = condition[version] {
+                    // Only wrap in `if #available` when the check is higher than the minimum supported version.
+                    // This avoids unnecessary type erasure.
+                    if let platformFamilyName,
+                       let deploymentTarget,
+                       condition[platform] == platformFamilyName && version > deploymentTarget
+                    {
+                        return availability
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
     func viewCase(path: URL) throws -> String {
         let name = path.deletingPathExtension().lastPathComponent
-        return """
-                case "\(name)":
-                    \(name)\(try isGeneric(path: path) ? "<R>" : "")()
-        """
+        if let availability = try availability(path: path) {
+            return """
+                    case "\(name)":
+                        if #available(\(availability)) {
+                            \(name)\(try isGeneric(path: path) ? "<R>" : "")()
+                        }
+            """
+        } else {
+            return """
+                    case "\(name)":
+                        \(name)\(try isGeneric(path: path) ? "<R>" : "")()
+            """
+        }
     }
     
     func additionalViewCase(name: String, initializer: String) -> String {
@@ -151,10 +227,19 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             }
             "Modifier"
         }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
-        return """
-                case .\(name.toCamelCase()):
-                    try \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "")(from: decoder)
-        """
+        if let availability = try availability(path: path) {
+            return """
+                    case .\(name.toCamelCase()):
+                        if #available(\(availability)) {
+                            try \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "")(from: decoder)
+                        }
+            """
+        } else {
+            return """
+                    case .\(name.toCamelCase()):
+                        try \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "")(from: decoder)
+            """
+        }
     }
 }
 

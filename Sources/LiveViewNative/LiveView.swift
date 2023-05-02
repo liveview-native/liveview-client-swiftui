@@ -51,10 +51,16 @@ public struct LiveView<R: RootRegistry>: View {
                     case .connecting:
                         SwiftUI.Text("Connecting")
                     case .connectionFailed(let error):
-                        SwiftUI.VStack {
-                            SwiftUI.Text("Connection Failed")
-                                .font(.subheadline)
-                            SwiftUI.Text(error.localizedDescription)
+                        if let error = error as? LiveConnectionError,
+                           case let .initialFetchUnexpectedResponse(_, trace?) = error
+                        {
+                            ErrorView(html: trace)
+                        } else {
+                            SwiftUI.VStack {
+                                SwiftUI.Text("Connection Failed")
+                                    .font(.subheadline)
+                                SwiftUI.Text(error.localizedDescription)
+                            }
                         }
                     }
                 } else {
