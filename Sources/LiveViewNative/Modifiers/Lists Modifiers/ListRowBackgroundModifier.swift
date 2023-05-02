@@ -17,9 +17,7 @@ import SwiftUI
 /// <List>
 ///     <Text modifiers={list_row_background(@native, content: :my_background)}>
 ///         ...
-///         <list_row_background:my_background>
-///             <Capsule fill-color="system-red" />
-///         </list_row_background:my_background>
+///         <Capsule template={:my_background} fill-color="system-red" />
 ///     </Text>
 /// </List>
 /// ```
@@ -46,7 +44,7 @@ struct ListRowBackgroundModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        content.listRowBackground(self.content.flatMap({ context.buildChildren(of: element, withTagName: $0, namespace: "list_row_background") }))
+        content.listRowBackground(self.content.flatMap({ context.buildChildren(of: element, forTemplate: $0) }))
     }
 
     enum CodingKeys: String, CodingKey {

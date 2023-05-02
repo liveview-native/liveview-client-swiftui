@@ -99,14 +99,14 @@ struct ToolbarModifier<R: RootRegistry>: ViewModifier, Decodable {
         if let id {
             content.toolbar(id: id) {
                 CustomizableToolbarTreeBuilder<R>().fromNodes(
-                    context.children(of: element, withTagName: self.content, namespace: "toolbar").flatMap { $0.children() },
+                    context.children(of: element, forTemplate: self.content).flatMap { $0.children() },
                     context: context.storage
                 )
             }
         } else {
             content.toolbar {
                 ToolbarTreeBuilder<R>().fromNodes(
-                    context.children(of: element, withTagName: self.content, namespace: "toolbar").flatMap { $0.children() },
+                    context.children(of: element, forTemplate: self.content).flatMap { $0.children() },
                     context: context.storage
                 )
             }

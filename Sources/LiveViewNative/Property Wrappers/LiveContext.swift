@@ -123,12 +123,12 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         }
     }
     
+    /// Get the children of an element with the correct template attribute.
     func children(
         of element: ElementNode,
-        withTagName tagName: String,
-        namespace: String? = nil
-    ) -> [Node] {
-        element.children().filter(Self.elementWithName(tagName, namespace: namespace))
+        forTemplate template: String
+    ) -> [NodeChildrenSequence.Element] {
+        element.children().filter(Self.isTemplateElement(template))
     }
 }
 

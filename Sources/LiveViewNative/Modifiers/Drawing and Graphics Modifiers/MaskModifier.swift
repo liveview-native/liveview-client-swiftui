@@ -15,12 +15,10 @@ import SwiftUI
 ///         @native
 ///         |> foreground_color(color: :blue)
 ///         |> font(font: {:system, :large_title})
-///         |> mask(alignment: :center, content: :rectangle)
+///         |> mask(alignment: :center, content: :mask)
 ///     }
 /// >
-///     <mask:rectangle>
-///         <Rectangle modifiers={@native |> opacity(opacity: 0.1)} />
-///     </mask:rectangle>
+///     <Rectangle template={:mask} modifiers={@native |> opacity(opacity: 0.1)} />
 /// </Image>
 /// ```
 ///
@@ -57,7 +55,7 @@ struct MaskModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.mask(alignment: alignment) {
-            context.buildChildren(of: element, withTagName: self.content, namespace: "mask")
+            context.buildChildren(of: element, forTemplate: self.content)
         }
     }
 

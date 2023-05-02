@@ -51,12 +51,8 @@ import SwiftUI
 ///     }
 /// >
 ///     ...
-///     <searchable:cats>
-///         <Label system-image="pawprint.fill">Cats</Label>
-///     </searchable:cats>
-///     <searchable:dogs>
-///         <Label system-image="pawprint">Dogs</Label>
-///     </searchable:dogs>
+///     <Label template={:cats} system-image="pawprint.fill">Cats</Label>
+///     <Label template={:dogs} system-image="pawprint">Dogs</Label>
 /// </List>
 /// ```
 ///
@@ -142,12 +138,12 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
         if let suggestedTokens {
             content
                 .searchable(text: $text, tokens: $tokens, suggestedTokens: .constant(suggestedTokens), placement: placement, prompt: prompt) { token in
-                    context.buildChildren(of: element, withTagName: token.value, namespace: "searchable")
+                    context.buildChildren(of: element, forTemplate: token.value)
                 }
         } else {
             content
                 .searchable(text: $text, tokens: $tokens, placement: placement, prompt: prompt) { token in
-                    context.buildChildren(of: element, withTagName: token.value, namespace: "searchable")
+                    context.buildChildren(of: element, forTemplate: token.value)
                 }
         }
         #else
