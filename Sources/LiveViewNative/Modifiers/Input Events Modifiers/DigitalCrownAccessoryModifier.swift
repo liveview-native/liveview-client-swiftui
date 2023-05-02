@@ -17,9 +17,7 @@ import SwiftUI
 ///     |> digital_crown_accessory(content: :dca_view)
 ///     |> digital_crown_accessory_visibility(visibility: :visible)
 /// }>
-///     <digital_crown_accessory:dca_view>
-///         <Image system-name="heart.fill" />
-///     </digital_crown_accessory:dca_view>
+///     <Image template={:dca_view} system-name="heart.fill" />
 /// </List>
 /// ```
 ///
@@ -49,7 +47,7 @@ struct DigitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier, Decodable {
         content
             #if os(watchOS)
             .digitalCrownAccessory {
-                context.buildChildren(of: element, withTagName: self.content, namespace: "digital_crown_accessory")
+                context.buildChildren(of: element, forTemplate: self.content)
                     .environment(\.coordinatorEnvironment, coordinatorEnvironment)
                     .environment(\.anyLiveContextStorage, context.storage)
             }
