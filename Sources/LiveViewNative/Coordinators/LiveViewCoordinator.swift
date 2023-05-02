@@ -229,14 +229,14 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> (String, String, String, String) {
         let metaRes = try doc.select("meta[name=\"csrf-token\"]")
         guard !metaRes.isEmpty() else {
-            throw LiveConnectionError.initialParseError
+            throw LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken)
         }
         let phxCSRFToken = try metaRes[0].attr("content")
 //        let liveReloadEnabled = !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
         
         let mainDivRes = try doc.select("div[data-phx-main]")
         guard !mainDivRes.isEmpty() else {
-            throw LiveConnectionError.initialParseError
+            throw LiveConnectionError.initialParseError(missingOrInvalid: .phxMain)
         }
         let mainDiv = mainDivRes[0]
         let phxSession = try mainDiv.attr("data-phx-session")
@@ -254,7 +254,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         var connectParams = session.config.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = session.phxCSRFToken
-        connectParams["_platform"] = "ios"
+        connectParams["_platform"] = "swiftui"
         
         let params: Payload = [
             "session": session.phxSession,

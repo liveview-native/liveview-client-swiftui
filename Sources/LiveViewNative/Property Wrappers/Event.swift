@@ -202,7 +202,7 @@ public struct Event: DynamicProperty, Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.event = try container.decode(String.self, forKey: .event)
+        self.event = try container.decodeIfPresent(String.self, forKey: .event)
         self.name = nil
         self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "click"
         self.target = try container.decodeIfPresent(Int.self, forKey: .target)
@@ -232,6 +232,11 @@ public struct Event: DynamicProperty, Decodable {
     /// ```
     public var wrappedValue: EventHandler {
         EventHandler(owner: self)
+    }
+    
+    /// A closure that triggers the event without any additional payload or waiting for completion.
+    public var projectedValue: () -> Void {
+        return { wrappedValue() }
     }
     
     public func update() {

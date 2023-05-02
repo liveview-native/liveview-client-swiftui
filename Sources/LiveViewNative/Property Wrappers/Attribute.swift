@@ -61,6 +61,20 @@ public struct Attribute<T>: DynamicProperty {
         self.defaultValue = wrappedValue
         self.transform = transform
     }
+    
+    init(wrappedValue: T? = nil, _ name: AttributeName, element: ElementNode) where T: AttributeDecodable {
+        self.name = name
+        self.defaultValue = wrappedValue
+        self.transform = { try T(from: $0) }
+        self._element = .init(element: element)
+    }
+    
+    init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?) throws -> T, element: ElementNode) {
+        self.name = name
+        self.defaultValue = wrappedValue
+        self.transform = transform
+        self._element = .init(element: element)
+    }
 
     /// Gets the decoded value of the attribute.
     ///

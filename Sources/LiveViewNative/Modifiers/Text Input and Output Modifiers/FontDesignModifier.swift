@@ -21,6 +21,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 16.1, watchOS 9.1, *)
 struct FontDesignModifier: ViewModifier, Decodable {
     /// The font design to apply to the view.
     #if swift(>=5.8)
@@ -47,11 +48,7 @@ struct FontDesignModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        if #available(iOS 16.1, watchOS 9.1, *) {
-            content.fontDesign(design)
-        } else {
-            content
-        }
+        content.fontDesign(design)
     }
     
     enum CodingKeys: String, CodingKey {

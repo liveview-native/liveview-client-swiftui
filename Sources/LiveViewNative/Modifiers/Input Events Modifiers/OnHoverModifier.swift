@@ -44,16 +44,24 @@ struct OnHoverModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let action: Event
+    @Event private var action: Event.EventHandler
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self._action = try container.decode(Event.self, forKey: .action)
+    }
 
     func body(content: Content) -> some View {
         content
             #if os(iOS) || os(macOS)
             .onHover { isHovering in
-                Task {
-                    try await action.wrappedValue.callAsFunction(value: isHovering)
-                }
+                action(value: isHovering)
             }
             #endif
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case action
     }
 }

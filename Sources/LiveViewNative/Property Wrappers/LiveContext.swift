@@ -108,7 +108,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         includeDefaultSlot: Bool = false
     ) -> some View {
         let children = element.children()
-        let namedSlotChildren = children.filter(Self.elementWithName(tagName, namespace: namespace))
+        let namedSlotChildren = self.children(of: element, withTagName: tagName, namespace: namespace)
         if namedSlotChildren.isEmpty && includeDefaultSlot {
             let defaultSlotChildren = children.filter({
                 if case let .element(element) = $0.data {
@@ -121,6 +121,14 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         } else {
             return coordinator.builder.fromNodes(namedSlotChildren.flatMap { $0.children() }, context: storage)
         }
+    }
+    
+    func children(
+        of element: ElementNode,
+        withTagName tagName: String,
+        namespace: String? = nil
+    ) -> [Node] {
+        element.children().filter(Self.elementWithName(tagName, namespace: namespace))
     }
 }
 
