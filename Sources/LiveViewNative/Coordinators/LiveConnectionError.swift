@@ -17,7 +17,6 @@ public enum LiveConnectionError: Error, LocalizedError {
     case socketError(Error)
     case joinError(Message)
     case eventError(Message)
-    case missingDocument
     
     public var errorDescription: String? {
         switch self {
@@ -35,8 +34,6 @@ public enum LiveConnectionError: Error, LocalizedError {
             return "joinError(\(message.payload))"
         case .eventError(let message):
             return "eventError(\(message.payload))"
-        case .missingDocument:
-            return "State is `.connected`, but no `Document` was found."
         }
     }
     
