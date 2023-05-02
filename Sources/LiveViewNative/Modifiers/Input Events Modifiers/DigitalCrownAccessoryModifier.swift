@@ -48,7 +48,7 @@ struct DigitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier, Decodable {
             .digitalCrownAccessory {
                 context.buildChildren(of: element, withTagName: self.content, namespace: "digital_crown_accessory")
                     .environment(\.coordinatorEnvironment, coordinatorEnvironment)
-                    .environment(\.anyLiveContextStorage, context)
+                    .environment(\.anyLiveContextStorage, context.storage)
             }
             #endif
     }
