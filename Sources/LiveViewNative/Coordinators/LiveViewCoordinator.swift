@@ -299,14 +299,36 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func getPlatformMetadata() throws -> String {
         let encoder = JSONEncoder()
         let metadata: [String : String] = [
-            "platform_variant": getPlatformVariant()
+            "device_class": getDeviceClass(),
+            "os_name": getOSName(),
+            "os_version": getOSVersion()
         ]
         let encodedMetadata = try encoder.encode(metadata)
 
         return String(data: encodedMetadata, encoding: .utf8)!
     }
-    
-    private func getPlatformVariant() -> String {
+
+    private func getDeviceClass() -> String {
+        #if os(watchOS)
+        return "watch"
+        #else
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone:
+            return "phone"
+        case .pad:
+            return "pad"
+        case .mac:
+            return "mac"
+        case .tv:
+            return "tv"
+        default:
+            return "unspecified"
+        }
+        #endif
+    }
+
+
+    private func getOSName() -> String {
         #if os(macOS)
         return "macOS"
         #elseif os(tvOS)
@@ -314,7 +336,15 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         #elseif os(watchOS)
         return "watchOS"
         #else
-        return UIDevice.current.userInterfaceIdiom == .pad ? "iPadOS" : "iOS"
+        return "iOS"
+        #endif
+    }
+
+    private func getOSVersion() -> String {
+        #if os(watchOS)
+            return WKInterfaceDevice.currentDevice().systemVersion
+        #else
+            return UIDevice.current.systemVersion
         #endif
     }
 
