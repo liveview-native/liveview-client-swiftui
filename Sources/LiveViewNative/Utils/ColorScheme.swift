@@ -1,5 +1,5 @@
 //
-//  Visibility.swift
+//  ColorScheme.swift
 //  
 //
 //  Created by Carson Katri on 3/30/23.
@@ -8,13 +8,12 @@
 import SwiftUI
 import LiveViewNativeCore
 
-/// A value that represents a hidden state.
+/// A value that represents a system appearance.
 ///
 /// Possible values:
-/// * `automatic`
-/// * `visible`
-/// * `hidden`
-extension Visibility: Decodable, AttributeDecodable {
+/// * `light`
+/// * `dark`
+extension ColorScheme: Decodable, AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let value = Self(from: attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
@@ -23,9 +22,8 @@ extension Visibility: Decodable, AttributeDecodable {
     
     init?(from string: String) {
         switch string {
-        case "visible": self = .visible
-        case "hidden": self = .hidden
-        case "automatic": self = .automatic
+        case "light": self = .light
+        case "dark": self = .dark
         default: return nil
         }
     }
@@ -33,7 +31,7 @@ extension Visibility: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         guard let value = Self(from: try container.decode(String.self))
-        else { throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Visibility")) }
+        else { throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for ColorScheme")) }
         self = value
     }
 }

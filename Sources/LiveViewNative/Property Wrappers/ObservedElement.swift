@@ -51,12 +51,23 @@ import Combine
 /// ```
 @propertyWrapper
 public struct ObservedElement {
-    @Environment(\.element.nodeRef) private var nodeRef: NodeRef?
+    @Environment(\.element.nodeRef) private var environmentNodeRef: NodeRef?
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
     @StateObject private var observer = Observer()
     
+    private let overrideNodeRef: NodeRef?
+    
+    private var nodeRef: NodeRef? {
+        overrideNodeRef ?? environmentNodeRef
+    }
+    
     /// Creates an `ObservedElement` that observes changes to the view's element.
     public init() {
+        self.overrideNodeRef = nil
+    }
+    
+    public init(element: ElementNode) {
+        self.overrideNodeRef = element.node.id
     }
     
     /// The observed element in the document, with all current data.
