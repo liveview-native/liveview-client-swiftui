@@ -1,5 +1,4 @@
 defmodule LiveViewNativeSwiftUi.Types.Namespace do
-  @derive Jason.Encoder
   use LiveViewNativePlatform.Modifier.Type
   def type, do: :string
 
