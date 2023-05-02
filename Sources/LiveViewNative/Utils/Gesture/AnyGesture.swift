@@ -89,12 +89,12 @@ extension AnyGesture: Decodable {
         
         enum SpatialTap: String, CodingKey {
             case count
-            case coordinateSpace = "coordinate_space"
+            case coordinateSpace
         }
         
         enum LongPress: String, CodingKey {
-            case minimumDuration = "minimum_duration"
-            case maximumDistance = "maximum_distance"
+            case minimumDuration
+            case maximumDistance
         }
         
         enum Sequence: String, CodingKey {

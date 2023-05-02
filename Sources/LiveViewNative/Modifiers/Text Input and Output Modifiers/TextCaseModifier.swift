@@ -49,6 +49,6 @@ struct TextCaseModifier: ViewModifier, Decodable, Equatable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case textCase = "text_case"
+        case textCase
     }
 }

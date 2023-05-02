@@ -31,12 +31,6 @@ struct TextFieldStyleModifier: ViewModifier, Decodable {
     #endif
     private let style: TextFieldStyle
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.style = try container.decode(TextFieldStyle.self, forKey: .style)
-    }
-
     func body(content: Content) -> some View {
         switch style {
         case .automatic:
@@ -52,10 +46,6 @@ struct TextFieldStyleModifier: ViewModifier, Decodable {
             content.textFieldStyle(.squareBorder)
             #endif
         }
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case style
     }
 }
 

@@ -71,7 +71,7 @@ extension ContentTransition: Decodable {
         case properties
         
         enum NumericText: String, CodingKey {
-            case countsDown = "counts_down"
+            case countsDown
         }
     }
 }

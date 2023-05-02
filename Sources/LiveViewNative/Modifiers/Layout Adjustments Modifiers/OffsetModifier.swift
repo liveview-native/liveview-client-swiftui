@@ -37,19 +37,7 @@ struct OffsetModifier: ViewModifier, Decodable, Equatable {
     #endif
     private let y: CGFloat
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.x = try container.decode(CGFloat.self, forKey: .x)
-        self.y = try container.decode(CGFloat.self, forKey: .y)
-    }
-
     func body(content: Content) -> some View {
         content.offset(x: x, y: y)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case x
-        case y
     }
 }

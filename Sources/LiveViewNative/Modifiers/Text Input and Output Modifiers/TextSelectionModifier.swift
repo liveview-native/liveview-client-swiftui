@@ -30,12 +30,6 @@ struct TextSelectionModifier: ViewModifier, Decodable {
     #endif
     private let selectable: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.selectable = try container.decode(Bool.self, forKey: .selectable)
-    }
-
     func body(content: Content) -> some View {
         #if os(iOS) || os(macOS)
         if selectable {
@@ -46,9 +40,5 @@ struct TextSelectionModifier: ViewModifier, Decodable {
         #else
         content
         #endif
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case selectable
     }
 }

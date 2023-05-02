@@ -41,17 +41,7 @@ struct HueRotationModifier: ViewModifier, Decodable {
     #endif
     private let angle: Angle
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.angle = try container.decode(Angle.self, forKey: .angle)
-    }
-
     func body(content: Content) -> some View {
         content.hueRotation(angle)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case angle
     }
 }

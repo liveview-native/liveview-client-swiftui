@@ -39,13 +39,6 @@ struct SearchCompletionModifier: ViewModifier, Decodable {
     #endif
     private let token: String?
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.completion = try container.decodeIfPresent(String.self, forKey: .completion)
-        self.token = try container.decodeIfPresent(String.self, forKey: .token)
-    }
-
     func body(content: Content) -> some View {
         if let token {
             content
@@ -55,10 +48,5 @@ struct SearchCompletionModifier: ViewModifier, Decodable {
         } else if let completion {
             content.searchCompletion(completion)
         }
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case completion
-        case token
     }
 }

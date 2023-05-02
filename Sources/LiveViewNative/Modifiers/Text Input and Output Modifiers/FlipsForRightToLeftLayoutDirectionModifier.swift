@@ -26,16 +26,7 @@ struct FlipsForRightToLeftLayoutDirectionModifier: ViewModifier, Decodable {
     #endif
     private let enabled: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.enabled = try container.decode(Bool.self, forKey: .enabled)
-    }
-
     func body(content: Content) -> some View {
         content.flipsForRightToLeftLayoutDirection(enabled)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case enabled
     }
 }

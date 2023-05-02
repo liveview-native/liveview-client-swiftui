@@ -27,18 +27,8 @@ struct BaselineOffsetModifier: ViewModifier, Decodable {
     #endif
     private let offset: CGFloat
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.offset = try container.decode(CGFloat.self, forKey: .offset)
-    }
-
     func body(content: Content) -> some View {
         content.baselineOffset(offset)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case offset
     }
 }
 

@@ -28,19 +28,10 @@ struct NavigationSubtitleModifier: ViewModifier, Decodable {
     #endif
     private let subtitle: String
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.subtitle = try container.decode(String.self, forKey: .subtitle)
-    }
-
     func body(content: Content) -> some View {
         content
             #if os(macOS)
             .navigationSubtitle(subtitle)
             #endif
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case subtitle
     }
 }

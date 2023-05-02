@@ -51,6 +51,6 @@ struct PreferredColorSchemeModifier: ViewModifier, Decodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case colorScheme = "color_scheme"
+        case colorScheme
     }
 }

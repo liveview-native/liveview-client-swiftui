@@ -32,19 +32,7 @@ struct CornerRadiusModifier: ViewModifier, Decodable {
     #endif
     private let antialiased: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.radius = try container.decode(CGFloat.self, forKey: .radius)
-        self.antialiased = try container.decode(Bool.self, forKey: .antialiased)
-    }
-
     func body(content: Content) -> some View {
         content.cornerRadius(radius, antialiased: antialiased)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case radius
-        case antialiased
     }
 }

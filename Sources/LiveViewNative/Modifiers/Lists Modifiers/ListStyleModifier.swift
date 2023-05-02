@@ -31,12 +31,6 @@ struct ListStyleModifier: ViewModifier, Decodable {
     #endif
     private let style: ListStyle
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.style = try container.decode(ListStyle.self, forKey: .style)
-    }
-
     func body(content: Content) -> some View {
         switch style {
         case .automatic:
@@ -80,10 +74,6 @@ struct ListStyleModifier: ViewModifier, Decodable {
             content.listStyle(.sidebar)
             #endif
         }
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case style
     }
 }
 

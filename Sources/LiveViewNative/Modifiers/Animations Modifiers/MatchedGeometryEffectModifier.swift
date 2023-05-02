@@ -119,7 +119,7 @@ struct MatchedGeometryEffectModifier: ViewModifier, Decodable {
         case namespace
         case properties
         case anchor
-        case isSource = "is_source"
+        case isSource
     }
 }
 

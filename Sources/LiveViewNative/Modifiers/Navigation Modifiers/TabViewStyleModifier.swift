@@ -31,12 +31,6 @@ struct TabViewStyleModifier: ViewModifier, Decodable {
     #endif
     private let style: TabViewStyle
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.style = try container.decode(TabViewStyle.self, forKey: .style)
-    }
-
     func body(content: Content) -> some View {
         switch style {
         case .automatic:
@@ -62,10 +56,6 @@ struct TabViewStyleModifier: ViewModifier, Decodable {
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 #endif
         }
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case style
     }
 }
 

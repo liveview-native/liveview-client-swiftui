@@ -71,6 +71,6 @@ struct SubmitLabelModifier: ViewModifier, Decodable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case submitLabel = "submit_label"
+        case submitLabel
     }
 }

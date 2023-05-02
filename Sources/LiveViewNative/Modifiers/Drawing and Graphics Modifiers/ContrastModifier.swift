@@ -25,16 +25,7 @@ struct ContrastModifier: ViewModifier, Decodable {
     #endif
     private let amount: Double
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.amount = try container.decode(Double.self, forKey: .amount)
-    }
-
     func body(content: Content) -> some View {
         content.contrast(amount)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case amount
     }
 }

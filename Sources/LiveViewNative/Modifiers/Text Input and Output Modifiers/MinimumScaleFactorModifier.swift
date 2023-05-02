@@ -25,16 +25,7 @@ struct MinimumScaleFactorModifier: ViewModifier, Decodable {
     #endif
     private let factor: CGFloat
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.factor = try container.decode(CGFloat.self, forKey: .factor)
-    }
-
     func body(content: Content) -> some View {
         content.minimumScaleFactor(factor)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case factor
     }
 }

@@ -38,12 +38,6 @@ struct IndexViewStyleModifier: ViewModifier, Decodable {
     #endif
     private let style: IndexViewStyle
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.style = try container.decode(IndexViewStyle.self, forKey: .style)
-    }
-
     func body(content: Content) -> some View {
         #if os(macOS)
         content
@@ -65,10 +59,6 @@ struct IndexViewStyleModifier: ViewModifier, Decodable {
             content.indexViewStyle(.page(backgroundDisplayMode: .never))
         }
         #endif
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case style
     }
 }
 

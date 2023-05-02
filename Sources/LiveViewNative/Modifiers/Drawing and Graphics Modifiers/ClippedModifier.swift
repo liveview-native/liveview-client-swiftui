@@ -25,16 +25,7 @@ struct ClippedModifier: ViewModifier, Decodable {
     #endif
     private let antialiased: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.antialiased = try container.decode(Bool.self, forKey: .antialiased)
-    }
-
     func body(content: Content) -> some View {
         content.clipped(antialiased: antialiased)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case antialiased
     }
 }

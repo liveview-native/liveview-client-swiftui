@@ -34,19 +34,7 @@ struct BorderModifier: ViewModifier, Decodable {
     #endif
     private var width: CGFloat
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.content = try container.decode(AnyShapeStyle.self, forKey: .content)
-        self.width = try container.decode(CGFloat.self, forKey: .width)
-    }
-
     func body(content: Content) -> some View {
         content.border(self.content, width: width)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case content
-        case width
     }
 }

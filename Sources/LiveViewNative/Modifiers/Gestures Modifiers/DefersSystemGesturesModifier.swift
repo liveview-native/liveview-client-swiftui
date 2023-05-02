@@ -34,21 +34,11 @@ struct DefersSystemGesturesModifier<R: RootRegistry>: ViewModifier, Decodable {
     #endif
     private let edges: Edge.Set
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.edges = try container.decode(Edge.Set.self, forKey: .edges)
-    }
-
     func body(content: Content) -> some View {
         content
             #if os(iOS)
             .defersSystemGestures(on: edges)
             #endif
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case edges
     }
 }
 

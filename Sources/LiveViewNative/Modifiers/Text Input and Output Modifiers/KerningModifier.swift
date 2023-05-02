@@ -26,16 +26,7 @@ struct KerningModifier: ViewModifier, Decodable {
     #endif
     private let kerning: CGFloat
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.kerning = try container.decode(CGFloat.self, forKey: .kerning)
-    }
-
     func body(content: Content) -> some View {
         content.kerning(kerning)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case kerning
     }
 }

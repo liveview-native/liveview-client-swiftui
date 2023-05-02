@@ -54,7 +54,7 @@ struct LazyVGrid<R: RootRegistry>: View {
         "columns",
         transform: {
             guard let value = $0?.value?.data(using: .utf8) else { throw AttributeDecodingError.missingAttribute([GridItem].self) }
-            return try JSONDecoder().decode([GridItem].self, from: value)
+            return try makeJSONDecoder().decode([GridItem].self, from: value)
         }
     ) private var columns: [GridItem]
     /// The alignment between columns.

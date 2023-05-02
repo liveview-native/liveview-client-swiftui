@@ -26,16 +26,7 @@ struct AutocorrectionDisabledModifier: ViewModifier, Decodable {
     #endif
     private var disable: Bool
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.disable = try container.decode(Bool.self, forKey: .disable)
-    }
-
     func body(content: Content) -> some View {
         content.autocorrectionDisabled(disable)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case disable
     }
 }

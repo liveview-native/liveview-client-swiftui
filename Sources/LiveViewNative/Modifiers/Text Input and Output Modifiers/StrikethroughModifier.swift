@@ -73,7 +73,7 @@ struct StrikethroughModifier: ViewModifier, Decodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case isActive = "is_active"
+        case isActive
         case pattern
         case color
     }

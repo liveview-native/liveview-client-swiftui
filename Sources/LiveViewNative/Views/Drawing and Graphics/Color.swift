@@ -273,7 +273,7 @@ extension SwiftUI.Color: Decodable {
         case hue
         case opacity
         case red
-        case rgbColorSpace = "rgb_color_space"
+        case rgbColorSpace
         case saturation
         case string
         case white

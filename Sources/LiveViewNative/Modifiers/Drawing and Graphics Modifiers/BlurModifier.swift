@@ -34,20 +34,8 @@ struct BlurModifier: ViewModifier, Decodable {
     #endif
     private let opaque: Bool
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.radius = try container.decode(CGFloat.self, forKey: .radius)
-        self.opaque = try container.decode(Bool.self, forKey: .opaque)
-    }
-
     func body(content: Content) -> some View {
         content.blur(radius: radius, opaque: opaque)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case radius
-        case opaque
     }
 }
 

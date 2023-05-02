@@ -35,19 +35,10 @@ struct ScrollContentBackgroundModifier: ViewModifier, Decodable {
     #endif
     private let visibility: Visibility
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.visibility = try container.decode(Visibility.self, forKey: .visibility)
-    }
-    
     func body(content: Content) -> some View {
         content
             #if !os(tvOS)
             .scrollContentBackground(visibility)
             #endif
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case visibility
     }
 }

@@ -53,17 +53,7 @@ struct ListItemTintModifier: ViewModifier, Decodable {
     #endif
     private let tint: ListItemTint?
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.tint = try container.decodeIfPresent(ListItemTint.self, forKey: .tint)
-    }
-
     func body(content: Content) -> some View {
         content.listItemTint(tint)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case tint
     }
 }
