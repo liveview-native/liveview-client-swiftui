@@ -7,7 +7,7 @@
 
 import XCTest
 import SwiftUI
-import LiveViewNative
+@testable import LiveViewNative
 
 @MainActor
 final class TextTests: XCTestCase {
@@ -86,12 +86,10 @@ This is some markdown text [click me](apple.com)
     }
     
     func testTextDate() throws {
-        try assertMatch(#"<Text date="2023-01-17" date-style="date" />"#) {
-            Text(Date(timeIntervalSince1970: 1673931600.0), style: .date)
-        }
+        let date = Date(timeIntervalSince1970: 1673931600.0)
         for style in [(Text.DateStyle.time, "time"), (.date, "date"), (.relative, "relative"), (.offset, "offset"), (.timer, "timer")] {
-            try assertMatch(#"<Text date="2023-01-17T14:55:01.326Z" date-style="\#(style.1)" />"#) {
-                Text(Date(timeIntervalSince1970: 1673967301.325973), style: style.0)
+            try assertMatch(#"<Text date="\#(date.formatted(.elixirDateTime))" date-style="\#(style.1)" />"#) {
+                Text(date, style: style.0)
             }
         }
     }

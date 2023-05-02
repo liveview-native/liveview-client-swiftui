@@ -29,11 +29,9 @@ done
 # build doccarchive
 echo "Building docs..."
 mkdir -p docc_build
-# build the docs once to get the symbol graph.
-xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build &> $output
 # generate the documentation extensions.
 xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions &> $output || :
-# build the docs again with the extensions.
+# build the docs with the extensions.
 xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath docc_build &> $output
 
 # create worktree

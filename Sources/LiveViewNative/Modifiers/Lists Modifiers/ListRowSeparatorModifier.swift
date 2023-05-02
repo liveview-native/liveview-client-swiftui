@@ -31,16 +31,7 @@ struct ListRowSeparatorModifier: ViewModifier, Decodable, Equatable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        switch try container.decode(String.self, forKey: .visibility) {
-        case "hidden":
-            self.visibility = .hidden
-        case "visible":
-            self.visibility = .visible
-        case "automatic":
-            self.visibility = .automatic
-        default:
-            throw DecodingError.dataCorruptedError(forKey: .visibility, in: container, debugDescription: "invalid value for visibility")
-        }
+        self.visibility = try container.decode(Visibility.self, forKey: .visibility)
         switch try container.decodeIfPresent(String.self, forKey: .edges) {
         case "top":
             self.edges = .top

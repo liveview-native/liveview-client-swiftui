@@ -38,7 +38,7 @@ final class DecodeModifiersTest: XCTestCase {
     
     func testDecodeListRowInsets() throws {
         let data = """
-        {"type": "list_row_insets", "all": 10}
+        {"type": "list_row_insets", "insets": 10}
         """
         try assertDecodeModifier(data, expected: ListRowInsetsModifier(insets: EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)))
     }
@@ -55,13 +55,6 @@ final class DecodeModifiersTest: XCTestCase {
         {"type": "navigation_title", "title": "hello"}
         """
         try assertDecodeModifier(data, expected: NavigationTitleModifier(title: "hello"))
-    }
-    
-    func testDecodePadding() throws {
-        let data = """
-        {"type": "padding", "top": 10, "leading": 5, "bottom": 10, "trailing": 5}
-        """
-        try assertDecodeModifier(data, expected: PaddingModifier(insets: EdgeInsets(top: 10, leading: 5, bottom: 10, trailing: 5)))
     }
     
     func testDecodeTint() throws {

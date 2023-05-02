@@ -32,11 +32,6 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``systemImage``
-/// * ``style``
-///
-/// ## Topics
-/// ### Supporting Types
-/// - ``LabelStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -53,11 +48,6 @@ struct Label<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @Attribute("system-image") private var systemImage: String?
-    /// The style to use for this label.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("label-style") private var style: LabelStyle = .automatic
     
     public var body: some View {
         SwiftUI.Label {
@@ -68,48 +58,6 @@ struct Label<R: RootRegistry>: View {
             } else {
                 context.buildChildren(of: element, withTagName: "icon", namespace: "Label")
             }
-        }
-        .applyLabelStyle(style)
-    }
-}
-
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum LabelStyle: String, AttributeDecodable {
-    /// `icon-only`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case iconOnly = "icon-only"
-    /// `title-only`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case titleOnly = "title-only"
-    /// `title-and-icon`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case titleAndIcon = "title-and-icon"
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic = "automatic"
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    func applyLabelStyle(_ style: LabelStyle) -> some View {
-        switch style {
-        case .iconOnly:
-            self.labelStyle(.iconOnly)
-        case .titleOnly:
-            self.labelStyle(.titleOnly)
-        case .titleAndIcon:
-            self.labelStyle(.titleAndIcon)
-        case .automatic:
-            self.labelStyle(.automatic)
         }
     }
 }
