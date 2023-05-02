@@ -15,7 +15,11 @@ jobs:
         run: |
           sudo xcode-select --switch /Applications/Xcode_14.3.app
           xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
-          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro"
+          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath TestResults
+      - uses: kishikawakatsumi/xcresulttool@v1
+        with:
+          path: TestResults.xcresult
+        if: success() || failure()
       - name: Build for macOS
         shell: bash
         run: |
