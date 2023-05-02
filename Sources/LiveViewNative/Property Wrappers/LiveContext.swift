@@ -82,14 +82,10 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     
     /// Builds a view representing only the children of the element which have the given template attribute.
     ///
-    /// The template attribute can be written in two ways:
-    /// 1. `template={:some_value}`
-    /// 2. `#some_value`
-    ///
     /// This can be use to build views which have multiple types of children, such as how ``Menu`` takes content and a label:
     /// ```html
     /// <Menu>
-    ///     <Group #label>
+    ///     <Group template={:label}>
     ///         My Menu
     ///     </Group>
     ///     <Button template={:content} phx-click="clicked">Hello</Button>

@@ -32,8 +32,8 @@ fileprivate let itemsDecoder = JSONDecoder()
 ///     message="Here's a link to the DockYard homepage"
 /// >
 ///     <SharePreview title="DockYard Homepage">
-///         <Image #image name="dockyard" />
-///         <Image #icon name="dockyard" />
+///         <Image template={:image} name="dockyard" />
+///         <Image template={:icon} name="dockyard" />
 ///     </SharePreview>
 /// </ShareLink>
 /// ```
@@ -48,16 +48,16 @@ fileprivate let itemsDecoder = JSONDecoder()
 ///     message="Here are links to our favorite websites"
 /// >
 ///     <SharePreview item="https://dockyard.com" title="DockYard">
-///         <Image #image name="dockyard" />
-///         <Image #icon name="dockyard" />
+///         <Image template={:image} name="dockyard" />
+///         <Image template={:icon} name="dockyard" />
 ///     </SharePreview>
 ///     <SharePreview item="https://news.ycombinator.com" title="Hacker News">
-///         <Image #image name="hackernews" />
-///         <Image #icon name="hackernews" />
+///         <Image template={:image} name="hackernews" />
+///         <Image template={:icon} name="hackernews" />
 ///     </SharePreview>
 ///     <SharePreview item="https://apple.com" title="Apple">
-///         <Image #image name="apple" />
-///         <Image #icon name="apple" />
+///         <Image template={:image} name="apple" />
+///         <Image template={:icon} name="apple" />
 ///     </SharePreview>
 /// </ShareLink>
 /// ```

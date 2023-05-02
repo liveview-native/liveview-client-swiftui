@@ -13,8 +13,8 @@ import SwiftUI
 ///
 /// ```html
 /// <LabeledContent>
-///     <Text #label>Price</Text>
-///     <Text #content>$100.00</Text>
+///     <Text template={:label}>Price</Text>
+///     <Text template={:content}>$100.00</Text>
 /// </LabeledContent>
 /// ```
 ///

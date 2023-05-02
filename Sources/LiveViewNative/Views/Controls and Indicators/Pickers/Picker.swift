@@ -15,8 +15,8 @@ import SwiftUI
 ///
 /// ```html
 /// <Picker value-binding="transport" picker-style="menu">
-///     <Text #label>Transportation</Text>
-///     <Group #content>
+///     <Text template={:label}>Transportation</Text>
+///     <Group template={:content}>
 ///         <Label system-image="car" modifiers={tag(@native, tag: "car")}>Car</Label>
 ///         <Label system-image="bus" modifiers={tag(@native, tag: "bus")}>Bus</Label>
 ///         <Label system-image="tram" modifiers={tag(@native, tag: "tram")}>Tram</Label>

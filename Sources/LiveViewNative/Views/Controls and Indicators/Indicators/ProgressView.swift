@@ -20,8 +20,8 @@ import SwiftUI
 /// ```html
 /// <ProgressView value={0.5} />
 /// <ProgressView value={0.5} total={2}>
-///     <Text #label>Completed Percentage</Text>
-///     <Text #current-value-label>25%</Text>
+///     <Text template={:label}>Completed Percentage</Text>
+///     <Text template={:current-value-label}>25%</Text>
 /// </ProgressView>
 /// ```
 ///

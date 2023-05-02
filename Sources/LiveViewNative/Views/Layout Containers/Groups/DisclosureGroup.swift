@@ -13,8 +13,8 @@ import SwiftUI
 ///
 /// ```html
 /// <DisclosureGroup>
-///     <Text #label>Edit Actions</Text>
-///     <Group #content>
+///     <Text template={:label}>Edit Actions</Text>
+///     <Group template={:content}>
 ///         <Button phx-click="arrange">Arrange</Button>
 ///         <Button phx-click="update">Update</Button>
 ///         <Button phx-click="remove">Remove</Button>

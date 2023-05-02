@@ -13,10 +13,10 @@ import SwiftUI
 ///
 /// ```html
 /// <Menu>
-///     <Text #label>
+///     <Text template={:label}>
 ///         Edit Actions
 ///     </Text>
-///     <Group #content>
+///     <Group template={:content}>
 ///         <Button phx-click="arrange">Arrange</Button>
 ///         <Button phx-click="update">Update</Button>
 ///         <Button phx-click="remove">Remove</Button>

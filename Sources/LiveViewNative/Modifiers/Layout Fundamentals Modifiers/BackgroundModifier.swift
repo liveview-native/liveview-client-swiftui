@@ -14,7 +14,7 @@ import SwiftUI
 /// ```html
 /// <HStack>
 ///   <Image system-name="heart.fill" modifiers={@native |> background(alignment: :center, content: :bg_content)}>
-///     <Circle #bg_content />
+///     <Circle template={:bg_content} />
 ///   </Image>
 /// </HStack>
 /// ```

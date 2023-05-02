@@ -17,12 +17,12 @@ import SwiftUI
 ///
 /// ```html
 /// <Table>
-///     <Group #columns>
+///     <Group template={:columns}>
 ///         <TableColumn id="name">Name</TableColumn>
 ///         <TableColumn id="description">Description</TableColumn>
 ///         <TableColumn id="length">Length</TableColumn>
 ///     </Group>
-///     <Group #rows>
+///     <Group template={:rows}>
 ///         <TableRow id="basketball">
 ///             <Text>Basketball</Text>
 ///             <Text>Players attempt to throw a ball into an elevated basket.</Text>
@@ -48,7 +48,7 @@ import SwiftUI
 /// ```html
 /// <Table sort-order="sports_sort_order">
 ///     ...
-///     <Group #rows>
+///     <Group template={:rows}>
 ///         <%= for sport <- Enum.sort_by(
 ///             @sports,
 ///             fn sport -> sport[hd(@sports_sort_order)["id"]] end,

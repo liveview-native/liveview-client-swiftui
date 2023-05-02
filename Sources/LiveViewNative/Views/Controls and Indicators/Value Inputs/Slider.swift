@@ -40,9 +40,9 @@ import SwiftUI
 ///
 /// ```html
 /// <Slider value-binding="value">
-///     <Text #label>Percent Completed</Text>
-///     <Text #minimum-value-label>0%</Text>
-///     <Text #maximum-value-label>100%</Text>
+///     <Text template={:label}>Percent Completed</Text>
+///     <Text template={:"minimum-value-label"}>0%</Text>
+///     <Text template={:"maximum-value-label"}>100%</Text>
 /// </Slider>
 /// ```
 ///
