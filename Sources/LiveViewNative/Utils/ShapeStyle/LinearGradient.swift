@@ -6,6 +6,24 @@
 //
 import SwiftUI
 
+/// A shape style that creates a gradient between two points.
+///
+/// To create this shape style, create a map or keyword list with the `gradient` key set to a ``LiveViewNative/SwiftUI/Gradient`` value.
+///
+/// ```elixir
+/// [gradient: {:colors, [:pink, :blue]}]
+/// ```
+///
+/// Use the `start_point` and `end_point` keys to customize the gradient further.
+///
+/// ```elixir
+/// [gradient: {:colors, [:pink, :blue]}, start_point: {0, 0}, end_point: {1, 1}]
+/// ```
+///
+/// See ``LiveViewNative/SwiftUI/UnitPoint`` for more details on creating the start/end points.
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 extension LinearGradient: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
