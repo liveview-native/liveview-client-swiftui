@@ -314,7 +314,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         #elseif os(watchOS)
         return "watchOS"
         #else
-        return UIDevice.current.localizedModel == "iPhone" ? "iOS" : "iPadOS"
+        return UIDevice.current.userInterfaceIdiom == .pad ? "iPadOS" : "iOS"
         #endif
     }
 
