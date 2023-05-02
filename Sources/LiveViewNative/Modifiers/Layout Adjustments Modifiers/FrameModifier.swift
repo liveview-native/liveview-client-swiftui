@@ -41,7 +41,7 @@ enum FrameModifier: ViewModifier, Decodable, Equatable {
     }
         
     init(string value: String) {
-        let attributeDecoder = LVN.JSONDecoder()
+        let attributeDecoder = makeJSONDecoder()
 
         self = try! attributeDecoder.decode(Self.self, from: value.data(using: .utf8)!)
     }

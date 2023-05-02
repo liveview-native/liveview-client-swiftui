@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeCore
 import CoreTransferable
 
-fileprivate let itemsDecoder = LVN.JSONDecoder()
+fileprivate let itemsDecoder = makeJSONDecoder()
 
 /// Opens a system share sheet when tapped.
 ///

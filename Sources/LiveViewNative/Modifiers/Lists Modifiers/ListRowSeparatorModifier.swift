@@ -23,7 +23,7 @@ struct ListRowSeparatorModifier: ViewModifier, Decodable, Equatable {
             self.visibility = .automatic
             self.edges = .all
         default:
-            let attributeDecoder = LVN.JSONDecoder()
+            let attributeDecoder = makeJSONDecoder()
 
             self = try! attributeDecoder.decode(ListRowSeparatorModifier.self, from: value.data(using: .utf8)!)
         }
