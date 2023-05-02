@@ -51,7 +51,7 @@ struct NavigationBarTitleDisplayModeModifier: ViewModifier, Decodable {
         default: throw DecodingError.dataCorruptedError(forKey: .displayMode, in: container, debugDescription: "invalid value for \(CodingKeys.displayMode.rawValue)")
         }
         #else
-        fatalError()
+        throw DecodingError.typeMismatch(Self.self, .init(codingPath: container.codingPath, debugDescription: "`navigation_bar_title_display_mode` modifier not available on this platform"))
         #endif
     }
 

@@ -279,12 +279,12 @@ internal struct ElementView<R: RootRegistry>: View {
 
 // not fileprivate because List needs ot use it so it has access to ForEach modifiers
 func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContextStorage<R>) -> ForEach<[(ElementNode, String)], String, some View> {
-    let elements = nodes.map { (node) -> (ElementNode, String) in
+    let elements = nodes.compactMap { (node) -> (ElementNode, String)? in
         guard let element = node.asElement() else {
-            preconditionFailure("node in list or parent with more than 10 children must be an element")
+            return nil
         }
         guard let id = element.attributeValue(for: "id") else {
-            preconditionFailure("element in list or parent with more than 10 children must have an id")
+            return nil
         }
         return (element, id)
     }

@@ -60,7 +60,7 @@ struct NavStackEntryView<R: RootRegistry>: View {
                             self.liveViewModel.cachedNavigationTitle = navigationTitle
                         }
                 } else {
-                    fatalError("State is `.connected`, but no `Document` was found.")
+                    R.loadingView(for: coordinator.url, state: .connectionFailed(LiveConnectionError.missingDocument))
                 }
             default:
                 let content = SwiftUI.Group {

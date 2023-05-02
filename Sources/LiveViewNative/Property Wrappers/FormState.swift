@@ -117,7 +117,7 @@ public struct FormState<Value: FormValue> {
                 return value
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
-                    fatalError("Expected @FormState in form mode to have element with name")
+                    return initialValue
                 }
                 if let existing = formModel[elementName],
                    let value = existing as? Value {
@@ -143,7 +143,7 @@ public struct FormState<Value: FormValue> {
                 data.objectWillChange.send()
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
-                    fatalError("Expected @FormState in form mode to have element with name")
+                    return
                 }
                 formModel[elementName] = newValue
                 // todo: this will send a change event for both the form and the input if the input has one, check if that matches web

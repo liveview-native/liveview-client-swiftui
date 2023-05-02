@@ -105,11 +105,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
         
         if let diffPayload = replyPayload["diff"] as? Payload {
-            do {
-                try self.handleDiff(payload: diffPayload, baseURL: self.url)
-            } catch {
-                fatalError("todo")
-            }
+            try self.handleDiff(payload: diffPayload, baseURL: self.url)
         } else if session.config.navigationMode.permitsRedirects,
                   let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
             await session.redirect(redirect)
@@ -208,7 +204,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         do {
             try await connectLiveView()
         } catch {
-            fatalError(error.localizedDescription)
+            self.internalState = .connectionFailed(error)
         }
     }
     

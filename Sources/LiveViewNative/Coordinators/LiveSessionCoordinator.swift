@@ -156,7 +156,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         internalState = .notConnected(reconnectAutomatically: false)
     }
     
-    @_spi(NarwinChat)
     public func reconnect() async {
         disconnect()
         await connect()

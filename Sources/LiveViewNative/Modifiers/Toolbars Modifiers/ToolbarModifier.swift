@@ -146,7 +146,8 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
         case 10:
             return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(e[9], c))
         default:
-            fatalError("Too many children in toolbar content")
+            // Too many children in toolbar content
+            return ToolbarContentBuilder.buildBlock(f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         }
     }
     
@@ -158,10 +159,9 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
     
     @ToolbarContentBuilder
     fileprivate func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some ToolbarContent {
+        // ToolbarTreeBuilder.fromNode may not be called with a root or leaf node")
         if case .element(let element) = node.data {
             Self.lookup(ElementNode(node: node, data: element))
-        } else {
-            fatalError("ToolbarTreeBuilder.fromNode may not be called with a root or leaf node")
         }
     }
     
@@ -175,7 +175,7 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
         case "ToolbarTitleMenu":
             ToolbarTitleMenu<R>(element: node)
         default:
-            fatalError("Unsupported toolbar content '\(node.tag)'")
+            Optional<SwiftUI.ToolbarItem<String, Never>>.none
         }
     }
 }
@@ -207,7 +207,8 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
         case 10:
             return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(e[9], c))
         default:
-            fatalError("Too many children in toolbar content")
+            // Too many children in toolbar content
+            return ToolbarContentBuilder.buildBlock(f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         }
     }
     
@@ -219,10 +220,9 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
     
     @ToolbarContentBuilder
     fileprivate func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some CustomizableToolbarContent {
+        // CustomizableToolbarTreeBuilder.fromNode may not be called with a root or leaf node")
         if case .element(let element) = node.data {
             Self.lookup(ElementNode(node: node, data: element))
-        } else {
-            fatalError("CustomizableToolbarTreeBuilder.fromNode may not be called with a root or leaf node")
         }
     }
     
@@ -234,7 +234,7 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
         case "ToolbarTitleMenu":
             ToolbarTitleMenu<R>(element: node)
         default:
-            fatalError("Unsupported toolbar content '\(node.tag)'")
+            Optional<SwiftUI.ToolbarItem<String, Never>>.none
         }
     }
 }
