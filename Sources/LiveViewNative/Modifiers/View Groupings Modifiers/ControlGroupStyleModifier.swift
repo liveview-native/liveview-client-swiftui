@@ -14,7 +14,7 @@ import SwiftUI
 ///
 /// ## Topics
 /// ### Supporting Types
-/// - ``LabelStyle``
+/// - ``ControlGroupStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
