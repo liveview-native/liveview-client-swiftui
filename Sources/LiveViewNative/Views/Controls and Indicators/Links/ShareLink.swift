@@ -342,10 +342,10 @@ struct ShareLink<R: RootRegistry>: View {
             .reduce(into: ([:], default: nil)) { pairs, element in
                 let title = element.attributeValue(for: "title") ?? ""
                 let image = element.elementChildren()
-                    .first(where: { $0.attributeBoolean(for: "#image") || $0.attributeValue(for: "template") == "image" })
+                    .first(where: { $0.attributeValue(for: "template") == "image" })
                     .flatMap({ Image(overrideElement: $0).image })
                 let icon = element.elementChildren()
-                    .first(where: { $0.attributeBoolean(for: "#icon") || $0.attributeValue(for: "template") == "icon" })
+                    .first(where: { $0.attributeValue(for: "template") == "icon" })
                     .flatMap({ Image(overrideElement: $0).image })
                 
                 let data = PreviewData(

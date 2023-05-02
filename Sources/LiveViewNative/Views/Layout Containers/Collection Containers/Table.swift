@@ -269,14 +269,14 @@ struct Table<R: RootRegistry>: View {
     
     private var rows: [TableRow] {
         element.elementChildren()
-            .filter { $0.attributeValue(for: "template") == "rows" || $0.attributeBoolean(for: "#rows") }
+            .filter { $0.attributeValue(for: "template") == "rows" }
             .flatMap { $0.elementChildren() }
             .compactMap { $0.tag == "TableRow" ? TableRow(element: $0) : nil }
     }
     
     private var columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>] {
         let columnElements = element.elementChildren()
-            .filter { $0.attributeValue(for: "template") == "columns" || $0.attributeBoolean(for: "#columns") }
+            .filter { $0.attributeValue(for: "template") == "columns" }
             .flatMap { $0.elementChildren() }
             .filter { $0.tag == "TableColumn" }
         return columnElements.enumerated().map { item in
