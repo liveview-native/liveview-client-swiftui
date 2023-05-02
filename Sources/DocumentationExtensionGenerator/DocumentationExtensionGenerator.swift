@@ -1,16 +1,17 @@
-import SymbolKit
 import Foundation
 import RegexBuilder
-import OSLog
-
-let logger = Logger(subsystem: "LiveViewNative", category: "DocumentationExtensionGenerator")
+import ArgumentParser
 
 @main
-struct DocumentationExtensionGenerator {
+struct DocumentationExtensionGenerator: ParsableCommand {
+    @Option(name: .customLong("view")) private var views: [String] = []
+    @Option(name: .customLong("modifier")) private var modifiers: [String] = []
+    
     static let denylist = [
         "LiveView",
         "Shape",
         "TextFieldProtocol",
+        "NamespaceContext"
     ]
     
     static let categoryDenyList = [
@@ -25,15 +26,13 @@ struct DocumentationExtensionGenerator {
         ["Layout Containers", "Separators"]: [
             "<doc:Divider>",
         ],
+        ["Animations Modifiers", "Views"]: [
+            "``NamespaceContext``"
+        ]
     ]
     
-    static func main() throws {
+    func run() throws {
         let packageDirectory = URL(filePath: FileManager.default.currentDirectoryPath)
-        let symbolsURL = packageDirectory.appending(path: "docc_build/Build/Intermediates.noindex/LiveViewNative.build/Debug-iphoneos/LiveViewNative.build/symbol-graph/swift/arm64-apple-ios/LiveViewNative.symbols.json", directoryHint: .notDirectory)
-        
-        let data = try Data(contentsOf: symbolsURL)
-        let symbolGraph = try JSONDecoder().decode(SymbolGraph.self, from: data)
-        
         let extensionsURL = packageDirectory.appending(path: "Sources/LiveViewNative/LiveViewNative.docc/DocumentationExtensions")
         
         try viewCategories(
@@ -41,57 +40,45 @@ struct DocumentationExtensionGenerator {
             output: extensionsURL,
             fallbackSubcategory: "Views"
         )
-        
+
         try viewCategories(
             directory: packageDirectory.appending(path: "Sources/LiveViewNative/Modifiers"),
             output: extensionsURL,
             fallbackSubcategory: "Modifiers"
         )
         
-        // MARK: View element name overrides and SwiftUI links
-        for symbol in symbolGraph.symbols.values
-            where symbol.kind.identifier == .struct
-        && symbolGraph.relationships.contains(where: { $0.source == symbol.identifier.precise && ["SwiftUI.View", "SwiftUI.ToolbarContent"].contains($0.targetFallback) })
-                && !Self.denylist.contains(symbol.pathComponents.joined(separator: "/"))
-        {
-            let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
+        // MARK: View element and attribute/event names
+        let views = self.views.map { URL(filePath: $0) }
+        for view in views {
+            let name = view.deletingPathExtension().lastPathComponent
+            guard !Self.denylist.contains(name) else { continue }
             
             let markdownURL = extensionsURL
-                .appending(path: symbol.pathComponents.joined(separator: "-"))
+                .appending(path: name)
                 .appendingPathExtension("md")
             
             try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
             
             let appleDocs = URL(string: "https://developer.apple.com/documentation/swiftui/")!
-                .appending(path: symbol.pathComponents.last!)
+                .appending(path: name)
             
-            let elementName = "<\(symbol.pathComponents.last!)>"
-            let override = #"""
-            # ``\#(symbolPath)``
-
+            let elementName = "<\(name)>"
+            try
+            #"""
+            # ``LiveViewNative/\#(name)``
+            
             @Metadata {
                 @DocumentationExtension(mergeBehavior: append)
                 @DisplayName("\#(elementName)", style: symbol)
             }
             
             ## SwiftUI Documentation
-            See [`SwiftUI.\#(symbol.pathComponents.last!)`](\#(appleDocs.absoluteString)) for more details on this View.
+            See [`SwiftUI.\#(name)`](\#(appleDocs.absoluteString)) for more details on this View.
             """#
-            try override.write(to: markdownURL, atomically: true, encoding: .utf8)
-        }
-        
-        // MARK: @Attribute/@Event display name overrides
-        let attributeID = symbolGraph.symbols.values.first(where: { $0.pathComponents == ["Attribute"] })!.identifier.precise
-        let eventID = symbolGraph.symbols.values.first(where: { $0.pathComponents == ["Event"] })!.identifier.precise
-        
-        for symbol in symbolGraph.symbols.values
-            where symbol.kind.identifier == .property
-                && (symbol.declarationFragments?.count ?? 0) > 2
-                && symbol.declarationFragments![0].kind == .attribute
-                && symbol.declarationFragments![0].spelling == "@"
-                && [attributeID, eventID].contains(symbol.declarationFragments![1].preciseIdentifier)
-                && !Self.denylist.contains(symbol.pathComponents.joined(separator: "/"))
-        {
+                .write(to: markdownURL, atomically: true, encoding: .utf8)
+            
+            let property = Reference(Substring.self)
+            let attributeName = Reference(Substring.self)
             let expression = Regex {
                 "@"
                 ChoiceOf {
@@ -101,64 +88,53 @@ struct DocumentationExtensionGenerator {
                 "("
                 ZeroOrMore(.whitespace)
                 "\""
-                Capture {
-                    ZeroOrMore(CharacterClass(.anyOf("\"")).inverted)
+                Capture(as: attributeName) {
+                    OneOrMore(.any, .reluctant)
                 }
-                ZeroOrMore(.whitespace)
                 "\""
-            }
-            
-            // scan backwards from the declaration until we find the @Attribute
-            let location = symbol[mixin: SymbolGraph.Symbol.Location.self]!
-            let upToDeclaration = try String(contentsOf: location.url!)
-                .split(separator: "\n", omittingEmptySubsequences: false)
-                .prefix(location.position.line + 1)
-                .joined(separator: "\n")
-            var displayName: Substring?
-            var index = upToDeclaration.endIndex
-            repeat {
-                index = upToDeclaration.index(before: index)
-                if let match = upToDeclaration[index...].firstMatch(of: expression) {
-                    displayName = match.output.1
-                    break
+                ZeroOrMore(.any, .reluctant)
+                ")"
+                OneOrMore(.whitespace)
+                "private"
+                OneOrMore(.whitespace)
+                "var"
+                OneOrMore(.whitespace)
+                Capture(as: property) {
+                    OneOrMore(.word)
                 }
-            } while index > upToDeclaration.startIndex
-            
-            guard let displayName else { continue }
-            
-            let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
-            
-            let markdownURL = extensionsURL
-                .appending(path: symbol.pathComponents.joined(separator: "-"))
-                .appendingPathExtension("md")
-            
-            try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-            
-            let override = #"""
-            # ``\#(symbolPath)``
-
-            @Metadata {
-                @DocumentationExtension(mergeBehavior: append)
-                @DisplayName("\#(displayName)", style: symbol)
             }
-            """#
-            try override.write(to: markdownURL, atomically: true, encoding: .utf8)
+            for match in try String(contentsOf: view).matches(of: expression) where match[property] != match[attributeName] {
+                try
+                #"""
+                # ``LiveViewNative/\#(name)/\#(match[property])``
+                
+                @Metadata {
+                    @DocumentationExtension(mergeBehavior: append)
+                    @DisplayName("\#(match[attributeName])", style: symbol)
+                }
+                """#
+                    .write(
+                        to: extensionsURL
+                            .appending(path: "\(name)-\(match[property])")
+                            .appendingPathExtension("md"),
+                        atomically: true,
+                        encoding: .utf8
+                    )
+            }
         }
         
-        // MARK: ViewModifier function name overrides
-        for symbol in symbolGraph.symbols.values
-            where symbol.kind.identifier == .struct
-                && symbolGraph.relationships.contains(where: { $0.source == symbol.identifier.precise && $0.targetFallback == "SwiftUI.ViewModifier" })
-                && !Self.denylist.contains(symbol.pathComponents.joined(separator: "/"))
-        {
-            let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
-            
+        // MARK: Modifier function names
+        let modifiers = self.modifiers.map { URL(filePath: $0) }
+        for modifier in modifiers {
+            let name = modifier.deletingPathExtension().lastPathComponent
+            guard !Self.denylist.contains(name) else { continue }
+
             let markdownURL = extensionsURL
-                .appending(path: symbol.pathComponents.joined(separator: "/"))
+                .appending(path: name)
                 .appendingPathExtension("md")
-            
+
             try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-            
+
             let expression = Regex {
                 ChoiceOf {
                     Anchor.startOfLine
@@ -166,7 +142,7 @@ struct DocumentationExtensionGenerator {
                 }
                 "A"..."Z"
             }
-            let functionName = symbol.pathComponents.last!
+            let functionName = name
                 .replacing("Modifier", with: "")
                 .replacing(expression) { match in
                     switch match.output.count {
@@ -178,7 +154,7 @@ struct DocumentationExtensionGenerator {
                 }
 
             let override = #"""
-            # ``\#(symbolPath)``
+            # ``LiveViewNative/\#(name)``
 
             @Metadata {
                 @DocumentationExtension(mergeBehavior: append)
@@ -187,78 +163,64 @@ struct DocumentationExtensionGenerator {
             """#
             try override.write(to: markdownURL, atomically: true, encoding: .utf8)
         }
-        
-        // MARK: View style case name overrides
-        let attributeDecodableID = symbolGraph.symbols.values.first(where: { $0.pathComponents == ["AttributeDecodable"] })!.identifier.precise
-        
-        for symbol in symbolGraph.symbols.values
-            where symbol.kind.identifier == .case
-            && symbolGraph.relationships.contains(where: { caseRelationship in
-                caseRelationship.source == symbol.identifier.precise
-                    && caseRelationship.kind == .memberOf
-                    && (symbolGraph.symbols[caseRelationship.target]?.pathComponents.last?.hasSuffix("Style") == true)
-                    && symbolGraph.relationships.contains(where: {
-                        return $0.source == caseRelationship.target
-                            && $0.kind == .conformsTo
-                            && $0.target == attributeDecodableID
-                    })
-            })
-        {
-            guard let rawValue = symbol.docComment?.lines.first?.text.replacing("`", with: "") else { continue }
-            
-            let symbolPath = (["LiveViewNative"] + symbol.pathComponents).joined(separator: "/")
-            
-            let markdownURL = extensionsURL
-                .appending(path: symbol.pathComponents.joined(separator: "-"))
-                .appendingPathExtension("md")
-            
-            try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-            
-            let override = #"""
-            # ``\#(symbolPath)``
-
-            @Metadata {
-                @DocumentationExtension(mergeBehavior: append)
-                @DisplayName("\#(rawValue)", style: symbol)
-            }
-            """#
-            try override.write(to: markdownURL, atomically: true, encoding: .utf8)
-        }
     }
-    
-    static func viewCategories(directory: URL, output: URL, fallbackSubcategory: String) throws {
+
+    func viewCategories(directory: URL, output: URL, fallbackSubcategory: String) throws {
         for category in try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil)
             where category.hasDirectoryPath
                   && !Self.categoryDenyList.contains(category.lastPathComponent)
         {
             let fileName = category.lastPathComponent.capitalized.replacing(" ", with: "")
-            var categoryFile = ["# \(category.lastPathComponent)", "## Topics"]
-            for subCategory in try FileManager.default.contentsOfDirectory(at: category, includingPropertiesForKeys: nil)
-            where subCategory.hasDirectoryPath {
-                categoryFile.append("### \(subCategory.lastPathComponent)")
-                for file in try FileManager.default.contentsOfDirectory(at: subCategory, includingPropertiesForKeys: nil)
-                    where file.pathExtension == "swift"
-                        && !Self.denylist.contains(file.deletingPathExtension().lastPathComponent)
-                {
-                    categoryFile.append("- ``\(file.deletingPathExtension().lastPathComponent)``")
-                }
-                for addition in categoryAdditions[[category.lastPathComponent, subCategory.lastPathComponent], default: []] {
-                    categoryFile.append("- \(addition)")
-                }
+            
+            func getFileTypes(at url: URL) throws -> [String] {
+                try FileManager.default
+                    .contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
+                    .filter {
+                        $0.pathExtension == "swift"
+                        && !Self.denylist.contains($0.deletingPathExtension().lastPathComponent)
+                    }
+                    .map { "``\($0.deletingPathExtension().lastPathComponent)``" }
             }
-            for file in try FileManager.default.contentsOfDirectory(at: category, includingPropertiesForKeys: nil)
-                where file.pathExtension == "swift"
-                    && !Self.denylist.contains(file.deletingPathExtension().lastPathComponent)
-            {
-                if !categoryFile.contains("### \(fallbackSubcategory)") {
-                    categoryFile.append("### \(fallbackSubcategory)")
+            
+            let topics = Self.categoryAdditions
+                .filter({ $0.key.first == category.lastPathComponent })
+                .merging(
+                    try FileManager.default
+                        .contentsOfDirectory(at: category, includingPropertiesForKeys: nil)
+                        .filter(\.hasDirectoryPath)
+                        .map {
+                            (
+                                [category.lastPathComponent, $0.lastPathComponent],
+                                try getFileTypes(at: $0)
+                            )
+                        },
+                    uniquingKeysWith: { $0 + $1 }
+                )
+                .merging(
+                    [[category.lastPathComponent, fallbackSubcategory]: try getFileTypes(at: category)],
+                    uniquingKeysWith: { $0 + $1 }
+                )
+            
+            try """
+            # \(category.lastPathComponent)
+            ## Topics
+            \(topics
+                .sorted(by: { $0.key.joined() < $1.key.joined() })
+                .map { (heading, references) in
+                    (
+                        heading
+                            .dropFirst()
+                            .enumerated()
+                            .map { "###\(String(repeating: "#", count: $0.offset)) \($0.element)" }
+                        + references
+                            .sorted()
+                            .map { "- \($0)" }
+                    )
+                        .joined(separator: "\n")
                 }
-                categoryFile.append("- ``\(file.deletingPathExtension().lastPathComponent)``")
-                for addition in categoryAdditions[[category.lastPathComponent], default: []] {
-                    categoryFile.append("- \(addition)")
-                }
-            }
-            try categoryFile.joined(separator: "\n")
+                    .joined(separator: "\n")
+            )
+            """
                 .write(
                     to: output.appending(path: fileName).appendingPathExtension("md"),
                     atomically: true,
