@@ -296,16 +296,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    private func getPlatformMetadata() throws -> String {
-        let encoder = JSONEncoder()
-        let metadata: [String : String] = [
+    private func getPlatformMetadata() throws -> Payload {
+        return [
             "device_class": getDeviceClass(),
             "os_name": getOSName(),
             "os_version": getOSVersion()
         ]
-        let encodedMetadata = try encoder.encode(metadata)
-
-        return String(data: encodedMetadata, encoding: .utf8)!
     }
 
     private func getDeviceClass() -> String {
