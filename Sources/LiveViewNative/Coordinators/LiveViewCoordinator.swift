@@ -320,7 +320,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         #if os(watchOS)
         return WKInterfaceDevice.currentDevice().systemVersion
         #elseif os(macOS)
-        return ProcessInfo.processInfo.operatingSystemVersionString
+        let operatingSystemVersion = ProcessInfo.processInfo.operatingSystemVersion
+        let majorVersion = operatingSystemVersion.majorVersion
+        let minorVersion = operatingSystemVersion.minorVersion
+        let patchVersion = operatingSystemVersion.patchVersion
+        
+        return "\(majorVersion).\(minorVersion).\(patchVersion)"
         #else
         return UIDevice.current.systemVersion
         #endif
