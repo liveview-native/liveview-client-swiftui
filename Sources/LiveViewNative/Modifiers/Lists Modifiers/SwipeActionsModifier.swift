@@ -82,7 +82,7 @@ struct SwipeActionsModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case allowsFullSwipe = "allows_full_swipe"
+        case allowsFullSwipe
         case content
         case edge
     }
