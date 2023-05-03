@@ -318,11 +318,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
 
     private func getOSVersion() -> String {
         #if os(watchOS)
-            return WKInterfaceDevice.currentDevice().systemVersion
+        return WKInterfaceDevice.currentDevice().systemVersion
         #elseif os(macOS)
-            return ProcessInfo.operatingSystemVersion
+        return ProcessInfo.processInfo.operatingSystemVersionString
         #else
-            return UIDevice.current.systemVersion
+        return UIDevice.current.systemVersion
         #endif
     }
 
