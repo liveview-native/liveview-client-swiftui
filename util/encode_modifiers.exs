@@ -10,13 +10,13 @@ defmodule ModifierEncoder do
     custom_modifiers: [],
     platform_modifiers: @native.platform_modifiers
 
-  defmacro encode() do
+  defmacro quote_argv() do
     Code.string_to_quoted!(hd(System.argv()))
   end
 
-  def encode!() do
-    IO.write(Phoenix.HTML.Safe.to_iodata(encode().modifiers) |> IO.iodata_to_binary)
+  def encode() do
+    IO.write(Phoenix.HTML.Safe.to_iodata(quote_argv().modifiers) |> IO.iodata_to_binary)
   end
 end
 
-ModifierEncoder.encode!()
+ModifierEncoder.encode()
