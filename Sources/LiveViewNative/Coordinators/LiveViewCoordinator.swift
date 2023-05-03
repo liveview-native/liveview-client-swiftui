@@ -307,6 +307,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func getDeviceClass() -> String {
         #if os(watchOS)
         return "watch"
+        #elseif os(macOS)
+        return "mac"
         #else
         switch UIDevice.current.userInterfaceIdiom {
         case .phone:
