@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
 
+env:
+  MIN_COVERAGE: 0.3
+
 jobs:
   test:
     runs-on: [self-hosted, tartelet]
@@ -20,6 +23,16 @@ jobs:
         with:
           path: TestResults.xcresult
         if: success() || failure()
+      - name: Validate Coverage %
+        shell: bash
+        run: |
+          COVERAGE=$(xcrun xccov view --report --json TestResults.xcresult | jq '.targets[] | select(.name == "LiveViewNative") | .lineCoverage')
+          if [ $(echo "$COVERAGE > $MIN_COVERAGE" | bc) -ne 1 ]; then
+            printf "Code coverage $COVERAGE does not meet minimum requirement $MIN_COVERAGE"
+            exit -1
+          else
+            printf "Code coverage $COVERAGE meets minimum requirement $MIN_COVERAGE"
+          fi
       - name: Build for macOS
         shell: bash
         run: |
