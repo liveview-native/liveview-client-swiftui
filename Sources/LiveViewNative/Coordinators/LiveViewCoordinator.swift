@@ -298,13 +298,35 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     private func getPlatformMetadata() throws -> Payload {
         return [
-            "device_class": getDeviceClass(),
             "os_name": getOSName(),
-            "os_version": getOSVersion()
+            "os_version": getOSVersion(),
+            "user_interface_idiom": getUserInterfaceIdiom()
         ]
     }
 
-    private func getDeviceClass() -> String {
+    private func getOSName() -> String {
+        #if os(macOS)
+        return "macOS"
+        #elseif os(tvOS)
+        return "tvOS"
+        #elseif os(watchOS)
+        return "watchOS"
+        #else
+        return "iOS"
+        #endif
+    }
+
+    private func getOSVersion() -> String {
+        #if os(watchOS)
+            return WKInterfaceDevice.currentDevice().systemVersion
+        #elseif os(macOS)
+            return ProcessInfo.operatingSystemVersion
+        #else
+            return UIDevice.current.systemVersion
+        #endif
+    }
+
+    private func getUserInterfaceIdiom() -> String {
         #if os(watchOS)
         return "watch"
         #elseif os(macOS)
@@ -322,27 +344,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         default:
             return "unspecified"
         }
-        #endif
-    }
-
-
-    private func getOSName() -> String {
-        #if os(macOS)
-        return "macOS"
-        #elseif os(tvOS)
-        return "tvOS"
-        #elseif os(watchOS)
-        return "watchOS"
-        #else
-        return "iOS"
-        #endif
-    }
-
-    private func getOSVersion() -> String {
-        #if os(watchOS)
-            return WKInterfaceDevice.currentDevice().systemVersion
-        #else
-            return UIDevice.current.systemVersion
         #endif
     }
 
