@@ -263,7 +263,7 @@ struct Table<R: RootRegistry>: View {
                 columns[9]
             }
         default:
-            fatalError("Too many columns in table: \(columns.count)")
+            ErrorView<R>(TableError.badColumnCount(columns.count))
         }
     }
     
@@ -271,7 +271,7 @@ struct Table<R: RootRegistry>: View {
         element.elementChildren()
             .filter { $0.tag == "rows" && $0.namespace == "Table" }
             .flatMap { $0.elementChildren() }
-            .compactMap { $0.tag == "TableRow" ? TableRow(element: $0) : nil }
+            .compactMap { $0.tag == "TableRow" && $0.attribute(named: "id") != nil ? TableRow(element: $0) : nil }
     }
     
     private var columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>] {
@@ -299,6 +299,17 @@ struct Table<R: RootRegistry>: View {
         }
     }
     #endif
+}
+
+enum TableError: LocalizedError {
+    case badColumnCount(Int)
+    
+    var errorDescription: String? {
+        switch self {
+        case let .badColumnCount(count):
+            return "\(count) is an invalid number of columns for <Table>. Only 1-10 columns are supported."
+        }
+    }
 }
 
 fileprivate struct TableRow: Identifiable {

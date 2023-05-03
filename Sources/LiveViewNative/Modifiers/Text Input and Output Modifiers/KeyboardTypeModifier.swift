@@ -76,7 +76,7 @@ struct KeyboardTypeModifier: ViewModifier, Decodable {
             throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "invalid value for \(CodingKeys.type.rawValue)")
         }
         #else
-        fatalError()
+        throw DecodingError.typeMismatch(Self.self, .init(codingPath: container.codingPath, debugDescription: "`keyboard_type` modifier not available on this platform"))
         #endif
     }
     

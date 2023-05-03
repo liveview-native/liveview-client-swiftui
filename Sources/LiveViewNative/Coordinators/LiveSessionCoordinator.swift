@@ -156,7 +156,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         internalState = .notConnected(reconnectAutomatically: false)
     }
     
-    @_spi(NarwinChat)
+    /// Forces the session to disconnect then connect.
+    ///
+    /// All state will be lost when the reload occurs, as an entirely new LiveView is mounted.
+    ///
+    /// This can be used to force the LiveView to reset, for example after an unrecoverable error occurs.
     public func reconnect() async {
         disconnect()
         await connect()

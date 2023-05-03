@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct ErrorModifier: ViewModifier {
+struct ErrorModifier<R: RootRegistry>: ViewModifier {
     let type: String
     let error: any Error
     
     func body(content: Content) -> some View {
-        SwiftUI.VStack {
-            SwiftUI.Text("Error Decoding Modifier of Type '\(type)'")
-            SwiftUI.Text(String(describing: error))
-        }
+        content
+            .overlay {
+                ErrorView<R>(error)
+            }
     }
 }
