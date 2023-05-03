@@ -8,10 +8,10 @@ defmodule LiveViewNativeSwiftUi.Platform do
 
   defstruct [
     :app_name,
-    :device_class,
     :os_name,
     :os_version,
     :simulator_opts,
+    :user_interface_idiom,
     custom_modifiers: []
   ]
 
