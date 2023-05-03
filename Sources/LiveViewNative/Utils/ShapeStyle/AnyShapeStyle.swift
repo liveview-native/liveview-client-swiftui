@@ -201,7 +201,8 @@ extension AnyShapeStyle: Decodable {
             self = Self(BackgroundStyle())
         }
         
-        if var modifiers = try? container.nestedUnkeyedContainer(forKey: .modifiers) {
+        if container.contains(.modifiers) {
+            var modifiers = try container.nestedUnkeyedContainer(forKey: .modifiers)
             while !modifiers.isAtEnd {
                 let modifier = try modifiers.nestedContainer(keyedBy: CodingKeys.Modifier.self)
                 switch try modifier.decode(Modifier.self, forKey: .type) {
