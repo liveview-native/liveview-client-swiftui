@@ -201,21 +201,22 @@ extension AnyShapeStyle: Decodable {
             self = Self(BackgroundStyle())
         }
         
-        var modifiers = try container.nestedUnkeyedContainer(forKey: .modifiers)
-        while !modifiers.isAtEnd {
-            let modifier = try modifiers.nestedContainer(keyedBy: CodingKeys.Modifier.self)
-            switch try modifier.decode(Modifier.self, forKey: .type) {
-            case .opacity:
-                self = Self(self.opacity(try modifier.decode(Double.self, forKey: .properties)))
-            case .blendMode:
-                self = Self(self.blendMode(try modifier.decode(BlendMode.self, forKey: .properties)))
-            case .shadow:
-                self = Self(self.shadow(try modifier.decode(ShadowStyle.self, forKey: .properties)))
+        if var modifiers = try? container.nestedUnkeyedContainer(forKey: .modifiers) {
+            while !modifiers.isAtEnd {
+                let modifier = try modifiers.nestedContainer(keyedBy: CodingKeys.Modifier.self)
+                switch try modifier.decode(Modifier.self, forKey: .type) {
+                case .opacity:
+                    self = Self(self.opacity(try modifier.decode(Double.self, forKey: .properties)))
+                case .blendMode:
+                    self = Self(self.blendMode(try modifier.decode(BlendMode.self, forKey: .properties)))
+                case .shadow:
+                    self = Self(self.shadow(try modifier.decode(ShadowStyle.self, forKey: .properties)))
+                }
             }
         }
     }
     enum CodingKeys: String, CodingKey {
-        case concreteStyle = "concrete_style"
+        case concreteStyle
         case style
         case modifiers
         

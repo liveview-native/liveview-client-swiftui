@@ -46,8 +46,8 @@ extension ImagePaint: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case image
-        case systemImage = "system_image"
-        case sourceRect = "source_rect"
+        case systemImage
+        case sourceRect
         case scale
     }
 }
