@@ -17,12 +17,12 @@ final class GroupTests: XCTestCase {
         try assertMatch(
             #"""
             <GroupBox>
-                <GroupBox:label>
+                <Text template="label">
                     Label
-                </GroupBox:label>
-                <GroupBox:content>
+                </Text>
+                <Text template="content">
                     Content
-                </GroupBox:content>
+                </Text>
             </GroupBox>
             """#,
             size: .init(width: 300, height: 300)
@@ -39,9 +39,9 @@ final class GroupTests: XCTestCase {
         try assertMatch(
             #"""
             <GroupBox>
-                <GroupBox:label>
+                <Text template="label">
                     Label
-                </GroupBox:label>
+                </Text>
                 Content
             </GroupBox>
             """#,
@@ -94,14 +94,14 @@ final class GroupTests: XCTestCase {
         try assertMatch(
             #"""
             <ControlGroup>
-                <ControlGroup:label>
+                <Text template="label">
                     Label
-                </ControlGroup:label>
-                <ControlGroup:content>
+                </Text>
+                <Group template="content">
                     <Button>Action #1</Button>
                     <Button>Action #2</Button>
                     <Button>Action #3</Button>
-                </ControlGroup:content>
+                </Group>
             </ControlGroup>
             """#
         ) {
@@ -155,7 +155,7 @@ final class GroupTests: XCTestCase {
         try assertMatch(
             #"""
             <DisclosureGroup>
-                <DisclosureGroup:label>Expandable Section</DisclosureGroup:label>
+                <Text template="label">Expandable Section</Text>
                 Content
             </DisclosureGroup>
             """#
@@ -172,8 +172,8 @@ final class GroupTests: XCTestCase {
         try assertMatch(
             #"""
             <DisclosureGroup>
-                <DisclosureGroup:label>Expandable Section</DisclosureGroup:label>
-                <DisclosureGroup:content>Content</DisclosureGroup:content>
+                <Text template="label">Expandable Section</Text>
+                <Text template="content">Content</Text>
             </DisclosureGroup>
             """#
         ) {

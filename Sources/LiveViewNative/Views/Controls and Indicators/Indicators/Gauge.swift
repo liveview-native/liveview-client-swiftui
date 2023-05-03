@@ -14,10 +14,10 @@ import SwiftUI
 ///
 /// ```html
 /// <Gauge value="0.5">
-///     <Gauge:label>50%</Gauge:label>
-///     <Gauge:current-value-label>0.5</Gauge:current-value-label>
-///     <Gauge:minimum-value-label>0</Gauge:minimum-value-label>
-///     <Gauge:maximum-value-label>1</Gauge:maximum-value-label>
+///     <Text template={:label}>50%</Text>
+///     <Text template={:"current-value-label"}>0.5</Text>
+///     <Text template={:"minimum-value-label"}>0</Text>
+///     <Text template={:"maximum-value-label"}>1</Text>
 /// </Gauge>
 /// ```
 ///
@@ -55,9 +55,9 @@ struct Gauge<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Group {
-            if context.hasChild(of: element, withTagName: "current-value-label", namespace: "Gauge") ||
-               context.hasChild(of: element, withTagName: "minimum-value-label", namespace: "Gauge") ||
-               context.hasChild(of: element, withTagName: "maximum-value-label", namespace: "Gauge")
+            if context.hasTemplate(of: element, withName: "current-value-label") ||
+               context.hasTemplate(of: element, withName: "minimum-value-label") ||
+               context.hasTemplate(of: element, withName: "maximum-value-label")
             {
                 SwiftUI.Gauge(
                     value: self.value,
@@ -65,11 +65,11 @@ struct Gauge<R: RootRegistry>: View {
                 ) {
                     label
                 } currentValueLabel: {
-                    context.buildChildren(of: element, withTagName: "current-value-label", namespace: "Gauge")
+                    context.buildChildren(of: element, forTemplate: "current-value-label")
                 } minimumValueLabel: {
-                    context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "Gauge")
+                    context.buildChildren(of: element, forTemplate: "minimum-value-label")
                 } maximumValueLabel: {
-                    context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "Gauge")
+                    context.buildChildren(of: element, forTemplate: "maximum-value-label")
                 }
             } else {
                 SwiftUI.Gauge(
@@ -83,7 +83,7 @@ struct Gauge<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element, withTagName: "label", namespace: "Gauge", includeDefaultSlot: true)
+        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
     }
 }
 #endif

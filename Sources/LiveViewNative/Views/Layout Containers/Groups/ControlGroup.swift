@@ -13,14 +13,12 @@ import SwiftUI
 ///
 /// ```html
 /// <ControlGroup>
-///     <ControlGroup:label>
-///         Edit Actions
-///     </ControlGroup:label>
-///     <ControlGroup:content>
+///     <Text template={:label}>Edit Actions</Text>
+///     <Group template={:content}>
 ///         <Button phx-click="arrange">Arrange</Button>
 ///         <Button phx-click="update">Update</Button>
 ///         <Button phx-click="remove">Remove</Button>
-///     </ControlGroup:content>
+///     </Group>
 /// </ControlGroup>
 /// ```
 ///
@@ -51,9 +49,9 @@ struct ControlGroup<R: RootRegistry>: View {
     public var body: some View {
         #if os(iOS) || os(macOS)
         SwiftUI.ControlGroup {
-            context.buildChildren(of: element, withTagName: "content", namespace: "ControlGroup", includeDefaultSlot: true)
+            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "ControlGroup")
+            context.buildChildren(of: element, forTemplate: "label")
         }
         .applyControlGroupStyle(style)
         #endif

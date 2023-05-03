@@ -39,10 +39,10 @@ import SwiftUI
 /// Customize the appearance of the slider with the children `label`, `minimum-value-label` and `maximum-value-label`.
 ///
 /// ```html
-/// <Slider value-binding="progress">
-///     <Slider:label>Percent Completed</Slider:label>
-///     <Slider:minimum-value-label>0%</Slider:minimum-value-label>
-///     <Slider:maximum-value-label>100%</Slider:maximum-value-label>
+/// <Slider value-binding="value">
+///     <Text template={:label}>Percent Completed</Text>
+///     <Text template={:"minimum-value-label"}>0%</Text>
+///     <Text template={:"maximum-value-label"}>100%</Text>
 /// </Slider>
 /// ```
 ///
@@ -90,22 +90,22 @@ struct Slider<R: RootRegistry>: View {
                 in: lowerBound...upperBound,
                 step: step
             ) {
-                context.buildChildren(of: element, withTagName: "label", namespace: "Slider", includeDefaultSlot: true)
+                context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
             } minimumValueLabel: {
-                context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "Slider")
+                context.buildChildren(of: element, forTemplate: "minimum-value-label")
             } maximumValueLabel: {
-                context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "Slider")
+                context.buildChildren(of: element, forTemplate: "maximum-value-label")
             }
         } else {
             SwiftUI.Slider(
                 value: $value,
                 in: lowerBound...upperBound
             ) {
-                context.buildChildren(of: element, withTagName: "label", namespace: "Slider", includeDefaultSlot: true)
+                context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
             } minimumValueLabel: {
-                context.buildChildren(of: element, withTagName: "minimum-value-label", namespace: "Slider")
+                context.buildChildren(of: element, forTemplate: "minimum-value-label")
             } maximumValueLabel: {
-                context.buildChildren(of: element, withTagName: "maximum-value-label", namespace: "Slider")
+                context.buildChildren(of: element, forTemplate: "maximum-value-label")
             }
         }
     }

@@ -32,8 +32,8 @@ fileprivate let itemsDecoder = makeJSONDecoder()
 ///     message="Here's a link to the DockYard homepage"
 /// >
 ///     <SharePreview title="DockYard Homepage">
-///         <SharePreview:image><Image name="dockyard" /></SharePreview:image>
-///         <SharePreview:icon><Image name="dockyard" /></SharePreview:icon>
+///         <Image template={:image} name="dockyard" />
+///         <Image template={:icon} name="dockyard" />
 ///     </SharePreview>
 /// </ShareLink>
 /// ```
@@ -48,16 +48,16 @@ fileprivate let itemsDecoder = makeJSONDecoder()
 ///     message="Here are links to our favorite websites"
 /// >
 ///     <SharePreview item="https://dockyard.com" title="DockYard">
-///         <SharePreview:image><Image name="dockyard" /></SharePreview:image>
-///         <SharePreview:icon><Image name="dockyard" /></SharePreview:icon>
+///         <Image template={:image} name="dockyard" />
+///         <Image template={:icon} name="dockyard" />
 ///     </SharePreview>
 ///     <SharePreview item="https://news.ycombinator.com" title="Hacker News">
-///         <SharePreview:image><Image name="hackernews" /></SharePreview:image>
-///         <SharePreview:icon><Image name="hackernews" /></SharePreview:icon>
+///         <Image template={:image} name="hackernews" />
+///         <Image template={:icon} name="hackernews" />
 ///     </SharePreview>
 ///     <SharePreview item="https://apple.com" title="Apple">
-///         <SharePreview:image><Image name="apple" /></SharePreview:image>
-///         <SharePreview:icon><Image name="apple" /></SharePreview:icon>
+///         <Image template={:image} name="apple" />
+///         <Image template={:icon} name="apple" />
 ///     </SharePreview>
 /// </ShareLink>
 /// ```
@@ -289,7 +289,7 @@ struct ShareLink<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element, withTagName: "label", namespace: "ShareLink", includeDefaultSlot: true)
+        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
     }
     
     /// The set of values used to create the `SharePreview` for each item.
@@ -342,14 +342,10 @@ struct ShareLink<R: RootRegistry>: View {
             .reduce(into: ([:], default: nil)) { pairs, element in
                 let title = element.attributeValue(for: "title") ?? ""
                 let image = element.elementChildren()
-                    .first(where: { $0.tag == "image" && $0.namespace == "SharePreview" })?
-                    .elementChildren()
-                    .first
+                    .first(where: { $0.attributeValue(for: "template") == "image" })
                     .flatMap({ Image(overrideElement: $0).image })
                 let icon = element.elementChildren()
-                    .first(where: { $0.tag == "icon" && $0.namespace == "SharePreview" })?
-                    .elementChildren()
-                    .first
+                    .first(where: { $0.attributeValue(for: "template") == "icon" })
                     .flatMap({ Image(overrideElement: $0).image })
                 
                 let data = PreviewData(

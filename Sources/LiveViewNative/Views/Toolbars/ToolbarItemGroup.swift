@@ -49,9 +49,9 @@ struct ToolbarItemGroup<R: RootRegistry>: ToolbarContent {
     
     var body: some ToolbarContent {
         SwiftUI.ToolbarItemGroup(placement: placement) {
-            context.buildChildren(of: element, withTagName: "content", namespace: "ToolbarItemGroup", includeDefaultSlot: true)
+            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "ToolbarItemGroup")
+            context.buildChildren(of: element, forTemplate: "label")
         }
     }
 }

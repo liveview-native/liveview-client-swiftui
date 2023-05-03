@@ -79,7 +79,7 @@ final class FormTests: XCTestCase {
         try assertMatch(
             #"""
             <LabeledContent>
-                <LabeledContent:label>Label</LabeledContent:label>
+                <Text template="label">Label</Text>
                 Content
             </LabeledContent>
             """#,
@@ -97,8 +97,8 @@ final class FormTests: XCTestCase {
         try assertMatch(
             #"""
             <LabeledContent>
-                <LabeledContent:label>Label</LabeledContent:label>
-                <LabeledContent:content>Content</LabeledContent:content>
+                <Text template="label">Label</Text>
+                <Text template="content">Content</Text>
             </LabeledContent>
             """#,
             size: .init(width: 300, height: 100)
