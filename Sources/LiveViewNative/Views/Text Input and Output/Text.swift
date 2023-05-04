@@ -164,6 +164,8 @@ struct Text<R: RootRegistry>: View {
         } else {
             return element.children().reduce(into: SwiftUI.Text("")) { prev, next in
                 if let element = next.asElement() {
+                    guard !element.attributes.contains(where: { $0.name == "template" })
+                    else { return }
                     switch element.tag {
                     case "Text":
                         prev = prev + Self(overrideElement: element).body
