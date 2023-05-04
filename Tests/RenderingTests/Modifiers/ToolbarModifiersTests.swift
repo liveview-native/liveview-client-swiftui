@@ -74,6 +74,7 @@ final class ToolbarModifiersTests: XCTestCase {
     }
     
     func testToolbarTitleMenu() throws {
+        #if os(iOS)
         try assertMatch(
             #"""
             <Rectangle fill-color="system-red" modifiers="[{&quot;content&quot;:&quot;content&quot;,&quot;type&quot;:&quot;toolbar_title_menu&quot;}]">
@@ -99,9 +100,11 @@ final class ToolbarModifiersTests: XCTestCase {
                     Button("Cancel") {}
                 }
         }
+        #endif
     }
     
     func testToolbarVisibility() throws {
+        #if os(iOS)
         try assertMatch(
             #"""
             <Rectangle fill-color="system-red" modifiers="[{&quot;bars&quot;:&quot;navigation_bar&quot;,&quot;type&quot;:&quot;toolbar_visibility&quot;,&quot;visibility&quot;:&quot;hidden&quot;}]" />
@@ -119,5 +122,6 @@ final class ToolbarModifiersTests: XCTestCase {
                 .fill(.red)
                 .toolbar(.hidden, for: .navigationBar)
         }
+        #endif
     }
 }
