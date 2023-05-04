@@ -100,6 +100,7 @@ final class ListsModifiersTests: XCTestCase {
     }
     
     func testListRowSeparatorTint() throws {
+        #if os(iOS)
         try assertMatch(
             #"""
             <List>
@@ -130,9 +131,11 @@ final class ListsModifiersTests: XCTestCase {
                     .listRowSeparatorTint(.green, edges: .top)
             }
         }
+        #endif
     }
     
     func testListSectionSeparator() throws {
+        #if os(iOS)
         try assertMatch(
             #"""
             <List modifiers="[{&quot;style&quot;:&quot;plain&quot;,&quot;type&quot;:&quot;list_style&quot;}]">
@@ -157,9 +160,11 @@ final class ListsModifiersTests: XCTestCase {
             }
             .listStyle(.plain)
         }
+        #endif
     }
     
     func testListSectionSeparatorTint() throws {
+        #if os(iOS)
         try assertMatch(
             #"""
             <List modifiers="[{&quot;style&quot;:&quot;plain&quot;,&quot;type&quot;:&quot;list_style&quot;}]">
@@ -185,6 +190,7 @@ final class ListsModifiersTests: XCTestCase {
             }
             .listStyle(.plain)
         }
+        #endif
     }
     
     func testListStyle() throws {
