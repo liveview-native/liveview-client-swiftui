@@ -26,14 +26,14 @@ import SwiftUI
 ///
 /// ```html
 /// <Section>
-///     <Section:header>Group #1</Section:header>
-///     <Section:content>Item #1</Section:content>
-///     <Section:footer>The first group ends here</Section:footer>
+///     <Text template={:header}>Group #1</Text>
+///     <Text template={:content}>Item #1</Text>
+///     <Text template={:footer}>The first group ends here</Text>
 /// </Section>
 /// <Section>
-///     <Section:header>Group #2</Section:header>
-///     <Section:content>Item #1</Section:content>
-///     <Section:footer>The second group ends here</Section:footer>
+///     <Text template={:header}>Group #2</Text>
+///     <Text template={:content}>Item #1</Text>
+///     <Text template={:footer}>The second group ends here</Text>
 /// </Section>
 /// ```
 ///
@@ -67,11 +67,11 @@ struct Section<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Section {
-            context.buildChildren(of: element, withTagName: "content", namespace: "Section", includeDefaultSlot: true)
+            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
         } header: {
-            context.buildChildren(of: element, withTagName: "header", namespace: "Section")
+            context.buildChildren(of: element, forTemplate: "header")
         } footer: {
-            context.buildChildren(of: element, withTagName: "footer", namespace: "Section")
+            context.buildChildren(of: element, forTemplate: "footer")
         }
         #if os(macOS)
             .collapsible(collapsible)

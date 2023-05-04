@@ -13,14 +13,14 @@ import SwiftUI
 ///
 /// ```html
 /// <Menu>
-///     <Menu:label>
+///     <Text template={:label}>
 ///         Edit Actions
-///     </Menu:label>
-///     <Menu:content>
+///     </Text>
+///     <Group template={:content}>
 ///         <Button phx-click="arrange">Arrange</Button>
 ///         <Button phx-click="update">Update</Button>
 ///         <Button phx-click="remove">Remove</Button>
-///     </Menu:content>
+///     </Group>
 /// </Menu>
 /// ```
 ///
@@ -53,9 +53,9 @@ struct Menu<R: RootRegistry>: View {
     public var body: some View {
         #if !os(watchOS)
         SwiftUI.Menu {
-            context.buildChildren(of: element, withTagName: "content", namespace: "Menu")
+            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "Menu", includeDefaultSlot: true)
+            context.buildChildren(of: element, forTemplate: "label")
         }
         .applyMenuStyle(style)
         #endif

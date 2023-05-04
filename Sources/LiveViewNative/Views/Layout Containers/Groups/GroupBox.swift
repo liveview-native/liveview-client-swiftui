@@ -13,14 +13,12 @@ import SwiftUI
 ///
 /// ```html
 /// <GroupBox>
-///     <GroupBox:label>
-///         Edit Actions
-///     </GroupBox:label>
-///     <GroupBox:content>
+///     <Text template={:label}>Edit Actions</Text>
+///     <Group template={:content}>
 ///         <Button phx-click="arrange">Arrange</Button>
 ///         <Button phx-click="update">Update</Button>
 ///         <Button phx-click="remove">Remove</Button>
-///     </GroupBox:content>
+///     </Group>
 /// </GroupBox>
 /// ```
 ///
@@ -74,9 +72,9 @@ struct GroupBox<R: RootRegistry>: View {
                 }
             } else {
                 SwiftUI.GroupBox {
-                    context.buildChildren(of: element, withTagName: "content", namespace: "GroupBox", includeDefaultSlot: true)
+                    context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
                 } label: {
-                    context.buildChildren(of: element, withTagName: "label", namespace: "GroupBox")
+                    context.buildChildren(of: element, forTemplate: "label")
                 }
             }
         }

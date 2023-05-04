@@ -53,15 +53,11 @@ struct NavStackEntryView<R: RootRegistry>: View {
         if coordinator.url == entry.url {
             switch coordinator.state {
             case .connected:
-                if let doc = coordinator.document {
-                    coordinator.builder.fromNodes(doc[doc.root()].children(), coordinator: coordinator, url: coordinator.url)
-                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: doc))
-                        .onPreferenceChange(NavigationTitleModifierKey.self) { navigationTitle in
-                            self.liveViewModel.cachedNavigationTitle = navigationTitle
-                        }
-                } else {
-                    fatalError("State is `.connected`, but no `Document` was found.")
-                }
+                coordinator.builder.fromNodes(coordinator.document![coordinator.document!.root()].children(), coordinator: coordinator, url: coordinator.url)
+                    .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: coordinator.document!))
+                    .onPreferenceChange(NavigationTitleModifierKey.self) { navigationTitle in
+                        self.liveViewModel.cachedNavigationTitle = navigationTitle
+                    }
             default:
                 let content = SwiftUI.Group {
                     if R.LoadingView.self == Never.self {

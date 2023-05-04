@@ -22,10 +22,10 @@ import SwiftUI
 ///     }
 /// >
 ///     ...
-///     <search_suggestions:my_suggestions>
+///     <Group template={:my_suggestions}>
 ///         <Text modifiers={search_completion(@native, completion: "text completion")}>text completion</Text>
 ///         <Text modifiers={search_completion(@native, token: "Custom")}>Custom Token</Text>
-///     </search_suggestions:my_suggestions>
+///     </Group>
 /// <List>
 /// ```
 #if swift(>=5.8)
@@ -49,7 +49,7 @@ struct SearchSuggestionsModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.searchSuggestions {
-            context.buildChildren(of: element, withTagName: suggestions, namespace: "search_suggestions")
+            context.buildChildren(of: element, forTemplate: suggestions)
         }
     }
 

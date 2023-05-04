@@ -99,14 +99,14 @@ struct ToolbarModifier<R: RootRegistry>: ViewModifier, Decodable {
         if let id {
             content.toolbar(id: id) {
                 CustomizableToolbarTreeBuilder<R>().fromNodes(
-                    context.children(of: element, withTagName: self.content, namespace: "toolbar").flatMap { $0.children() },
+                    context.children(of: element, forTemplate: self.content).flatMap { $0.children() },
                     context: context.storage
                 )
             }
         } else {
             content.toolbar {
                 ToolbarTreeBuilder<R>().fromNodes(
-                    context.children(of: element, withTagName: self.content, namespace: "toolbar").flatMap { $0.children() },
+                    context.children(of: element, forTemplate: self.content).flatMap { $0.children() },
                     context: context.storage
                 )
             }
@@ -119,6 +119,11 @@ struct ToolbarModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 }
 
+private enum FromNodeValue {
+    case n(Node)
+    case e(Error)
+}
+
 /// A builder for `ToolbarContent`.
 struct ToolbarTreeBuilder<R: RootRegistry> {
     func fromNodes<Nodes>(_ e: Nodes, context c: LiveContextStorage<R>) -> some ToolbarContent
@@ -126,42 +131,49 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
     {
         switch e.count {
         case 1:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 2:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 3:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 4:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 5:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 6:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 7:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(.n(e[6]), c), f(nil, c), f(nil, c), f(nil, c))
         case 8:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(.n(e[6]), c), f(.n(e[7]), c), f(nil, c), f(nil, c))
         case 9:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(.n(e[6]), c), f(.n(e[7]), c), f(.n(e[8]), c), f(nil, c))
         case 10:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(e[9], c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(.n(e[6]), c), f(.n(e[7]), c), f(.n(e[8]), c), f(.n(e[9]), c))
         default:
-            fatalError("Too many children in toolbar content")
+            // Too many children in toolbar content
+            return ToolbarContentBuilder.buildBlock(f(.e(ToolbarError.badChildCount(e.count)), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         }
     }
     
     // alias for typing
     @inline(__always)
-    fileprivate func f(_ n: Node?, _ c: LiveContextStorage<R>) -> some ToolbarContent {
+    fileprivate func f(_ n: FromNodeValue?, _ c: LiveContextStorage<R>) -> some ToolbarContent {
         return n.flatMap({ fromNode($0, context: c) })
     }
     
     @ToolbarContentBuilder
-    fileprivate func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some ToolbarContent {
-        if case .element(let element) = node.data {
-            Self.lookup(ElementNode(node: node, data: element))
-        } else {
-            fatalError("ToolbarTreeBuilder.fromNode may not be called with a root or leaf node")
+    fileprivate func fromNode(_ node: FromNodeValue, context: LiveContextStorage<R>) -> some ToolbarContent {
+        // ToolbarTreeBuilder.fromNode may not be called with a root or leaf node
+        switch node {
+        case let .n(node):
+            if case .element(let element) = node.data {
+                Self.lookup(ElementNode(node: node, data: element))
+            }
+        case let .e(error):
+            SwiftUI.ToolbarItem {
+                ErrorView<R>(error)
+            }
         }
     }
     
@@ -175,7 +187,9 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
         case "ToolbarTitleMenu":
             ToolbarTitleMenu<R>(element: node)
         default:
-            fatalError("Unsupported toolbar content '\(node.tag)'")
+            SwiftUI.ToolbarItem {
+                ErrorView<R>(ToolbarError.unknownTag(node.tag))
+            }
         }
     }
 }
@@ -187,42 +201,49 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
     {
         switch e.count {
         case 1:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 2:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 3:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 4:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 5:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 6:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         case 7:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(nil, c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(.n(e[6]), c), f(nil, c), f(nil, c), f(nil, c))
         case 8:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(nil, c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(.n(e[6]), c), f(.n(e[7]), c), f(nil, c), f(nil, c))
         case 9:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(nil, c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(.n(e[6]), c), f(.n(e[7]), c), f(.n(e[8]), c), f(nil, c))
         case 10:
-            return ToolbarContentBuilder.buildBlock(f(e[0], c), f(e[1], c), f(e[2], c), f(e[3], c), f(e[4], c), f(e[5], c), f(e[6], c), f(e[7], c), f(e[8], c), f(e[9], c))
+            return ToolbarContentBuilder.buildBlock(f(.n(e[0]), c), f(.n(e[1]), c), f(.n(e[2]), c), f(.n(e[3]), c), f(.n(e[4]), c), f(.n(e[5]), c), f(.n(e[6]), c), f(.n(e[7]), c), f(.n(e[8]), c), f(.n(e[9]), c))
         default:
-            fatalError("Too many children in toolbar content")
+            // Too many children in toolbar content
+            return ToolbarContentBuilder.buildBlock(f(.e(ToolbarError.badChildCount(e.count)), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         }
     }
     
     // alias for typing
     @inline(__always)
-    fileprivate func f(_ n: Node?, _ c: LiveContextStorage<R>) -> some CustomizableToolbarContent {
+    fileprivate func f(_ n: FromNodeValue?, _ c: LiveContextStorage<R>) -> some CustomizableToolbarContent {
         return n.flatMap({ fromNode($0, context: c) })
     }
     
     @ToolbarContentBuilder
-    fileprivate func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some CustomizableToolbarContent {
-        if case .element(let element) = node.data {
-            Self.lookup(ElementNode(node: node, data: element))
-        } else {
-            fatalError("CustomizableToolbarTreeBuilder.fromNode may not be called with a root or leaf node")
+    fileprivate func fromNode(_ node: FromNodeValue, context: LiveContextStorage<R>) -> some CustomizableToolbarContent {
+        // CustomizableToolbarTreeBuilder.fromNode may not be called with a root or leaf node
+        switch node {
+        case let .n(node):
+            if case .element(let element) = node.data {
+                Self.lookup(ElementNode(node: node, data: element))
+            }
+        case let .e(error):
+            SwiftUI.ToolbarItem(id: error.localizedDescription) {
+                ErrorView<R>(error)
+            }
         }
     }
     
@@ -234,7 +255,23 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
         case "ToolbarTitleMenu":
             ToolbarTitleMenu<R>(element: node)
         default:
-            fatalError("Unsupported toolbar content '\(node.tag)'")
+            SwiftUI.ToolbarItem(id: node.tag) {
+                ErrorView<R>(ToolbarError.unknownTag(node.tag))
+            }
+        }
+    }
+}
+
+enum ToolbarError: LocalizedError {
+    case badChildCount(Int)
+    case unknownTag(String)
+    
+    var errorDescription: String? {
+        switch self {
+        case let .badChildCount(count):
+            return "\(count) is an invalid number of children for a toolbar. Toolbar supports 1-10 children."
+        case let .unknownTag(tag):
+            return "Unsupported toolbar content '\(tag)'"
         }
     }
 }

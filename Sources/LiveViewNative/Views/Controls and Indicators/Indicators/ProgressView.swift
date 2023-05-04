@@ -20,8 +20,8 @@ import SwiftUI
 /// ```html
 /// <ProgressView value={0.5} />
 /// <ProgressView value={0.5} total={2}>
-///     <ProgressView:label>Completed Percentage</ProgressView:label>
-///     <ProgressView:current-value-label>25%</ProgressView:current-value-label>
+///     <Text template={:label}>Completed Percentage</Text>
+///     <Text template={:current-value-label}>25%</Text>
 /// </ProgressView>
 /// ```
 ///
@@ -106,21 +106,21 @@ struct ProgressView<R: RootRegistry>: View {
             {
                 // SwiftUI's default `currentValueLabel` is not present unless the argument is not included in the initializer.
                 // Check if we have it first otherwise use the default.
-                if context.hasChild(of: element, withTagName: "current-value-label", namespace: "ProgressView") {
+                if context.hasTemplate(of: element, withName: "current-value-label") {
                     SwiftUI.ProgressView(
                         timerInterval: timerIntervalStart...timerIntervalEnd,
                         countsDown: countsDown
                     ) {
-                        context.buildChildren(of: element, withTagName: "label", namespace: "ProgressView", includeDefaultSlot: true)
+                        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
                     } currentValueLabel: {
-                        context.buildChildren(of: element, withTagName: "current-value-label", namespace: "ProgressView")
+                        context.buildChildren(of: element, forTemplate: "current-value-label")
                     }
                 } else {
                     SwiftUI.ProgressView(
                         timerInterval: timerIntervalStart...timerIntervalEnd,
                         countsDown: countsDown
                     ) {
-                        context.buildChildren(of: element, withTagName: "label", namespace: "ProgressView", includeDefaultSlot: true)
+                        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
                     }
                 }
             } else if let value {
@@ -128,13 +128,13 @@ struct ProgressView<R: RootRegistry>: View {
                     value: value,
                     total: total
                 ) {
-                    context.buildChildren(of: element, withTagName: "label", namespace: "ProgressView", includeDefaultSlot: true)
+                    context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
                 } currentValueLabel: {
-                    context.buildChildren(of: element, withTagName: "current-value-label", namespace: "ProgressView")
+                    context.buildChildren(of: element, forTemplate: "current-value-label")
                 }
             } else {
                 SwiftUI.ProgressView {
-                    context.buildChildren(of: element, withTagName: "label", namespace: "ProgressView", includeDefaultSlot: true)
+                    context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
                 }
             }
         }

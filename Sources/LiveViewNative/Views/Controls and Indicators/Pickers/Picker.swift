@@ -15,14 +15,12 @@ import SwiftUI
 ///
 /// ```html
 /// <Picker value-binding="transport" picker-style="menu">
-///     <Picker:content>
+///     <Text template={:label}>Transportation</Text>
+///     <Group template={:content}>
 ///         <Label system-image="car" modifiers={tag(@native, tag: "car")}>Car</Label>
 ///         <Label system-image="bus" modifiers={tag(@native, tag: "bus")}>Bus</Label>
 ///         <Label system-image="tram" modifiers={tag(@native, tag: "tram")}>Tram</Label>
-///     </Picker:content>
-///     <Picker:label>
-///         <Text>Transportation</Text>
-///     </Picker:label>
+///     </Group>
 /// </Picker>
 /// ```
 ///
@@ -45,9 +43,9 @@ struct Picker<R: RootRegistry>: View {
     
     var body: some View {
         SwiftUI.Picker(selection: $value) {
-            context.buildChildren(of: element, withTagName: "content", namespace: "Picker", includeDefaultSlot: false)
+            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: false)
         } label: {
-            context.buildChildren(of: element, withTagName: "label", namespace: "Picker", includeDefaultSlot: false)
+            context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: false)
         }
     }
     

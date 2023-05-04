@@ -30,11 +30,11 @@ import SwiftUI
 ///     }
 /// >
 ///     ...
-///     <search_scopes:scope_list>
+///     <Group template={:scope_list}>
 ///         <Text modifiers='[{"type":"tag","value":"photos"}]'>Photos</Text>
 ///         <Text modifiers='[{"type":"tag","value":"videos"}]'>Videos</Text>
 ///         <Text modifiers='[{"type":"tag","value":"screenshots"}]'>Screenshots</Text>
-///     </search_scopes:scopes_list>
+///     </Group>
 /// </List>
 /// ```
 ///
@@ -95,11 +95,11 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
         #if os(iOS) || os(macOS) || os(tvOS)
         if #available(iOS 16.4, macOS 13.3, tvOS 16.4, *) {
             content.searchScopes($active, activation: searchScopeActivation) {
-                context.buildChildren(of: element, withTagName: scopes, namespace: "search_scopes")
+                context.buildChildren(of: element, forTemplate: scopes)
             }
         } else {
             content.searchScopes($active) {
-                context.buildChildren(of: element, withTagName: scopes, namespace: "search_scopes")
+                context.buildChildren(of: element, forTemplate: scopes)
             }
         }
         #else

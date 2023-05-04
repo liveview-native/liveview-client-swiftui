@@ -17,12 +17,12 @@ import SwiftUI
 ///
 /// ```html
 /// <Table>
-///     <Table:columns>
+///     <Group template={:columns}>
 ///         <TableColumn id="name">Name</TableColumn>
 ///         <TableColumn id="description">Description</TableColumn>
 ///         <TableColumn id="length">Length</TableColumn>
-///     </Table:columns>
-///     <Table:rows>
+///     </Group>
+///     <Group template={:rows}>
 ///         <TableRow id="basketball">
 ///             <Text>Basketball</Text>
 ///             <Text>Players attempt to throw a ball into an elevated basket.</Text>
@@ -38,7 +38,7 @@ import SwiftUI
 ///             <Text>Players attempt to throw a ball into an end zone.</Text>
 ///             <Text>60 min</Text>
 ///         </TableRow>
-///     </Table:rows>
+///     </Group>
 /// </Table>
 /// ```
 ///
@@ -48,7 +48,7 @@ import SwiftUI
 /// ```html
 /// <Table sort-order="sports_sort_order">
 ///     ...
-///     <Table:rows>
+///     <Group template={:rows}>
 ///         <%= for sport <- Enum.sort_by(
 ///             @sports,
 ///             fn sport -> sport[hd(@sports_sort_order)["id"]] end,
@@ -60,7 +60,7 @@ import SwiftUI
 ///                 <Text><%= sport["length"] %></Text>
 ///             </TableRow>
 ///         <% end %>
-///     </Table:rows>
+///     </Group>
 /// </Table>
 /// ```
 ///
@@ -263,20 +263,20 @@ struct Table<R: RootRegistry>: View {
                 columns[9]
             }
         default:
-            fatalError("Too many columns in table: \(columns.count)")
+            ErrorView<R>(TableError.badColumnCount(columns.count))
         }
     }
     
     private var rows: [TableRow] {
         element.elementChildren()
-            .filter { $0.tag == "rows" && $0.namespace == "Table" }
+            .filter { $0.attributeValue(for: "template") == "rows" }
             .flatMap { $0.elementChildren() }
-            .compactMap { $0.tag == "TableRow" ? TableRow(element: $0) : nil }
+            .compactMap { $0.tag == "TableRow" && $0.attribute(named: "id") != nil ? TableRow(element: $0) : nil }
     }
     
     private var columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>] {
         let columnElements = element.elementChildren()
-            .filter { $0.tag == "columns" && $0.namespace == "Table" }
+            .filter { $0.attributeValue(for: "template") == "columns" }
             .flatMap { $0.elementChildren() }
             .filter { $0.tag == "TableColumn" }
         return columnElements.enumerated().map { item in
@@ -299,6 +299,17 @@ struct Table<R: RootRegistry>: View {
         }
     }
     #endif
+}
+
+enum TableError: LocalizedError {
+    case badColumnCount(Int)
+    
+    var errorDescription: String? {
+        switch self {
+        case let .badColumnCount(count):
+            return "\(count) is an invalid number of columns for <Table>. Only 1-10 columns are supported."
+        }
+    }
 }
 
 fileprivate struct TableRow: Identifiable {

@@ -7,9 +7,47 @@
 
 import SwiftUI
 
+enum ErrorSource {
+    case html(String)
+    case error(Error)
+}
+
+struct ErrorView<R: RootRegistry>: View {
+    let source: ErrorSource
+    
+    init(html: String) {
+        self.source = .html(html)
+    }
+    
+    init(_ error: Error) {
+        self.source = .error(error)
+    }
+    
+    @State private var isPresented = false
+    
+    var body: some View {
+        switch source {
+        case let .html(html):
+            WebErrorView(html: html)
+        case let .error(error):
+            if R.ErrorView.self == Never.self {
+                SwiftUI.Text(error.localizedDescription)
+                    .alert(error.localizedDescription, isPresented: $isPresented) {
+                        SwiftUI.Button("OK", action: {})
+                    }
+                    .task {
+                        isPresented = true
+                    }
+            } else {
+                R.errorView(for: error)
+            }
+        }
+    }
+}
+
 #if os(macOS)
 import WebKit
-struct ErrorView: NSViewRepresentable {
+struct WebErrorView: NSViewRepresentable {
     let html: String
     
     func makeNSView(context: Context) -> WKWebView {
@@ -24,7 +62,7 @@ struct ErrorView: NSViewRepresentable {
 }
 #elseif os(iOS)
 import WebKit
-struct ErrorView: UIViewRepresentable {
+struct WebErrorView: UIViewRepresentable {
     let html: String
     
     func makeUIView(context: Context) -> WKWebView {
@@ -38,7 +76,7 @@ struct ErrorView: UIViewRepresentable {
     }
 }
 #else
-struct ErrorView: View {
+struct WebErrorView: View {
     let html: String
     
     var body: some View {

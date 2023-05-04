@@ -8,13 +8,11 @@ defmodule LiveViewNativeSwiftUi.Platform do
 
   defstruct [
     :app_name,
-    :bundle_name,
-    :project_path,
-    custom_modifiers: [],
-    default_simulator_device: "iPhone 13",
-    default_simulator_os: "iOS",
-    default_simulator_os_version: "16-0",
-    xcode_path: "/Applications/Xcode.app"
+    :os_name,
+    :os_version,
+    :simulator_opts,
+    :user_interface_idiom,
+    custom_modifiers: []
   ]
 
   defimpl LiveViewNativePlatform do
@@ -30,12 +28,14 @@ defmodule LiveViewNativeSwiftUi.Platform do
     def start_simulator(struct, opts \\ []) do
       %{
         app_name: app_name,
-        bundle_name: bundle_name,
-        default_simulator_device: default_simulator_device,
-        default_simulator_os: default_simulator_os,
-        default_simulator_os_version: default_simulator_os_version,
-        project_path: project_path,
-        xcode_path: xcode_path
+        simulator_opts: %{
+          bundle_name: bundle_name,
+          default_simulator_device: default_simulator_device,
+          default_simulator_os: default_simulator_os,
+          default_simulator_os_version: default_simulator_os_version,
+          project_path: project_path,
+          xcode_path: xcode_path
+        }
       } = struct
 
       # Raises if either `xcrun` or `xcodebuild` are missing from the current system PATH.

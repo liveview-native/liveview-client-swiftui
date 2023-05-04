@@ -13,12 +13,8 @@ import SwiftUI
 ///
 /// ```html
 /// <Label>
-///     <Label:title>
-///         <Text>John Doe</Text>
-///     </Label:title>
-///     <Label:icon>
-///         <Image system-name="person.crop.circle.fill" />
-///     </Label:icon>
+///     <Text template={:title}>John Doe</Text>
+///     <Image template={:icon} system-name="person.crop.circle.fill" />
 /// </Label>
 /// ```
 ///
@@ -51,12 +47,12 @@ struct Label<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Label {
-            context.buildChildren(of: element, withTagName: "title", namespace: "Label", includeDefaultSlot: true)
+            context.buildChildren(of: element, forTemplate: "title", includeDefaultSlot: true)
         } icon: {
             if let systemImage {
                 SwiftUI.Image(systemName: systemImage)
             } else {
-                context.buildChildren(of: element, withTagName: "icon", namespace: "Label")
+                context.buildChildren(of: element, forTemplate: "icon")
             }
         }
     }

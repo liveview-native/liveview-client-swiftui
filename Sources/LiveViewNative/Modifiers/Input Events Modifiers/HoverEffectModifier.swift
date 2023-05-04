@@ -47,7 +47,7 @@ struct HoverEffectModifier: ViewModifier, Decodable {
             throw DecodingError.dataCorruptedError(forKey: .effect, in: container, debugDescription: "invalid value for \(CodingKeys.effect.rawValue)")
         }
         #else
-        fatalError()
+        throw DecodingError.typeMismatch(Self.self, .init(codingPath: container.codingPath, debugDescription: "`hover_effect` modifier not available on this platform"))
         #endif
     }
     

@@ -18,15 +18,13 @@ import SwiftUI
 /// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, is_presented: :show)}>
 ///   Present Sheet
 ///
-///   <sheet:content>
-///     <VStack modifiers={presentation_background(@native, style: {:linear_gradient, [gradient: {:colors, [:red, :blue]}]})}>
-///       <presentation_background:background>
-///         <Color name="system-orange" />
-///       </presentation_background:background>
-///       <Text>Hello, world!</Text>
-///       <Button phx-click="toggle">Dismiss</Button>
-///     </VStack>
-///   </sheet:content>
+///   <VStack template={:content} modifiers={presentation_background(@native, style: {:linear_gradient, [gradient: {:colors, [:red, :blue]}]})}>
+///     <presentation_background:background>
+///       <Color name="system-orange" />
+///     </presentation_background:background>
+///     <Text>Hello, world!</Text>
+///     <Button phx-click="toggle">Dismiss</Button>
+///   </VStack>
 /// </Button>
 /// ```
 ///
@@ -80,7 +78,7 @@ struct PresentationBackgroundModifier<R: RootRegistry>: ViewModifier, Decodable 
             content.presentationBackground(style)
         } else {
             content.presentationBackground(alignment: alignment ?? .center) {
-                context.buildChildren(of: element, withTagName: self.content!, namespace: "presentation_background")
+                context.buildChildren(of: element, forTemplate: self.content!)
             }
         }
     }

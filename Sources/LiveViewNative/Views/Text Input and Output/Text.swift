@@ -172,7 +172,9 @@ struct Text<R: RootRegistry>: View {
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
                     case "Image":
-                        prev = prev + SwiftUI.Text(Image(overrideElement: element).image)
+                        if let image = Image(overrideElement: element).image {
+                            prev = prev + SwiftUI.Text(image)
+                        }
                     default:
                         break
                     }

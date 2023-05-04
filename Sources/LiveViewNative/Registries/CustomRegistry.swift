@@ -92,6 +92,10 @@ public protocol CustomRegistry {
     ///
     /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-6jd3b`` implementations and this will be inferred automatically.
     associatedtype LoadingView: View = Never
+    /// The type of view this registry produces for error views.
+    ///
+    /// Generally, implementors will use an opaque return type on their ``errorView(for:)`` implementations and this will be inferred automatically.
+    associatedtype ErrorView: View = Never
     
     /// This method is called by LiveView Native when it needs to construct a custom view.
     ///
@@ -123,11 +127,26 @@ public protocol CustomRegistry {
     /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveSessionState/connected``.
     @ViewBuilder
     static func loadingView(for url: URL, state: LiveSessionState) -> LoadingView
+    
+    /// This method is called when it needs a view to display when an error occurs in the View hierarchy.
+    ///
+    /// If you do not implement this method, the framework provides a view which displays a simple text representation of the error.
+    ///
+    /// - Parameter error: The error of the view is reporting.
+    @ViewBuilder
+    static func errorView(for error: Error) -> ErrorView
 }
 
 extension CustomRegistry where LoadingView == Never {
     /// A default  implementation that falls back to the default framework loading view.
     public static func loadingView(for url: URL, state: LiveSessionState) -> Never {
+        fatalError()
+    }
+}
+
+extension CustomRegistry where ErrorView == Never {
+    /// A default  implementation that falls back to the default framework error view.
+    public static func errorView(for error: Error) -> Never {
         fatalError()
     }
 }
