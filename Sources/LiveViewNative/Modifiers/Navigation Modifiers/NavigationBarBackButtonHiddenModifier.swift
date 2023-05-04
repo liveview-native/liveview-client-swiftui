@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Hides the navigation bar back button for the view. This modifier only takes effect when this view is inside of and visible within a ``NavigationView``.
+/// Hides the navigation bar back button for the view.
 ///
 /// While this modifier defaults to false when used, the typical usage of SwiftUI is to not call this modifier and allow showing of the back button.
 ///
@@ -19,7 +19,7 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``hides_back_button``
+/// * ``hidesBackButton``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

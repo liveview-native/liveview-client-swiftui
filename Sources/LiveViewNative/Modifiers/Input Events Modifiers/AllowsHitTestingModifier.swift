@@ -21,6 +21,9 @@ import SwiftUI
 ///
 /// ## Arguments
 /// * ``enabled``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct AllowsHitTestingModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)

@@ -26,7 +26,7 @@ import SwiftUI
 ///
 /// ## Arguments
 /// * ``opaque``
-/// * ``color_mode``
+/// * ``colorMode``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -37,7 +37,7 @@ struct DrawingGroupModifier: ViewModifier, Decodable {
     #endif
     private let opaque: Bool
     
-    /// One of the working color space and storage formats. The default is ``non_linear``
+    /// One of the working color space and storage formats. The default is `non_linear`
     ///
     /// Possible values:
     /// * `extended_linear`
