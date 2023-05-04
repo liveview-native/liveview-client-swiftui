@@ -35,7 +35,7 @@ struct ScrollIndicatorsModifier: ViewModifier, Decodable {
     
     /// The axes of scrollable views that the visibility applies to. Defaults to `all`.
     ///
-    /// See ``LiveViewNative/SwiftUI/Axis`` for a list of possible values.
+    /// See ``LiveViewNative/SwiftUI/Axis/Set`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
