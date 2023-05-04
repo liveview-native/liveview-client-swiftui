@@ -2,7 +2,7 @@
 //  DrawingAndGraphicsModifiersTests.swift
 //  
 //
-//  Created by Carson.Katri on 5/3/23.
+//  Created by Carson Katri on 5/3/23.
 //
 
 import XCTest

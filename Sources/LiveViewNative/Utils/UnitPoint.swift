@@ -39,13 +39,13 @@ extension UnitPoint: Decodable, AttributeDecodable {
             self = .top
         case "bottom":
             self = .bottom
-        case "top-leading":
+        case "top-leading", "top_leading":
             self = .topLeading
-        case "top-trailing":
+        case "top-trailing", "top_trailing":
             self = .topTrailing
-        case "bottom-leading":
+        case "bottom-leading", "bottom_leading":
             self = .bottomLeading
-        case "bottom-trailing":
+        case "bottom-trailing", "bottom_trailing":
             self = .bottomTrailing
         default:
             let doublePattern = Regex {

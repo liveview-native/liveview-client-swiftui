@@ -2,7 +2,7 @@
 //  LayoutAdjustmentsModifiersTests.swift
 //
 //
-//  Created by Carson.Katri on 5/4/23.
+//  Created by Carson Katri on 5/4/23.
 //
 
 import XCTest
@@ -108,8 +108,7 @@ final class LayoutAdjustmentsModifiersTests: XCTestCase {
                 <Text template="content">Bottom Inset</Text>
             </ScrollView>
             """#,
-            size: .init(width: 100, height: 100),
-            lifetime: .keepAlways
+            size: .init(width: 100, height: 100)
         ) {
             ScrollView {
                 Rectangle().fill(.red)
