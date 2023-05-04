@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 env:
-  MIN_COVERAGE: 0.3
+  MIN_COVERAGE: 0.4
 
 jobs:
   test:
