@@ -114,7 +114,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
     }
     
     @ViewBuilder
-    private func applyBindings<R: RootRegistry>(
+    private func applyBindings(
         to view: some View,
         element: ElementNode,
         context: LiveContextStorage<R>

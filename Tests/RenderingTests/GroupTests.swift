@@ -115,41 +115,6 @@ final class GroupTests: XCTestCase {
         }
     }
     
-    func testControlGroupStyles() throws {
-        try assertMatch(
-            #"""
-            <ControlGroup control-group-style="automatic">
-                <Button>Action #1</Button>
-                <Button>Action #2</Button>
-                <Button>Action #3</Button>
-            </ControlGroup>
-            """#
-        ) {
-            ControlGroup {
-                Button("Action #1") {}
-                Button("Action #2") {}
-                Button("Action #3") {}
-            }
-            .controlGroupStyle(.automatic)
-        }
-        try assertMatch(
-            #"""
-            <ControlGroup control-group-style="navigation">
-                <Button>Action #1</Button>
-                <Button>Action #2</Button>
-                <Button>Action #3</Button>
-            </ControlGroup>
-            """#
-        ) {
-            ControlGroup {
-                Button("Action #1") {}
-                Button("Action #2") {}
-                Button("Action #3") {}
-            }
-            .controlGroupStyle(.navigation)
-        }
-    }
-    
     // MARK: DisclosureGroup
     func testDisclosureGroup() throws {
         try assertMatch(

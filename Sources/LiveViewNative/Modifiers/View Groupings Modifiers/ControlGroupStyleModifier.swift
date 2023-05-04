@@ -30,6 +30,18 @@ struct ControlGroupStyleModifier: ViewModifier, Decodable {
         switch style {
         case .automatic:
             content.controlGroupStyle(.automatic)
+        case .compactMenu:
+            if #available(iOS 16.4, macOS 13.3, *) {
+                content.controlGroupStyle(.compactMenu)
+            } else {
+                content
+            }
+        case .menu:
+            if #available(iOS 16.4, macOS 13.3, *) {
+                content.controlGroupStyle(.menu)
+            } else {
+                content
+            }
         case .navigation:
             content.controlGroupStyle(.navigation)
         }
@@ -48,6 +60,17 @@ fileprivate enum ControlGroupStyle: String, Decodable {
     @_documentation(visibility: public)
     #endif
     case automatic
+    /// `compact_menu`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(iOS 16.4, macOS 13.3, *)
+    case compactMenu = "compact_menu"
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(iOS 16.4, macOS 13.3, *)
+    case menu
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
