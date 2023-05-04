@@ -15,14 +15,14 @@ import LiveViewNativeCore
 /// ```html
 /// <Text modifiers={toolbar(@native, content: :my_toolbar_content)}>
 ///     ...
-///     <toolbar:my_toolbar_content>
+///     <Group template={:my_toolbar_content}>
 ///         <ToolbarItem placement="confirmation-action">
 ///             <Button phx-click="save">Save</Button>
 ///         </ToolbarItem>
 ///         <ToolbarItem placement="cancellation-action">
 ///             <Button phx-click="cancel">Cancel</Button>
 ///         </ToolbarItem>
-///     </toolbar:my_toolbar_content>
+///     </GRoup>
 /// </Text>
 /// ```
 ///
@@ -43,7 +43,7 @@ import LiveViewNativeCore
 /// ```html
 /// <Text modifiers={toolbar(@native, id: "my-main-bar", content: :editable_bar)}>
 ///     ...
-///     <toolbar:editable_bar>
+///     <Group template={:editable_bar}>
 ///         <ToolbarItem id="search" placement="secondary-action">
 ///             <TextField text-field-style="rounded-border">Search for photos...</TextField>
 ///         </ToolbarItem>
@@ -56,7 +56,7 @@ import LiveViewNativeCore
 ///         <ToolbarItem id="spacer" visibility="hidden">
 ///             <Spacer />
 ///         </ToolbarItem>
-///     </toolbar:editable_bar>
+///     </Group>
 /// </Text>
 /// ```
 ///
