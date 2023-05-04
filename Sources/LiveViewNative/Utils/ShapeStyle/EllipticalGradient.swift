@@ -39,7 +39,7 @@ extension EllipticalGradient: Decodable {
     enum CodingKeys: String, CodingKey {
         case gradient
         case center
-        case startRadiusFraction = "start_radius_fraction"
-        case endRadiusFraction = "end_radius_fraction"
+        case startRadiusFraction
+        case endRadiusFraction
     }
 }
