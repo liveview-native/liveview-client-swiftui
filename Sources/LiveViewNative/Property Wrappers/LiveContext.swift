@@ -54,8 +54,16 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     }
     
     /// Builds a view representing the children of the current element in the current context.
+    ///
+    /// Ignores any children with a `template` attribute.
     public func buildChildren(of element: ElementNode) -> some View {
-        return coordinator.builder.fromNodes(element.children(), context: storage)
+        return coordinator.builder.fromNodes(element.children().filter({
+            if case let .element(element) = $0.data {
+                return !element.attributes.contains(where: { $0.name == "template" })
+            } else {
+                return true
+            }
+        }), context: storage)
     }
     
     private static func isTemplateElement(
