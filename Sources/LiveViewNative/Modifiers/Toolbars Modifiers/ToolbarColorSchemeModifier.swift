@@ -52,7 +52,7 @@ struct ToolbarColorSchemeModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case colorScheme = "color_scheme"
+        case colorScheme
         case bars
     }
 }

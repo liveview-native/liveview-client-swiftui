@@ -44,17 +44,17 @@ struct LabelStyleModifier: ViewModifier, Decodable {
 @_documentation(visibility: public)
 #endif
 fileprivate enum LabelStyle: String, Decodable {
-    /// `icon-only`
+    /// `icon_only`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     case iconOnly = "icon_only"
-    /// `title-only`
+    /// `title_only`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     case titleOnly = "title_only"
-    /// `title-and-icon`
+    /// `title_and_icon`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
