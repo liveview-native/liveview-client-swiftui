@@ -95,8 +95,10 @@ be found at <https://hexdocs.pm/live_view_native_swift_ui>.
 - <doc:ListsModifiers>
 - <doc:ModalPresentations>
 - <doc:NavigationModifiers>
+- <doc:ScrollViewsModifiers>
 - <doc:SearchModifiers>
 - <doc:TextInputAndOutputModifiers>
+- <doc:ToolbarsModifiers>
 - <doc:ViewConfigurationModifiers>
 - <doc:ViewFundamentalsModifiers>
 - <doc:ViewStylesModifiers>
