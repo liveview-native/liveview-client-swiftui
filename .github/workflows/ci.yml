@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  checks: write
+
 jobs:
   test:
     runs-on: [self-hosted, tartelet]
