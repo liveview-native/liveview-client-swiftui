@@ -56,7 +56,7 @@ struct PaddingModifier: ViewModifier, Decodable, Equatable {
     
     /// The edges to inset. Defaults to `all`.
     ///
-    /// See ``LiveViewNative/SwiftUI/Edge`` for more details on creating insets.
+    /// See ``LiveViewNative/SwiftUI/Edge/Set`` for more details on creating insets.
 #if swift(>=5.8)
     @_documentation(visibility: public)
 #endif
