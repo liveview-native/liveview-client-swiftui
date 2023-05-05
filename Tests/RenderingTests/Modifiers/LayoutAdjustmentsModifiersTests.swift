@@ -118,4 +118,38 @@ final class LayoutAdjustmentsModifiersTests: XCTestCase {
                 }
         }
     }
+    
+    func testFrame() throws {
+        try assertMatch(
+            #"""
+            <Color name="system-pink" modifiers='[{"type": "frame", "width": 50, "height": 50, "alignment": "top"}]' />
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Color.pink
+                .frame(width: 50, height: 50, alignment: .top)
+        }
+        
+        try assertMatch(
+            #"""
+            <Color name="system-pink" modifiers='[{"type": "frame", "ideal_width": 50, "max_width": 75, "ideal_height": 50, "max_height": 75, "alignment": "bottom"}]' />
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Color.pink
+                .frame(idealWidth: 50, maxWidth: 75, idealHeight: 50, maxHeight: 75, alignment: .bottom)
+        }
+    }
+    
+    func testPadding() throws {
+        try assertMatch(
+            #"""
+            <Color name="system-pink" modifiers='[{"type": "padding", "length": 20, "edges": "all"}]' />
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Color.pink
+                .padding(20)
+        }
+    }
 }

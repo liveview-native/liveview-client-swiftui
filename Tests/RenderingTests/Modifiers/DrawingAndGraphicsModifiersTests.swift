@@ -23,4 +23,15 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                 .rotationEffect(.degrees(45))
         }
     }
+    
+    func testTint() throws {
+        try assertMatch(
+            #"""
+            <Button modifiers='[{"type": "tint", "color": {"string": "system-red"}}]'>Hello</Button>
+            """#
+        ) {
+            Button("Hello") {}
+                .tint(.red)
+        }
+    }
 }

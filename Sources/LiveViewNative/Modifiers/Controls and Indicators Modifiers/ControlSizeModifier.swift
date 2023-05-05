@@ -23,7 +23,7 @@ import SwiftUI
 struct ControlSizeModifier: ViewModifier, Decodable {
     /// The size of controls.
     ///
-    /// See ``LiveViewNative/SwiftUI/Prominence`` for a list of possible values.
+    /// See ``LiveViewNative/SwiftUI/ControlSize`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
