@@ -69,7 +69,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// - Parameter type: The type of event that is being sent (e.g., `click` or `form`). Note: this is not currently used by the LiveView backend.
     /// - Parameter event: The name of the LiveView event handler that the event is being dispatched to.
-    /// - Parameter value: The event value to provide to the backend event handler. The value _must_ be  serializable using ``JSONSerialization``.
+    /// - Parameter value: The event value to provide to the backend event handler. The value _must_ be  serializable using `JSONSerialization`.
     /// - Parameter target: The value of the `phx-target` attribute.
     /// - Throws: ``LiveConnectionError/eventError(_:)`` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
     public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws {

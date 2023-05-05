@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct BackgroundStyleModifier: ViewModifier, Decodable {
+    // TODO: Documentation
     private let style: AnyShapeStyle
 
     func body(content: Content) -> some View {
