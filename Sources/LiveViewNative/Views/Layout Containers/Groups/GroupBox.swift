@@ -57,11 +57,6 @@ struct GroupBox<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @Attribute("title") private var title: String?
-    /// The style to apply to this group box.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("group-box-style") private var style: GroupBoxStyle = .automatic
 
     public var body: some View {
 #if os(iOS) || os(macOS)
@@ -77,29 +72,6 @@ struct GroupBox<R: RootRegistry>: View {
                     context.buildChildren(of: element, forTemplate: "label")
                 }
             }
-        }
-        .applyGroupBoxStyle(style)
-#endif
-    }
-}
-
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum GroupBoxStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    func applyGroupBoxStyle(_ style: GroupBoxStyle) -> some View {
-#if os(iOS) || os(macOS)
-        switch style {
-        case .automatic:
-            self.groupBoxStyle(.automatic)
         }
 #endif
     }
