@@ -81,6 +81,7 @@ be found at <https://hexdocs.pm/live_view_native_swift_ui>.
 - <doc:LayoutContainers>
 - <doc:Shapes>
 - <doc:TextInputAndOutput>
+- <doc:Toolbars>
 
 ### Supported Modifiers
 - <doc:AnimationsModifiers>
