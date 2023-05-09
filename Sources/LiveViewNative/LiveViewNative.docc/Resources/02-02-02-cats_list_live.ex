@@ -32,7 +32,7 @@ defmodule LvnTutorialWeb.CatsListLive do
   def render(%{platform_id: :swiftui} = assigns) do
     ~Z"""
     <List>
-      <%= for name <- @cats do %>
+      <%= for {name, favorite} <- @cats_and_favorites do %>
         <HStack id={name}>
           <AsyncImage url={"/images/cats/#{name}.jpg"} modifiers={frame(@native, width: 100, height: 100)} />
           <Text><%= name %></Text>

@@ -1,7 +1,6 @@
 defmodule LvnTutorialWeb.CatsListLive do
   use LvnTutorialWeb, :live_view
   use LiveViewNative.LiveView
-  alias LvnTutorial.FavoritesStore
 
   @cats [
     "Clenil",
@@ -33,23 +32,9 @@ defmodule LvnTutorialWeb.CatsListLive do
     ~Z"""
     <List>
       <%= for name <- @cats do %>
-        <HStack id={name}>
-          <AsyncImage url={"/images/cats/#{name}.jpg"} modifiers={frame(@native, width: 100, height: 100)} />
-          <Text><%= name %></Text>
-        </HStack>
+        <Text id={name}><%= name %></Text>
       <% end %>
     </List>
     """swiftui
-  end
-
-  def get_cats_and_favorites() do
-    favorites = FavoritesStore.get_favorites()
-
-    {favorites, non_favorites} =
-      @cats
-      |> Enum.map(fn name -> {name, Enum.member?(favorites, name)} end)
-      |> Enum.split_with(fn {_, favorite} -> favorite end)
-
-    favorites ++ non_favorites
   end
 end

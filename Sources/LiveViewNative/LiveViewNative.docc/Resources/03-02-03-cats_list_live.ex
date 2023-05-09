@@ -31,11 +31,15 @@ defmodule LvnTutorialWeb.CatsListLive do
 
   def render(%{platform_id: :swiftui} = assigns) do
     ~Z"""
-    <List>
-      <%= for name <- @cats do %>
+    <List modifiers={navigation_title(@native, title: "Cats!")}>
+      <%= for {name, favorite} <- @cats_and_favorites do %>
         <HStack id={name}>
           <AsyncImage url={"/images/cats/#{name}.jpg"} modifiers={frame(@native, width: 100, height: 100)} />
           <Text><%= name %></Text>
+          <Spacer />
+          <Button phx-click="toggle-favorite" phx-value-name={name}>
+            <Image system-name={if favorite, do: "star.fill", else: "star"} symbol-color={if favorite, do: "#f3c51a", else: "#000000"} />
+          </Button>
         </HStack>
       <% end %>
     </List>
@@ -51,5 +55,11 @@ defmodule LvnTutorialWeb.CatsListLive do
       |> Enum.split_with(fn {_, favorite} -> favorite end)
 
     favorites ++ non_favorites
+  end
+
+  def handle_event("toggle-favorite", %{"name" => name}, socket) do
+    FavoritesStore.toggle_favorite(name)
+    new = get_cats_and_favorites()
+    {:noreply, assign(socket, cats_and_favorites: new)}
   end
 end

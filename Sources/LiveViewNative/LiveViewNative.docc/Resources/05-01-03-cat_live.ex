@@ -16,6 +16,15 @@ defmodule LvnTutorialWeb.CatLive do
     ~H""
   end
 
+  def render(%{platform_id: :swiftui} = assigns) do
+    ~Z"""
+    <VStack modifiers={navigation_title(@native, title: @name)}>
+      <AsyncImage url={"/images/cats/#{@name}.jpg"} modifiers={frame(@native, width: 300, height: 300)} />
+      <CatRating score={@score} />
+    </VStack>
+    """swiftui
+  end
+
   def render(assigns) do
     render_native(assigns)
   end
@@ -23,5 +32,10 @@ defmodule LvnTutorialWeb.CatLive do
   def handle_event("change-score", score, socket) do
     FavoritesStore.set_score(socket.assigns.name, score)
     {:noreply, assign(socket, score: score)}
+  end
+
+  def handle_event("toggle-favorite", _, socket) do
+    new = FavoritesStore.toggle_favorite(socket.assigns.name)
+    {:noreply, assign(socket, favorite: Enum.member?(new, socket.assigns.name))}
   end
 end

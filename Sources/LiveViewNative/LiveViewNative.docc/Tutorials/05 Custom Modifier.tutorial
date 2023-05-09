@@ -20,7 +20,7 @@
                 @Comment {
                     skip = true
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 04-04-01-change-score.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 04-04-03-cat_live.ex)
             }
             
             @Step {
@@ -29,7 +29,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-01-assign.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-02-cat_live.ex)
             }
             
             @Step {
@@ -38,16 +38,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-02-toggle-favorite.ex)
-            }
-            
-            @Step {
-                Edit the `cat_live.swiftui.heex` template.
-                
-                @Comment {
-                    skip = true
-                }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.swiftui.heex", file: 04-04-02-cat-rating.swiftui.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-03-cat_live.ex)
             }
             
             @Step {
@@ -56,13 +47,13 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.swiftui.heex", file: 05-01-03-attribute.swiftui.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-04-cat_live.ex)
             }
         }
     }
     
     @Section(title: "Implement the Attribute") {
-        Add code for handling the `nav_favorite` attribute to your custom registry.
+        Add code for handling the `nav_favorite` modifier to your custom registry.
         
         @Steps {
             @Step {
@@ -154,7 +145,7 @@
                 @Comment {
                     skip = true
                 }
-                @Code(name: "config.exs", file: 01-01-09-config.exs)
+                @Code(name: "config/config.exs", file: 01-01-05-config.exs)
             }
             
             @Step {

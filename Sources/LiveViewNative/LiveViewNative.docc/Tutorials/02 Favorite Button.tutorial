@@ -51,7 +51,7 @@
                 @Comment {
                     skip = true
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-04-initial.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 01-03-03-cats_list_live.ex)
             }
             
             @Step {
@@ -79,12 +79,12 @@
         
         @Steps {
             @Step {
-                Open the HEEX template for the live view.
+                Open `cats_list_live.ex`
                 
                 @Comment {
                     skip = true
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 01-03-03-images.swiftui.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-01-06-assign.ex)
             }
             
             @Step {
@@ -93,7 +93,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-01-template.swiftui.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-02-02-cats_list_live.ex)
             }
             
             @Step {
@@ -104,7 +104,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-02-button.swiftui.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-02-03-cats_list_live.ex) {
                     @Image(source: 02-02-03-button-preview.png, alt: "The list of cats with black, star outlines to the right of each list item.")
                 }
             }
@@ -117,7 +117,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-04-button-click.swiftui.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-04-cats_list_live.ex)
             }
             
             @Step {
@@ -128,7 +128,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-02-05-button-handler.ex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-02-05-cats_list_live.ex) {
                     @Video(source: 02-02-06-favorites.mp4, poster: 02-02-07-favorites-poster.png)
                 }
             }

@@ -114,9 +114,10 @@
             }
             
             @Step {
-                Next, let's add properties for the element, context, and score. The ``ObservedElement`` property wrapper provides access to the element that defined this view, and will automatically update the view whenever there's a change to the element.
-                
-                The score is read from the `score` attribute on the DOM element and converted to an integer, falling back to 0 if that fails.
+                Next, let's add properties for the element, context, and score.
+                The ``Attribute`` property wrapper provides access to an attribute on the DOM element, and will automatically update the view whenever there's a change to the element.
+
+                The ``LiveContext`` property wrapper will allow us to send events to the LiveView.
                 
                 @Comment {
                     project = "app"
@@ -126,7 +127,10 @@
             }
             
             @Step {
-                Add a couple of `@State` variables that will be used for building the interaction. The `editedScore` variable will hold the current score as the user is dragging their finger to edit it, but before it's been committed. The `width` variable will store the width of the view on screen, which is needed to turn the absolute position of the user's finger into a fraction. Finally, `effectiveScore` is a helper property that the view body wil use to read the score that should currently be displayed.
+                Add a couple of `@State` variables that will be used for building the interaction.
+                The `editedScore` variable will hold the current score as the user is dragging their finger to edit it, but before it's been committed.
+                The `width` variable will store the width of the view on screen, which is needed to turn the absolute position of the user's finger into a fraction.
+                Finally, `effectiveScore` is a helper property that the view body wil use to read the score that should currently be displayed.
                 
                 @Comment {
                     project = "app"
@@ -202,27 +206,18 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 04-04-01-change-score.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 04-04-02-cat_live.ex)
             }
-            
+
             @Step {
-                Edit the `cat_live.swiftui.heex` template.
-                
-                @Comment {
-                    project = "backend"
-                }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.swiftui.heex", file: 03-01-03-cat_live.swiftui.heex)
-            }
-            
-            @Step {
-                Add the `<cat-rating>` element to the template below the image, assigning the `score` attribute from the assign.
+                Add the `<CatRating>` element to the template below the image, assigning the `score` attribute from the assign.
                 
                 With that, you can re-run the app and view and edit scores to your heart's content!
                 
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.swiftui.heex", file: 04-04-02-cat-rating.swiftui.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 04-04-03-cat_live.ex) {
                     @Video(source: 04-04-03-preview.mp4, poster: 04-04-04-preview-poster.png)
                 }
             }
