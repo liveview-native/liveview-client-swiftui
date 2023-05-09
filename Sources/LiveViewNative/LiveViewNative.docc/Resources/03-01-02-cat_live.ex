@@ -17,8 +17,4 @@ defmodule LvnTutorialWeb.CatLive do
     </VStack>
     """swiftui
   end
-
-  def render(assigns) do
-    render_native(assigns)
-  end
 end

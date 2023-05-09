@@ -25,10 +25,6 @@ defmodule LvnTutorialWeb.CatLive do
     """swiftui
   end
 
-  def render(assigns) do
-    render_native(assigns)
-  end
-
   def handle_event("change-score", score, socket) do
     FavoritesStore.set_score(socket.assigns.name, score)
     {:noreply, assign(socket, score: score)}
