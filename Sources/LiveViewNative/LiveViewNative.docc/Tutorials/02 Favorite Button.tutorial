@@ -117,7 +117,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-04-cats_list_live.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-02-04-cats_list_live.ex)
             }
             
             @Step {
