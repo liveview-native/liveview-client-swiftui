@@ -48,7 +48,7 @@
                @Comment {
                    project = "backend"
                }
-               @Code(name: "mix.exs", file: 01-01-09-mix.exs)
+               @Code(name: "mix.exs", file: 01-01-08-mix.exs)
            }
 
            @Step {
@@ -66,7 +66,7 @@
                @Comment {
                    project = "backend"
                }
-               @Code(name: "config/config.exs", file: 01-01-10-config.exs)
+               @Code(name: "config/config.exs", file: 01-01-09-config.exs)
            }
 
            @Step {
@@ -84,7 +84,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/router.ex", file: 01-01-12-router.ex)
+                @Code(name: "lib/lvn_tutorial_web/router.ex", file: 01-01-10-router.ex)
             }
             
             @Step {
@@ -113,17 +113,8 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 01-01-07-cats_list_live.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 01-01-07-cats_list_live.swiftui.heex)
             }
-            
-            @Step {
-               Edit the `app.html.heex` file in the created project.
-               
-               @Comment {
-                   skip = true
-               }
-               @Code(name: "lib/lvn_tutorial_web/templates/layout/app.html.heex", file: 01-01-08-app-template.html.heex)
-           }
 
             @Step {
                 Lastly, we need to tweak the `app.html.heex` layout to remove the extraneous HTML that the native frontend doesn't need.
@@ -131,7 +122,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/templates/layout/app.html.heex", file: 01-01-13-app-template.html.heex)
+                @Code(name: "lib/lvn_tutorial_web/components/layouts/app.html.heex", file: 01-01-11-app-template.html.heex)
             }
         }
     }
@@ -223,7 +214,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 01-03-01-list.ios.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 01-03-01-list.swiftui.heex) {
                     @Image(source: 01-03-02-list-preview.png, alt: "The cat names we added earlier displayed as an iOS-styled list.")
                 }
             }
@@ -236,7 +227,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 01-03-03-images.ios.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 01-03-03-images.swiftui.heex) {
                     @Image(source: 01-03-04-images-preview.png, alt: "The list of cats with images of each cat to the left of their name.")
                 }
             }

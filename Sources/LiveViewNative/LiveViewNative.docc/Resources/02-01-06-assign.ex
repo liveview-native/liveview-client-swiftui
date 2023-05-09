@@ -25,6 +25,10 @@ defmodule LvnTutorialWeb.CatsListLive do
     {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}
   end
 
+  def render(%{platform_id: :web} = assigns) do
+    ~H""
+  end
+
   def render(assigns) do
     render_native(assigns)
   end

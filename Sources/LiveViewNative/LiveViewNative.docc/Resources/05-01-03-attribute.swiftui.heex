@@ -1,0 +1,4 @@
+<VStack modifiers={@native |> navigation_title(title: @name) |> nav_favorite(is_favorite: @favorite)}>
+  <AsyncImage src={"/images/cats/#{@name}.jpg"} modifiers={frame(@native, width: 300, height: 300)} />
+  <CatRating score={@score} />
+</VStack>

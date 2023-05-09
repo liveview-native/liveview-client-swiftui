@@ -44,7 +44,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ios.heex", file: 03-01-03-cat_live.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.swiftui.heex", file: 03-01-03-cat_live.swiftui.heex)
             }
         }
     }
@@ -66,12 +66,12 @@
             }
             
             @Step {
-                Open the `cats_list_live.ios.heex` file.
+                Open the `cats_list_live.swiftui.heex` file.
                 
                 @Comment {
                     skip = true
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-04-button-click.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-04-button-click.swiftui.heex)
             }
             
             @Step {
@@ -82,7 +82,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 03-02-02-nav-title.ios.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 03-02-02-nav-title.swiftui.heex) {
                     @Image(source: 03-02-03-nav-title-preview.png, alt: "The list of cats, with a title that reads 'Cats!'")
                 }
             }
@@ -95,7 +95,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 03-02-04-navigationlink.ios.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 03-02-04-navigationlink.swiftui.heex) {
                     @Video(source: 03-02-05-navigation-preview.mp4, poster: 03-02-06-navigation-preview-poster.png)
                 }
             }

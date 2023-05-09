@@ -7,7 +7,8 @@ defmodule LvnTutorialWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_lvn_tutorial_key",
-    signing_salt: "jctVYeM1"
+    signing_salt: "xJnRr/Xu",
+    same_site: "Lax"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
@@ -20,7 +21,7 @@ defmodule LvnTutorialWeb.Endpoint do
     at: "/",
     from: :lvn_tutorial,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: LvnTutorialWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

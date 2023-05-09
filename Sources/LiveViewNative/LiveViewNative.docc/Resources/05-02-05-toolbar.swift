@@ -19,6 +19,6 @@ struct NavFavoriteModifier: ViewModifier, Decodable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case isFavorite = "is_favorite"
+        case isFavorite
     }
 }

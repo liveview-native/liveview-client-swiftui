@@ -4,11 +4,11 @@ import Config
 # you can enable the server option below.
 config :lvn_tutorial, LvnTutorialWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "84mk/7QE6BBiqalRp9AjNc7EQSmaBUCfI+GhXGMj3aCEH4nV5W1NVTbalZF5Ee27",
+  secret_key_base: "4E3ymyo+TG5/iu0Dk8DlBQJir4SV1mSSgQ2JjPD1plerbDjlS0N0fxd8YAnpxrwp",
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime

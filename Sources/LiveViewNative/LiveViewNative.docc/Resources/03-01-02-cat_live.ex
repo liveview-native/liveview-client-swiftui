@@ -6,6 +6,10 @@ defmodule LvnTutorialWeb.CatLive do
     {:ok, assign(socket, name: name)}
   end
 
+  def render(%{platform_id: :web} = assigns) do
+    ~H""
+  end
+
   def render(assigns) do
     render_native(assigns)
   end

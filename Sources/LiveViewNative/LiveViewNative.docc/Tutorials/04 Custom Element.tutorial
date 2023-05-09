@@ -206,12 +206,12 @@
             }
             
             @Step {
-                Edit the `cat_live.ios.heex` template.
+                Edit the `cat_live.swiftui.heex` template.
                 
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ios.heex", file: 03-01-03-cat_live.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.swiftui.heex", file: 03-01-03-cat_live.swiftui.heex)
             }
             
             @Step {
@@ -222,7 +222,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ios.heex", file: 04-04-02-cat-rating.ios.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.swiftui.heex", file: 04-04-02-cat-rating.swiftui.heex) {
                     @Video(source: 04-04-03-preview.mp4, poster: 04-04-04-preview-poster.png)
                 }
             }

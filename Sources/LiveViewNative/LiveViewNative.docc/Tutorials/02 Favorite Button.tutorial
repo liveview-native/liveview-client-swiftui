@@ -84,7 +84,7 @@
                 @Comment {
                     skip = true
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 01-03-03-images.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 01-03-03-images.swiftui.heex)
             }
             
             @Step {
@@ -93,7 +93,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-01-template.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-01-template.swiftui.heex)
             }
             
             @Step {
@@ -104,7 +104,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-02-button.ios.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-02-button.swiftui.heex) {
                     @Image(source: 02-02-03-button-preview.png, alt: "The list of cats with black, star outlines to the right of each list item.")
                 }
             }
@@ -117,7 +117,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-04-button-click.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.swiftui.heex", file: 02-02-04-button-click.swiftui.heex)
             }
             
             @Step {
