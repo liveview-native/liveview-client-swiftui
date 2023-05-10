@@ -39,7 +39,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 @available(macOS 13.0, *)
-struct OnDeleteCommandModifier<R: RootRegistry>: ViewModifier, Decodable {
+struct OnDeleteCommandModifier: ViewModifier, Decodable {
     /// The event to trigger when the delete command is received.
     /// 
     /// See [`Event`](doc:Event/init(from:)) for more details on referencing events.
