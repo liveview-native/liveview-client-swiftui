@@ -111,9 +111,9 @@ struct ConfirmationDialogModifier<R: RootRegistry>: ViewModifier, Decodable {
     
     enum CodingKeys: String, CodingKey {
         case title
-        case titleVisibility = "title_visibility"
+        case titleVisibility
         case actions
         case message
-        case isPresented = "is_presented"
+        case isPresented
     }
 }
