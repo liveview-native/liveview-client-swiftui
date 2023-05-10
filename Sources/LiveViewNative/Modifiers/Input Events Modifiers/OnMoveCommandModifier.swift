@@ -47,7 +47,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 @available(macOS 13.0, tvOS 16.0, *)
-struct OnMoveCommandModifier<R: RootRegistry>: ViewModifier, Decodable {
+struct OnMoveCommandModifier: ViewModifier, Decodable {
     /// The event to trigger when the command is received.
     /// 
     /// See [`Event`](doc:Event/init(from:)) for more details on referencing events.
