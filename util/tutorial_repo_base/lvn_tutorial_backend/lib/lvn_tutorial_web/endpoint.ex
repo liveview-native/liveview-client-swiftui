@@ -7,7 +7,7 @@ defmodule LvnTutorialWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_lvn_tutorial_key",
-    signing_salt: "xJnRr/Xu",
+    signing_salt: "8svCijM4",
     same_site: "Lax"
   ]
 

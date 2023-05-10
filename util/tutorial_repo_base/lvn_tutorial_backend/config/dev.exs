@@ -13,10 +13,9 @@ config :lvn_tutorial, LvnTutorialWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "GBH+psanE8siysNFovK/TabMkKE5NWIlqBB3l+MLIB540RGS6+z0h7O0G1mIG3Ux",
+  secret_key_base: "cm8PspLDRJB8WPDuePJJPdpYZK7NJP9hOOhM1fNMOL+KCGUXBTgggRElRmIdERQf",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
   ]
 
 # ## SSL Support
