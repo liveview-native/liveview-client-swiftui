@@ -102,6 +102,6 @@ struct AlertModifier<R: RootRegistry>: ViewModifier, Decodable {
         case title
         case actions
         case message
-        case isPresented = "is_presented"
+        case isPresented
     }
 }

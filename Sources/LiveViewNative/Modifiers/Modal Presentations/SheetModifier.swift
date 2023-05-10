@@ -65,8 +65,8 @@ struct SheetModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case isPresented = "is_presented"
-        case onDismiss = "on_dismiss"
+        case isPresented
+        case onDismiss
         case content
     }
 }
