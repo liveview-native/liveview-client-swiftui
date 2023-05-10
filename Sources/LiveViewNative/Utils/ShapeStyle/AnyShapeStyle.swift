@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// A color, gradient, or other style.
 ///
@@ -162,7 +163,13 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-extension AnyShapeStyle: Decodable {
+extension AnyShapeStyle: Decodable, AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let string = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self = try makeJSONDecoder().decode(Self.self, from: Data(string.utf8))
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         

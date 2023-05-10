@@ -21,30 +21,30 @@ struct Shape<S: SwiftUI.Shape>: View {
     @ObservedElement private var element: ElementNode
     private let shape: S
 
-    /// The color the shape is filled with.
+    /// The ``LiveViewNative/SwiftUI/AnyShapeStyle`` the shape is filled with.
     ///
-    /// See ``LiveViewNative/SwiftUI/Color/init(fromNamedOrCSSHex:)``.
+    /// See ``LiveViewNative/SwiftUI/AnyShapeStyle`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Attribute("fill-color") private var fillColor: SwiftUI.Color? = nil
-    /// The color the shape stroke is drawn with.
+    @Attribute("fill") private var fill: SwiftUI.AnyShapeStyle? = nil
+    /// The ``LiveViewNative/SwiftUI/AnyShapeStyle`` the shape stroke is drawn with.
     ///
-    /// See ``LiveViewNative/SwiftUI/Color/init(fromNamedOrCSSHex:)``.
+    /// See ``LiveViewNative/SwiftUI/AnyShapeStyle`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Attribute("stroke-color") private var strokeColor: SwiftUI.Color? = nil
+    @Attribute("stroke") private var stroke: SwiftUI.AnyShapeStyle? = nil
     
     init(shape: S) {
         self.shape = shape
     }
     
     var body: some View {
-        if let fillColor {
-            shape.fill(fillColor)
-        } else if let strokeColor {
-            shape.stroke(strokeColor)
+        if let fill {
+            shape.fill(fill)
+        } else if let stroke {
+            shape.stroke(stroke)
         } else {
             shape
         }

@@ -56,4 +56,20 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
     end
   end
   defp cast_modifier({type, properties}), do: %{ "type" => type, "properties" => properties }
+
+  def cast!(value) do
+    case cast(value) do
+      {:ok, result} -> result
+      :error -> raise "failed to cast #{value} to `ShapeStyle`"
+    end
+  end
+
+  defimpl Phoenix.HTML.Safe do
+    def to_iodata(data) do
+      data
+        |> Map.from_struct()
+        |> Jason.encode!()
+        |> Phoenix.HTML.Engine.html_escape()
+    end
+  end
 end
