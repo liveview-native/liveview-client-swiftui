@@ -33,9 +33,9 @@ struct RedactedModifier: ViewModifier, Decodable {
 
         switch try container.decode(String.self, forKey: .reason) {
         case "placeholder":
-            reason = .hierarchical
+            reason = .placeholder
         case "privacy":
-            reason = .monochrome
+            reason = .privacy
         default:
             throw DecodingError.dataCorruptedError(forKey: .reason, in: container, debugDescription: "invalid value for reason")
         }
