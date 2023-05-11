@@ -146,6 +146,7 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
     case builtin(BuiltinRegistry<R>.BuiltinModifier)
     case custom(R.CustomModifier)
     case error(ErrorModifier<R>)
+    case inert
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -162,6 +163,10 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
             } catch {
                 self = .error(ErrorModifier<R>(type: type.rawValue, error: error))
             }
+        } else if ShapeModifier.ModifierType(rawValue: type) != nil
+                    || FinalShapeModifier.ModifierType(rawValue: type) != nil
+        {
+            self = .inert
         } else {
             self = .error(ErrorModifier<R>(type: type, error: ViewTreeBuilder<R>.Error.unknownModifierType))
         }
@@ -180,6 +185,8 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
             modifier
         case let .error(modifier):
             modifier
+        case .inert:
+            EmptyModifier()
         }
     }
 }
