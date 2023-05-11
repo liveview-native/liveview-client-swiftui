@@ -163,8 +163,8 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
             } catch {
                 self = .error(ErrorModifier<R>(type: type.rawValue, error: error))
             }
-        } else if ShapeModifier.ModifierType(rawValue: type) != nil
-                    || FinalShapeModifier.ModifierType(rawValue: type) != nil
+        } else if ShapeModifierType(rawValue: type) != nil
+                    || FinalShapeModifierType(rawValue: type) != nil
         {
             self = .inert
         } else {

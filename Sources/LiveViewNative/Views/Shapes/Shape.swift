@@ -44,21 +44,17 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
     }
     
     var body: some View {
-        let shape = modifiers.stack.reduce(EitherAnyShape.insettable(AnyInsettableShape(self.shape))) { shape, modifier in
+        let shape = modifiers.stack.reduce(EitherAnyShape.insettable(shape)) { shape, modifier in
             modifier.apply(to: shape)
         }
-        if let final = modifiers.final
-            ?? fillColor.flatMap({ FinalShapeModifier.fill(.init($0), style: .init()) })
-            ?? strokeColor.flatMap({ FinalShapeModifier.stroke(.init($0), style: .init()) })
-        {
+        if let final = modifiers.final {
             final.apply(to: shape)
+        } else if let fillColor {
+            shape.eraseToAnyShape().fill(fillColor)
+        } else if let strokeColor {
+            shape.eraseToAnyShape().stroke(strokeColor)
         } else {
-            switch shape {
-            case let .shape(shape):
-                shape
-            case let .insettable(shape):
-                shape
-            }
+            shape.eraseToAnyShape()
         }
     }
 }
@@ -121,217 +117,23 @@ private enum RoundedCornerStyle: String {
     }
 }
 
-enum ShapeModifier: Decodable {
-    case inset(amount: CGFloat)
-    case offset(x: CGFloat, y: CGFloat)
-    case rotation(angle: Angle, anchor: UnitPoint)
-    case size(width: CGFloat, height: CGFloat)
-    case trim(startFraction: CGFloat, endFraction: CGFloat)
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        switch try container.decode(ModifierType.self, forKey: .type) {
-        case .inset:
-            self = .inset(amount: try container.decode(CGFloat.self, forKey: .amount))
-        case .offset:
-            self = .offset(
-                x: try container.decode(CGFloat.self, forKey: .x),
-                y: try container.decode(CGFloat.self, forKey: .y)
-            )
-        case .rotation:
-            self = .rotation(
-                angle: try container.decode(Angle.self, forKey: .angle),
-                anchor: try container.decodeIfPresent(UnitPoint.self, forKey: .anchor) ?? .center
-            )
-        case .size:
-            self = .size(
-                width: try container.decode(CGFloat.self, forKey: .width),
-                height: try container.decode(CGFloat.self, forKey: .height)
-            )
-        case .trim:
-            self = .trim(
-                startFraction: try container.decode(CGFloat.self, forKey: .startFraction),
-                endFraction: try container.decode(CGFloat.self, forKey: .endFraction)
-            )
-        }
-    }
-    
-    enum CodingKeys: CodingKey {
-        case type
-        
-        // inset
-        case amount
-        
-        // offset
-        case x
-        case y
-        
-        // rotation
-        case angle
-        case anchor
-        
-        // size
-        case width
-        case height
-        
-        // trim
-        case startFraction
-        case endFraction
-    }
-    
-    enum ModifierType: String, Decodable {
-        case inset
-        case offset = "offset_shape"
-        case rotation
-        case size
-        case trim
-    }
-    
-    func apply(to shape: EitherAnyShape) -> EitherAnyShape {
-        switch self {
-        case let .inset(amount):
-            switch shape {
-            case let .insettable(shape):
-                return .insettable(AnyInsettableShape(shape.inset(by: amount)))
-            case let .shape(shape):
-                return .shape(shape)
-            }
-        case let .offset(x, y):
-            switch shape {
-            case let .insettable(shape):
-                return .insettable(AnyInsettableShape(shape.offset(x: x, y: y)))
-            case let .shape(shape):
-                return .shape(AnyShape(shape.offset(x: x, y: y)))
-            }
-        case let .rotation(angle, anchor):
-            switch shape {
-            case let .insettable(shape):
-                return .insettable(AnyInsettableShape(shape.rotation(angle, anchor: anchor)))
-            case let .shape(shape):
-                return .shape(AnyShape(shape.rotation(angle, anchor: anchor)))
-            }
-        case let .size(width, height):
-            switch shape {
-            case let .insettable(shape):
-                return .shape(AnyShape(shape.size(width: width, height: height)))
-            case let .shape(shape):
-                return .shape(AnyShape(shape.size(width: width, height: height)))
-            }
-        case let .trim(startFraction, endFraction):
-            switch shape {
-            case let .insettable(shape):
-                return .shape(AnyShape(shape.trim(from: startFraction, to: endFraction)))
-            case let .shape(shape):
-                return .shape(AnyShape(shape.trim(from: startFraction, to: endFraction)))
-            }
-        }
-    }
+enum ShapeModifierType: String, Decodable {
+    case inset
+    case offset = "offset_shape"
+    case rotation
+    case size
+    case trim
 }
 
-enum EitherAnyShape {
-    case shape(AnyShape)
-    case insettable(AnyInsettableShape)
-    
-    func eraseToAnyShape() -> AnyShape {
-        switch self {
-        case let .shape(shape):
-            return shape
-        case let .insettable(shape):
-            return AnyShape(shape)
-        }
-    }
-}
-
-struct AnyInsettableShape: SwiftUI.InsettableShape {
-    let makePath: (CGRect) -> Path
-    let makeInset: (CGFloat) -> AnyInsettableShape
-    
-    init(_ shape: some SwiftUI.InsettableShape) {
-        self.makePath = shape.path(in:)
-        self.makeInset = { AnyInsettableShape(shape.inset(by: $0)) }
-    }
-    
-    func path(in rect: CGRect) -> Path {
-        makePath(rect)
-    }
-    
-    func inset(by amount: CGFloat) -> some InsettableShape {
-        makeInset(amount)
-    }
-}
-
-enum FinalShapeModifier: Decodable {
-    case fill(AnyShapeStyle, style: FillStyle)
-    case stroke(AnyShapeStyle, style: StrokeStyle)
-    case strokeBorder(AnyShapeStyle, style: StrokeStyle, antialiased: Bool)
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        switch try container.decode(ModifierType.self, forKey: .type) {
-        case .fill:
-            self = .fill(
-                try container.decode(AnyShapeStyle.self, forKey: .content),
-                style: try container.decodeIfPresent(FillStyle.self, forKey: .style) ?? .init()
-            )
-        case .stroke:
-            self = .stroke(
-                try container.decode(AnyShapeStyle.self, forKey: .content),
-                style: try container.decodeIfPresent(StrokeStyle.self, forKey: .style) ?? .init()
-            )
-        case .strokeBorder:
-            self = .strokeBorder(
-                try container.decode(AnyShapeStyle.self, forKey: .content),
-                style: try container.decodeIfPresent(StrokeStyle.self, forKey: .style) ?? .init(),
-                antialiased: try container.decode(Bool.self, forKey: .antialiased)
-            )
-        }
-    }
-    
-    enum CodingKeys: CodingKey {
-        case type
-        case content
-        case style
-        
-        case antialiased
-    }
-    
-    enum ModifierType: String, Decodable {
-        case fill
-        case stroke
-        case strokeBorder = "stroke_border"
-    }
-    
-    @ViewBuilder
-    func apply(to shape: EitherAnyShape) -> some View {
-        switch self {
-        case let .fill(content, style):
-            switch shape {
-            case let .shape(shape):
-                shape.fill(content, style: style)
-            case let .insettable(shape):
-                shape.fill(content, style: style)
-            }
-        case let .stroke(content, style):
-            switch shape {
-            case let .shape(shape):
-                shape.stroke(content, style: style)
-            case let .insettable(shape):
-                shape.stroke(content, style: style)
-            }
-        case let .strokeBorder(content, style, antialiased):
-            switch shape {
-            case let .shape(shape):
-                shape
-            case let .insettable(shape):
-                shape.strokeBorder(content, style: style, antialiased: antialiased)
-            }
-        }
-    }
+enum FinalShapeModifierType: String, Decodable {
+    case fill
+    case stroke
+    case strokeBorder = "stroke_border"
 }
 
 struct ShapeModifierStack: Decodable, AttributeDecodable {
     var stack: [ShapeModifier]
-    var final: FinalShapeModifier?
+    var final: ShapeModifierRegistry.AggregateFinalShapeModifier?
     
     init(_ stack: [ShapeModifier]) {
         self.stack = stack
@@ -342,16 +144,40 @@ struct ShapeModifierStack: Decodable, AttributeDecodable {
         self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
     }
     
+    enum ShapeModifierContainer: Decodable {
+        case modifier(ShapeModifier)
+        case final(ShapeModifierRegistry.AggregateFinalShapeModifier)
+        case end
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let type = try container.decode(String.self, forKey: .type)
+            if let modifier = ShapeModifierType(rawValue: type) {
+                self = .modifier(try ShapeModifierRegistry.decodeShapeModifier(modifier, from: decoder))
+            } else if let modifier = FinalShapeModifierType(rawValue: type) {
+                self = .final(try ShapeModifierRegistry.decodeFinalShapeModifier(modifier, from: decoder))
+            } else {
+                self = .end
+            }
+        }
+        
+        enum CodingKeys: CodingKey {
+            case type
+        }
+    }
+    
     init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
         self.stack = []
         while !container.isAtEnd {
-            if let modifier = try? container.decode(ShapeModifier.self) {
+            let modifier = try container.decode(ShapeModifierContainer.self)
+            switch modifier {
+            case let .modifier(modifier):
                 self.stack.append(modifier)
-            } else if let modifier = try? container.decode(FinalShapeModifier.self) {
-                self.final = modifier
+            case let .final(final):
+                self.final = final
                 return
-            } else {
+            case .end:
                 return
             }
         }
