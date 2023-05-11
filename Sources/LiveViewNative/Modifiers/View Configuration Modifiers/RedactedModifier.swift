@@ -42,7 +42,7 @@ struct RedactedModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        content.redacted(reason)
+        content.redacted(reason: reason)
     }
     
     enum CodingKeys: String, CodingKey {
