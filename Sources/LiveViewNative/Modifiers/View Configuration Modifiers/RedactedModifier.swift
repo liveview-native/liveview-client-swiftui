@@ -46,6 +46,6 @@ struct RedactedModifier: ViewModifier, Decodable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case mode
+        case reason
     }
 }
