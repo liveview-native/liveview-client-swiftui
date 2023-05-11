@@ -30,6 +30,14 @@ import LiveViewNativeCore
 /// ```elixir
 /// {:color, :blue}
 /// ```
+/// 
+/// ### :gradient
+/// Creates a gradient from a single color.
+/// See ``LiveViewNative/SwiftUI/Color/init(from:)`` for a list of possible color values.
+/// 
+/// ```elixir
+/// {:gradient, :blue}
+/// ```
 ///
 /// ### :angular_gradient
 /// See ``LiveViewNative/SwiftUI/AngularGradient`` for details on creating this style.
@@ -176,6 +184,8 @@ extension AnyShapeStyle: Decodable, AttributeDecodable {
         switch try container.decode(ConcreteStyle.self, forKey: .concreteStyle) {
         case .color:
             self = Self(try container.decode(SwiftUI.Color.self, forKey: .style))
+        case .gradient:
+            self = Self(try container.decode(SwiftUI.Color.self, forKey: .style).gradient)
         case .angularGradient:
             self = Self(try container.decode(AngularGradient.self, forKey: .style))
         case .ellipticalGradient:
@@ -234,6 +244,7 @@ extension AnyShapeStyle: Decodable, AttributeDecodable {
     
     enum ConcreteStyle: String, Decodable {
         case color
+        case gradient
         case angularGradient = "angular_gradient"
         case ellipticalGradient = "elliptical_gradient"
         case linearGradient = "linear_gradient"

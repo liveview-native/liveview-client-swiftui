@@ -41,6 +41,7 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
   ###
 
   defp cast_style({:color, value}), do: Color.cast(value)
+  defp cast_style({:gradient, value}), do: Color.cast(value)
   defp cast_style({:angular_gradient, value}), do: AngularGradient.cast(value)
   defp cast_style({:elliptical_gradient, value}), do: EllipticalGradient.cast(value)
   defp cast_style({:linear_gradient, value}), do: LinearGradient.cast(value)
@@ -56,13 +57,6 @@ defmodule LiveViewNativeSwiftUi.Types.ShapeStyle do
     end
   end
   defp cast_modifier({type, properties}), do: %{ "type" => type, "properties" => properties }
-
-  def cast!(value) do
-    case cast(value) do
-      {:ok, result} -> result
-      :error -> raise "failed to cast #{value} to `ShapeStyle`"
-    end
-  end
 
   defimpl Phoenix.HTML.Safe do
     def to_iodata(data) do
