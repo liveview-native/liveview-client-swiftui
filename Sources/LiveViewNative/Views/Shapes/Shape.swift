@@ -12,7 +12,7 @@ import LiveViewNativeCore
 ///
 /// This view isn't used directly as an element. Instead, use the shape itself (e.g., `<Rectangle>`).
 ///
-/// Attributes:
+/// ## Attributes
 /// - ``fillColor``
 /// - ``strokeColor``
 #if swift(>=5.8)

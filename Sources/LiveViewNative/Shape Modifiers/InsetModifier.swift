@@ -7,7 +7,25 @@
 
 import SwiftUI
 
+/// Insets a ``Shape`` by a given amount.
+///
+/// - Note: Only insettable shapes can use this modifier.
+/// Some modifiers cause shapes to no longer be insettable, such as ``TrimModifier``.
+///
+/// ```html
+/// <Circle modifiers={inset(@native, amount: 10)} />
+/// ```
+///
+/// ## Arguments
+/// * ``amount``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct InsetModifier: ShapeModifier, Decodable {
+    /// The amount to inset the ``Shape`` by.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     let amount: CGFloat
     
     enum CodingKeys: CodingKey {

@@ -7,13 +7,17 @@
 
 import SwiftUI
 
+/// A modifier that applies to a ``Shape``.
 protocol ShapeModifier {
     @_disfavoredOverload
+    /// Modify the `Shape` and return the new erased `Shape` type.
     func apply(to shape: some SwiftUI.Shape) -> any SwiftUI.Shape
-    func apply(to shape: some SwiftUI.InsettableShape) -> any SwiftUI.Shape
+    /// Modify the `InsettableShape` and return the new erased `Shape` type.
+    func apply(to shape: some InsettableShape) -> any SwiftUI.Shape
 }
 
 extension ShapeModifier {
+    /// Applies the modifier to a `Shape` or `InsettableShape` (preferred).
     func apply(to shape: EitherAnyShape) -> EitherAnyShape {
         switch shape {
         case let .shape(shape):
@@ -29,15 +33,19 @@ extension ShapeModifier {
     }
 }
 
+/// A modifier that applies to a `Shape` and returns a `View`.
 protocol FinalShapeModifier {
     associatedtype Body: View
     associatedtype InsettableBody: View
+    /// Modify the `Shape` and return the new `View` type.
     @_disfavoredOverload
     func apply(to shape: any SwiftUI.Shape) -> Body
+    /// Modify the `InsettableShape` and return the new `View` type.
     func apply(to shape: any SwiftUI.InsettableShape) -> InsettableBody
 }
 
 extension FinalShapeModifier {
+    /// Applies the modifier to a `Shape` or `InsettableShape` (preferred).
     @ViewBuilder
     func apply(to shape: EitherAnyShape) -> some View {
         switch shape {
@@ -49,10 +57,12 @@ extension FinalShapeModifier {
     }
 }
 
+/// An erased `Shape` or `InsettableShape`.
 enum EitherAnyShape {
     case shape(any SwiftUI.Shape)
     case insettable(any InsettableShape)
     
+    /// Erases the `any Shape` or `any InsettableShape` to an `AnyShape`.
     func eraseToAnyShape() -> AnyShape {
         switch self {
         case let .shape(shape):
@@ -64,27 +74,7 @@ enum EitherAnyShape {
 }
 
 @resultBuilder
-struct ShapeModifierBuilder {
-    static func buildBlock(_ component: some ShapeModifier) -> some ShapeModifier {
-        component
-    }
-    
-    static func buildEither<
-        TrueShapeModifier: ShapeModifier,
-        FalseShapeModifier: ShapeModifier
-    >(first component: @autoclosure () throws -> TrueShapeModifier) rethrows -> _ConditionalShapeContent<TrueShapeModifier, FalseShapeModifier> {
-        .init(storage: .trueContent(try component()))
-    }
-    static func buildEither<
-        TrueShapeModifier: ShapeModifier,
-        FalseShapeModifier: ShapeModifier
-    >(second component: @autoclosure () throws -> FalseShapeModifier) rethrows -> _ConditionalShapeContent<TrueShapeModifier, FalseShapeModifier> {
-        .init(storage: .falseContent(try component()))
-    }
-}
-
-@resultBuilder
-struct FinalShapeModifierBuilder {
+enum FinalShapeModifierBuilder {
     static func buildBlock<M: FinalShapeModifier>(_ component: M) -> M {
         component
     }
@@ -103,7 +93,7 @@ struct FinalShapeModifierBuilder {
     }
 }
 
-/// A `ShapeModifier` that switches between two possible shape modifier types.
+/// A `ShapeModifier` or `FinalShapeModifier` that switches between two possible shape modifier types.
 struct _ConditionalShapeContent<TrueContent, FalseContent> {
     enum Storage {
         case trueContent(TrueContent)
@@ -148,10 +138,10 @@ where TrueContent: FinalShapeModifier, FalseContent: FinalShapeModifier {
     }
 }
 
+/// A protocol used by `ShapeModifierRegistry` to provide access to the `AggregateFinalShapeModifier` return type.
 protocol ShapeModifierRegistryProtocol {
     associatedtype AggregateFinalShapeModifier: FinalShapeModifier
     
-    @ShapeModifierBuilder
     static func decodeShapeModifier(
         _ type: ShapeModifierType,
         from decoder: Decoder
@@ -164,6 +154,7 @@ protocol ShapeModifierRegistryProtocol {
     ) throws -> AggregateFinalShapeModifier
 }
 
+/// Provides helpers for decoding `ShapeModifier` and `FinalShapeModifier`.
 enum ShapeModifierRegistry: ShapeModifierRegistryProtocol {
     static func decodeShapeModifier(
         _ type: ShapeModifierType,
