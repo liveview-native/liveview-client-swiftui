@@ -23,6 +23,7 @@ jobs:
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: TestResults.xcresult
+        continue-on-error: true
         if: success() || failure()
       - name: Build for macOS
         shell: bash
