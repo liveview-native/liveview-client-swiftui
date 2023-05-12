@@ -94,6 +94,7 @@ be found at <https://hexdocs.pm/live_view_native_swift_ui>.
 - <doc:LayoutAdjustmentsModifiers>
 - <doc:LayoutFundamentalsModifiers>
 - <doc:ListsModifiers>
+- <doc:MenusAndCommands>
 - <doc:ModalPresentations>
 - <doc:NavigationModifiers>
 - <doc:ScrollViewsModifiers>
