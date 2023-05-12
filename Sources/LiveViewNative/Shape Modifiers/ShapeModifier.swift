@@ -174,7 +174,6 @@ enum ShapeModifierRegistry: ShapeModifierRegistryProtocol {
         }
     }
     
-    @FinalShapeModifierBuilder
     static func decodeFinalShapeModifier(
         _ type: FinalShapeModifierType,
         from decoder: Decoder

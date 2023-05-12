@@ -171,7 +171,7 @@ import LiveViewNativeCore
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-extension AnyShapeStyle: Decodable, AttributeDecodable {
+extension AnyShapeStyle: Decodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let string = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
