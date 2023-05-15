@@ -1,6 +1,7 @@
 Mix.install([
   {:live_view_native_swift_ui, path: "."},
   {:live_view_native, git: "https://github.com/liveview-native/live_view_native", branch: "main"},
+  {:html_entities, "~> 0.5"}
 ])
 
 defmodule ModifierEncoder do
@@ -15,7 +16,11 @@ defmodule ModifierEncoder do
   end
 
   def encode() do
-    IO.write(Phoenix.HTML.Safe.to_iodata(quote_argv().modifiers) |> IO.iodata_to_binary)
+    IO.write(
+      Phoenix.HTML.Safe.to_iodata(quote_argv().modifiers)
+      |> IO.iodata_to_binary
+      |> HtmlEntities.decode
+    )
   end
 end
 
