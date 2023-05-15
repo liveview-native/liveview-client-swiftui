@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the keyboard type for this view.
 ///
 /// ```html
-/// <TextField modifiers={keyboard_type(@native, type: :email_address)}>
+/// <TextField modifiers={keyboard_type(@native, keyboard_type: :email_address)}>
 ///     Email
 /// </TextField>
 /// ```
@@ -22,10 +22,6 @@ import SwiftUI
 #endif
 @available(iOS 16.0, tvOS 16.0, *)
 struct KeyboardTypeModifier: ViewModifier, Decodable {
-    #if !os(iOS) && !os(tvOS)
-    typealias UIKeyboardType = Never
-    #endif
-
     /// One of the `UIKeyboardType` enumerations.
     ///
     /// Possible values:
@@ -49,7 +45,7 @@ struct KeyboardTypeModifier: ViewModifier, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         #if os(iOS) || os(tvOS)
-        switch try container.decode(String.self, forKey: .type) {
+        switch try container.decode(String.self, forKey: .keyboardType) {
         case "default":
             self.type = .default
         case "ascii_capable":
@@ -73,7 +69,7 @@ struct KeyboardTypeModifier: ViewModifier, Decodable {
         case "ascii_capable_number_pad":
             self.type = .asciiCapableNumberPad
         default:
-            throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "invalid value for \(CodingKeys.type.rawValue)")
+            throw DecodingError.dataCorruptedError(forKey: .keyboardType, in: container, debugDescription: "invalid value for \(CodingKeys.keyboardType.rawValue)")
         }
         #else
         throw DecodingError.typeMismatch(Self.self, .init(codingPath: container.codingPath, debugDescription: "`keyboard_type` modifier not available on this platform"))
@@ -88,6 +84,12 @@ struct KeyboardTypeModifier: ViewModifier, Decodable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case type
+        case keyboardType
     }
+}
+
+extension KeyboardTypeModifier {
+    #if !os(iOS) && !os(tvOS)
+    typealias UIKeyboardType = Never
+    #endif
 }

@@ -12,7 +12,7 @@ import SwiftUI
 /// See ``TextContentType`` for a list of possible values.
 ///
 /// ```html
-/// <VStack id="text_field" modifiers={@native |> padding(all: 50) |> text_field_style(style: :rounded_border)}>
+/// <VStack modifiers={@native |> padding(all: 50) |> text_field_style(style: :rounded_border)}>
 ///     <TextField modifiers={text_content_type(@native, text_content_type: :name)}>
 ///         Name
 ///     </TextField>
