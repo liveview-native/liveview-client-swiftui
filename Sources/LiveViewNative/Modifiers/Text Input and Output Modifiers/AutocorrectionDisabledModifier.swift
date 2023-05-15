@@ -10,8 +10,8 @@ import SwiftUI
 /// Sets whether to disable autocorrection for this view.
 ///
 /// ```html
-/// <TextField modifiers={autocorrection_disabled(@native)}>Enter text</TextField>
-/// <TextField modifiers={autocorrection_disabled(@native, disable: false)}>Enter text</TextField>
+/// <TextField modifiers={@native |> autocorrection_disabled()}>Enter text</TextField>
+/// <TextField modifiers={@native |> autocorrection_disabled(disable: false)}>Enter text</TextField>
 /// ```
 ///
 /// ## Arguments

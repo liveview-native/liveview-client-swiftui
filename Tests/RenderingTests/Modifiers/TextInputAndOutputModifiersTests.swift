@@ -179,4 +179,17 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
         }
         #endif
     }
+    
+    func testAutocorrectionDisabled() throws {
+        for disable in [true, false] {
+            try assertMatch(
+                #"""
+                <TextField modifiers='[{"disable":\#(disable),"type":"autocorrection_disabled"}]'>Enter text</TextField>
+                """#
+            ) {
+                TextField("Enter text", text: .constant(""))
+                    .autocorrectionDisabled(disable)
+            }
+        }
+    }
 }
