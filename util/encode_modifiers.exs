@@ -20,9 +20,10 @@ defmodule ModifierEncoder do
 
   def encode() do
     IO.write(
-      Phoenix.HTML.Safe.to_iodata(quote_argv().modifiers)
-      |> IO.iodata_to_binary
-      |> HtmlEntities.decode
+      quote_argv().modifiers
+      |> Phoenix.HTML.Safe.to_iodata()
+      |> IO.iodata_to_binary()
+      |> HtmlEntities.decode()
     )
   end
 end
