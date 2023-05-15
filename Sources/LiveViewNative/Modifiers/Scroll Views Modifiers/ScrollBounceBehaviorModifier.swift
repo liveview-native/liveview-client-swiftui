@@ -1,6 +1,6 @@
 //
 //  ScrollBounceBehaviorModifier.swift
-//  
+//  LiveViewNative
 //
 //  Created by Dylan.Ginsburg on 4/28/23.
 //
@@ -36,7 +36,7 @@ struct ScrollBounceBehaviorModifier: ViewModifier, Decodable {
     
     /// The set of axes to apply behavior to.. Defaults to `vertical`.
     ///
-    /// See ``LiveViewNative/SwiftUI/Axis.Set`` for a list of possible values.
+    /// See ``LiveViewNative/SwiftUI/Axis/Set`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif

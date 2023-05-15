@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ListRowSeparatorModifier: ViewModifier, Decodable, Equatable {
+    // TODO: Documentation
     private let visibility: Visibility
     private let edges: VerticalEdge.Set
     

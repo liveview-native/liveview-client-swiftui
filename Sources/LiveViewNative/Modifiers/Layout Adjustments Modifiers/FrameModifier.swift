@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum FrameModifier: ViewModifier, Decodable, Equatable {
+    // TODO: Documentation
     case fixed(width: CGFloat?, height: CGFloat?, alignment: Alignment)
     case flexible(minWidth: CGFloat?, idealWidth: CGFloat?, maxWidth: CGFloat?, minHeight: CGFloat?, idealHeight: CGFloat?, maxHeight: CGFloat?, alignment: Alignment)
     

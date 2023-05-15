@@ -7,7 +7,25 @@
 
 import SwiftUI
 
+/// Configures the view’s title for purposes of navigation, using a string.
+///
+/// ```html
+/// <VStack modifiers={navigation_title(@native, title: "Navigation Title")}>
+///     <Text>Top</Text>
+///     <Text>Bottom</Text>
+/// </VStack>
+/// ```
+///
+/// ## Arguments
+/// * ``title``
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
 struct NavigationTitleModifier: ViewModifier, Decodable, Equatable {
+    /// The string to display.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     fileprivate let title: String
     private let cached: Bool
     

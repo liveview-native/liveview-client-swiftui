@@ -16,7 +16,7 @@ import SwiftUI
 /// </VStack>
 ///
 /// ## Arguments
-/// * ``is_active``
+/// * ``isActive``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

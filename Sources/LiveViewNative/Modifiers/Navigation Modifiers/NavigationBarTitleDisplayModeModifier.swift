@@ -23,7 +23,7 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``display_mode``
+/// * ``displayMode``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
