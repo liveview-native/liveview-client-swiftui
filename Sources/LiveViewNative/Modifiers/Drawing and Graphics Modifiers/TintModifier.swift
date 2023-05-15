@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TintModifier: ViewModifier, Decodable, Equatable {
+    // TODO: Documentation
     private let color: SwiftUI.Color?
     
     init(color: SwiftUI.Color) {

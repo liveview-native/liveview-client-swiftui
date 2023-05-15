@@ -36,9 +36,6 @@ import SwiftUI
 /// end
 /// ```
 ///
-/// ## Attributes
-/// * ``style``
-///
 /// ## Bindings
 /// * ``isExpanded``
 ///

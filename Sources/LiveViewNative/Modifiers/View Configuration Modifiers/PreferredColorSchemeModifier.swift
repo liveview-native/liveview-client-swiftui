@@ -22,7 +22,7 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``color_scheme``
+/// * ``colorScheme``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

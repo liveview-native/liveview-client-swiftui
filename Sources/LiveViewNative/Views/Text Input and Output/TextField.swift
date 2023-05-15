@@ -91,10 +91,47 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     @FormState var value: String?
     @FocusState private var isFocused: Bool
     
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Event("phx-focus", type: "focus") var focusEvent
+    
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Event("phx-blur", type: "blur") var blurEvent
+
+    /// Possible values:
+    /// * `date-time`
+    /// * `url`
+    /// * `iso8601`
+    /// * `number`
+    /// * `percent`
+    /// * `currency`
+    /// * `name`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("format") private var format: String?
+    
+    /// The currency code for the locale.
+    ///
+    /// Example currency codes include `USD`, `EUR`, and `JPY`.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute("currency-code") private var currencyCode: String?
+    
+    /// A type used to format a person’s name with a style appropriate for the given locale.
+    /// 
+    /// Possible values:
+    /// * `short`
+    /// * `medium`
+    /// * `long`
+    /// * `abbreviated`
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @Attribute(
         "name-style",
         transform: {

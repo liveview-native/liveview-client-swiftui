@@ -24,7 +24,7 @@ import SwiftUI
 #endif
 @available(iOS 16.0, tvOS 16.0, *)
 struct HoverEffectModifier: ViewModifier, Decodable {
-    /// The effect applied when the pointer hovers over a view. Defaults to ``automatic``.
+    /// The effect applied when the pointer hovers over a view. Defaults to `automatic`.
     ///
     /// Possible values:
     /// * `automatic`
