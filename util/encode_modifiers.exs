@@ -12,10 +12,10 @@ defmodule ModifierEncoder do
     platform_modifiers: @native.platform_modifiers
 
   defmacro quote_argv() do
-    Code.string_to_quoted!(
-      hd(System.argv())
-      |> String.replace(~r'///', "")
-    )
+    System.argv()
+    |> hd()
+    |> String.replace(~r'///', "")
+    |> Code.string_to_quoted!()
   end
 
   def encode() do
