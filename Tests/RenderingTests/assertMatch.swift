@@ -21,9 +21,10 @@ extension XCTestCase {
         environment: @escaping (inout EnvironmentValues) -> () = { _ in },
         size: CGSize? = nil,
         lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
+        @ViewBuilder outerView: (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: () -> some View
     ) throws {
-        try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, lifetime: lifetime, view)
+        try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, lifetime: lifetime, outerView: outerView, view)
     }
     
     @MainActor
@@ -33,6 +34,7 @@ extension XCTestCase {
         environment: @escaping (inout EnvironmentValues) -> () = { _ in },
         size: CGSize? = nil,
         lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
+        @ViewBuilder outerView: (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: () -> some View
     ) throws {
         #if !os(iOS)
@@ -47,16 +49,20 @@ extension XCTestCase {
         ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
         
         guard let markupImage = snapshot(
-            viewTree
-                .transformEnvironment(\.self, transform: environment),
+            outerView(AnyView(
+                viewTree
+                    .transformEnvironment(\.self, transform: environment)
+            )),
             size: size
         )
         else {
             return XCTAssert(false, "Markup failed to render an image")
         }
         guard let viewImage = snapshot(
-            view()
-                .transformEnvironment(\.self, transform: environment),
+            outerView(AnyView(
+                view()
+                    .transformEnvironment(\.self, transform: environment)
+            )),
             size: size
         )
         else {

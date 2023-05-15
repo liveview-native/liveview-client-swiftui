@@ -44,29 +44,31 @@ struct Image: View {
     }
     
     public var body: some View {
-        image
+        image?
             // todo: this probably only works for symbols
             .resizableIfPresent(resizable: resizable)
             .scaledIfPresent(scale: symbolScale)
             .foregroundColorIfPresent(color: symbolColor)
     }
     
-    var image: SwiftUI.Image {
+    var image: SwiftUI.Image? {
         switch mode {
         case .symbol(let name):
             return SwiftUI.Image(systemName: name)
         case .asset(let name):
             return SwiftUI.Image(name)
+        default:
+            return nil
         }
     }
     
-    private var mode: Mode {
+    private var mode: Mode? {
         if let systemName = element.attributeValue(for: "system-name") {
             return .symbol(systemName)
         } else if let name = element.attributeValue(for: "name") {
             return .asset(name)
         } else {
-            preconditionFailure("<image> must have system-name or name")
+            return nil
         }
     }
     
@@ -105,8 +107,8 @@ struct Image: View {
             return .medium
         case "large":
             return .large
-        case .some(let attr):
-            fatalError("invalid value '\(attr)' for symbol-scale")
+        default:
+            return nil
         }
     }
 }

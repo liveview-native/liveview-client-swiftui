@@ -44,12 +44,12 @@ final class PickerTests: XCTestCase {
         try assertMatch(
             #"""
             <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "automatic"}]'>
-                <Picker:label><Text>Pick an icon</Text></Picker:label>
-                <Picker:content>
+                <Text template="label">Pick an icon</Text>
+                <Group template="content">
                     <Label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><Text>paperplane</Text></Label>
                     <Label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><Text>graduationcap</Text></Label>
                     <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
-                </Picker:content>
+                </Group>
             </Picker>
             """#) {
                 Picker(selection: .constant("paperplane")) {
@@ -72,12 +72,12 @@ final class PickerTests: XCTestCase {
         try assertMatch(
             #"""
             <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "inline"}]'>
-                <Picker:label><Text>Pick an icon</Text></Picker:label>
-                <Picker:content>
+                <Text template="label">Pick an icon</Text>
+                <Group template="content">
                     <Label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><Text>paperplane</Text></Label>
                     <Label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><Text>graduationcap</Text></Label>
                     <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
-                </Picker:content>
+                </Group>
             </Picker>
             """#) {
                 Picker(selection: .constant("paperplane")) {

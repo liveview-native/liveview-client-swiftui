@@ -38,9 +38,9 @@ final class CollectionContainerTests: XCTestCase {
         try assertMatch(
             #"""
             <Section>
-                <Section:header>Header</Section:header>
-                <Section:content>Content</Section:content>
-                <Section:footer>Footer</Section:footer>
+                <Text template="header">Header</Text>
+                <Text template="content">Content</Text>
+                <Text template="footer">Footer</Text>
             <Section>
             """#
         ) {
@@ -55,9 +55,9 @@ final class CollectionContainerTests: XCTestCase {
         try assertMatch(
             #"""
             <Section>
-                <Section:header>Header</Section:header>
+                <Text template="header">Header</Text>
                 Content
-                <Section:footer>Footer</Section:footer>
+                <Text template="footer">Footer</Text>
             </Section>
             """#
         ) {
@@ -83,12 +83,12 @@ final class CollectionContainerTests: XCTestCase {
         try assertMatch(
             #"""
             <Table>
-                <Table:columns>
+                <Group template="columns">
                     <TableColumn>A</TableColumn>
                     <TableColumn>B</TableColumn>
                     <TableColumn>C</TableColumn>
-                </Table:columns>
-                <Table:rows>
+                </Group>
+                <Group template="rows">
                     <TableRow id="1">
                         <Text>A1</Text>
                         <Text>B1</Text>
@@ -104,7 +104,7 @@ final class CollectionContainerTests: XCTestCase {
                         <Text>B3</Text>
                         <Text>C3</Text>
                     </TableRow>
-                </Table:rows>
+                </Table>
             </Table>
             """#,
             environment: { environment in

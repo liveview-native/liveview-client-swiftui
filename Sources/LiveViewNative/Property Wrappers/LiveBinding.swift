@@ -149,14 +149,26 @@ public struct LiveBinding<Value: Codable> {
     /// Setting this property will send an event to the server to update its value as well.
     public var wrappedValue: Value {
         get {
+            let valueError: Error?
             if let bindingName {
-                return data.getValue(from: liveViewModel, bindingName: bindingName)
-            } else if case .local(let value) = data.mode {
+                do {
+                    return try data.getValue(from: liveViewModel, bindingName: bindingName)
+                } catch {
+                    valueError = error
+                }
+            } else {
+                valueError = nil
+            }
+            if case .local(let value) = data.mode {
                 return value
             } else if let initialLocalValue {
                 return initialLocalValue
             } else {
-                fatalError("@LiveBinding must have binding name or default value")
+                if let valueError {
+                    fatalError(valueError.localizedDescription)
+                } else {
+                    fatalError("@LiveBinding must have binding name or default value")
+                }
             }
         }
         nonmutating set {
@@ -207,7 +219,7 @@ extension LiveBinding {
         private var serverCancellable: AnyCancellable?
         private var clientCancellable: AnyCancellable?
         
-        func getValue(from liveViewModel: LiveViewModel, bindingName: String) -> Value {
+        func getValue(from liveViewModel: LiveViewModel, bindingName: String) throws -> Value {
             switch mode {
             case .uninitialized:
                 serverCancellable = liveViewModel.bindingUpdatedByServer
@@ -226,20 +238,20 @@ extension LiveBinding {
                             self.objectWillChange.send()
                         }
                     }
-                return getValueFromViewModel(liveViewModel, bindingName: bindingName)
+                return try getValueFromViewModel(liveViewModel, bindingName: bindingName)
             case .needsUpdateFromViewModel:
-                return getValueFromViewModel(liveViewModel, bindingName: bindingName)
+                return try getValueFromViewModel(liveViewModel, bindingName: bindingName)
             case .local(let value):
                 return value
             }
         }
         
-        private func getValueFromViewModel(_ liveViewModel: LiveViewModel, bindingName: String) -> Value {
+        private func getValueFromViewModel(_ liveViewModel: LiveViewModel, bindingName: String) throws -> Value {
             guard let defaultPayload = liveViewModel.bindingValues[bindingName] else {
-                fatalError("@LiveBinding for \(bindingName) must have value sent before use")
+                throw LiveBindingError.missingDefaultPayload(bindingName)
             }
             // todo: if decoding fails, what should happen?
-            let value = try! Value(from: FragmentDecoder(data: defaultPayload))
+            let value = try Value(from: FragmentDecoder(data: defaultPayload))
             mode = .local(value)
             return value
         }
@@ -248,6 +260,17 @@ extension LiveBinding {
             case uninitialized
             case needsUpdateFromViewModel
             case local(Value)
+        }
+    }
+}
+
+enum LiveBindingError: LocalizedError {
+    case missingDefaultPayload(String)
+    
+    var errorDescription: String? {
+        switch self {
+        case let .missingDefaultPayload(bindingName):
+            return "@LiveBinding for \(bindingName) must have value sent before use"
         }
     }
 }

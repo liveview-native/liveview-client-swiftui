@@ -64,6 +64,9 @@ private enum PickerStyle: String, Decodable {
     @_documentation(visibility: public)
     #endif
     case automatic
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     case inline
     #if swift(>=5.8)
     @_documentation(visibility: public)

@@ -16,10 +16,10 @@ import SwiftUI
 ///     modifiers={toolbar_title_menu(@native, content: :my_menu)}
 /// >
 ///     ...
-///     <toolbar_title_menu:my_menu>
+///     <Group template={:my_menu}>
 ///         <Button phx-click="duplicate">Duplicate</Button>
 ///         <Button phx-click="print">Print</Button>
-///     </toolbar_title_menu:my_menu>
+///     </Group>
 /// </Text>
 /// ```
 ///
@@ -46,7 +46,7 @@ struct ToolbarTitleMenuModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.toolbarTitleMenu {
-            context.buildChildren(of: element, withTagName: self.content, namespace: "toolbar_title_menu")
+            context.buildChildren(of: element, forTemplate: self.content)
         }
     }
 

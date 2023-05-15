@@ -17,11 +17,11 @@ import SwiftUI
 ///     }
 /// >
 ///   Present Confirmation Dialog
-///   <confirmation_dialog:actions>
+///   <Group template={:actions}>
 ///     <Button>
 ///       OK
 ///     </Button>
-///   </confirmation_dialog:actions>
+///   </Group template={:actions}>
 /// </Button>
 /// ```
 ///
@@ -101,19 +101,19 @@ struct ConfirmationDialogModifier<R: RootRegistry>: ViewModifier, Decodable {
     
     func body(content: Content) -> some View {
         content.confirmationDialog(title, isPresented: $isPresented, titleVisibility: titleVisibility) {
-            context.buildChildren(of: element, withTagName: self.actions, namespace: "alert")
+            context.buildChildren(of: element, forTemplate: self.actions)
         } message: {
             if let message {
-                context.buildChildren(of: element, withTagName: message, namespace: "alert")
+                context.buildChildren(of: element, forTemplate: message)
             }
         }
     }
     
     enum CodingKeys: String, CodingKey {
         case title
-        case titleVisibility = "title_visibility"
+        case titleVisibility
         case actions
         case message
-        case isPresented = "is_presented"
+        case isPresented
     }
 }

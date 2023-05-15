@@ -96,7 +96,7 @@ struct MatchedGeometryEffectModifier: ViewModifier, Decodable {
         case "frame": self.properties = .frame
         case "position": self.properties = .position
         case "size": self.properties = .size
-        default: fatalError("Unknown value for properties")
+        case let `default`: throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown properties '\(`default`)'"))
         }
 
         self.anchor = try container.decodeIfPresent(UnitPoint.self, forKey: .anchor) ?? .center

@@ -8,6 +8,10 @@ on:
 env:
   MIN_COVERAGE: 0.3
 
+permissions:
+  checks: write
+  pull-requests: write
+
 jobs:
   test:
     runs-on: [self-hosted, tartelet]
@@ -22,6 +26,7 @@ jobs:
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: TestResults.xcresult
+        continue-on-error: true
         if: success() || failure()
       - name: Validate Coverage %
         shell: bash

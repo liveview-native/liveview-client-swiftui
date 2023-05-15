@@ -215,7 +215,7 @@ extension AnyShapeStyle: Decodable {
         }
     }
     enum CodingKeys: String, CodingKey {
-        case concreteStyle = "concrete_style"
+        case concreteStyle
         case style
         case modifiers
         

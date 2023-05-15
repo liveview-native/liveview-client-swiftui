@@ -17,14 +17,14 @@ import SwiftUI
 ///     }
 /// >
 ///   Present Alert
-///   <alert:message>
+///   <Text template={:message}>
 ///     Hello, world!
-///   </alert:message>
-///   <alert:actions>
+///   </Text template={:message}>
+///   <Group template={:actions}>
 ///     <Button>
 ///       OK
 ///     </Button>
-///   </alert:actions>
+///   </Group template={:actions}>
 /// </Button>
 /// ```
 ///
@@ -90,10 +90,10 @@ struct AlertModifier<R: RootRegistry>: ViewModifier, Decodable {
     
     func body(content: Content) -> some View {
         content.alert(title, isPresented: $isPresented) {
-            context.buildChildren(of: element, withTagName: self.actions, namespace: "alert")
+            context.buildChildren(of: element, forTemplate: self.actions)
         } message: {
             if let message {
-                context.buildChildren(of: element, withTagName: message, namespace: "alert")
+                context.buildChildren(of: element, forTemplate: message)
             }
         }
     }
@@ -102,6 +102,6 @@ struct AlertModifier<R: RootRegistry>: ViewModifier, Decodable {
         case title
         case actions
         case message
-        case isPresented = "is_presented"
+        case isPresented
     }
 }

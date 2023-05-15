@@ -8,6 +8,7 @@
 import Foundation
 import SwiftPhoenixClient
 import SwiftSoup
+import SwiftUI
 import Combine
 import LiveViewNativeCore
 import OSLog
@@ -105,11 +106,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
         
         if let diffPayload = replyPayload["diff"] as? Payload {
-            do {
-                try self.handleDiff(payload: diffPayload, baseURL: self.url)
-            } catch {
-                fatalError("todo")
-            }
+            try self.handleDiff(payload: diffPayload, baseURL: self.url)
         } else if session.config.navigationMode.permitsRedirects,
                   let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
             await session.redirect(redirect)
@@ -208,7 +205,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         do {
             try await connectLiveView()
         } catch {
-            fatalError(error.localizedDescription)
+            self.internalState = .connectionFailed(error)
         }
     }
     
@@ -255,7 +252,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = session.phxCSRFToken
         connectParams["_platform"] = "swiftui"
-        
+        connectParams["_platform_meta"] = try getPlatformMetadata()
+
         let params: Payload = [
             "session": session.phxSession,
             "static": session.phxStatic,
@@ -298,6 +296,62 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
+    private func getPlatformMetadata() throws -> Payload {
+        return [
+            "os_name": getOSName(),
+            "os_version": getOSVersion(),
+            "user_interface_idiom": getUserInterfaceIdiom()
+        ]
+    }
+
+    private func getOSName() -> String {
+        #if os(macOS)
+        return "macOS"
+        #elseif os(tvOS)
+        return "tvOS"
+        #elseif os(watchOS)
+        return "watchOS"
+        #else
+        return "iOS"
+        #endif
+    }
+
+    private func getOSVersion() -> String {
+        #if os(watchOS)
+        return WKInterfaceDevice.current().systemVersion
+        #elseif os(macOS)
+        let operatingSystemVersion = ProcessInfo.processInfo.operatingSystemVersion
+        let majorVersion = operatingSystemVersion.majorVersion
+        let minorVersion = operatingSystemVersion.minorVersion
+        let patchVersion = operatingSystemVersion.patchVersion
+        
+        return "\(majorVersion).\(minorVersion).\(patchVersion)"
+        #else
+        return UIDevice.current.systemVersion
+        #endif
+    }
+
+    private func getUserInterfaceIdiom() -> String {
+        #if os(watchOS)
+        return "watch"
+        #elseif os(macOS)
+        return "mac"
+        #else
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone:
+            return "phone"
+        case .pad:
+            return "pad"
+        case .mac:
+            return "mac"
+        case .tv:
+            return "tv"
+        default:
+            return "unspecified"
+        }
+        #endif
+    }
+
     private func setupChannelJoinHandlers(channel: Channel) {
         channel.join()
             .receive("ok") { [weak self, weak channel] message in

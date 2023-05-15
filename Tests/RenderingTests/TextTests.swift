@@ -147,8 +147,8 @@ This is some markdown text [click me](apple.com)
         try assertMatch(
             #"""
             <Label>
-                <Label:icon><Image system-name="bolt.fill" /></Label:icon>
-                <Label:title><Text>Lightning</Text></Label:title>
+                <Image template="icon" system-name="bolt.fill" />
+                <Text template="title">Lightning</Text>
             <Label>
             """#
         ) {

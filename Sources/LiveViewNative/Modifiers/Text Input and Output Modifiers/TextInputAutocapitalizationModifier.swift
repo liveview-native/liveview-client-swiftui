@@ -53,7 +53,7 @@ struct TextInputAutocapitalizationModifier: ViewModifier, Decodable {
             throw DecodingError.dataCorruptedError(forKey: .autocapitalization, in: container, debugDescription: "invalid value for \(CodingKeys.autocapitalization.rawValue)")
         }
         #else
-        fatalError()
+        throw DecodingError.typeMismatch(Self.self, .init(codingPath: container.codingPath, debugDescription: "`text_input_autocapitalization` modifier not available on this platform"))
         #endif
     }
     

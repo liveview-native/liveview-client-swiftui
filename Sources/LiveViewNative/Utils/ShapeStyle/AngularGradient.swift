@@ -49,7 +49,7 @@ extension AngularGradient: Decodable {
         case gradient
         case center
         case angle
-        case startAngle = "start_angle"
-        case endAngle = "end_angle"
+        case startAngle
+        case endAngle
     }
 }

@@ -14,9 +14,7 @@ import SwiftUI
 /// ```html
 /// <HStack>
 ///   <Image system-name="heart.fill" modifiers={@native |> background(alignment: :center, content: :bg_content)}>
-///     <background:bg_content>
-///       <Circle />
-///     </background:bg_content>
+///     <Circle template={:bg_content} />
 ///   </Image>
 /// </HStack>
 /// ```
@@ -48,7 +46,7 @@ struct BackgroundModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.background(alignment: alignment) {
-            context.buildChildren(of: element, withTagName: self.content, namespace: "background")
+            context.buildChildren(of: element, forTemplate: self.content)
         }
     }
 

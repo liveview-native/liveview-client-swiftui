@@ -83,10 +83,10 @@ final class IndicatorTests: XCTestCase {
         try assertMatch(
             #"""
             <Gauge value="0.5">
-                <Gauge:label>50%</Gauge:label>
-                <Gauge:current-value-label>0.5</Gauge:current-value-label>
-                <Gauge:minimum-value-label>0</Gauge:minimum-value-label>
-                <Gauge:maximum-value-label>1</Gauge:maximum-value-label>
+                <Text template="label">50%</Text>
+                <Text template="current-value-label">0.5</Text>
+                <Text template="minimum-value-label">0</Text>
+                <Text template="maximum-value-label">1</Text>
             </Gauge>
             """#
         ) {
@@ -105,9 +105,9 @@ final class IndicatorTests: XCTestCase {
             #"""
             <Gauge value="0.5">
                 50%
-                <Gauge:current-value-label>0.5</Gauge:current-value-label>
-                <Gauge:minimum-value-label>0</Gauge:minimum-value-label>
-                <Gauge:maximum-value-label>1</Gauge:maximum-value-label>
+                <Text template="current-value-label">0.5</Text>
+                <Text template="minimum-value-label">0</GText>
+                <Text template="maximum-value-label">1</GText>
             </Gauge>
             """#
         ) {

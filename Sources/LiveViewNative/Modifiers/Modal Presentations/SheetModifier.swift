@@ -12,12 +12,10 @@ import SwiftUI
 /// ```html
 /// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, is_presented: :show)}>
 ///   Present Sheet
-///   <sheet:content>
-///     <VStack>
-///       <Text>Hello, world!</Text>
-///       <Button phx-click="toggle">Dismiss</Button>
-///     </VStack>
-///   </sheet:content>
+///   <VStack template={:content}>
+///     <Text>Hello, world!</Text>
+///     <Button phx-click="toggle">Dismiss</Button>
+///   </VStack>
 /// </Button>
 /// ```
 ///
@@ -62,13 +60,13 @@ struct SheetModifier<R: RootRegistry>: ViewModifier, Decodable {
     
     func body(content: Content) -> some View {
         content.sheet(isPresented: $isPresented, onDismiss: $onDismiss) {
-            context.buildChildren(of: element, withTagName: self.content, namespace: "sheet")
+            context.buildChildren(of: element, forTemplate: self.content)
         }
     }
     
     enum CodingKeys: String, CodingKey {
-        case isPresented = "is_presented"
-        case onDismiss = "on_dismiss"
+        case isPresented
+        case onDismiss
         case content
     }
 }

@@ -13,14 +13,12 @@ import SwiftUI
 ///
 /// ```html
 /// <GroupBox>
-///     <GroupBox:label>
-///         Edit Actions
-///     </GroupBox:label>
-///     <GroupBox:content>
+///     <Text template={:label}>Edit Actions</Text>
+///     <Group template={:content}>
 ///         <Button phx-click="arrange">Arrange</Button>
 ///         <Button phx-click="update">Update</Button>
 ///         <Button phx-click="remove">Remove</Button>
-///     </GroupBox:content>
+///     </Group>
 /// </GroupBox>
 /// ```
 ///
@@ -59,11 +57,6 @@ struct GroupBox<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @Attribute("title") private var title: String?
-    /// The style to apply to this group box.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("group-box-style") private var style: GroupBoxStyle = .automatic
 
     public var body: some View {
 #if os(iOS) || os(macOS)
@@ -74,34 +67,11 @@ struct GroupBox<R: RootRegistry>: View {
                 }
             } else {
                 SwiftUI.GroupBox {
-                    context.buildChildren(of: element, withTagName: "content", namespace: "GroupBox", includeDefaultSlot: true)
+                    context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
                 } label: {
-                    context.buildChildren(of: element, withTagName: "label", namespace: "GroupBox")
+                    context.buildChildren(of: element, forTemplate: "label")
                 }
             }
-        }
-        .applyGroupBoxStyle(style)
-#endif
-    }
-}
-
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum GroupBoxStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    func applyGroupBoxStyle(_ style: GroupBoxStyle) -> some View {
-#if os(iOS) || os(macOS)
-        switch style {
-        case .automatic:
-            self.groupBoxStyle(.automatic)
         }
 #endif
     }
