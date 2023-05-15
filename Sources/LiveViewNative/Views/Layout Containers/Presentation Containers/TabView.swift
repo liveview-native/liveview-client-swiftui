@@ -35,6 +35,9 @@ struct TabView<R: RootRegistry>: View {
     /// Synchronizes the selected tab with the server.
     ///
     /// Use the ``TagModifier`` modifier to set the selection value for a given tab.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     @LiveBinding(attribute: "selection") private var selection: String?
     
     var body: some View {

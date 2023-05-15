@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AspectRatioModifier: ViewModifier, Decodable {
+    // TODO: Documentation
     private let aspectRatio: CGSize?
     private let contentMode: ContentMode
 

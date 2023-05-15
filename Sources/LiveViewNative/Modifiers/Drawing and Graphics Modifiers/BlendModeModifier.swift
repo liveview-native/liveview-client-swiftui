@@ -25,7 +25,7 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``blend_mode``
+/// * ``blendMode``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

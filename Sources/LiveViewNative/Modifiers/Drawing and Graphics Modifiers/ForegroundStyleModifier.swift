@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ForegroundStyleModifier: ViewModifier, Decodable {
+    // TODO: Documentation
     private let primary: AnyShapeStyle
     private let secondary: AnyShapeStyle?
     private let tertiary: AnyShapeStyle?

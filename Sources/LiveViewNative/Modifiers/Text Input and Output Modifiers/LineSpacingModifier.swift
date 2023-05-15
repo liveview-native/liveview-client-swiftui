@@ -16,7 +16,7 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``line_spacing``
+/// * ``lineSpacing``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

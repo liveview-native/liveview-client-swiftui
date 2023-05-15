@@ -23,7 +23,7 @@ import SwiftUI
 /// ```
 ///
 /// ## Arguments
-/// * ``text_content_type``
+/// * ``textContentType``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
