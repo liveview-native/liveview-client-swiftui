@@ -131,7 +131,23 @@ enum ShapeReference: Decodable {
             return context.children(of: element, forTemplate: keyName)
                 .compactMap { $0.asElement() }
                 .compactMap {
-                    let shape = Shape<Rectangle>.shapeTypes[$0.tag]!($0)
+                    let shape: any InsettableShape
+                    switch $0.tag {
+                    case "Capsule":
+                        shape = Capsule(from: $0)
+                    case "Circle":
+                        shape = Circle()
+                    case "ContainerRelativeShape":
+                        shape = ContainerRelativeShape()
+                    case "Ellipse":
+                        shape = Ellipse()
+                    case "Rectangle":
+                        shape = Rectangle()
+                    case "RoundedRectangle":
+                        shape = RoundedRectangle(from: $0)
+                    default:
+                        shape = Rectangle()
+                    }
                     if let modifiers = try? ShapeModifierStack(from: $0.attribute(named: "modifiers")) {
                         return modifiers.stack.reduce(EitherAnyShape.insettable(shape)) { shape, modifier in
                             modifier.apply(to: shape)
@@ -139,7 +155,7 @@ enum ShapeReference: Decodable {
                     } else {
                         return AnyShape(shape)
                     }
-                }.first!
+                }.first ?? AnyShape(Rectangle())
         }
-    } 
+    }
 }

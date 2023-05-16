@@ -57,28 +57,6 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
             shape.eraseToAnyShape()
         }
     }
-    
-    static var shapeTypes: [String:(ElementNode) -> any SwiftUI.InsettableShape] {
-        [
-            "Capsule": Capsule.init(from:),
-            "Circle": { _ in Circle() },
-            "ContainerRelativeShape": { _ in ContainerRelativeShape() },
-            "Ellipse": { _ in Ellipse() },
-            "Rectangle": { _ in Rectangle() },
-            "RoundedRectangle": RoundedRectangle.init(from:),
-        ]
-    }
-    
-    static var atomShapes: [String:any SwiftUI.InsettableShape] {
-        [
-            "capsule": Capsule(),
-            "circle": Circle(),
-            "container_relative_shape": ContainerRelativeShape(),
-            "ellipse": Ellipse(),
-            "rectangle": Rectangle(),
-            "rounded_rectangle": RoundedRectangle(cornerRadius: 0)
-        ]
-    }
 }
 
 /// A rounded rectangle shape.
