@@ -84,7 +84,7 @@ extension RoundedRectangle {
                 height: element.attributeValue(for: "corner-height").flatMap(Double.init) ?? radius
             ),
             style: (element.attributeValue(for: "style").flatMap({
-                try? JSONDecoder().decode(RoundedCornerStyle.self, from: Data($0.utf8))
+                try? makeJSONDecoder().decode(RoundedCornerStyle.self, from: Data($0.utf8))
             }) ?? .circular)
         )
     }
@@ -103,7 +103,7 @@ extension Capsule {
     init(from element: ElementNode) {
         self.init(
             style: (element.attributeValue(for: "style").flatMap({
-                try? JSONDecoder().decode(RoundedCornerStyle.self, from: Data($0.utf8))
+                try? makeJSONDecoder().decode(RoundedCornerStyle.self, from: Data($0.utf8))
             }) ?? .circular)
         )
     }
