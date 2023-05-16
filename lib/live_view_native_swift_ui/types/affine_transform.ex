@@ -57,7 +57,7 @@ defmodule LiveViewNativeSwiftUi.Types.AffineTransform do
         with {:ok, acc} <- acc,
              {:ok, element} <- cast(element)
         do
-          {:ok, concat(acc, element)}
+          {:ok, concat(element, acc)}
         else
           _ ->
             :error

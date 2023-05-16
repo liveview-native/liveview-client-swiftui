@@ -71,4 +71,58 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                 .clipShape(Rectangle().rotation(.degrees(45)))
         }
     }
+    
+    func testTransformEffect() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"transform":[1,0,0,1,10,-10],"type":"transform_effect"}]'>
+                Hello, world!
+            </Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text("Hello, world!")
+                .transformEffect(.init(translationX: 10, y: -10))
+        }
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"transform":[0.7071067811865476,0.7071067811865475,-0.7071067811865475,0.7071067811865476,10,-10],"type":"transform_effect"}]'>
+                Hello, world!
+            </Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text("Hello, world!")
+                .transformEffect(.init(translationX: 10, y: -10).rotated(by: 45 * (.pi / 180)))
+        }
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"transform":[0.7071067811865476,0.7071067811865475,-0.7071067811865475,0.7071067811865476,14.142135623730951,-8.881784197001252e-16],"type":"transform_effect"}]'>
+                Hello, world!
+            </Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text("Hello, world!")
+                .transformEffect(
+                    .init(rotationAngle: 45 * (.pi / 180))
+                        .translatedBy(x: 10, y: -10)
+                )
+        }
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"transform":[0.3535533905932738,0.35355339059327373,-0.7071067811865475,0.7071067811865476,14.142135623730951,-8.881784197001252e-16],"type":"transform_effect"}]'>
+                Hello, world!
+            </Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text("Hello, world!")
+                .transformEffect(
+                    .init(rotationAngle: 45 * (.pi / 180))
+                        .translatedBy(x: 10, y: -10)
+                        .scaledBy(x: 0.5, y: 1)
+                )
+        }
+    }
 }
