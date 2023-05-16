@@ -34,4 +34,41 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                 .tint(.red)
         }
     }
+    
+    func testClipShape() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"shape":{"key":null,"properties":{},"static":"circle"},"style":null,"type":"clip_shape"}]'>
+            Hello,
+            world!
+            </Text>
+            """#
+        ) {
+            Text("Hello,\nworld!")
+                .clipShape(Circle())
+        }
+        
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"shape":{"key":null,"properties":{"radius":10},"static":"rounded_rectangle"},"style":null,"type":"clip_shape"}]'>
+                Hello, world!
+            </Text>
+            """#
+        ) {
+            Text("Hello, world!")
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+        }
+        
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"shape":{"key":"my_shape","properties":{},"static":null},"style":null,"type":"clip_shape"}]'>
+                Hello, world!
+                <Rectangle template="my_shape" modifiers='[{"anchor":null,"angle":0.7853981633974483,"type":"rotation"}]' />
+            </Text>
+            """#
+        ) {
+            Text("Hello, world!")
+                .clipShape(Rectangle().rotation(.degrees(45)))
+        }
+    }
 }
