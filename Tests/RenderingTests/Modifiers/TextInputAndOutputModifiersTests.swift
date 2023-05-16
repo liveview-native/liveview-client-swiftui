@@ -187,7 +187,16 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
             """#
         ) {
             Text("Private Information")
-            .privacySensitive(true)
+            .privacySensitive()
+        
+        }
+        try assertMatch(
+            #"""
+            <Text modifiers="[{&quot;sensitive&quot;:&quot;false&quot;,&quot;type&quot;:&quot;privacy_sensitive&quot;}]">Private Information</Text>
+            """#
+        ) {
+            Text("Private Information")
+            .privacySensitive(false)
         
         }
     }
