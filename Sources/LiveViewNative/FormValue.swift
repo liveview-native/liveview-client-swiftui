@@ -6,10 +6,9 @@
 //
 
 import Foundation
+import LiveViewNativeCore
 
 /// A form value is any type that can be stored in a ``FormModel`` and used with ``FormState``.
-///
-/// The initial value is decoded from the `value` attribute using the ``AttributeDecodable`` protocol.
 ///
 /// The `Codable` representation is used for sending form events and when a live binding is used.
 /// See ``FormState`` for more information about how form values and live bindings interact.
@@ -20,7 +19,7 @@ import Foundation
 /// 3. `Bool`
 /// 4. `Double`
 /// 5. `Date`
-public protocol FormValue: Equatable, Codable, AttributeDecodable {
+public protocol FormValue: Equatable, Codable {
 }
 
 extension FormValue {
@@ -29,6 +28,14 @@ extension FormValue {
             return false
         }
         return self == other
+    }
+    
+    static func fromAttribute(_ attribute: LiveViewNativeCore.Attribute) -> Self? {
+        if let self = Self.self as? AttributeDecodable.Type {
+            return try? (self.init(from: attribute) as! Self)
+        } else {
+            return nil
+        }
     }
 }
 
