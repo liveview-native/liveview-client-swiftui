@@ -200,15 +200,27 @@ public struct Event: DynamicProperty, Decodable {
     /// * ``debounce``
     /// * ``throttle``
     public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.event = try container.decodeIfPresent(String.self, forKey: .event)
-        self.name = nil
-        self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "click"
-        self.target = try container.decodeIfPresent(Int.self, forKey: .target)
-        self.debounce = try container.decodeIfPresent(Double.self, forKey: .debounce)
-        self.throttle = try container.decodeIfPresent(Double.self, forKey: .throttle)
-        self.params = try container.decodeIfPresent(String.self, forKey: .params).flatMap({ try? JSONSerialization.jsonObject(with: Data($0.utf8)) })
+        if let singleValue = try? decoder.singleValueContainer(),
+           singleValue.decodeNil()
+        {
+            self.event = nil
+            self.name = nil
+            self.type = "click"
+            self.target = nil
+            self.debounce = nil
+            self.throttle = nil
+            self.params = nil
+        } else {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            
+            self.event = try container.decodeIfPresent(String.self, forKey: .event)
+            self.name = nil
+            self.type = try container.decodeIfPresent(String.self, forKey: .type) ?? "click"
+            self.target = try container.decodeIfPresent(Int.self, forKey: .target)
+            self.debounce = try container.decodeIfPresent(Double.self, forKey: .debounce)
+            self.throttle = try container.decodeIfPresent(Double.self, forKey: .throttle)
+            self.params = try container.decodeIfPresent(String.self, forKey: .params).flatMap({ try? JSONSerialization.jsonObject(with: Data($0.utf8)) })
+        }
     }
     
     enum CodingKeys: String, CodingKey {
