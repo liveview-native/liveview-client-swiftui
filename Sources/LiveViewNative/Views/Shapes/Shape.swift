@@ -57,6 +57,28 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
             shape.eraseToAnyShape()
         }
     }
+    
+    static var shapeTypes: [String:(ElementNode) -> any SwiftUI.InsettableShape] {
+        [
+            "Capsule": Capsule.init(from:),
+            "Circle": { _ in Circle() },
+            "ContainerRelativeShape": { _ in ContainerRelativeShape() },
+            "Ellipse": { _ in Ellipse() },
+            "Rectangle": { _ in Rectangle() },
+            "RoundedRectangle": RoundedRectangle.init(from:),
+        ]
+    }
+    
+    static var atomShapes: [String:any SwiftUI.InsettableShape] {
+        [
+            "capsule": Capsule(),
+            "circle": Circle(),
+            "container_relative_shape": ContainerRelativeShape(),
+            "ellipse": Ellipse(),
+            "rectangle": Rectangle(),
+            "rounded_rectangle": RoundedRectangle(cornerRadius: 0)
+        ]
+    }
 }
 
 /// A rounded rectangle shape.
@@ -83,7 +105,9 @@ extension RoundedRectangle {
                 width: element.attributeValue(for: "corner-width").flatMap(Double.init) ?? radius,
                 height: element.attributeValue(for: "corner-height").flatMap(Double.init) ?? radius
             ),
-            style: (element.attributeValue(for: "style").flatMap(RoundedCornerStyle.init) ?? .circular).style
+            style: (element.attributeValue(for: "style").flatMap({
+                try? JSONDecoder().decode(RoundedCornerStyle.self, from: Data($0.utf8))
+            }) ?? .circular)
         )
     }
 }
@@ -100,19 +124,30 @@ extension RoundedRectangle {
 extension Capsule {
     init(from element: ElementNode) {
         self.init(
-            style: (element.attributeValue(for: "style").flatMap(RoundedCornerStyle.init) ?? .circular).style
+            style: (element.attributeValue(for: "style").flatMap({
+                try? JSONDecoder().decode(RoundedCornerStyle.self, from: Data($0.utf8))
+            }) ?? .circular)
         )
     }
 }
 
-private enum RoundedCornerStyle: String {
-    case circular
-    case continuous
-    
-    var style: SwiftUI.RoundedCornerStyle {
-        switch self {
-        case .circular: return .circular
-        case .continuous: return .continuous
+/// A style for rounded corners.
+/// 
+/// Possible values:
+/// * `circular`
+/// * `continuous`
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
+extension RoundedCornerStyle: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        switch try container.decode(String.self) {
+        case "circular":
+            self = .circular
+        case "continuous":
+            self = .continuous
+        case let `default`: throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown RoundedCornerStyle '\(`default`)'"))
         }
     }
 }
