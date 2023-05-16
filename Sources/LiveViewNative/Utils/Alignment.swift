@@ -35,11 +35,11 @@ extension Alignment: Decodable, AttributeDecodable {
     
     init?(string: String) {
         switch string {
-        case "top-leading":
+        case "top-leading", "top_leading":
             self = .topLeading
         case "top":
             self = .top
-        case "top-trailing":
+        case "top-trailing", "top_trailing":
             self = .topTrailing
         case "leading":
             self = .leading
@@ -47,15 +47,15 @@ extension Alignment: Decodable, AttributeDecodable {
             self = .center
         case "trailing":
             self = .trailing
-        case "bottom-leading":
+        case "bottom-leading", "bottom_leading":
             self = .bottomTrailing
         case "bottom":
             self = .bottom
-        case "bottom-trailing":
+        case "bottom-trailing", "bottom_trailing":
             self = .bottomTrailing
-        case "leading-last-text-baseline":
+        case "leading-last-text-baseline", "leading_last_text_baseline":
             self = .leadingLastTextBaseline
-        case "trailing-last-text-baseline":
+        case "trailing-last-text-baseline", "trailing_last_text_baseline":
             self = .trailingLastTextBaseline
         default:
             return nil
