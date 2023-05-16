@@ -183,7 +183,7 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
     func testPrivacySensitive() throws {
         try assertMatch(
             #"""
-            <Text modifiers="[{&quot;sensitive&quot;:&quot;true&quot;,&quot;type&quot;:&quot;privacy_sensitive&quot;}]">Private Information</Text>
+            <Text modifiers="[{&quot;sensitive&quot;:true,&quot;type&quot;:&quot;privacy_sensitive&quot;}]">Private Information</Text>
             """#
         ) {
             Text("Private Information")
@@ -192,7 +192,7 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <Text modifiers="[{&quot;sensitive&quot;:&quot;false&quot;,&quot;type&quot;:&quot;privacy_sensitive&quot;}]">Private Information</Text>
+            <Text modifiers="[{&quot;sensitive&quot;:false,&quot;type&quot;:&quot;privacy_sensitive&quot;}]">Private Information</Text>
             """#
         ) {
             Text("Private Information")
