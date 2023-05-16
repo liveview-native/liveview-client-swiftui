@@ -102,7 +102,6 @@
                 Next, we'll add `render` functions for `:web` and `:swiftui` platforms.
 
                 Use the LiveView Native sigil with the `swiftui` modifier to provide the template.
-                
                 In the template itself, we'll start with just a simple message. In the next section, we'll come back and build the full UI.
                 
                 @Comment {

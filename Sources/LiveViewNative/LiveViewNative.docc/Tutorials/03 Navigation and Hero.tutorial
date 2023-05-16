@@ -29,9 +29,7 @@
                 Then, add the live view for the route we just created. This one will be very simple: it has a render function similar to the list and in the `mount` callback, we assign the name parameter from the route to the socket for use in the template.
                 
                 In a production app, you would want to perform validation here. But for this tutorial, we're just going to assume that whatever's in the route is a valid cat.
-
                 We'll start with a simple template for this view that just displays the cat's image.
-                
                 The `navigation_title` modifier is used to assign a title that will be displayed in the navigation bar of our app. In the next section, you'll see how this is added.
                 
                 @Comment {
