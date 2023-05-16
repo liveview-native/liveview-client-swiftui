@@ -1,5 +1,4 @@
 defmodule LiveViewNativeSwiftUi.Types.EdgeSet do
-  @derive Jason.Encoder
   use LiveViewNativePlatform.Modifier.Type
   def type, do: {:array, :string}
 
