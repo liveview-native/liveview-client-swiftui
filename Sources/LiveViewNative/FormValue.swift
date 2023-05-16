@@ -42,6 +42,9 @@ extension FormValue {
 extension Optional: FormValue where Wrapped: FormValue {
 }
 
+extension Set: FormValue where Element: FormValue {
+}
+
 extension String: FormValue {
 }
 
