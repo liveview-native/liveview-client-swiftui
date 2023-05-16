@@ -82,41 +82,27 @@ enum FinalShapeModifierBuilder {
     static func buildEither<
         TrueShapeModifier: FinalShapeModifier,
         FalseShapeModifier: FinalShapeModifier
-    >(first component: @autoclosure () throws -> TrueShapeModifier) rethrows -> _ConditionalShapeContent<TrueShapeModifier, FalseShapeModifier> {
+    >(first component: @autoclosure () throws -> TrueShapeModifier) rethrows -> _ConditionalFinalShapeModifier<TrueShapeModifier, FalseShapeModifier> {
         .init(storage: .trueContent(try component()))
     }
     static func buildEither<
         TrueShapeModifier: FinalShapeModifier,
         FalseShapeModifier: FinalShapeModifier
-    >(second component: @autoclosure () throws -> FalseShapeModifier) rethrows -> _ConditionalShapeContent<TrueShapeModifier, FalseShapeModifier> {
+    >(second component: @autoclosure () throws -> FalseShapeModifier) rethrows -> _ConditionalFinalShapeModifier<TrueShapeModifier, FalseShapeModifier> {
         .init(storage: .falseContent(try component()))
     }
 }
 
-/// A `ShapeModifier` or `FinalShapeModifier` that switches between two possible shape modifier types.
-struct _ConditionalShapeContent<TrueContent, FalseContent> {
+/// A `FinalShapeModifier` that switches between two possible shape modifier types.
+struct _ConditionalFinalShapeModifier<TrueContent, FalseContent>: FinalShapeModifier
+where TrueContent: FinalShapeModifier, FalseContent: FinalShapeModifier {
     enum Storage {
         case trueContent(TrueContent)
         case falseContent(FalseContent)
     }
     
     let storage: Storage
-}
-
-extension _ConditionalShapeContent: ShapeModifier
-where TrueContent: ShapeModifier, FalseContent: ShapeModifier {
-    func apply(to shape: some SwiftUI.Shape) -> any SwiftUI.Shape {
-        switch storage {
-        case let .trueContent(modifier):
-            return modifier.apply(to: shape)
-        case let .falseContent(modifier):
-            return modifier.apply(to: shape)
-        }
-    }
-}
-
-extension _ConditionalShapeContent: FinalShapeModifier
-where TrueContent: FinalShapeModifier, FalseContent: FinalShapeModifier {
+    
     @ViewBuilder
     func apply(to shape: any SwiftUI.Shape) -> some View {
         switch storage {
@@ -177,8 +163,8 @@ enum ShapeModifierRegistry: ShapeModifierRegistryProtocol {
     static func decodeFinalShapeModifier(
         _ type: FinalShapeModifierType,
         from decoder: Decoder
-    ) throws -> _ConditionalShapeContent<
-        _ConditionalShapeContent<
+    ) throws -> _ConditionalFinalShapeModifier<
+        _ConditionalFinalShapeModifier<
             FillModifier,
             StrokeModifier
         >,
