@@ -19,7 +19,7 @@ struct MyRegistry: RootRegistry {
     static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
         switch type {
         case .navFavorite:
-            return try NavFavoriteModifier(from: decoder)
+            try NavFavoriteModifier(from: decoder)
         }
     }
 }
