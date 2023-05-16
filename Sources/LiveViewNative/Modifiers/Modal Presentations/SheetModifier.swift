@@ -39,7 +39,7 @@ struct SheetModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Event private var onDismiss: Event.EventHandler
+    private var onDismiss: Event?
     
     /// A reference to the content view for the sheet.
     #if swift(>=5.8)
@@ -54,12 +54,12 @@ struct SheetModifier<R: RootRegistry>: ViewModifier, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self._isPresented = try LiveBinding(decoding: .isPresented, in: container)
-        self._onDismiss = try container.decode(Event.self, forKey: .onDismiss)
+        self.onDismiss = try container.decodeIfPresent(Event.self, forKey: .onDismiss)
         self.content = try container.decode(String.self, forKey: .content)
     }
     
     func body(content: Content) -> some View {
-        content.sheet(isPresented: $isPresented, onDismiss: $onDismiss) {
+        content.sheet(isPresented: $isPresented, onDismiss: onDismiss?.projectedValue) {
             context.buildChildren(of: element, forTemplate: self.content)
         }
     }
