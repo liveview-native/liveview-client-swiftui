@@ -29,14 +29,7 @@
                 Then, add the live view for the route we just created. This one will be very simple: it has a render function similar to the list and in the `mount` callback, we assign the name parameter from the route to the socket for use in the template.
                 
                 In a production app, you would want to perform validation here. But for this tutorial, we're just going to assume that whatever's in the route is a valid cat.
-                
-                @Comment {
-                    project = "backend"
-                }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 03-01-02-cat_live.ex)
-            }
-            
-            @Step {
+
                 We'll start with a simple template for this view that just displays the cat's image.
                 
                 The `navigation_title` modifier is used to assign a title that will be displayed in the navigation bar of our app. In the next section, you'll see how this is added.
@@ -44,7 +37,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ios.heex", file: 03-01-03-cat_live.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 03-01-02-cat_live.ex)
             }
         }
     }
@@ -66,12 +59,12 @@
             }
             
             @Step {
-                Open the `cats_list_live.ios.heex` file.
+                Open the `cats_list_live.ex` file.
                 
                 @Comment {
                     skip = true
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 02-02-04-button-click.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 02-02-05-cats_list_live.ex)
             }
             
             @Step {
@@ -82,31 +75,23 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 03-02-02-nav-title.ios.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 03-02-03-cats_list_live.ex) {
                     @Image(source: 03-02-03-nav-title-preview.png, alt: "The list of cats, with a title that reads 'Cats!'")
                 }
             }
             
             @Step {
-                Next, wrap the `<h-stack>` in a `<navigation-link>`. This element functions like an HTML anchor tag, indicating that, when tapped, the client should navigate to a new page. The attributes we provide tell the client which mode to navigate in and to which page. Don't forget to move the `id` attribute from the `<h-stack>` to the link!
+                Next, wrap the `<HStack>` in a `<NavigationLink>`. This element functions like an HTML anchor tag, indicating that, when tapped, the client should navigate to a new page. The attributes we provide tell the client which mode to navigate in and to which page. Don't forget to move the `id` attribute from the `<HStack>` to the link!
                 
                 Once you've done that, you can tap a cat on the list and navigate to the detail view and see the larger image!
                 
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ios.heex", file: 03-02-04-navigationlink.ios.heex) {
+                @Code(name: "lib/lvn_tutorial_web/live/cats_list_live.ex", file: 03-02-04-cats_list_live.ex) {
                     @Video(source: 03-02-05-navigation-preview.mp4, poster: 03-02-06-navigation-preview-poster.png)
                 }
             }
         }
     }
-    
-<!--    @Section(title: "The Hero Transition") {-->
-<!--        Now that navigation is working, let's add a cool transition when navigating into the detail view.-->
-<!--        -->
-<!--        @Steps {-->
-<!--            -->
-<!--        }-->
-<!--    }-->
 }
