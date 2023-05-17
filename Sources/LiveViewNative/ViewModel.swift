@@ -20,6 +20,12 @@ public class LiveViewModel: ObservableObject {
     let bindingUpdatedByServer = PassthroughSubject<(String, Any), Never>()
     let bindingUpdatedByClient = PassthroughSubject<(String, Any), Never>()
     
+    init(forms: [String : FormModel] = [String: FormModel](), cachedNavigationTitle: NavigationTitleModifier? = nil, bindingValues: [String : Any] = [String: Any]()) {
+        self.forms = forms
+        self.cachedNavigationTitle = cachedNavigationTitle
+        self.bindingValues = bindingValues
+    }
+    
     /// Get or create a ``FormModel`` for the given `<live-form>`.
     ///
     /// - Important: The element parameter must be the form element. To get the form model for an element within a form, use the ``LiveContext`` or the `\.formModel` environment value.
