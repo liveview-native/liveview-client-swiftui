@@ -22,16 +22,12 @@ import SwiftUI
 ///         |> swipe_actions(edge: :trailing, allows_full_swipe: false, content: :flag)
 ///       }>
 ///       <Text><%= item %></Text>
-///       <swipe_actions:flag>
-///         <Button phx-click="flag_item" phx-value-item-id={@item.id}>
-///           <Image system-name="flag" />
-///         </Button>
-///       </swipe_actions:flag>
-///       <swipe_actions:delete>
-///         <Button phx-click="delete_item" phx-value-item-id={@item.id} modifiers={tint(@native, color: :red)}>
-///           <Image system-name="trash" />
-///         </Button>
-///       </swipe_actions:delete>
+///       <Button template={:flag} phx-click="flag_item" phx-value-item-id={@item.id}>
+///         <Image system-name="flag" />
+///       </Button>
+///       <Button template={:delete} phx-click="delete_item" phx-value-item-id={@item.id} modifiers={tint(@native, color: :red)}>
+///         <Image system-name="trash" />
+///       </Button>
 ///     </HStack>
 ///   <% end %>
 /// </List>
@@ -77,7 +73,7 @@ struct SwipeActionsModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.swipeActions(edge: edge, allowsFullSwipe: allowsFullSwipe) {
-            context.buildChildren(of: element, withTagName: self.content, namespace: "swipe_actions")
+            context.buildChildren(of: element, forTemplate: self.content)
         }
     }
 
