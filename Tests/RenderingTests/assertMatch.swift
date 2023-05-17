@@ -21,10 +21,11 @@ extension XCTestCase {
         environment: @escaping (inout EnvironmentValues) -> () = { _ in },
         size: CGSize? = nil,
         lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
+        useDrawingGroup: Bool = true,
         @ViewBuilder outerView: (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: () -> some View
     ) throws {
-        try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, lifetime: lifetime, outerView: outerView, view)
+        try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, lifetime: lifetime, useDrawingGroup: useDrawingGroup, outerView: outerView, view)
     }
     
     @MainActor
@@ -34,6 +35,7 @@ extension XCTestCase {
         environment: @escaping (inout EnvironmentValues) -> () = { _ in },
         size: CGSize? = nil,
         lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
+        useDrawingGroup: Bool = true,
         @ViewBuilder outerView: (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: () -> some View
     ) throws {
@@ -48,21 +50,26 @@ extension XCTestCase {
             url: session.url
         ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
         
-        guard let markupImage = snapshot(
-            outerView(AnyView(
-                viewTree
+        let modifyViewForRender: (any View) -> any View = {
+            if useDrawingGroup {
+                return $0
                     .transformEnvironment(\.self, transform: environment)
-            )),
+                    .drawingGroup()
+            } else {
+                return $0
+                    .transformEnvironment(\.self, transform: environment)
+            }
+        }
+        
+        guard let markupImage = snapshot(
+            outerView(AnyView(modifyViewForRender(viewTree))),
             size: size
         )
         else {
             return XCTAssert(false, "Markup failed to render an image")
         }
         guard let viewImage = snapshot(
-            outerView(AnyView(
-                view()
-                    .transformEnvironment(\.self, transform: environment)
-            )),
+            outerView(AnyView(modifyViewForRender(view()))),
             size: size
         )
         else {
@@ -113,6 +120,13 @@ private func snapshot(_ view: some View, size: CGSize?) -> UIImage? {
 
     let renderer = UIGraphicsImageRenderer(size: uiView.bounds.size)
     return renderer.image { context in
+        /// If this is crashing when running tests then the call to `assertMatch` likely needs to pass `useDrawingGroup: false`.
+        /// `drawingGroup` is necessary to for the render to composite all modifiers, but crashes with some views. Known cases at the time of writing this are `RenameButton` and `Guage`
+        ///
+        /// https://developer.apple.com/documentation/swiftui/view/drawinggroup(opaque:colormode:)
+        ///
+        /// Note from Apple docs:
+        /// > Views backed by native platform views may not render into the image.
         uiView.layer.render(in: context.cgContext)
     }
 }

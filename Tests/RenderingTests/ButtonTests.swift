@@ -59,7 +59,7 @@ final class ButtonTests: XCTestCase {
     }
 
     func testRenameButton() throws {
-        try assertMatch(#"<RenameButton />"#) {
+        try assertMatch(#"<RenameButton />"#, useDrawingGroup: false) {
             RenameButton()
         }
         try assertMatch(#"<RenameButton modifiers='[{"type":"rename_action","event":"rename","target":null}]' />"#) {
