@@ -120,8 +120,8 @@ private func snapshot(_ view: some View, size: CGSize?) -> UIImage? {
 
     let renderer = UIGraphicsImageRenderer(size: uiView.bounds.size)
     return renderer.image { context in
-        /// If this is crashing when running tests then the call to `assertMatch` likely needs to pass `useDrawingGroup: false`.
-        /// `drawingGroup` is necessary to for the render to composite all modifiers, but crashes with some views. Known cases at the time of writing this are `RenameButton` and `Guage`
+        /// If this is crashing when running tests, then the call to `assertMatch` likely needs to pass `useDrawingGroup: false`.
+        /// `drawingGroup` is necessary to for the render to composite all modifiers, but crashes with some views. Known cases at the time of writing this are `RenameButton` and `Gauge`
         ///
         /// https://developer.apple.com/documentation/swiftui/view/drawinggroup(opaque:colormode:)
         ///
