@@ -16,3 +16,13 @@ fileprivate let snakeCaseDecoder: JSONDecoder = {
     decoder.keyDecodingStrategy = .convertFromSnakeCase
     return decoder
 }()
+
+extension Array where Element: Decodable {
+    init(jsonValues: [String]) throws {
+        self = try makeJSONDecoder().decode(Self.self, from: Data(
+            #"""
+            ["\#(jsonValues.joined(separator: "\",\""))"]
+            """#.utf8
+        ))
+    }
+}

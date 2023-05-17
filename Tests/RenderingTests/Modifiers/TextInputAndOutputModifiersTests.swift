@@ -186,6 +186,7 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
     }
     
     func testAutocorrectionDisabled() throws {
+        /// This can test parsing and building, but not visual matching of the keyboard with the current test scaffolding
         for disable in [true, false] {
             try assertMatch(
                 #"""
@@ -225,6 +226,7 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
     }
     
     func testKeyboardType() throws {
+        /// This can test parsing and building, but not visual matching of the keyboard with the current test scaffolding
         #if os(iOS) || os(tvOS)
         try assertMatch(
             #"""
