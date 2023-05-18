@@ -221,7 +221,8 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
             #"""
             <Color name="system-red" modifiers='[{"type":"color_invert"}]' />
             """#,
-            size: .init(width: 100, height: 100)
+            size: .init(width: 100, height: 100),
+            useDrawingGroup: true
         ) {
             Color.red
                 .colorInvert()
@@ -233,10 +234,22 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
             #"""
             <Color name="system-red" modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-mint","white":null},"type":"color_multiply"}]' />
             """#,
-            size: .init(width: 100, height: 100)
+            size: .init(width: 100, height: 100),
+            useDrawingGroup: true
         ) {
             Color.red
                 .colorMultiply(.mint)
+        }
+        
+        try assertFail(
+            #"""
+            <Color name="system-red" modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-mint","white":null},"type":"color_multiply"}]' />
+            """#,
+            size: .init(width: 100, height: 100),
+            useDrawingGroup: true
+        ) {
+            Color.red
+                .colorMultiply(.blue)
         }
     }
     
@@ -267,14 +280,25 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
     func testContrast() throws {
         for amount in [0.5, -0.5] {
             try assertMatch(
-            #"""
-            <Color name='system-red' modifiers='[{"amount":\#(amount),"type":"contrast"},{"color_mode":"non_linear","opaque":false,"type":"drawing_group"}]' />
-            """#,
-            size: .init(width: 100, height: 100)
+                #"""
+                <Color name='system-red' modifiers='[{"amount":\#(amount),"type":"contrast"}]' />
+                """#,
+                size: .init(width: 100, height: 100),
+                useDrawingGroup: true
             ) {
                 Color.red
                     .contrast(amount)
-                    .drawingGroup()
+            }
+            
+            try assertFail(
+                #"""
+                <Color name='system-red' modifiers='[{"amount":\#(amount),"type":"contrast"}]' />
+                """#,
+                size: .init(width: 100, height: 100),
+                useDrawingGroup: true
+            ) {
+                Color.red
+                    .contrast(0.1)
             }
         }
     }
@@ -282,13 +306,26 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
     func testCornerRadius() throws {
         for antialiased in [true, false] {
             try assertMatch(
-            #"""
-            <Image system-name="square.fill" modifiers='[{"antialiased":\#(antialiased),"radius":8.0,"type":"corner_radius"}]' />
-            """#,
-            size: .init(width: 100, height: 100)
+                #"""
+                <Image system-name="square.fill" modifiers='[{"antialiased":\#(antialiased),"radius":8.0,"type":"corner_radius"}]' />
+                """#,
+                size: .init(width: 100, height: 100),
+                useDrawingGroup: true
             ) {
                 Image(systemName: "square.fill")
                     .cornerRadius(8.0, antialiased: antialiased)
+                
+            }
+            
+            try assertFail(
+                #"""
+                <Image system-name="square.fill" modifiers='[{"antialiased":\#(antialiased),"radius":8.0,"type":"corner_radius"}]' />
+                """#,
+                size: .init(width: 100, height: 100),
+                useDrawingGroup: true
+            ) {
+                Image(systemName: "square.fill")
+                    .cornerRadius(8.0, antialiased: !antialiased)
                 
             }
         }
