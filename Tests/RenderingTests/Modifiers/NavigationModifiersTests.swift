@@ -26,7 +26,7 @@ final class NavigationModifiersTests: XCTestCase {
                 </Text>
             </TabView>
             """#,
-            size: .init(width: 200, height: 200)
+            size: .init(width: 100, height: 100)
         ) {
             TabView {
                 Text("A")
