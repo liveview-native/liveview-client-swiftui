@@ -30,8 +30,16 @@ struct NamespaceContext<R: RootRegistry>: View {
     @Namespace private var namespace
     @Environment(\.namespaces) private var namespaces
     
+    @Environment(\.resetFocus) private var resetFocus
+    
     var body: some View {
         context.buildChildren(of: element)
             .environment(\.namespaces, namespaces.merging([id: namespace], uniquingKeysWith: { $1 }))
+            .onReceive(context.coordinator.receiveEvent("reset_focus")) { event in
+                guard let namespace = event["namespace"] as? String,
+                      namespace == id
+                else { return }
+                resetFocus(in: self.namespace)
+            }
     }
 }
