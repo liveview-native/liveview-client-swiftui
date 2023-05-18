@@ -38,6 +38,9 @@ extension XCTestCase {
         @ViewBuilder outerView: @escaping (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: @escaping () -> some View
     ) throws {
+        #if !os(iOS)
+        fatalError("Rendering tests not supported on platforms other than iOS at this time")
+        #else
         let session = LiveSessionCoordinator(URL(string: "http://localhost")!)
         let document = try LiveViewNativeCore.Document.parse(markup)
         let markupView = session.rootCoordinator.builder.fromNodes(
@@ -82,38 +85,11 @@ extension XCTestCase {
                 .map { "Markup: \($0.0.trimmingCharacters(in: .whitespacesAndNewlines))\nView: \($0.1.trimmingCharacters(in: .whitespacesAndNewlines))" }
                 .joined(separator: "\n\n")
         )
+        #endif
     }
 }
 
-private let describeDenyList: Set<String> = ["SwiftUI.AccessibilityAttachmentModifier", "SwiftUI.ResolvedUIKitButtonBody", "SwiftUI.UIKitButtonAdaptor", "SwiftUI.ViewLeafView"]
-private func describe(_ value: Any) -> String {
-    let unknownContext = Regex {
-        "(unknown context at $"
-        OneOrMore(CharacterClass(.digit, "a"..."z"))
-        ")."
-    }
-    let typeName = String(reflecting: Swift.type(of: value))
-        .replacing(unknownContext, with: "")
-    if describeDenyList.contains(String(typeName.split(separator: "<")[0])) {
-        return "\(typeName)(...)"
-    }
-    if let convertible = value as? CustomStringConvertible {
-        return convertible.description
-    }
-    let mirror = (value as? CustomReflectable)?.customMirror ?? Mirror(reflecting: value)
-    if mirror.children.isEmpty {
-        return String(reflecting: value)
-    } else {
-        return """
-        \(typeName.split(separator: "<")[0])(\(mirror.children
-            .filter { ($0.value as? any View) == nil }
-            .map { "\($0.label ?? "_"): \(describe($0.value))" }
-            .joined(separator: ", ")
-        ))
-        """
-    }
-}
-
+#if os(iOS)
 struct RenderedViewHierarchy: CustomDebugStringConvertible, Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.debugDescription == rhs.debugDescription
@@ -267,3 +243,4 @@ extension UIView {
         return [RenderedViewHierarchy(data: debugData)] + subviewData
     }
 }
+#endif
