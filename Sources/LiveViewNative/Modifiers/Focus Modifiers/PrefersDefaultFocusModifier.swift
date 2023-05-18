@@ -16,8 +16,17 @@ import SwiftUI
 ///     <VStack modifiers={focus_scope(@native, :my_namespace)}>
 ///         <TextField>Username</TextField>
 ///         <TextField modifiers={prefers_default_focus(@native, namespace: :my_namespace)}>Password</TextField>
+///         <Button phx-click="reset_focus" phx-value-namespace={:my_namespace}>Reset Focus</Button>
 ///     </VStack>
 /// </NamespaceContext>
+/// ```
+///
+/// Push the `reset_focus` event to set focus back to the preferred defaults.
+///
+/// ```elixir
+/// def handle_event("reset_focus", %{ "namespace" => namespace }, socket) do
+///   {:noreply, push_event(socket, :reset_focus, %{ namespace: namespace })}
+/// end
 /// ```
 ///
 /// ## Arguments
