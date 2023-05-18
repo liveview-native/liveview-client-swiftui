@@ -25,7 +25,27 @@ extension XCTestCase {
         @ViewBuilder outerView: (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: () -> some View
     ) throws {
-        try assertMatch(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, lifetime: lifetime, useDrawingGroup: useDrawingGroup, outerView: outerView, view)
+        try assertPassFail(shouldMatch: true) {
+            try compareSnapshots(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, lifetime: lifetime, useDrawingGroup: useDrawingGroup, outerView: outerView, view)
+        }
+    }
+
+    @MainActor
+    func assertFail(
+        _ markup: String,
+        _ file: String = #file,
+        _ line: Int = #line,
+        _ function: StaticString = #function,
+        environment: @escaping (inout EnvironmentValues) -> () = { _ in },
+        size: CGSize? = nil,
+        lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
+        useDrawingGroup: Bool = false,
+        @ViewBuilder outerView: (AnyView) -> some View = { $0 },
+        @ViewBuilder _ view: () -> some View
+    ) throws {
+        try assertPassFail(shouldMatch: false) {
+            try compareSnapshots(name: "\(URL(filePath: file).lastPathComponent)-\(line)-\(function)", markup, environment: environment, size: size, lifetime: lifetime, useDrawingGroup: useDrawingGroup, outerView: outerView, view)
+        }
     }
     
     @MainActor
@@ -39,6 +59,38 @@ extension XCTestCase {
         @ViewBuilder outerView: (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: () -> some View
     ) throws {
+        try assertPassFail(shouldMatch: true) {
+            try compareSnapshots(name: name, markup, environment: environment, size: size, lifetime: lifetime, useDrawingGroup: useDrawingGroup, outerView: outerView, view)
+        }
+    }
+    
+    @MainActor
+    func assertFail(
+        name: String,
+        _ markup: String,
+        environment: @escaping (inout EnvironmentValues) -> () = { _ in },
+        size: CGSize? = nil,
+        lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
+        useDrawingGroup: Bool = false,
+        @ViewBuilder outerView: (AnyView) -> some View = { $0 },
+        @ViewBuilder _ view: () -> some View
+    ) throws {
+        try assertPassFail(shouldMatch: false) {
+            try compareSnapshots(name: name, markup, environment: environment, size: size, lifetime: lifetime, useDrawingGroup: useDrawingGroup, outerView: outerView, view)
+        }
+    }
+
+    @MainActor
+    private func compareSnapshots(
+        name: String,
+        _ markup: String,
+        environment: @escaping (inout EnvironmentValues) -> () = { _ in },
+        size: CGSize? = nil,
+        lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
+        useDrawingGroup: Bool = false,
+        @ViewBuilder outerView: (AnyView) -> some View = { $0 },
+        @ViewBuilder _ view: () -> some View
+    ) throws -> Bool {
         #if !os(iOS)
         fatalError("Rendering tests not supported on platforms other than iOS at this time")
         #else
@@ -66,14 +118,14 @@ extension XCTestCase {
             size: size
         )
         else {
-            return XCTAssert(false, "Markup failed to render an image")
+            throw SnapshotError("Markup failed to render an image")
         }
         guard let viewImage = snapshot(
             outerView(AnyView(modifyViewForRender(view()))),
             size: size
         )
         else {
-            return XCTAssert(false, "View failed to render an image")
+            throw SnapshotError("View failed to render an image")
         }
         
         let markupAttachment = XCTAttachment(image: markupImage)
@@ -88,12 +140,30 @@ extension XCTestCase {
         let markupData = markupImage.pngData()
         let viewData = viewImage.pngData()
         
-        if markupData == viewData {
-            XCTAssert(true)
-        } else {
-            XCTAssert(false, "Rendered views did not match. Attachments can be viewed in the Report navigator.")
-        }
+        return markupData == viewData
         #endif
+    }
+    
+    @MainActor
+    private func assertPassFail(shouldMatch: Bool, _ compare: () throws -> Bool) throws {
+        do {
+            let matched = try compare()
+            if matched == shouldMatch {
+                XCTAssert(true)
+            } else {
+                let errorString = shouldMatch ? "Rendered views did not match." : "Rendered views matched and were expected to be different."
+                XCTAssert(false, "\(errorString) Attachments can be viewed in the Report navigator.")
+            }
+        } catch let error as SnapshotError {
+            XCTAssert(false, error.localizedDescription)
+        }
+    }
+}
+
+private struct SnapshotError: Error {
+    let localizedDescription: String
+    init(_ localizedDescription: String) {
+        self.localizedDescription = localizedDescription
     }
 }
 

@@ -9,6 +9,10 @@ import XCTest
 import SwiftUI
 import LiveViewNative
 
+/// Some graphics view modifiers don't render properly in `assertMatch`. If you expect a test to fail and it doesn't, then you might need to pass `useDrawingGroup: true`. See `testBrightness` for an example.
+///
+/// https://developer.apple.com/documentation/swiftui/view/drawinggroup(opaque:colormode:)
+
 @MainActor
 final class DrawingAndGraphicsModifiersTests: XCTestCase {
     func testRotationEffect() throws {
@@ -69,6 +73,30 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
         ) {
             Text("Hello, world!")
                 .clipShape(Rectangle().rotation(.degrees(45)))
+        }
+    }
+
+    func testBrightness() throws {
+        try assertMatch(
+            #"""
+            <Color name="system-red" modifiers='[{"amount":0.5,"type":"brightness"}]' />
+            """#,
+            size: .init(width: 100, height: 100),
+            useDrawingGroup: true
+        ) {
+            Color.red
+                .brightness(0.5)
+        }
+        
+        try assertFail(
+            #"""
+            <Color name="system-red" modifiers='[{"amount":0.5,"type":"brightness"}]' />
+            """#,
+            size: .init(width: 100, height: 100),
+            useDrawingGroup: true
+        ) {
+            Color.red
+                .brightness(0.1)
         }
     }
 }
