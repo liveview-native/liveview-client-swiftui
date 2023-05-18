@@ -42,20 +42,20 @@ import SwiftUI
 struct SwipeActionsModifier<R: RootRegistry>: ViewModifier, Decodable {
     @ObservedElement private var element
     @LiveContext<R> private var context
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
     /// The edge of the list item to associate the swipe actions with.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     let edge: HorizontalEdge
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
     /// A boolean value that indicates whether the swipe action should be allowed to span the entire width of the screen.
-    let allowsFullSwipe: Bool
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
+    let allowsFullSwipe: Bool
     /// The content of the swipe action.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
     let content: String
 
     init(from decoder: Decoder) throws {
