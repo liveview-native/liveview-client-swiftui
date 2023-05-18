@@ -188,8 +188,7 @@ final class ControlsAndIndicatorsModifiersTests: XCTestCase {
                 <Gauge value="0.5" modifiers='[{"type": "gauge_style", "style": "linear_capacity"}]'>Linear Capacity</Gauage>
                 <Gauge value="0.5" modifiers='[{"type": "gauge_style", "style": "accessory_linear"}]'>Accessory Linear</Gauage>
             </VStack>
-            """#,
-            useDrawingGroup: false
+            """#
         ) {
             VStack {
                 Gauge(value: 0.5) {

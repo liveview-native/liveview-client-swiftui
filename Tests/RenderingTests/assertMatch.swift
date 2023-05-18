@@ -21,7 +21,7 @@ extension XCTestCase {
         environment: @escaping (inout EnvironmentValues) -> () = { _ in },
         size: CGSize? = nil,
         lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
-        useDrawingGroup: Bool = true,
+        useDrawingGroup: Bool = false,
         @ViewBuilder outerView: (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: () -> some View
     ) throws {
@@ -35,7 +35,7 @@ extension XCTestCase {
         environment: @escaping (inout EnvironmentValues) -> () = { _ in },
         size: CGSize? = nil,
         lifetime: XCTAttachment.Lifetime = .deleteOnSuccess,
-        useDrawingGroup: Bool = true,
+        useDrawingGroup: Bool = false,
         @ViewBuilder outerView: (AnyView) -> some View = { $0 },
         @ViewBuilder _ view: () -> some View
     ) throws {
@@ -120,13 +120,6 @@ private func snapshot(_ view: some View, size: CGSize?) -> UIImage? {
 
     let renderer = UIGraphicsImageRenderer(size: uiView.bounds.size)
     return renderer.image { context in
-        /// If this is crashing when running tests, then the call to `assertMatch` likely needs to pass `useDrawingGroup: false`.
-        /// `drawingGroup` is necessary to for the render to composite all modifiers, but crashes with some views. Known cases at the time of writing this are `RenameButton` and `Gauge`
-        ///
-        /// https://developer.apple.com/documentation/swiftui/view/drawinggroup(opaque:colormode:)
-        ///
-        /// Note from Apple docs:
-        /// > Views backed by native platform views may not render into the image.
         uiView.layer.render(in: context.cgContext)
     }
 }
