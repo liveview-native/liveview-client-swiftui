@@ -71,7 +71,12 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.url = url.appending(path: "").absoluteURL
         self.config = config
         self.rootCoordinator = .init(session: self, url: self.url)
+        Task { [weak self] in
+            await self?.connect()
+            await self?.rootCoordinator.connect()
+        }
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { prev, next in
+            print(prev, next)
             if prev.count > next.count {
                 let last = next.last ?? .init(url: self.url, coordinator: self.rootCoordinator)
                 if last.coordinator.url != last.url {
@@ -79,6 +84,18 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     Task {
                         await last.coordinator.reconnect()
                     }
+                }
+            }
+        }.store(in: &cancellables)
+        $navigationPath.sink { entries in
+            guard let entry = entries.last else { return }
+            Task {
+                // If the coordinator is not connected to the right URL, update it.
+                if entry.coordinator.url != entry.url {
+                    entry.coordinator.url = entry.url
+                    await entry.coordinator.reconnect()
+                } else {
+                    await entry.coordinator.connect()
                 }
             }
         }.store(in: &cancellables)
