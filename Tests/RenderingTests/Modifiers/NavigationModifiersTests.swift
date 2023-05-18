@@ -15,12 +15,12 @@ final class NavigationModifiersTests: XCTestCase {
         #if os(iOS)
         try assertMatch(
             #"""
-            <TabView modifiers='[{"style":"page_always","type":"tab_view_style"}]'>
-                <Text modifiers='[{"label":"label","type":"tab_item"}]'>
+            <TabView modifiers="[{&quot;style&quot;:&quot;page_always&quot;,&quot;type&quot;:&quot;tab_view_style&quot;}]">
+                <Text modifiers="[{&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;tab_item&quot;}]">
                     A
                     <Image template="label" system-name="person.crop.circle.fill" />
                 </Text>
-                <Text modifiers='[{"label":"label","type":"tab_item"}]'>
+                <Text modifiers="[{&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;tab_item&quot;}]">
                     B
                     <Image template="label" system-name="tray.fill" />
                 </Text>
@@ -45,7 +45,7 @@ final class NavigationModifiersTests: XCTestCase {
     
     func testTabViewStyle() throws {
         let content = #"""
-        <Text modifiers='[{"label":"label","type":"tab_item"}]'>
+        <Text modifiers="[{&quot;label&quot;:&quot;label&quot;,&quot;type&quot;:&quot;tab_item&quot;}]">
             A
             <Image template="label" system-name="person.crop.circle.fill" />
         </Text>
@@ -57,7 +57,7 @@ final class NavigationModifiersTests: XCTestCase {
         #if os(iOS)
         try assertMatch(
             #"""
-            <TabView modifiers='[{"style":"page","type":"tab_view_style"}]'>
+            <TabView modifiers="[{&quot;style&quot;:&quot;page&quot;,&quot;type&quot;:&quot;tab_view_style&quot;}]">
                 \#(content)
             </TabView>
             """#,
@@ -70,7 +70,7 @@ final class NavigationModifiersTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <TabView modifiers='[{"style":"page_always","type":"tab_view_style"}]'>
+            <TabView modifiers="[{&quot;style&quot;:&quot;page_always&quot;,&quot;type&quot;:&quot;tab_view_style&quot;}]">
                 \#(content)
             </TabView>
             """#,
@@ -83,7 +83,7 @@ final class NavigationModifiersTests: XCTestCase {
         }
         try assertMatch(
             #"""
-            <TabView modifiers='[{"style":"page_never","type":"tab_view_style"}]'>
+            <TabView modifiers="[{&quot;style&quot;:&quot;page_never&quot;,&quot;type&quot;:&quot;tab_view_style&quot;}]">
                 \#(content)
             </TabView>
             """#,
