@@ -136,7 +136,10 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
-        content.keyboardShortcut(key, modifiers: eventModifiers)
+        content
+            #if os(iOS) || os(macOS)
+            .keyboardShortcut(key, modifiers: eventModifiers)
+            #endif
     }
     
     enum CodingKeys: String, CodingKey {
