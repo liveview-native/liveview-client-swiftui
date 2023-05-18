@@ -13,13 +13,14 @@ import SwiftUI
 ///
 /// ```html
 /// <NamespaceContext id={:my_namespace}>
-///     <TextField>Username</TextField>
-///     <TextField modifiers={prefers_default_focus(@native, namespace: :my_namespace)}>Password</TextField>
+///     <VStack modifiers={focus_scope(@native, namespace: :my_namespace)}>
+///         <TextField>Username</TextField>
+///         <TextField modifiers={prefers_default_focus(@native, namespace: :my_namespace)}>Password</TextField>
+///     </VStack>
 /// </NamespaceContext>
 /// ```
 ///
 /// ## Arguments
-/// * ``prefersDefaultFocus``
 /// * ``namespace``
 #if swift(>=5.8)
 @_documentation(visibility: public)
@@ -54,7 +55,6 @@ struct FocusScopeModifier: ViewModifier, Decodable {
     }
 
     enum CodingKeys: CodingKey {
-        case prefersDefaultFocus
         case namespace
     }
 }
