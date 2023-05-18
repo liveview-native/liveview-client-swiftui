@@ -15,12 +15,10 @@ import SwiftUI
 /// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, is_presented: :show)}>
 ///   Present Sheet
 ///
-///   <sheet:content>
-///     <VStack modifiers={presentation_corner_radius(@native, radius: 50)}>
-///       <Text>Hello, world!</Text>
-///       <Button phx-click="toggle">Dismiss</Button>
-///     </VStack>
-///   </sheet:content>
+///   <VStack template={:content} modifiers={presentation_corner_radius(@native, radius: 50)}>
+///     <Text>Hello, world!</Text>
+///     <Button phx-click="toggle">Dismiss</Button>
+///   </VStack>
 /// </Button>
 /// ```
 ///

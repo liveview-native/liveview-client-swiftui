@@ -39,12 +39,6 @@ import SwiftUI
 struct ControlGroup<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
-    
-    /// The style to use for this control group.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("control-group-style") private var style: ControlGroupStyle = .automatic
 
     public var body: some View {
         #if os(iOS) || os(macOS)
@@ -52,36 +46,6 @@ struct ControlGroup<R: RootRegistry>: View {
             context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
         } label: {
             context.buildChildren(of: element, forTemplate: "label")
-        }
-        .applyControlGroupStyle(style)
-        #endif
-    }
-}
-
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum ControlGroupStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case navigation
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    @available(iOS 16.0, macOS 13.0, *)
-    func applyControlGroupStyle(_ style: ControlGroupStyle) -> some View {
-        #if os(iOS) || os(macOS)
-        switch style {
-        case .automatic:
-            self.controlGroupStyle(.automatic)
-        case .navigation:
-            self.controlGroupStyle(.navigation)
         }
         #endif
     }

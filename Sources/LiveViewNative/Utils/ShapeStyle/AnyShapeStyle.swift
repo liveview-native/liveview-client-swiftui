@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// A color, gradient, or other style.
 ///
@@ -28,6 +29,14 @@ import SwiftUI
 ///
 /// ```elixir
 /// {:color, :blue}
+/// ```
+/// 
+/// ### :gradient
+/// Creates a gradient from a single color.
+/// See ``LiveViewNative/SwiftUI/Color/init(from:)`` for a list of possible color values.
+/// 
+/// ```elixir
+/// {:gradient, :blue}
 /// ```
 ///
 /// ### :angular_gradient
@@ -163,12 +172,20 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 extension AnyShapeStyle: Decodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let string = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self = try makeJSONDecoder().decode(Self.self, from: Data(string.utf8))
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         switch try container.decode(ConcreteStyle.self, forKey: .concreteStyle) {
         case .color:
             self = Self(try container.decode(SwiftUI.Color.self, forKey: .style))
+        case .gradient:
+            self = Self(try container.decode(SwiftUI.Color.self, forKey: .style).gradient)
         case .angularGradient:
             self = Self(try container.decode(AngularGradient.self, forKey: .style))
         case .ellipticalGradient:
@@ -227,6 +244,7 @@ extension AnyShapeStyle: Decodable {
     
     enum ConcreteStyle: String, Decodable {
         case color
+        case gradient
         case angularGradient = "angular_gradient"
         case ellipticalGradient = "elliptical_gradient"
         case linearGradient = "linear_gradient"

@@ -1,6 +1,4 @@
 defmodule LiveViewNativeSwiftUi.Types.Rect do
-  @derive Jason.Encoder
-
   use LiveViewNativePlatform.Modifier.Type
   def type, do: {:array, {:array, :number}}
 

@@ -20,7 +20,7 @@
                 @Comment {
                     skip = true
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 04-04-01-change-score.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 04-04-03-cat_live.ex)
             }
             
             @Step {
@@ -29,7 +29,7 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-01-assign.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-02-cat_live.ex)
             }
             
             @Step {
@@ -38,31 +38,22 @@
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-02-toggle-favorite.ex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-03-cat_live.ex)
             }
             
             @Step {
-                Edit the `cat_live.ios.heex` template.
-                
-                @Comment {
-                    skip = true
-                }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ios.heex", file: 04-04-02-cat-rating.ios.heex)
-            }
-            
-            @Step {
-                Add the custom modifier `nav_favorite` to the `<v-stack>`. With the modifier we'll pass the current state, so the frontend can display it in the navigation bar button.
+                Add the custom modifier `nav_favorite` to the `<VStack>`. With the modifier we'll pass the current state, so the frontend can display it in the navigation bar button.
                 
                 @Comment {
                     project = "backend"
                 }
-                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ios.heex", file: 05-01-03-attribute.ios.heex)
+                @Code(name: "lib/lvn_tutorial_web/live/cat_live.ex", file: 05-01-04-cat_live.ex)
             }
         }
     }
     
     @Section(title: "Implement the Attribute") {
-        Add code for handling the `nav_favorite` attribute to your custom registry.
+        Add code for handling the `nav_favorite` modifier to your custom registry.
         
         @Steps {
             @Step {
@@ -71,7 +62,7 @@
                 @Comment {
                     skip = true
                 }
-                @Code(name: "MyRegistry.swift", file: 04-01-04-view.swift)
+                @Code(name: "MyRegistry.swift", file: 04-01-03-view.swift)
             }
             
             @Step {
@@ -131,14 +122,42 @@
             @Step {
                 The button inside the toolbar item will display a filled or unfilled star, depending on the current state. When the button is tapped, it will trigger the `toggle-favorite` we set up before on the backend. We pass an empty dictionary as the value for the event, since there's no other data we need to send.
                 
-                With that, you can re-run the app and observe the new attribute in action!
-                
                 @Comment {
                     project = "app"
                     path = "LVNTutorialApp/NavFavoriteModifier.swift"
                 }
-                @Code(name: "NavFavoriteModifier.swift", file: 05-02-06-button.swift) {
-                    @Video(source: 05-02-07-preview.mp4, poster: 05-02-08-preview-poster.png)
+                @Code(name: "NavFavoriteModifier.swift", file: 05-02-06-button.swift)
+            }
+            
+            @Step {
+                Now we need to setup the modifier in Elixir.
+                Create a new file called `nav_favorite.ex` and write the modifier schema.
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "lib/lvn_tutorial_web/modifiers/nav_favorite.ex", file: 05-02-07-modifier-schema.ex)
+            }
+
+            @Step {
+                Edit your config.
+                
+                @Comment {
+                    skip = true
+                }
+                @Code(name: "config/config.exs", file: 01-01-05-config.exs)
+            }
+            
+            @Step {
+                Next, add the modifier module to the list of `custom_modifiers` in `config.exs`.
+                
+                With that, you can re-run the app and observe the new modifier in action!
+                
+                @Comment {
+                    project = "backend"
+                }
+                @Code(name: "config/config.exs", file: 05-02-08-config.exs) {
+                    @Video(source: 05-02-09-preview.mp4, poster: 05-02-10-preview-poster.png)
                 }
             }
         }

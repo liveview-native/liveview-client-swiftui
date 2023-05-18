@@ -1,9 +1,0 @@
-<List>
-  <%= for {name, favorite} <- @cats_and_favorites do %>
-    <HStack id={name}>
-      <AsyncImage src={"/images/cats/#{name}.jpg"} modifiers={frame(@native, width: 100, height: 100)} />
-      <Text><%= name %></Text>
-    </HStack>
-  <% end %>
-</List>
-

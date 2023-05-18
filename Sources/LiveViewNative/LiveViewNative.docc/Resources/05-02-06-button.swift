@@ -16,7 +16,7 @@ struct NavFavoriteModifier: ViewModifier, Decodable {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         Task {
-                            try? await context.coordinator.pushEvent(type: "click", event: "toggle-favorite", value: [:])
+                            try? await context.coordinator.pushEvent(type: "click", event: "toggle-favorite", value: [String:Any]())
                         }
                     } label: {
                         Image(systemName: isFavorite ? "star.fill" : "star")
@@ -26,6 +26,6 @@ struct NavFavoriteModifier: ViewModifier, Decodable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case isFavorite = "is_favorite"
+        case isFavorite
     }
 }

@@ -10,13 +10,16 @@ import Config
 # Configures the endpoint
 config :lvn_tutorial, LvnTutorialWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: LvnTutorialWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [
+    formats: [html: LvnTutorialWeb.ErrorHTML, json: LvnTutorialWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: LvnTutorial.PubSub,
-  live_view: [signing_salt: "luloBBwt"]
+  live_view: [signing_salt: "bwIHzxBe"]
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.14.29",
+  version: "0.17.11",
   default: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
