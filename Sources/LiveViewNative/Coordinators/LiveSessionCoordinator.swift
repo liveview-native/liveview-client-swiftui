@@ -71,10 +71,13 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.url = url.appending(path: "").absoluteURL
         self.config = config
         self.rootCoordinator = .init(session: self, url: self.url)
-        Task { [weak self] in
-            await self?.connect()
-            await self?.rootCoordinator.connect()
-        }
+        self.$internalState.sink { state in
+            if case .connected = state {
+                Task { [weak self] in
+                    await self?.rootCoordinator.connect()
+                }
+            }
+        }.store(in: &cancellables)
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { prev, next in
             print(prev, next)
             if prev.count > next.count {
