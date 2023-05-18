@@ -79,7 +79,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
         }.store(in: &cancellables)
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { prev, next in
-            print(prev, next)
             if prev.count > next.count {
                 let last = next.last ?? .init(url: self.url, coordinator: self.rootCoordinator)
                 if last.coordinator.url != last.url {
