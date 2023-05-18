@@ -22,13 +22,45 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 14.0, macOS 11.0, *)
 struct KeyboardShortcutModifier: ViewModifier, Decodable {
     /// The key equivalent that the user presses in conjunction with any specified modifier keys to activate the shortcut.
+    /// One of the `KeyEquivalent` enumerations.
+    ///
+    /// Possible values:
+    /// * `up_arrow`
+    /// * `down_arrow`
+    /// * `left_arrow`
+    /// * `right_arrow`
+    /// * `clear`
+    /// * `delete`
+    /// * `end`
+    /// * `escape`
+    /// * `home`
+    /// * `page_up`
+    /// * `page_down`
+    /// * `return`
+    /// * `space`
+    /// * `tab`
+    /// * `a-z`
+    /// * `A-Z`
+    /// * `0-9`
+    /// * `!@#$%^*()-_=+[]{}|:"'<>,./?`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     private var key: KeyEquivalent
     /// The modifier keys that the user presses in conjunction with a key equivalent to activate the shortcut.
+    /// One of the `EventModifiers` enumerations.
+    ///
+    /// Possible values:
+    /// * `all`
+    /// * `caps_lock`
+    /// * `command`
+    /// * `control`
+    /// * `numeric_pad`
+    /// * `option`
+    /// * `shift`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -73,7 +105,7 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
             key = KeyEquivalent(value[value.startIndex])
         case "0"..."9":
             key = KeyEquivalent(value[value.startIndex])
-        case "!","@","#","$","%","^","*","(",")","-","_","=","+","[","]","{","}","|",":",";","'","<",">",",",".","/","?":
+        case "!","@","#","$","%","^","*","(",")","-","_","=","+","[","]","{","}","|",":",";","\"","'","<",">",",",".","/","?":
             key = KeyEquivalent(value[value.startIndex])
         default:
             throw DecodingError.dataCorruptedError(forKey: .key, in: container, debugDescription: "invalid value for key")
