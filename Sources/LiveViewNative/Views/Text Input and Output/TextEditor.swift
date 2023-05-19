@@ -13,8 +13,6 @@ import SwiftUI
 /// <TextEditor value-binding="my_text" phx-focus="editor_focused" />
 /// ```
 ///
-/// ## Attributes
-/// - ``replaceDisabled``
 /// ## Events
 /// - ``focusEvent``
 /// - ``blurEvent``
@@ -37,19 +35,11 @@ struct TextEditor: TextFieldProtocol {
     @_documentation(visibility: public)
     #endif
     @Event("phx-blur", type: "blur") var blurEvent
-    /// Whether replace is disabled (defaults to false).
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("replace-disabled") private var replaceDisabled: Bool
     
     var body: some View {
 #if os(iOS) || os(macOS)
         SwiftUI.TextEditor(text: textBinding)
             .focused($isFocused)
-#if os(iOS)
-            .replaceDisabled(replaceDisabled)
-#endif
             .onChange(of: isFocused, perform: handleFocus)
             .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
 #endif
