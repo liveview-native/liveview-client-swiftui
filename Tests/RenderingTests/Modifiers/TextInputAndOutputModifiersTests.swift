@@ -179,4 +179,47 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
         }
         #endif
     }
+    
+    func testKeyboardShortcut() throws {
+        try assertMatch(
+            #"""
+            <Button modifiers="[{&quot;key&quot;:&quot;clear&quot;,&quot;event_modifiers&quot;:{null},&quot;type&quot;:&quot;keyboard_shortcut&quot;}]">Click Me!</Button>
+            """#
+        ){
+            Button("Click Me!") {}
+                .keyboardShortcut(.clear)
+        }
+        try assertMatch(
+            #"""
+            <Button modifiers="[{&quot;key&quot;:&quot;s&quot;,&quot;event_modifiers&quot;:{null},&quot;type&quot;:&quot;keyboard_shortcut&quot;}]">Click Me!</Button>
+            """#
+        ){
+            Button("Click Me!") {}
+                .keyboardShortcut("s")
+        }
+        try assertMatch(
+            #"""
+            <Button modifiers="[{&quot;key&quot;:&quot;+&quot;,&quot;event_modifiers&quot;:{null},&quot;type&quot;:&quot;keyboard_shortcut&quot;}]">Click Me!</Button>
+            """#
+        ){
+            Button("Click Me!") {}
+                .keyboardShortcut("+")
+        }
+        try assertMatch(
+            #"""
+            <Button modifiers="[{&quot;key&quot;:&quot;s&quot;,&quot;event_modifiers&quot;:{&quot;command&quot;},&quot;type&quot;:&quot;keyboard_shortcut&quot;}]">Click Me!</Button>
+            """#
+        ){
+            Button("Click Me!") {}
+                .keyboardShortcut("s", modifiers: [.command])
+        }
+        try assertMatch(
+            #"""
+            <Button modifiers="[{&quot;key&quot;:&quot;s&quot;,&quot;event_modifiers&quot;:{&quot;command&quot;,&quot;shift&quot;},&quot;type&quot;:&quot;keyboard_shortcut&quot;}]">Click Me!</Button>
+            """#
+        ){
+            Button("Click Me!") {}
+                .keyboardShortcut("s", modifiers: [.command, .shift])
+        }
+    }
 }
