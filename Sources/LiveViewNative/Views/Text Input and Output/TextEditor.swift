@@ -14,7 +14,6 @@ import SwiftUI
 /// ```
 ///
 /// ## Attributes
-/// - ``findDisabled``
 /// - ``replaceDisabled``
 /// ## Events
 /// - ``focusEvent``
@@ -38,11 +37,6 @@ struct TextEditor: TextFieldProtocol {
     @_documentation(visibility: public)
     #endif
     @Event("phx-blur", type: "blur") var blurEvent
-    /// Whether find is disabled (defaults to false).
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("find-disabled") private var findDisabled: Bool
     /// Whether replace is disabled (defaults to false).
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -54,7 +48,6 @@ struct TextEditor: TextFieldProtocol {
         SwiftUI.TextEditor(text: textBinding)
             .focused($isFocused)
 #if os(iOS)
-            .findDisabled(findDisabled)
             .replaceDisabled(replaceDisabled)
 #endif
             .onChange(of: isFocused, perform: handleFocus)
