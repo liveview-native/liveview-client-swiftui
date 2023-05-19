@@ -19,8 +19,6 @@ import SwiftUI
 /// ## Events
 /// - ``focusEvent``
 /// - ``blurEvent``
-/// ## Bindings
-/// - ``isFindPresented``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -29,11 +27,6 @@ struct TextEditor: TextFieldProtocol {
     @ObservedElement var element: ElementNode
     @FormState var value: String?
     @FocusState private var isFocused: Bool
-    /// The `find-presented` attribute is a live binding that controls whether the system find UI is presented.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @LiveBinding(attribute: "find-presented") private var isFindPresented = false
     
     /// An event that fires when the text editor is focused.
     #if swift(>=5.8)
@@ -61,7 +54,6 @@ struct TextEditor: TextFieldProtocol {
         SwiftUI.TextEditor(text: textBinding)
             .focused($isFocused)
 #if os(iOS)
-            .findNavigator(isPresented: $isFindPresented)
             .findDisabled(findDisabled)
             .replaceDisabled(replaceDisabled)
 #endif
