@@ -13,6 +13,10 @@ import SwiftUI
 ///
 /// https://developer.apple.com/documentation/swiftui/view/drawinggroup(opaque:colormode:)
 
+/// Some graphics view modifiers don't render properly in `assertMatch`. If you expect a test to fail and it doesn't, then you might need to pass `useDrawingGroup: true`. See `testBrightness` for an example.
+///
+/// https://developer.apple.com/documentation/swiftui/view/drawinggroup(opaque:colormode:)
+
 @MainActor
 final class DrawingAndGraphicsModifiersTests: XCTestCase {
     func testRotationEffect() throws {
