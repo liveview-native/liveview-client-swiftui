@@ -241,7 +241,7 @@ private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
         BuiltinRegistry<R>.applyBinding(
             binding.name,
             event: binding.value!,
-            value: element.buildPhxValuePayload(),
+            value: .object(element.buildPhxValuePayload()),
             to: parent,
             element: element
         )

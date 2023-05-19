@@ -18,7 +18,7 @@ public class LiveViewModel: ObservableObject {
     
     private(set) var bindingValues = [String: Any]()
     let bindingUpdatedByServer = PassthroughSubject<(String, Any), Never>()
-    let bindingUpdatedByClient = PassthroughSubject<(String, Any), Never>()
+    let bindingUpdatedByClient = PassthroughSubject<(String, JSONValue), Never>()
     
     /// Get or create a ``FormModel`` for the given `<live-form>`.
     ///
@@ -57,7 +57,7 @@ public class LiveViewModel: ObservableObject {
         }
     }
     
-    func setBinding(_ name: String, to encodedValue: Any) {
+    func setBinding(_ name: String, to encodedValue: JSONValue) {
         bindingValues[name] = encodedValue
         bindingUpdatedByClient.send((name, encodedValue))
     }
@@ -68,7 +68,7 @@ public class LiveViewModel: ObservableObject {
 /// To obtain a form model, use ``LiveViewModel/getForm(elementID:)`` or the `\.formModel` environment key.
 public class FormModel: ObservableObject, CustomDebugStringConvertible {
     let elementID: String
-    @_spi(LiveForm) public var pushEventImpl: ((String, String, Any, Int?) async throws -> Void)!
+    @_spi(LiveForm) public var pushEventImpl: ((String, String, JSONValue, Int?) async throws -> Void)!
     var changeEvent: String?
     var submitEvent: String?
     /// The form data for this form.
@@ -113,11 +113,11 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         let data = data.mapValues { value in
             let encoder = FragmentEncoder()
             try! value.encode(to: encoder)
-            return encoder.unwrap() as Any
+            return encoder.unwrap()
         }
 
         // the `form` event type signals to LiveView on the backend that the payload is url encoded (e.g., `a=b&c=d`), so we use a different type
-        try await pushEventImpl("native-form", event, data, nil)
+        try await pushEventImpl("native-form", event, .object(data), nil)
     }
     
     public var debugDescription: String {

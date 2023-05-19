@@ -181,7 +181,7 @@ public struct LiveBinding<Value: Codable> {
                 // todo: if encoding fails, what should happen?
                 try! newValue.encode(to: encoder)
                 data.skipNextUpdate = true
-                liveViewModel.setBinding(bindingName, to: encoder.unwrap() as Any)
+                liveViewModel.setBinding(bindingName, to: encoder.unwrap())
             }
         }
     }

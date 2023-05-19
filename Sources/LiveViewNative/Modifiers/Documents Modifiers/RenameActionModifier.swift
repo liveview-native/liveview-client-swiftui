@@ -55,7 +55,7 @@ struct RenameActionModifier: ViewModifier, Decodable {
         content
             .renameAction {
                 Task {
-                    try await coordinatorEnvironment?.pushEvent("click", event, [String:Any](), target)
+                    try await coordinatorEnvironment?.pushEvent("click", event, nil, target)
                 }
             }
     }

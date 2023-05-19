@@ -7,5 +7,4 @@
 
 import Foundation
 
-// todo: typed payloads
 public typealias Payload = [String: Any]

@@ -49,7 +49,7 @@ struct GestureModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let gesture: AnyGesture<Any>
+    private let gesture: AnyGesture<JSONValue>
     
     /// The event to trigger when tapped.
     ///
@@ -78,7 +78,7 @@ struct GestureModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.gesture = try container.decode(AnyGesture<Any>.self, forKey: .gesture)
+        self.gesture = try container.decode(AnyGesture<JSONValue>.self, forKey: .gesture)
         self._action = try container.decode(Event.self, forKey: .action)
         self.priority = try container.decode(GesturePriority.self, forKey: .priority)
         self.mask = try container.decode(GestureMask.self, forKey: .mask)

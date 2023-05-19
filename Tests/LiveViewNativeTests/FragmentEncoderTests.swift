@@ -41,7 +41,7 @@ final class FragmentEncoderTests: XCTestCase {
         let test = Test(b: false, s: "hello", d: 3.14, f: 1.0, i: -1, o: Nested(s: "foo"), a: [Nested(s: "bar")])
         let encoder = FragmentEncoder()
         try test.encode(to: encoder)
-        XCTAssertEqual(encoder.unwrap() as! [String: Any?] as NSDictionary, expected as NSDictionary)
+        XCTAssertEqual(encoder.toNSJSONSerializable() as! NSDictionary, expected as NSDictionary)
     }
     
 }

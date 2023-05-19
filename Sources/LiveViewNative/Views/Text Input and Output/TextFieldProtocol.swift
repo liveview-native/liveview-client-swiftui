@@ -76,12 +76,12 @@ extension TextFieldProtocol {
         if isFocused {
             focusEvent(value:
                 element.buildPhxValuePayload()
-                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+                    .merging(["value": .string(textBinding.wrappedValue)], uniquingKeysWith: { a, _ in a })
             )
         } else {
             blurEvent(value:
                 element.buildPhxValuePayload()
-                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+                    .merging(["value": .string(textBinding.wrappedValue)], uniquingKeysWith: { a, _ in a })
             )
         }
     }

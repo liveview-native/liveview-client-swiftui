@@ -83,7 +83,7 @@ public struct Event: DynamicProperty, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let params: Any?
+    private let params: JSONValue
     
     @Attribute("phx-debounce") private var debounceAttribute: Double?
     @Attribute("phx-throttle") private var throttleAttribute: Double?
@@ -219,7 +219,7 @@ public struct Event: DynamicProperty, Decodable {
             self.target = try container.decodeIfPresent(Int.self, forKey: .target)
             self.debounce = try container.decodeIfPresent(Double.self, forKey: .debounce)
             self.throttle = try container.decodeIfPresent(Double.self, forKey: .throttle)
-            self.params = try container.decodeIfPresent(String.self, forKey: .params).flatMap({ try? JSONSerialization.jsonObject(with: Data($0.utf8)) })
+            self.params = try container.decodeIfPresent(String.self, forKey: .params).flatMap({ try? makeJSONDecoder().decode(JSONValue.self, from: Data($0.utf8)) }) ?? .null
         }
     }
     
@@ -260,14 +260,14 @@ public struct Event: DynamicProperty, Decodable {
     public struct EventHandler {
         let owner: Event
         
-        public func callAsFunction(value: Any = [String:String](), didSend: (() -> Void)? = nil) {
+        public func callAsFunction(value: some ToJSONValue = JSONValue.null, didSend: (() -> Void)? = nil) {
             Task {
                 try await self.callAsFunction(value: value)
                 didSend?()
             }
         }
         
-        public func callAsFunction(value: Any = [String:String]()) async throws {
+        public func callAsFunction(value: some ToJSONValue = JSONValue.null) async throws {
             guard let event = owner.event ?? owner.name.flatMap(owner.element.attributeValue(for:)) else {
                 return
             }
@@ -275,7 +275,7 @@ public struct Event: DynamicProperty, Decodable {
                 owner.handler.currentEvent.send({
                     Task {
                         do {
-                            try await owner.coordinatorEnvironment?.pushEvent(owner.type, event, owner.params ?? value, owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init))
+                            try await owner.coordinatorEnvironment?.pushEvent(owner.type, event, owner.params ?? value.toJSONValue(), owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init))
                             continuation.resume()
                         } catch {
                             continuation.resume(with: .failure(error))

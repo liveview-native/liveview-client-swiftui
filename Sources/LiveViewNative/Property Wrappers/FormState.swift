@@ -202,7 +202,7 @@ public struct FormState<Value: FormValue> {
         let name = element.attributeValue(for: "name") ?? "value"
         let encoder = FragmentEncoder()
         try! wrappedValue.encode(to: encoder)
-        let value = encoder.unwrap() as Any
+        let value = encoder.unwrap()
         Task {
             try? await coordinator!.pushEvent("native-form", changeEvent, [name: value], nil)
         }

@@ -53,7 +53,7 @@ struct PasteButton<R: RootRegistry>: View {
     var body: some View {
         #if os(iOS) || os(macOS)
         SwiftUI.PasteButton(payloadType: String.self) { strings in
-            click(value: ["value": strings]) {}
+            click(value: ["value": JSONValue.array(strings.map(JSONValue.string(_:)))]) {}
         }
             .preference(key: ProvidedBindingsKey.self, value: ["phx-click"])
         #endif

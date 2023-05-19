@@ -7,9 +7,9 @@
 
 import Foundation
 
-/// An ``Encoder`` implementation that lets us encode something to be later serialized by ``JSONSerialization``
+/// An ``Encoder`` implementation that lets us encode something to a ``JSONValue``, which can be converted to a form serializable by `JSONSerialization`.
 class FragmentEncoder: Encoder {
-    var future = JSONFuture()
+    fileprivate var future = JSONFuture()
     
     var codingPath: [CodingKey]
     
@@ -19,8 +19,12 @@ class FragmentEncoder: Encoder {
         self.codingPath = codingPath
     }
     
-    func unwrap() -> Any? {
-        future.value!.unwrap()
+    func unwrap() -> JSONValue {
+        future.value!.payload
+    }
+    
+    func toNSJSONSerializable() -> Any {
+        unwrap().toNSJSONSerializable()
     }
     
     func container<Key>(keyedBy type: Key.Type) -> KeyedEncodingContainer<Key> where Key : CodingKey {
@@ -36,43 +40,39 @@ class FragmentEncoder: Encoder {
     }
 }
 
-class JSONFuture {
-    var value: JSONValue?
+private class JSONFuture {
+    var value: JSONValueBox?
     
-    init(value: JSONValue? = nil) {
+    init(value: JSONValueBox? = nil) {
         self.value = value
     }
 }
 
-class JSONValue {
-    private var payload: Payload
+private class JSONValueBox {
+    private(set) var payload: JSONValue
     
-    private init(payload: Payload) {
+    private init(payload: JSONValue) {
         self.payload = payload
     }
     
-    static func null() -> JSONValue {
-        JSONValue(payload: .null)
+    static func null() -> JSONValueBox {
+        JSONValueBox(payload: .null)
     }
     
-    static func string(_ s: String) -> JSONValue {
-        JSONValue(payload: .string(s))
+    static func string(_ s: String) -> JSONValueBox {
+        JSONValueBox(payload: .string(s))
     }
     
-    static func number(_ n: NSNumber) -> JSONValue {
-        JSONValue(payload: .number(n))
+    static func number(_ n: NSNumber) -> JSONValueBox {
+        JSONValueBox(payload: .double(n.doubleValue))
     }
     
-    static func emptyArray() -> JSONValue {
-        JSONValue(payload: .array([]))
+    static func emptyArray() -> JSONValueBox {
+        JSONValueBox(payload: .array([]))
     }
     
-    static func emptyObject() -> JSONValue {
-        JSONValue(payload: .object([:]))
-    }
-    
-    func unwrap() -> Any? {
-        return payload.unwrap()
+    static func emptyObject() -> JSONValueBox {
+        JSONValueBox(payload: .object([:]))
     }
     
     func arrayCount() -> Int {
@@ -82,51 +82,28 @@ class JSONValue {
         return a.count
     }
     
-    func arrayAppend(value: JSONValue) {
+    func arrayAppend(value: JSONValueBox) {
         guard case .array(var a) = payload else {
             fatalError()
         }
-        a.append(value)
+        a.append(value.payload)
         payload = .array(a)
     }
     
-    func objectSet(value: JSONValue, forKey key: String) {
+    func objectSet(value: JSONValueBox, forKey key: String) {
         guard case .object(var d) = payload else {
             fatalError()
         }
-        d[key] = value
+        d[key] = value.payload
         payload = .object(d)
-    }
-    
-    private enum Payload {
-        case null
-        case string(String)
-        case number(NSNumber)
-        case array([JSONValue])
-        case object([String: JSONValue])
-        
-        func unwrap() -> Any? {
-            switch self {
-            case .null:
-                return nil
-            case .string(let s):
-                return s
-            case .number(let n):
-                return n
-            case .array(let a):
-                return a.map { $0.unwrap() }
-            case .object(let o):
-                return o.mapValues { $0.unwrap() }
-            }
-        }
     }
 }
 
 struct KeyedFragmentEncodingContainer<Key: CodingKey>: KeyedEncodingContainerProtocol {
-    let future: JSONFuture
+    private let future: JSONFuture
     let codingPath: [CodingKey]
     
-    init(future: JSONFuture, codingPath: [CodingKey]) {
+    fileprivate init(future: JSONFuture, codingPath: [CodingKey]) {
         self.future = future
         self.codingPath = codingPath
         future.value = .emptyObject()
@@ -199,13 +176,13 @@ struct KeyedFragmentEncodingContainer<Key: CodingKey>: KeyedEncodingContainerPro
     }
     
     mutating func nestedContainer<NestedKey>(keyedBy keyType: NestedKey.Type, forKey key: Key) -> KeyedEncodingContainer<NestedKey> where NestedKey : CodingKey {
-        let object = JSONValue.emptyObject()
+        let object = JSONValueBox.emptyObject()
         future.value!.objectSet(value: object, forKey: key.stringValue)
         return KeyedEncodingContainer(KeyedFragmentEncodingContainer<NestedKey>(future: JSONFuture(value: object), codingPath: codingPath + [key]))
     }
     
     mutating func nestedUnkeyedContainer(forKey key: Key) -> UnkeyedEncodingContainer {
-        let array = JSONValue.emptyArray()
+        let array = JSONValueBox.emptyArray()
         future.value!.objectSet(value: array, forKey: key.stringValue)
         return UnkeyedFragmentEncodingContainer(future: JSONFuture(value: array), codingPath: codingPath + [key])
     }
@@ -221,14 +198,14 @@ struct KeyedFragmentEncodingContainer<Key: CodingKey>: KeyedEncodingContainerPro
 }
 
 struct UnkeyedFragmentEncodingContainer: UnkeyedEncodingContainer {
-    let future: JSONFuture
+    private let future: JSONFuture
     let codingPath: [CodingKey]
     
     var count: Int {
         future.value!.arrayCount()
     }
     
-    init(future: JSONFuture, codingPath: [CodingKey]) {
+    fileprivate init(future: JSONFuture, codingPath: [CodingKey]) {
         self.future = future
         self.codingPath = codingPath
         future.value = .emptyArray()
@@ -301,13 +278,13 @@ struct UnkeyedFragmentEncodingContainer: UnkeyedEncodingContainer {
     }
     
     mutating func nestedContainer<NestedKey>(keyedBy keyType: NestedKey.Type) -> KeyedEncodingContainer<NestedKey> where NestedKey : CodingKey {
-        let object = JSONValue.emptyObject()
+        let object = JSONValueBox.emptyObject()
         future.value!.arrayAppend(value: object)
         return KeyedEncodingContainer(KeyedFragmentEncodingContainer<NestedKey>(future: JSONFuture(value: object), codingPath: codingPath + [IntKey(intValue: count - 1)!]))
     }
     
     mutating func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
-        let array = JSONValue.emptyArray()
+        let array = JSONValueBox.emptyArray()
         future.value!.arrayAppend(value: array)
         return UnkeyedFragmentEncodingContainer(future: JSONFuture(value: array), codingPath: codingPath + [IntKey(intValue: count - 1)!])
     }
@@ -319,8 +296,13 @@ struct UnkeyedFragmentEncodingContainer: UnkeyedEncodingContainer {
 }
 
 struct SingleValueFragmentEncodingContainer: SingleValueEncodingContainer {
-    let future: JSONFuture
+    private let future: JSONFuture
     let codingPath: [CodingKey]
+    
+    fileprivate init(future: JSONFuture, codingPath: [CodingKey]) {
+        self.future = future
+        self.codingPath = codingPath
+    }
     
     mutating func encodeNil() throws {
         future.value = .null()

@@ -13,7 +13,7 @@ extension BuiltinRegistry {
     static func applyBinding(
         _ binding: AttributeName,
         event: String,
-        value: Payload,
+        value: JSONValue,
         to view: some View,
         element: ElementNode
     ) -> some View {
@@ -71,9 +71,9 @@ fileprivate struct ScenePhaseObserver<Content: View>: View {
     let content: Content
     let target: ScenePhase
     let _event: Event
-    let value: Payload
+    let value: JSONValue
     
-    init(content: Content, target: ScenePhase, type: String, event: String, value: Payload) {
+    init(content: Content, target: ScenePhase, type: String, event: String, value: JSONValue) {
         self.content = content
         self.target = target
         self._event = .init(event: event, type: type)
@@ -95,9 +95,9 @@ fileprivate struct FocusObserver<Content: View>: View {
     let content: Content
     let target: Bool
     let _event: Event
-    let value: Payload
+    let value: JSONValue
     
-    init(content: Content, target: Bool, type: String, event: String, value: Payload) {
+    init(content: Content, target: Bool, type: String, event: String, value: JSONValue) {
         self.content = content
         self.target = target
         self._event = .init(event: event, type: type)
@@ -117,9 +117,9 @@ fileprivate struct FocusObserver<Content: View>: View {
 fileprivate struct TapGestureView<Content: View>: View {
     let content: Content
     let _event: Event
-    let value: Payload
+    let value: JSONValue
     
-    init(content: Content, type: String, event: String, value: Payload) {
+    init(content: Content, type: String, event: String, value: JSONValue) {
         self.content = content
         self._event = .init(event: event, type: type)
         self.value = value

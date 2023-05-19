@@ -78,7 +78,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-extension AnyGesture: Decodable {
+extension AnyGesture: Decodable where Value == JSONValue {
     enum CodingKeys: String, CodingKey {
         case type
         case properties
@@ -120,7 +120,7 @@ extension AnyGesture: Decodable {
                 TapGesture(
                     count: try properties.decodeIfPresent(Int.self, forKey: .count) ?? 1
                 )
-                .map { _ in [String:String]() as! Value }
+                .map { _ in nil }
             )
         case .spatialTap:
             let properties = try container.nestedContainer(keyedBy: CodingKeys.SpatialTap.self, forKey: .properties)
@@ -129,7 +129,7 @@ extension AnyGesture: Decodable {
                     count: try properties.decodeIfPresent(Int.self, forKey: .count) ?? 1,
                     coordinateSpace: try properties.decodeIfPresent(CoordinateSpace.self, forKey: .coordinateSpace) ?? .local
                 )
-                .map { ["x": $0.location.x, "y": $0.location.y] as! Value }
+                .map { ["x": $0.location.x, "y": $0.location.y] }
             )
         case .longPress:
             let properties = try container.nestedContainer(keyedBy: CodingKeys.LongPress.self, forKey: .properties)
@@ -138,7 +138,7 @@ extension AnyGesture: Decodable {
                     minimumDuration: try properties.decodeIfPresent(Double.self, forKey: .minimumDuration) ?? 0.5,
                     maximumDistance: try properties.decodeIfPresent(Double.self, forKey: .maximumDistance) ?? 10
                 )
-                .map { $0 as! Value }
+                .map { .boolean($0) }
             )
         case .sequential:
             let properties = try container.nestedContainer(keyedBy: CodingKeys.Sequence.self, forKey: .properties)
@@ -151,10 +151,11 @@ extension AnyGesture: Decodable {
                             case let .first(first):
                                 return first
                             case let .second(first, second):
-                                if let array = first as? [Any] {
-                                    return (array + [second as Any]) as! Value
+                                if case .array(let first) = first,
+                                   case .array(let second) = second {
+                                    return .array(first + second)
                                 } else {
-                                    return [first, second] as! Value
+                                    return [first, second]
                                 }
                             }
                         }
@@ -167,10 +168,11 @@ extension AnyGesture: Decodable {
                 AnyGesture<Value>(
                     SimultaneousGesture(first, second)
                         .map {
-                            if let array = $0.first as? [Any] {
-                                return (array + [$0.second as Any]) as! Value
+                            if case .array(let first) = $0.first,
+                               case .array(let second) = $0.second {
+                                return .array(first + second)
                             } else {
-                                return [$0.first, $0.second] as! Value
+                                return [$0.first, $0.second]
                             }
                         }
                 )

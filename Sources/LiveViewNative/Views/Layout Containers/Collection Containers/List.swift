@@ -197,7 +197,7 @@ struct List<R: RootRegistry>: View {
         return { indices in
             var meta = element.buildPhxValuePayload()
             // todo: what about multiple indicies?
-            meta["index"] = indices.first!
+            meta["index"] = .integer(indices.first!)
             delete(value: meta) {}
         }
     }
@@ -205,8 +205,8 @@ struct List<R: RootRegistry>: View {
     private var onMoveHandler: ((IndexSet, Int) -> Void)? {
         return { indices, index in
             var meta = element.buildPhxValuePayload()
-            meta["index"] = indices.first!
-            meta["destination"] = index
+            meta["index"] = .integer(indices.first!)
+            meta["destination"] = .integer(index)
             move(value: meta) {
                 Task {
 #if os(iOS) || os(tvOS)

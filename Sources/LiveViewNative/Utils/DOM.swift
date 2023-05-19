@@ -91,13 +91,13 @@ public struct ElementNode {
         .joined(separator: " ")
     }
     
-    internal func buildPhxValuePayload() -> Payload {
+    internal func buildPhxValuePayload() -> [String: JSONValue] {
         let prefix = "phx-value-"
         return attributes
             .filter { $0.name.namespace == nil && $0.name.name.starts(with: prefix) }
             .reduce(into: [:]) { partialResult, attr in
                 // TODO: for nil attribute values, what value should this use?
-                partialResult[String(attr.name.name.dropFirst(prefix.count))] = attr.value
+                partialResult[String(attr.name.name.dropFirst(prefix.count))] = attr.value.flatMap(JSONValue.string(_:))
             }
     }
 }

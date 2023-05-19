@@ -69,21 +69,19 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// - Parameter type: The type of event that is being sent (e.g., `click` or `form`). Note: this is not currently used by the LiveView backend.
     /// - Parameter event: The name of the LiveView event handler that the event is being dispatched to.
-    /// - Parameter value: The event value to provide to the backend event handler. The value _must_ be  serializable using `JSONSerialization`.
+    /// - Parameter value: The event value to provide to the backend event handler.
     /// - Parameter target: The value of the `phx-target` attribute.
     /// - Throws: ``LiveConnectionError/eventError(_:)`` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
-    public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws {
-        // isValidJSONObject only accepts objects, but we want to check that the value can be serialized as a field of an object
-        precondition(JSONSerialization.isValidJSONObject(["a": value]))
+    public func pushEvent(type: String, event: String, value: some ToJSONValue, target: Int? = nil) async throws {
         try await doPushEvent("event", payload: [
             "type": type,
             "event": event,
             "value": value,
-            "cid": target as Any
+            "cid": target
         ])
     }
     
-    internal func doPushEvent(_ event: String, payload: Payload) async throws {
+    internal func doPushEvent(_ event: String, payload: [String: any ToJSONValue]) async throws {
         guard let channel = channel else {
             return
         }
@@ -91,7 +89,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         let token = self.currentConnectionToken
 
         let replyPayload = try await withCheckedThrowingContinuation({ [weak channel] continuation in
-            channel?.push(event, payload: payload, timeout: PUSH_TIMEOUT)
+            channel?.push(event, payload: payload.mapValues { $0.toJSONValue().toNSJSONSerializable() }, timeout: PUSH_TIMEOUT)
                 .receive("ok") { reply in
                     continuation.resume(returning: reply.payload)
                 }
