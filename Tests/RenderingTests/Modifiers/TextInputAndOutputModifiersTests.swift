@@ -181,6 +181,7 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
     }
     
     func testKeyboardShortcut() throws {
+        #if os(iOS) || os(macOS)
         try assertMatch(
             #"""
             <Button modifiers="[{&quot;key&quot;:&quot;clear&quot;,&quot;event_modifiers&quot;:{null},&quot;type&quot;:&quot;keyboard_shortcut&quot;}]">Click Me!</Button>
@@ -221,5 +222,6 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
             Button("Click Me!") {}
                 .keyboardShortcut("s", modifiers: [.command, .shift])
         }
+        #endif
     }
 }
