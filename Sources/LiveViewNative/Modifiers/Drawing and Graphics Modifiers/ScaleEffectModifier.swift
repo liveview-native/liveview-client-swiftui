@@ -28,25 +28,13 @@ struct ScaleEffectModifier: ViewModifier, Decodable {
     #endif
     private let scale: CGSize
 
-    /// The ``LiveViewNative/SwiftUI/UnitPoint`` from which to apply the transformation. Defaults to `{0.5, 0.5}`
+    /// The ``LiveViewNative/SwiftUI/UnitPoint`` from which to apply the transformation`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     private let anchor: UnitPoint
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.scale = try container.decode(CGSize.self, forKey: .scale)
-        self.anchor = try container.decodeIfPresent(UnitPoint.self, forKey: .anchor) ?? .center
-    }
-
     func body(content: Content) -> some View {
         content.scaleEffect(scale, anchor: anchor)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case scale
-        case anchor
     }
 }

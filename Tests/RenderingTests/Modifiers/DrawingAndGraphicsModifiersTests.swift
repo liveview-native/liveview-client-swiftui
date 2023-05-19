@@ -135,7 +135,6 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
             #"""
             <Color name="system-red" modifiers='[{"amount":0.5,"type":"brightness"}]' />
             """#,
-            size: .init(width: 100, height: 100),
             useDrawingGroup: true
         ) {
             Color.red
@@ -146,7 +145,6 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
             #"""
             <Color name="system-red" modifiers='[{"amount":0.5,"type":"brightness"}]' />
             """#,
-            size: .init(width: 100, height: 100),
             useDrawingGroup: true
         ) {
             Color.red
@@ -187,8 +185,7 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                     <Color name="system-red" />
                     <Color name="system-green" modifiers='[{"anchor":null,"angle":0.75,"type":"rotation_effect"},{"blend_mode":"\#(modeNames[index])","type":"blend_mode"}]' />
                 </ZStack>
-                """#,
-                size: .init(width: 100, height: 100)
+                """#
             ) {
                 ZStack {
                     Color.red
@@ -221,11 +218,19 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
             #"""
             <Color name="system-red" modifiers='[{"type":"color_invert"}]' />
             """#,
-            size: .init(width: 100, height: 100),
             useDrawingGroup: true
         ) {
             Color.red
                 .colorInvert()
+        }
+        
+        try assertFail(
+            #"""
+            <Color name="system-red" modifiers='[{"type":"color_invert"}]' />
+            """#,
+            useDrawingGroup: true
+        ) {
+            Color.red
         }
     }
     
@@ -245,7 +250,6 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
             #"""
             <Color name="system-red" modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-mint","white":null},"type":"color_multiply"}]' />
             """#,
-            size: .init(width: 100, height: 100),
             useDrawingGroup: true
         ) {
             Color.red
@@ -262,8 +266,7 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                     <Text modifiers='[{"opaque":false,"radius":2.0,"type":"blur"}]'>Hello</Text>
                 </ZStack>
             </HStack>
-            """#,
-            size: .init(width: 100, height: 100)
+            """#
         ) {
             HStack {
                 ZStack {
@@ -283,7 +286,6 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                 #"""
                 <Color name='system-red' modifiers='[{"amount":\#(amount),"type":"contrast"}]' />
                 """#,
-                size: .init(width: 100, height: 100),
                 useDrawingGroup: true
             ) {
                 Color.red
@@ -294,7 +296,6 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                 #"""
                 <Color name='system-red' modifiers='[{"amount":\#(amount),"type":"contrast"}]' />
                 """#,
-                size: .init(width: 100, height: 100),
                 useDrawingGroup: true
             ) {
                 Color.red
@@ -361,6 +362,144 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                 }
                 .drawingGroup(opaque: false, colorMode: mode)
             }
+        }
+    }
+    
+    func testGrayscale() throws {
+        try assertMatch(
+            #"""
+            <Color name='system-red' modifiers='[{"amount":0.5,"type":"grayscale"}]' />
+            """#,
+            useDrawingGroup: true
+        ) {
+            Color.red
+                .grayscale(0.5)
+        }
+        
+        try assertFail(
+            #"""
+            <Color name='system-red' modifiers='[{"amount":0.5,"type":"grayscale"}]' />
+            """#,
+            useDrawingGroup: true
+        ) {
+            Color.red
+                .grayscale(0.2)
+        }
+    }
+    
+    func testLuminanceToAlpha() throws {
+        try assertMatch(
+            #"""
+            <Color name='system-red' modifiers='[{"type":"luminance_to_alpha"}]' />
+            """#,
+            useDrawingGroup: true
+        ) {
+            Color.red
+                .luminanceToAlpha()
+        }
+        
+        try assertFail(
+            #"""
+            <Color name='system-red' modifiers='[{"type":"luminance_to_alpha"}]' />
+            """#,
+            useDrawingGroup: true
+        ) {
+            Color.red
+        }
+    }
+    
+    func testMask() throws {
+        try assertMatch(
+            #"""
+            <Image
+                system-name="envelope.badge.fill"
+                modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-blue","white":null},"type":"foreground_color"},{"font":{"modifiers":[],"properties":{"style":"large_title"},"type":"system"},"type":"font"},{"alignment":"center","content":"mask","type":"mask"}]'
+            >
+                <Rectangle template="mask" modifiers='[{"opacity":0.1,"type":"opacity"}]' />
+            </Image>
+            """#,
+            useDrawingGroup: true
+        ) {
+            Image(systemName: "envelope.badge.fill")
+                .foregroundColor(.blue)
+                .font(.largeTitle)
+                .mask(alignment: .center) {
+                    Rectangle()
+                        .opacity(0.1)
+                }
+        }
+    }
+    
+    func testSaturation() throws {
+        try assertMatch(
+            #"""
+            <Color name='system-red' modifiers='[{"amount":0.5,"type":"saturation"}]' />
+            """#,
+            useDrawingGroup: true
+        ) {
+            Color.red
+                .saturation(0.5)
+        }
+        
+        try assertFail(
+            #"""
+            <Color name='system-red' modifiers='[{"amount":0.5,"type":"saturation"}]' />
+            """#,
+            useDrawingGroup: true
+        ) {
+            Color.red
+                .saturation(0.2)
+        }
+    }
+    
+    func testScaledToFill() throws {
+        try assertMatch(
+            #"""
+            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"type":"foreground_color"},{"type":"scaled_to_fill"},{"alignment":null,"height":20.0,"type":"frame","width":50.0}]' />
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Circle()
+                .foregroundColor(.red)
+                .scaledToFill()
+                .frame(width: 50, height: 20)
+        }
+    }
+    
+    func testScaledToFit() throws {
+        try assertMatch(
+            #"""
+            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"type":"foreground_color"},{"type":"scaled_to_fit"},{"alignment":null,"height":20.0,"type":"frame","width":50.0}]' />
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Circle()
+                .foregroundColor(.red)
+                .scaledToFit()
+                .frame(width: 50, height: 20)
+        }
+    }
+    
+    func testScaleEffect() throws {
+        try assertMatch(
+            #"""
+            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"type":"foreground_color"},{"anchor":{"named":"bottom","x":null,"y":null},"scale":[0.5,0.5],"type":"scale_effect"}]' />
+            """#
+        ) {
+            Circle()
+                .foregroundColor(.red)
+                .scaleEffect(x: 0.5, y: 0.5, anchor: .bottom)
+        }
+    }
+    
+    func testShadow() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-gray","white":null},"radius":2.0,"type":"shadow","x":2.0,"y":2.0}]'>Hello</Text>
+            """#
+        ) {
+            Text("Hello")
+                .shadow(color: .gray, radius: 2, x: 2, y: 2)
         }
     }
 }
