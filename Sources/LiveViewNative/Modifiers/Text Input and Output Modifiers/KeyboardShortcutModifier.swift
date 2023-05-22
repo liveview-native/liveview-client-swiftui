@@ -24,6 +24,9 @@ import SwiftUI
 #endif
 @available(iOS 14.0, macOS 11.0, *)
 struct KeyboardShortcutModifier: ViewModifier, Decodable {
+    #if !os(iOS) && !os(macOS)
+    typealias KeyEquivalent = Never
+    #endif
     /// The key equivalent that the user presses in conjunction with any specified modifier keys to activate the shortcut.
     /// One of the `KeyEquivalent` enumerations.
     ///
@@ -68,6 +71,7 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        #if os(iOS) || os(macOS)
         let value = try container.decode(String.self, forKey: .key)
         
         switch value {
@@ -133,6 +137,9 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
                 throw DecodingError.dataCorruptedError(forKey: .eventModifier, in: container, debugDescription: "invalid value for event_modifiers")
             }
         }
+        #else
+        throw DecodingError.typeMismatch(Self.self, .init(codingPath: container.codingPath, debugDescription: "`keyboard_shortcut` modifier not available on this platform"))
+        #endif
     }
 
     func body(content: Content) -> some View {
