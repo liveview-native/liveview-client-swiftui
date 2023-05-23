@@ -26,4 +26,16 @@ final class ViewConfigurationModifiersTests: XCTestCase {
             }.redacted(reason: .placeholder)
         }
     }
+    
+    func testLabelsHidden() throws {
+        try assertMatch(
+            #"""
+            <Toggle modifiers='[{"type":"labels_hidden"}]'>Labelled Switch</Toggle>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Toggle("Labelled Switch", isOn: .constant(false))
+                .labelsHidden()
+        }
+    }
 }
