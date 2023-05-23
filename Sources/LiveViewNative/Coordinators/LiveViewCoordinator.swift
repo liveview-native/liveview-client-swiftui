@@ -72,7 +72,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter value: The event value to provide to the backend event handler.
     /// - Parameter target: The value of the `phx-target` attribute.
     /// - Throws: ``LiveConnectionError/eventError(_:)`` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
-    public func pushEvent(type: String, event: String, value: some ToJSONValue, target: Int? = nil) async throws {
+    public func pushEvent(type: String, event: String, value: some JSONValueConvertible, target: Int? = nil) async throws {
         try await doPushEvent("event", payload: [
             "type": type,
             "event": event,
@@ -81,7 +81,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         ])
     }
     
-    internal func doPushEvent(_ event: String, payload: [String: any ToJSONValue]) async throws {
+    internal func doPushEvent(_ event: String, payload: [String: any JSONValueConvertible]) async throws {
         guard let channel = channel else {
             return
         }
@@ -89,7 +89,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         let token = self.currentConnectionToken
 
         let replyPayload = try await withCheckedThrowingContinuation({ [weak channel] continuation in
-            channel?.push(event, payload: payload.mapValues { $0.toJSONValue().toNSJSONSerializable() }, timeout: PUSH_TIMEOUT)
+            channel?.push(event, payload: payload.mapValues { $0.jsonValue.toNSJSONSerializable() }, timeout: PUSH_TIMEOUT)
                 .receive("ok") { reply in
                     continuation.resume(returning: reply.payload)
                 }

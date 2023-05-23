@@ -260,14 +260,14 @@ public struct Event: DynamicProperty, Decodable {
     public struct EventHandler {
         let owner: Event
         
-        public func callAsFunction(value: some ToJSONValue = JSONValue.null, didSend: (() -> Void)? = nil) {
+        public func callAsFunction(value: some JSONValueConvertible = JSONValue.null, didSend: (() -> Void)? = nil) {
             Task {
                 try await self.callAsFunction(value: value)
                 didSend?()
             }
         }
         
-        public func callAsFunction(value: some ToJSONValue = JSONValue.null) async throws {
+        public func callAsFunction(value: some JSONValueConvertible = JSONValue.null) async throws {
             guard let event = owner.event ?? owner.name.flatMap(owner.element.attributeValue(for:)) else {
                 return
             }
@@ -275,7 +275,7 @@ public struct Event: DynamicProperty, Decodable {
                 owner.handler.currentEvent.send({
                     Task {
                         do {
-                            try await owner.coordinatorEnvironment?.pushEvent(owner.type, event, owner.params ?? value.toJSONValue(), owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init))
+                            try await owner.coordinatorEnvironment?.pushEvent(owner.type, event, owner.params ?? value.jsonValue, owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init))
                             continuation.resume()
                         } catch {
                             continuation.resume(with: .failure(error))

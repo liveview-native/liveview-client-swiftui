@@ -30,6 +30,10 @@ final class JSONValueTests: XCTestCase {
                 .string("qux"),
             ])
         ]))
+        XCTAssertEqual(
+            try JSONSerialization.data(withJSONObject: object.toNSJSONSerializable(), options: .sortedKeys),
+            Data(#"{"key1":null,"key2":3.1400000000000001,"key3":"foo","key4":[{"bar":false,"baz":42},"qux"]}"#.utf8)
+        )
     }
     
 }

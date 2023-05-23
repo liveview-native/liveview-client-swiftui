@@ -9,7 +9,7 @@ import Foundation
 
 /// A strongly typed JSON value.
 ///
-/// In conjunction with the ``ToJSONValue`` protocol, complex JSON structures can be expressed in Swift directly as heterogenous collections.
+/// In conjunction with the ``JSONValueConvertible`` protocol, complex JSON structures can be expressed in Swift directly as heterogenous collections.
 ///
 /// ```swift
 /// let object: JSONValue = [
@@ -25,7 +25,7 @@ import Foundation
 ///
 /// ## Topics
 /// ### Supporting Types
-/// - ``ToJSONValue``
+/// - ``JSONValueConvertible``
 public indirect enum JSONValue: Equatable {
     case null
     case integer(Int)
@@ -72,15 +72,15 @@ extension JSONValue: ExpressibleByNilLiteral {
     }
 }
 extension JSONValue: ExpressibleByArrayLiteral {
-    public init(arrayLiteral elements: any ToJSONValue...) {
-        self = .array(elements.map { $0.toJSONValue() })
+    public init(arrayLiteral elements: any JSONValueConvertible...) {
+        self = .array(elements.map(\.jsonValue))
     }
 }
 extension JSONValue: ExpressibleByDictionaryLiteral {
     public typealias Key = String
-    public typealias Value = any ToJSONValue
+    public typealias Value = any JSONValueConvertible
     public init(dictionaryLiteral elements: (Key, Value)...) {
-        self = .object(Dictionary(uniqueKeysWithValues: elements.map { ($0.0, $0.1.toJSONValue()) }))
+        self = .object(Dictionary(uniqueKeysWithValues: elements.map { ($0.0, $0.1.jsonValue) }))
     }
 }
 extension JSONValue: Decodable {
@@ -108,58 +108,55 @@ extension JSONValue: Decodable {
 
 /// Types that can be converted to ``JSONValue`` conform to this protocol.
 ///
-/// This protocol makes it easier to express complex, nested JSON structures by using heterogenous collections of `any ToJSONValue`.
+/// This protocol makes it easier to express complex, nested JSON structures by using heterogenous collections of `any JSONValueConvertible`.
 ///
-/// For example, `[String: any ToJSONValue]` conforms to `ToJSONValue` and so may be used directly in another JSON object, without manually specifying the JSON object.
-public protocol ToJSONValue {
-    func toJSONValue() -> JSONValue
+/// For example, `[String: any JSONValueConvertible]` conforms to `JSONValueConvertible` and so may be used directly in another JSON object, without manually specifying the JSON object.
+public protocol JSONValueConvertible {
+    var jsonValue: JSONValue { get }
 }
-extension JSONValue: ToJSONValue {
-    public func toJSONValue() -> JSONValue {
+extension JSONValue: JSONValueConvertible {
+    public var jsonValue: JSONValue {
         self
     }
 }
-extension Int: ToJSONValue {
-    public func toJSONValue() -> JSONValue {
+extension Int: JSONValueConvertible {
+    public var jsonValue: JSONValue {
         .integer(self)
     }
 }
-extension Double: ToJSONValue {
-    public func toJSONValue() -> JSONValue {
+extension Double: JSONValueConvertible {
+    public var jsonValue: JSONValue {
         .double(self)
     }
 }
-extension CGFloat: ToJSONValue {
-    public func toJSONValue() -> JSONValue {
+extension CGFloat: JSONValueConvertible {
+    public var jsonValue: JSONValue {
         .double(Double(self))
     }
 }
-extension String: ToJSONValue {
-    public func toJSONValue() -> JSONValue {
+extension String: JSONValueConvertible {
+    public var jsonValue: JSONValue {
         .string(self)
     }
 }
-extension Bool: ToJSONValue {
-    public func toJSONValue() -> JSONValue {
+extension Bool: JSONValueConvertible {
+    public var jsonValue: JSONValue {
         .boolean(self)
     }
 }
-extension Array: ToJSONValue where Element == any ToJSONValue {
-    public func toJSONValue() -> JSONValue {
-        .array(self.map { $0.toJSONValue() })
+extension Array: JSONValueConvertible where Element == any JSONValueConvertible {
+    public var jsonValue: JSONValue {
+        .array(self.map(\.jsonValue))
     }
 }
-extension Dictionary: ToJSONValue where Key == String, Value == any ToJSONValue {
-    public func toJSONValue() -> JSONValue {
-        .object(self.mapValues { $0.toJSONValue() })
+extension Dictionary: JSONValueConvertible where Key == String, Value == any JSONValueConvertible {
+    public var jsonValue: JSONValue {
+        .object(self.mapValues(\.jsonValue))
     }
 }
-extension Optional: ToJSONValue where Wrapped: ToJSONValue {
-    public func toJSONValue() -> JSONValue {
-        if let wrapped = self {
-            return wrapped.toJSONValue()
-        } else {
-            return .null
-        }
+
+extension Optional: JSONValueConvertible where Wrapped: JSONValueConvertible {
+    public var jsonValue: JSONValue {
+        self?.jsonValue ?? .null
     }
 }
