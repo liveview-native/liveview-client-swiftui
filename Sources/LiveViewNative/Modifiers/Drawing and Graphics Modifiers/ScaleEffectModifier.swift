@@ -28,7 +28,7 @@ struct ScaleEffectModifier: ViewModifier, Decodable {
     #endif
     private let scale: CGSize
 
-    /// The ``LiveViewNative/SwiftUI/UnitPoint`` from which to apply the transformation`
+    /// The ``LiveViewNative/SwiftUI/UnitPoint`` from which to apply the transformation.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
