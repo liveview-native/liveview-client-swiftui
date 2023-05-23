@@ -14,10 +14,10 @@ import SwiftUI
 /// ```html
 /// <HStack>
 ///     <ZStack
-///         modifier={
+///         modifiers={
 ///             @native
-///                 |> compositing_group()
-///                 |> opacity(opacity: 0.5)
+///             |> compositing_group()
+///             |> opacity(opacity: 0.5)
 ///         }
 ///     >
 ///         <Text>Hello, world!</Text>

@@ -12,11 +12,7 @@ import SwiftUI
 /// The amount of additional space, in points, that the view should add to each character cluster after layout. Value of 0 sets the tracking to the system default value.
 ///
 /// ```html
-/// <Text
-///     modifiers={
-///         tracking(@native, tracking: 0.5)
-///     }
-/// >Hello World!</Text>
+/// <Text modifiers={tracking(@native, tracking: 0.5)}>Hello, world!</Text>
 /// ```
 ///
 /// ## Arguments

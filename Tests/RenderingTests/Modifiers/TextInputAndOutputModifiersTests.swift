@@ -11,6 +11,11 @@ import LiveViewNative
 
 @MainActor
 final class TextInputAndOutputModifiersTests: XCTestCase {
+    private let shortString = "Placeholder"
+    private let longString = """
+    A text view always uses exactly the amount of space it needs to display its rendered contents, but you can affect the view’s layout. For example, you can use the frame(width:height:alignment:) modifier to propose specific dimensions to the view. If the view accepts the proposal but the text doesn’t fit into the available space, the view uses a combination of wrapping, tightening, scaling, and truncation to make it fit. With a width of 100 points but no constraint on the height, a text view might wrap a long string:
+    """
+    
     func testBaselineOffset() throws {
         try assertMatch(
             #"""
@@ -178,5 +183,135 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
                 .textFieldStyle(.roundedBorder)
         }
         #endif
+    }
+    
+    func testAutocorrectionDisabled() throws {
+        /// This can test parsing and building, but not visual matching of the keyboard with the current test scaffolding
+        for disable in [true, false] {
+            try assertMatch(
+                #"""
+                <TextField modifiers='[{"disable":\#(disable),"type":"autocorrection_disabled"}]'>\#(shortString)</TextField>
+                """#
+            ) {
+                TextField(shortString, text: .constant(""))
+                    .autocorrectionDisabled(disable)
+            }
+        }
+    }
+    
+    func testFlipsForRightToLeftLayoutDirection() throws {
+        for enabled in [true, false] {
+            try assertMatch(
+                #"""
+                <TextField modifiers='[{"enabled":\#(enabled),"type":"flips_for_right_to_left_layout_direction"}]'>\#(shortString)</TextField>
+                """#,
+                environment: {
+                    $0.layoutDirection = .rightToLeft
+                }
+            ) {
+                TextField(shortString, text: .constant(""))
+                    .flipsForRightToLeftLayoutDirection(enabled)
+            }
+        }
+    }
+    
+    func testKerning() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"kerning":0.2,"type":"kerning"}]'>Hello</Text>
+            <Text modifiers='[{"kerning":0,"type":"kerning"}]'>Hello</Text>
+            """#
+        ) {
+            Text("Hello")
+                .kerning(0.2)
+            Text("Hello")
+        }
+    }
+        
+    func testLineLimit() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"number":2,"type":"line_limit"}]'>\#(longString)</Text>
+            <Text modifiers='[{"type":"line_limit"}]'>\#(longString)</Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text(longString)
+                .lineLimit(2)
+            Text(longString)
+        }
+    }
+    
+    func testLineSpacing() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"line_spacing":0.2,"type":"line_spacing"}]'>\#(longString)</Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text(longString)
+                .lineSpacing(0.2)
+        }
+    }
+    
+    func testMinimumScaleFactor() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"factor":0.2,"type":"minimum_scale_factor"},{"number":1,"type":"line_limit"}]'>\#(longString)</Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text(longString)
+                .minimumScaleFactor(0.2)
+                .lineLimit(1)
+        }
+    }
+    
+    func testMultilineTextAlignment() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"alignment":"center","type":"multiline_text_alignment"}]'>\#(longString)</Text>
+            <Text modifiers='[{"alignment":"leading","type":"multiline_text_alignment"}]'>\#(longString)</Text>
+            <Text modifiers='[{"alignment":"trailing","type":"multiline_text_alignment"}]'>\#(longString)</Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text(longString)
+                .multilineTextAlignment(.center)
+            Text(longString)
+                .multilineTextAlignment(.leading)
+            Text(longString)
+                .multilineTextAlignment(.trailing)
+        }
+    }
+    
+    func testTracking() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"tracking":0.2,"type":"tracking"}]'>\#(longString)</Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text(longString)
+                .tracking(0.2)
+        }
+    }
+    
+    func testTruncationMode() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"mode":"head","type":"truncation_mode"}]'>\#(longString)</Text>
+            <Text modifiers='[{"mode":"middle","type":"truncation_mode"}]'>\#(longString)</Text>
+            <Text modifiers='[{"mode":"tail","type":"truncation_mode"}]'>\#(longString)</Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text(longString)
+                .truncationMode(.head)
+            Text(longString)
+                .truncationMode(.middle)
+            Text(longString)
+                .truncationMode(.tail)
+        }
     }
 }

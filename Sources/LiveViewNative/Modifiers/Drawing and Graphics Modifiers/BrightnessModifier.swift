@@ -10,7 +10,7 @@ import SwiftUI
 /// Brighten the intensity of the colors in a view.
 ///
 /// ```html
-/// <Circle modifiers={@native |> foreground_style(primary: {:color, :red}) |> brightness(amount: 0.5)} />
+/// <Color name="system-red" modifiers={@native |> brightness(amount: 0.5)} />
 /// ```
 ///
 /// ## Arguments

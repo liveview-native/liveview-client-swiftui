@@ -2,7 +2,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.KeyboardType do
   use LiveViewNativePlatform.Modifier
 
   modifier_schema "keyboard_type" do
-    field :type, Ecto.Enum, values: ~w(
+    field :keyboard_type, Ecto.Enum, values: ~w(
       default
       ascii_capable
       numbers_and_punctuation

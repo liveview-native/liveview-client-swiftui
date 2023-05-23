@@ -17,12 +17,12 @@ import SwiftUI
 ///     modifiers={
 ///         @native
 ///             |> background(alignment: :center, content: :heart_bg)
-///             |> foreground_style(primary: {:color, :white})
+///             |> foreground_color(color: :red)
 ///             |> luminance_to_alpha()
 ///     }
 /// >
 ///     <background:heart_bg>
-///         <Circle modifiers={@native |> frame(width: 32, height: 32) |> foreground_style(primary: {:color, :red})} />
+///         <Circle modifiers={@native |> frame(width: 32, height: 32) |> foreground_color(color: :red)} />
 ///     </background:heart_bg>
 /// </Image>
 /// ```

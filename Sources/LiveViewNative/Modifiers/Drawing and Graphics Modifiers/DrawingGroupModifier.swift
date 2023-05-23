@@ -39,34 +39,13 @@ struct DrawingGroupModifier: ViewModifier, Decodable {
     
     /// One of the working color space and storage formats. The default is `non_linear`
     ///
-    /// Possible values:
-    /// * `extended_linear`
-    /// * `linear`
-    /// * `non_linear`
+    /// See ``LiveViewNative/SwiftUI/ColorRenderingMode`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     private let colorMode: ColorRenderingMode
 
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.opaque = try container.decode(Bool.self, forKey: .opaque)
-        switch try container.decode(String.self, forKey: .colorMode) {
-        case "extended_linear": self.colorMode = .extendedLinear
-        case "linear": self.colorMode = .linear
-        case "non_linear": self.colorMode = .nonLinear
-        default:
-            throw DecodingError.dataCorruptedError(forKey: .colorMode, in: container, debugDescription: "invalid value for \(CodingKeys.colorMode.rawValue)")
-        }
-    }
-    
     func body(content: Content) -> some View {
         content.drawingGroup(opaque: opaque, colorMode: colorMode)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case opaque
-        case colorMode
     }
 }
