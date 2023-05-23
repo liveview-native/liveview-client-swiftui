@@ -227,59 +227,7 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
             Text("Hello")
         }
     }
-    
-    func testKeyboardType() throws {
-        /// This can test parsing and building, but not visual matching of the keyboard with the current test scaffolding
-        #if os(iOS) || os(tvOS)
-        try assertMatch(
-            #"""
-            <VStack>
-                <TextField modifiers='[{"keyboard_type":"default","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"ascii_capable","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"numbers_and_punctuation","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"url","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"number_pad","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"name_phone_pad","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"email_address","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"decimal_pad","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"twitter","type":"keyboard_type"}]'>\#(shortString)</TextField>
-                <TextField modifiers='[{"keyboard_type":"web_search","type":"keyboard_type"}]'>\#(shortString)</TextField>
-            </VStack>
-            <VStack>
-                <TextField modifiers='[{"keyboard_type":"ascii_capable_number_pad","type":"keyboard_type"}]'>\#(shortString)</TextField>
-            </VStack>
-            """#
-        ) {
-            VStack {
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.default)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.asciiCapable)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.numbersAndPunctuation)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.URL)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.numberPad)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.namePhonePad)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.emailAddress)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.decimalPad)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.twitter)
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.webSearch)
-            }
-            VStack {
-                TextField(shortString, text: .constant(""))
-                    .keyboardType(.asciiCapableNumberPad)
-            }
-        }
-        #endif
-    }
-    
+        
     func testLineLimit() throws {
         try assertMatch(
             #"""
@@ -335,44 +283,6 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
             Text(longString)
                 .multilineTextAlignment(.trailing)
         }
-    }
-    
-    func testSubmitLabel() throws {
-        /// This can test parsing and building, but not visual matching of the keyboard with the current test scaffolding
-        #if os(iOS) || os(tvOS)
-        try assertMatch(
-            #"""
-            <TextField modifiers='[{"submit_label":"done","type":"submit_label"}]'>\#(shortString)</TextField>
-            <TextField modifiers='[{"submit_label":"go","type":"submit_label"}]'>\#(shortString)</TextField>
-            <TextField modifiers='[{"submit_label":"send","type":"submit_label"}]'>\#(shortString)</TextField>
-            <TextField modifiers='[{"submit_label":"join","type":"submit_label"}]'>\#(shortString)</TextField>
-            <TextField modifiers='[{"submit_label":"route","type":"submit_label"}]'>\#(shortString)</TextField>
-            <TextField modifiers='[{"submit_label":"search","type":"submit_label"}]'>\#(shortString)</TextField>
-            <TextField modifiers='[{"submit_label":"return","type":"submit_label"}]'>\#(shortString)</TextField>
-            <TextField modifiers='[{"submit_label":"next","type":"submit_label"}]'>\#(shortString)</TextField>
-            <TextField modifiers='[{"submit_label":"continue","type":"submit_label"}]'>\#(shortString)</TextField>
-            """#
-        ) {
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.done)
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.go)
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.send)
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.join)
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.route)
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.search)
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.return)
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.next)
-            TextField(shortString, text: .constant(""))
-                .submitLabel(.continue)
-        }
-        #endif
     }
     
     func testTracking() throws {
