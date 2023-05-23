@@ -2,7 +2,7 @@ defmodule LiveViewNativeSwiftUi.Types.Rect do
   use LiveViewNativePlatform.Modifier.Type
   def type, do: {:array, {:array, :number}}
 
-  def cast([x, y, width, height]) when is_float(x) and is_float(y) and is_float(width) and is_float(height) do
+  def cast([x, y, width, height]) when is_number(x) and is_number(y) and is_number(width) and is_number(height) do
     {:ok, [[x, y], [width, height]]}
   end
   def cast([[_, _], [_, _]] = value), do: {:ok, value}
