@@ -9,7 +9,7 @@ import SwiftUI
 
 /// A modifier that presents another view as a popover when a binding is activated.
 ///
-/// - Note: Popovers are rendered as a sheet on iOS.
+/// - Note: Popovers are rendered as a sheet on iOS. Use ``PresentationCompactAdaptationModifier`` to customize this behavior.
 ///
 /// ```html
 /// <Button phx-click="toggle" modifiers={popover(@native, content: :content, is_presented: :show)}>
