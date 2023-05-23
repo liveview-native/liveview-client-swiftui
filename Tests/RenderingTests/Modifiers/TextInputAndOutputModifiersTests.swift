@@ -204,7 +204,10 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
             try assertMatch(
                 #"""
                 <TextField modifiers='[{"enabled":\#(enabled),"type":"flips_for_right_to_left_layout_direction"}]'>\#(shortString)</TextField>
-                """#
+                """#,
+                environment: {
+                    $0.layoutDirection = .rightToLeft
+                }
             ) {
                 TextField(shortString, text: .constant(""))
                     .flipsForRightToLeftLayoutDirection(enabled)
