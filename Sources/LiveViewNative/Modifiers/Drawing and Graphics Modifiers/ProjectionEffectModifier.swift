@@ -31,7 +31,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct ProjectionEffectModifier<R: RootRegistry>: ViewModifier, Decodable {
+struct ProjectionEffectModifier: ViewModifier, Decodable {
     /// The 4x4 transformation matrix to apply.
     ///
     /// See ``LiveViewNative/SwiftUI/ProjectionTransform`` for more details.
