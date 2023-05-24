@@ -26,6 +26,17 @@ struct ProjectionEffectModifier<R: RootRegistry>: ViewModifier, Decodable {
 extension ProjectionTransform: Decodable {
     public init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
+        #if os(watchOS)
+        var values = [CGFloat]()
+        while !container.isAtEnd {
+            values.append(try container.decode(CGFloat.self))
+        }
+        self.init(CGAffineTransform(
+            a: values[0], b: values[1],
+            c: values[4], d: values[5],
+            tx: values[8], ty: values[9]
+        ))
+        #else
         self.init(CATransform3D(
             m11: try container.decode(CGFloat.self),
             m12: try container.decode(CGFloat.self),
@@ -44,5 +55,6 @@ extension ProjectionTransform: Decodable {
             m43: try container.decode(CGFloat.self),
             m44: try container.decode(CGFloat.self)
         ))
+        #endif
     }
 }

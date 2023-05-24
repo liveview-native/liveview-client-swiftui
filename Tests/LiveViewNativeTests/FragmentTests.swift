@@ -565,5 +565,3 @@ class FragmentTests: XCTestCase {
         )
     }
 }
-
-import SwiftUI
