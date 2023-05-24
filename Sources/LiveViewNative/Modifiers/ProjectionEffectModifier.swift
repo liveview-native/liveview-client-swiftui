@@ -7,12 +7,34 @@
 
 import SwiftUI
 
-/// <#Documentation#>
+/// Applies a 3D transformation matrix to an element.
+///
+/// Create a ``LiveViewNative/SwiftUI/ProjectionTransform`` to tweak the visual display of the element.
+///
+/// - Note: The frame of the element is not affected.
+///
+/// ```html
+/// <Text modifiers={projection_effect(@native, transform: [
+///     {:translate, {50, 0, 10}},
+///     {:rotate, {:degrees, 45}, {0, 0, 1}},
+///     {:scale, 0.5}
+/// ])}>
+///     Hello, world!
+/// </Text>
+/// ```
+///
+/// - Note: watchOS does not support 3D transformations.
+/// The input values will be treated as a 3x3 matrix, and other values will be ignored.
+///
+/// ## Arguments
+/// * ``transform``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 struct ProjectionEffectModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// <#Documentation#>
+    /// The 4x4 transformation matrix to apply.
+    ///
+    /// See ``LiveViewNative/SwiftUI/ProjectionTransform`` for more details.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -20,41 +42,5 @@ struct ProjectionEffectModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.projectionEffect(transform)
-    }
-}
-
-extension ProjectionTransform: Decodable {
-    public init(from decoder: Decoder) throws {
-        var container = try decoder.unkeyedContainer()
-        #if os(watchOS)
-        var values = [CGFloat]()
-        while !container.isAtEnd {
-            values.append(try container.decode(CGFloat.self))
-        }
-        self.init(CGAffineTransform(
-            a: values[0], b: values[1],
-            c: values[4], d: values[5],
-            tx: values[8], ty: values[9]
-        ))
-        #else
-        self.init(CATransform3D(
-            m11: try container.decode(CGFloat.self),
-            m12: try container.decode(CGFloat.self),
-            m13: try container.decode(CGFloat.self),
-            m14: try container.decode(CGFloat.self),
-            m21: try container.decode(CGFloat.self),
-            m22: try container.decode(CGFloat.self),
-            m23: try container.decode(CGFloat.self),
-            m24: try container.decode(CGFloat.self),
-            m31: try container.decode(CGFloat.self),
-            m32: try container.decode(CGFloat.self),
-            m33: try container.decode(CGFloat.self),
-            m34: try container.decode(CGFloat.self),
-            m41: try container.decode(CGFloat.self),
-            m42: try container.decode(CGFloat.self),
-            m43: try container.decode(CGFloat.self),
-            m44: try container.decode(CGFloat.self)
-        ))
-        #endif
     }
 }
