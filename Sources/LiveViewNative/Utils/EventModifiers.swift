@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A value that represents a set of sides.
+/// The modifier keys that the user presses in conjunction with a key equivalent to activate the shortcut.
 ///
 /// Possible values:
 /// * `all`
