@@ -1,6 +1,6 @@
 //
 //  FragmentTests.swift
-//  
+//
 //
 //  Created by Shadowfacts on 2/28/22.
 //
@@ -562,6 +562,41 @@ class FragmentTests: XCTestCase {
                  components: nil
             ).buildString(),
             "\n  \n    0\n  \n    1\n  \n\n  \n    0\n  \n    1\n  \n"
+        )
+    }
+    
+    func testBuildStringWithThreeNestedComprehensions() throws {
+        XCTAssertEqual(
+            Root(
+                fragment: .comprehension(
+                    dynamics: [
+                        [
+                            .fragment(.comprehension(
+                                dynamics: [
+                                    [.fragment(.comprehension(dynamics: [[], []], statics: .templateRef(0), templates: nil))],
+                                    [.fragment(.comprehension(dynamics: [[], []], statics: .templateRef(0), templates: nil))]
+                                ],
+                                statics: .templateRef(1),
+                                templates: nil
+                            ))
+                        ],
+                        [
+                            .fragment(.comprehension(
+                                dynamics: [
+                                    [.fragment(.comprehension(dynamics: [[], []], statics: .templateRef(0), templates: nil))],
+                                    [.fragment(.comprehension(dynamics: [[], []], statics: .templateRef(0), templates: nil))]
+                                ],
+                                statics: .templateRef(1),
+                                templates: nil
+                            ))
+                        ]
+                    ],
+                    statics: .statics(["<", ">"]),
+                    templates: Templates(templates: [0: ["0"], 1: ["[", "]"]])
+                ),
+                components: nil
+            ).buildString(),
+            "<[00][00]><[00][00]>"
         )
     }
 }

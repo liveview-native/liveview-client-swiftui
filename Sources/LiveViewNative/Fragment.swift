@@ -187,13 +187,13 @@ enum Fragment: Decodable, Equatable {
                 buffer += effectiveStatics[i + 1]
             }
             
-        case .comprehension(let dynamics, statics: _, let templates):
+        case .comprehension(let dynamics, statics: _, let compTemplates):
             for dynamicComponents in dynamics {
                 assert(effectiveStatics.count == dynamicComponents.count + 1)
                 
                 buffer += effectiveStatics[0]
                 for i in dynamicComponents.indices {
-                    dynamicComponents[i].buildStringInternal(buffer: &buffer, root: root, templates: templates)
+                    dynamicComponents[i].buildStringInternal(buffer: &buffer, root: root, templates: compTemplates ?? templates)
                     buffer += effectiveStatics[i + 1]
                 }
             }
