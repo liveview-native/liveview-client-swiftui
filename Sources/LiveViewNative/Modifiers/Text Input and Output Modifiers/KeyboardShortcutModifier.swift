@@ -103,14 +103,10 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
             key = .space
         case "tab":
             key = .tab
-        case "a"..."z":
-            key = KeyEquivalent(value[value.startIndex])
-        case "A"..."Z":
-            key = KeyEquivalent(value[value.startIndex])
-        case "0"..."9":
-            key = KeyEquivalent(value[value.startIndex])
-        case "!","@","#","$","%","^","*","(",")","-","_","=","+","[","]","{","}","|",":",";","\"","'","<",">",",",".","/","?":
-            key = KeyEquivalent(value[value.startIndex])
+        case "a"..."z", "A"..."Z", "0"..."9":
+            key = KeyEquivalent(Character(value))
+        case let character where Set("!@#$%^*()-_=+[]{}|:;\"'<>,./?").contains(Character(character)):
+            key = KeyEquivalent(Character(character))
         default:
             throw DecodingError.dataCorruptedError(forKey: .key, in: container, debugDescription: "invalid value for key")
         }
