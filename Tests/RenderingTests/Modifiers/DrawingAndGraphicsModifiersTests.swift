@@ -504,6 +504,7 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
     }
     
     func testProjectionEffect() throws {
+        #if !os(watchOS)
         try assertMatch(
             #"""
             <Text modifiers='[{"transform":[-0.5,6.123233995736766e-17,0.0,0.0,-6.123233995736766e-17,-0.5,0.0,0.0,0.0,0.0,0.5,0.0,0.0,1.0,1.0,1.0],"type":"projection_effect"}]'>Hello</Text>
@@ -521,5 +522,6 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                     )
                 ))
         }
+        #endif
     }
 }
