@@ -12,13 +12,13 @@ import SwiftUI
 /// ```html
 /// <Button modifiers={keyboard_shortcut(@native, key: :"+")}>Click Me!</Button>
 /// <Button modifiers={keyboard_shortcut(@native, key: :"7")}>Click Me!</Button>
-/// <Button modifiers={keyboard_shortcut(@native, key: :s, event_modifiers: [:command])}>Click Me!</Button>
-/// <Button modifiers={keyboard_shortcut(@native, key: :s, event_modifiers: [:command, :shift])}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut(@native, key: :s, modifiers: [:command])}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut(@native, key: :s, modifiers: [:command, :shift])}>Click Me!</Button>
 /// ```
 ///
 /// ## Arguments
 /// * ``key``
-/// * ``eventModifiers``
+/// * ``modifiers``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -67,7 +67,7 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private var eventModifiers: EventModifiers = []
+    private let modifiers: EventModifiers = []
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -111,28 +111,6 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
             throw DecodingError.dataCorruptedError(forKey: .key, in: container, debugDescription: "invalid value for key")
         }
         
-        let modifiers = try container.decode([String].self, forKey: .eventModifier)
-        
-        for modifier in modifiers {
-            switch modifier {
-            case "all":
-                eventModifiers.insert(.all)
-            case "caps_lock":
-                eventModifiers.insert(.capsLock)
-            case "command":
-                eventModifiers.insert(.command)
-            case "control":
-                eventModifiers.insert(.control)
-            case "numeric_pad":
-                eventModifiers.insert(.numericPad)
-            case "option":
-                eventModifiers.insert(.option)
-            case "shift":
-                eventModifiers.insert(.shift)
-            default:
-                throw DecodingError.dataCorruptedError(forKey: .eventModifier, in: container, debugDescription: "invalid value for event_modifiers")
-            }
-        }
         #else
         throw DecodingError.typeMismatch(Self.self, .init(codingPath: container.codingPath, debugDescription: "`keyboard_shortcut` modifier not available on this platform"))
         #endif
@@ -141,12 +119,12 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
     func body(content: Content) -> some View {
         content
             #if os(iOS) || os(macOS)
-            .keyboardShortcut(key, modifiers: eventModifiers)
+            .keyboardShortcut(key, modifiers: modifiers)
             #endif
     }
     
     enum CodingKeys: String, CodingKey {
         case key
-        case eventModifier
+        case modifiers
     }
 }
