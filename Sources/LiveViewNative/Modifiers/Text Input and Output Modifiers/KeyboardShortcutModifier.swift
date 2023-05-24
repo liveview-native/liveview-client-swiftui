@@ -30,7 +30,7 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private var key: KeyEquivalent
+    private let key: KeyEquivalent
     /// The modifier keys that the user presses in conjunction with a key equivalent to activate the shortcut.
     ///
     /// See ``LiveViewNative/SwiftUI/EventModifiers`` for a list possible values.
@@ -54,6 +54,6 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
 
 extension KeyboardShortcutModifier {
     #if !os(iOS) && !os(macOS)
-    typealias KeyEquivalent = Never
+    typealias KeyEquivalent = String
     #endif
 }
