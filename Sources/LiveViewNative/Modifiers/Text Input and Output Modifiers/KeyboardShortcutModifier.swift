@@ -24,31 +24,9 @@ import SwiftUI
 #endif
 @available(iOS 14.0, macOS 11.0, *)
 struct KeyboardShortcutModifier: ViewModifier, Decodable {
-    #if !os(iOS) && !os(macOS)
-    typealias KeyEquivalent = Never
-    #endif
     /// The key equivalent that the user presses in conjunction with any specified modifier keys to activate the shortcut.
-    /// One of the `KeyEquivalent` enumerations.
     ///
-    /// Possible values:
-    /// * `up_arrow`
-    /// * `down_arrow`
-    /// * `left_arrow`
-    /// * `right_arrow`
-    /// * `clear`
-    /// * `delete`
-    /// * `end`
-    /// * `escape`
-    /// * `home`
-    /// * `page_up`
-    /// * `page_down`
-    /// * `return`
-    /// * `space`
-    /// * `tab`
-    /// * `a-z`
-    /// * `A-Z`
-    /// * `0-9`
-    /// * `!@#$%^*()-_=+[]{}|:"'<>,./?`
+    /// See ``LiveViewNative/SwiftUI/KeyEquivalent`` for a list possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -59,54 +37,7 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let modifiers: EventModifiers = []
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        #if os(iOS) || os(macOS)
-        let value = try container.decode(String.self, forKey: .key)
-        
-        switch value {
-        case "up_arrow":
-            key = .upArrow
-        case "down_arrow":
-            key = .downArrow
-        case "left_arrow":
-            key = .leftArrow
-        case "right_arrow":
-            key = .rightArrow
-        case "clear":
-            key = .clear
-        case "delete":
-            key = .delete
-        case "end":
-            key = .end
-        case "escap":
-            key = .escape
-        case "home":
-            key = .home
-        case "page_up":
-            key = .pageUp
-        case "page_down":
-            key = .pageDown
-        case "return":
-            key = .return
-        case "space":
-            key = .space
-        case "tab":
-            key = .tab
-        case "a"..."z", "A"..."Z", "0"..."9":
-            key = KeyEquivalent(Character(value))
-        case let character where Set("!@#$%^*()-_=+[]{}|:;\"'<>,./?").contains(Character(character)):
-            key = KeyEquivalent(Character(character))
-        default:
-            throw DecodingError.dataCorruptedError(forKey: .key, in: container, debugDescription: "invalid value for key")
-        }
-        
-        #else
-        throw DecodingError.typeMismatch(Self.self, .init(codingPath: container.codingPath, debugDescription: "`keyboard_shortcut` modifier not available on this platform"))
-        #endif
-    }
+    private let modifiers: EventModifiers
 
     func body(content: Content) -> some View {
         content
@@ -119,4 +50,10 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
         case key
         case modifiers
     }
+}
+
+extension KeyboardShortcutModifier {
+    #if !os(iOS) && !os(macOS)
+    typealias KeyEquivalent = Never
+    #endif
 }
