@@ -29,6 +29,7 @@ import SwiftUI
 /// * `A-Z`
 /// * `0-9`
 /// * `!@#$%^*()-_=+[]{}|:"'<>,./?`
+#if os(iOS) || os(macOS)
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -71,3 +72,4 @@ extension KeyEquivalent: Decodable {
         }
     }
 }
+#endif
