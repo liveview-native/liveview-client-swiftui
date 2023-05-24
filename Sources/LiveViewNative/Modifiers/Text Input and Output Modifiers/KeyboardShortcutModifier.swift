@@ -10,10 +10,10 @@ import SwiftUI
 /// Assigns a keyboard shortcut to the modified control.
 ///
 /// ```html
-/// <Button modifiers={keyboard_shortcut(@native, key: :"+")}>Click Me!</Button>
-/// <Button modifiers={keyboard_shortcut(@native, key: :"7")}>Click Me!</Button>
-/// <Button modifiers={keyboard_shortcut(@native, key: :s, modifiers: [:command])}>Click Me!</Button>
-/// <Button modifiers={keyboard_shortcut(@native, key: :s, modifiers: [:command, :shift])}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut(@native, key: "+")}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut(@native, key: "7")}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut(@native, key: "s", modifiers: [:command])}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut(@native, key: "s", modifiers: [:command, :shift])}>Click Me!</Button>
 /// ```
 ///
 /// ## Arguments
@@ -54,16 +54,8 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
     #endif
     private var key: KeyEquivalent
     /// The modifier keys that the user presses in conjunction with a key equivalent to activate the shortcut.
-    /// One of the `EventModifiers` enumerations.
     ///
-    /// Possible values:
-    /// * `all`
-    /// * `caps_lock`
-    /// * `command`
-    /// * `control`
-    /// * `numeric_pad`
-    /// * `option`
-    /// * `shift`
+    /// See ``LiveViewNative/SwiftUI/EventModifiers`` for a list possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
