@@ -5,6 +5,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Border do
 
   modifier_schema "border" do
     field :content, ShapeStyle
-    field :width, :float, default: 0.0
+    field :width, :float, default: 1.0
   end
 end
