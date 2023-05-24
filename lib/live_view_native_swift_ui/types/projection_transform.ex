@@ -32,19 +32,14 @@ defmodule LiveViewNativeSwiftUi.Types.ProjectionTransform do
   def cast({:rotate, angle, {x, y, z}}) do
     with {:ok, r} <- Angle.cast(angle) do
       magnitude = :math.sqrt((x*x) + (y*y) + (z*z))
-      {x, y, z} = {x / magnitude, y / magnitude, z / magnitude}
       r = r / 2
-      scale = :math.sin(r)
-      q = %{
-        x: x * scale,
-        y: y * scale,
-        z: z * scale,
-        w: :math.cos(r)
-      }
+      s = :math.sin(r)
+      c = :math.cos(r)
+      {x, y, z} = {x / magnitude * s, y / magnitude * s, z / magnitude * s}
       cast([
-        1 - 2 * (q.y * q.y + q.z * q.z), 2 * (q.x * q.y + q.z * q.w), 2 * (q.x * q.z - q.y * q.w), 0,
-        2 * (q.x * q.y - q.z * q.w), 1 - 2 * (q.x * q.x + q.z * q.z), 2 * (q.y * q.z + q.x * q.w), 0,
-        2 * (q.x * q.z + q.y * q.w), 2 * (q.y * q.z - q.x * q.w), 1 - 2 * (q.x * q.x + q.y * q.y), 0,
+        1 - 2 * (y * y + z * z), 2 * (x * y + z * c), 2 * (x * z - y * c), 0,
+        2 * (x * y - z * c), 1 - 2 * (x * x + z * z), 2 * (y * z + x * c), 0,
+        2 * (x * z + y * c), 2 * (y * z - x * c), 1 - 2 * (x * x + y * y), 0,
         0, 0, 0, 1
       ])
     else
