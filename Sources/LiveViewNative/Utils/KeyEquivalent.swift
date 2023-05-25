@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS) || os(macOS)
 /// The key equivalent that the user presses in conjunction with any specified modifier keys to activate the shortcut.
 /// One of the `KeyEquivalent` enumerations.
 ///
@@ -29,7 +30,6 @@ import SwiftUI
 /// * `A-Z`
 /// * `0-9`
 /// * `!@#$%^*()-_=+[]{}|:"'<>,./?`
-#if os(iOS) || os(macOS)
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

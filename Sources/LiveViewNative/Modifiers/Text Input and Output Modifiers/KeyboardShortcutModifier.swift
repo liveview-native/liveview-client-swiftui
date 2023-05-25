@@ -37,18 +37,13 @@ struct KeyboardShortcutModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let modifiers: EventModifiers
+    private let modifiers: EventModifiers?
 
     func body(content: Content) -> some View {
         content
             #if os(iOS) || os(macOS)
-            .keyboardShortcut(key, modifiers: modifiers)
+            .keyboardShortcut(key, modifiers: modifiers ?? [])
             #endif
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case key
-        case modifiers
     }
 }
 

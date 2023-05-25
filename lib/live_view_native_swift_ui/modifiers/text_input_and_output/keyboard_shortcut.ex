@@ -6,6 +6,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.KeyboardShortcut do
 
   modifier_schema "keyboard_shortcut" do
     field :key, KeyEquivalent
-    field :event_modifiers, EventModifier
+    field :modifiers, EventModifier
   end
 end
