@@ -50,7 +50,7 @@ struct ContentShapeModifier: ViewModifier, Decodable {
     private var eoFill: Bool = false
 
     func body(content: Content) -> some View {
-        let shapeKind = kind ?? []
+        let kind = kind ?? []
         
         switch shape {
         case .capsule:
