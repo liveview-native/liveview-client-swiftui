@@ -106,7 +106,7 @@ struct DatePicker<R: RootRegistry>: View {
 }
 
 /// A `Date` wrapper that encodes/decodes using the Elixir date formats.
-private struct CodableDate: FormValue {
+private struct CodableDate: FormValue, AttributeDecodable {
     var date: Date
     
     init() {

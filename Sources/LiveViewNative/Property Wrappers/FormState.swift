@@ -20,7 +20,8 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 /// When a `value-binding` attribute is provided on the element, the value of that attributed is treated as the name of a ``LiveBinding`` to use as the value storage.
 /// ``LiveBinding`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
 ///
-/// When the element this properrty wrapper is placed on is located of inside a `<live-form>` and it has a `name` attribute, the value will be stored on that form's ``FormModel``.
+/// When the element this properrty wrapper is placed on is located of inside a `<LiveForm>` (see [LiveViewNativeLiveForm](https://github.com/liveview-native/liveview-native-live-form))
+/// and it has a `name` attribute, the value will be stored on that form's ``FormModel``.
 /// The key used in the form model is the element's `name` attribute.
 ///
 /// If the element is not located inside of a form, the value will be stored directly by the property wrapper.
@@ -31,8 +32,8 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 /// ### Default Value
 /// If the value is using a ``LiveBinding``, the default value of the binding will be provided by the server outside of the element.
 ///
-/// Otherwise, when the value is accessed for the first time, the framework will try to use the element's `value` attribute, if possible.
-/// If the element does not have a `value` attribute, or the `Value` type could not be constructed from the string representation,
+/// If the element has a `value` attribute, and the `Value` type conforms to ``AttributeDecodable``, the framework
+/// will try to construct the default value from the attribute. If those conditions are not satisfied, or ``AttributeDecodable/init(from:)`` fails,
 /// it will use the default value the property wrapper was initialized with. Before the state is first updated, changes to the element's `value`
 /// attribute will be reflected in the property wrapper's value.
 ///
@@ -172,12 +173,7 @@ public struct FormState<Value: FormValue> {
     
     // the initial value converts the element's `value` attribute if possible, otherwise uses the default value
     private var initialValue: Value {
-        if let attribute = element.attribute(named: "value"),
-           let value = try? Value(from: attribute) {
-            return value
-        } else {
-            return defaultValue
-        }
+        return element.attribute(named: "value").flatMap(Value.fromAttribute(_:)) ?? defaultValue
     }
     
     private func resolveMode() {
@@ -203,7 +199,7 @@ public struct FormState<Value: FormValue> {
               let changeEvent = element.attributeValue(for: "phx-change") else {
             return
         }
-        let name = element.attributeValue(for: "name")
+        let name = element.attributeValue(for: "name") ?? "value"
         let encoder = FragmentEncoder()
         try! wrappedValue.encode(to: encoder)
         let value = encoder.unwrap() as Any

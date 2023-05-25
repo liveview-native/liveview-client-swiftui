@@ -83,7 +83,7 @@ extension RoundedRectangle {
                 width: element.attributeValue(for: "corner-width").flatMap(Double.init) ?? radius,
                 height: element.attributeValue(for: "corner-height").flatMap(Double.init) ?? radius
             ),
-            style: (element.attributeValue(for: "style").flatMap(RoundedCornerStyle.init) ?? .circular).style
+            style: (try? RoundedCornerStyle(from: element.attribute(named: "style"))) ?? .circular
         )
     }
 }
@@ -100,19 +100,46 @@ extension RoundedRectangle {
 extension Capsule {
     init(from element: ElementNode) {
         self.init(
-            style: (element.attributeValue(for: "style").flatMap(RoundedCornerStyle.init) ?? .circular).style
+            style: (try? RoundedCornerStyle(from: element.attribute(named: "style"))) ?? .circular
         )
     }
 }
 
-private enum RoundedCornerStyle: String {
-    case circular
-    case continuous
+/// A style for rounded corners.
+/// 
+/// Possible values:
+/// * `circular`
+/// * `continuous`
+#if swift(>=5.8)
+@_documentation(visibility: public)
+#endif
+extension RoundedCornerStyle: Decodable, AttributeDecodable {
+    init?(string: String) {
+        switch string {
+        case "circular":
+            self = .circular
+        case "continuous":
+            self = .continuous
+        default:
+            return nil
+        }
+    }
     
-    var style: SwiftUI.RoundedCornerStyle {
-        switch self {
-        case .circular: return .circular
-        case .continuous: return .continuous
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let string = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let value = Self(string: string)
+        else { throw AttributeDecodingError.badValue(Self.self) }
+        self = value
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        if let value = Self(string: string) {
+            self = value
+        } else {
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown RoundedCornerStyle `\(string)`"))
         }
     }
 }

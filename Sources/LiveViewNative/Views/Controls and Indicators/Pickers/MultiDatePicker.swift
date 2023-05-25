@@ -25,7 +25,7 @@ import SwiftUI
 ///
 /// The value is a list of date strings of the form "yyyy-MM-dd".
 ///
-/// - Note: This control only supports using a ``LiveBinding`` for the value, and not the `value` attribute or form data.
+/// - Note: This control does not support reading the intial value from the `value` attribute on the element.
 ///
 /// ## Attributes
 /// - ``start``
@@ -47,7 +47,7 @@ struct MultiDatePicker<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @Attribute("end") private var end: Date?
-    @LiveBinding(attribute: "value-binding") private var dates: Set<SelectedDate> = []
+    @FormState(default: []) private var dates: Set<SelectedDate>
     
     private var dateComponents: Binding<Set<DateComponents>> {
         Binding {
@@ -79,7 +79,7 @@ struct MultiDatePicker<R: RootRegistry>: View {
         #endif
     }
     
-    struct SelectedDate: Codable, Equatable, Hashable {
+    struct SelectedDate: Codable, Equatable, Hashable, FormValue {
         let dateComponents: DateComponents
         
         init(dateComponents: DateComponents) {

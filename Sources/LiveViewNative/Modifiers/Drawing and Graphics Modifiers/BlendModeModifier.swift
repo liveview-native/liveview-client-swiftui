@@ -15,10 +15,10 @@ import SwiftUI
 ///     <Color name="system-red"
 ///         modifiers={
 ///             @native
-///                 |> frame(width: 50, height: 50, alignment: :center)
-///                 |> rotation_effect(angle: {:degrees, 45})
-///                 |> padding(all: -20)
-///                 |> blend_mode(blend_mode: :color_burn)
+///             |> frame(width: 50, height: 50, alignment: :center)
+///             |> rotation_effect(angle: {:degrees, 45})
+///             |> padding(all: -20)
+///             |> blend_mode(blend_mode: :color_burn)
 ///         }
 ///     />
 /// </HStack>

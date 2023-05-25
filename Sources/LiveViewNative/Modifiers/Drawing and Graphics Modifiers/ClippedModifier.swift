@@ -10,7 +10,14 @@ import SwiftUI
 /// Clips this view to its bounding rectangular frame.
 ///
 /// ```html
-/// <Circle modifiers={@native |> frame(width: 20, height: 20) |> clipped(antialiased: true)} />
+/// <Circle
+///     modifiers={
+///         @native
+///         |> foreground_color(color: :mint)
+///         |> frame(width: 20, height: 20)
+///         |> clipped(antialiased: true)
+///     }
+/// />
 /// ```
 ///
 /// ## Arguments

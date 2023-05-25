@@ -22,15 +22,6 @@ struct NavStackEntryView<R: RootRegistry>: View {
         let _ = Self._printChanges()
         elementTree
             .environmentObject(liveViewModel)
-            .task {
-                // If the coordinator is not connected to the right URL, update it.
-                if coordinator.url != entry.url {
-                    coordinator.url = entry.url
-                    await coordinator.reconnect()
-                } else {
-                    await coordinator.connect()
-                }
-            }
             .onReceive(coordinator.$document) { newDocument in
                 if let doc = newDocument {
                     // todo: doing this every time the DOM changes is probably not efficient
