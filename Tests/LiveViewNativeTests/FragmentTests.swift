@@ -365,6 +365,161 @@ class FragmentTests: XCTestCase {
         )
     }
     
+    func testDecodeComponentWithDynamicsIterated() {
+        let data = #"""
+        {
+            "0": {
+                "0": {
+                    "d": [
+                        [
+                            1
+                        ],
+                        [
+                            2
+                        ],
+                        [
+                            3
+                        ]
+                    ],
+                    "s": [
+                        "\n  ",
+                        "\n"
+                    ]
+                },
+                "s": [
+                    "",
+                    ""
+                ]
+            },
+            "c": {
+                "1": {
+                    "0": {
+                        "d": [
+                            [
+                                "1"
+                            ],
+                            [
+                                "2"
+                            ],
+                            [
+                                "3"
+                            ]
+                        ],
+                        "s": [
+                            "\n    <Text>Item ",
+                            "</Text>\n  "
+                        ]
+                    },
+                    "s": [
+                        "<Group>\n  ",
+                        "\n</Group>"
+                    ]
+                },
+                "2": {
+                    "0": {
+                        "d": [
+                            [
+                                "1"
+                            ],
+                            [
+                                "2"
+                            ],
+                            [
+                                "3"
+                            ]
+                        ]
+                    },
+                    "s": 1
+                },
+                "3": {
+                    "0": {
+                        "d": [
+                            [
+                                "1"
+                            ],
+                            [
+                                "2"
+                            ],
+                            [
+                                "3"
+                            ]
+                        ]
+                    },
+                    "s": 1
+                }
+            },
+            "s": [
+                "",
+                ""
+            ]
+        }
+        """#.data(using: .utf8)!
+        XCTAssertEqual(
+            try decoder.decode(Root.self, from: data),
+            Root(
+                fragment: .regular(
+                    children: [
+                        .fragment(
+                            .regular(
+                                children: [
+                                    .fragment(
+                                        .comprehension(
+                                            dynamics: [
+                                                [.componentID(1)], [.componentID(2)], [.componentID(3)]
+                                            ],
+                                            statics: .statics(["\n  ", "\n"]),
+                                            templates: nil
+                                        )
+                                    )
+                                ],
+                                statics: .statics(["", ""])
+                            )
+                        )
+                    ],
+                    statics: .statics(["", ""])
+                ),
+                components: [
+                    1: Component(
+                        children: [
+                            .fragment(
+                                .comprehension(
+                                    dynamics: [[.string("1")], [.string("2")], [.string("3")]],
+                                    statics: .statics(["\n    <Text>Item ", "</Text>\n  "]),
+                                    templates: nil
+                                )
+                            )
+                        ],
+                        statics: .statics(["<Group>\n  ", "\n</Group>"])
+                    ),
+                    2: Component(
+                        children: [
+                            .fragment(
+                                .comprehension(
+                                    dynamics: [[.string("1")], [.string("2")], [.string("3")]],
+                                    statics: .componentRef,
+                                    templates: nil
+                                )
+                            )
+                        ],
+                        statics: .componentRef(1)
+                    ),
+                    3: Component(
+                        children: [
+                            .fragment(
+                                .comprehension(
+                                    dynamics: [[.string("1")], [.string("2")], [.string("3")]],
+                                    statics: .componentRef,
+                                    templates: nil
+                                )
+                            )
+                        ],
+                        statics: .componentRef(1)
+                    )
+                ]
+            )
+        )
+    }
+    
     func testBuildStringStatic() {
         XCTAssertEqual(
             Fragment.regular(children: [], statics: ["test"]).buildString(),
@@ -597,6 +752,73 @@ class FragmentTests: XCTestCase {
                 components: nil
             ).buildString(),
             "<[00][00]><[00][00]>"
+        )
+    }
+    
+    func testBuildStringWithComponentComprehension() throws {
+        XCTAssertEqual(
+            Root(
+                fragment: .regular(
+                    children: [
+                        .fragment(
+                            .regular(
+                                children: [
+                                    .fragment(
+                                        .comprehension(
+                                            dynamics: [
+                                                [.componentID(1)], [.componentID(2)], [.componentID(3)]
+                                            ],
+                                            statics: .statics(["<", ">"]),
+                                            templates: nil
+                                        )
+                                    )
+                                ],
+                                statics: .statics(["*", "*"])
+                            )
+                        )
+                    ],
+                    statics: .statics(["-", "-"])
+                ),
+                components: [
+                    1: Component(
+                        children: [
+                            .fragment(
+                                .comprehension(
+                                    dynamics: [[.string("1")], [.string("2")], [.string("3")]],
+                                    statics: .statics(["{", "}"]),
+                                    templates: nil
+                                )
+                            )
+                        ],
+                        statics: .statics(["[", "]"])
+                    ),
+                    2: Component(
+                        children: [
+                            .fragment(
+                                .comprehension(
+                                    dynamics: [[.string("1")], [.string("2")], [.string("3")]],
+                                    statics: .componentRef,
+                                    templates: nil
+                                )
+                            )
+                        ],
+                        statics: .componentRef(1)
+                    ),
+                    3: Component(
+                        children: [
+                            .fragment(
+                                .comprehension(
+                                    dynamics: [[.string("1")], [.string("2")], [.string("3")]],
+                                    statics: .componentRef,
+                                    templates: nil
+                                )
+                            )
+                        ],
+                        statics: .componentRef(1)
+                    )
+                ]
+            ).buildString(),
+            "-*<[{1}{2}{3}]><[{1}{2}{3}]><[{1}{2}{3}]>*-"
         )
     }
 }

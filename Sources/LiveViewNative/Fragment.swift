@@ -24,10 +24,10 @@ enum Child: Decodable, Equatable {
         }
     }
     
-    fileprivate func buildStringInternal(buffer: inout String, root: Root, templates: Templates?) {
+    fileprivate func buildStringInternal(buffer: inout String, root: Root, templates: Templates?, componentStatics: ComponentStatics?, childIndex: Int?) {
         switch self {
         case .fragment(let frag):
-            frag.buildStringInternal(buffer: &buffer, root: root, templates: templates)
+            frag.buildStringInternal(buffer: &buffer, root: root, templates: templates, componentStatics: componentStatics, childIndex: childIndex)
         case .string(let s):
             buffer += s
         case .componentID(let cid):
@@ -102,7 +102,7 @@ struct Component: Decodable, Equatable {
         buffer += effectiveStatics[0]
         for i in children.indices {
             // nil because components create their own template contexts
-            children[i].buildStringInternal(buffer: &buffer, root: root, templates: nil)
+            children[i].buildStringInternal(buffer: &buffer, root: root, templates: nil, componentStatics: statics, childIndex: i)
             buffer += effectiveStatics[i + 1]
         }
     }
@@ -151,7 +151,7 @@ enum Fragment: Decodable, Equatable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let statics = try container.decode(Statics.self, forKey: .statics)
+        let statics = try container.decodeIfPresent(Statics.self, forKey: .statics) ?? .componentRef
         
         if container.contains(.dynamics) {
             let dynamics = try container.decode([[Child]].self, forKey: .dynamics)
@@ -170,20 +170,20 @@ enum Fragment: Decodable, Equatable {
     
     func buildString(root: Root) -> String {
         var s = ""
-        buildStringInternal(buffer: &s, root: root, templates: nil)
+        buildStringInternal(buffer: &s, root: root, templates: nil, componentStatics: nil, childIndex: nil)
         return s
     }
     
     // todo: track which components are used so we can notify the backend of deleted ones
-    fileprivate func buildStringInternal(buffer: inout String, root: Root, templates: Templates?) {
-        let effectiveStatics = statics.effectiveValue(in: templates)
+    fileprivate func buildStringInternal(buffer: inout String, root: Root, templates: Templates?, componentStatics: ComponentStatics?, childIndex: Int?) {
+        let effectiveStatics = statics.effectiveValue(in: templates, root: root, componentStatics: componentStatics, childIndex: childIndex)
         
         switch self {
         case .regular(let children, statics: _):
             assert(effectiveStatics.count == children.count + 1)
             buffer += effectiveStatics[0]
             for i in children.indices {
-                children[i].buildStringInternal(buffer: &buffer, root: root, templates: templates)
+                children[i].buildStringInternal(buffer: &buffer, root: root, templates: templates, componentStatics: componentStatics, childIndex: childIndex)
                 buffer += effectiveStatics[i + 1]
             }
             
@@ -193,7 +193,7 @@ enum Fragment: Decodable, Equatable {
                 
                 buffer += effectiveStatics[0]
                 for i in dynamicComponents.indices {
-                    dynamicComponents[i].buildStringInternal(buffer: &buffer, root: root, templates: compTemplates ?? templates)
+                    dynamicComponents[i].buildStringInternal(buffer: &buffer, root: root, templates: compTemplates ?? templates, componentStatics: componentStatics, childIndex: childIndex)
                     buffer += effectiveStatics[i + 1]
                 }
             }
@@ -263,6 +263,7 @@ enum Fragment: Decodable, Equatable {
 enum Statics: Decodable, Equatable {
     case statics([String])
     case templateRef(Int)
+    case componentRef
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -273,7 +274,7 @@ enum Statics: Decodable, Equatable {
         }
     }
     
-    func effectiveValue(in templates: Templates?) -> [String] {
+    func effectiveValue(in templates: Templates?, root: Root, componentStatics: ComponentStatics?, childIndex: Int?) -> [String] {
         switch self {
         case .statics(let statics):
             return statics
@@ -283,6 +284,15 @@ enum Statics: Decodable, Equatable {
             }
 
             return templates
+        case .componentRef:
+            guard case let .componentRef(componentId) = componentStatics,
+                  let component = root.components?[componentId],
+                  let childIndex,
+                  case let .fragment(fragment) = component.children[childIndex]
+            else {
+                preconditionFailure("Static cannot reference non-existent component")
+            }
+            return fragment.statics.effectiveValue(in: templates, root: root, componentStatics: component.statics, childIndex: childIndex)
         }
     }
 }
