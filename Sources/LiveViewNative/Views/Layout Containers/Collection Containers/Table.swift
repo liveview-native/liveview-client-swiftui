@@ -85,9 +85,6 @@ import SwiftUI
 /// end
 /// ```
 ///
-/// ## Attributes
-/// * ``style``
-///
 /// ## Bindings
 /// * ``selection``
 /// * ``sortOrder``
@@ -102,9 +99,6 @@ import SwiftUI
 ///
 /// ### Selecting Rows
 /// * ``selection``
-///
-/// ### Supporting Types
-/// - ``TableStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -158,18 +152,11 @@ struct Table<R: RootRegistry>: View {
     #endif
     @LiveBinding(attribute: "sort-order") private var sortOrder = [TableColumnSort]()
     
-    /// The style to apply to this table.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("table-style") private var style: TableStyle = .automatic
-    
     public var body: some View {
         #if os(iOS) || os(macOS)
         SwiftUI.Group {
             table(rows: self.rows, columns: self.columns)
         }
-        .applyTableStyle(style)
         #endif
     }
     
@@ -351,67 +338,3 @@ fileprivate extension SwiftUI.Table where Value == TableRow, Rows == TableForEac
     }
 }
 #endif
-
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-fileprivate enum TableStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case inset
-    
-    /// `inset-alternating`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(macOS 13.0, *)
-    case insetAlternating = "inset-alternating"
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(macOS 13.0, *)
-    case bordered
-    /// `bordered-alternating`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @available(macOS 13.0, *)
-    case borderedAlternating = "bordered-alternating"
-
-}
-
-fileprivate extension View {
-    @available(iOS 16.0, macOS 13.0, *)
-    @ViewBuilder
-    func applyTableStyle(_ style: TableStyle) -> some View {
-        switch style {
-        case .automatic:
-            #if os(iOS) || os(macOS)
-            self.tableStyle(.automatic)
-            #endif
-        case .inset:
-            #if os(macOS)
-            self.tableStyle(.inset(alternatesRowBackgrounds: false))
-            #elseif os(iOS)
-            self.tableStyle(.inset)
-            #endif
-        case .insetAlternating:
-            #if os(macOS)
-            self.tableStyle(.inset(alternatesRowBackgrounds: true))
-            #endif
-        case .bordered:
-            #if os(macOS)
-            self.tableStyle(.bordered(alternatesRowBackgrounds: false))
-            #endif
-        case .borderedAlternating:
-            #if os(macOS)
-            self.tableStyle(.bordered(alternatesRowBackgrounds: true))
-            #endif
-        }
-    }
-}
