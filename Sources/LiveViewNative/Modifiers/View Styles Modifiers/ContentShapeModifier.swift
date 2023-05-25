@@ -32,18 +32,27 @@ import SwiftUI
 #endif
 struct ContentShapeModifier: ViewModifier, Decodable {
     /// The kinds to apply to this content shape.
+    ///
+    /// See ``LiveViewNative/SwiftUI/ContentShapeKinds`` for a list possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     private let kind: ContentShapeKinds?
     
     /// The shape to use.
+    ///
+    /// Possible values:
+    /// * `capsule`
+    /// * `circle`
+    /// * `container_relative_shape`
+    /// * `ellipse`
+    /// * `rectangle`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     private var shape: ShapeKind
     
-    /// A Boolean that indicates whether the shape is interpreted with the even-odd winding number rule.
+    /// A Boolean that indicates whether the shape is interpreted with the even-odd winding number rule. Default value is `false`
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -54,15 +63,15 @@ struct ContentShapeModifier: ViewModifier, Decodable {
         
         switch shape {
         case .capsule:
-            content.contentShape(shapeKind, Capsule(), eoFill: eoFill)
+            content.contentShape(kind, Capsule(), eoFill: eoFill)
         case .circle:
-            content.contentShape(shapeKind, Circle(), eoFill: eoFill)
+            content.contentShape(kind, Circle(), eoFill: eoFill)
         case .containerRelativeShape:
-            content.contentShape(shapeKind, ContainerRelativeShape(), eoFill: eoFill)
+            content.contentShape(kind, ContainerRelativeShape(), eoFill: eoFill)
         case .ellipse:
-            content.contentShape(shapeKind, Ellipse(), eoFill: eoFill)
+            content.contentShape(kind, Ellipse(), eoFill: eoFill)
         case .rectangle:
-            content.contentShape(shapeKind, Rectangle(), eoFill: eoFill)
+            content.contentShape(kind, Rectangle(), eoFill: eoFill)
         }
     }
 }
