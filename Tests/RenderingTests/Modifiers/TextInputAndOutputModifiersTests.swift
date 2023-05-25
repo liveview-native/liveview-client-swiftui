@@ -184,6 +184,27 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
         }
         #endif
     }
+
+    func testPrivacySensitive() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers="[{&quot;sensitive&quot;:true,&quot;type&quot;:&quot;privacy_sensitive&quot;}]">Private Information</Text>
+            """#
+        ) {
+            Text("Private Information")
+            .privacySensitive()
+        
+        }
+        try assertMatch(
+            #"""
+            <Text modifiers="[{&quot;sensitive&quot;:false,&quot;type&quot;:&quot;privacy_sensitive&quot;}]">Private Information</Text>
+            """#
+        ) {
+            Text("Private Information")
+            .privacySensitive(false)
+        
+        }
+    }
     
     func testAutocorrectionDisabled() throws {
         /// This can test parsing and building, but not visual matching of the keyboard with the current test scaffolding
