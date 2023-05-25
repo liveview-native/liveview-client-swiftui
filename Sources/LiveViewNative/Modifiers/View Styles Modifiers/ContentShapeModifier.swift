@@ -10,11 +10,11 @@ import SwiftUI
 /// Sets the content shape for this view.
 ///
 /// ```html
-/// <HStack modifiers={content_shape(@native, kind: :hover_effect, shape: :rectangle)}>
+/// <HStack modifiers={content_shape(@native, shape: :rectangle)}>
 ///   <Image system-name="heart.circle"></Image>
 /// </HStack>
 ///
-/// <HStack modifiers={content_shape(@native, kind: :hover_effect, shape: :rectangle, eo_fill: true)}>
+/// <HStack modifiers={content_shape(@native, kind: :hover_effect, shape: :rectangle)}>
 ///   <Image system-name="heart.circle"></Image>
 /// </HStack>
 ///
@@ -35,7 +35,7 @@ struct ContentShapeModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let kind: ContentShapeKinds
+    private let kind: ContentShapeKinds?
     
     /// The shape to use.
     #if swift(>=5.8)
@@ -50,24 +50,20 @@ struct ContentShapeModifier: ViewModifier, Decodable {
     private var eoFill: Bool = false
 
     func body(content: Content) -> some View {
+        let shapeKind = kind ?? []
+        
         switch shape {
         case .capsule:
-            content.contentShape(kind, Capsule(), eoFill: eoFill)
+            content.contentShape(shapeKind, Capsule(), eoFill: eoFill)
         case .circle:
-            content.contentShape(kind, Circle(), eoFill: eoFill)
+            content.contentShape(shapeKind, Circle(), eoFill: eoFill)
         case .containerRelativeShape:
-            content.contentShape(kind, ContainerRelativeShape(), eoFill: eoFill)
+            content.contentShape(shapeKind, ContainerRelativeShape(), eoFill: eoFill)
         case .ellipse:
-            content.contentShape(kind, Ellipse(), eoFill: eoFill)
+            content.contentShape(shapeKind, Ellipse(), eoFill: eoFill)
         case .rectangle:
-            content.contentShape(kind, Rectangle(), eoFill: eoFill)
+            content.contentShape(shapeKind, Rectangle(), eoFill: eoFill)
         }
-        
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case kind
-        case shape
     }
 }
 
