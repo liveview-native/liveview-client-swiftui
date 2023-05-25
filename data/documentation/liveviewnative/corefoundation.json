@@ -1,0 +1,124 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:m:s:e:s:So17CGAffineTransformV14LiveViewNativeE3___s5NeverOvp",
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Extended Module",
+    "symbolKind" : "extension",
+    "title" : "CoreFoundation"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "CoreFoundation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/corefoundation"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation\/CGAffineTransform" : {
+      "abstract" : [
+        {
+          "text" : "A transformation matrix.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CoreFoundation"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "c:@S@CGAffineTransform",
+          "text" : "CGAffineTransform"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation\/CGAffineTransform",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CGAffineTransform"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CGAffineTransform",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/corefoundation\/cgaffinetransform"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation\/CGAffineTransform"
+      ],
+      "title" : "Extended Structures"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/corefoundation"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

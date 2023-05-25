@@ -1,0 +1,274 @@
+{
+  "abstract" : [
+    {
+      "text" : "The amount to inset the ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " by.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier\/amount"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative13InsetModifierV6amount14CoreFoundation7CGFloatVvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "amount"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14CoreFoundation7CGFloatV",
+        "text" : "CGFloat"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "amount"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "amount"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14CoreFoundation7CGFloatV",
+              "text" : "CGFloat"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier" : {
+      "abstract" : [
+        {
+          "text" : "Insets a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " by a given amount.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "InsetModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "InsetModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "inset",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/insetmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier\/amount" : {
+      "abstract" : [
+        {
+          "text" : "The amount to inset the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " by.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "amount"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14CoreFoundation7CGFloatV",
+          "text" : "CGFloat"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier\/amount",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "amount",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/insetmodifier\/amount"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape" : {
+      "abstract" : [
+        {
+          "text" : "A view that displays the a shape.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Shape"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Shape"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shape"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Shapes",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shapes"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/insetmodifier\/amount"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationSubtitleModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationSubtitleModifier\/subtitle"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative26NavigationSubtitleModifierV8subtitle33_01C1826CEBD044D719DD200E68FEA0B0LLSSvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "subtitle"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "13.0",
+        "name" : "macOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "subtitle"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "subtitle"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Navigation Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationSubtitleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Configures the view’s subtitle for purposes of navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "NavigationSubtitleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationSubtitleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "NavigationSubtitleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "navigation_subtitle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationsubtitlemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationSubtitleModifier\/subtitle" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "subtitle"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationSubtitleModifier\/subtitle",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "subtitle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationsubtitlemodifier\/subtitle"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/navigationsubtitlemodifier\/subtitle"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

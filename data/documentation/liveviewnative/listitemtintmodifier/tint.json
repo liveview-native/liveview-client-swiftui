@@ -1,0 +1,306 @@
+{
+  "abstract" : [
+    {
+      "text" : "The tint value.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/tint"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative20ListItemTintModifierV4tint33_AF48F9B5BD6DCBD5166AD19F07285D7ALL7SwiftUI0deF0VSgvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "tint"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI12ListItemTintV",
+        "text" : "ListItemTint"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "tint"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "tint"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI12ListItemTintV",
+              "text" : "ListItemTint"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "If ",
+              "type" : "text"
+            },
+            {
+              "code" : "nil",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : ", the default system is used.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ListItemTint",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on creating tints.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the tint for a list item.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ListItemTintModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ListItemTintModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "list_item_tint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listitemtintmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/tint" : {
+      "abstract" : [
+        {
+          "text" : "The tint value.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "tint"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI12ListItemTintV",
+          "text" : "ListItemTint"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/tint",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "tint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listitemtintmodifier\/tint"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Lists Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ListItemTint" : {
+      "abstract" : [
+        {
+          "text" : "A tint for a list row.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI12ListItemTintV",
+          "text" : "ListItemTint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ListItemTint",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ListItemTint"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ListItemTint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/listitemtint"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/listitemtintmodifier\/tint"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

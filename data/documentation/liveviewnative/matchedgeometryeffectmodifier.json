@@ -1,0 +1,754 @@
+{
+  "abstract" : [
+    {
+      "text" : "Applies an effect that transitions between two Views.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative29MatchedGeometryEffectModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "MatchedGeometryEffectModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "MatchedGeometryEffectModifier"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "matched_geometry_effect"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "MatchedGeometryEffectModifier"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " element to establish a namespace.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<NamespaceContext id=\"animation\">",
+            "    ...",
+            "<\/NamespaceContext>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Within that context, this modifier can be applied to any two elements that should transition between each other when some value changes.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Use the same ",
+              "type" : "text"
+            },
+            {
+              "code" : "id",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " argument for elements that should be paired.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<VStack modifiers={@native |> animation(value: Atom.to_string(@is_flipped))}>",
+            "    <%= if @is_flipped do %>",
+            "        <Text id=\"a\" modifiers={@native |> matched_geometry_effect(id: \"a\", namespace: :animation)}>A<\/Text>",
+            "        <Text id=\"b\" modifiers={@native |> matched_geometry_effect(id: \"b\", namespace: :animation)}>B<\/Text>",
+            "    <% else %>",
+            "        <Text id=\"b\" modifiers={@native |> matched_geometry_effect(id: \"b\", namespace: :animation)}>B<\/Text>",
+            "        <Text id=\"a\" modifiers={@native |> matched_geometry_effect(id: \"a\", namespace: :animation)}>A<\/Text>",
+            "    <% end %>",
+            "    <Button phx-click=\"flip\">Flip<\/Button>",
+            "<\/VStack>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "code" : [
+            "defmodule MyAppWeb.FlipLive do",
+            "    def handle_event(\"flip\", _params, socket) do",
+            "      {:noreply, assign(socket, :is_flipped, !socket.assigns.is_flipped)}",
+            "    end",
+            "end"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "When the button is tapped, the ",
+              "type" : "text"
+            },
+            {
+              "code" : "A",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " and ",
+              "type" : "text"
+            },
+            {
+              "code" : "B",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " text will swap positions with a default animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "The elements the modifier is applied to cannot be visible at the same time. For example, keep them in opposite sides of an ",
+                  "type" : "text"
+                },
+                {
+                  "code" : "if",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : "\/",
+                  "type" : "text"
+                },
+                {
+                  "code" : "else",
+                  "type" : "codeVoice"
+                },
+                {
+                  "text" : " branch.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies an animation when a value changes.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AnimationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AnimationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "animation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/animationmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Animations Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/animationsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a transition when an element’s content changes.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ContentTransitionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ContentTransitionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "content_transition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/contenttransitionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies an effect that transitions between two Views.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MatchedGeometryEffectModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MatchedGeometryEffectModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "matched_geometry_effect",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/matchedgeometryeffectmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/anchor" : {
+      "abstract" : [
+        {
+          "text" : "The location within the element to use for the shared position.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "anchor"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI9UnitPointV",
+          "text" : "UnitPoint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/anchor",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "anchor",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/matchedgeometryeffectmodifier\/anchor"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/id" : {
+      "abstract" : [
+        {
+          "text" : "The unique identifier for the pair of elements to transition between.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "id"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/id",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "id",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/matchedgeometryeffectmodifier\/id"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/isSource" : {
+      "abstract" : [
+        {
+          "text" : "If this element is the source geometry for the pair.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "isSource"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/isSource",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "isSource",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/matchedgeometryeffectmodifier\/issource"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/namespace" : {
+      "abstract" : [
+        {
+          "text" : "An atom that matches the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element’s ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext\/id",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "namespace"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/namespace",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "namespace",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/matchedgeometryeffectmodifier\/namespace"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/properties" : {
+      "abstract" : [
+        {
+          "text" : "The properties of the elements to animate.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "properties"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI25MatchedGeometryPropertiesV",
+          "text" : "MatchedGeometryProperties"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/properties",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "properties",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/matchedgeometryeffectmodifier\/properties"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/matchedgeometryeffectmodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext" : {
+      "abstract" : [
+        {
+          "text" : "Creates a namespace for child elements to use.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "NamespaceContext"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "NamespaceContext"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "NamespaceContext",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/namespacecontext"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext\/id" : {
+      "abstract" : [
+        {
+          "text" : "The unique identifier for this namespace.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "id"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext\/id",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "id",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/namespacecontext\/id"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a transition when an element is inserted or removed.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TransitionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TransitionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "transition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/transitionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/s8SendableP",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/anchor",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/id",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/isSource",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/namespace",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/properties"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MatchedGeometryEffectModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/matchedgeometryeffectmodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

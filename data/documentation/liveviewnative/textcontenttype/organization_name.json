@@ -1,0 +1,224 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType\/organization_name"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative15TextContentType33_3886D8CF62EB25428B84C121D5665B7ELLO17organization_nameyA2DmF",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "case"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "organization_name"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "16.0",
+        "name" : "iOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "9.0",
+        "name" : "watchOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Case",
+    "symbolKind" : "case",
+    "title" : "TextContentType.organization_name"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "case"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "organization_name"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType" : {
+      "abstract" : [
+        {
+          "text" : "A content type to use with ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextContentType"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextContentType"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "TextContentType",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textcontenttype"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType\/organization_name" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "organization_name"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType\/organization_name",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "TextContentType.organization_name",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textcontenttype\/organization_name"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the text content type for this view, which the system uses to offer suggestions while the user enters text.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextContentTypeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextContentTypeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "text_content_type",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textcontenttypemodifier"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/textcontenttype\/organization_name"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

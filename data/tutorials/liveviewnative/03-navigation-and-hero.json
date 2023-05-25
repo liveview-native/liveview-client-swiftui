@@ -119,29 +119,81 @@
     "title" : "Navigation and Detail View"
   },
   "references" : {
-    "02-02-04-button-click.ios.heex" : {
+    "02-02-05-cats_list_live.ex" : {
       "content" : [
-        "<List>",
-        "  <%= for {name, favorite} <- @cats_and_favorites do %>",
-        "    <HStack id={name}>",
-        "      <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
-        "      <Text><%= name %><\/Text>",
-        "      <Spacer \/>",
-        "      <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
-        "        <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
-        "      <\/Button>",
-        "    <\/HStack>",
-        "  <% end %>",
-        "<\/List>",
-        ""
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "  alias LvnTutorial.FavoritesStore",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for {name, favorite} <- @cats_and_favorites do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "          <Spacer \/>",
+        "          <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
+        "            <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
+        "          <\/Button>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "",
+        "  def get_cats_and_favorites() do",
+        "    favorites = FavoritesStore.get_favorites()",
+        "",
+        "    {favorites, non_favorites} =",
+        "      @cats",
+        "      |> Enum.map(fn name -> {name, Enum.member?(favorites, name)} end)",
+        "      |> Enum.split_with(fn {_, favorite} -> favorite end)",
+        "",
+        "    favorites ++ non_favorites",
+        "  end",
+        "",
+        "  def handle_event(\"toggle-favorite\", %{\"name\" => name}, socket) do",
+        "    FavoritesStore.toggle_favorite(name)",
+        "    new = get_cats_and_favorites()",
+        "    {:noreply, assign(socket, cats_and_favorites: new)}",
+        "  end",
+        "end"
       ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
       "highlights" : [
 
       ],
-      "identifier" : "02-02-04-button-click.ios.heex",
-      "syntax" : "html",
+      "identifier" : "02-02-05-cats_list_live.ex",
+      "syntax" : "elixir",
       "type" : "file"
     },
     "03-00-intro-header.png" : {
@@ -167,7 +219,7 @@
         "    plug :accepts, [\"html\"]",
         "    plug :fetch_session",
         "    plug :fetch_live_flash",
-        "    plug :put_root_layout, {LvnTutorialWeb.LayoutView, :root}",
+        "    plug :put_root_layout, {LvnTutorialWeb.Layouts, :root}",
         "    plug :protect_from_forgery",
         "    plug :put_secure_browser_headers",
         "  end",
@@ -190,17 +242,16 @@
         "  #   pipe_through :api",
         "  # end",
         "",
-        "  # Enables LiveDashboard only for development",
-        "  #",
-        "  # If you want to use the LiveDashboard in production, you should put",
-        "  # it behind authentication and allow only admins to access it.",
-        "  # If your application does not have an admins-only section yet,",
-        "  # you can use Plug.BasicAuth to set up some basic authentication",
-        "  # as long as you are also using SSL (which you should anyway).",
-        "  if Mix.env() in [:dev, :test] do",
+        "  # Enable LiveDashboard in development",
+        "  if Application.compile_env(:lvn_tutorial, :dev_routes) do",
+        "    # If you want to use the LiveDashboard in production, you should put",
+        "    # it behind authentication and allow only admins to access it.",
+        "    # If your application does not have an admins-only section yet,",
+        "    # you can use Plug.BasicAuth to set up some basic authentication",
+        "    # as long as you are also using SSL (which you should anyway).",
         "    import Phoenix.LiveDashboard.Router",
         "",
-        "    scope \"\/\" do",
+        "    scope \"\/dev\" do",
         "      pipe_through :browser",
         "",
         "      live_dashboard \"\/dashboard\", metrics: LvnTutorialWeb.Telemetry",
@@ -227,8 +278,16 @@
         "    {:ok, assign(socket, name: name)}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <VStack modifiers={navigation_title(@native, title: @name)}>",
+        "      <AsyncImage url={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "    <\/VStack>",
+        "    \"\"\"swiftui",
         "  end",
         "end"
       ],
@@ -239,21 +298,6 @@
       ],
       "identifier" : "03-01-02-cat_live.ex",
       "syntax" : "elixir",
-      "type" : "file"
-    },
-    "03-01-03-cat_live.ios.heex" : {
-      "content" : [
-        "<VStack modifiers={navigation_title(@native, title: @name)}>",
-        "  <AsyncImage src={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
-        "<\/VStack>"
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ios.heex",
-      "fileType" : "heex",
-      "highlights" : [
-
-      ],
-      "identifier" : "03-01-03-cat_live.ios.heex",
-      "syntax" : "html",
       "type" : "file"
     },
     "03-02-01-navigationmode.swift" : {
@@ -283,30 +327,83 @@
       "syntax" : "swift",
       "type" : "file"
     },
-    "03-02-02-nav-title.ios.heex" : {
+    "03-02-03-cats_list_live.ex" : {
       "content" : [
-        "<List modifiers={navigation_title(@native, title: \"Cats!\")}>",
-        "  <%= for {name, favorite} <- @cats_and_favorites do %>",
-        "    <HStack id={name}>",
-        "      <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
-        "      <Text><%= name %><\/Text>",
-        "      <Spacer \/>",
-        "      <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
-        "        <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
-        "      <\/Button>",
-        "    <\/HStack>",
-        "  <% end %>",
-        "<\/List>"
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "  alias LvnTutorial.FavoritesStore",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List modifiers={navigation_title(@native, title: \"Cats!\")}>",
+        "      <%= for {name, favorite} <- @cats_and_favorites do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "          <Spacer \/>",
+        "          <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
+        "            <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
+        "          <\/Button>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "",
+        "  def get_cats_and_favorites() do",
+        "    favorites = FavoritesStore.get_favorites()",
+        "",
+        "    {favorites, non_favorites} =",
+        "      @cats",
+        "      |> Enum.map(fn name -> {name, Enum.member?(favorites, name)} end)",
+        "      |> Enum.split_with(fn {_, favorite} -> favorite end)",
+        "",
+        "    favorites ++ non_favorites",
+        "  end",
+        "",
+        "  def handle_event(\"toggle-favorite\", %{\"name\" => name}, socket) do",
+        "    FavoritesStore.toggle_favorite(name)",
+        "    new = get_cats_and_favorites()",
+        "    {:noreply, assign(socket, cats_and_favorites: new)}",
+        "  end",
+        "end"
       ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
       "highlights" : [
         {
-          "line" : 1
+          "line" : 34
         }
       ],
-      "identifier" : "03-02-02-nav-title.ios.heex",
-      "syntax" : "html",
+      "identifier" : "03-02-03-cats_list_live.ex",
+      "syntax" : "elixir",
       "type" : "file"
     },
     "03-02-03-nav-title-preview.png" : {
@@ -323,59 +420,112 @@
         }
       ]
     },
-    "03-02-04-navigationlink.ios.heex" : {
+    "03-02-04-cats_list_live.ex" : {
       "content" : [
-        "<List modifiers={navigation_title(@native, title: \"Cats!\")}>",
-        "  <%= for {name, favorite} <- @cats_and_favorites do %>",
-        "    <NavigationLink id={name} data-phx-link=\"redirect\" data-phx-link-state=\"push\" data-phx-href={Routes.live_path(@socket, LvnTutorialWeb.CatLive, name)}>",
-        "      <HStack>",
-        "        <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
-        "        <Text><%= name %><\/Text>",
-        "        <Spacer \/>",
-        "        <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
-        "          <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
-        "        <\/Button>",
-        "      <\/HStack>",
-        "    <\/NavigationLink>",
-        "  <% end %>",
-        "<\/List>"
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "  alias LvnTutorial.FavoritesStore",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List modifiers={navigation_title(@native, title: \"Cats!\")}>",
+        "      <%= for {name, favorite} <- @cats_and_favorites do %>",
+        "        <NavigationLink id={name} destination={\"\/cats\/#{name}\"}>",
+        "          <HStack>",
+        "            <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "            <Text><%= name %><\/Text>",
+        "            <Spacer \/>",
+        "            <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
+        "              <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
+        "            <\/Button>",
+        "          <\/HStack>",
+        "        <\/NavigationLink>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "",
+        "  def get_cats_and_favorites() do",
+        "    favorites = FavoritesStore.get_favorites()",
+        "",
+        "    {favorites, non_favorites} =",
+        "      @cats",
+        "      |> Enum.map(fn name -> {name, Enum.member?(favorites, name)} end)",
+        "      |> Enum.split_with(fn {_, favorite} -> favorite end)",
+        "",
+        "    favorites ++ non_favorites",
+        "  end",
+        "",
+        "  def handle_event(\"toggle-favorite\", %{\"name\" => name}, socket) do",
+        "    FavoritesStore.toggle_favorite(name)",
+        "    new = get_cats_and_favorites()",
+        "    {:noreply, assign(socket, cats_and_favorites: new)}",
+        "  end",
+        "end"
       ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
       "highlights" : [
         {
-          "line" : 3
+          "line" : 36
         },
         {
-          "line" : 4
+          "line" : 37
         },
         {
-          "line" : 5
+          "line" : 38
         },
         {
-          "line" : 6
+          "line" : 39
         },
         {
-          "line" : 7
+          "line" : 40
         },
         {
-          "line" : 8
+          "line" : 41
         },
         {
-          "line" : 9
+          "line" : 42
         },
         {
-          "line" : 10
+          "line" : 43
         },
         {
-          "line" : 11
+          "line" : 44
         },
         {
-          "line" : 12
+          "line" : 45
         }
       ],
-      "identifier" : "03-02-04-navigationlink.ios.heex",
-      "syntax" : "html",
+      "identifier" : "03-02-04-cats_list_live.ex",
+      "syntax" : "elixir",
       "type" : "file"
     },
     "03-02-05-navigation-preview.mp4" : {
@@ -834,6 +984,30 @@
                     {
                       "text" : "In a production app, you would want to perform validation here. But for this tutorial, we’re just going to assume that whatever’s in the route is a valid cat.",
                       "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "We’ll start with a simple template for this view that just displays the cat’s image.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "The ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "navigation_title",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " modifier is used to assign a title that will be displayed in the navigation bar of our app. In the next section, you’ll see how this is added.",
+                      "type" : "text"
                     }
                   ],
                   "type" : "paragraph"
@@ -853,42 +1027,6 @@
                     },
                     {
                       "text" : " callback, we assign the name parameter from the route to the socket for use in the template.",
-                      "type" : "text"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ],
-              "media" : null,
-              "runtimePreview" : null,
-              "type" : "step"
-            },
-            {
-              "caption" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "text" : "The ",
-                      "type" : "text"
-                    },
-                    {
-                      "code" : "navigation_title",
-                      "type" : "codeVoice"
-                    },
-                    {
-                      "text" : " modifier is used to assign a title that will be displayed in the navigation bar of our app. In the next section, you’ll see how this is added.",
-                      "type" : "text"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ],
-              "code" : "03-01-03-cat_live.ios.heex",
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "text" : "We’ll start with a simple template for this view that just displays the cat’s image.",
                       "type" : "text"
                     }
                   ],
@@ -969,7 +1107,7 @@
               "caption" : [
 
               ],
-              "code" : "02-02-04-button-click.ios.heex",
+              "code" : "02-02-05-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -978,7 +1116,7 @@
                       "type" : "text"
                     },
                     {
-                      "code" : "cats_list_live.ios.heex",
+                      "code" : "cats_list_live.ex",
                       "type" : "codeVoice"
                     },
                     {
@@ -1005,7 +1143,7 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "03-02-02-nav-title.ios.heex",
+              "code" : "03-02-03-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1041,7 +1179,7 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "03-02-04-navigationlink.ios.heex",
+              "code" : "03-02-04-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1050,7 +1188,7 @@
                       "type" : "text"
                     },
                     {
-                      "code" : "<h-stack>",
+                      "code" : "<HStack>",
                       "type" : "codeVoice"
                     },
                     {
@@ -1058,7 +1196,7 @@
                       "type" : "text"
                     },
                     {
-                      "code" : "<navigation-link>",
+                      "code" : "<NavigationLink>",
                       "type" : "codeVoice"
                     },
                     {
@@ -1074,7 +1212,7 @@
                       "type" : "text"
                     },
                     {
-                      "code" : "<h-stack>",
+                      "code" : "<HStack>",
                       "type" : "codeVoice"
                     },
                     {

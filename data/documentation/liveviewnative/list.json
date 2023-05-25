@@ -385,20 +385,6 @@
                   "type" : "paragraph"
                 }
               ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/style",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
             }
           ],
           "type" : "unorderedList"
@@ -753,43 +739,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/list\/selection"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this list.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative9ListStyle029_E4934C7D0C8B51E1429ACC17F026I2C6LLO",
-          "text" : "ListStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "list-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/list\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/View-Implementations" : {
       "abstract" : [
 
@@ -990,8 +939,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Table",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Section"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Section",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Table"
       ],
       "title" : "Collection Containers"
     }
@@ -1002,8 +951,7 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/body",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/delete",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/move",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/selection",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/style"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List\/selection"
       ],
       "title" : "Instance Properties"
     },

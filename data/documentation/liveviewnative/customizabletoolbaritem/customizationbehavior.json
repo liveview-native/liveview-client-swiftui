@@ -1,0 +1,372 @@
+{
+  "abstract" : [
+    {
+      "text" : "Changes the level of customization for this item.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomizableToolbarItem"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomizableToolbarItem\/customizationBehavior"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative23CustomizableToolbarItemV21customizationBehavior33_69920AFD71D20E77EFB103671247C228LL7SwiftUI0e13CustomizationH0Vvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "customizationBehavior"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI28ToolbarCustomizationBehaviorV",
+        "text" : "ToolbarCustomizationBehavior"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "customizationBehavior"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "attribute",
+              "text" : "@"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative9AttributeV",
+              "text" : "Attribute"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "customizationBehavior"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI28ToolbarCustomizationBehaviorV",
+              "text" : "ToolbarCustomizationBehavior"
+            },
+            {
+              "kind" : "text",
+              "text" : " { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Possible values:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "default",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "disabled",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The item is not customizable.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "reorderable",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The item can be reordered, but not removed.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute" : {
+      "abstract" : [
+        {
+          "text" : "A property wrapper that decodes an attribute of an element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Attribute"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Attribute",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Attribute"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Attribute",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attribute"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomizableToolbarItem" : {
+      "abstract" : [
+        {
+          "text" : "See ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItem",
+          "isActive" : true,
+          "type" : "reference"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CustomizableToolbarItem"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomizableToolbarItem",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CustomizableToolbarItem"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomizableToolbarItem",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customizabletoolbaritem"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomizableToolbarItem\/customizationBehavior" : {
+      "abstract" : [
+        {
+          "text" : "Changes the level of customization for this item.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "customizationBehavior"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI28ToolbarCustomizationBehaviorV",
+          "text" : "ToolbarCustomizationBehavior"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomizableToolbarItem\/customizationBehavior",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "customizationBehavior",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customizabletoolbaritem\/customizationbehavior"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItem" : {
+      "abstract" : [
+        {
+          "text" : "Toolbar element for placing items.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarItem"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItem",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarItem"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<ToolbarItem>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritem"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/customizabletoolbaritem\/customizationbehavior"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

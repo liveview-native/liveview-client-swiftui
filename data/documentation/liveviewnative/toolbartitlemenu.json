@@ -1,0 +1,467 @@
+{
+  "abstract" : [
+    {
+      "text" : "Toolbar element that opens a menu when the navigation title is tapped.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarTitleMenu"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative16ToolbarTitleMenuV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "ToolbarTitleMenu"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "ToolbarTitleMenu"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "<ToolbarTitleMenu>"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "ToolbarTitleMenu"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "On iOS, the menu can be opened by tapping the inline navigation bar title.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<ToolbarTitleMenu>",
+            "    <Button phx-click=\"edit\">Edit<\/Button>",
+            "    <Button phx-click=\"save\">Save<\/Button>",
+            "    <Button phx-click=\"open\">Open<\/Button>",
+            "<\/ToolbarItemMenu>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI14ToolbarContentP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI14ToolbarContentP",
+      "title" : "SwiftUI.ToolbarContent",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/7SwiftUI26CustomizableToolbarContentP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI26CustomizableToolbarContentP",
+      "title" : "SwiftUI.CustomizableToolbarContent",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItem" : {
+      "abstract" : [
+        {
+          "text" : "Toolbar element for placing items.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarItem"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItem",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarItem"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<ToolbarItem>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritem"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemGroup" : {
+      "abstract" : [
+        {
+          "text" : "Toolbar element for placing multiple items.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarItemGroup"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemGroup",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarItemGroup"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<ToolbarItemGroup>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemgroup"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Toolbars",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbars"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarTitleMenu" : {
+      "abstract" : [
+        {
+          "text" : "Toolbar element that opens a menu when the navigation title is tapped.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarTitleMenu"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarTitleMenu",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarTitleMenu"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<ToolbarTitleMenu>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbartitlemenu"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarTitleMenu\/CustomizableToolbarContent-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarTitleMenu\/CustomizableToolbarContent-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "CustomizableToolbarContent Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbartitlemenu\/customizabletoolbarcontent-implementations"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/7SwiftUI26CustomizableToolbarContentP",
+        "doc:\/\/LiveViewNative\/7SwiftUI14ToolbarContentP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemGroup",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItem"
+      ],
+      "title" : "Views"
+    }
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarTitleMenu\/CustomizableToolbarContent-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/toolbartitlemenu"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,313 @@
+{
+  "abstract" : [
+    {
+      "text" : "A value that represents a hidden state.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftUI",
+    "externalID" : "s:e:s:7SwiftUI10VisibilityO14LiveViewNativeE4fromAC0deF4Core9AttributeVSg_tKcfc",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "extension"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "preciseIdentifier" : "s:7SwiftUI10VisibilityO",
+        "text" : "Visibility"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Visibility"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Extended Enumeration",
+    "symbolKind" : "extension",
+    "title" : "Visibility"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "extension"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI10VisibilityO",
+              "text" : "Visibility"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Possible values:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "automatic",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "visible",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "hidden",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
+      "abstract" : [
+        {
+          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftUI",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility" : {
+      "abstract" : [
+        {
+          "text" : "A value that represents a hidden state.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI10VisibilityO",
+          "text" : "Visibility"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Visibility"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Visibility",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/visibility"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility\/AttributeDecodable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility\/AttributeDecodable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "AttributeDecodable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/visibility\/attributedecodable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility\/Decodable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility\/Decodable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Decodable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/visibility\/decodable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/Se"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility\/AttributeDecodable-Implementations",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility\/Decodable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/swiftui\/visibility"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

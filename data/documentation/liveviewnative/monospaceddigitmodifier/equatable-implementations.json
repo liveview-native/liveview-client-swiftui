@@ -1,0 +1,177 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier\/Equatable-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "Equatable Implementations"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes any element to use fixed-width digits.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MonospacedDigitModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MonospacedDigitModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "monospaced_digit",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/monospaceddigitmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier\/!=(_:_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "static"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "!="
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "Self"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "Self"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier\/!=(_:_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "!=(_:_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/monospaceddigitmodifier\/!=(_:_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Text Input and Output Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier\/!=(_:_:)"
+      ],
+      "title" : "Operators"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/monospaceddigitmodifier\/equatable-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

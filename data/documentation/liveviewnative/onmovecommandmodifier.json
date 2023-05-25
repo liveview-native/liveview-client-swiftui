@@ -1,0 +1,695 @@
+{
+  "abstract" : [
+    {
+      "text" : "Receive an event when the arrow keys are pressed on a focused element.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative21OnMoveCommandModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "OnMoveCommandModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "OnMoveCommandModifier"
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "13.0",
+        "name" : "macOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "16.0",
+        "name" : "tvOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "on_move_command"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "OnMoveCommandModifier"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "This modifier must be used on an element that can receive focus.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Create an event with a ",
+              "type" : "text"
+            },
+            {
+              "code" : "direction",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " parameter.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "defmodule MyAppWeb.SliderLive do",
+            "  native_binding :value, Float, 0",
+            "   ",
+            "  @impl true",
+            "  def handle_event(\"adjust\", %{ \"direction\" => direction }, socket) do",
+            "    case direction do",
+            "      \"right\" ->",
+            "        {:noreply, assign_native_bindings(socket, value: socket.assigns.value + 0.1)}",
+            "      \"left\" ->",
+            "        {:noreply, assign_native_bindings(socket, value: socket.assigns.value - 0.1)}",
+            "      _ ->",
+            "        {:noreply, socket}",
+            "    end",
+            "  end",
+            "end"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Pass the name of this event to the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier\/action",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " argument.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<Slider value-binding=\"value\" modifiers={on_move_command(@native, action: \"adjust\")}>",
+            "    Value",
+            "<\/Slider>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Now when the slider is focused, the left\/right keys can be used to adjust the value.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Arguments",
+          "level" : 2,
+          "text" : "Arguments",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier\/action",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AllowsHitTestingModifier" : {
+      "abstract" : [
+        {
+          "text" : "Configures whether this view participates in hit test operations.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AllowsHitTestingModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AllowsHitTestingModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AllowsHitTestingModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "allows_hit_testing",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/allowshittestingmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier" : {
+      "abstract" : [
+        {
+          "text" : "Places an accessory View next to the Digital Crown on Apple Watch.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DigitalCrownAccessoryModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DigitalCrownAccessoryModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "digital_crown_accessory",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/digitalcrownaccessorymodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryVisibilityModifier" : {
+      "abstract" : [
+        {
+          "text" : "Specifies the visibility of Digital Crown accessory Views on Apple Watch.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DigitalCrownAccessoryVisibilityModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryVisibilityModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DigitalCrownAccessoryVisibilityModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "digital_crown_accessory_visibility",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/digitalcrownaccessoryvisibilitymodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HoverEffectModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a pointer hover effect to the view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "HoverEffectModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HoverEffectModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "HoverEffectModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "hover_effect",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hovereffectmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Input Events Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/inputeventsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnDeleteCommandModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sends an event when a system delete command is received.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OnDeleteCommandModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnDeleteCommandModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OnDeleteCommandModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "on_delete_command",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/ondeletecommandmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnHoverModifier" : {
+      "abstract" : [
+        {
+          "text" : "Receive an event when the cursor enters\/leaves the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OnHoverModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnHoverModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OnHoverModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "on_hover",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/onhovermodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier" : {
+      "abstract" : [
+        {
+          "text" : "Receive an event when the arrow keys are pressed on a focused element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OnMoveCommandModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OnMoveCommandModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "on_move_command",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/onmovecommandmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier\/action" : {
+      "abstract" : [
+        {
+          "text" : "The event to trigger when the command is received.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "action"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV",
+          "text" : "Event"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier\/action",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "action",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/onmovecommandmodifier\/action"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/onmovecommandmodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnSubmitModifier" : {
+      "abstract" : [
+        {
+          "text" : "Receive an event when a field is submitted.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OnSubmitModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnSubmitModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OnSubmitModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "on_submit",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/onsubmitmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitScopeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Scopes an ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnSubmitModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier to a specific element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SubmitScopeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitScopeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SubmitScopeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "submit_scope",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/submitscopemodifier"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AllowsHitTestingModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryVisibilityModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HoverEffectModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnDeleteCommandModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnHoverModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnSubmitModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitScopeModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier\/action"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/onmovecommandmodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

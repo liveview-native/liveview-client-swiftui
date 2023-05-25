@@ -1,0 +1,443 @@
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "RawRepresentable.init(from:)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/RawRepresentable-Implementations"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/RawRepresentable-Implementations"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/init(from:)"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "conformance" : {
+      "availabilityPrefix" : [
+        {
+          "text" : "Available when",
+          "type" : "text"
+        }
+      ],
+      "conformancePrefix" : [
+        {
+          "text" : "Conforms when",
+          "type" : "text"
+        }
+      ],
+      "constraints" : [
+        {
+          "code" : "Self",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " conforms to ",
+          "type" : "text"
+        },
+        {
+          "code" : "Decodable",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " and ",
+          "type" : "text"
+        },
+        {
+          "code" : "RawValue",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " is ",
+          "type" : "text"
+        },
+        {
+          "code" : "String",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ]
+    },
+    "extendedModule" : "Swift",
+    "externalID" : "s:SYsSeRzSS8RawValueSYRtzrlE4fromxs7Decoder_p_tKcfc::SYNTHESIZED::s:14LiveViewNative17ControlGroupStyle33_A47A20CCCC57890AB8A8C7F3EFFC2ADFLLO",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "from"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s7DecoderP",
+        "text" : "Decoder"
+      },
+      {
+        "kind" : "text",
+        "text" : ") "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(from:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "from"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "decoder"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s7DecoderP",
+              "text" : "Decoder"
+            },
+            {
+              "kind" : "text",
+              "text" : ") "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup" : {
+      "abstract" : [
+        {
+          "text" : "Visual grouping of control elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroup"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroup"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<ControlGroup>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroup"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle" : {
+      "abstract" : [
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroupStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroupStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ControlGroupStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroupstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/init(from:)" : {
+      "abstract" : [
+
+      ],
+      "conformance" : {
+        "availabilityPrefix" : [
+          {
+            "text" : "Available when",
+            "type" : "text"
+          }
+        ],
+        "conformancePrefix" : [
+          {
+            "text" : "Conforms when",
+            "type" : "text"
+          }
+        ],
+        "constraints" : [
+          {
+            "code" : "Self",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " conforms to ",
+            "type" : "text"
+          },
+          {
+            "code" : "Decodable",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " and ",
+            "type" : "text"
+          },
+          {
+            "code" : "RawValue",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " is ",
+            "type" : "text"
+          },
+          {
+            "code" : "String",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : ".",
+            "type" : "text"
+          }
+        ]
+      },
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s7DecoderP",
+          "text" : "Decoder"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/init(from:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroupstyle\/init(from:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/RawRepresentable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/RawRepresentable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "RawRepresentable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroupstyle\/rawrepresentable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any control groups within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroupStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroupStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "control_group_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroupstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Containers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutcontainers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/controlgroupstyle\/init(from:)"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

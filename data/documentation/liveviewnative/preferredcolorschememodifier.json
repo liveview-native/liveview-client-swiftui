@@ -1,0 +1,478 @@
+{
+  "abstract" : [
+    {
+      "text" : "Overrides the preferred color scheme for the presentation.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative28PreferredColorSchemeModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "PreferredColorSchemeModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "PreferredColorSchemeModifier"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "preferred_color_scheme"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "PreferredColorSchemeModifier"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "This modifier propagates up to the nearest presentation container",
+                  "type" : "text"
+                },
+                {
+                  "text" : " ",
+                  "type" : "text"
+                },
+                {
+                  "text" : "rather than modifying the content directly.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "code" : [
+            "<VStack",
+            "    modifiers={",
+            "        preferred_color_scheme(@native, color_scheme: :light)",
+            "    }",
+            ">",
+            "  This view will present in light mode, regardless of the system setting.",
+            "<\/VStack>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Arguments",
+          "level" : 2,
+          "text" : "Arguments",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier\/colorScheme",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HiddenModifier" : {
+      "abstract" : [
+        {
+          "text" : "Hides any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "HiddenModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HiddenModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "HiddenModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "hidden",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hiddenmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OpacityModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the opacity for any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OpacityModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OpacityModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OpacityModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "opacity",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/opacitymodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Overrides the preferred color scheme for the presentation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PreferredColorSchemeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PreferredColorSchemeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "preferred_color_scheme",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/preferredcolorschememodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier\/colorScheme" : {
+      "abstract" : [
+        {
+          "text" : "The preferred color scheme for the view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "colorScheme"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI11ColorSchemeO",
+          "text" : "ColorScheme"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier\/colorScheme",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "colorScheme",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/preferredcolorschememodifier\/colorscheme"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/preferredcolorschememodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StatusBarHiddenModifier" : {
+      "abstract" : [
+        {
+          "text" : "Hides or shows the status bar.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "StatusBarHiddenModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StatusBarHiddenModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "StatusBarHiddenModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "status_bar_hidden",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/statusbarhiddenmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier" : {
+      "abstract" : [
+        {
+          "text" : "Removes any reason to apply a redaction to this view hierarchy.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "UnredactedModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "UnredactedModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "unredacted",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/unredactedmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Configuration Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewconfigurationmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/s8SendableP",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HiddenModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OpacityModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StatusBarHiddenModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier\/colorScheme"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PreferredColorSchemeModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/preferredcolorschememodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

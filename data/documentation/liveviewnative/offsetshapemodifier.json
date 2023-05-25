@@ -1,0 +1,561 @@
+{
+  "abstract" : [
+    {
+      "text" : "Moves a ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " by the given amount.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative19OffsetShapeModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "OffsetShapeModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "OffsetShapeModifier"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "offset_shape"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "OffsetShapeModifier"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "This modifier only applies to ",
+                  "type" : "text"
+                },
+                {
+                  "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+                  "isActive" : true,
+                  "type" : "reference"
+                },
+                {
+                  "text" : " elements, and is separate from the ",
+                  "type" : "text"
+                },
+                {
+                  "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetModifier",
+                  "isActive" : true,
+                  "type" : "reference"
+                },
+                {
+                  "text" : " modifier.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "code" : [
+            "<Circle modifiers={shape_offset(@native, x: 10, y: 50)} \/>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies an offset to any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OffsetModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OffsetModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "offset",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/offsetmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Moves a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " by the given amount.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OffsetShapeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OffsetShapeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "offset_shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/offsetshapemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier\/x" : {
+      "abstract" : [
+        {
+          "text" : "The horizontal offset distance. Defaults to ",
+          "type" : "text"
+        },
+        {
+          "code" : "0",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "x"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14CoreFoundation7CGFloatV",
+          "text" : "CGFloat"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier\/x",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "x",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/offsetshapemodifier\/x"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier\/y" : {
+      "abstract" : [
+        {
+          "text" : "The vertical offset distance. Defaults to ",
+          "type" : "text"
+        },
+        {
+          "code" : "0",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "y"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14CoreFoundation7CGFloatV",
+          "text" : "CGFloat"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier\/y",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "y",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/offsetshapemodifier\/y"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Rotates a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RotationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RotationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "rotation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rotationmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape" : {
+      "abstract" : [
+        {
+          "text" : "A view that displays the a shape.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Shape"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Shape"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shape"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Shapes",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shapes"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SizeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the size of the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SizeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SizeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SizeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "size",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/sizemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrimModifier" : {
+      "abstract" : [
+        {
+          "text" : "Trim the start\/end points of a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TrimModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrimModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TrimModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "trim",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/trimmodifier"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/s8SendableP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SizeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrimModifier"
+      ],
+      "title" : "Transforming a shape"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier\/x",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier\/y"
+      ],
+      "title" : "Instance Properties"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/offsetshapemodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

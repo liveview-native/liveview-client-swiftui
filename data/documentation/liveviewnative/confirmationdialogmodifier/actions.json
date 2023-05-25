@@ -1,0 +1,304 @@
+{
+  "abstract" : [
+    {
+      "text" : "A reference to a set of ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " views that are used as the dialog’s actions.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ModalPresentations",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier\/actions"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative26ConfirmationDialogModifierV7actions33_00D74D111F168756C9BFDA47CF8104E4LLSSvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "actions"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:SS",
+        "text" : "String"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "actions"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "actions"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:SS",
+              "text" : "String"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The system will dismiss the alert when any of the buttons is activated.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The first button provided is used as the confirmation action, and a “Cancel” action is added automatically.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button" : {
+      "abstract" : [
+        {
+          "code" : "<Button>",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ", sends events when tapped.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Button"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Button"
+        }
+      ],
+      "role" : "symbol",
+      "tags" : [
+        {
+          "text" : "SPI",
+          "type" : "spi"
+        }
+      ],
+      "title" : "<Button>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/button"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier" : {
+      "abstract" : [
+        {
+          "text" : "Displays a confirmation dialog when a live binding is active.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ConfirmationDialogModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ConfirmationDialogModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "confirmation_dialog",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/confirmationdialogmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier\/actions" : {
+      "abstract" : [
+        {
+          "text" : "A reference to a set of ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " views that are used as the dialog’s actions.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "actions"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier\/actions",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "actions",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/confirmationdialogmodifier\/actions"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ModalPresentations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ModalPresentations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Modal Presentations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/modalpresentations"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/confirmationdialogmodifier\/actions"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,410 @@
+{
+  "abstract" : [
+    {
+      "text" : "The event to trigger when tapped.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier\/action"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative15GestureModifierV6action33_851F1ADB51184C23D5EA62943C299733LLAA5EventV0M7HandlerVvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "action"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative5EventV",
+        "text" : "Event"
+      },
+      {
+        "kind" : "text",
+        "text" : "."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+        "text" : "EventHandler"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "action"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "attribute",
+              "text" : "@"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative5EventV",
+              "text" : "Event"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "action"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative5EventV",
+              "text" : "Event"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+              "text" : "EventHandler"
+            },
+            {
+              "kind" : "text",
+              "text" : " { "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "get"
+            },
+            {
+              "kind" : "text",
+              "text" : " }"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(from:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on referencing events.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event" : {
+      "abstract" : [
+        {
+          "text" : "A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Event"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Event"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Event",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler" : {
+      "abstract" : [
+        {
+          "text" : "An action that you invoke to send an event to the server.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "EventHandler"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Event.EventHandler",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/eventhandler"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(from:)" : {
+      "abstract" : [
+        {
+          "text" : "Create an event reference as an argument to a modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s7DecoderP",
+          "text" : "Decoder"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(from:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/init(from:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sends an event when a gesture is performed on the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "gesture",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier\/action" : {
+      "abstract" : [
+        {
+          "text" : "The event to trigger when tapped.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "action"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV",
+          "text" : "Event"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier\/action",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "action",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturemodifier\/action"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Gestures Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturesmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/gesturemodifier\/action"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

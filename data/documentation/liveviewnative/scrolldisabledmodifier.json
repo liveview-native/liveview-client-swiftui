@@ -1,0 +1,448 @@
+{
+  "abstract" : [
+    {
+      "text" : "Disables or enables scrolling in scrollable views.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative22ScrollDisabledModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "ScrollDisabledModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "ScrollDisabledModifier"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "scroll_disabled"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "ScrollDisabledModifier"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "code" : [
+            "<List modifiers={@native |> scroll_disabled(disabled: true)}>",
+            "    <Text>One<\/Text>",
+            "    <Text>Two<\/Text>",
+            "    <Text>Three<\/Text>",
+            "<\/List>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Arguments",
+          "level" : 2,
+          "text" : "Arguments",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier\/disabled",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollBounceBehaviorModifier" : {
+      "abstract" : [
+        {
+          "text" : "Configures the bounce behavior of scrollable views along the specified axis.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ScrollBounceBehaviorModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollBounceBehaviorModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScrollBounceBehaviorModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "scroll_bounce_behavior",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrollbouncebehaviormodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollContentBackgroundModifier" : {
+      "abstract" : [
+        {
+          "text" : "Specifies the visibility of the background for scrollable views within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ScrollContentBackgroundModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollContentBackgroundModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScrollContentBackgroundModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "scroll_content_background",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrollcontentbackgroundmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier" : {
+      "abstract" : [
+        {
+          "text" : "Disables or enables scrolling in scrollable views.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ScrollDisabledModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScrollDisabledModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "scroll_disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrolldisabledmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier\/disabled" : {
+      "abstract" : [
+        {
+          "text" : "Indicates whether scrolling is disabled.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "disabled"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier\/disabled",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrolldisabledmodifier\/disabled"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrolldisabledmodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDismissesKeyboardModifier" : {
+      "abstract" : [
+        {
+          "text" : "Configures the behavior in which scrollable content interacts with the software keyboard.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ScrollDismissesKeyboardModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDismissesKeyboardModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScrollDismissesKeyboardModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "scroll_dismisses_keyboard",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrolldismisseskeyboardmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollIndicatorsModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the visibility of scroll indicators within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ScrollIndicatorsModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollIndicatorsModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScrollIndicatorsModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "scroll_indicators",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrollindicatorsmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Scroll Views Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrollviewsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/s8SendableP",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollBounceBehaviorModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollContentBackgroundModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDismissesKeyboardModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollIndicatorsModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier\/disabled"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollDisabledModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/scrolldisabledmodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

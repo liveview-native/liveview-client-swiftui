@@ -1,0 +1,694 @@
+{
+  "abstract" : [
+    {
+      "text" : "Renders nested content within the background of an element.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative18BackgroundModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "BackgroundModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "BackgroundModifier"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "background"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "BackgroundModifier"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Nested content is referenced by its namespace using the ",
+              "type" : "text"
+            },
+            {
+              "code" : "content",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " argument.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<HStack>",
+            "  <Image system-name=\"heart.fill\" modifiers={@native |> background(alignment: :center, content: :bg_content)}>",
+            "    <Circle template={:bg_content} \/>",
+            "  <\/Image>",
+            "<\/HStack>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Arguments",
+          "level" : 2,
+          "text" : "Arguments",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/alignment",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/content",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier" : {
+      "abstract" : [
+        {
+          "text" : "Renders nested content within the background of an element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "BackgroundModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BackgroundModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "background",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/backgroundmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/alignment" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "alignment"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI9AlignmentV",
+          "text" : "Alignment"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/alignment",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "alignment",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/backgroundmodifier\/alignment"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/content" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "content"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/content",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "content",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/backgroundmodifier\/content"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/backgroundmodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellAnchorModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes the anchor point of an element in a grid.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GridCellAnchorModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellAnchorModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GridCellAnchorModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "grid_cell_anchor",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gridcellanchormodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellColumnsModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the column span for an element in a grid.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GridCellColumnsModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellColumnsModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GridCellColumnsModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "grid_cell_columns",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gridcellcolumnsmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellUnsizedAxesModifier" : {
+      "abstract" : [
+        {
+          "text" : "Prevents grid cells from filling the available space.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GridCellUnsizedAxesModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellUnsizedAxesModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GridCellUnsizedAxesModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "grid_cell_unsized_axes",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gridcellunsizedaxesmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridColumnAlignmentModifier" : {
+      "abstract" : [
+        {
+          "text" : "Overrides the alignment of all cells in a column.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GridColumnAlignmentModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridColumnAlignmentModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GridColumnAlignmentModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "grid_column_alignment",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gridcolumnalignmentmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Fundamentals Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutfundamentalsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZIndexModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the drawing order of any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ZIndexModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZIndexModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ZIndexModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "zIndex",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/zindexmodifier"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellAnchorModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellColumnsModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellUnsizedAxesModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridColumnAlignmentModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZIndexModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/alignment",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/content"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/backgroundmodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

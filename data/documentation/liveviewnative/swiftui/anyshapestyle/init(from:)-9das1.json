@@ -1,0 +1,264 @@
+{
+  "abstract" : [
+    {
+      "text" : "Inherited from ",
+      "type" : "text"
+    },
+    {
+      "code" : "Decodable.init(from:)",
+      "type" : "codeVoice"
+    },
+    {
+      "text" : ".",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/Decodable-Implementations"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-9das1"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftUI",
+    "externalID" : "s:7SwiftUI13AnyShapeStyleV14LiveViewNativeE4fromACs7Decoder_p_tKcfc",
+    "fragments" : [
+      {
+        "kind" : "identifier",
+        "text" : "init"
+      },
+      {
+        "kind" : "text",
+        "text" : "("
+      },
+      {
+        "kind" : "externalParam",
+        "text" : "from"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:s7DecoderP",
+        "text" : "Decoder"
+      },
+      {
+        "kind" : "text",
+        "text" : ") "
+      },
+      {
+        "kind" : "keyword",
+        "text" : "throws"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Initializer",
+    "symbolKind" : "init",
+    "title" : "init(from:)"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "init"
+            },
+            {
+              "kind" : "text",
+              "text" : "("
+            },
+            {
+              "kind" : "externalParam",
+              "text" : "from"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "internalParam",
+              "text" : "decoder"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:s7DecoderP",
+              "text" : "Decoder"
+            },
+            {
+              "kind" : "text",
+              "text" : ") "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "throws"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftUI",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle" : {
+      "abstract" : [
+        {
+          "text" : "A color, gradient, or other style.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI13AnyShapeStyleV",
+          "text" : "AnyShapeStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AnyShapeStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AnyShapeStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/Decodable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/Decodable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Decodable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle\/decodable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-9das1" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s7DecoderP",
+          "text" : "Decoder"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-9das1",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle\/init(from:)-9das1"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/swiftui\/anyshapestyle\/init(from:)-9das1"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

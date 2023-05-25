@@ -1,0 +1,287 @@
+{
+  "abstract" : [
+    {
+      "text" : "One of the content types available in the ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " enum that identify the semantic meaning expected for a text-entry area.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier\/textContentType"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative23TextContentTypeModifierV04texteF033_3886D8CF62EB25428B84C121D5665B7ELLAA0deF0AELLOSgvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "textContentType"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative15TextContentType33_3886D8CF62EB25428B84C121D5665B7ELLO",
+        "text" : "TextContentType"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "textContentType"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "textContentType"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative15TextContentType33_3886D8CF62EB25428B84C121D5665B7ELLO",
+              "text" : "TextContentType"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType" : {
+      "abstract" : [
+        {
+          "text" : "A content type to use with ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextContentType"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextContentType"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "TextContentType",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textcontenttype"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the text content type for this view, which the system uses to offer suggestions while the user enters text.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextContentTypeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextContentTypeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "text_content_type",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textcontenttypemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier\/textContentType" : {
+      "abstract" : [
+        {
+          "text" : "One of the content types available in the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentType",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " enum that identify the semantic meaning expected for a text-entry area.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "textContentType"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative15TextContentType33_3886D8CF62EB25428B84C121D5665B7ELLO",
+          "text" : "TextContentType"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier\/textContentType",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "textContentType",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textcontenttypemodifier\/textcontenttype"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Text Input and Output Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/textcontenttypemodifier\/textcontenttype"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

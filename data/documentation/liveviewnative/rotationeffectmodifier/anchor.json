@@ -1,0 +1,274 @@
+{
+  "abstract" : [
+    {
+      "text" : "The ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " to center the rotation around. Defaults to ",
+      "type" : "text"
+    },
+    {
+      "code" : "{0.5, 0.5}",
+      "type" : "codeVoice"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier\/anchor"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative22RotationEffectModifierV6anchor33_E9DE591FD852216E9409943988FC17BBLL7SwiftUI9UnitPointVvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "anchor"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI9UnitPointV",
+        "text" : "UnitPoint"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "anchor"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "anchor"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI9UnitPointV",
+              "text" : "UnitPoint"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Drawing and Graphics Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/drawingandgraphicsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a rotation effect to the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RotationEffectModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RotationEffectModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "rotation_effect",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rotationeffectmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier\/anchor" : {
+      "abstract" : [
+        {
+          "text" : "The ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " to center the rotation around. Defaults to ",
+          "type" : "text"
+        },
+        {
+          "code" : "{0.5, 0.5}",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "anchor"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI9UnitPointV",
+          "text" : "UnitPoint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier\/anchor",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "anchor",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rotationeffectmodifier\/anchor"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint" : {
+      "abstract" : [
+        {
+          "text" : "Decodes a unit point from a string value.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9UnitPointV",
+          "text" : "UnitPoint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "UnitPoint"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "UnitPoint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/unitpoint"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/rotationeffectmodifier\/anchor"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

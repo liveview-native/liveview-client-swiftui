@@ -1,0 +1,220 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListRowInsetsModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListRowInsetsModifier\/Equatable-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "Equatable Implementations"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List" : {
+      "abstract" : [
+        {
+          "text" : "Presents rows of elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "List"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "List"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<List>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListRowInsetsModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the inset for an element in a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ListRowInsetsModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListRowInsetsModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ListRowInsetsModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "list_row_insets",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listrowinsetsmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListRowInsetsModifier\/!=(_:_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "static"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "!="
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "Self"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "Self"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sb",
+          "text" : "Bool"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListRowInsetsModifier\/!=(_:_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "!=(_:_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listrowinsetsmodifier\/!=(_:_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Lists Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listsmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListRowInsetsModifier\/!=(_:_:)"
+      ],
+      "title" : "Operators"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/listrowinsetsmodifier\/equatable-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

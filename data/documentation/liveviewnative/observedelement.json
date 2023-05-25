@@ -571,6 +571,44 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/observedelement\/init()"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/init(element:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "element"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative11ElementNodeV",
+          "text" : "ElementNode"
+        },
+        {
+          "kind" : "text",
+          "text" : ")"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/init(element:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(element:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/observedelement\/init(element:)"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/projectedValue" : {
       "abstract" : [
         {
@@ -710,7 +748,8 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/init()"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/init()",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ObservedElement\/init(element:)"
       ],
       "title" : "Initializers"
     },

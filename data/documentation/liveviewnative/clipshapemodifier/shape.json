@@ -1,0 +1,277 @@
+{
+  "abstract" : [
+    {
+      "text" : "The shape to use as a mask.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier\/shape"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative17ClipShapeModifierV5shape33_BDD50AC9B91161267DB772514160A729LLAA0E9ReferenceOvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "shape"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative14ShapeReferenceO",
+        "text" : "ShapeReference"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "shape"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "shape"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ShapeReference",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative14ShapeReferenceO",
+              "text" : "ShapeReference"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ShapeReference",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on creating shape arguments.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Masks an element with a given shape.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ClipShapeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ClipShapeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "clip_shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/clipshapemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier\/shape" : {
+      "abstract" : [
+        {
+          "text" : "The shape to use as a mask.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "shape"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative14ShapeReferenceO",
+          "text" : "ShapeReference"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier\/shape",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/clipshapemodifier\/shape"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Drawing and Graphics Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/drawingandgraphicsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ShapeReference" : {
+      "abstract" : [
+        {
+          "text" : "A type that provides a shape argument.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ShapeReference"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ShapeReference",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ShapeReference"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ShapeReference",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shapereference"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/clipshapemodifier\/shape"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

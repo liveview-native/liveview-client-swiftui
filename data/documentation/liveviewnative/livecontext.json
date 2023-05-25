@@ -438,10 +438,10 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/livecontext\/buildchildren(of:)"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:withTagName:namespace:includeDefaultSlot:)" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:forTemplate:includeDefaultSlot:)" : {
       "abstract" : [
         {
-          "text" : "Builds a view representing only the children of the element which have the given tag name.",
+          "text" : "Builds a view representing only the children of the element which have the given template attribute.",
           "type" : "text"
         }
       ],
@@ -481,7 +481,7 @@
         },
         {
           "kind" : "externalParam",
-          "text" : "withTagName"
+          "text" : "forTemplate"
         },
         {
           "kind" : "text",
@@ -495,23 +495,6 @@
         {
           "kind" : "text",
           "text" : ", "
-        },
-        {
-          "kind" : "externalParam",
-          "text" : "namespace"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:SS",
-          "text" : "String"
-        },
-        {
-          "kind" : "text",
-          "text" : "?, "
         },
         {
           "kind" : "externalParam",
@@ -544,12 +527,12 @@
           "text" : "View"
         }
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:forTemplate:includeDefaultSlot:)",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
+      "title" : "buildChildren(of:forTemplate:includeDefaultSlot:)",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/livecontext\/buildchildren(of:withtagname:namespace:includedefaultslot:)"
+      "url" : "\/documentation\/liveviewnative\/livecontext\/buildchildren(of:fortemplate:includedefaultslot:)"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildElement(_:)" : {
       "abstract" : [
@@ -666,7 +649,7 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/livecontext\/dynamicproperty-implementations"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasChild(of:withTagName:namespace:)" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasTemplate(of:withName:)" : {
       "abstract" : [
         {
           "text" : "Checks whether the element has any children with the given tag.",
@@ -684,7 +667,7 @@
         },
         {
           "kind" : "identifier",
-          "text" : "hasChild"
+          "text" : "hasTemplate"
         },
         {
           "kind" : "text",
@@ -709,7 +692,7 @@
         },
         {
           "kind" : "externalParam",
-          "text" : "withTagName"
+          "text" : "withName"
         },
         {
           "kind" : "text",
@@ -722,24 +705,7 @@
         },
         {
           "kind" : "text",
-          "text" : ", "
-        },
-        {
-          "kind" : "externalParam",
-          "text" : "namespace"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:SS",
-          "text" : "String"
-        },
-        {
-          "kind" : "text",
-          "text" : "?) -> "
+          "text" : ") -> "
         },
         {
           "kind" : "typeIdentifier",
@@ -747,12 +713,12 @@
           "text" : "Bool"
         }
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasChild(of:withTagName:namespace:)",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasTemplate(of:withName:)",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "hasChild(of:withTagName:namespace:)",
+      "title" : "hasTemplate(of:withName:)",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/livecontext\/haschild(of:withtagname:namespace:)"
+      "url" : "\/documentation\/liveviewnative\/livecontext\/hastemplate(of:withname:)"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/init()" : {
       "abstract" : [
@@ -1011,9 +977,9 @@
     {
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:)",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:withTagName:namespace:includeDefaultSlot:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildChildren(of:forTemplate:includeDefaultSlot:)",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/buildElement(_:)",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasChild(of:withTagName:namespace:)"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveContext\/hasTemplate(of:withName:)"
       ],
       "title" : "Instance Methods"
     },

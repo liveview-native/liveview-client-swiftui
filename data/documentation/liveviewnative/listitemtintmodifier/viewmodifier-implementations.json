@@ -1,0 +1,306 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/ViewModifier-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "ViewModifier Implementations"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the tint for a list item.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ListItemTintModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ListItemTintModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "list_item_tint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listitemtintmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/animation(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "animation"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI9AnimationV",
+          "text" : "Animation"
+        },
+        {
+          "kind" : "text",
+          "text" : "?) -> "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI12ViewModifierP",
+          "text" : "ViewModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/animation(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "animation(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listitemtintmodifier\/animation(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/concat(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "concat"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "genericParameter",
+          "text" : "T"
+        },
+        {
+          "kind" : "text",
+          "text" : ">("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "T"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI15ModifiedContentV",
+          "text" : "ModifiedContent"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "Self"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "T"
+        },
+        {
+          "kind" : "text",
+          "text" : ">"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/concat(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "concat(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listitemtintmodifier\/concat(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/transaction(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "transaction"
+        },
+        {
+          "kind" : "text",
+          "text" : "(("
+        },
+        {
+          "kind" : "keyword",
+          "text" : "inout"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI11TransactionV",
+          "text" : "Transaction"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s4Voida",
+          "text" : "Void"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI12ViewModifierP",
+          "text" : "ViewModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/transaction(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "transaction(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listitemtintmodifier\/transaction(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Lists Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listsmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/animation(_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/concat(_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListItemTintModifier\/transaction(_:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/listitemtintmodifier\/viewmodifier-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

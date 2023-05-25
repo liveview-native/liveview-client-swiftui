@@ -1,0 +1,237 @@
+{
+  "abstract" : [
+    {
+      "text" : "A custom placeholder for the search field.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier\/prompt"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative18SearchableModifierV6prompt33_2D0347B5F48B8D5BA03C61CB9C5F7909LL7SwiftUI4TextVSgvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "prompt"
+      },
+      {
+        "kind" : "text",
+        "text" : ": SwiftUI"
+      },
+      {
+        "kind" : "text",
+        "text" : "."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI4TextV",
+        "text" : "Text"
+      },
+      {
+        "kind" : "text",
+        "text" : "?"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "prompt"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "prompt"
+            },
+            {
+              "kind" : "text",
+              "text" : ": SwiftUI"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI4TextV",
+              "text" : "Text"
+            },
+            {
+              "kind" : "text",
+              "text" : "?"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier" : {
+      "abstract" : [
+        {
+          "text" : "Add a system search bar.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SearchableModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SearchableModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "searchable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchablemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier\/prompt" : {
+      "abstract" : [
+        {
+          "text" : "A custom placeholder for the search field.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "prompt"
+        },
+        {
+          "kind" : "text",
+          "text" : ": SwiftUI"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI4TextV",
+          "text" : "Text"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier\/prompt",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "prompt",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchablemodifier\/prompt"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Search Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/searchablemodifier\/prompt"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

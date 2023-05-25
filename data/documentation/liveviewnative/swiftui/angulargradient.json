@@ -1,0 +1,441 @@
+{
+  "abstract" : [
+    {
+      "text" : "A shape style that creates a conic gradient.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftUI",
+    "externalID" : "s:e:s:7SwiftUI15AngularGradientV14LiveViewNativeE4fromACs7Decoder_p_tKcfc",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "extension"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "preciseIdentifier" : "s:7SwiftUI15AngularGradientV",
+        "text" : "AngularGradient"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "AngularGradient"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Extended Structure",
+    "symbolKind" : "extension",
+    "title" : "AngularGradient"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "extension"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI15AngularGradientV",
+              "text" : "AngularGradient"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To create this shape style, create a map or keyword list with the ",
+              "type" : "text"
+            },
+            {
+              "code" : "gradient",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " key set to a ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Gradient",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " value.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Specify an ",
+              "type" : "text"
+            },
+            {
+              "code" : "angle",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " to create a full rotation with an offset.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "Provide a ",
+              "type" : "text"
+            },
+            {
+              "code" : "start_angle",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " and ",
+              "type" : "text"
+            },
+            {
+              "code" : "end_angle",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " to describe a partial rotation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "[gradient: {:colors, [:pink, :blue, 0.9]}, angle: {:degrees, 45}]",
+            "[gradient: {:colors, [:pink, :blue, 0.9]}, start_angle: {:degrees, 45}, end_angle: {:degrees, 90}]"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Angle",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on creating angles.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Set the ",
+              "type" : "text"
+            },
+            {
+              "code" : "center",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " argument to a ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " value to offset the origin of the rotation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "[gradient: {:stops, [{:pink, 0.8}, {:blue, 0.9}]}, angle: {:degrees, 45}, center: {0, 0}]"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftUI",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Angle" : {
+      "abstract" : [
+        {
+          "text" : "A rotation in degrees or radians.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI5AngleV",
+          "text" : "Angle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Angle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Angle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Angle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/angle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that creates a conic gradient.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI15AngularGradientV",
+          "text" : "AngularGradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AngularGradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AngularGradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/angulargradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient\/Decodable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient\/Decodable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Decodable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/angulargradient\/decodable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Gradient" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI8GradientV",
+          "text" : "Gradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Gradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Gradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Gradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/gradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint" : {
+      "abstract" : [
+        {
+          "text" : "Decodes a unit point from a string value.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9UnitPointV",
+          "text" : "UnitPoint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "UnitPoint"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "UnitPoint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/unitpoint"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient\/Decodable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/swiftui\/angulargradient"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

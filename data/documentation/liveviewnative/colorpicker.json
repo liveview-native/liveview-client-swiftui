@@ -772,9 +772,9 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MultiDatePicker",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker"
       ],
       "title" : "Pickers"
     }

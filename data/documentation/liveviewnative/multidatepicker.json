@@ -170,16 +170,7 @@
             {
               "inlineContent" : [
                 {
-                  "text" : "This control only supports using a ",
-                  "type" : "text"
-                },
-                {
-                  "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
-                  "isActive" : true,
-                  "type" : "reference"
-                },
-                {
-                  "text" : " for the value, and not the ",
+                  "text" : "This control does not support reading the intial value from the ",
                   "type" : "text"
                 },
                 {
@@ -187,7 +178,7 @@
                   "type" : "codeVoice"
                 },
                 {
-                  "text" : " attribute or form data.",
+                  "text" : " attribute on the element.",
                   "type" : "text"
                 }
               ],
@@ -397,40 +388,6 @@
       "title" : "<DatePicker>",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/datepicker"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding" : {
-      "abstract" : [
-        {
-          "text" : "Live bindings provide a mechanism for sharing state between the server and client in a way that can be updated by either.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "struct"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "LiveBinding"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "LiveBinding"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "LiveBinding",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/livebinding"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
       "abstract" : [
@@ -727,9 +684,9 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorPicker",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorPicker"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker"
       ],
       "title" : "Pickers"
     }

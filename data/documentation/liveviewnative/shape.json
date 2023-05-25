@@ -103,8 +103,8 @@
             },
             {
               "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:7SwiftUI5ShapeP",
-              "text" : "Shape"
+              "preciseIdentifier" : "s:7SwiftUI15InsettableShapeP",
+              "text" : "InsettableShape"
             }
           ]
         }
@@ -137,13 +137,10 @@
           "type" : "paragraph"
         },
         {
-          "inlineContent" : [
-            {
-              "text" : "Attributes:",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
+          "anchor" : "Attributes",
+          "level" : 2,
+          "text" : "Attributes",
+          "type" : "heading"
         },
         {
           "items" : [
@@ -295,7 +292,16 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape\/fillColor" : {
       "abstract" : [
         {
-          "text" : "The color the shape is filled with.",
+          "text" : "The ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Color",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " the shape is filled with.",
           "type" : "text"
         }
       ],
@@ -333,14 +339,23 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape\/fillColor",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "fill-color",
+      "title" : "fillColor",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/shape\/fillcolor"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape\/strokeColor" : {
       "abstract" : [
         {
-          "text" : "The color the shape stroke is drawn with.",
+          "text" : "The ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Color",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " the shape stroke is drawn with.",
           "type" : "text"
         }
       ],
@@ -378,7 +393,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape\/strokeColor",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "stroke-color",
+      "title" : "strokeColor",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/shape\/strokecolor"
     },
@@ -438,6 +453,57 @@
       "title" : "Capsule",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/capsule"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Color" : {
+      "abstract" : [
+        {
+          "text" : "Helpers for creating a SwiftUI ",
+          "type" : "text"
+        },
+        {
+          "code" : "Color",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SwiftUI"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI5ColorV",
+          "text" : "Color"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Color",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Color"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Color",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/color"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RoundedRectangle" : {
       "abstract" : [

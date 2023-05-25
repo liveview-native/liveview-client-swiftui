@@ -1,0 +1,773 @@
+{
+  "abstract" : [
+    {
+      "text" : "Places an accessory View next to the Digital Crown on Apple Watch.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative29DigitalCrownAccessoryModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "DigitalCrownAccessoryModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "DigitalCrownAccessoryModifier"
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "9.0",
+        "name" : "watchOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "digital_crown_accessory"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "DigitalCrownAccessoryModifier"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Nested content is referenced by its namespace using the ",
+              "type" : "text"
+            },
+            {
+              "code" : "content",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " argument.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<List modifiers={",
+            "    @native",
+            "    |> digital_crown_accessory(content: :dca_view)",
+            "    |> digital_crown_accessory_visibility(visibility: :visible)",
+            "}>",
+            "    <Image template={:dca_view} system-name=\"heart.fill\" \/>",
+            "<\/List>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Arguments",
+          "level" : 2,
+          "text" : "Arguments",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier\/content",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AllowsHitTestingModifier" : {
+      "abstract" : [
+        {
+          "text" : "Configures whether this view participates in hit test operations.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AllowsHitTestingModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AllowsHitTestingModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AllowsHitTestingModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "allows_hit_testing",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/allowshittestingmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier" : {
+      "abstract" : [
+        {
+          "text" : "Places an accessory View next to the Digital Crown on Apple Watch.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DigitalCrownAccessoryModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DigitalCrownAccessoryModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "digital_crown_accessory",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/digitalcrownaccessorymodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier\/content" : {
+      "abstract" : [
+        {
+          "text" : "A reference to the element that contains the accessory view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "content"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier\/content",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "content",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/digitalcrownaccessorymodifier\/content"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/digitalcrownaccessorymodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryVisibilityModifier" : {
+      "abstract" : [
+        {
+          "text" : "Specifies the visibility of Digital Crown accessory Views on Apple Watch.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DigitalCrownAccessoryVisibilityModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryVisibilityModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DigitalCrownAccessoryVisibilityModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "digital_crown_accessory_visibility",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/digitalcrownaccessoryvisibilitymodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HoverEffectModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a pointer hover effect to the view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "HoverEffectModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HoverEffectModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "HoverEffectModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "hover_effect",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/hovereffectmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Input Events Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/inputeventsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnDeleteCommandModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sends an event when a system delete command is received.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OnDeleteCommandModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnDeleteCommandModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OnDeleteCommandModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "on_delete_command",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/ondeletecommandmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnHoverModifier" : {
+      "abstract" : [
+        {
+          "text" : "Receive an event when the cursor enters\/leaves the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OnHoverModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnHoverModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OnHoverModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "on_hover",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/onhovermodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier" : {
+      "abstract" : [
+        {
+          "text" : "Receive an event when the arrow keys are pressed on a focused element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OnMoveCommandModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OnMoveCommandModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "on_move_command",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/onmovecommandmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnSubmitModifier" : {
+      "abstract" : [
+        {
+          "text" : "Receive an event when a field is submitted.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OnSubmitModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnSubmitModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OnSubmitModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "on_submit",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/onsubmitmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitScopeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Scopes an ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnSubmitModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier to a specific element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SubmitScopeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitScopeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SubmitScopeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "submit_scope",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/submitscopemodifier"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AllowsHitTestingModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryVisibilityModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HoverEffectModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnDeleteCommandModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnHoverModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnMoveCommandModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OnSubmitModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitScopeModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier\/content"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DigitalCrownAccessoryModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/digitalcrownaccessorymodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

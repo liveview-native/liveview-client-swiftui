@@ -3,8 +3,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle"
       ]
     ]
@@ -38,16 +38,16 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge" : {
       "abstract" : [
@@ -187,6 +187,40 @@
       "title" : "!=(_:_:)",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gaugestyle\/!=(_:_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any gauges within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GaugeStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GaugeStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "gauge_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gaugestylemodifier"
     }
   },
   "schemaVersion" : {

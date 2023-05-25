@@ -239,10 +239,10 @@
         },
         {
           "code" : [
-            "<Slider value-binding=\"progress\">",
-            "    <Slider:label>Percent Completed<\/Slider:label>",
-            "    <Slider:minimum-value-label>0%<\/Slider:minimum-value-label>",
-            "    <Slider:maximum-value-label>100%<\/Slider:maximum-value-label>",
+            "<Slider value-binding=\"value\">",
+            "    <Text template={:label}>Percent Completed<\/Text>",
+            "    <Text template={:\"minimum-value-label\"}>0%<\/Text>",
+            "    <Text template={:\"maximum-value-label\"}>100%<\/Text>",
             "<\/Slider>"
           ],
           "syntax" : "html",
@@ -826,8 +826,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Stepper"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Stepper",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle"
       ],
       "title" : "Value Inputs"
     }

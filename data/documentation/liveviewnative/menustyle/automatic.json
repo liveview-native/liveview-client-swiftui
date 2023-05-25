@@ -3,8 +3,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle"
       ]
     ]
@@ -15,7 +15,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative9MenuStyle33_E8370A60BF551560F0179D5B501909FDLLO9automaticyA2DmF",
+    "externalID" : "s:14LiveViewNative9MenuStyle33_DCB46A07CF3EFA9F11BCCD5DF21379BBLLO9automaticyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -84,17 +84,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
-      "abstract" : [
-
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-      "kind" : "article",
-      "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu" : {
       "abstract" : [
         {
@@ -128,6 +117,17 @@
       "title" : "<Menu>",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/menu"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Menus and Commands",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menusandcommands"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle" : {
       "abstract" : [
@@ -184,6 +184,49 @@
       "title" : "MenuStyle.automatic",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/menustyle\/automatic"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a style to a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MenuStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MenuStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "menu_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menustylemodifier"
     }
   },
   "schemaVersion" : {

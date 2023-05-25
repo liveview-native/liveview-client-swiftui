@@ -3,8 +3,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePickerStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePickerStyle"
       ]
     ]
@@ -15,7 +15,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative15DatePickerStyle33_5663E4F46DEB2EE1D47145A283F89223LLO9automaticyA2DmF",
+    "externalID" : "s:14LiveViewNative15DatePickerStyle023_712A5AE1C48A84760730D8G8F34200D0LLO9automaticyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -114,16 +114,16 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker" : {
       "abstract" : [
@@ -226,6 +226,40 @@
       "title" : "DatePickerStyle.automatic",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/datepickerstyle\/automatic"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePickerStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any date pickers within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DatePickerStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePickerStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DatePickerStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "date_picker_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/datepickerstylemodifier"
     }
   },
   "schemaVersion" : {

@@ -189,14 +189,14 @@
         {
           "code" : [
             "<Section>",
-            "    <Section:header>Group #1<\/Section:header>",
-            "    <Section:content>Item #1<\/Section:content>",
-            "    <Section:footer>The first group ends here<\/Section:footer>",
+            "    <Text template={:header}>Group #1<\/Text>",
+            "    <Text template={:content}>Item #1<\/Text>",
+            "    <Text template={:footer}>The first group ends here<\/Text>",
             "<\/Section>",
             "<Section>",
-            "    <Section:header>Group #2<\/Section:header>",
-            "    <Section:content>Item #1<\/Section:content>",
-            "    <Section:footer>The second group ends here<\/Section:footer>",
+            "    <Text template={:header}>Group #2<\/Text>",
+            "    <Text template={:content}>Item #1<\/Text>",
+            "    <Text template={:footer}>The second group ends here<\/Text>",
             "<\/Section>"
           ],
           "syntax" : "html",
@@ -209,8 +209,9 @@
               "type" : "text"
             },
             {
-              "code" : "ListStyle\/sidebar",
-              "type" : "codeVoice"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/sidebar",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
               "text" : " can have collapsible sections. Use the ",
@@ -450,6 +451,31 @@
       "title" : "<List>",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/list"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/sidebar" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "sidebar"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/sidebar",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.sidebar",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/sidebar"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
       "abstract" : [
@@ -764,8 +790,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Table",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Table"
       ],
       "title" : "Collection Containers"
     }

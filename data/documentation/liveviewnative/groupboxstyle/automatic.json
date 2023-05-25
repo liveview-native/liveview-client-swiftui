@@ -3,6 +3,11 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyle"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyle"
@@ -15,7 +20,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative13GroupBoxStyle33_1F5A270FB3719BED3FF91A856BB38B02LLO9automaticyA2DmF",
+    "externalID" : "s:14LiveViewNative13GroupBoxStyle33_8E96B56CBD2815540B324739BF301E2BLLO9automaticyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -120,7 +125,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -173,6 +190,40 @@
       "title" : "GroupBoxStyle.automatic",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/groupboxstyle\/automatic"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any group boxes within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GroupBoxStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GroupBoxStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "group_box_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/groupboxstylemodifier"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
       "abstract" : [

@@ -1,0 +1,531 @@
+{
+  "abstract" : [
+    {
+      "text" : "The positioning of a toolbar item.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative20ToolbarItemPlacementO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "ToolbarItemPlacement"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "ToolbarItemPlacement"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "ToolbarItemPlacement"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "ToolbarItemPlacement"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
+      "abstract" : [
+        {
+          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement" : {
+      "abstract" : [
+        {
+          "text" : "The positioning of a toolbar item.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarItemPlacement"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarItemPlacement"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/automatic" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "automatic"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/automatic",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.automatic",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/automatic"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/cancellationAction" : {
+      "abstract" : [
+        {
+          "code" : "cancellation-action",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "cancellationAction"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/cancellationAction",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.cancellationAction",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/cancellationaction"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/confirmationAction" : {
+      "abstract" : [
+        {
+          "code" : "confirmation-action",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "confirmationAction"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/confirmationAction",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.confirmationAction",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/confirmationaction"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/destructiveAction" : {
+      "abstract" : [
+        {
+          "code" : "destructive-action",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "destructiveAction"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/destructiveAction",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.destructiveAction",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/destructiveaction"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/Equatable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/Equatable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Equatable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/equatable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/keyboard" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "keyboard"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/keyboard",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.keyboard",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/keyboard"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/navigation" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "navigation"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/navigation",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.navigation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/navigation"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/primaryAction" : {
+      "abstract" : [
+        {
+          "code" : "primary-action",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "primaryAction"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/primaryAction",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.primaryAction",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/primaryaction"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/principal" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "principal"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/principal",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.principal",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/principal"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/RawRepresentable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/RawRepresentable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "RawRepresentable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/rawrepresentable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/secondaryAction" : {
+      "abstract" : [
+        {
+          "code" : "secondary-action",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "secondaryAction"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/secondaryAction",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.secondaryAction",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/secondaryaction"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/status" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "status"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/status",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ToolbarItemPlacement.status",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbaritemplacement\/status"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SH" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SH",
+      "title" : "Swift.Hashable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SQ" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SQ",
+      "title" : "Swift.Equatable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SY" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SY",
+      "title" : "Swift.RawRepresentable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/SQ",
+        "doc:\/\/LiveViewNative\/SH",
+        "doc:\/\/LiveViewNative\/SY",
+        "doc:\/\/LiveViewNative\/s8SendableP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/automatic",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/cancellationAction",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/confirmationAction",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/destructiveAction",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/keyboard",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/navigation",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/primaryAction",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/principal",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/secondaryAction",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/status"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/Equatable-Implementations",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarItemPlacement\/RawRepresentable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/toolbaritemplacement"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

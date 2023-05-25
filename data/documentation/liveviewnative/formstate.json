@@ -204,11 +204,28 @@
               "type" : "text"
             },
             {
-              "code" : "<live-form>",
+              "code" : "<LiveForm>",
               "type" : "codeVoice"
             },
             {
-              "text" : " and it has a ",
+              "text" : " (see ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/github.com\/liveview-native\/liveview-native-live-form",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ")",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "and it has a ",
               "type" : "text"
             },
             {
@@ -317,7 +334,7 @@
         {
           "inlineContent" : [
             {
-              "text" : "Otherwise, when the value is accessed for the first time, the framework will try to use the element’s ",
+              "text" : "If the element has a ",
               "type" : "text"
             },
             {
@@ -325,23 +342,7 @@
               "type" : "codeVoice"
             },
             {
-              "text" : " attribute, if possible.",
-              "type" : "text"
-            },
-            {
-              "text" : " ",
-              "type" : "text"
-            },
-            {
-              "text" : "If the element does not have a ",
-              "type" : "text"
-            },
-            {
-              "code" : "value",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " attribute, or the ",
+              "text" : " attribute, and the ",
               "type" : "text"
             },
             {
@@ -349,7 +350,32 @@
               "type" : "codeVoice"
             },
             {
-              "text" : " type could not be constructed from the string representation,",
+              "text" : " type conforms to ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : ", the framework",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "will try to construct the default value from the attribute. If those conditions are not satisfied, or ",
+              "type" : "text"
+            },
+            {
+              "code" : "AttributeDecodable\/init(from:)",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " fails,",
               "type" : "text"
             },
             {
@@ -482,6 +508,40 @@
       "title" : "LiveViewNative",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
+      "abstract" : [
+        {
+          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AttributeDecodable"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AttributeDecodable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/attributedecodable"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FormControls" : {
       "abstract" : [
@@ -913,6 +973,18 @@
       "title" : "ObservedElement",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/observedelement"
+    },
+    "https:\/\/github.com\/liveview-native\/liveview-native-live-form" : {
+      "identifier" : "https:\/\/github.com\/liveview-native\/liveview-native-live-form",
+      "title" : "LiveViewNativeLiveForm",
+      "titleInlineContent" : [
+        {
+          "text" : "LiveViewNativeLiveForm",
+          "type" : "text"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/github.com\/liveview-native\/liveview-native-live-form"
     }
   },
   "relationshipsSections" : [

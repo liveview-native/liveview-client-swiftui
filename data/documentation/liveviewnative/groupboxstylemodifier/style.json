@@ -1,0 +1,279 @@
+{
+  "abstract" : [
+    {
+      "text" : "The style to apply to group boxes.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier\/style"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative21GroupBoxStyleModifierV5style33_8E96B56CBD2815540B324739BF301E2BLLAA0deF0AELLOvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "style"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative13GroupBoxStyle33_8E96B56CBD2815540B324739BF301E2BLLO",
+        "text" : "GroupBoxStyle"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "style"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "style"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyle",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative13GroupBoxStyle33_8E96B56CBD2815540B324739BF301E2BLLO",
+              "text" : "GroupBoxStyle"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox" : {
+      "abstract" : [
+        {
+          "text" : "Visual grouping of elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GroupBox"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GroupBox"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<GroupBox>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/groupbox"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyle" : {
+      "abstract" : [
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GroupBoxStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GroupBoxStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "GroupBoxStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/groupboxstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any group boxes within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GroupBoxStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GroupBoxStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "group_box_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/groupboxstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier\/style" : {
+      "abstract" : [
+        {
+          "text" : "The style to apply to group boxes.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "style"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative13GroupBoxStyle33_8E96B56CBD2815540B324739BF301E2BLLO",
+          "text" : "GroupBoxStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyleModifier\/style",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/groupboxstylemodifier\/style"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/groupboxstylemodifier\/style"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

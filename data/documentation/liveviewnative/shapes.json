@@ -99,6 +99,58 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/ellipse"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FillModifier" : {
+      "abstract" : [
+        {
+          "text" : "Fills a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " with a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FillModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FillModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FillModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "fill",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/fillmodifier"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images" : {
       "abstract" : [
 
@@ -110,6 +162,49 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/images"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier" : {
+      "abstract" : [
+        {
+          "text" : "Insets a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " by a given amount.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "InsetModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "InsetModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "inset",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/insetmodifier"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
       "abstract" : [
 
@@ -120,6 +215,49 @@
       "title" : "Layout Containers",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/layoutcontainers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Moves a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " by the given amount.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OffsetShapeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OffsetShapeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "offset_shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/offsetshapemodifier"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Rectangle" : {
       "abstract" : [
@@ -134,6 +272,49 @@
       "title" : "Rectangle",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/rectangle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Rotates a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RotationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RotationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "rotation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rotationmodifier"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape" : {
       "abstract" : [
@@ -168,6 +349,170 @@
       "title" : "Shape",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/shape"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SizeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the size of the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SizeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SizeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SizeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "size",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/sizemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrokeBorderModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adds an inner stroke to a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "StrokeBorderModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrokeBorderModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "StrokeBorderModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "stroke_border",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/strokebordermodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrokeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Strokes a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " with a shape style.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "StrokeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrokeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "StrokeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "stroke",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/strokemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle" : {
+      "abstract" : [
+        {
+          "text" : "A color, gradient, or other style.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI13AnyShapeStyleV",
+          "text" : "AnyShapeStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AnyShapeStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AnyShapeStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Capsule" : {
       "abstract" : [
@@ -249,6 +594,60 @@
       "title" : "Text Input and Output",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textinputandoutput"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Toolbars",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbars"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrimModifier" : {
+      "abstract" : [
+        {
+          "text" : "Trim the start\/end points of a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TrimModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrimModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TrimModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "trim",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/trimmodifier"
     }
   },
   "schemaVersion" : {
@@ -267,7 +666,8 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphics",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars"
       ],
       "title" : "Supported Elements"
     }
@@ -284,6 +684,34 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RoundedRectangle"
       ],
       "title" : "Views"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetShapeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SizeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrimModifier"
+      ],
+      "title" : "Transforming a shape"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InsetModifier"
+      ],
+      "title" : "Insetting a shape"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrokeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrokeBorderModifier"
+      ],
+      "title" : "Stroking a shape"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FillModifier"
+      ],
+      "title" : "Filling a shape"
     }
   ],
   "variants" : [

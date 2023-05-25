@@ -1,0 +1,617 @@
+{
+  "abstract" : [
+    {
+      "text" : "A style to apply to a list with the ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyleModifier",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " modifier.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative9ListStyle33_F9C59AE0A33110E77576DE46F1F7B6E3LLO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "ListStyle"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "ListStyle"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "ListStyle"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "ListStyle"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List" : {
+      "abstract" : [
+        {
+          "text" : "Presents rows of elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "List"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "List"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<List>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/list"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle" : {
+      "abstract" : [
+        {
+          "text" : "A style to apply to a list with the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyleModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ListStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ListStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ListStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/automatic" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "automatic"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/automatic",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.automatic",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/automatic"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/bordered" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "bordered"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/bordered",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.bordered",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/bordered"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/borderedAlternating" : {
+      "abstract" : [
+        {
+          "code" : "bordered_alternating",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "borderedAlternating"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/borderedAlternating",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.borderedAlternating",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/borderedalternating"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/carousel" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "carousel"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/carousel",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.carousel",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/carousel"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/elliptical" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "elliptical"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/elliptical",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.elliptical",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/elliptical"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/Equatable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/Equatable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Equatable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/equatable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/grouped" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "grouped"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/grouped",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.grouped",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/grouped"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/inset" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "inset"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/inset",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.inset",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/inset"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/insetAlternating" : {
+      "abstract" : [
+        {
+          "code" : "inset_alternating",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "insetAlternating"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/insetAlternating",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.insetAlternating",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/insetalternating"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/insetGrouped" : {
+      "abstract" : [
+        {
+          "code" : "inset_grouped",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "insetGrouped"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/insetGrouped",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.insetGrouped",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/insetgrouped"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/plain" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "plain"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/plain",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.plain",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/plain"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/RawRepresentable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/RawRepresentable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "RawRepresentable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/rawrepresentable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/sidebar" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "sidebar"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/sidebar",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ListStyle.sidebar",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststyle\/sidebar"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the style of a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/List",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ListStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ListStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "list_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liststylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SH" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SH",
+      "title" : "Swift.Hashable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SQ" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SQ",
+      "title" : "Swift.Equatable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SY" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SY",
+      "title" : "Swift.RawRepresentable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/SQ",
+        "doc:\/\/LiveViewNative\/SH",
+        "doc:\/\/LiveViewNative\/SY",
+        "doc:\/\/LiveViewNative\/s8SendableP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/automatic",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/bordered",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/borderedAlternating",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/carousel",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/elliptical",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/grouped",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/inset",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/insetAlternating",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/insetGrouped",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/plain",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/sidebar"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/Equatable-Implementations",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListStyle\/RawRepresentable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/liststyle"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

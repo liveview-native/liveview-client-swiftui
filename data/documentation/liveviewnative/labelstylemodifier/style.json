@@ -1,0 +1,291 @@
+{
+  "abstract" : [
+    {
+      "text" : "The style to apply to labels.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier\/style"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative18LabelStyleModifierV5style33_67156DE9DC8587A41C5EF22F5E473AD7LLAA0dE0AELLOvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "let"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "style"
+      },
+      {
+        "kind" : "text",
+        "text" : ": "
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:14LiveViewNative10LabelStyle33_67156DE9DC8587A41C5EF22F5E473AD7LLO",
+        "text" : "LabelStyle"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "style"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "let"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "style"
+            },
+            {
+              "kind" : "text",
+              "text" : ": "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative10LabelStyle33_67156DE9DC8587A41C5EF22F5E473AD7LLO",
+              "text" : "LabelStyle"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label" : {
+      "abstract" : [
+        {
+          "text" : "A title and icon pair.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Label"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Label"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<Label>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/label"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle" : {
+      "abstract" : [
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LabelStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labelstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any labels within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "label_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labelstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier\/style" : {
+      "abstract" : [
+        {
+          "text" : "The style to apply to labels.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "style"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative10LabelStyle33_67156DE9DC8587A41C5EF22F5E473AD7LLO",
+          "text" : "LabelStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier\/style",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labelstylemodifier\/style"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Text Input and Output Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/labelstylemodifier\/style"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

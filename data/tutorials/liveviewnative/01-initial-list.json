@@ -146,7 +146,328 @@
       "syntax" : "",
       "type" : "file"
     },
-    "01-01-04-router.ex" : {
+    "01-01-02-mix.exs" : {
+      "content" : [
+        "defmodule LvnTutorial.MixProject do",
+        "  use Mix.Project",
+        "",
+        "  def project do",
+        "    [",
+        "      app: :lvn_tutorial,",
+        "      version: \"0.1.0\",",
+        "      elixir: \"~> 1.14\",",
+        "      elixirc_paths: elixirc_paths(Mix.env()),",
+        "      start_permanent: Mix.env() == :prod,",
+        "      aliases: aliases(),",
+        "      deps: deps()",
+        "    ]",
+        "  end",
+        "",
+        "  # Configuration for the OTP application.",
+        "  #",
+        "  # Type `mix help compile.app` for more information.",
+        "  def application do",
+        "    [",
+        "      mod: {LvnTutorial.Application, []},",
+        "      extra_applications: [:logger, :runtime_tools]",
+        "    ]",
+        "  end",
+        "",
+        "  # Specifies which paths to compile per environment.",
+        "  defp elixirc_paths(:test), do: [\"lib\", \"test\/support\"]",
+        "  defp elixirc_paths(_), do: [\"lib\"]",
+        "",
+        "  # Specifies your project dependencies.",
+        "  #",
+        "  # Type `mix help deps` for examples and options.",
+        "  defp deps do",
+        "    [",
+        "      {:phoenix, \"~> 1.7.2\"},",
+        "      {:phoenix_html, \"~> 3.3\"},",
+        "      {:phoenix_live_reload, \"~> 1.2\", only: :dev},",
+        "      {:phoenix_live_view, \"~> 0.18.18\"},",
+        "      {:floki, \">= 0.30.0\", only: :test},",
+        "      {:phoenix_live_dashboard, \"~> 0.7.2\"},",
+        "      {:esbuild, \"~> 0.7\", runtime: Mix.env() == :dev},",
+        "      {:tailwind, \"~> 0.2.0\", runtime: Mix.env() == :dev},",
+        "      {:telemetry_metrics, \"~> 0.6\"},",
+        "      {:telemetry_poller, \"~> 1.0\"},",
+        "      {:jason, \"~> 1.2\"},",
+        "      {:plug_cowboy, \"~> 2.5\"}",
+        "    ]",
+        "  end",
+        "",
+        "  # Aliases are shortcuts or tasks specific to the current project.",
+        "  # For example, to install project dependencies and perform other setup tasks, run:",
+        "  #",
+        "  #     $ mix setup",
+        "  #",
+        "  # See the documentation for `Mix` for more info on aliases.",
+        "  defp aliases do",
+        "    [",
+        "      setup: [\"deps.get\", \"assets.setup\", \"assets.build\"],",
+        "      \"assets.setup\": [\"tailwind.install --if-missing\", \"esbuild.install --if-missing\"],",
+        "      \"assets.build\": [\"tailwind default\", \"esbuild default\"],",
+        "      \"assets.deploy\": [\"tailwind default --minify\", \"esbuild default --minify\", \"phx.digest\"]",
+        "    ]",
+        "  end",
+        "end"
+      ],
+      "fileName" : "mix.exs",
+      "fileType" : "exs",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-02-mix.exs",
+      "syntax" : "exs",
+      "type" : "file"
+    },
+    "01-01-03-mix.exs" : {
+      "content" : [
+        "defmodule LvnTutorial.MixProject do",
+        "  use Mix.Project",
+        "",
+        "  def project do",
+        "    [",
+        "      app: :lvn_tutorial,",
+        "      version: \"0.1.0\",",
+        "      elixir: \"~> 1.14\",",
+        "      elixirc_paths: elixirc_paths(Mix.env()),",
+        "      start_permanent: Mix.env() == :prod,",
+        "      aliases: aliases(),",
+        "      deps: deps()",
+        "    ]",
+        "  end",
+        "",
+        "  # Configuration for the OTP application.",
+        "  #",
+        "  # Type `mix help compile.app` for more information.",
+        "  def application do",
+        "    [",
+        "      mod: {LvnTutorial.Application, []},",
+        "      extra_applications: [:logger, :runtime_tools]",
+        "    ]",
+        "  end",
+        "",
+        "  # Specifies which paths to compile per environment.",
+        "  defp elixirc_paths(:test), do: [\"lib\", \"test\/support\"]",
+        "  defp elixirc_paths(_), do: [\"lib\"]",
+        "",
+        "  # Specifies your project dependencies.",
+        "  #",
+        "  # Type `mix help deps` for examples and options.",
+        "  defp deps do",
+        "    [",
+        "      {:phoenix, \"~> 1.7.2\"},",
+        "      {:phoenix_html, \"~> 3.3\"},",
+        "      {:phoenix_live_reload, \"~> 1.2\", only: :dev},",
+        "      {:phoenix_live_view, \"~> 0.18.18\"},",
+        "      {:floki, \">= 0.30.0\", only: :test},",
+        "      {:phoenix_live_dashboard, \"~> 0.7.2\"},",
+        "      {:esbuild, \"~> 0.7\", runtime: Mix.env() == :dev},",
+        "      {:tailwind, \"~> 0.2.0\", runtime: Mix.env() == :dev},",
+        "      {:telemetry_metrics, \"~> 0.6\"},",
+        "      {:telemetry_poller, \"~> 1.0\"},",
+        "      {:jason, \"~> 1.2\"},",
+        "      {:plug_cowboy, \"~> 2.5\"},",
+        "      {:live_view_native,",
+        "       git: \"https:\/\/github.com\/liveview-native\/live_view_native.git\", branch: \"main\"},",
+        "      {:live_view_native_swift_ui,",
+        "       git: \"https:\/\/github.com\/liveview-native\/liveview-client-swiftui\", branch: \"main\"}",
+        "    ]",
+        "  end",
+        "",
+        "  # Aliases are shortcuts or tasks specific to the current project.",
+        "  # For example, to install project dependencies and perform other setup tasks, run:",
+        "  #",
+        "  #     $ mix setup",
+        "  #",
+        "  # See the documentation for `Mix` for more info on aliases.",
+        "  defp aliases do",
+        "    [",
+        "      setup: [\"deps.get\", \"assets.setup\", \"assets.build\"],",
+        "      \"assets.setup\": [\"tailwind.install --if-missing\", \"esbuild.install --if-missing\"],",
+        "      \"assets.build\": [\"tailwind default\", \"esbuild default\"],",
+        "      \"assets.deploy\": [\"tailwind default --minify\", \"esbuild default --minify\", \"phx.digest\"]",
+        "    ]",
+        "  end",
+        "end"
+      ],
+      "fileName" : "mix.exs",
+      "fileType" : "exs",
+      "highlights" : [
+        {
+          "line" : 46
+        },
+        {
+          "line" : 47
+        },
+        {
+          "line" : 48
+        },
+        {
+          "line" : 49
+        },
+        {
+          "line" : 50
+        }
+      ],
+      "identifier" : "01-01-03-mix.exs",
+      "syntax" : "exs",
+      "type" : "file"
+    },
+    "01-01-04-config.exs" : {
+      "content" : [
+        "# This file is responsible for configuring your application",
+        "# and its dependencies with the aid of the Config module.",
+        "#",
+        "# This configuration file is loaded before any dependency and",
+        "# is restricted to this project.",
+        "",
+        "# General application configuration",
+        "import Config",
+        "",
+        "# Configures the endpoint",
+        "config :lvn_tutorial, LvnTutorialWeb.Endpoint,",
+        "  url: [host: \"localhost\"],",
+        "  render_errors: [",
+        "    formats: [html: LvnTutorialWeb.ErrorHTML, json: LvnTutorialWeb.ErrorJSON],",
+        "    layout: false",
+        "  ],",
+        "  pubsub_server: LvnTutorial.PubSub,",
+        "  live_view: [signing_salt: \"0p4irQ9b\"]",
+        "",
+        "# Configure esbuild (the version is required)",
+        "config :esbuild,",
+        "  version: \"0.17.11\",",
+        "  default: [",
+        "    args:",
+        "      ~w(js\/app.js --bundle --target=es2017 --outdir=..\/priv\/static\/assets --external:\/fonts\/* --external:\/images\/*),",
+        "    cd: Path.expand(\"..\/assets\", __DIR__),",
+        "    env: %{\"NODE_PATH\" => Path.expand(\"..\/deps\", __DIR__)}",
+        "  ]",
+        "",
+        "# Configure tailwind (the version is required)",
+        "config :tailwind,",
+        "  version: \"3.2.7\",",
+        "  default: [",
+        "    args: ~w(",
+        "      --config=tailwind.config.js",
+        "      --input=css\/app.css",
+        "      --output=..\/priv\/static\/assets\/app.css",
+        "    ),",
+        "    cd: Path.expand(\"..\/assets\", __DIR__)",
+        "  ]",
+        "",
+        "# Configures Elixir's Logger",
+        "config :logger, :console,",
+        "  format: \"$time $metadata[$level] $message\\n\",",
+        "  metadata: [:request_id]",
+        "",
+        "# Use Jason for JSON parsing in Phoenix",
+        "config :phoenix, :json_library, Jason",
+        "",
+        "# Import environment specific config. This must remain at the bottom",
+        "# of this file so it overrides the configuration defined above.",
+        "import_config \"#{config_env()}.exs\""
+      ],
+      "fileName" : "config\/config.exs",
+      "fileType" : "exs",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-04-config.exs",
+      "syntax" : "exs",
+      "type" : "file"
+    },
+    "01-01-05-config.exs" : {
+      "content" : [
+        "# This file is responsible for configuring your application",
+        "# and its dependencies with the aid of the Config module.",
+        "#",
+        "# This configuration file is loaded before any dependency and",
+        "# is restricted to this project.",
+        "",
+        "# General application configuration",
+        "import Config",
+        "",
+        "config :live_view_native, :platforms, [LiveViewNativeSwiftUi.Platform]",
+        "",
+        "config :live_view_native, LiveViewNativeSwiftUi.Platform,",
+        "  app_name: \"LVNTutorial\",",
+        "  custom_modifiers: []",
+        "",
+        "# Configures the endpoint",
+        "config :lvn_tutorial, LvnTutorialWeb.Endpoint,",
+        "  url: [host: \"localhost\"],",
+        "  render_errors: [",
+        "    formats: [html: LvnTutorialWeb.ErrorHTML, json: LvnTutorialWeb.ErrorJSON],",
+        "    layout: false",
+        "  ],",
+        "  pubsub_server: LvnTutorial.PubSub,",
+        "  live_view: [signing_salt: \"0p4irQ9b\"]",
+        "",
+        "# Configure esbuild (the version is required)",
+        "config :esbuild,",
+        "  version: \"0.17.11\",",
+        "  default: [",
+        "    args:",
+        "      ~w(js\/app.js --bundle --target=es2017 --outdir=..\/priv\/static\/assets --external:\/fonts\/* --external:\/images\/*),",
+        "    cd: Path.expand(\"..\/assets\", __DIR__),",
+        "    env: %{\"NODE_PATH\" => Path.expand(\"..\/deps\", __DIR__)}",
+        "  ]",
+        "",
+        "# Configure tailwind (the version is required)",
+        "config :tailwind,",
+        "  version: \"3.2.7\",",
+        "  default: [",
+        "    args: ~w(",
+        "      --config=tailwind.config.js",
+        "      --input=css\/app.css",
+        "      --output=..\/priv\/static\/assets\/app.css",
+        "    ),",
+        "    cd: Path.expand(\"..\/assets\", __DIR__)",
+        "  ]",
+        "",
+        "# Configures Elixir's Logger",
+        "config :logger, :console,",
+        "  format: \"$time $metadata[$level] $message\\n\",",
+        "  metadata: [:request_id]",
+        "",
+        "# Use Jason for JSON parsing in Phoenix",
+        "config :phoenix, :json_library, Jason",
+        "",
+        "# Import environment specific config. This must remain at the bottom",
+        "# of this file so it overrides the configuration defined above.",
+        "import_config \"#{config_env()}.exs\""
+      ],
+      "fileName" : "config\/config.exs",
+      "fileType" : "exs",
+      "highlights" : [
+        {
+          "line" : 10
+        },
+        {
+          "line" : 11
+        },
+        {
+          "line" : 12
+        },
+        {
+          "line" : 13
+        },
+        {
+          "line" : 14
+        },
+        {
+          "line" : 15
+        }
+      ],
+      "identifier" : "01-01-05-config.exs",
+      "syntax" : "exs",
+      "type" : "file"
+    },
+    "01-01-06-router.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.Router do",
         "  use LvnTutorialWeb, :router",
@@ -155,7 +476,62 @@
         "    plug :accepts, [\"html\"]",
         "    plug :fetch_session",
         "    plug :fetch_live_flash",
-        "    plug :put_root_layout, {LvnTutorialWeb.LayoutView, :root}",
+        "    plug :put_root_layout, {LvnTutorialWeb.Layouts, :root}",
+        "    plug :protect_from_forgery",
+        "    plug :put_secure_browser_headers",
+        "  end",
+        "",
+        "  pipeline :api do",
+        "    plug :accepts, [\"json\"]",
+        "  end",
+        "",
+        "  scope \"\/\", LvnTutorialWeb do",
+        "    pipe_through :browser",
+        "",
+        "    get \"\/\", PageController, :home",
+        "  end",
+        "",
+        "  # Other scopes may use custom stacks.",
+        "  # scope \"\/api\", LvnTutorialWeb do",
+        "  #   pipe_through :api",
+        "  # end",
+        "",
+        "  # Enable LiveDashboard in development",
+        "  if Application.compile_env(:lvn_tutorial, :dev_routes) do",
+        "    # If you want to use the LiveDashboard in production, you should put",
+        "    # it behind authentication and allow only admins to access it.",
+        "    # If your application does not have an admins-only section yet,",
+        "    # you can use Plug.BasicAuth to set up some basic authentication",
+        "    # as long as you are also using SSL (which you should anyway).",
+        "    import Phoenix.LiveDashboard.Router",
+        "",
+        "    scope \"\/dev\" do",
+        "      pipe_through :browser",
+        "",
+        "      live_dashboard \"\/dashboard\", metrics: LvnTutorialWeb.Telemetry",
+        "    end",
+        "  end",
+        "end"
+      ],
+      "fileName" : "lib\/lvn_tutorial_web\/router.ex",
+      "fileType" : "ex",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-06-router.ex",
+      "syntax" : "elixir",
+      "type" : "file"
+    },
+    "01-01-07-router.ex" : {
+      "content" : [
+        "defmodule LvnTutorialWeb.Router do",
+        "  use LvnTutorialWeb, :router",
+        "",
+        "  pipeline :browser do",
+        "    plug :accepts, [\"html\"]",
+        "    plug :fetch_session",
+        "    plug :fetch_live_flash",
+        "    plug :put_root_layout, {LvnTutorialWeb.Layouts, :root}",
         "    plug :protect_from_forgery",
         "    plug :put_secure_browser_headers",
         "  end",
@@ -175,17 +551,16 @@
         "  #   pipe_through :api",
         "  # end",
         "",
-        "  # Enables LiveDashboard only for development",
-        "  #",
-        "  # If you want to use the LiveDashboard in production, you should put",
-        "  # it behind authentication and allow only admins to access it.",
-        "  # If your application does not have an admins-only section yet,",
-        "  # you can use Plug.BasicAuth to set up some basic authentication",
-        "  # as long as you are also using SSL (which you should anyway).",
-        "  if Mix.env() in [:dev, :test] do",
+        "  # Enable LiveDashboard in development",
+        "  if Application.compile_env(:lvn_tutorial, :dev_routes) do",
+        "    # If you want to use the LiveDashboard in production, you should put",
+        "    # it behind authentication and allow only admins to access it.",
+        "    # If your application does not have an admins-only section yet,",
+        "    # you can use Plug.BasicAuth to set up some basic authentication",
+        "    # as long as you are also using SSL (which you should anyway).",
         "    import Phoenix.LiveDashboard.Router",
         "",
-        "    scope \"\/\" do",
+        "    scope \"\/dev\" do",
         "      pipe_through :browser",
         "",
         "      live_dashboard \"\/dashboard\", metrics: LvnTutorialWeb.Telemetry",
@@ -196,13 +571,15 @@
       "fileName" : "lib\/lvn_tutorial_web\/router.ex",
       "fileType" : "ex",
       "highlights" : [
-
+        {
+          "line" : 20
+        }
       ],
-      "identifier" : "01-01-04-router.ex",
+      "identifier" : "01-01-07-router.ex",
       "syntax" : "elixir",
       "type" : "file"
     },
-    "01-01-05-cats_list_live.ex" : {
+    "01-01-08-cats_list_live.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.CatsListLive do",
         "  use LvnTutorialWeb, :live_view",
@@ -235,11 +612,11 @@
       "highlights" : [
 
       ],
-      "identifier" : "01-01-05-cats_list_live.ex",
+      "identifier" : "01-01-08-cats_list_live.ex",
       "syntax" : "elixir",
       "type" : "file"
     },
-    "01-01-06-cats_list_live.ex" : {
+    "01-01-09-cats_list_live.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.CatsListLive do",
         "  use LvnTutorialWeb, :live_view",
@@ -267,8 +644,14 @@
         "    {:ok, assign(socket, cats: @cats)}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <Text>Hello, world!<\/Text>",
+        "    \"\"\"swiftui",
         "  end",
         "end"
       ],
@@ -289,35 +672,40 @@
         },
         {
           "line" : 29
+        },
+        {
+          "line" : 30
+        },
+        {
+          "line" : 31
+        },
+        {
+          "line" : 32
+        },
+        {
+          "line" : 33
+        },
+        {
+          "line" : 34
+        },
+        {
+          "line" : 35
         }
       ],
-      "identifier" : "01-01-06-cats_list_live.ex",
+      "identifier" : "01-01-09-cats_list_live.ex",
       "syntax" : "elixir",
       "type" : "file"
     },
-    "01-01-07-cats_list_live.ios.heex" : {
-      "content" : [
-        "<Text>Hello, world!<\/Text>"
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
-      "highlights" : [
-
-      ],
-      "identifier" : "01-01-07-cats_list_live.ios.heex",
-      "syntax" : "html",
-      "type" : "file"
-    },
-    "01-01-08-live-template.html.heex" : {
+    "01-01-10-app-template.html.heex" : {
       "content" : [
         "<%= @inner_content %>"
       ],
-      "fileName" : "lib\/lvn_tutorial_web\/templates\/layout\/live.html.heex",
+      "fileName" : "lib\/lvn_tutorial_web\/components\/layouts\/app.html.heex",
       "fileType" : "heex",
       "highlights" : [
 
       ],
-      "identifier" : "01-01-08-live-template.html.heex",
+      "identifier" : "01-01-10-app-template.html.heex",
       "syntax" : "html",
       "type" : "file"
     },
@@ -480,22 +868,56 @@
         }
       ]
     },
-    "01-03-01-list.ios.heex" : {
+    "01-03-01-cats_list_live.ex" : {
       "content" : [
-        "<List>",
-        "  <%= for name <- @cats do %>",
-        "    <Text id={name}><%= name %><\/Text>",
-        "  <% end %>",
-        "<\/List>",
-        ""
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats: @cats)}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for name <- @cats do %>",
+        "        <Text id={name}><%= name %><\/Text>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "end"
       ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
       "highlights" : [
 
       ],
-      "identifier" : "01-03-01-list.ios.heex",
-      "syntax" : "html",
+      "identifier" : "01-03-01-cats_list_live.ex",
+      "syntax" : "elixir",
       "type" : "file"
     },
     "01-03-02-list-preview.png" : {
@@ -512,36 +934,70 @@
         }
       ]
     },
-    "01-03-03-images.ios.heex" : {
+    "01-03-03-cats_list_live.ex" : {
       "content" : [
-        "<List>",
-        "  <%= for name <- @cats do %>",
-        "    <HStack id={name}>",
-        "      <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
-        "      <Text><%= name %><\/Text>",
-        "    <\/HStack>",
-        "  <% end %>",
-        "<\/List>",
-        ""
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats: @cats)}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for name <- @cats do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "end"
       ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
       "highlights" : [
         {
-          "line" : 3
+          "line" : 35
         },
         {
-          "line" : 4
+          "line" : 36
         },
         {
-          "line" : 5
+          "line" : 37
         },
         {
-          "line" : 6
+          "line" : 38
         }
       ],
-      "identifier" : "01-03-03-images.ios.heex",
-      "syntax" : "html",
+      "identifier" : "01-03-03-cats_list_live.ex",
+      "syntax" : "elixir",
       "type" : "file"
     },
     "01-03-04-images-preview.png" : {
@@ -910,8 +1366,8 @@
       "type" : "link",
       "url" : "https:\/\/elixir-lang.org\/install.html"
     },
-    "https:\/\/liveviewnative.github.io\/liveview-client-swiftui\/downloads\/cats.zip" : {
-      "identifier" : "https:\/\/liveviewnative.github.io\/liveview-client-swiftui\/downloads\/cats.zip",
+    "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/downloads\/cats.zip" : {
+      "identifier" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/downloads\/cats.zip",
       "title" : "project files",
       "titleInlineContent" : [
         {
@@ -920,7 +1376,7 @@
         }
       ],
       "type" : "link",
-      "url" : "https:\/\/liveviewnative.github.io\/liveview-client-swiftui\/downloads\/cats.zip"
+      "url" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/downloads\/cats.zip"
     },
     "https:\/\/www.phoenixframework.org\/" : {
       "identifier" : "https:\/\/www.phoenixframework.org\/",
@@ -1116,7 +1572,163 @@
               "caption" : [
 
               ],
-              "code" : "01-01-04-router.ex",
+              "code" : "01-01-02-mix.exs",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Edit the ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "mix.exs",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " file in the created project.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
+            },
+            {
+              "caption" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "These packages provide supporting functions for applying SwiftUI modifiers to elements from within HEEx templates.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "code" : "01-01-03-mix.exs",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Next, add the ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "live_view_native",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " and ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "live_view_native_swift_ui",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " libraries as dependencies.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
+            },
+            {
+              "caption" : [
+
+              ],
+              "code" : "01-01-04-config.exs",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Edit the ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "config.exs",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " file in the created project.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
+            },
+            {
+              "caption" : [
+
+              ],
+              "code" : "01-01-05-config.exs",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Next, add the config for ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "live_view_native",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : ".",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
+            },
+            {
+              "caption" : [
+
+              ],
+              "code" : "01-01-06-router.ex",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Edit the ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "router.ex",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " file in the created project.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
+            },
+            {
+              "caption" : [
+
+              ],
+              "code" : "01-01-07-router.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1141,7 +1753,7 @@
                       "type" : "text"
                     },
                     {
-                      "identifier" : "https:\/\/liveviewnative.github.io\/liveview-client-swiftui\/downloads\/cats.zip",
+                      "identifier" : "https:\/\/liveview-native.github.io\/liveview-client-swiftui\/downloads\/cats.zip",
                       "isActive" : true,
                       "type" : "reference"
                     },
@@ -1169,7 +1781,7 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "01-01-05-cats_list_live.ex",
+              "code" : "01-01-08-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1187,40 +1799,24 @@
             },
             {
               "caption" : [
-
-              ],
-              "code" : "01-01-06-cats_list_live.ex",
-              "content" : [
                 {
                   "inlineContent" : [
                     {
-                      "text" : "We’ll also use ",
+                      "text" : "Use the LiveView Native sigil with the ",
                       "type" : "text"
                     },
                     {
-                      "code" : "EEx.function_from_file",
+                      "code" : "swiftui",
                       "type" : "codeVoice"
                     },
                     {
-                      "text" : " to define our render implementation to use a different file than the default one.",
+                      "text" : " modifier to provide the template.",
                       "type" : "text"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ],
-              "media" : null,
-              "runtimePreview" : null,
-              "type" : "step"
-            },
-            {
-              "caption" : [
-
-              ],
-              "code" : "01-01-07-cats_list_live.ios.heex",
-              "content" : [
-                {
-                  "inlineContent" : [
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
                     {
                       "text" : "In the template itself, we’ll start with just a simple message. In the next section, we’ll come back and build the full UI.",
                       "type" : "text"
@@ -1229,6 +1825,42 @@
                   "type" : "paragraph"
                 }
               ],
+              "code" : "01-01-09-cats_list_live.ex",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Next, we’ll add ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "render",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " functions for ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : ":web",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " and ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : ":swiftui",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " platforms.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
               "media" : null,
               "runtimePreview" : null,
               "type" : "step"
@@ -1237,7 +1869,7 @@
               "caption" : [
 
               ],
-              "code" : "01-01-08-live-template.html.heex",
+              "code" : "01-01-10-app-template.html.heex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1246,7 +1878,7 @@
                       "type" : "text"
                     },
                     {
-                      "code" : "live.html.heex",
+                      "code" : "app.html.heex",
                       "type" : "codeVoice"
                     },
                     {
@@ -1579,12 +2211,20 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "01-03-01-list.ios.heex",
+              "code" : "01-03-01-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
                     {
-                      "text" : "In the HEEX template, replace the ",
+                      "text" : "In the SwiftUI ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "render",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " function, replace the ",
                       "type" : "text"
                     },
                     {
@@ -1600,7 +2240,15 @@
                       "type" : "codeVoice"
                     },
                     {
-                      "text" : ". In the list, we’ll iterate through the ",
+                      "text" : ".",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "In the list, we’ll iterate through the ",
                       "type" : "text"
                     },
                     {
@@ -1639,7 +2287,7 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "01-03-03-images.ios.heex",
+              "code" : "01-03-03-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [

@@ -6,6 +6,12 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyleModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle"
       ]
     ]
   },
@@ -74,7 +80,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -287,6 +305,130 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/disclosuregroupstyle\/hashvalue"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle\/init(from:)" : {
+      "abstract" : [
+
+      ],
+      "conformance" : {
+        "availabilityPrefix" : [
+          {
+            "text" : "Available when",
+            "type" : "text"
+          }
+        ],
+        "conformancePrefix" : [
+          {
+            "text" : "Conforms when",
+            "type" : "text"
+          }
+        ],
+        "constraints" : [
+          {
+            "code" : "Self",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " conforms to ",
+            "type" : "text"
+          },
+          {
+            "code" : "Decodable",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " and ",
+            "type" : "text"
+          },
+          {
+            "code" : "RawValue",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " is ",
+            "type" : "text"
+          },
+          {
+            "code" : "String",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : ".",
+            "type" : "text"
+          }
+        ]
+      },
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s7DecoderP",
+          "text" : "Decoder"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle\/init(from:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/disclosuregroupstyle\/init(from:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any disclosure groups within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DisclosureGroupStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DisclosureGroupStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "disclosure_group_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/disclosuregroupstylemodifier"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
       "abstract" : [
 
@@ -297,6 +439,17 @@
       "title" : "Layout Containers",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/layoutcontainers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Lists Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listsmodifiers"
     }
   },
   "schemaVersion" : {
@@ -308,6 +461,13 @@
 
   ],
   "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle\/init(from:)"
+      ],
+      "title" : "Initializers"
+    },
     {
       "generated" : true,
       "identifiers" : [

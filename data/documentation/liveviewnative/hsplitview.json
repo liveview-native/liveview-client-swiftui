@@ -415,6 +415,40 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/rootregistry"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabView" : {
+      "abstract" : [
+        {
+          "text" : "Container that presents content on separate pages.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TabView"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TabView"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<TabView>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabview"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VSplitView" : {
       "abstract" : [
         {
@@ -484,8 +518,9 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VSplitView",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationLink",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VSplitView"
       ],
       "title" : "Presentation Containers"
     }

@@ -273,7 +273,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TableStyle\/borderedAlternating",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "bordered-alternating",
+      "title" : "TableStyle.borderedAlternating",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/tablestyle\/borderedalternating"
     },
@@ -337,7 +337,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TableStyle\/insetAlternating",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "inset-alternating",
+      "title" : "TableStyle.insetAlternating",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/tablestyle\/insetalternating"
     },

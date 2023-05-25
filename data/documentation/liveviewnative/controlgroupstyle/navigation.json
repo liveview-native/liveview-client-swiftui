@@ -3,6 +3,11 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle"
@@ -15,7 +20,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative17ControlGroupStyle33_EBE0B90FAA8A32472FF6A7C238660C96LLO10navigationyA2DmF",
+    "externalID" : "s:14LiveViewNative17ControlGroupStyle33_A47A20CCCC57890AB8A8C7F3EFFC2ADFLLO10navigationyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -120,7 +125,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -173,6 +190,40 @@
       "title" : "ControlGroupStyle.navigation",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/controlgroupstyle\/navigation"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any control groups within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroupStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroupStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "control_group_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroupstylemodifier"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
       "abstract" : [

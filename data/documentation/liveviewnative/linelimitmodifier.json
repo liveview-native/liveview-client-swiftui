@@ -1,0 +1,1393 @@
+{
+  "abstract" : [
+    {
+      "text" : "Sets the maximum number of lines that text can occupy in this view.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative17LineLimitModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "LineLimitModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "LineLimitModifier"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "line_limit"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "LineLimitModifier"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "code" : [
+            "<Text modifiers={line_limit(@native, number: 2)}>Hello, world!<\/Text>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Arguments",
+          "level" : 2,
+          "text" : "Arguments",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/number",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AutocorrectionDisabledModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets whether to disable autocorrection for this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AutocorrectionDisabledModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AutocorrectionDisabledModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AutocorrectionDisabledModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "autocorrection_disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/autocorrectiondisabledmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BaselineOffsetModifier" : {
+      "abstract" : [
+        {
+          "text" : "Offsets ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " vertically.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "BaselineOffsetModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BaselineOffsetModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BaselineOffsetModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "baseline_offset",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/baselineoffsetmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BoldModifier" : {
+      "abstract" : [
+        {
+          "text" : "Makes any child ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " elements bold.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "BoldModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BoldModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BoldModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "bold",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/boldmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DynamicTypeSizeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes the size of the text for any element based on the user’s preferred content size.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DynamicTypeSizeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DynamicTypeSizeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DynamicTypeSizeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "dynamic_type_size",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/dynamictypesizemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FlipsForRightToLeftLayoutDirectionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets whether this view mirrors its contents horizontally when the layout direction is right-to-left.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FlipsForRightToLeftLayoutDirectionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FlipsForRightToLeftLayoutDirectionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FlipsForRightToLeftLayoutDirectionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "flips_for_right_to_left_layout_direction",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/flipsforrighttoleftlayoutdirectionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontDesignModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a font design to any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FontDesignModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontDesignModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FontDesignModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "font_design",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/fontdesignmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes the font for child elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FontModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FontModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "font",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/fontmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontWeightModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes the font weight for child elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FontWeightModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontWeightModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FontWeightModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "font_weight",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/fontweightmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontWidthModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes the font width for child elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FontWidthModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontWidthModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FontWidthModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "font_width",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/fontwidthmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ItalicModifier" : {
+      "abstract" : [
+        {
+          "text" : "Makes any child ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " elements italic.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ItalicModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ItalicModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ItalicModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "italic",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/italicmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/KerningModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the spacing, or kerning, between characters for the text in this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "KerningModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/KerningModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "KerningModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "kerning",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/kerningmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/KeyboardTypeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the keyboard type for this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "KeyboardTypeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/KeyboardTypeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "KeyboardTypeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "keyboard_type",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/keyboardtypemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any labels within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "label_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labelstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the maximum number of lines that text can occupy in this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LineLimitModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LineLimitModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "line_limit",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/linelimitmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/Equatable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/Equatable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Equatable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/linelimitmodifier\/equatable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/number" : {
+      "abstract" : [
+        {
+          "text" : "The line limit. If nil, no line limit applies.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "number"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Si",
+          "text" : "Int"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/number",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "number",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/linelimitmodifier\/number"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/linelimitmodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineSpacingModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the amount of space between lines of text in this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LineSpacingModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineSpacingModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LineSpacingModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "line_spacing",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/linespacingmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MinimumScaleFactorModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the minimum amount that text in this view scales down to fit in the available space.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MinimumScaleFactorModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MinimumScaleFactorModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MinimumScaleFactorModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "minimum_scale_factor",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/minimumscalefactormodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes any element to use fixed-width digits.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MonospacedDigitModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MonospacedDigitModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "monospaced_digit",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/monospaceddigitmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes the font within any element to be monospaced.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MonospacedModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MonospacedModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "monospaced",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/monospacedmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MultilineTextAlignmentModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the alignment of a text view that contains multiple lines of text.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MultilineTextAlignmentModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MultilineTextAlignmentModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MultilineTextAlignmentModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "multiline_text_alignment",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/multilinetextalignmentmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrikethroughModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adds a line through ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "StrikethroughModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrikethroughModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "StrikethroughModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "strikethrough",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/strikethroughmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitLabelModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the submit label for this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SubmitLabelModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitLabelModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SubmitLabelModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "submit_label",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/submitlabelmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text" : {
+      "abstract" : [
+        {
+          "text" : "Displays text.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Text"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<Text>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/text"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextCaseModifier" : {
+      "abstract" : [
+        {
+          "text" : "Changes the capitalization of the text for any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextCaseModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextCaseModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextCaseModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "text_case",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textcasemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the text content type for this view, which the system uses to offer suggestions while the user enters text.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextContentTypeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextContentTypeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "text_content_type",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textcontenttypemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField" : {
+      "abstract" : [
+        {
+          "text" : "A form element for entering text.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextField"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextField"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<TextField>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfield"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the style for ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " child elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextFieldStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextFieldStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "text_field_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Text Input and Output Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAutocapitalizationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets how often the shift key in the keyboard is automatically enabled.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextInputAutocapitalizationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAutocapitalizationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextInputAutocapitalizationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "text_input_autocapitalization",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textinputautocapitalizationmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextSelectionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Enables\/disables selection of ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TextSelectionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextSelectionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TextSelectionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "text_selection",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textselectionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrackingModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the tracking for the text in this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TrackingModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrackingModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TrackingModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "tracking",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/trackingmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TruncationModeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the truncation mode for lines of text that are too long to fit in the available space.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TruncationModeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TruncationModeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TruncationModeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "truncation_mode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/truncationmodemodifier"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SQ" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SQ",
+      "title" : "Swift.Equatable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/SQ",
+        "doc:\/\/LiveViewNative\/s8SendableP",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AutocorrectionDisabledModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BaselineOffsetModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BoldModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DynamicTypeSizeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FlipsForRightToLeftLayoutDirectionModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontDesignModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontWeightModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FontWidthModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ItalicModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/KerningModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/KeyboardTypeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineSpacingModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MinimumScaleFactorModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedDigitModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MonospacedModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MultilineTextAlignmentModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/StrikethroughModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SubmitLabelModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextCaseModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextContentTypeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyleModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAutocapitalizationModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextSelectionModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TrackingModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TruncationModeModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/number"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/Equatable-Implementations",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LineLimitModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/linelimitmodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

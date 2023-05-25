@@ -3,8 +3,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressViewStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressViewStyle"
       ]
     ]
@@ -38,16 +38,16 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView" : {
       "abstract" : [
@@ -85,7 +85,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressViewStyle" : {
       "abstract" : [
-
+        {
+          "text" : "The style of a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -175,6 +187,40 @@
       "title" : "!=(_:_:)",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/progressviewstyle\/!=(_:_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressViewStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any progress views within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ProgressViewStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressViewStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ProgressViewStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "progress_view_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/progressviewstylemodifier"
     }
   },
   "schemaVersion" : {

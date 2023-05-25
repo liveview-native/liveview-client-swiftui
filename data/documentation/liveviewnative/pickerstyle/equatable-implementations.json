@@ -3,8 +3,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle"
       ]
     ]
@@ -38,16 +38,16 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker" : {
       "abstract" : [
@@ -187,6 +187,40 @@
       "title" : "!=(_:_:)",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/pickerstyle\/!=(_:_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any pickers within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PickerStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PickerStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "picker_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/pickerstylemodifier"
     }
   },
   "schemaVersion" : {

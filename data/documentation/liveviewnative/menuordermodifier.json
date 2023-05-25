@@ -1,0 +1,535 @@
+{
+  "abstract" : [
+    {
+      "text" : "Sets the order of items in a menu.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative17MenuOrderModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "MenuOrderModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "MenuOrderModifier"
+      }
+    ],
+    "platforms" : [
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "16.4",
+        "name" : "iOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "13.3",
+        "name" : "macOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "16.4",
+        "name" : "tvOS",
+        "unavailable" : false
+      },
+      {
+        "beta" : false,
+        "deprecated" : false,
+        "introducedAt" : "9.4",
+        "name" : "watchOS",
+        "unavailable" : false
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "menu_order"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "MenuOrderModifier"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "code" : [
+            "<Menu modifiers={menu_order(@native, order: :fixed) |> frame(height: 500, alignment: :bottom)}>",
+            "    <Text template={:label}>",
+            "        Edit Actions",
+            "    <\/Text>",
+            "    <Group template={:content}>",
+            "        <Button>1<\/Button>",
+            "        <Button>2<\/Button>",
+            "        <Button>3<\/Button>",
+            "    <\/Group>",
+            "<\/Menu>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Arguments",
+          "level" : 2,
+          "text" : "Arguments",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier\/order",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContextMenuModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adds a context menu with actions and an optional preview. to the given view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ContextMenuModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContextMenuModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ContextMenuModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "context_menu",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/contextmenumodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu" : {
+      "abstract" : [
+        {
+          "text" : "Tappable element that expands to reveal a list of options.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Menu"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Menu"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<Menu>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menu"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuActionDismissBehaviorModifier" : {
+      "abstract" : [
+        {
+          "text" : "Controls whether a menu is dismissed automatically after an action is performed.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MenuActionDismissBehaviorModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuActionDismissBehaviorModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MenuActionDismissBehaviorModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "menu_action_dismiss_behavior",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menuactiondismissbehaviormodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuIndicatorVisibilityModifier" : {
+      "abstract" : [
+        {
+          "text" : "Specifies whether the indicator on a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " should be visible.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MenuIndicatorVisibilityModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuIndicatorVisibilityModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MenuIndicatorVisibilityModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "menu_indicator_visibility",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menuindicatorvisibilitymodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the order of items in a menu.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MenuOrderModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MenuOrderModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "menu_order",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menuordermodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier\/order" : {
+      "abstract" : [
+        {
+          "text" : "The order in which menu items are shown.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "order"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI9MenuOrderV",
+          "text" : "MenuOrder"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier\/order",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "order",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menuordermodifier\/order"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menuordermodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Menus and Commands",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menusandcommands"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a style to a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MenuStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MenuStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "menu_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menustylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/s8SendableP",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContextMenuModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuActionDismissBehaviorModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuIndicatorVisibilityModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier\/order"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuOrderModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/menuordermodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

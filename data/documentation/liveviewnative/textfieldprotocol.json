@@ -234,47 +234,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textfieldprotocol"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization" : {
-      "abstract" : [
-        {
-          "text" : "The boundaries to capitalize on.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "autocapitalization"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:7SwiftUI27TextInputAutocapitalizationV",
-          "text" : "TextInputAutocapitalization"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "autocapitalization",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/autocapitalization"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/axis" : {
       "abstract" : [
         {
@@ -311,88 +270,6 @@
       "title" : "axis",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/axis"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection" : {
-      "abstract" : [
-        {
-          "text" : "Indicates if autocorrection should be enabled.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "disableAutocorrection"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:Sb",
-          "text" : "Bool"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "autocorrection",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/disableautocorrection"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard" : {
-      "abstract" : [
-        {
-          "text" : "The type of keyboard to display.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "keyboard"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "c:@E@UIKeyboardType",
-          "text" : "UIKeyboardType"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "keyboard",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/keyboard"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/prompt" : {
       "abstract" : [
@@ -438,84 +315,6 @@
       "title" : "prompt",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/prompt"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel" : {
-      "abstract" : [
-        {
-          "text" : "The label to display on the keyboard submit button.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "submitLabel"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:7SwiftUI11SubmitLabelV",
-          "text" : "SubmitLabel"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "submit-label",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/submitlabel"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this field.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "textFieldStyle"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative14TextFieldStyleO",
-          "text" : "TextFieldStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "text-field-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/textfieldstyle"
     }
   },
   "relationshipsSections" : [
@@ -549,13 +348,8 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/axis",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/prompt",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/prompt"
       ],
       "title" : "Instance Properties"
     }

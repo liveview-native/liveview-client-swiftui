@@ -10,6 +10,12 @@
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event"
       ]
     ]
   },
@@ -262,6 +268,51 @@
       "title" : "wrappedValue",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/event\/wrappedvalue"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sends an event when a gesture is performed on the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "gesture",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Gestures Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturesmodifiers"
     }
   },
   "schemaVersion" : {

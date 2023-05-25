@@ -61,7 +61,7 @@
     "role" : "symbol",
     "roleHeading" : "Instance Property",
     "symbolKind" : "property",
-    "title" : "phx-blur"
+    "title" : "blurEvent"
   },
   "primaryContentSections" : [
     {
@@ -297,7 +297,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField\/blurEvent",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "phx-blur",
+      "title" : "blurEvent",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/securefield\/blurevent"
     },

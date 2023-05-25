@@ -123,6 +123,17 @@
       "title" : "Text Input and Output",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textinputandoutput"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Toolbars",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbars"
     }
   },
   "schemaVersion" : {
@@ -141,7 +152,8 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Images",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shapes",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toolbars"
       ],
       "title" : "Supported Elements"
     }

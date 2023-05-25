@@ -274,7 +274,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button" : {
       "abstract" : [
         {
-          "code" : "<button>",
+          "code" : "<Button>",
           "type" : "codeVoice"
         },
         {
@@ -600,9 +600,9 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EditButton",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RenameButton"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RenameButton",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button"
       ],
       "title" : "Buttons"
     }

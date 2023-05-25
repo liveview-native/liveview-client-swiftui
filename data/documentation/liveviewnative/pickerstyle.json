@@ -18,8 +18,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier"
       ]
     ]
   },
@@ -29,7 +29,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative11PickerStyle33_3D1A608FE14EB3986A7D0F4BAD773710LLO",
+    "externalID" : "s:14LiveViewNative11PickerStyle33_260CA52C00F4DE8EF08C8CFE32843712LLO",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -104,50 +104,16 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
-      "abstract" : [
-        {
-          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "protocol"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "AttributeDecodable",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/attributedecodable"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker" : {
       "abstract" : [
@@ -262,6 +228,31 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/pickerstyle\/equatable-implementations"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/inline" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "inline"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/inline",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "PickerStyle.inline",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/pickerstyle\/inline"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/menu" : {
       "abstract" : [
 
@@ -289,7 +280,10 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/navigationLink" : {
       "abstract" : [
-
+        {
+          "code" : "navigation_link",
+          "type" : "codeVoice"
+        }
       ],
       "fragments" : [
         {
@@ -314,7 +308,10 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/radioGroup" : {
       "abstract" : [
-
+        {
+          "code" : "radio_group",
+          "type" : "codeVoice"
+        }
       ],
       "fragments" : [
         {
@@ -398,9 +395,48 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/pickerstyle\/wheel"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any pickers within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PickerStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PickerStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "picker_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/pickerstylemodifier"
+    },
     "doc:\/\/LiveViewNative\/s8SendableP" : {
       "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
       "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
       "type" : "unresolvable"
     },
     "doc:\/\/LiveViewNative\/SH" : {
@@ -422,7 +458,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/Se",
         "doc:\/\/LiveViewNative\/SQ",
         "doc:\/\/LiveViewNative\/SH",
         "doc:\/\/LiveViewNative\/SY",
@@ -445,6 +481,7 @@
     {
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/automatic",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/inline",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/menu",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/navigationLink",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/radioGroup",

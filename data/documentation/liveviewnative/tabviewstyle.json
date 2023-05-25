@@ -1,0 +1,476 @@
+{
+  "abstract" : [
+    {
+      "text" : "A style to apply to a ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabView",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " with the ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyleModifier",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " modifier.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative03TabB5Style33_80CE4DE377DBC01D42C4D007DBDC0953LLO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "TabViewStyle"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "TabViewStyle"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "TabViewStyle"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "TabViewStyle"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabView" : {
+      "abstract" : [
+        {
+          "text" : "Container that presents content on separate pages.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TabView"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabView",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TabView"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "<TabView>",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabview"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle" : {
+      "abstract" : [
+        {
+          "text" : "A style to apply to a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabView",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " with the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyleModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TabViewStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TabViewStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "TabViewStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/automatic" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "automatic"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/automatic",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "TabViewStyle.automatic",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstyle\/automatic"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/carousel" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "carousel"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/carousel",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "TabViewStyle.carousel",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstyle\/carousel"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/Equatable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/Equatable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Equatable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstyle\/equatable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/page" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "page"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/page",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "TabViewStyle.page",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstyle\/page"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/pageAlways" : {
+      "abstract" : [
+        {
+          "code" : "page_always",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "pageAlways"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/pageAlways",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "TabViewStyle.pageAlways",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstyle\/pagealways"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/pageNever" : {
+      "abstract" : [
+        {
+          "code" : "page_never",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "pageNever"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/pageNever",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "TabViewStyle.pageNever",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstyle\/pagenever"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/RawRepresentable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/RawRepresentable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "RawRepresentable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstyle\/rawrepresentable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the style of a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabView",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TabViewStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TabViewStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "tab_view_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/tabviewstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SH" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SH",
+      "title" : "Swift.Hashable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SQ" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SQ",
+      "title" : "Swift.Equatable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SY" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SY",
+      "title" : "Swift.RawRepresentable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/SQ",
+        "doc:\/\/LiveViewNative\/SH",
+        "doc:\/\/LiveViewNative\/SY",
+        "doc:\/\/LiveViewNative\/s8SendableP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/automatic",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/carousel",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/page",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/pageAlways",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/pageNever"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/Equatable-Implementations",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TabViewStyle\/RawRepresentable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/tabviewstyle"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,693 @@
+{
+  "abstract" : [
+    {
+      "text" : "Provide a list of suggested search completions.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative25SearchSuggestionsModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "SearchSuggestionsModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "SearchSuggestionsModifier"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "search_suggestions"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "SearchSuggestionsModifier"
+            },
+            {
+              "kind" : "text",
+              "text" : "<"
+            },
+            {
+              "kind" : "genericParameter",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : "> "
+            },
+            {
+              "kind" : "keyword",
+              "text" : "where"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "text" : "R"
+            },
+            {
+              "kind" : "text",
+              "text" : " : "
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:14LiveViewNative12RootRegistryP",
+              "text" : "RootRegistry"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The list of completions is referenced by its namespace using the ",
+              "type" : "text"
+            },
+            {
+              "code" : "suggestions",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " argument.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use the ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchCompletionModifier",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " modifier on each child to set the completion content.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "<List",
+            "    modifiers={",
+            "        @native",
+            "            |> searchable(...)",
+            "            |> search_suggestions(suggestions: :my_suggestions)",
+            "    }",
+            ">",
+            "    ...",
+            "    <Group template={:my_suggestions}>",
+            "        <Text modifiers={search_completion(@native, completion: \"text completion\")}>text completion<\/Text>",
+            "        <Text modifiers={search_completion(@native, token: \"Custom\")}>Custom Token<\/Text>",
+            "    <\/Group>",
+            "<List>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A custom registry allows clients to include custom view types in the LiveView DOM.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CustomRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CustomRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/customregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FindDisabledModifier" : {
+      "abstract" : [
+        {
+          "text" : "Controls whether the find navigator is disabled.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FindDisabledModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FindDisabledModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FindDisabledModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "find_disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/finddisabledmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FindNavigatorModifier" : {
+      "abstract" : [
+        {
+          "text" : "Controls whether the find navigator is shown.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FindNavigatorModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FindNavigatorModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FindNavigatorModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "find_navigator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/findnavigatormodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ReplaceDisabledModifier" : {
+      "abstract" : [
+        {
+          "text" : "Controls whether the replace is disabled (but not find).",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ReplaceDisabledModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ReplaceDisabledModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ReplaceDisabledModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "replace_disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/replacedisabledmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
+      "abstract" : [
+        {
+          "text" : "A root registry is a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CustomRegistry",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " type that can be used directly as the registry for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "protocol"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RootRegistry"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RootRegistry",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier" : {
+      "abstract" : [
+        {
+          "text" : "Add a system search bar.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SearchableModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SearchableModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "searchable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchablemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchCompletionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets a completion within a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier body.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SearchCompletionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchCompletionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SearchCompletionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "search_completion",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchcompletionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Search Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchScopesModifier" : {
+      "abstract" : [
+        {
+          "text" : "Enables search scopes for an element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SearchScopesModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchScopesModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SearchScopesModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "search_scopes",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchscopesmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier" : {
+      "abstract" : [
+        {
+          "text" : "Provide a list of suggested search completions.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SearchSuggestionsModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SearchSuggestionsModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "search_suggestions",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchsuggestionsmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier\/suggestions" : {
+      "abstract" : [
+        {
+          "text" : "An atom that references the element containing the list of completions.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "suggestions"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier\/suggestions",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "suggestions",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchsuggestionsmodifier\/suggestions"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchsuggestionsmodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FindDisabledModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FindNavigatorModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ReplaceDisabledModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchCompletionModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchScopesModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchableModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier\/suggestions"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchSuggestionsModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/searchsuggestionsmodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

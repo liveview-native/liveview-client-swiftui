@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "square-border",
+      "code" : "square_border",
       "type" : "codeVoice"
     }
   ],
@@ -19,7 +19,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative14TextFieldStyleO12squareBorderyA2CmF",
+    "externalID" : "s:14LiveViewNative14TextFieldStyle33_3A502CA82293376C24064E4ECB956207LLO12squareBorderyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -131,7 +131,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle\/squareBorder" : {
       "abstract" : [
         {
-          "code" : "square-border",
+          "code" : "square_border",
           "type" : "codeVoice"
         }
       ],

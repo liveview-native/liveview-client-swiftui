@@ -1,0 +1,306 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/ViewModifier-Implementations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "ViewModifier Implementations"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier" : {
+      "abstract" : [
+        {
+          "text" : "Removes any reason to apply a redaction to this view hierarchy.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "UnredactedModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "UnredactedModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "unredacted",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/unredactedmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/animation(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "animation"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI9AnimationV",
+          "text" : "Animation"
+        },
+        {
+          "kind" : "text",
+          "text" : "?) -> "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI12ViewModifierP",
+          "text" : "ViewModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/animation(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "animation(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/unredactedmodifier\/animation(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/concat(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "concat"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "genericParameter",
+          "text" : "T"
+        },
+        {
+          "kind" : "text",
+          "text" : ">("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "T"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI15ModifiedContentV",
+          "text" : "ModifiedContent"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "Self"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "text" : "T"
+        },
+        {
+          "kind" : "text",
+          "text" : ">"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/concat(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "concat(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/unredactedmodifier\/concat(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/transaction(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "transaction"
+        },
+        {
+          "kind" : "text",
+          "text" : "(("
+        },
+        {
+          "kind" : "keyword",
+          "text" : "inout"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI11TransactionV",
+          "text" : "Transaction"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s4Voida",
+          "text" : "Void"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "some"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI12ViewModifierP",
+          "text" : "ViewModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/transaction(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "transaction(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/unredactedmodifier\/transaction(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Configuration Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewconfigurationmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/animation(_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/concat(_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/UnredactedModifier\/transaction(_:)"
+      ],
+      "title" : "Instance Methods"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/unredactedmodifier\/viewmodifier-implementations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

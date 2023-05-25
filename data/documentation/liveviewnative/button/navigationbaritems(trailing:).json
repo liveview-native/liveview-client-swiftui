@@ -244,7 +244,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button" : {
       "abstract" : [
         {
-          "code" : "<button>",
+          "code" : "<Button>",
           "type" : "codeVoice"
         },
         {

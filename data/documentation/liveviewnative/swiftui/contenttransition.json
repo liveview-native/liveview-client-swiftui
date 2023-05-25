@@ -1,0 +1,503 @@
+{
+  "abstract" : [
+    {
+      "text" : "Configuration for the ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " modifier.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftUI",
+    "externalID" : "s:e:s:7SwiftUI17ContentTransitionV14LiveViewNativeE4fromACs7Decoder_p_tKcfc",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "extension"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "preciseIdentifier" : "s:7SwiftUI17ContentTransitionV",
+        "text" : "ContentTransition"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "ContentTransition"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Extended Structure",
+    "symbolKind" : "extension",
+    "title" : "ContentTransition"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "extension"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI17ContentTransitionV",
+              "text" : "ContentTransition"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "In their simplest form, content transitions can be created with an atom. More complex content transitions can have properties.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":interpolate",
+            "{:numeric_text, [counts_down: true]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Content-Transitions",
+          "level" : 2,
+          "text" : "Content Transitions",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Transitions with no required arguments can be represented with an atom.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":interpolate"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To pass arguments, use a tuple with a keyword list as the second element.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:numeric_text, [counts_down: true]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "identity",
+          "level" : 3,
+          "text" : ":identity",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/identity",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this content transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "interpolate",
+          "level" : 3,
+          "text" : ":interpolate",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/interpolate",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this content transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "opacity",
+          "level" : 3,
+          "text" : ":opacity",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/opacity",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this content transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "identity",
+          "level" : 3,
+          "text" : ":identity",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "counts_down",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - Whether the numbers the text represents count down. Defaults to ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "false",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : ".",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/numerictext(countsdown:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this content transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a transition when an element’s content changes.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ContentTransitionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ContentTransitionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "content_transition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/contenttransitionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftUI",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI17ContentTransitionV",
+          "text" : "ContentTransition"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ContentTransition"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ContentTransition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/contenttransition"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition\/Decodable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition\/Decodable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Decodable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/contenttransition\/decodable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/identity" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/identity",
+      "title" : "SwiftUI.ContentTransition.identity",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.ContentTransition.identity",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/identity"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/interpolate" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/interpolate",
+      "title" : "SwiftUI.ContentTransition.interpolate",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.ContentTransition.interpolate",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/interpolate"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/numerictext(countsdown:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/numerictext(countsdown:)",
+      "title" : "SwiftUI.ContentTransition.numericText",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.ContentTransition.numericText",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/numerictext(countsdown:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/opacity" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/opacity",
+      "title" : "SwiftUI.ContentTransition.opacity",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.ContentTransition.opacity",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/contenttransition\/opacity"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition\/Decodable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/swiftui\/contenttransition"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,687 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ModalPresentations"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "Modal Presentations"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AlertModifier" : {
+      "abstract" : [
+        {
+          "text" : "Displays a system-style alert when a live binding is active.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AlertModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AlertModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AlertModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "alert",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/alertmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Animations Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/animationsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier" : {
+      "abstract" : [
+        {
+          "text" : "Displays a confirmation dialog when a live binding is active.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ConfirmationDialogModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ConfirmationDialogModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "confirmation_dialog",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/confirmationdialogmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Controls and Indicators Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DocumentsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DocumentsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Documents Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/documentsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Drawing and Graphics Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/drawingandgraphicsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FullScreenCoverModifier" : {
+      "abstract" : [
+        {
+          "text" : "A modifier that presents another view in full screen when a binding is activated.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FullScreenCoverModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FullScreenCoverModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FullScreenCoverModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "full_screen_cover",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/fullscreencovermodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Gestures Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturesmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Images Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/imagesmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Input Events Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/inputeventsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InteractiveDismissDisabledModifier" : {
+      "abstract" : [
+        {
+          "text" : "A modifier that disables interactive dismissal of the sheet it contains.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "InteractiveDismissDisabledModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InteractiveDismissDisabledModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "InteractiveDismissDisabledModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "interactive_dismiss_disabled",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/interactivedismissdisabledmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutAdjustmentsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutAdjustmentsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Adjustments Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutadjustmentsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Layout Fundamentals Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutfundamentalsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Lists Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Menus and Commands",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menusandcommands"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Navigation Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/navigationmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationBackgroundInteractionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Specifies whether the content behind a sheet can be interacted with.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PresentationBackgroundInteractionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationBackgroundInteractionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PresentationBackgroundInteractionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "presentation_background_interaction",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/presentationbackgroundinteractionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationBackgroundModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the background of a sheet-presented view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PresentationBackgroundModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationBackgroundModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PresentationBackgroundModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "presentation_background",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/presentationbackgroundmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationContentInteractionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Specifies the preferred behavior for handling swipe gestures on a sheet.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PresentationContentInteractionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationContentInteractionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PresentationContentInteractionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "presentation_content_interaction",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/presentationcontentinteractionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationCornerRadiusModifier" : {
+      "abstract" : [
+        {
+          "text" : "Controls the corner radius of the presented view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PresentationCornerRadiusModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationCornerRadiusModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PresentationCornerRadiusModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "presentation_corner_radius",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/presentationcornerradiusmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationDetentsModifier" : {
+      "abstract" : [
+        {
+          "text" : "Specifies the detents that a view presented as a sheet can snap to.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PresentationDetentsModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationDetentsModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PresentationDetentsModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "presentation_detents",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/presentationdetentsmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationDragIndicatorModifier" : {
+      "abstract" : [
+        {
+          "text" : "A modifier that specifies the visibility of the drag handle on a sheet-presented view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PresentationDragIndicatorModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationDragIndicatorModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PresentationDragIndicatorModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "presentation_drag_indicator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/presentationdragindicatormodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Scroll Views Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrollviewsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Search Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SheetModifier" : {
+      "abstract" : [
+        {
+          "text" : "A modifier that presents another view as a sheet when a binding is activated.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SheetModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SheetModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SheetModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "sheet",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/sheetmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Text Input and Output Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Toolbars Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbarsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Configuration Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewconfigurationmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Fundamentals Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewfundamentalsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewStylesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewStylesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Styles Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewstylesmodifiers"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DocumentsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutAdjustmentsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewStylesModifiers"
+      ],
+      "title" : "Supported Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AlertModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ConfirmationDialogModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FullScreenCoverModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InteractiveDismissDisabledModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationBackgroundInteractionModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationBackgroundModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationContentInteractionModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationCornerRadiusModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationDetentsModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PresentationDragIndicatorModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SheetModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/modalpresentations"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

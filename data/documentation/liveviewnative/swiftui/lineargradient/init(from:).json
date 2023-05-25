@@ -154,7 +154,10 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/LinearGradient" : {
       "abstract" : [
-
+        {
+          "text" : "A shape style that creates a gradient between two points.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {

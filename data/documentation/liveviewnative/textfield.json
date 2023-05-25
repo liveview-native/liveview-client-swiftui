@@ -165,7 +165,7 @@
         {
           "inlineContent" : [
             {
-              "text" : "Use the available attributes to configure how text is input.",
+              "text" : "Use modifiers to configure how text is input.",
               "type" : "text"
             }
           ],
@@ -175,12 +175,15 @@
           "code" : [
             "<TextField",
             "    value-binding=\"value\"",
-            "    autocorrection=\"no\"",
-            "    autocapitalization=\"words\"",
-            "    keyboard=\"web-search\"",
-            "    submit-label=\"continue\"",
+            "    modifiers={",
+            "        @native",
+            "        |> autocorrection_disabled(disable: true)",
+            "        |> text_input_autocapitalization(autocapitalization: :words)",
+            "        |> keyboard_type(type: :web_search)",
+            "        |> submit_label(submit_label: :search)",
+            "    }",
             ">",
-            "    Enter Text",
+            "    Enter Search Text",
             "<\/TextField>"
           ],
           "syntax" : "html",
@@ -199,8 +202,9 @@
               "type" : "text"
             },
             {
-              "code" : "format",
-              "type" : "codeVoice"
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/format",
+              "isActive" : true,
+              "type" : "reference"
             },
             {
               "text" : " attribute to input values such as numbers and URLs.",
@@ -211,14 +215,23 @@
         },
         {
           "code" : [
-            "<TextField",
-            "    value-binding=\"amount\"",
-            "    format=\"currency\"",
-            "    currency-code=\"usd\"",
-            "    keyboard=\"decimal-pad\"",
-            ">",
-            "    Enter Amount",
-            "<\/TextField>"
+            "<VStack>",
+            "    <TextField",
+            "        value-binding=\"amount\"",
+            "        format=\"currency\"",
+            "        currency-code=\"usd\"",
+            "        modifier={@native |> keyboard_type(type: :decimal_pad)}",
+            "    >",
+            "        Enter Amount",
+            "    <\/TextField>",
+            "",
+            "    <TextField",
+            "        value-binding=\"bank_address\"",
+            "        axis=\"vertical\"",
+            "    >",
+            "        Enter Bank Address",
+            "    <\/TextField>",
+            "<\/VStack>"
           ],
           "syntax" : "html",
           "type" : "codeListing"
@@ -260,8 +273,9 @@
                 {
                   "inlineContent" : [
                     {
-                      "code" : "format",
-                      "type" : "codeVoice"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/format",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
                   "type" : "paragraph"
@@ -273,8 +287,9 @@
                 {
                   "inlineContent" : [
                     {
-                      "code" : "currencyCode",
-                      "type" : "codeVoice"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/currencyCode",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
                   "type" : "paragraph"
@@ -286,8 +301,23 @@
                 {
                   "inlineContent" : [
                     {
-                      "code" : "nameStyle",
-                      "type" : "codeVoice"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/nameStyle",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/axis",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
                   "type" : "paragraph"
@@ -300,76 +330,6 @@
                   "inlineContent" : [
                     {
                       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/prompt",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle",
                       "isActive" : true,
                       "type" : "reference"
                     }
@@ -394,8 +354,9 @@
                 {
                   "inlineContent" : [
                     {
-                      "code" : "focusEvent",
-                      "type" : "codeVoice"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/focusEvent",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
                   "type" : "paragraph"
@@ -407,8 +368,9 @@
                 {
                   "inlineContent" : [
                     {
-                      "code" : "blurEvent",
-                      "type" : "codeVoice"
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/blurEvent",
+                      "isActive" : true,
+                      "type" : "reference"
                     }
                   ],
                   "type" : "paragraph"
@@ -732,6 +694,233 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textfield"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/blurEvent" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "blurEvent"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV",
+          "text" : "Event"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/blurEvent",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "blurEvent",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfield\/blurevent"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/currencyCode" : {
+      "abstract" : [
+        {
+          "text" : "The currency code for the locale.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "currencyCode"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/currencyCode",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "currency-code",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfield\/currencycode"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/focusEvent" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "focusEvent"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV",
+          "text" : "Event"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative5EventV0D7HandlerV",
+          "text" : "EventHandler"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/focusEvent",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "focusEvent",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfield\/focusevent"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/format" : {
+      "abstract" : [
+        {
+          "text" : "Possible values:",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "format"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/format",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "phx-focus",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfield\/format"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/nameStyle" : {
+      "abstract" : [
+        {
+          "text" : "A type used to format a person’s name with a style appropriate for the given locale.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "nameStyle"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation20PersonNameComponentsV",
+          "text" : "PersonNameComponents"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation20PersonNameComponentsV11FormatStyleV",
+          "text" : "FormatStyle"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:10Foundation20PersonNameComponentsV11FormatStyleV0F0O",
+          "text" : "Style"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/nameStyle",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "name-style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfield\/namestyle"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/View-Implementations" : {
       "abstract" : [
 
@@ -774,10 +963,10 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textfieldprotocol"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/axis" : {
       "abstract" : [
         {
-          "text" : "The boundaries to capitalize on.",
+          "text" : "The axis to scroll when the content doesn’t fit.",
           "type" : "text"
         }
       ],
@@ -792,7 +981,7 @@
         },
         {
           "kind" : "identifier",
-          "text" : "autocapitalization"
+          "text" : "axis"
         },
         {
           "kind" : "text",
@@ -800,102 +989,16 @@
         },
         {
           "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:7SwiftUI27TextInputAutocapitalizationV",
-          "text" : "TextInputAutocapitalization"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
+          "preciseIdentifier" : "s:7SwiftUI4AxisO",
+          "text" : "Axis"
         }
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/axis",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "autocapitalization",
+      "title" : "axis",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/autocapitalization"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection" : {
-      "abstract" : [
-        {
-          "text" : "Indicates if autocorrection should be enabled.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "disableAutocorrection"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:Sb",
-          "text" : "Bool"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "autocorrection",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/disableautocorrection"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard" : {
-      "abstract" : [
-        {
-          "text" : "The type of keyboard to display.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "keyboard"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "c:@E@UIKeyboardType",
-          "text" : "UIKeyboardType"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "keyboard",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/keyboard"
+      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/axis"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/prompt" : {
       "abstract" : [
@@ -941,84 +1044,6 @@
       "title" : "prompt",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/prompt"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel" : {
-      "abstract" : [
-        {
-          "text" : "The label to display on the keyboard submit button.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "submitLabel"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:7SwiftUI11SubmitLabelV",
-          "text" : "SubmitLabel"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "submit-label",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/submitlabel"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this field.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "textFieldStyle"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative14TextFieldStyleO",
-          "text" : "TextFieldStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/textFieldStyle",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "text-field-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/textfieldstyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput" : {
       "abstract" : [
@@ -1074,14 +1099,24 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text"
       ],
       "title" : "Views"
     }
   ],
   "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/blurEvent",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/currencyCode",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/focusEvent",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/format",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField\/nameStyle"
+      ],
+      "title" : "Instance Properties"
+    },
     {
       "generated" : true,
       "identifiers" : [

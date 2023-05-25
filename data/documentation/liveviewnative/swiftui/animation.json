@@ -1,0 +1,1257 @@
+{
+  "abstract" : [
+    {
+      "text" : "Configuration for the ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " modifier.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftUI",
+    "externalID" : "s:e:s:7SwiftUI9AnimationV14LiveViewNativeE4fromACs7Decoder_p_tKcfc",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "extension"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "preciseIdentifier" : "s:7SwiftUI9AnimationV",
+        "text" : "Animation"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "Animation"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Extended Structure",
+    "symbolKind" : "extension",
+    "title" : "Animation"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "extension"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI9AnimationV",
+              "text" : "Animation"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "In their simplest form, animations can be created with an atom. More complex animations can have properties and modifiers.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":ease_in_out",
+            "{:ease_out, [duration: 3]} # a 3 second animation",
+            "{:spring, [response: 0.55, damping_fraction: 0.825, blend_duration: 0]} # a customized spring",
+            "{:linear, [], [{:speed, 3}]} # a sped-up animation."
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Animations",
+          "level" : 2,
+          "text" : "Animations",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Animations with no required arguments can be represented with an atom.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":interactive_spring"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To pass arguments, use a tuple with a keyword list as the second element.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:interactive_spring, [response: 0.3, blend_duration: 0.5]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "default",
+          "level" : 3,
+          "text" : ":default",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/default",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "easein",
+          "level" : 3,
+          "text" : ":ease_in",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "duration",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The number of seconds this animation lasts.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeIn(duration:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "easeout",
+          "level" : 3,
+          "text" : ":ease_out",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "duration",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The number of seconds this animation lasts.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeOut(duration:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "easeinout",
+          "level" : 3,
+          "text" : ":ease_in_out",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "duration",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The number of seconds this animation lasts.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeInOut(duration:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "linear",
+          "level" : 3,
+          "text" : ":linear",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "duration",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The number of seconds this animation lasts.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/linear(duration:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "spring",
+          "level" : 4,
+          "text" : ":spring",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "response",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "damping_fraction",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "blend_duration",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/spring(response:dampingfraction:blendduration:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "interactivespring",
+          "level" : 4,
+          "text" : ":interactive_spring",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "response",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "damping_fraction",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "blend_duration",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/interactivespring(response:dampingfraction:blendduration:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "interpolatingspring",
+          "level" : 4,
+          "text" : ":interpolating_spring",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "mass",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "stiffness",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required)",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "damping",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required)",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "initial_velocity",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/interpolatingspring(mass:stiffness:damping:initialvelocity:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "Animation-Modifiers",
+          "level" : 3,
+          "text" : "Animation Modifiers",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Modifiers can be applied to any animation as the third tuple element.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:interactive_spring, [], [ <animation modifiers> ]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "A modifier is represented as a tuple where the first element is an atom with the name of the modifier, and the second is a keyword list or argument if the modifier only takes one.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:interactive_spring, [], [{:speed, 0.25}]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "delay",
+          "level" : 3,
+          "text" : ":delay",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "delay",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required)",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "code" : [
+            "{:delay, 3}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/delay(_:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "repeatcount",
+          "level" : 3,
+          "text" : ":repeat_count",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "repeat_count",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required)",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "autoreverses",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "code" : [
+            "{:repeat_count, [repeat_count: 3, autoreverses: false]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/repeatcount(_:autoreverses:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "repeatforever",
+          "level" : 3,
+          "text" : ":repeat_forever",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "autoreverses",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "code" : [
+            "{:repeat_count, [autoreverses: false]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/repeatforever(autoreverses:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "speed",
+          "level" : 3,
+          "text" : ":speed",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "speed",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required)",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "code" : [
+            "{:speed, 0.25}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/speed(_:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies an animation when a value changes.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AnimationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AnimationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "animation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/animationmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftUI",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9AnimationV",
+          "text" : "Animation"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Animation"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Animation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/animation"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation\/Decodable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation\/Decodable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Decodable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/animation\/decodable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/default" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/default",
+      "title" : "SwiftUI.Animation.default",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.default",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/default"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/delay(_:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/delay(_:)",
+      "title" : "SwiftUI.Animation.delay",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.delay",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/delay(_:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeIn(duration:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeIn(duration:)",
+      "title" : "SwiftUI.Animation.easeIn",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.easeIn",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeIn(duration:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeInOut(duration:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeInOut(duration:)",
+      "title" : "SwiftUI.Animation.easeInOut",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.easeInOut",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeInOut(duration:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeOut(duration:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeOut(duration:)",
+      "title" : "SwiftUI.Animation.easeOut",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.easeOut",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/easeOut(duration:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/interactivespring(response:dampingfraction:blendduration:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/interactivespring(response:dampingfraction:blendduration:)",
+      "title" : "SwiftUI.Animation.interactiveSpring",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.interactiveSpring",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/interactivespring(response:dampingfraction:blendduration:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/interpolatingspring(mass:stiffness:damping:initialvelocity:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/interpolatingspring(mass:stiffness:damping:initialvelocity:)",
+      "title" : "SwiftUI.Animation.interpolatingSpring",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.interpolatingSpring",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/interpolatingspring(mass:stiffness:damping:initialvelocity:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/linear(duration:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/linear(duration:)",
+      "title" : "SwiftUI.Animation.linear",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.linear",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/linear(duration:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/repeatcount(_:autoreverses:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/repeatcount(_:autoreverses:)",
+      "title" : "SwiftUI.Animation.repeatCount",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.repeatCount",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/repeatcount(_:autoreverses:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/repeatforever(autoreverses:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/repeatforever(autoreverses:)",
+      "title" : "SwiftUI.Animation.repeatForever",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.repeatForever",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/repeatforever(autoreverses:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/speed(_:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/speed(_:)",
+      "title" : "SwiftUI.Animation.speed",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.speed",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/speed(_:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/spring(response:dampingfraction:blendduration:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/spring(response:dampingfraction:blendduration:)",
+      "title" : "SwiftUI.Animation.spring",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Animation.spring",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/animation\/spring(response:dampingfraction:blendduration:)"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation\/Decodable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/swiftui\/animation"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

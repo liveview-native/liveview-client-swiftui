@@ -1,0 +1,1101 @@
+{
+  "abstract" : [
+    {
+      "text" : "Configuration for the ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " modifier.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyTransition"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "extendedModule" : "SwiftUI",
+    "externalID" : "s:e:s:7SwiftUI13AnyTransitionV14LiveViewNativeE4from2inACs22KeyedDecodingContainerVyAcDE10CodingKeysOG_xmtKcAD12RootRegistryRzlufc",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "extension"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "preciseIdentifier" : "s:7SwiftUI13AnyTransitionV",
+        "text" : "AnyTransition"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "AnyTransition"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Extended Structure",
+    "symbolKind" : "extension",
+    "title" : "AnyTransition"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "extension"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI13AnyTransitionV",
+              "text" : "AnyTransition"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "In their simplest form, transitions can be created with an atom. More complex transitions can have properties.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":opacity",
+            "{:move, [edge: :bottom]} # move in\/out from the bottom edge",
+            "[:scale, :opacity] # multiple transitions combined",
+            "{:asymmetric, [insertion: :scale, removal: :opacity]} # different transition for insert\/remove"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Transitions",
+          "level" : 2,
+          "text" : "Transitions",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Transitions with no required arguments can be represented with an atom.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":opacity"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To pass arguments, use a tuple with a keyword list as the second element.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:move, [edge: :bottom]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Multiple animations can be combined by using a list.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "[:scale, :opacity] # scale up\/down while fading in\/out"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "A different animation can be applied to a transition by using a tuple where the first element is the transition, and the second is an animation.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:scale, :spring}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on creating animations.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "identity",
+          "level" : 3,
+          "text" : ":identity",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/identity",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "move",
+          "level" : 3,
+          "text" : ":move",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "edge",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The side to move in\/out from. See ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Edge",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " for possible values.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/move(edge:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "offset",
+          "level" : 3,
+          "text" : ":offset",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "x",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The horizontal offset",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "y",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The vertical offset",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/offset(_:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "opacity",
+          "level" : 3,
+          "text" : ":opacity",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/opacity",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "scale",
+          "level" : 3,
+          "text" : ":scale",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "scale",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The scale amount in the range ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "0-1",
+                      "type" : "codeVoice"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "anchor",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " to scale from",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/scale(scale:anchor:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "slide",
+          "level" : 3,
+          "text" : ":slide",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/slide",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "push",
+          "level" : 3,
+          "text" : ":push",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "edge",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " - The side to push from",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/push(from:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "asymmetric",
+          "level" : 3,
+          "text" : ":asymmetric",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "insertion",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The transition to apply when the element is inserted",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "removal",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The transition to apply when the element is removed",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/asymmetric(insertion:removal:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "modifier",
+          "level" : 3,
+          "text" : ":modifier",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "active",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The modifier to apply when the transition is active",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            },
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "identity",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The modifier to apply when the transition is done",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The arguments to this transition should be modifier stacks.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:modifier, [active: foreground_style(@native, primary: {:color, :red}), identity: foreground_style(@native, primary: {:color, :green})]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/modifier(active:identity:)",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this transition.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies an animation when a value changes.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AnimationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AnimationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "animation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/animationmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "SwiftUI",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9AnimationV",
+          "text" : "Animation"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Animation"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Animation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/animation"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyTransition" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI13AnyTransitionV",
+          "text" : "AnyTransition"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyTransition",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AnyTransition"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AnyTransition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/anytransition"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Edge" : {
+      "abstract" : [
+        {
+          "text" : "A value that represents a side.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI4EdgeO",
+          "text" : "Edge"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Edge",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Edge"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Edge",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/edge"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint" : {
+      "abstract" : [
+        {
+          "text" : "Decodes a unit point from a string value.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9UnitPointV",
+          "text" : "UnitPoint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "UnitPoint"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "UnitPoint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/unitpoint"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a transition when an element is inserted or removed.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TransitionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TransitionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "transition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/transitionmodifier"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/asymmetric(insertion:removal:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/asymmetric(insertion:removal:)",
+      "title" : "SwiftUI.AnyTransition.asymmetric",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.asymmetric",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/asymmetric(insertion:removal:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/identity" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/identity",
+      "title" : "SwiftUI.AnyTransition.default",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.default",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/identity"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/modifier(active:identity:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/modifier(active:identity:)",
+      "title" : "SwiftUI.AnyTransition.modifier",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.modifier",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/modifier(active:identity:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/move(edge:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/move(edge:)",
+      "title" : "SwiftUI.AnyTransition.move",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.move",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/move(edge:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/offset(_:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/offset(_:)",
+      "title" : "SwiftUI.AnyTransition.offset",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.offset",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/offset(_:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/opacity" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/opacity",
+      "title" : "SwiftUI.AnyTransition.opacity",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.opacity",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/opacity"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/push(from:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/push(from:)",
+      "title" : "SwiftUI.AnyTransition.push",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.push",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/push(from:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/scale(scale:anchor:)" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/scale(scale:anchor:)",
+      "title" : "SwiftUI.AnyTransition.scale",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.scale",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/scale(scale:anchor:)"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/slide" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/slide",
+      "title" : "SwiftUI.AnyTransition.slide",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.AnyTransition.slide",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/anytransition\/slide"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/swiftui\/anytransition"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

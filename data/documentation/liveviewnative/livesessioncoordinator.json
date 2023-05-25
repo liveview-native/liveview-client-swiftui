@@ -468,6 +468,42 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/livesessioncoordinator\/observableobject-implementations"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/reconnect()" : {
+      "abstract" : [
+        {
+          "text" : "Forces the session to disconnect then connect.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "reconnect"
+        },
+        {
+          "kind" : "text",
+          "text" : "() "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "async"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/reconnect()",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "reconnect()",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator\/reconnect()"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/state" : {
       "abstract" : [
         {
@@ -775,6 +811,12 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError"
       ],
       "title" : "Supporting Types"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator\/reconnect()"
+      ],
+      "title" : "Instance Methods"
     },
     {
       "generated" : true,

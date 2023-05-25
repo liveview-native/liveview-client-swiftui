@@ -1,0 +1,225 @@
+{
+  "abstract" : [
+    {
+      "text" : "A symbol rendering mode.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SymbolRenderingModeModifier"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SymbolRenderingModeModifier\/mode"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative27SymbolRenderingModeModifierV4mode33_7867280BAB03983BF0F60F3F76CAF84CLL7SwiftUI0deF0Vvp",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "var"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "mode"
+      },
+      {
+        "kind" : "text",
+        "text" : ": SwiftUI"
+      },
+      {
+        "kind" : "text",
+        "text" : "."
+      },
+      {
+        "kind" : "typeIdentifier",
+        "preciseIdentifier" : "s:7SwiftUI19SymbolRenderingModeV",
+        "text" : "SymbolRenderingMode"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Instance Property",
+    "symbolKind" : "property",
+    "title" : "mode"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "var"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "mode"
+            },
+            {
+              "kind" : "text",
+              "text" : ": SwiftUI"
+            },
+            {
+              "kind" : "text",
+              "text" : "."
+            },
+            {
+              "kind" : "typeIdentifier",
+              "preciseIdentifier" : "s:7SwiftUI19SymbolRenderingModeV",
+              "text" : "SymbolRenderingMode"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Images Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/imagesmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SymbolRenderingModeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the rendering mode for symbol images within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SymbolRenderingModeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SymbolRenderingModeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SymbolRenderingModeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "symbol_rendering_mode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/symbolrenderingmodemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SymbolRenderingModeModifier\/mode" : {
+      "abstract" : [
+        {
+          "text" : "A symbol rendering mode.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "mode"
+        },
+        {
+          "kind" : "text",
+          "text" : ": SwiftUI"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI19SymbolRenderingModeV",
+          "text" : "SymbolRenderingMode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SymbolRenderingModeModifier\/mode",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "mode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/symbolrenderingmodemodifier\/mode"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/symbolrenderingmodemodifier\/mode"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

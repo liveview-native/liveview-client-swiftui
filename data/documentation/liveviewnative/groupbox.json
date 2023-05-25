@@ -148,14 +148,12 @@
         {
           "code" : [
             "<GroupBox>",
-            "    <GroupBox:label>",
-            "        Edit Actions",
-            "    <\/GroupBox:label>",
-            "    <GroupBox:content>",
+            "    <Text template={:label}>Edit Actions<\/Text>",
+            "    <Group template={:content}>",
             "        <Button phx-click=\"arrange\">Arrange<\/Button>",
             "        <Button phx-click=\"update\">Update<\/Button>",
             "        <Button phx-click=\"remove\">Remove<\/Button>",
-            "    <\/GroupBox:content>",
+            "    <\/Group>",
             "<\/GroupBox>"
           ],
           "syntax" : "html",
@@ -225,9 +223,8 @@
                 {
                   "inlineContent" : [
                     {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox\/style",
-                      "isActive" : true,
-                      "type" : "reference"
+                      "code" : "style",
+                      "type" : "codeVoice"
                     }
                   ],
                   "type" : "paragraph"
@@ -518,43 +515,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/groupbox\/body"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this group box.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative13GroupBoxStyle33_1F5A270FB3719BED3FF91A856BB38B02LLO",
-          "text" : "GroupBoxStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "group-box-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/groupbox\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox\/title" : {
       "abstract" : [
         {
@@ -609,7 +569,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBoxStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -758,8 +730,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Group"
       ],
       "title" : "Groups"
@@ -775,7 +747,6 @@
     {
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox\/body",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox\/style",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox\/title"
       ],
       "title" : "Instance Properties"

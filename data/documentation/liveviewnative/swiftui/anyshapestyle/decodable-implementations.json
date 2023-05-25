@@ -50,7 +50,10 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A color, gradient, or other style.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -80,7 +83,7 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-9das1" : {
       "abstract" : [
 
       ],
@@ -115,12 +118,12 @@
           "text" : "throws"
         }
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-9das1",
       "kind" : "symbol",
       "role" : "symbol",
       "title" : "init(from:)",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle\/init(from:)"
+      "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle\/init(from:)-9das1"
     }
   },
   "schemaVersion" : {
@@ -135,7 +138,7 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-9das1"
       ],
       "title" : "Initializers"
     }

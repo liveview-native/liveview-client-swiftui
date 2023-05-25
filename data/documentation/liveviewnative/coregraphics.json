@@ -1,0 +1,152 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:m:s:e:s:So10CGLineJoinV14LiveViewNativeE4fromABs7Decoder_p_tKcfc",
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collection",
+    "roleHeading" : "Extended Module",
+    "symbolKind" : "extension",
+    "title" : "CoreGraphics"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "CoreGraphics",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/coregraphics"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics\/CGLineCap" : {
+      "abstract" : [
+        {
+          "text" : "Style for the endpoint of a stroke.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "c:@E@CGLineCap",
+          "text" : "CGLineCap"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics\/CGLineCap",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CGLineCap"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CGLineCap",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/coregraphics\/cglinecap"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics\/CGLineJoin" : {
+      "abstract" : [
+        {
+          "text" : "Style for the stroke junctions.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "c:@E@CGLineJoin",
+          "text" : "CGLineJoin"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics\/CGLineJoin",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CGLineJoin"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CGLineJoin",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/coregraphics\/cglinejoin"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics\/CGLineCap",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreGraphics\/CGLineJoin"
+      ],
+      "title" : "Extended Enumerations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/coregraphics"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

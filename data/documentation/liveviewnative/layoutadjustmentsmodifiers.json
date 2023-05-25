@@ -18,7 +18,6 @@
       }
     ],
     "role" : "collectionGroup",
-    "roleHeading" : "Article",
     "title" : "Layout Adjustments Modifiers"
   },
   "references" : {
@@ -35,6 +34,71 @@
       "title" : "LiveViewNative",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Animations Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/animationsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Controls and Indicators Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoordinateSpaceModifier" : {
+      "abstract" : [
+        {
+          "text" : "Creates a new named ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/CoordinateSpace",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CoordinateSpaceModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoordinateSpaceModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CoordinateSpaceModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "coordinate_space",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/coordinatespacemodifier"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DocumentsModifiers" : {
       "abstract" : [
@@ -58,6 +122,73 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/drawingandgraphicsmodifiers"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FixedSizeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Ensures the element only takes the space it needs.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FixedSizeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FixedSizeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FixedSizeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "fixed_size",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/fixedsizemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Gestures Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturesmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Images Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/imagesmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Input Events Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/inputeventsmodifiers"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers" : {
       "abstract" : [
 
@@ -68,6 +199,40 @@
       "title" : "Layout Fundamentals Modifiers",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/layoutfundamentalsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutPriorityModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the priority of an element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LayoutPriorityModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutPriorityModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LayoutPriorityModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "layout_priority",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/layoutprioritymodifier"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers" : {
       "abstract" : [
@@ -80,6 +245,28 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/listsmodifiers"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Menus and Commands",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menusandcommands"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ModalPresentations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ModalPresentations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Modal Presentations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/modalpresentations"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers" : {
       "abstract" : [
 
@@ -90,6 +277,199 @@
       "title" : "Navigation Modifiers",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/navigationmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies an offset to any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "OffsetModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "OffsetModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "offset",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/offsetmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PaddingModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adds space around the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PaddingModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PaddingModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PaddingModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "padding",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/paddingmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PositionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets an absolute position for the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PositionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PositionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PositionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "position",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/positionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SafeAreaInsetModifier" : {
+      "abstract" : [
+        {
+          "text" : "Overlays content while shifting the safe area.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SafeAreaInsetModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SafeAreaInsetModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SafeAreaInsetModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "safe_area_inset",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/safeareainsetmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Scroll Views Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scrollviewsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Search Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/searchmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/CoordinateSpace" : {
+      "abstract" : [
+        {
+          "text" : "A named coordinate space for resolving locations.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI15CoordinateSpaceO",
+          "text" : "CoordinateSpace"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/CoordinateSpace",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CoordinateSpace"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CoordinateSpace",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/coordinatespace"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
       "abstract" : [
@@ -102,6 +482,28 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Toolbars Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/toolbarsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Configuration Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewconfigurationmodifiers"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers" : {
       "abstract" : [
 
@@ -112,6 +514,17 @@
       "title" : "View Fundamentals Modifiers",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/viewfundamentalsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewStylesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewStylesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "View Styles Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewstylesmodifiers"
     }
   },
   "schemaVersion" : {
@@ -126,15 +539,41 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DocumentsModifiers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ImagesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/InputEventsModifiers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutFundamentalsModifiers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ModalPresentations",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NavigationModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScrollViewsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SearchModifiers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ToolbarsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewConfigurationModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewFundamentalsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewStylesModifiers"
       ],
       "title" : "Supported Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoordinateSpaceModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FixedSizeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutPriorityModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/OffsetModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PaddingModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PositionModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SafeAreaInsetModifier"
+      ],
+      "title" : "Modifiers"
     }
   ],
   "variants" : [

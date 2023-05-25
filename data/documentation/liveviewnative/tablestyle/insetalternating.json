@@ -53,7 +53,7 @@
     "role" : "symbol",
     "roleHeading" : "Case",
     "symbolKind" : "case",
-    "title" : "inset-alternating"
+    "title" : "TableStyle.insetAlternating"
   },
   "primaryContentSections" : [
     {
@@ -199,7 +199,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TableStyle\/insetAlternating",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "inset-alternating",
+      "title" : "TableStyle.insetAlternating",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/tablestyle\/insetalternating"
     }

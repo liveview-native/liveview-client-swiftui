@@ -3,8 +3,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle"
       ]
     ]
@@ -74,7 +74,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -287,16 +299,140 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/labelstyle\/hashvalue"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/init(from:)" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
+      "conformance" : {
+        "availabilityPrefix" : [
+          {
+            "text" : "Available when",
+            "type" : "text"
+          }
+        ],
+        "conformancePrefix" : [
+          {
+            "text" : "Conforms when",
+            "type" : "text"
+          }
+        ],
+        "constraints" : [
+          {
+            "code" : "Self",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " conforms to ",
+            "type" : "text"
+          },
+          {
+            "code" : "Decodable",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " and ",
+            "type" : "text"
+          },
+          {
+            "code" : "RawValue",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " is ",
+            "type" : "text"
+          },
+          {
+            "code" : "String",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : ".",
+            "type" : "text"
+          }
+        ]
+      },
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s7DecoderP",
+          "text" : "Decoder"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/init(from:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labelstyle\/init(from:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any labels within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "label_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labelstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Text Input and Output",
+      "title" : "Text Input and Output Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textinputandoutput"
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
     }
   },
   "schemaVersion" : {
@@ -308,6 +444,13 @@
 
   ],
   "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/init(from:)"
+      ],
+      "title" : "Initializers"
+    },
     {
       "generated" : true,
       "identifiers" : [

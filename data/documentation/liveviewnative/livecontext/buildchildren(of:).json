@@ -152,6 +152,34 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "discussion",
+          "level" : 2,
+          "text" : "Discussion",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Ignores any children with a ",
+              "type" : "text"
+            },
+            {
+              "code" : "template",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " attribute.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "references" : {

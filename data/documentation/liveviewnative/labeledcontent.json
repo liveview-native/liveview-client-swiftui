@@ -148,8 +148,8 @@
         {
           "code" : [
             "<LabeledContent>",
-            "    <LabeledContent:label>Price<\/LabeledContent:label>",
-            "    <LabeledContent:content>$100.00<\/LabeledContent:content>",
+            "    <Text template={:label}>Price<\/Text>",
+            "    <Text template={:content}>$100.00<\/Text>",
             "<\/LabeledContent>"
           ],
           "syntax" : "html",

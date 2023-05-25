@@ -513,6 +513,146 @@
       "title" : "buildEither(second:)",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/viewmodifierbuilder\/buildeither(second:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildLimitedAvailability(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "static"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "buildLimitedAvailability"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "genericParameter",
+          "text" : "M"
+        },
+        {
+          "kind" : "text",
+          "text" : ">("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO24buildLimitedAvailabilityyAA04_AnybD0Vx7SwiftUI0bD0RzlFZ1ML_xmfp",
+          "text" : "M"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative04_AnyB8ModifierV",
+          "text" : "_AnyViewModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildLimitedAvailability(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildLimitedAvailability(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewmodifierbuilder\/buildlimitedavailability(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildOptional(_:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "static"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "buildOptional"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "genericParameter",
+          "text" : "M"
+        },
+        {
+          "kind" : "text",
+          "text" : ">("
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO13buildOptionalyAA012_ConditionalD0Vyx7SwiftUI05EmptyD0VGxSgAG0bD0RzlFZ1ML_xmfp",
+          "text" : "M"
+        },
+        {
+          "kind" : "text",
+          "text" : "?) -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative20_ConditionalModifierV",
+          "text" : "_ConditionalModifier"
+        },
+        {
+          "kind" : "text",
+          "text" : "<"
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0B15ModifierBuilderO13buildOptionalyAA012_ConditionalD0Vyx7SwiftUI05EmptyD0VGxSgAG0bD0RzlFZ1ML_xmfp",
+          "text" : "M"
+        },
+        {
+          "kind" : "text",
+          "text" : ", "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI13EmptyModifierV",
+          "text" : "EmptyModifier"
+        },
+        {
+          "kind" : "text",
+          "text" : ">"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildOptional(_:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "buildOptional(_:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/viewmodifierbuilder\/buildoptional(_:)"
     }
   },
   "schemaVersion" : {
@@ -537,7 +677,9 @@
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildBlock(_:)",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildEither(first:)",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildEither(second:)"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildEither(second:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildLimitedAvailability(_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ViewModifierBuilder\/buildOptional(_:)"
       ],
       "title" : "Type Methods"
     }

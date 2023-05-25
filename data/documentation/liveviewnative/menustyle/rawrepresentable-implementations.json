@@ -3,8 +3,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle"
       ]
     ]
@@ -37,17 +37,6 @@
       "title" : "LiveViewNative",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
-      "abstract" : [
-
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-      "kind" : "article",
-      "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu" : {
       "abstract" : [
@@ -82,6 +71,17 @@
       "title" : "<Menu>",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/menu"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenusAndCommands",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Menus and Commands",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menusandcommands"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle" : {
       "abstract" : [
@@ -297,6 +297,139 @@
       "title" : "hashValue",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/menustyle\/hashvalue"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle\/init(from:)" : {
+      "abstract" : [
+
+      ],
+      "conformance" : {
+        "availabilityPrefix" : [
+          {
+            "text" : "Available when",
+            "type" : "text"
+          }
+        ],
+        "conformancePrefix" : [
+          {
+            "text" : "Conforms when",
+            "type" : "text"
+          }
+        ],
+        "constraints" : [
+          {
+            "code" : "Self",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " conforms to ",
+            "type" : "text"
+          },
+          {
+            "code" : "Decodable",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " and ",
+            "type" : "text"
+          },
+          {
+            "code" : "RawValue",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " is ",
+            "type" : "text"
+          },
+          {
+            "code" : "String",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : ".",
+            "type" : "text"
+          }
+        ]
+      },
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s7DecoderP",
+          "text" : "Decoder"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle\/init(from:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menustyle\/init(from:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a style to a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MenuStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MenuStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "menu_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/menustylemodifier"
     }
   },
   "schemaVersion" : {
@@ -308,6 +441,13 @@
 
   ],
   "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle\/init(from:)"
+      ],
+      "title" : "Initializers"
+    },
     {
       "generated" : true,
       "identifiers" : [

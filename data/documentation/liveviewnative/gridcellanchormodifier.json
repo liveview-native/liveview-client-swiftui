@@ -166,6 +166,40 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier" : {
+      "abstract" : [
+        {
+          "text" : "Renders nested content within the background of an element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "BackgroundModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BackgroundModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "background",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/backgroundmodifier"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Grid" : {
       "abstract" : [
         {
@@ -406,6 +440,40 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/layoutfundamentalsmodifiers"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZIndexModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the drawing order of any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ZIndexModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZIndexModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ZIndexModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "zIndex",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/zindexmodifier"
+    },
     "doc:\/\/LiveViewNative\/s8SendableP" : {
       "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
       "title" : "Swift.Sendable",
@@ -447,9 +515,11 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BackgroundModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellColumnsModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridCellUnsizedAxesModifier",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridColumnAlignmentModifier"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GridColumnAlignmentModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZIndexModifier"
       ],
       "title" : "Modifiers"
     }

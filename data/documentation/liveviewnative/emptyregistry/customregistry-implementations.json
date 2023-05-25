@@ -354,6 +354,100 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/emptyregistry\/decodemodifier(_:from:)"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EmptyRegistry\/errorView(for:)" : {
+      "abstract" : [
+        {
+          "text" : "A default  implementation that falls back to the default framework error view.",
+          "type" : "text"
+        }
+      ],
+      "conformance" : {
+        "availabilityPrefix" : [
+          {
+            "text" : "Available when",
+            "type" : "text"
+          }
+        ],
+        "conformancePrefix" : [
+          {
+            "text" : "Conforms when",
+            "type" : "text"
+          }
+        ],
+        "constraints" : [
+          {
+            "code" : "ErrorView",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " is ",
+            "type" : "text"
+          },
+          {
+            "code" : "Never",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : ".",
+            "type" : "text"
+          }
+        ]
+      },
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "static"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "errorView"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "for"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s5ErrorP",
+          "text" : "Error"
+        },
+        {
+          "kind" : "text",
+          "text" : ") -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s5NeverO",
+          "text" : "Never"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EmptyRegistry\/errorView(for:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "errorView(for:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/emptyregistry\/errorview(for:)"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EmptyRegistry\/loadingView(for:state:)" : {
       "abstract" : [
         {
@@ -683,6 +777,7 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EmptyRegistry\/decodeModifier(_:from:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EmptyRegistry\/errorView(for:)",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EmptyRegistry\/loadingView(for:state:)",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EmptyRegistry\/lookup(_:element:)"
       ],

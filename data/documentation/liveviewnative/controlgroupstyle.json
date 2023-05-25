@@ -1,6 +1,25 @@
 {
+  "abstract" : [
+    {
+      "text" : "A style for a ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " element.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier"
+      ],
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
@@ -14,7 +33,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative17ControlGroupStyle33_EBE0B90FAA8A32472FF6A7C238660C96LLO",
+    "externalID" : "s:14LiveViewNative17ControlGroupStyle33_A47A20CCCC57890AB8A8C7F3EFFC2ADFLLO",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -89,40 +108,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
-      "abstract" : [
-        {
-          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "protocol"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "AttributeDecodable",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/attributedecodable"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup" : {
       "abstract" : [
         {
@@ -159,7 +144,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -213,6 +210,34 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/controlgroupstyle\/automatic"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/compactMenu" : {
+      "abstract" : [
+        {
+          "code" : "compact_menu",
+          "type" : "codeVoice"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "compactMenu"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/compactMenu",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ControlGroupStyle.compactMenu",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroupstyle\/compactmenu"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/Equatable-Implementations" : {
       "abstract" : [
 
@@ -223,6 +248,31 @@
       "title" : "Equatable Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/controlgroupstyle\/equatable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/menu" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "menu"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/menu",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "ControlGroupStyle.menu",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroupstyle\/menu"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/navigation" : {
       "abstract" : [
@@ -260,6 +310,40 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/controlgroupstyle\/rawrepresentable-implementations"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any control groups within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroupStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ControlGroupStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "control_group_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/controlgroupstylemodifier"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
       "abstract" : [
 
@@ -274,6 +358,11 @@
     "doc:\/\/LiveViewNative\/s8SendableP" : {
       "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
       "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
       "type" : "unresolvable"
     },
     "doc:\/\/LiveViewNative\/SH" : {
@@ -295,7 +384,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/Se",
         "doc:\/\/LiveViewNative\/SQ",
         "doc:\/\/LiveViewNative\/SH",
         "doc:\/\/LiveViewNative\/SY",
@@ -318,6 +407,8 @@
     {
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/automatic",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/compactMenu",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/menu",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle\/navigation"
       ],
       "title" : "Enumeration Cases"

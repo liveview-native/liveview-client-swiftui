@@ -1,0 +1,382 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative0A15ConnectionErrorO21InitialParseComponentO",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "enum"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "InitialParseComponent"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "InitialParseComponent"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Enumeration",
+    "symbolKind" : "enum",
+    "title" : "LiveConnectionError.InitialParseComponent"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "enum"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "InitialParseComponent"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError" : {
+      "abstract" : [
+        {
+          "text" : "An error that occurred when connecting to a live view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveConnectionError"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveConnectionError"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveConnectionError",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "InitialParseComponent"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "InitialParseComponent"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveConnectionError.InitialParseComponent",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparsecomponent"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/csrfToken" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "csrfToken"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/csrfToken",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveConnectionError.InitialParseComponent.csrfToken",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparsecomponent\/csrftoken"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/description" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "description"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/description",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "description",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparsecomponent\/description"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/document" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "document"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/document",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveConnectionError.InitialParseComponent.document",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparsecomponent\/document"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/Equatable-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/Equatable-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Equatable Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparsecomponent\/equatable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/phxMain" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "case"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "phxMain"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/phxMain",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "LiveConnectionError.InitialParseComponent.phxMain",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparsecomponent\/phxmain"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
+      "abstract" : [
+        {
+          "text" : "The session coordinator object handles the initial connection, as well as navigation.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "class"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LiveSessionCoordinator"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveSessionCoordinator",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/livesessioncoordinator"
+    },
+    "doc:\/\/LiveViewNative\/s23CustomStringConvertibleP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s23CustomStringConvertibleP",
+      "title" : "Swift.CustomStringConvertible",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SH" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SH",
+      "title" : "Swift.Hashable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/SQ" : {
+      "identifier" : "doc:\/\/LiveViewNative\/SQ",
+      "title" : "Swift.Equatable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/s23CustomStringConvertibleP",
+        "doc:\/\/LiveViewNative\/SQ",
+        "doc:\/\/LiveViewNative\/SH"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/csrfToken",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/document",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/phxMain"
+      ],
+      "title" : "Enumeration Cases"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/description"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent\/Equatable-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/liveconnectionerror\/initialparsecomponent"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -617,8 +617,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZStack",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VStack"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/VStack",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ZStack"
       ],
       "title" : "Stacks"
     }

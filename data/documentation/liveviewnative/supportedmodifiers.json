@@ -47,9 +47,9 @@
         },
         {
           "code" : [
-            "<h-stack modifiers='[{\"type\": \"padding\", \"all\": 16}]'>",
+            "<HStack modifiers='[{\"type\": \"padding\", \"all\": 16}]'>",
             "    <!-- ... -->",
-            "<\/h-stack>"
+            "<\/HStack>"
           ],
           "syntax" : "html",
           "type" : "codeListing"

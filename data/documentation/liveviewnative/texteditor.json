@@ -110,101 +110,6 @@
           "type" : "codeListing"
         },
         {
-          "anchor" : "Attributes",
-          "level" : 2,
-          "text" : "Attributes",
-          "type" : "heading"
-        },
-        {
-          "items" : [
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/findDisabled",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/replaceDisabled",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            }
-          ],
-          "type" : "unorderedList"
-        },
-        {
           "anchor" : "Events",
           "level" : 2,
           "text" : "Events",
@@ -232,31 +137,6 @@
                   "inlineContent" : [
                     {
                       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/blurEvent",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            }
-          ],
-          "type" : "unorderedList"
-        },
-        {
-          "anchor" : "Bindings",
-          "level" : 2,
-          "text" : "Bindings",
-          "type" : "heading"
-        },
-        {
-          "items" : [
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/isFindPresented",
                       "isActive" : true,
                       "type" : "reference"
                     }
@@ -494,46 +374,9 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/blurEvent",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "phx-blur",
+      "title" : "blurEvent",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/texteditor\/blurevent"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/findDisabled" : {
-      "abstract" : [
-        {
-          "text" : "Whether find is disabled (defaults to false).",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "findDisabled"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:Sb",
-          "text" : "Bool"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/findDisabled",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "find-disabled",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/texteditor\/finddisabled"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/focusEvent" : {
       "abstract" : [
@@ -577,91 +420,9 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/focusEvent",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "phx-focus",
+      "title" : "focusEvent",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/texteditor\/focusevent"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/isFindPresented" : {
-      "abstract" : [
-        {
-          "text" : "The ",
-          "type" : "text"
-        },
-        {
-          "code" : "find-presented",
-          "type" : "codeVoice"
-        },
-        {
-          "text" : " attribute is a live binding that controls whether the system find UI is presented.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "isFindPresented"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:Sb",
-          "text" : "Bool"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/isFindPresented",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "isFindPresented",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/texteditor\/isfindpresented"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/replaceDisabled" : {
-      "abstract" : [
-        {
-          "text" : "Whether replace is disabled (defaults to false).",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "replaceDisabled"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:Sb",
-          "text" : "Bool"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/replaceDisabled",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "replace-disabled",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/texteditor\/replacedisabled"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/View-Implementations" : {
       "abstract" : [
@@ -739,170 +500,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textfieldprotocol"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization" : {
-      "abstract" : [
-        {
-          "text" : "The boundaries to capitalize on.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "autocapitalization"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:7SwiftUI27TextInputAutocapitalizationV",
-          "text" : "TextInputAutocapitalization"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/autocapitalization",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "autocapitalization",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/autocapitalization"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection" : {
-      "abstract" : [
-        {
-          "text" : "Indicates if autocorrection should be enabled.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "disableAutocorrection"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:Sb",
-          "text" : "Bool"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/disableAutocorrection",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "autocorrection",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/disableautocorrection"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard" : {
-      "abstract" : [
-        {
-          "text" : "The type of keyboard to display.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "keyboard"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "c:@E@UIKeyboardType",
-          "text" : "UIKeyboardType"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/keyboard",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "keyboard",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/keyboard"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel" : {
-      "abstract" : [
-        {
-          "text" : "The label to display on the keyboard submit button.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "submitLabel"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:7SwiftUI11SubmitLabelV",
-          "text" : "SubmitLabel"
-        },
-        {
-          "kind" : "text",
-          "text" : "?"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldProtocol\/submitLabel",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "submit-label",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textfieldprotocol\/submitlabel"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput" : {
       "abstract" : [
 
@@ -951,9 +548,9 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text"
       ],
       "title" : "Views"
     }
@@ -962,10 +559,7 @@
     {
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/blurEvent",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/findDisabled",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/focusEvent",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/isFindPresented",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/replaceDisabled"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor\/focusEvent"
       ],
       "title" : "Instance Properties"
     },

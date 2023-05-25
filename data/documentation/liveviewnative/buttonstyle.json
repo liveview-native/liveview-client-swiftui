@@ -18,8 +18,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyleModifier"
       ]
     ]
   },
@@ -29,7 +29,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative11ButtonStyle33_86DE25FE7BDFB54BC1FD80BE0C37213BLLO",
+    "externalID" : "s:14LiveViewNative11ButtonStyle33_F85D7A50A66B7ED5F1EB1739C91D181DLLO",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -104,44 +104,10 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
-      "abstract" : [
-        {
-          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "protocol"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "AttributeDecodable",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/attributedecodable"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button" : {
       "abstract" : [
         {
-          "code" : "<button>",
+          "code" : "<Button>",
           "type" : "codeVoice"
         },
         {
@@ -278,7 +244,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle\/borderedProminent" : {
       "abstract" : [
         {
-          "code" : "bordered-prominent",
+          "code" : "bordered_prominent",
           "type" : "codeVoice"
         }
       ],
@@ -299,7 +265,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle\/borderedProminent",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "bordered-prominent",
+      "title" : "ButtonStyle.borderedProminent",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/buttonstyle\/borderedprominent"
     },
@@ -375,20 +341,59 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/buttonstyle\/rawrepresentable-implementations"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any buttons within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ButtonStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ButtonStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "button_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/buttonstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/s8SendableP" : {
       "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
       "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
       "type" : "unresolvable"
     },
     "doc:\/\/LiveViewNative\/SH" : {
@@ -410,7 +415,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/Se",
         "doc:\/\/LiveViewNative\/SQ",
         "doc:\/\/LiveViewNative\/SH",
         "doc:\/\/LiveViewNative\/SY",

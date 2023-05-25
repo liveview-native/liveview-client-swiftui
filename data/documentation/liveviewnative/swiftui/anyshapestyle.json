@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "A color, gradient, or other style.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -14,7 +20,7 @@
   "kind" : "symbol",
   "metadata" : {
     "extendedModule" : "SwiftUI",
-    "externalID" : "s:e:s:7SwiftUI13AnyShapeStyleV14LiveViewNativeE4fromACs7Decoder_p_tKcfc",
+    "externalID" : "s:e:s:7SwiftUI13AnyShapeStyleV14LiveViewNativeE4fromAC0fgH4Core9AttributeVSg_tKcfc",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -74,6 +80,704 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Create a shape style with a type, options, and modifiers.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:color, :blue}",
+            "{:color, :red, [{:opacity, 0.5}]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Shape-Styles",
+          "level" : 2,
+          "text" : "Shape Styles",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To create a shape style, use a tuple where the first element is an atom for the style type, and the second element is the style value.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{type, value}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "color",
+          "level" : 3,
+          "text" : ":color",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "code" : "LiveViewNative\/SwiftUI\/Color\/init(from:)",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " for a list of possible color values.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:color, :blue}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "gradient",
+          "level" : 3,
+          "text" : ":gradient",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Creates a gradient from a single color.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "code" : "LiveViewNative\/SwiftUI\/Color\/init(from:)",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " for a list of possible color values.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:gradient, :blue}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "angulargradient",
+          "level" : 3,
+          "text" : ":angular_gradient",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for details on creating this style.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:angular_gradient, [gradient: {:colors, [:pink, :blue]}, angle: {:degrees, 45}]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "ellipticalgradient",
+          "level" : 3,
+          "text" : ":elliptical_gradient",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EllipticalGradient",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for details on creating this style.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:elliptical_gradient, [gradient: {:colors, [:pink, :blue]}]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "lineargradient",
+          "level" : 3,
+          "text" : ":linear_gradient",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/LinearGradient",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for details on creating this style.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:linear_gradient, [gradient: {:colors, [:pink, :blue]}]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "radialgradient",
+          "level" : 3,
+          "text" : ":radial_gradient",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RadialGradient",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for details on creating this style.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:radial_gradient, [gradient: {:colors, [:pink, :blue]}, start_radius: 0, end_radius: 100]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "hierarchical",
+          "level" : 3,
+          "text" : ":hierarchical",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/HierarchicalShapeStyle",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for a list of possible values.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:hierarchical, :tertiary}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "material",
+          "level" : 3,
+          "text" : ":material",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Material",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for a list of possible values.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Materials are only available on iOS and macOS.",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "code" : [
+            "{:material, :regular}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "image",
+          "level" : 3,
+          "text" : ":image",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ImagePaint",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for details on creating this style.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:image, [image: {:system, \"basketball.fill\"}]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "selection",
+          "level" : 3,
+          "text" : ":selection",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The selection color in the current context.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Only available on iOS and macOS",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "code" : [
+            ":selection"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "separator",
+          "level" : 3,
+          "text" : ":separator",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The separator color in the current context.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "content" : [
+            {
+              "inlineContent" : [
+                {
+                  "text" : "Only available on macOS",
+                  "type" : "text"
+                }
+              ],
+              "type" : "paragraph"
+            }
+          ],
+          "name" : "Note",
+          "style" : "note",
+          "type" : "aside"
+        },
+        {
+          "code" : [
+            ":separator"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "tint",
+          "level" : 3,
+          "text" : ":tint",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The tint color in the current context.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":tint"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "foreground",
+          "level" : 3,
+          "text" : ":foreground",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The foreground style in the current context.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":foreground"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "background",
+          "level" : 3,
+          "text" : ":background",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "The background style in the current context.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            ":background"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Modifiers",
+          "level" : 2,
+          "text" : "Modifiers",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "A third element can be contained in the style tuple. This element is a list of modifiers.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{type, value, [modifier1, modifier2, ...]}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Modifiers are created with tuples as well, with the first element being the name of the modifier and the second being any options.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "{:opacity, 0.5}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Modifiers with only one option can have the value directly as the second element.",
+              "type" : "text"
+            },
+            {
+              "text" : " ",
+              "type" : "text"
+            },
+            {
+              "text" : "If a modifier has multiply options, use a keyword list to set the values.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "anchor" : "opacity",
+          "level" : 3,
+          "text" : ":opacity",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "opacity",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The transparency of the style, from 0-1.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "code" : [
+            "{:opacity, 0.5}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "blendmode",
+          "level" : 3,
+          "text" : ":blend_mode",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "blend_mode",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/BlendMode",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " to use for this style.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "code" : [
+            "{:blend_mode, :multiply}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "shadow",
+          "level" : 3,
+          "text" : ":shadow",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Arguments:",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "code" : "shadow_style",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " (required) - The ",
+                      "type" : "text"
+                    },
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ShadowStyle",
+                      "isActive" : true,
+                      "type" : "reference"
+                    },
+                    {
+                      "text" : " to apply.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        },
+        {
+          "code" : [
+            "{:shadow, {:drop, [radius: 10]}}"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "references" : {
@@ -102,9 +806,47 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that creates a conic gradient.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI15AngularGradientV",
+          "text" : "AngularGradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AngularGradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AngularGradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/angulargradient"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A color, gradient, or other style.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -145,6 +887,332 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle\/decodable-implementations"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-6v592" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": LiveViewNativeCore"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:18LiveViewNativeCore9AttributeV",
+          "text" : "Attribute"
+        },
+        {
+          "kind" : "text",
+          "text" : "?) "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-6v592",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle\/init(from:)-6v592"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/BlendMode" : {
+      "abstract" : [
+        {
+          "text" : "Mode for blending colors.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9BlendModeO",
+          "text" : "BlendMode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/BlendMode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BlendMode"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "BlendMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/blendmode"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EllipticalGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that draws a gradient in an ellipse.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI18EllipticalGradientV",
+          "text" : "EllipticalGradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EllipticalGradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "EllipticalGradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "EllipticalGradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/ellipticalgradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/HierarchicalShapeStyle" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that maps to a numbered content style.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI22HierarchicalShapeStyleV",
+          "text" : "HierarchicalShapeStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/HierarchicalShapeStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "HierarchicalShapeStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "HierarchicalShapeStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/hierarchicalshapestyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ImagePaint" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that repeats an image.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI10ImagePaintV",
+          "text" : "ImagePaint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ImagePaint",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ImagePaint"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ImagePaint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/imagepaint"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/LinearGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that creates a gradient between two points.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI14LinearGradientV",
+          "text" : "LinearGradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/LinearGradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LinearGradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LinearGradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/lineargradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Material" : {
+      "abstract" : [
+        {
+          "text" : "A translucent shape style.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI8MaterialV",
+          "text" : "Material"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Material",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Material"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Material",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/material"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RadialGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that draws a gradient in a circle.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI14RadialGradientV",
+          "text" : "RadialGradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RadialGradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RadialGradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RadialGradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/radialgradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ShadowStyle" : {
+      "abstract" : [
+        {
+          "text" : "A shadow configuration.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI11ShadowStyleV",
+          "text" : "ShadowStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ShadowStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ShadowStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ShadowStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/shadowstyle"
+    },
     "doc:\/\/LiveViewNative\/Se" : {
       "identifier" : "doc:\/\/LiveViewNative\/Se",
       "title" : "Swift.Decodable",
@@ -170,6 +1238,12 @@
 
   ],
   "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle\/init(from:)-6v592"
+      ],
+      "title" : "Initializers"
+    },
     {
       "generated" : true,
       "identifiers" : [

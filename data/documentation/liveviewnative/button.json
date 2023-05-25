@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "<button>",
+      "code" : "<Button>",
       "type" : "codeVoice"
     },
     {
@@ -149,7 +149,7 @@
         },
         {
           "code" : [
-            "<button phx-click=\"my_event\" phx-value-extra=\"more info\">Click Me!<\/button>"
+            "<Button phx-click=\"my_event\" phx-value-extra=\"more info\">Click Me!<\/Button>"
           ],
           "syntax" : "html",
           "type" : "codeListing"
@@ -177,20 +177,6 @@
                   "inlineContent" : [
                     {
                       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/disabled",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/buttonStyle",
                       "isActive" : true,
                       "type" : "reference"
                     }
@@ -226,6 +212,30 @@
             }
           ],
           "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Button",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
       "kind" : "content"
@@ -254,7 +264,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button" : {
       "abstract" : [
         {
-          "code" : "<button>",
+          "code" : "<Button>",
           "type" : "codeVoice"
         },
         {
@@ -294,49 +304,6 @@
       "title" : "<Button>",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/button"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/buttonStyle" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this button.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "buttonStyle"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative11ButtonStyle33_86DE25FE7BDFB54BC1FD80BE0C37213BLLO",
-          "text" : "ButtonStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/buttonStyle",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "tags" : [
-        {
-          "text" : "SPI",
-          "type" : "spi"
-        }
-      ],
-      "title" : "button-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/button\/buttonstyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/click" : {
       "abstract" : [
@@ -443,49 +410,6 @@
       "title" : "View Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/button\/view-implementations"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle" : {
-      "abstract" : [
-        {
-          "text" : "A style for the ",
-          "type" : "text"
-        },
-        {
-          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button",
-          "isActive" : true,
-          "type" : "reference"
-        },
-        {
-          "text" : " element.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "enum"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "ButtonStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "ButtonStyle"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "ButtonStyle",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/buttonstyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
       "abstract" : [
@@ -679,6 +603,18 @@
       "title" : "RootRegistry",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/Button" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Button",
+      "title" : "SwiftUI.Button",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Button",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Button"
     }
   },
   "relationshipsSections" : [
@@ -703,9 +639,9 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PasteButton",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/EditButton",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RenameButton"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RenameButton",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PasteButton"
       ],
       "title" : "Buttons"
     }
@@ -713,13 +649,6 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle"
-      ],
-      "title" : "Supporting Types"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/buttonStyle",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/click",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button\/disabled"
       ],

@@ -250,6 +250,96 @@
       "title" : "hashValue",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textfieldstyle\/hashvalue"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle\/init(from:)" : {
+      "abstract" : [
+
+      ],
+      "conformance" : {
+        "availabilityPrefix" : [
+          {
+            "text" : "Available when",
+            "type" : "text"
+          }
+        ],
+        "conformancePrefix" : [
+          {
+            "text" : "Conforms when",
+            "type" : "text"
+          }
+        ],
+        "constraints" : [
+          {
+            "code" : "Self",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " conforms to ",
+            "type" : "text"
+          },
+          {
+            "code" : "Decodable",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " and ",
+            "type" : "text"
+          },
+          {
+            "code" : "RawValue",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " is ",
+            "type" : "text"
+          },
+          {
+            "code" : "String",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : ".",
+            "type" : "text"
+          }
+        ]
+      },
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s7DecoderP",
+          "text" : "Decoder"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle\/init(from:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/textfieldstyle\/init(from:)"
     }
   },
   "schemaVersion" : {
@@ -261,6 +351,13 @@
 
   ],
   "topicSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle\/init(from:)"
+      ],
+      "title" : "Initializers"
+    },
     {
       "generated" : true,
       "identifiers" : [

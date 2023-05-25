@@ -148,12 +148,8 @@
         {
           "code" : [
             "<Label>",
-            "    <Label:title>",
-            "        <Text>John Doe<\/Text>",
-            "    <\/Label:title>",
-            "    <Label:icon>",
-            "        <Image system-name=\"person.crop.circle.fill\" \/>",
-            "    <\/Label:icon>",
+            "    <Text template={:title}>John Doe<\/Text>",
+            "    <Image template={:icon} system-name=\"person.crop.circle.fill\" \/>",
             "<\/Label>"
           ],
           "syntax" : "html",
@@ -207,23 +203,33 @@
                   "type" : "paragraph"
                 }
               ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label\/style",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
             }
           ],
           "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Label",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
       "kind" : "content"
@@ -359,43 +365,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/label\/body"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to use for this label.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative10LabelStyle33_AE5F64E5F48C4116EE0BFBD9AE870721LLO",
-          "text" : "LabelStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "label-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/label\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label\/systemImage" : {
       "abstract" : [
         {
@@ -455,37 +424,6 @@
       "title" : "View Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/label\/view-implementations"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle" : {
-      "abstract" : [
-
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "enum"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "LabelStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "LabelStyle"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "LabelStyle",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/labelstyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
       "abstract" : [
@@ -719,6 +657,18 @@
       "title" : "Text Input and Output",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/textinputandoutput"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/Label" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Label",
+      "title" : "SwiftUI.Label",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Label",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Label"
     }
   },
   "relationshipsSections" : [
@@ -743,10 +693,10 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Text"
       ],
       "title" : "Views"
     }
@@ -754,14 +704,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle"
-      ],
-      "title" : "Supporting Types"
-    },
-    {
-      "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label\/body",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label\/style",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label\/systemImage"
       ],
       "title" : "Instance Properties"

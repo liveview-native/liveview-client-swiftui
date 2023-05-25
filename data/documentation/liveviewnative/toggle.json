@@ -160,31 +160,6 @@
           "name" : "Note",
           "style" : "note",
           "type" : "aside"
-        },
-        {
-          "anchor" : "Attributes",
-          "level" : 2,
-          "text" : "Attributes",
-          "type" : "heading"
-        },
-        {
-          "items" : [
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle\/style",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            }
-          ],
-          "type" : "unorderedList"
         }
       ],
       "kind" : "content"
@@ -485,43 +460,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/toggle\/body"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this toggle.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative11ToggleStyle33_BDF851F5EBB164967B4C2407FB53843FLLO",
-          "text" : "ToggleStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "toggle-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/toggle\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle\/View-Implementations" : {
       "abstract" : [
 
@@ -583,8 +521,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle\/body",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle\/style"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Toggle\/body"
       ],
       "title" : "Instance Properties"
     },

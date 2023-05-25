@@ -18,8 +18,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier"
       ]
     ]
   },
@@ -29,7 +29,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative10GaugeStyle33_B85EC247652BDDF84D69319EE5D78E5BLLO",
+    "externalID" : "s:14LiveViewNative10GaugeStyle33_B9E381080FCE031D385C1A115AB35E2BLLO",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -104,50 +104,16 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
-      "abstract" : [
-        {
-          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "protocol"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "AttributeDecodable",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/attributedecodable"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge" : {
       "abstract" : [
@@ -229,7 +195,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryCircular" : {
       "abstract" : [
         {
-          "code" : "accessory-circular",
+          "code" : "accessory_circular",
           "type" : "codeVoice"
         }
       ],
@@ -250,14 +216,14 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryCircular",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "accessory-circular",
+      "title" : "GaugeStyle.accessoryCircular",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gaugestyle\/accessorycircular"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryCircularCapacity" : {
       "abstract" : [
         {
-          "code" : "accessory-circular-capacity",
+          "code" : "accessory_circular_capacity",
           "type" : "codeVoice"
         }
       ],
@@ -278,14 +244,14 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryCircularCapacity",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "accessory-circular-capacity",
+      "title" : "GaugeStyle.accessoryCircularCapacity",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gaugestyle\/accessorycircularcapacity"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryLinear" : {
       "abstract" : [
         {
-          "code" : "accessory-linear",
+          "code" : "accessory_linear",
           "type" : "codeVoice"
         }
       ],
@@ -306,14 +272,14 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryLinear",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "accessory-linear",
+      "title" : "GaugeStyle.accessoryLinear",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gaugestyle\/accessorylinear"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryLinearCapacity" : {
       "abstract" : [
         {
-          "code" : "accessory-linear-capacity",
+          "code" : "accessory_linear_capacity",
           "type" : "codeVoice"
         }
       ],
@@ -334,7 +300,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryLinearCapacity",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "accessory-linear-capacity",
+      "title" : "GaugeStyle.accessoryLinearCapacity",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gaugestyle\/accessorylinearcapacity"
     },
@@ -377,7 +343,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/linearCapacity" : {
       "abstract" : [
         {
-          "code" : "linear-capacity",
+          "code" : "linear_capacity",
           "type" : "codeVoice"
         }
       ],
@@ -398,7 +364,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/linearCapacity",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "linear-capacity",
+      "title" : "GaugeStyle.linearCapacity",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gaugestyle\/linearcapacity"
     },
@@ -413,9 +379,48 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gaugestyle\/rawrepresentable-implementations"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any gauges within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GaugeStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GaugeStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "gauge_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gaugestylemodifier"
+    },
     "doc:\/\/LiveViewNative\/s8SendableP" : {
       "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
       "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
       "type" : "unresolvable"
     },
     "doc:\/\/LiveViewNative\/SH" : {
@@ -437,7 +442,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/Se",
         "doc:\/\/LiveViewNative\/SQ",
         "doc:\/\/LiveViewNative\/SH",
         "doc:\/\/LiveViewNative\/SY",

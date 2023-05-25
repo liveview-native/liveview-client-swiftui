@@ -1,4 +1,10 @@
 {
+  "abstract" : [
+    {
+      "text" : "A shape style that creates a gradient between two points.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
@@ -74,6 +80,100 @@
         }
       ],
       "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "To create this shape style, create a map or keyword list with the ",
+              "type" : "text"
+            },
+            {
+              "code" : "gradient",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " key set to a ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Gradient",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " value.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "[gradient: {:colors, [:pink, :blue]}]"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "Use the ",
+              "type" : "text"
+            },
+            {
+              "code" : "start_point",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " and ",
+              "type" : "text"
+            },
+            {
+              "code" : "end_point",
+              "type" : "codeVoice"
+            },
+            {
+              "text" : " keys to customize the gradient further.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        },
+        {
+          "code" : [
+            "[gradient: {:colors, [:pink, :blue]}, start_point: {0, 0}, end_point: {1, 1}]"
+          ],
+          "syntax" : "elixir",
+          "type" : "codeListing"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on creating the start\/end points.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
+        }
+      ],
+      "kind" : "content"
     }
   ],
   "references" : {
@@ -102,9 +202,44 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/LinearGradient" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Gradient" : {
       "abstract" : [
 
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI8GradientV",
+          "text" : "Gradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Gradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Gradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Gradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/gradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/LinearGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that creates a gradient between two points.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -144,6 +279,41 @@
       "title" : "Decodable Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/lineargradient\/decodable-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint" : {
+      "abstract" : [
+        {
+          "text" : "Decodes a unit point from a string value.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9UnitPointV",
+          "text" : "UnitPoint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "UnitPoint"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "UnitPoint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/unitpoint"
     },
     "doc:\/\/LiveViewNative\/Se" : {
       "identifier" : "doc:\/\/LiveViewNative\/Se",

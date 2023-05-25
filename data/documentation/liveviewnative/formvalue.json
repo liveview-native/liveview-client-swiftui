@@ -95,16 +95,6 @@
               "text" : " : "
             },
             {
-              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
-              "kind" : "typeIdentifier",
-              "preciseIdentifier" : "s:14LiveViewNative18AttributeDecodableP",
-              "text" : "AttributeDecodable"
-            },
-            {
-              "kind" : "text",
-              "text" : ", "
-            },
-            {
               "kind" : "typeIdentifier",
               "preciseIdentifier" : "s:Se",
               "text" : "Decodable"
@@ -139,32 +129,6 @@
           "level" : 2,
           "text" : "Overview",
           "type" : "heading"
-        },
-        {
-          "inlineContent" : [
-            {
-              "text" : "The initial value is decoded from the ",
-              "type" : "text"
-            },
-            {
-              "code" : "value",
-              "type" : "codeVoice"
-            },
-            {
-              "text" : " attribute using the ",
-              "type" : "text"
-            },
-            {
-              "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
-              "isActive" : true,
-              "type" : "reference"
-            },
-            {
-              "text" : " protocol.",
-              "type" : "text"
-            }
-          ],
-          "type" : "paragraph"
         },
         {
           "inlineContent" : [
@@ -711,6 +675,78 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swift\/optional"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Set" : {
+      "abstract" : [
+
+      ],
+      "conformance" : {
+        "availabilityPrefix" : [
+          {
+            "text" : "Available when",
+            "type" : "text"
+          }
+        ],
+        "conformancePrefix" : [
+          {
+            "text" : "Conforms when",
+            "type" : "text"
+          }
+        ],
+        "constraints" : [
+          {
+            "code" : "Element",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " conforms to ",
+            "type" : "text"
+          },
+          {
+            "code" : "FormValue",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : " and ",
+            "type" : "text"
+          },
+          {
+            "code" : "Hashable",
+            "type" : "codeVoice"
+          },
+          {
+            "text" : ".",
+            "type" : "text"
+          }
+        ]
+      },
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Sh",
+          "text" : "Set"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Set",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Set"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Set",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/set"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String" : {
       "abstract" : [
         {
@@ -765,7 +801,6 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
         "doc:\/\/LiveViewNative\/Se",
         "doc:\/\/LiveViewNative\/SE",
         "doc:\/\/LiveViewNative\/SQ"
@@ -780,6 +815,7 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Foundation\/Date",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Double",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Optional",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Set",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String"
       ],
       "kind" : "relationships",

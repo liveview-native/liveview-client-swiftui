@@ -1,10 +1,16 @@
 {
+  "abstract" : [
+    {
+      "code" : "radio_group",
+      "type" : "codeVoice"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle"
       ]
     ]
@@ -15,7 +21,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative11PickerStyle33_3D1A608FE14EB3986A7D0F4BAD773710LLO10radioGroupyA2DmF",
+    "externalID" : "s:14LiveViewNative11PickerStyle33_260CA52C00F4DE8EF08C8CFE32843712LLO10radioGroupyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -93,16 +99,16 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker" : {
       "abstract" : [
@@ -183,7 +189,10 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle\/radioGroup" : {
       "abstract" : [
-
+        {
+          "code" : "radio_group",
+          "type" : "codeVoice"
+        }
       ],
       "fragments" : [
         {
@@ -205,6 +214,40 @@
       "title" : "PickerStyle.radioGroup",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/pickerstyle\/radiogroup"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any pickers within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PickerStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PickerStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "picker_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/pickerstylemodifier"
     }
   },
   "schemaVersion" : {

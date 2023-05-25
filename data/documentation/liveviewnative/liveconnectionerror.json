@@ -80,6 +80,11 @@
     }
   ],
   "references" : {
+    "doc:\/\/LiveViewNative\/10Foundation14LocalizedErrorP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/10Foundation14LocalizedErrorP",
+      "title" : "Foundation.LocalizedError",
+      "type" : "unresolvable"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
       "abstract" : [
         {
@@ -138,6 +143,44 @@
       "title" : "Error Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/error-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/errorDescription-1i0j8" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "errorDescription"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/errorDescription-1i0j8",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "errorDescription",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/errordescription-1i0j8"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/eventError(_:)" : {
       "abstract" : [
@@ -215,7 +258,7 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialfetcherror(_:)"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialFetchUnexpectedResponse(_:)" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialFetchUnexpectedResponse(_:_:)" : {
       "abstract" : [
 
       ],
@@ -243,17 +286,57 @@
         },
         {
           "kind" : "text",
-          "text" : ")"
+          "text" : ", "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?)"
         }
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialFetchUnexpectedResponse(_:)",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialFetchUnexpectedResponse(_:_:)",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "LiveConnectionError.initialFetchUnexpectedResponse(_:)",
+      "title" : "LiveConnectionError.initialFetchUnexpectedResponse(_:_:)",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialfetchunexpectedresponse(_:)"
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialfetchunexpectedresponse(_:_:)"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialParseError" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "enum"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "InitialParseComponent"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "InitialParseComponent"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "LiveConnectionError.InitialParseComponent",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparsecomponent"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialParseError(missingOrInvalid:)" : {
       "abstract" : [
         {
           "text" : "An error encountered when parsing the initial HTML.",
@@ -272,14 +355,35 @@
         {
           "kind" : "identifier",
           "text" : "initialParseError"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "missingOrInvalid"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14LiveViewNative0A15ConnectionErrorO21InitialParseComponentO",
+          "text" : "InitialParseComponent"
+        },
+        {
+          "kind" : "text",
+          "text" : ")"
         }
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialParseError",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialParseError(missingOrInvalid:)",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "LiveConnectionError.initialParseError",
+      "title" : "LiveConnectionError.initialParseError(missingOrInvalid:)",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparseerror"
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/initialparseerror(missingorinvalid:)"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/joinError(_:)" : {
       "abstract" : [
@@ -318,6 +422,17 @@
       "title" : "LiveConnectionError.joinError(_:)",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/joinerror(_:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/LocalizedError-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/LocalizedError-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "LocalizedError Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/liveconnectionerror\/localizederror-implementations"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/socketError(_:)" : {
       "abstract" : [
@@ -439,6 +554,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/LiveViewNative\/10Foundation14LocalizedErrorP",
         "doc:\/\/LiveViewNative\/s5ErrorP",
         "doc:\/\/LiveViewNative\/s8SendableP"
       ],
@@ -469,17 +585,30 @@
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/eventError(_:)",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialFetchError(_:)",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialFetchUnexpectedResponse(_:)",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialParseError",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialFetchUnexpectedResponse(_:_:)",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/initialParseError(missingOrInvalid:)",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/joinError(_:)",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/socketError(_:)"
       ],
       "title" : "Enumeration Cases"
     },
     {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/errorDescription-1i0j8"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/InitialParseComponent"
+      ],
+      "title" : "Enumerations"
+    },
+    {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/Error-Implementations"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/Error-Implementations",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveConnectionError\/LocalizedError-Implementations"
       ],
       "title" : "Default Implementations"
     }

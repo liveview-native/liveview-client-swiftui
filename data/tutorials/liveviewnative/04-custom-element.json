@@ -182,8 +182,16 @@
         "    {:ok, assign(socket, name: name)}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <VStack modifiers={navigation_title(@native, title: @name)}>",
+        "      <AsyncImage url={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "    <\/VStack>",
+        "    \"\"\"swiftui",
         "  end",
         "end"
       ],
@@ -194,21 +202,6 @@
       ],
       "identifier" : "03-01-02-cat_live.ex",
       "syntax" : "elixir",
-      "type" : "file"
-    },
-    "03-01-03-cat_live.ios.heex" : {
-      "content" : [
-        "<VStack modifiers={navigation_title(@native, title: @name)}>",
-        "  <AsyncImage src={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
-        "<\/VStack>"
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ios.heex",
-      "fileType" : "heex",
-      "highlights" : [
-
-      ],
-      "identifier" : "03-01-03-cat_live.ios.heex",
-      "syntax" : "html",
       "type" : "file"
     },
     "03-02-01-navigationmode.swift" : {
@@ -1016,7 +1009,7 @@
       "syntax" : "swift",
       "type" : "file"
     },
-    "04-04-01-change-score.ex" : {
+    "04-04-02-cat_live.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.CatLive do",
         "  use LvnTutorialWeb, :live_view",
@@ -1027,8 +1020,16 @@
         "    {:ok, assign(socket, name: name, score: FavoritesStore.get_score(name))}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <VStack modifiers={navigation_title(@native, title: @name)}>",
+        "      <AsyncImage url={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "    <\/VStack>",
+        "    \"\"\"swiftui",
         "  end",
         "",
         "  def handle_event(\"change-score\", score, socket) do",
@@ -1047,44 +1048,66 @@
           "line" : 7
         },
         {
-          "line" : 13
+          "line" : 21
         },
         {
-          "line" : 14
+          "line" : 22
         },
         {
-          "line" : 15
+          "line" : 23
         },
         {
-          "line" : 16
+          "line" : 24
+        },
+        {
+          "line" : 25
+        }
+      ],
+      "identifier" : "04-04-02-cat_live.ex",
+      "syntax" : "elixir",
+      "type" : "file"
+    },
+    "04-04-03-cat_live.ex" : {
+      "content" : [
+        "defmodule LvnTutorialWeb.CatLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "",
+        "  def mount(%{\"name\" => name}, _session, socket) do",
+        "    {:ok, assign(socket, name: name)}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <VStack modifiers={navigation_title(@native, title: @name)}>",
+        "      <AsyncImage url={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "      <CatRating score={@score} \/>",
+        "    <\/VStack>",
+        "    \"\"\"swiftui",
+        "  end",
+        "",
+        "  def handle_event(\"change-score\", score, socket) do",
+        "    FavoritesStore.set_score(socket.assigns.name, score)",
+        "    {:noreply, assign(socket, score: score)}",
+        "  end",
+        "end"
+      ],
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
+        {
+          "line" : 6
         },
         {
           "line" : 17
         }
       ],
-      "identifier" : "04-04-01-change-score.ex",
+      "identifier" : "04-04-03-cat_live.ex",
       "syntax" : "elixir",
-      "type" : "file"
-    },
-    "04-04-02-cat-rating.ios.heex" : {
-      "content" : [
-        "<VStack modifiers={navigation_title(@native, title: @title)}>",
-        "  <AsyncImage src={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
-        "  <CatRating score={@score} \/>",
-        "<\/VStack>"
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ios.heex",
-      "fileType" : "heex",
-      "highlights" : [
-        {
-          "line" : 1
-        },
-        {
-          "line" : 3
-        }
-      ],
-      "identifier" : "04-04-02-cat-rating.ios.heex",
-      "syntax" : "html",
       "type" : "file"
     },
     "04-04-03-preview.mp4" : {
@@ -1841,15 +1864,15 @@
                 {
                   "inlineContent" : [
                     {
-                      "text" : "The score is read from the ",
+                      "text" : "The ",
                       "type" : "text"
                     },
                     {
-                      "code" : "score",
+                      "code" : "LiveContext",
                       "type" : "codeVoice"
                     },
                     {
-                      "text" : " attribute on the DOM element and converted to an integer, falling back to 0 if that fails.",
+                      "text" : " property wrapper will allow us to send events to the LiveView.",
                       "type" : "text"
                     }
                   ],
@@ -1861,15 +1884,23 @@
                 {
                   "inlineContent" : [
                     {
-                      "text" : "Next, let’s add properties for the element, context, and score. The ",
+                      "text" : "Next, let’s add properties for the element, context, and score.",
                       "type" : "text"
                     },
                     {
-                      "code" : "ObservedElement",
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "The ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "Attribute",
                       "type" : "codeVoice"
                     },
                     {
-                      "text" : " property wrapper provides access to the element that defined this view, and will automatically update the view whenever there’s a change to the element.",
+                      "text" : " property wrapper provides access to an attribute on the DOM element, and will automatically update the view whenever there’s a change to the element.",
                       "type" : "text"
                     }
                   ],
@@ -1897,7 +1928,15 @@
                       "type" : "codeVoice"
                     },
                     {
-                      "text" : " variables that will be used for building the interaction. The ",
+                      "text" : " variables that will be used for building the interaction.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "The ",
                       "type" : "text"
                     },
                     {
@@ -1905,7 +1944,15 @@
                       "type" : "codeVoice"
                     },
                     {
-                      "text" : " variable will hold the current score as the user is dragging their finger to edit it, but before it’s been committed. The ",
+                      "text" : " variable will hold the current score as the user is dragging their finger to edit it, but before it’s been committed.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "The ",
                       "type" : "text"
                     },
                     {
@@ -1913,7 +1960,15 @@
                       "type" : "codeVoice"
                     },
                     {
-                      "text" : " variable will store the width of the view on screen, which is needed to turn the absolute position of the user’s finger into a fraction. Finally, ",
+                      "text" : " variable will store the width of the view on screen, which is needed to turn the absolute position of the user’s finger into a fraction.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "Finally, ",
                       "type" : "text"
                     },
                     {
@@ -2186,7 +2241,7 @@
               "caption" : [
 
               ],
-              "code" : "04-04-01-change-score.ex",
+              "code" : "04-04-02-cat_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -2220,34 +2275,6 @@
             },
             {
               "caption" : [
-
-              ],
-              "code" : "03-01-03-cat_live.ios.heex",
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "text" : "Edit the ",
-                      "type" : "text"
-                    },
-                    {
-                      "code" : "cat_live.ios.heex",
-                      "type" : "codeVoice"
-                    },
-                    {
-                      "text" : " template.",
-                      "type" : "text"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ],
-              "media" : null,
-              "runtimePreview" : null,
-              "type" : "step"
-            },
-            {
-              "caption" : [
                 {
                   "inlineContent" : [
                     {
@@ -2258,7 +2285,7 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "04-04-02-cat-rating.ios.heex",
+              "code" : "04-04-03-cat_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -2267,7 +2294,7 @@
                       "type" : "text"
                     },
                     {
-                      "code" : "<cat-rating>",
+                      "code" : "<CatRating>",
                       "type" : "codeVoice"
                     },
                     {

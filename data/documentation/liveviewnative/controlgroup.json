@@ -164,14 +164,12 @@
         {
           "code" : [
             "<ControlGroup>",
-            "    <ControlGroup:label>",
-            "        Edit Actions",
-            "    <\/ControlGroup:label>",
-            "    <ControlGroup:content>",
+            "    <Text template={:label}>Edit Actions<\/Text>",
+            "    <Group template={:content}>",
             "        <Button phx-click=\"arrange\">Arrange<\/Button>",
             "        <Button phx-click=\"update\">Update<\/Button>",
             "        <Button phx-click=\"remove\">Remove<\/Button>",
-            "    <\/ControlGroup:content>",
+            "    <\/Group>",
             "<\/ControlGroup>"
           ],
           "syntax" : "html",
@@ -190,9 +188,8 @@
                 {
                   "inlineContent" : [
                     {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup\/style",
-                      "isActive" : true,
-                      "type" : "reference"
+                      "code" : "style",
+                      "type" : "codeVoice"
                     }
                   ],
                   "type" : "paragraph"
@@ -347,43 +344,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/controlgroup\/body"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to use for this control group.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative17ControlGroupStyle33_EBE0B90FAA8A32472FF6A7C238660C96LLO",
-          "text" : "ControlGroupStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "control-group-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlgroup\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup\/View-Implementations" : {
       "abstract" : [
 
@@ -397,7 +357,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroupStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -682,8 +654,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Group"
       ],
       "title" : "Groups"
@@ -698,8 +670,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup\/body",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup\/style"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup\/body"
       ],
       "title" : "Instance Properties"
     },

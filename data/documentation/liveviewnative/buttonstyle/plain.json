@@ -3,8 +3,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyle"
       ]
     ]
@@ -15,7 +15,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative11ButtonStyle33_86DE25FE7BDFB54BC1FD80BE0C37213BLLO5plainyA2DmF",
+    "externalID" : "s:14LiveViewNative11ButtonStyle33_F85D7A50A66B7ED5F1EB1739C91D181DLLO5plainyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -87,7 +87,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Button" : {
       "abstract" : [
         {
-          "code" : "<button>",
+          "code" : "<Button>",
           "type" : "codeVoice"
         },
         {
@@ -196,16 +196,50 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/buttonstyle\/plain"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any buttons within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ButtonStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ButtonStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ButtonStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "button_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/buttonstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     }
   },
   "schemaVersion" : {

@@ -399,9 +399,9 @@
           "code" : [
             "<my-toggle is-on=\"toggle_binding\" \/>",
             "",
-            "<button modifiers='[{\"type\": \"my_alert\", \"is_active\": \"alert_shown\"}]'>",
-            "    <text>Present alert<\/text>",
-            "<\/button>"
+            "<Button modifiers='[{\"type\": \"my_alert\", \"is_active\": \"alert_shown\"}]'>",
+            "    <Text>Present alert<\/Text>",
+            "<\/Button>"
           ],
           "syntax" : "html",
           "type" : "codeListing"

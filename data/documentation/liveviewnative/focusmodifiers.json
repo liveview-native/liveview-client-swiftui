@@ -1,0 +1,249 @@
+{
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusModifiers"
+  },
+  "kind" : "article",
+  "metadata" : {
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "role" : "collectionGroup",
+    "title" : "Focus Modifiers"
+  },
+  "references" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusableModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets whether an element can receive focus.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FocusableModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusableModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FocusableModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "focusable",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/focusablemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusScopeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Associates an element hierarchy with a namespace.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FocusScopeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusScopeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FocusScopeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "focus_scope",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/focusscopemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusSectionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Groups a section of focusable elements.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "FocusSectionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusSectionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FocusSectionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "focus_section",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/focussectionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext" : {
+      "abstract" : [
+        {
+          "text" : "Creates a namespace for child elements to use.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "NamespaceContext"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "NamespaceContext"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "NamespaceContext",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/namespacecontext"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PrefersDefaultFocusModifier" : {
+      "abstract" : [
+        {
+          "text" : "Gives default focus to the element in a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/NamespaceContext",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "PrefersDefaultFocusModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PrefersDefaultFocusModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PrefersDefaultFocusModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "prefers_default_focus",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/prefersdefaultfocusmodifier"
+    }
+  },
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusScopeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusSectionModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/FocusableModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PrefersDefaultFocusModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/focusmodifiers"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -12,7 +12,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative14TextFieldStyleO",
+    "externalID" : "s:14LiveViewNative14TextFieldStyle33_3A502CA82293376C24064E4ECB956207LLO",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -193,7 +193,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle\/roundedBorder" : {
       "abstract" : [
         {
-          "code" : "rounded-border",
+          "code" : "rounded_border",
           "type" : "codeVoice"
         }
       ],
@@ -221,7 +221,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldStyle\/squareBorder" : {
       "abstract" : [
         {
-          "code" : "square-border",
+          "code" : "square_border",
           "type" : "codeVoice"
         }
       ],
@@ -251,6 +251,11 @@
       "title" : "Swift.Sendable",
       "type" : "unresolvable"
     },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    },
     "doc:\/\/LiveViewNative\/SH" : {
       "identifier" : "doc:\/\/LiveViewNative\/SH",
       "title" : "Swift.Hashable",
@@ -270,6 +275,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
         "doc:\/\/LiveViewNative\/SQ",
         "doc:\/\/LiveViewNative\/SH",
         "doc:\/\/LiveViewNative\/SY",

@@ -573,9 +573,9 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox"
       ],
       "title" : "Groups"
     }

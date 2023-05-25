@@ -17,8 +17,13 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event"
       ]
     ]
   },
@@ -28,8 +33,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "extendedModule" : "SwiftUI",
-    "externalID" : "s:7SwiftUI15DynamicPropertyPAAE6updateyyF::SYNTHESIZED::s:14LiveViewNative5EventV",
+    "externalID" : "s:14LiveViewNative5EventV6updateyyF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -53,36 +57,6 @@
         "name" : "LiveViewNative"
       }
     ],
-    "platforms" : [
-      {
-        "beta" : false,
-        "deprecated" : false,
-        "introducedAt" : "13.0",
-        "name" : "iOS",
-        "unavailable" : false
-      },
-      {
-        "beta" : false,
-        "deprecated" : false,
-        "introducedAt" : "10.15",
-        "name" : "macOS",
-        "unavailable" : false
-      },
-      {
-        "beta" : false,
-        "deprecated" : false,
-        "introducedAt" : "13.0",
-        "name" : "tvOS",
-        "unavailable" : false
-      },
-      {
-        "beta" : false,
-        "deprecated" : false,
-        "introducedAt" : "6.0",
-        "name" : "watchOS",
-        "unavailable" : false
-      }
-    ],
     "role" : "symbol",
     "roleHeading" : "Instance Method",
     "symbolKind" : "method",
@@ -99,14 +73,6 @@
             "iOS"
           ],
           "tokens" : [
-            {
-              "kind" : "keyword",
-              "text" : "mutating"
-            },
-            {
-              "kind" : "text",
-              "text" : " "
-            },
             {
               "kind" : "keyword",
               "text" : "func"
@@ -178,17 +144,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/event"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations" : {
-      "abstract" : [
-
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations",
-      "kind" : "article",
-      "role" : "collectionGroup",
-      "title" : "DynamicProperty Implementations",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/event\/dynamicproperty-implementations"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/update()" : {
       "abstract" : [
 
@@ -217,6 +172,51 @@
       "title" : "update()",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/event\/update()"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sends an event when a gesture is performed on the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "gesture",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Gestures Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturesmodifiers"
     }
   },
   "schemaVersion" : {

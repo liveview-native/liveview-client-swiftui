@@ -1,0 +1,1253 @@
+{
+  "abstract" : [
+    {
+      "text" : "Sets the blend mode for compositing this view with overlapping views.",
+      "type" : "text"
+    }
+  ],
+  "hierarchy" : {
+    "paths" : [
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers"
+      ]
+    ]
+  },
+  "identifier" : {
+    "interfaceLanguage" : "swift",
+    "url" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier"
+  },
+  "kind" : "symbol",
+  "metadata" : {
+    "externalID" : "s:14LiveViewNative17BlendModeModifierV",
+    "fragments" : [
+      {
+        "kind" : "keyword",
+        "text" : "struct"
+      },
+      {
+        "kind" : "text",
+        "text" : " "
+      },
+      {
+        "kind" : "identifier",
+        "text" : "BlendModeModifier"
+      }
+    ],
+    "modules" : [
+      {
+        "name" : "LiveViewNative"
+      }
+    ],
+    "navigatorTitle" : [
+      {
+        "kind" : "identifier",
+        "text" : "BlendModeModifier"
+      }
+    ],
+    "role" : "symbol",
+    "roleHeading" : "Structure",
+    "symbolKind" : "struct",
+    "title" : "blend_mode"
+  },
+  "primaryContentSections" : [
+    {
+      "declarations" : [
+        {
+          "languages" : [
+            "swift"
+          ],
+          "platforms" : [
+            "iOS"
+          ],
+          "tokens" : [
+            {
+              "kind" : "keyword",
+              "text" : "struct"
+            },
+            {
+              "kind" : "text",
+              "text" : " "
+            },
+            {
+              "kind" : "identifier",
+              "text" : "BlendModeModifier"
+            }
+          ]
+        }
+      ],
+      "kind" : "declarations"
+    },
+    {
+      "content" : [
+        {
+          "anchor" : "overview",
+          "level" : 2,
+          "text" : "Overview",
+          "type" : "heading"
+        },
+        {
+          "code" : [
+            "<HStack>",
+            "    <Color name=\"system-yellow\" modifiers={@native |> frame(width: 50, height: 50, alignment: :center)} \/>",
+            "    <Color name=\"system-red\"",
+            "        modifiers={",
+            "            @native",
+            "            |> frame(width: 50, height: 50, alignment: :center)",
+            "            |> rotation_effect(angle: {:degrees, 45})",
+            "            |> padding(all: -20)",
+            "            |> blend_mode(blend_mode: :color_burn)",
+            "        }",
+            "    \/>",
+            "<\/HStack>"
+          ],
+          "syntax" : "html",
+          "type" : "codeListing"
+        },
+        {
+          "anchor" : "Arguments",
+          "level" : 2,
+          "text" : "Arguments",
+          "type" : "heading"
+        },
+        {
+          "items" : [
+            {
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier\/blendMode",
+                      "isActive" : true,
+                      "type" : "reference"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ]
+            }
+          ],
+          "type" : "unorderedList"
+        }
+      ],
+      "kind" : "content"
+    }
+  ],
+  "references" : {
+    "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP",
+      "title" : "SwiftUI.ViewModifier",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative" : {
+      "abstract" : [
+        {
+          "text" : "Use Phoenix LiveView to build native iOS apps with SwiftUI.",
+          "type" : "text"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+      "kind" : "symbol",
+      "role" : "collection",
+      "title" : "LiveViewNative",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the blend mode for compositing this view with overlapping views.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "BlendModeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BlendModeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "blend_mode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/blendmodemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier\/blendMode" : {
+      "abstract" : [
+        {
+          "text" : "Modes for compositing a view with overlapping content.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "blendMode"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:7SwiftUI9BlendModeO",
+          "text" : "BlendMode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier\/blendMode",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "blendMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/blendmodemodifier\/blendmode"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier\/ViewModifier-Implementations" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier\/ViewModifier-Implementations",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "ViewModifier Implementations",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/blendmodemodifier\/viewmodifier-implementations"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlurModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a Gaussian blur to the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "BlurModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlurModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BlurModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "blur",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/blurmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BorderModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a border to any element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "BorderModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BorderModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BorderModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "border",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/bordermodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BrightnessModifier" : {
+      "abstract" : [
+        {
+          "text" : "Brighten the intensity of the colors in a view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "BrightnessModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BrightnessModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BrightnessModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "brightness",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/brightnessmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClippedModifier" : {
+      "abstract" : [
+        {
+          "text" : "Clips this view to its bounding rectangular frame.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ClippedModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClippedModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ClippedModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "clipped",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/clippedmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier" : {
+      "abstract" : [
+        {
+          "text" : "Masks an element with a given shape.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ClipShapeModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ClipShapeModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "clip_shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/clipshapemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorInvertModifier" : {
+      "abstract" : [
+        {
+          "text" : "Inverts the colors in this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ColorInvertModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorInvertModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ColorInvertModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "color_invert",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/colorinvertmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorMultiplyModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adds a color multiplication effect to this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ColorMultiplyModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorMultiplyModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ColorMultiplyModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "color_multiply",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/colormultiplymodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CompositingGroupModifier" : {
+      "abstract" : [
+        {
+          "text" : "Wraps this view in a compositing group.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CompositingGroupModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CompositingGroupModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CompositingGroupModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "compositing_group",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/compositinggroupmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContrastModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sets the contrast and separation between similar colors in this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ContrastModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContrastModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ContrastModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "contrast",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/contrastmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation\/CGAffineTransform" : {
+      "abstract" : [
+        {
+          "text" : "A transformation matrix.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CoreFoundation"
+        },
+        {
+          "kind" : "text",
+          "text" : "."
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "c:@S@CGAffineTransform",
+          "text" : "CGAffineTransform"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation\/CGAffineTransform",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CGAffineTransform"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CGAffineTransform",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/corefoundation\/cgaffinetransform"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CornerRadiusModifier" : {
+      "abstract" : [
+        {
+          "text" : "Clips this view to its bounding frame, with the specified corner ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CornerRadiusModifier\/radius",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "CornerRadiusModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CornerRadiusModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CornerRadiusModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "corner_radius",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/cornerradiusmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CornerRadiusModifier\/radius" : {
+      "abstract" : [
+        {
+          "text" : "The corner radius in points.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "radius"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:14CoreFoundation7CGFloatV",
+          "text" : "CGFloat"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CornerRadiusModifier\/radius",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "radius",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/cornerradiusmodifier\/radius"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingAndGraphicsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Drawing and Graphics Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/drawingandgraphicsmodifiers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingGroupModifier" : {
+      "abstract" : [
+        {
+          "text" : "Composites this view’s contents into an offscreen image before final display.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DrawingGroupModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingGroupModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DrawingGroupModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "drawing_group",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/drawinggroupmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ForegroundColorModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a foreground color to a view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ForegroundColorModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ForegroundColorModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ForegroundColorModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "foreground_color",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/foregroundcolormodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GrayscaleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adds a grayscale effect to this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GrayscaleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GrayscaleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GrayscaleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "grayscale",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/grayscalemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HueRotationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a hue rotation effect to the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "HueRotationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HueRotationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "HueRotationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "hue_rotation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/huerotationmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LuminanceToAlphaModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adds a luminance to alpha effect to this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LuminanceToAlphaModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LuminanceToAlphaModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LuminanceToAlphaModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "luminance_to_alpha",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/luminancetoalphamodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MaskModifier" : {
+      "abstract" : [
+        {
+          "text" : "Masks this view using the alpha channel of the given view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "MaskModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MaskModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "MaskModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "mask",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/maskmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Rotation3DEffectModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a 3D rotation effect to the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Rotation3DEffectModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Rotation3DEffectModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Rotation3DEffectModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "rotation3DEffect",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rotation3deffectmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a rotation effect to the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "RotationEffectModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RotationEffectModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "rotation_effect",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/rotationeffectmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SaturationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adjusts the color saturation of this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "SaturationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SaturationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SaturationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "saturation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/saturationmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaledToFillModifier" : {
+      "abstract" : [
+        {
+          "text" : "Scales this view to fill its parent, maintaining this view’s aspect ratio.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ScaledToFillModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaledToFillModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScaledToFillModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "scaled_to_fill",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scaledtofillmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaledToFitModifier" : {
+      "abstract" : [
+        {
+          "text" : "Scales this view to fit its parent, maintaining this view’s aspect ratio.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ScaledToFitModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaledToFitModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScaledToFitModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "scaled_to_fit",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scaledtofitmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaleEffectModifier" : {
+      "abstract" : [
+        {
+          "text" : "Scales this view’s rendered output by the given vertical and horizontal size amounts, relative to an anchor point.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ScaleEffectModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaleEffectModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScaleEffectModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "scale_effect",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/scaleeffectmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ShadowModifier" : {
+      "abstract" : [
+        {
+          "text" : "Adds a shadow to this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ShadowModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ShadowModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ShadowModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "shadow",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shadowmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransformEffectModifier" : {
+      "abstract" : [
+        {
+          "text" : "Transforms an element with a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CoreFoundation\/CGAffineTransform",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TransformEffectModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransformEffectModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TransformEffectModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "transform_effect",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/transformeffectmodifier"
+    },
+    "doc:\/\/LiveViewNative\/s8SendableP" : {
+      "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
+      "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
+    }
+  },
+  "relationshipsSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
+        "doc:\/\/LiveViewNative\/s8SendableP",
+        "doc:\/\/LiveViewNative\/7SwiftUI12ViewModifierP"
+      ],
+      "kind" : "relationships",
+      "title" : "Conforms To",
+      "type" : "conformsTo"
+    }
+  ],
+  "schemaVersion" : {
+    "major" : 0,
+    "minor" : 3,
+    "patch" : 0
+  },
+  "sections" : [
+
+  ],
+  "seeAlsoSections" : [
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlurModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BorderModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BrightnessModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClipShapeModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ClippedModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorInvertModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorMultiplyModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CompositingGroupModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContrastModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/CornerRadiusModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DrawingGroupModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ForegroundColorModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GrayscaleModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/HueRotationModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LuminanceToAlphaModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MaskModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Rotation3DEffectModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RotationEffectModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SaturationModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaleEffectModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaledToFillModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ScaledToFitModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ShadowModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransformEffectModifier"
+      ],
+      "title" : "Modifiers"
+    }
+  ],
+  "topicSections" : [
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier\/blendMode"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "generated" : true,
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/BlendModeModifier\/ViewModifier-Implementations"
+      ],
+      "title" : "Default Implementations"
+    }
+  ],
+  "variants" : [
+    {
+      "paths" : [
+        "\/documentation\/liveviewnative\/blendmodemodifier"
+      ],
+      "traits" : [
+        {
+          "interfaceLanguage" : "swift"
+        }
+      ]
+    }
+  ]
+}

@@ -183,8 +183,8 @@
             "    message=\"Here's a link to the DockYard homepage\"",
             ">",
             "    <SharePreview title=\"DockYard Homepage\">",
-            "        <SharePreview:image><Image name=\"dockyard\" \/><\/SharePreview:image>",
-            "        <SharePreview:icon><Image name=\"dockyard\" \/><\/SharePreview:icon>",
+            "        <Image template={:image} name=\"dockyard\" \/>",
+            "        <Image template={:icon} name=\"dockyard\" \/>",
             "    <\/SharePreview>",
             "<\/ShareLink>"
           ],
@@ -241,16 +241,16 @@
             "    message=\"Here are links to our favorite websites\"",
             ">",
             "    <SharePreview item=\"https:\/\/dockyard.com\" title=\"DockYard\">",
-            "        <SharePreview:image><Image name=\"dockyard\" \/><\/SharePreview:image>",
-            "        <SharePreview:icon><Image name=\"dockyard\" \/><\/SharePreview:icon>",
+            "        <Image template={:image} name=\"dockyard\" \/>",
+            "        <Image template={:icon} name=\"dockyard\" \/>",
             "    <\/SharePreview>",
             "    <SharePreview item=\"https:\/\/news.ycombinator.com\" title=\"Hacker News\">",
-            "        <SharePreview:image><Image name=\"hackernews\" \/><\/SharePreview:image>",
-            "        <SharePreview:icon><Image name=\"hackernews\" \/><\/SharePreview:icon>",
+            "        <Image template={:image} name=\"hackernews\" \/>",
+            "        <Image template={:icon} name=\"hackernews\" \/>",
             "    <\/SharePreview>",
             "    <SharePreview item=\"https:\/\/apple.com\" title=\"Apple\">",
-            "        <SharePreview:image><Image name=\"apple\" \/><\/SharePreview:image>",
-            "        <SharePreview:icon><Image name=\"apple\" \/><\/SharePreview:icon>",
+            "        <Image template={:image} name=\"apple\" \/>",
+            "        <Image template={:icon} name=\"apple\" \/>",
             "    <\/SharePreview>",
             "<\/ShareLink>"
           ],
@@ -853,8 +853,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldLink",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Link"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Link",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextFieldLink"
       ],
       "title" : "Links"
     }

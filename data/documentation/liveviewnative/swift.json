@@ -256,6 +256,38 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swift\/optional"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Set" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:Sh",
+          "text" : "Set"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Set",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Set"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Set",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swift\/set"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String" : {
       "abstract" : [
         {
@@ -306,6 +338,7 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Bool",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Double",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Int",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/Set",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Swift\/String"
       ],
       "title" : "Extended Structures"

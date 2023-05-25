@@ -1344,9 +1344,9 @@
       "generated" : true,
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextEditor",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextField"
       ],
       "title" : "Views"
     }

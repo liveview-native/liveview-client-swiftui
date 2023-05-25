@@ -141,10 +141,10 @@
         {
           "code" : [
             "<Gauge value=\"0.5\">",
-            "    <Gauge:label>50%<\/Gauge:label>",
-            "    <Gauge:current-value-label>0.5<\/Gauge:current-value-label>",
-            "    <Gauge:minimum-value-label>0<\/Gauge:minimum-value-label>",
-            "    <Gauge:maximum-value-label>1<\/Gauge:maximum-value-label>",
+            "    <Text template={:label}>50%<\/Text>",
+            "    <Text template={:\"current-value-label\"}>0.5<\/Text>",
+            "    <Text template={:\"minimum-value-label\"}>0<\/Text>",
+            "    <Text template={:\"maximum-value-label\"}>1<\/Text>",
             "<\/Gauge>"
           ],
           "syntax" : "html",
@@ -192,20 +192,6 @@
                   "inlineContent" : [
                     {
                       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/upperBound",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/style",
                       "isActive" : true,
                       "type" : "reference"
                     }
@@ -278,6 +264,30 @@
             }
           ],
           "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Gauge",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
       "kind" : "content"
@@ -461,43 +471,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gauge\/lowerbound"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this gauge.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative10GaugeStyle33_B85EC247652BDDF84D69319EE5D78E5BLLO",
-          "text" : "GaugeStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "gauge-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/gauge\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/upperBound" : {
       "abstract" : [
         {
@@ -582,49 +555,6 @@
       "title" : "View Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gauge\/view-implementations"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle" : {
-      "abstract" : [
-        {
-          "text" : "A style for a ",
-          "type" : "text"
-        },
-        {
-          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge",
-          "isActive" : true,
-          "type" : "reference"
-        },
-        {
-          "text" : " element.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "enum"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "GaugeStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "GaugeStyle"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "GaugeStyle",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/gaugestyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
       "abstract" : [
@@ -745,6 +675,18 @@
       "title" : "RootRegistry",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/Gauge" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Gauge",
+      "title" : "SwiftUI.Gauge",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Gauge",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Gauge"
     }
   },
   "relationshipsSections" : [
@@ -777,15 +719,8 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle"
-      ],
-      "title" : "Supporting Types"
-    },
-    {
-      "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/body",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/lowerBound",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/style",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/upperBound",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge\/value"
       ],

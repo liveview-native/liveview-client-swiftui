@@ -166,14 +166,12 @@
         {
           "code" : [
             "<Picker value-binding=\"transport\" picker-style=\"menu\">",
-            "    <Picker:content>",
+            "    <Text template={:label}>Transportation<\/Text>",
+            "    <Group template={:content}>",
             "        <Label system-image=\"car\" modifiers={tag(@native, tag: \"car\")}>Car<\/Label>",
             "        <Label system-image=\"bus\" modifiers={tag(@native, tag: \"bus\")}>Bus<\/Label>",
             "        <Label system-image=\"tram\" modifiers={tag(@native, tag: \"tram\")}>Tram<\/Label>",
-            "    <\/Picker:content>",
-            "    <Picker:label>",
-            "        <Text>Transportation<\/Text>",
-            "    <\/Picker:label>",
+            "    <\/Group>",
             "<\/Picker>"
           ],
           "syntax" : "html",
@@ -187,31 +185,6 @@
           ],
           "syntax" : "elixir",
           "type" : "codeListing"
-        },
-        {
-          "anchor" : "Attributes",
-          "level" : 2,
-          "text" : "Attributes",
-          "type" : "heading"
-        },
-        {
-          "items" : [
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker\/style",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            }
-          ],
-          "type" : "unorderedList"
         },
         {
           "anchor" : "Children",
@@ -249,6 +222,30 @@
             }
           ],
           "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Picker",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
       "kind" : "content"
@@ -489,43 +486,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/picker"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker\/style" : {
-      "abstract" : [
-        {
-          "text" : "The visual style of this picker.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative11PickerStyle33_3D1A608FE14EB3986A7D0F4BAD773710LLO",
-          "text" : "PickerStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "picker-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/picker\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker\/View-Implementations" : {
       "abstract" : [
 
@@ -536,49 +496,6 @@
       "title" : "View Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/picker\/view-implementations"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle" : {
-      "abstract" : [
-        {
-          "text" : "The visual style of a ",
-          "type" : "text"
-        },
-        {
-          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker",
-          "isActive" : true,
-          "type" : "reference"
-        },
-        {
-          "text" : " element.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "enum"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "PickerStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "PickerStyle"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "PickerStyle",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/pickerstyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
       "abstract" : [
@@ -674,6 +591,18 @@
       "title" : "tag",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/tagmodifier"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/Picker" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Picker",
+      "title" : "SwiftUI.Picker",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Picker",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Picker"
     }
   },
   "relationshipsSections" : [
@@ -698,26 +627,14 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MultiDatePicker",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorPicker",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorPicker"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MultiDatePicker"
       ],
       "title" : "Pickers"
     }
   ],
   "topicSections" : [
-    {
-      "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/PickerStyle"
-      ],
-      "title" : "Supporting Types"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker\/style"
-      ],
-      "title" : "Instance Properties"
-    },
     {
       "generated" : true,
       "identifiers" : [

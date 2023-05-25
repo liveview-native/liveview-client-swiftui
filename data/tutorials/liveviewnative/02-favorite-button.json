@@ -119,25 +119,59 @@
     "title" : "Storing User Favorites"
   },
   "references" : {
-    "01-03-03-images.ios.heex" : {
+    "01-03-03-cats_list_live.ex" : {
       "content" : [
-        "<List>",
-        "  <%= for name <- @cats do %>",
-        "    <HStack id={name}>",
-        "      <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
-        "      <Text><%= name %><\/Text>",
-        "    <\/HStack>",
-        "  <% end %>",
-        "<\/List>",
-        ""
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats: @cats)}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for name <- @cats do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "end"
       ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
       "highlights" : [
 
       ],
-      "identifier" : "01-03-03-images.ios.heex",
-      "syntax" : "html",
+      "identifier" : "01-03-03-cats_list_live.ex",
+      "syntax" : "elixir",
       "type" : "file"
     },
     "02-00-intro-header.png" : {
@@ -305,48 +339,6 @@
       "syntax" : "elixir",
       "type" : "file"
     },
-    "02-01-04-initial.ex" : {
-      "content" : [
-        "defmodule LvnTutorialWeb.CatsListLive do",
-        "  use LvnTutorialWeb, :live_view",
-        "  use LiveViewNative.LiveView",
-        "",
-        "  @cats [",
-        "    \"Clenil\",",
-        "    \"Flippers\",",
-        "    \"Jorts\",",
-        "    \"Kipper\",",
-        "    \"Lemmy\",",
-        "    \"Lissy\",",
-        "    \"Mikkel\",",
-        "    \"Minka\",",
-        "    \"Misty\",",
-        "    \"Nelly\",",
-        "    \"Ninj\",",
-        "    \"Pollito\",",
-        "    \"Siegfried\",",
-        "    \"Truman\",",
-        "    \"Washy\"",
-        "  ]",
-        "",
-        "  def mount(_params, _session, socket) do",
-        "    {:ok, assign(socket, cats: @cats)}",
-        "  end",
-        "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
-        "  end",
-        "end"
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
-      "fileType" : "ex",
-      "highlights" : [
-
-      ],
-      "identifier" : "02-01-04-initial.ex",
-      "syntax" : "elixir",
-      "type" : "file"
-    },
     "02-01-05-build-list.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.CatsListLive do",
@@ -376,8 +368,21 @@
         "    {:ok, assign(socket, cats: @cats)}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for name <- @cats do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
         "  end",
         "",
         "  def get_cats_and_favorites() do",
@@ -399,37 +404,37 @@
           "line" : 4
         },
         {
-          "line" : 31
+          "line" : 44
         },
         {
-          "line" : 32
+          "line" : 45
         },
         {
-          "line" : 33
+          "line" : 46
         },
         {
-          "line" : 34
+          "line" : 47
         },
         {
-          "line" : 35
+          "line" : 48
         },
         {
-          "line" : 36
+          "line" : 49
         },
         {
-          "line" : 37
+          "line" : 50
         },
         {
-          "line" : 38
+          "line" : 51
         },
         {
-          "line" : 39
+          "line" : 52
         },
         {
-          "line" : 40
+          "line" : 53
         },
         {
-          "line" : 41
+          "line" : 54
         }
       ],
       "identifier" : "02-01-05-build-list.ex",
@@ -465,8 +470,21 @@
         "    {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for name <- @cats do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
         "  end",
         "",
         "  def get_cats_and_favorites() do",
@@ -484,115 +502,13 @@
       "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
       "fileType" : "ex",
       "highlights" : [
-        {
-          "line" : 25
-        }
+
       ],
       "identifier" : "02-01-06-assign.ex",
       "syntax" : "elixir",
       "type" : "file"
     },
-    "02-02-01-template.ios.heex" : {
-      "content" : [
-        "<List>",
-        "  <%= for {name, favorite} <- @cats_and_favorites do %>",
-        "    <HStack id={name}>",
-        "      <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
-        "      <Text><%= name %><\/Text>",
-        "    <\/HStack>",
-        "  <% end %>",
-        "<\/List>",
-        ""
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
-      "highlights" : [
-        {
-          "line" : 2
-        }
-      ],
-      "identifier" : "02-02-01-template.ios.heex",
-      "syntax" : "html",
-      "type" : "file"
-    },
-    "02-02-02-button.ios.heex" : {
-      "content" : [
-        "<List>",
-        "  <%= for {name, favorite} <- @cats_and_favorites do %>",
-        "    <HStack id={name}>",
-        "      <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
-        "      <Text><%= name %><\/Text>",
-        "      <Spacer \/>",
-        "      <Button>",
-        "        <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
-        "      <\/Button>",
-        "    <\/HStack>",
-        "  <% end %>",
-        "<\/List>",
-        ""
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
-      "highlights" : [
-        {
-          "line" : 6
-        },
-        {
-          "line" : 7
-        },
-        {
-          "line" : 8
-        },
-        {
-          "line" : 9
-        }
-      ],
-      "identifier" : "02-02-02-button.ios.heex",
-      "syntax" : "html",
-      "type" : "file"
-    },
-    "02-02-03-button-preview.png" : {
-      "alt" : "The list of cats with black, star outlines to the right of each list item.",
-      "identifier" : "02-02-03-button-preview.png",
-      "type" : "image",
-      "variants" : [
-        {
-          "traits" : [
-            "1x",
-            "light"
-          ],
-          "url" : "\/images\/02-02-03-button-preview.png"
-        }
-      ]
-    },
-    "02-02-04-button-click.ios.heex" : {
-      "content" : [
-        "<List>",
-        "  <%= for {name, favorite} <- @cats_and_favorites do %>",
-        "    <HStack id={name}>",
-        "      <AsyncImage src={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
-        "      <Text><%= name %><\/Text>",
-        "      <Spacer \/>",
-        "      <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
-        "        <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
-        "      <\/Button>",
-        "    <\/HStack>",
-        "  <% end %>",
-        "<\/List>",
-        ""
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ios.heex",
-      "fileType" : "heex",
-      "highlights" : [
-        {
-          "line" : 7
-        }
-      ],
-      "identifier" : "02-02-04-button-click.ios.heex",
-      "syntax" : "html",
-      "type" : "file"
-    },
-    "02-02-05-button-handler.ex" : {
+    "02-02-02-cats_list_live.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.CatsListLive do",
         "  use LvnTutorialWeb, :live_view",
@@ -621,8 +537,263 @@
         "    {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for {name, favorite} <- @cats_and_favorites do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "",
+        "  def get_cats_and_favorites() do",
+        "    favorites = FavoritesStore.get_favorites()",
+        "",
+        "    {favorites, non_favorites} =",
+        "      @cats",
+        "      |> Enum.map(fn name -> {name, Enum.member?(favorites, name)} end)",
+        "      |> Enum.split_with(fn {_, favorite} -> favorite end)",
+        "",
+        "    favorites ++ non_favorites",
+        "  end",
+        "end"
+      ],
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
+        {
+          "line" : 35
+        }
+      ],
+      "identifier" : "02-02-02-cats_list_live.ex",
+      "syntax" : "elixir",
+      "type" : "file"
+    },
+    "02-02-03-button-preview.png" : {
+      "alt" : "The list of cats with black, star outlines to the right of each list item.",
+      "identifier" : "02-02-03-button-preview.png",
+      "type" : "image",
+      "variants" : [
+        {
+          "traits" : [
+            "1x",
+            "light"
+          ],
+          "url" : "\/images\/02-02-03-button-preview.png"
+        }
+      ]
+    },
+    "02-02-03-cats_list_live.ex" : {
+      "content" : [
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "  alias LvnTutorial.FavoritesStore",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for {name, favorite} <- @cats_and_favorites do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "          <Spacer \/>",
+        "          <Button>",
+        "            <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
+        "          <\/Button>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "",
+        "  def get_cats_and_favorites() do",
+        "    favorites = FavoritesStore.get_favorites()",
+        "",
+        "    {favorites, non_favorites} =",
+        "      @cats",
+        "      |> Enum.map(fn name -> {name, Enum.member?(favorites, name)} end)",
+        "      |> Enum.split_with(fn {_, favorite} -> favorite end)",
+        "",
+        "    favorites ++ non_favorites",
+        "  end",
+        "end"
+      ],
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
+        {
+          "line" : 39
+        },
+        {
+          "line" : 40
+        },
+        {
+          "line" : 41
+        },
+        {
+          "line" : 42
+        }
+      ],
+      "identifier" : "02-02-03-cats_list_live.ex",
+      "syntax" : "elixir",
+      "type" : "file"
+    },
+    "02-02-04-cats_list_live.ex" : {
+      "content" : [
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "  alias LvnTutorial.FavoritesStore",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for {name, favorite} <- @cats_and_favorites do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "          <Spacer \/>",
+        "          <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
+        "            <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
+        "          <\/Button>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
+        "  end",
+        "",
+        "  def get_cats_and_favorites() do",
+        "    favorites = FavoritesStore.get_favorites()",
+        "",
+        "    {favorites, non_favorites} =",
+        "      @cats",
+        "      |> Enum.map(fn name -> {name, Enum.member?(favorites, name)} end)",
+        "      |> Enum.split_with(fn {_, favorite} -> favorite end)",
+        "",
+        "    favorites ++ non_favorites",
+        "  end",
+        "end"
+      ],
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
+      "fileType" : "ex",
+      "highlights" : [
+        {
+          "line" : 40
+        }
+      ],
+      "identifier" : "02-02-04-cats_list_live.ex",
+      "syntax" : "elixir",
+      "type" : "file"
+    },
+    "02-02-05-cats_list_live.ex" : {
+      "content" : [
+        "defmodule LvnTutorialWeb.CatsListLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "  alias LvnTutorial.FavoritesStore",
+        "",
+        "  @cats [",
+        "    \"Clenil\",",
+        "    \"Flippers\",",
+        "    \"Jorts\",",
+        "    \"Kipper\",",
+        "    \"Lemmy\",",
+        "    \"Lissy\",",
+        "    \"Mikkel\",",
+        "    \"Minka\",",
+        "    \"Misty\",",
+        "    \"Nelly\",",
+        "    \"Ninj\",",
+        "    \"Pollito\",",
+        "    \"Siegfried\",",
+        "    \"Truman\",",
+        "    \"Washy\"",
+        "  ]",
+        "",
+        "  def mount(_params, _session, socket) do",
+        "    {:ok, assign(socket, cats_and_favorites: get_cats_and_favorites())}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <List>",
+        "      <%= for {name, favorite} <- @cats_and_favorites do %>",
+        "        <HStack id={name}>",
+        "          <AsyncImage url={\"\/images\/cats\/#{name}.jpg\"} modifiers={frame(@native, width: 100, height: 100)} \/>",
+        "          <Text><%= name %><\/Text>",
+        "          <Spacer \/>",
+        "          <Button phx-click=\"toggle-favorite\" phx-value-name={name}>",
+        "            <Image system-name={if favorite, do: \"star.fill\", else: \"star\"} symbol-color={if favorite, do: \"#f3c51a\", else: \"#000000\"} \/>",
+        "          <\/Button>",
+        "        <\/HStack>",
+        "      <% end %>",
+        "    <\/List>",
+        "    \"\"\"swiftui",
         "  end",
         "",
         "  def get_cats_and_favorites() do",
@@ -646,9 +817,26 @@
       "fileName" : "lib\/lvn_tutorial_web\/live\/cats_list_live.ex",
       "fileType" : "ex",
       "highlights" : [
-
+        {
+          "line" : 59
+        },
+        {
+          "line" : 60
+        },
+        {
+          "line" : 61
+        },
+        {
+          "line" : 62
+        },
+        {
+          "line" : 63
+        },
+        {
+          "line" : 64
+        }
       ],
-      "identifier" : "02-02-05-button-handler.ex",
+      "identifier" : "02-02-05-cats_list_live.ex",
       "syntax" : "elixir",
       "type" : "file"
     },
@@ -1132,7 +1320,7 @@
               "caption" : [
 
               ],
-              "code" : "02-01-04-initial.ex",
+              "code" : "01-03-03-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1246,13 +1434,17 @@
               "caption" : [
 
               ],
-              "code" : "01-03-03-images.ios.heex",
+              "code" : "02-01-06-assign.ex",
               "content" : [
                 {
                   "inlineContent" : [
                     {
-                      "text" : "Open the HEEX template for the live view.",
+                      "text" : "Open ",
                       "type" : "text"
+                    },
+                    {
+                      "code" : "cats_list_live.ex",
+                      "type" : "codeVoice"
                     }
                   ],
                   "type" : "paragraph"
@@ -1266,7 +1458,7 @@
               "caption" : [
 
               ],
-              "code" : "02-02-01-template.ios.heex",
+              "code" : "02-02-02-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1310,7 +1502,7 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "02-02-02-button.ios.heex",
+              "code" : "02-02-03-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1354,7 +1546,7 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "02-02-04-button-click.ios.heex",
+              "code" : "02-02-04-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1390,7 +1582,7 @@
                   "type" : "paragraph"
                 }
               ],
-              "code" : "02-02-05-button-handler.ex",
+              "code" : "02-02-05-cats_list_live.ex",
               "content" : [
                 {
                   "inlineContent" : [

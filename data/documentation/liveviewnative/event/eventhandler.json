@@ -10,6 +10,12 @@
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event"
       ]
     ]
   },
@@ -175,6 +181,63 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/event\/eventhandler"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler\/callAsFunction(value:)" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "callAsFunction"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "value"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "Any"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "async"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler\/callAsFunction(value:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "callAsFunction(value:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/eventhandler\/callasfunction(value:)"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler\/callAsFunction(value:didSend:)" : {
       "abstract" : [
 
@@ -237,6 +300,51 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/event\/eventhandler\/callasfunction(value:didsend:)"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sends an event when a gesture is performed on the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "gesture",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Gestures Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturesmodifiers"
+    },
     "doc:\/\/LiveViewNative\/s8SendableP" : {
       "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
       "title" : "Swift.Sendable",
@@ -264,6 +372,7 @@
   "topicSections" : [
     {
       "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler\/callAsFunction(value:)",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler\/callAsFunction(value:didSend:)"
       ],
       "title" : "Instance Methods"

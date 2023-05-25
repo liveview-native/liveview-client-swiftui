@@ -164,14 +164,12 @@
         {
           "code" : [
             "<DisclosureGroup>",
-            "    <DisclosureGroup:label>",
-            "        Edit Actions",
-            "    <\/DisclosureGroup:label>",
-            "    <DisclosureGroup:content>",
+            "    <Text template={:label}>Edit Actions<\/Text>",
+            "    <Group template={:content}>",
             "        <Button phx-click=\"arrange\">Arrange<\/Button>",
             "        <Button phx-click=\"update\">Update<\/Button>",
             "        <Button phx-click=\"remove\">Remove<\/Button>",
-            "    <\/DisclosureGroup:content>",
+            "    <\/Group>",
             "<\/DisclosureGroup>"
           ],
           "syntax" : "html",
@@ -212,31 +210,6 @@
           ],
           "syntax" : "elixir",
           "type" : "codeListing"
-        },
-        {
-          "anchor" : "Attributes",
-          "level" : 2,
-          "text" : "Attributes",
-          "type" : "heading"
-        },
-        {
-          "items" : [
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup\/style",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            }
-          ],
-          "type" : "unorderedList"
         },
         {
           "anchor" : "Bindings",
@@ -513,43 +486,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/disclosuregroup\/isexpanded"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this disclosure group.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative20DisclosureGroupStyle33_400B975D37CF6F9ECF481D3794E07887LLO",
-          "text" : "DisclosureGroupStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "disclosure-group-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/disclosuregroup\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup\/View-Implementations" : {
       "abstract" : [
 
@@ -563,7 +499,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -780,8 +728,8 @@
     {
       "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlGroup",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GroupBox",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Group"
       ],
       "title" : "Groups"
@@ -797,8 +745,7 @@
     {
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup\/body",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup\/isExpanded",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup\/style"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup\/isExpanded"
       ],
       "title" : "Instance Properties"
     },

@@ -9,6 +9,11 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier"
       ]
     ]
   },
@@ -136,7 +141,7 @@
         },
         {
           "code" : [
-            "<my-counter on-increment=\"increment_count\" \/>"
+            "<MyCounter on-increment=\"increment_count\" \/>"
           ],
           "syntax" : "html",
           "type" : "codeListing"
@@ -292,16 +297,87 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/event"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/debounce" : {
       "abstract" : [
-
+        {
+          "text" : "A duration in milliseconds for the debounce interval.",
+          "type" : "text"
+        }
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations",
-      "kind" : "article",
-      "role" : "collectionGroup",
-      "title" : "DynamicProperty Implementations",
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "debounce"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sd",
+          "text" : "Double"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/debounce",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "debounce",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/event\/dynamicproperty-implementations"
+      "url" : "\/documentation\/liveviewnative\/event\/debounce"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/event" : {
+      "abstract" : [
+        {
+          "text" : "The name of the event to send.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "event"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/event",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "event",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/event"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/EventHandler" : {
       "abstract" : [
@@ -445,6 +521,308 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/event\/init(event:type:)"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(from:)" : {
+      "abstract" : [
+        {
+          "text" : "Create an event reference as an argument to a modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "identifier",
+          "text" : "init"
+        },
+        {
+          "kind" : "text",
+          "text" : "("
+        },
+        {
+          "kind" : "externalParam",
+          "text" : "from"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s7DecoderP",
+          "text" : "Decoder"
+        },
+        {
+          "kind" : "text",
+          "text" : ") "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "throws"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(from:)",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "init(from:)",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/init(from:)"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/params" : {
+      "abstract" : [
+        {
+          "text" : "Custom values to send with the event.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "params"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "keyword",
+          "text" : "Any"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/params",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "params",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/params"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/projectedValue" : {
+      "abstract" : [
+        {
+          "text" : "A closure that triggers the event without any additional payload or waiting for completion.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "var"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "projectedValue"
+        },
+        {
+          "kind" : "text",
+          "text" : ": () -> "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:s4Voida",
+          "text" : "Void"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/projectedValue",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "projectedValue",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/projectedvalue"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/target" : {
+      "abstract" : [
+        {
+          "text" : "The target ",
+          "type" : "text"
+        },
+        {
+          "code" : "LiveView",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " or ",
+          "type" : "text"
+        },
+        {
+          "code" : "LiveComponent",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "target"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Si",
+          "text" : "Int"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/target",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "target",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/target"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/throttle" : {
+      "abstract" : [
+        {
+          "text" : "A duration in milliseconds for the throttle interval.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "throttle"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:Sd",
+          "text" : "Double"
+        },
+        {
+          "kind" : "text",
+          "text" : "?"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/throttle",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "throttle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/throttle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/type" : {
+      "abstract" : [
+        {
+          "text" : "The type of event, such as ",
+          "type" : "text"
+        },
+        {
+          "code" : "click",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : " or ",
+          "type" : "text"
+        },
+        {
+          "code" : "focus",
+          "type" : "codeVoice"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "let"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "type"
+        },
+        {
+          "kind" : "text",
+          "text" : ": "
+        },
+        {
+          "kind" : "typeIdentifier",
+          "preciseIdentifier" : "s:SS",
+          "text" : "String"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/type",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "type",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/type"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/update()" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "func"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "update"
+        },
+        {
+          "kind" : "text",
+          "text" : "()"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/update()",
+      "kind" : "symbol",
+      "role" : "symbol",
+      "title" : "update()",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/event\/update()"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/wrappedValue" : {
       "abstract" : [
         {
@@ -481,6 +859,51 @@
       "title" : "wrappedValue",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/event\/wrappedvalue"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier" : {
+      "abstract" : [
+        {
+          "text" : "Sends an event when a gesture is performed on the element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GestureModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GestureModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "gesture",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GesturesModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Gestures Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gesturesmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveBinding" : {
       "abstract" : [
@@ -583,11 +1006,17 @@
       "title" : "ObservedElement",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/observedelement"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
+      "type" : "unresolvable"
     }
   },
   "relationshipsSections" : [
     {
       "identifiers" : [
+        "doc:\/\/LiveViewNative\/Se",
         "doc:\/\/LiveViewNative\/7SwiftUI15DynamicPropertyP"
       ],
       "kind" : "relationships",
@@ -637,11 +1066,28 @@
       "title" : "Supporting Types"
     },
     {
-      "generated" : true,
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/DynamicProperty-Implementations"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/init(from:)"
       ],
-      "title" : "Default Implementations"
+      "title" : "Initializers"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/debounce",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/event",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/params",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/projectedValue",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/target",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/throttle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/type"
+      ],
+      "title" : "Instance Properties"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Event\/update()"
+      ],
+      "title" : "Instance Methods"
     }
   ],
   "variants" : [

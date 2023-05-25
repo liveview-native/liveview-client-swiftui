@@ -6,6 +6,12 @@
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle"
+      ],
+      [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyleModifier",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle"
       ]
     ]
   },
@@ -74,7 +80,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroup",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -165,6 +183,40 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/disclosuregroupstyle\/!=(_:_:)"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any disclosure groups within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "DisclosureGroupStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DisclosureGroupStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "DisclosureGroupStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "disclosure_group_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/disclosuregroupstylemodifier"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LayoutContainers" : {
       "abstract" : [
 
@@ -175,6 +227,17 @@
       "title" : "Layout Containers",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/layoutcontainers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers" : {
+      "abstract" : [
+
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ListsModifiers",
+      "kind" : "article",
+      "role" : "collectionGroup",
+      "title" : "Lists Modifiers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/listsmodifiers"
     }
   },
   "schemaVersion" : {

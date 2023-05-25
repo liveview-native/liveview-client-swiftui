@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "title-and-icon",
+      "code" : "title_and_icon",
       "type" : "codeVoice"
     }
   ],
@@ -9,8 +9,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle"
       ]
     ]
@@ -21,7 +21,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative10LabelStyle33_AE5F64E5F48C4116EE0BFBD9AE870721LLO12titleAndIconyA2DmF",
+    "externalID" : "s:14LiveViewNative10LabelStyle33_67156DE9DC8587A41C5EF22F5E473AD7LLO12titleAndIconyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -44,7 +44,7 @@
     "role" : "symbol",
     "roleHeading" : "Case",
     "symbolKind" : "case",
-    "title" : "title-and-icon"
+    "title" : "LabelStyle.titleAndIcon"
   },
   "primaryContentSections" : [
     {
@@ -126,7 +126,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -158,7 +170,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/titleAndIcon" : {
       "abstract" : [
         {
-          "code" : "title-and-icon",
+          "code" : "title_and_icon",
           "type" : "codeVoice"
         }
       ],
@@ -179,20 +191,54 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/titleAndIcon",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "title-and-icon",
+      "title" : "LabelStyle.titleAndIcon",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/labelstyle\/titleandicon"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any labels within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "label_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labelstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Text Input and Output",
+      "title" : "Text Input and Output Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textinputandoutput"
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
     }
   },
   "schemaVersion" : {

@@ -119,19 +119,124 @@
     "title" : "Add a Navigation Bar Button with a Custom Modifier"
   },
   "references" : {
-    "04-04-01-change-score.ex" : {
+    "01-01-05-config.exs" : {
+      "content" : [
+        "# This file is responsible for configuring your application",
+        "# and its dependencies with the aid of the Config module.",
+        "#",
+        "# This configuration file is loaded before any dependency and",
+        "# is restricted to this project.",
+        "",
+        "# General application configuration",
+        "import Config",
+        "",
+        "config :live_view_native, :platforms, [LiveViewNativeSwiftUi.Platform]",
+        "",
+        "config :live_view_native, LiveViewNativeSwiftUi.Platform,",
+        "  app_name: \"LVNTutorial\",",
+        "  custom_modifiers: []",
+        "",
+        "# Configures the endpoint",
+        "config :lvn_tutorial, LvnTutorialWeb.Endpoint,",
+        "  url: [host: \"localhost\"],",
+        "  render_errors: [",
+        "    formats: [html: LvnTutorialWeb.ErrorHTML, json: LvnTutorialWeb.ErrorJSON],",
+        "    layout: false",
+        "  ],",
+        "  pubsub_server: LvnTutorial.PubSub,",
+        "  live_view: [signing_salt: \"0p4irQ9b\"]",
+        "",
+        "# Configure esbuild (the version is required)",
+        "config :esbuild,",
+        "  version: \"0.17.11\",",
+        "  default: [",
+        "    args:",
+        "      ~w(js\/app.js --bundle --target=es2017 --outdir=..\/priv\/static\/assets --external:\/fonts\/* --external:\/images\/*),",
+        "    cd: Path.expand(\"..\/assets\", __DIR__),",
+        "    env: %{\"NODE_PATH\" => Path.expand(\"..\/deps\", __DIR__)}",
+        "  ]",
+        "",
+        "# Configure tailwind (the version is required)",
+        "config :tailwind,",
+        "  version: \"3.2.7\",",
+        "  default: [",
+        "    args: ~w(",
+        "      --config=tailwind.config.js",
+        "      --input=css\/app.css",
+        "      --output=..\/priv\/static\/assets\/app.css",
+        "    ),",
+        "    cd: Path.expand(\"..\/assets\", __DIR__)",
+        "  ]",
+        "",
+        "# Configures Elixir's Logger",
+        "config :logger, :console,",
+        "  format: \"$time $metadata[$level] $message\\n\",",
+        "  metadata: [:request_id]",
+        "",
+        "# Use Jason for JSON parsing in Phoenix",
+        "config :phoenix, :json_library, Jason",
+        "",
+        "# Import environment specific config. This must remain at the bottom",
+        "# of this file so it overrides the configuration defined above.",
+        "import_config \"#{config_env()}.exs\""
+      ],
+      "fileName" : "config\/config.exs",
+      "fileType" : "exs",
+      "highlights" : [
+
+      ],
+      "identifier" : "01-01-05-config.exs",
+      "syntax" : "exs",
+      "type" : "file"
+    },
+    "04-01-03-view.swift" : {
+      "content" : [
+        "import SwiftUI",
+        "import LiveViewNative",
+        "",
+        "struct MyRegistry: RootRegistry {",
+        "    enum TagName: String {",
+        "        case catRating = \"CatRating\"",
+        "    }",
+        "    ",
+        "    static func lookup(_ name: TagName, element: ElementNode) -> some View {",
+        "        switch name {",
+        "        case .catRating:",
+        "            CatRatingView()",
+        "        }",
+        "    }",
+        "}"
+      ],
+      "fileName" : "MyRegistry.swift",
+      "fileType" : "swift",
+      "highlights" : [
+
+      ],
+      "identifier" : "04-01-03-view.swift",
+      "syntax" : "swift",
+      "type" : "file"
+    },
+    "04-04-03-cat_live.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.CatLive do",
         "  use LvnTutorialWeb, :live_view",
         "  use LiveViewNative.LiveView",
-        "  alias LvnTutorial.FavoritesStore",
         "",
         "  def mount(%{\"name\" => name}, _session, socket) do",
-        "    {:ok, assign(socket, name: name, score: FavoritesStore.get_score(name))}",
+        "    {:ok, assign(socket, name: name)}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <VStack modifiers={navigation_title(@native, title: @name)}>",
+        "      <AsyncImage url={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "      <CatRating score={@score} \/>",
+        "    <\/VStack>",
+        "    \"\"\"swiftui",
         "  end",
         "",
         "  def handle_event(\"change-score\", score, socket) do",
@@ -145,24 +250,8 @@
       "highlights" : [
 
       ],
-      "identifier" : "04-04-01-change-score.ex",
+      "identifier" : "04-04-03-cat_live.ex",
       "syntax" : "elixir",
-      "type" : "file"
-    },
-    "04-04-02-cat-rating.ios.heex" : {
-      "content" : [
-        "<VStack modifiers={navigation_title(@native, title: @title)}>",
-        "  <AsyncImage src={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
-        "  <CatRating score={@score} \/>",
-        "<\/VStack>"
-      ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ios.heex",
-      "fileType" : "heex",
-      "highlights" : [
-
-      ],
-      "identifier" : "04-04-02-cat-rating.ios.heex",
-      "syntax" : "html",
       "type" : "file"
     },
     "05-00-intro-header.png" : {
@@ -179,7 +268,7 @@
         }
       ]
     },
-    "05-01-01-assign.ex" : {
+    "05-01-02-cat_live.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.CatLive do",
         "  use LvnTutorialWeb, :live_view",
@@ -195,8 +284,17 @@
         "     )}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <VStack modifiers={navigation_title(@native, title: @name)}>",
+        "      <AsyncImage url={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "      <CatRating score={@score} \/>",
+        "    <\/VStack>",
+        "    \"\"\"swiftui",
         "  end",
         "",
         "  def handle_event(\"change-score\", score, socket) do",
@@ -208,6 +306,9 @@
       "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ex",
       "fileType" : "ex",
       "highlights" : [
+        {
+          "line" : 4
+        },
         {
           "line" : 7
         },
@@ -227,11 +328,11 @@
           "line" : 12
         }
       ],
-      "identifier" : "05-01-01-assign.ex",
+      "identifier" : "05-01-02-cat_live.ex",
       "syntax" : "elixir",
       "type" : "file"
     },
-    "05-01-02-toggle-favorite.ex" : {
+    "05-01-03-cat_live.ex" : {
       "content" : [
         "defmodule LvnTutorialWeb.CatLive do",
         "  use LvnTutorialWeb, :live_view",
@@ -247,8 +348,17 @@
         "     )}",
         "  end",
         "",
-        "  def render(assigns) do",
-        "    render_native(assigns)",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <VStack modifiers={navigation_title(@native, title: @name)}>",
+        "      <AsyncImage url={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "      <CatRating score={@score} \/>",
+        "    <\/VStack>",
+        "    \"\"\"swiftui",
         "  end",
         "",
         "  def handle_event(\"change-score\", score, socket) do",
@@ -266,41 +376,74 @@
       "fileType" : "ex",
       "highlights" : [
         {
-          "line" : 23
+          "line" : 32
         },
         {
-          "line" : 24
+          "line" : 33
         },
         {
-          "line" : 25
+          "line" : 34
         },
         {
-          "line" : 26
+          "line" : 35
         },
         {
-          "line" : 27
+          "line" : 36
         }
       ],
-      "identifier" : "05-01-02-toggle-favorite.ex",
+      "identifier" : "05-01-03-cat_live.ex",
       "syntax" : "elixir",
       "type" : "file"
     },
-    "05-01-03-attribute.ios.heex" : {
+    "05-01-04-cat_live.ex" : {
       "content" : [
-        "<VStack modifiers={@native |> navigation_title(title: @title) |> nav_favorite(is_favorite: @favorite)}>",
-        "  <AsyncImage src={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
-        "  <CatRating score={@score} \/>",
-        "<\/VStack>"
+        "defmodule LvnTutorialWeb.CatLive do",
+        "  use LvnTutorialWeb, :live_view",
+        "  use LiveViewNative.LiveView",
+        "  alias LvnTutorial.FavoritesStore",
+        "",
+        "  def mount(%{\"name\" => name}, _session, socket) do",
+        "    {:ok,",
+        "     assign(socket,",
+        "       name: name,",
+        "       favorite: Enum.member?(FavoritesStore.get_favorites(), name),",
+        "       score: FavoritesStore.get_score(name)",
+        "     )}",
+        "  end",
+        "",
+        "  def render(%{platform_id: :web} = assigns) do",
+        "    ~H\"\"",
+        "  end",
+        "",
+        "  def render(%{platform_id: :swiftui} = assigns) do",
+        "    ~Z\"\"\"",
+        "    <VStack modifiers={@native |> navigation_title(title: @name) |> nav_favorite(is_favorite: @favorite)}>",
+        "      <AsyncImage url={\"\/images\/cats\/#{@name}.jpg\"} modifiers={frame(@native, width: 300, height: 300)} \/>",
+        "      <CatRating score={@score} \/>",
+        "    <\/VStack>",
+        "    \"\"\"swiftui",
+        "  end",
+        "",
+        "  def handle_event(\"change-score\", score, socket) do",
+        "    FavoritesStore.set_score(socket.assigns.name, score)",
+        "    {:noreply, assign(socket, score: score)}",
+        "  end",
+        "",
+        "  def handle_event(\"toggle-favorite\", _, socket) do",
+        "    new = FavoritesStore.toggle_favorite(socket.assigns.name)",
+        "    {:noreply, assign(socket, favorite: Enum.member?(new, socket.assigns.name))}",
+        "  end",
+        "end"
       ],
-      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ios.heex",
-      "fileType" : "heex",
+      "fileName" : "lib\/lvn_tutorial_web\/live\/cat_live.ex",
+      "fileType" : "ex",
       "highlights" : [
         {
-          "line" : 1
+          "line" : 21
         }
       ],
-      "identifier" : "05-01-03-attribute.ios.heex",
-      "syntax" : "html",
+      "identifier" : "05-01-04-cat_live.ex",
+      "syntax" : "elixir",
       "type" : "file"
     },
     "05-02-01-attribute-name.swift" : {
@@ -327,7 +470,15 @@
       "fileName" : "MyRegistry.swift",
       "fileType" : "swift",
       "highlights" : [
-
+        {
+          "line" : 8
+        },
+        {
+          "line" : 9
+        },
+        {
+          "line" : 10
+        }
       ],
       "identifier" : "05-02-01-attribute-name.swift",
       "syntax" : "swift",
@@ -356,7 +507,7 @@
         "    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {",
         "        switch type {",
         "        case .navFavorite:",
-        "            return try NavFavoriteModifier(from: decoder)",
+        "            try NavFavoriteModifier(from: decoder)",
         "        }",
         "    }",
         "}"
@@ -427,7 +578,7 @@
         "    }",
         "    ",
         "    enum CodingKeys: String, CodingKey {",
-        "        case isFavorite = \"is_favorite\"",
+        "        case isFavorite",
         "    }",
         "}"
       ],
@@ -498,7 +649,7 @@
         "    }",
         "    ",
         "    enum CodingKeys: String, CodingKey {",
-        "        case isFavorite = \"is_favorite\"",
+        "        case isFavorite",
         "    }",
         "}"
       ],
@@ -545,7 +696,7 @@
         "                ToolbarItem(placement: .navigationBarTrailing) {",
         "                    Button {",
         "                        Task {",
-        "                            try? await context.coordinator.pushEvent(type: \"click\", event: \"toggle-favorite\", value: [:])",
+        "                            try? await context.coordinator.pushEvent(type: \"click\", event: \"toggle-favorite\", value: [String:Any]())",
         "                        }",
         "                    } label: {",
         "                        Image(systemName: isFavorite ? \"star.fill\" : \"star\")",
@@ -555,7 +706,7 @@
         "    }",
         "    ",
         "    enum CodingKeys: String, CodingKey {",
-        "        case isFavorite = \"is_favorite\"",
+        "        case isFavorite",
         "    }",
         "}"
       ],
@@ -588,9 +739,100 @@
       "syntax" : "swift",
       "type" : "file"
     },
-    "05-02-07-preview.mp4" : {
+    "05-02-07-modifier-schema.ex" : {
+      "content" : [
+        "defmodule LvnTutorialWeb.Modifiers.NavFavorite do",
+        "  use LiveViewNativePlatform.Modifier",
+        "",
+        "  modifier_schema \"nav_favorite\" do",
+        "    field :is_favorite, :boolean",
+        "  end",
+        "end"
+      ],
+      "fileName" : "lib\/lvn_tutorial_web\/modifiers\/nav_favorite.ex",
+      "fileType" : "ex",
+      "highlights" : [
+
+      ],
+      "identifier" : "05-02-07-modifier-schema.ex",
+      "syntax" : "elixir",
+      "type" : "file"
+    },
+    "05-02-08-config.exs" : {
+      "content" : [
+        "# This file is responsible for configuring your application",
+        "# and its dependencies with the aid of the Config module.",
+        "#",
+        "# This configuration file is loaded before any dependency and",
+        "# is restricted to this project.",
+        "",
+        "# General application configuration",
+        "import Config",
+        "",
+        "config :live_view_native, :platforms, [LiveViewNativeSwiftUi.Platform]",
+        "",
+        "config :live_view_native, LiveViewNativeSwiftUi.Platform,",
+        "  app_name: \"LVNTutorial\",",
+        "  custom_modifiers: [nav_favorite: LvnTutorialWeb.Modifiers.NavFavorite]",
+        "",
+        "# Configures the endpoint",
+        "config :lvn_tutorial, LvnTutorialWeb.Endpoint,",
+        "  url: [host: \"localhost\"],",
+        "  render_errors: [",
+        "    formats: [html: LvnTutorialWeb.ErrorHTML, json: LvnTutorialWeb.ErrorJSON],",
+        "    layout: false",
+        "  ],",
+        "  pubsub_server: LvnTutorial.PubSub,",
+        "  live_view: [signing_salt: \"0p4irQ9b\"]",
+        "",
+        "# Configure esbuild (the version is required)",
+        "config :esbuild,",
+        "  version: \"0.17.11\",",
+        "  default: [",
+        "    args:",
+        "      ~w(js\/app.js --bundle --target=es2017 --outdir=..\/priv\/static\/assets --external:\/fonts\/* --external:\/images\/*),",
+        "    cd: Path.expand(\"..\/assets\", __DIR__),",
+        "    env: %{\"NODE_PATH\" => Path.expand(\"..\/deps\", __DIR__)}",
+        "  ]",
+        "",
+        "# Configure tailwind (the version is required)",
+        "config :tailwind,",
+        "  version: \"3.2.7\",",
+        "  default: [",
+        "    args: ~w(",
+        "      --config=tailwind.config.js",
+        "      --input=css\/app.css",
+        "      --output=..\/priv\/static\/assets\/app.css",
+        "    ),",
+        "    cd: Path.expand(\"..\/assets\", __DIR__)",
+        "  ]",
+        "",
+        "# Configures Elixir's Logger",
+        "config :logger, :console,",
+        "  format: \"$time $metadata[$level] $message\\n\",",
+        "  metadata: [:request_id]",
+        "",
+        "# Use Jason for JSON parsing in Phoenix",
+        "config :phoenix, :json_library, Jason",
+        "",
+        "# Import environment specific config. This must remain at the bottom",
+        "# of this file so it overrides the configuration defined above.",
+        "import_config \"#{config_env()}.exs\""
+      ],
+      "fileName" : "config\/config.exs",
+      "fileType" : "exs",
+      "highlights" : [
+        {
+          "line" : 14
+        }
+      ],
+      "identifier" : "05-02-08-config.exs",
+      "syntax" : "exs",
+      "type" : "file"
+    },
+    "05-02-09-preview.mp4" : {
       "alt" : null,
-      "identifier" : "05-02-07-preview.mp4",
+      "identifier" : "05-02-09-preview.mp4",
       "poster" : null,
       "type" : "video",
       "variants" : [
@@ -599,7 +841,7 @@
             "1x",
             "light"
           ],
-          "url" : "\/videos\/05-02-07-preview.mp4"
+          "url" : "\/videos\/05-02-09-preview.mp4"
         }
       ]
     },
@@ -984,7 +1226,7 @@
               "caption" : [
 
               ],
-              "code" : "04-04-01-change-score.ex",
+              "code" : "04-04-03-cat_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1012,7 +1254,7 @@
               "caption" : [
 
               ],
-              "code" : "05-01-01-assign.ex",
+              "code" : "05-01-02-cat_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1040,7 +1282,7 @@
               "caption" : [
 
               ],
-              "code" : "05-01-02-toggle-favorite.ex",
+              "code" : "05-01-03-cat_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1060,35 +1302,7 @@
               "caption" : [
 
               ],
-              "code" : "04-04-02-cat-rating.ios.heex",
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "text" : "Edit the ",
-                      "type" : "text"
-                    },
-                    {
-                      "code" : "cat_live.ios.heex",
-                      "type" : "codeVoice"
-                    },
-                    {
-                      "text" : " template.",
-                      "type" : "text"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ],
-              "media" : null,
-              "runtimePreview" : null,
-              "type" : "step"
-            },
-            {
-              "caption" : [
-
-              ],
-              "code" : "05-01-03-attribute.ios.heex",
+              "code" : "05-01-04-cat_live.ex",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1105,7 +1319,7 @@
                       "type" : "text"
                     },
                     {
-                      "code" : "<v-stack>",
+                      "code" : "<VStack>",
                       "type" : "codeVoice"
                     },
                     {
@@ -1139,7 +1353,7 @@
                       "type" : "codeVoice"
                     },
                     {
-                      "text" : " attribute to your custom registry.",
+                      "text" : " modifier to your custom registry.",
                       "type" : "text"
                     }
                   ],
@@ -1154,7 +1368,7 @@
               "caption" : [
 
               ],
-              "code" : "",
+              "code" : "04-01-03-view.swift",
               "content" : [
                 {
                   "inlineContent" : [
@@ -1372,15 +1586,7 @@
             },
             {
               "caption" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "text" : "With that, you can re-run the app and observe the new attribute in action!",
-                      "type" : "text"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
+
               ],
               "code" : "05-02-06-button.swift",
               "content" : [
@@ -1403,7 +1609,107 @@
                 }
               ],
               "media" : null,
-              "runtimePreview" : "05-02-07-preview.mp4",
+              "runtimePreview" : null,
+              "type" : "step"
+            },
+            {
+              "caption" : [
+
+              ],
+              "code" : "05-02-07-modifier-schema.ex",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Now we need to setup the modifier in Elixir.",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : " ",
+                      "type" : "text"
+                    },
+                    {
+                      "text" : "Create a new file called ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "nav_favorite.ex",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " and write the modifier schema.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
+            },
+            {
+              "caption" : [
+
+              ],
+              "code" : "01-01-05-config.exs",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Edit your config.",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : null,
+              "type" : "step"
+            },
+            {
+              "caption" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "With that, you can re-run the app and observe the new modifier in action!",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "code" : "05-02-08-config.exs",
+              "content" : [
+                {
+                  "inlineContent" : [
+                    {
+                      "text" : "Next, add the modifier module to the list of ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "custom_modifiers",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : " in ",
+                      "type" : "text"
+                    },
+                    {
+                      "code" : "config.exs",
+                      "type" : "codeVoice"
+                    },
+                    {
+                      "text" : ".",
+                      "type" : "text"
+                    }
+                  ],
+                  "type" : "paragraph"
+                }
+              ],
+              "media" : null,
+              "runtimePreview" : "05-02-09-preview.mp4",
               "type" : "step"
             }
           ],

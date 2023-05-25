@@ -243,23 +243,33 @@
                   "type" : "paragraph"
                 }
               ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/style",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
             }
           ],
           "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/DatePicker",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
       "kind" : "content"
@@ -517,43 +527,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/datepicker\/start"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style of the date picker.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative15DatePickerStyle33_5663E4F46DEB2EE1D47145A283F89223LLO",
-          "text" : "DatePickerStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "date-picker-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/datepicker\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/View-Implementations" : {
       "abstract" : [
 
@@ -564,49 +537,6 @@
       "title" : "View Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/datepicker\/view-implementations"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePickerStyle" : {
-      "abstract" : [
-        {
-          "text" : "The style of a ",
-          "type" : "text"
-        },
-        {
-          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker",
-          "isActive" : true,
-          "type" : "reference"
-        },
-        {
-          "text" : ".",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "enum"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "DatePickerStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePickerStyle",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "DatePickerStyle"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "DatePickerStyle",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/datepickerstyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LiveSessionCoordinator" : {
       "abstract" : [
@@ -761,6 +691,18 @@
       "title" : "RootRegistry",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/DatePicker" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/DatePicker",
+      "title" : "SwiftUI.DatePicker",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.DatePicker",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/DatePicker"
     }
   },
   "relationshipsSections" : [
@@ -785,9 +727,9 @@
     {
       "generated" : true,
       "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorPicker",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MultiDatePicker",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ColorPicker"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Picker"
       ],
       "title" : "Pickers"
     }
@@ -795,16 +737,9 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePickerStyle"
-      ],
-      "title" : "Supporting Types"
-    },
-    {
-      "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/components",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/end",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/start",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/style"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/DatePicker\/start"
       ],
       "title" : "Instance Properties"
     },

@@ -1,10 +1,25 @@
 {
+  "abstract" : [
+    {
+      "text" : "A style for a ",
+      "type" : "text"
+    },
+    {
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+      "isActive" : true,
+      "type" : "reference"
+    },
+    {
+      "text" : " element.",
+      "type" : "text"
+    }
+  ],
   "hierarchy" : {
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier"
       ]
     ]
   },
@@ -14,7 +29,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative10LabelStyle33_AE5F64E5F48C4116EE0BFBD9AE870721LLO",
+    "externalID" : "s:14LiveViewNative10LabelStyle33_67156DE9DC8587A41C5EF22F5E473AD7LLO",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -89,40 +104,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable" : {
-      "abstract" : [
-        {
-          "text" : "A type that conforms to this protocol can be decoded from a DOM attribute key\/value pair.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "protocol"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "AttributeDecodable"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "AttributeDecodable",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/attributedecodable"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label" : {
       "abstract" : [
         {
@@ -159,7 +140,19 @@
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A style for a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Label",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " element.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -227,7 +220,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/iconOnly" : {
       "abstract" : [
         {
-          "code" : "icon-only",
+          "code" : "icon_only",
           "type" : "codeVoice"
         }
       ],
@@ -248,7 +241,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/iconOnly",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "icon-only",
+      "title" : "LabelStyle.iconOnly",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/labelstyle\/icononly"
     },
@@ -266,7 +259,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/titleAndIcon" : {
       "abstract" : [
         {
-          "code" : "title-and-icon",
+          "code" : "title_and_icon",
           "type" : "codeVoice"
         }
       ],
@@ -287,14 +280,14 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/titleAndIcon",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "title-and-icon",
+      "title" : "LabelStyle.titleAndIcon",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/labelstyle\/titleandicon"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/titleOnly" : {
       "abstract" : [
         {
-          "code" : "title-only",
+          "code" : "title_only",
           "type" : "codeVoice"
         }
       ],
@@ -315,24 +308,63 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyle\/titleOnly",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "title-only",
+      "title" : "LabelStyle.titleOnly",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/labelstyle\/titleonly"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any labels within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/LabelStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "LabelStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "label_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/labelstylemodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutput",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TextInputAndOutputModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Text Input and Output",
+      "title" : "Text Input and Output Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/textinputandoutput"
+      "url" : "\/documentation\/liveviewnative\/textinputandoutputmodifiers"
     },
     "doc:\/\/LiveViewNative\/s8SendableP" : {
       "identifier" : "doc:\/\/LiveViewNative\/s8SendableP",
       "title" : "Swift.Sendable",
+      "type" : "unresolvable"
+    },
+    "doc:\/\/LiveViewNative\/Se" : {
+      "identifier" : "doc:\/\/LiveViewNative\/Se",
+      "title" : "Swift.Decodable",
       "type" : "unresolvable"
     },
     "doc:\/\/LiveViewNative\/SH" : {
@@ -354,7 +386,7 @@
   "relationshipsSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AttributeDecodable",
+        "doc:\/\/LiveViewNative\/Se",
         "doc:\/\/LiveViewNative\/SQ",
         "doc:\/\/LiveViewNative\/SH",
         "doc:\/\/LiveViewNative\/SY",

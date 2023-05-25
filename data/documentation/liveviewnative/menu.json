@@ -171,14 +171,14 @@
         {
           "code" : [
             "<Menu>",
-            "    <Menu:label>",
+            "    <Text template={:label}>",
             "        Edit Actions",
-            "    <\/Menu:label>",
-            "    <Menu:content>",
+            "    <\/Text>",
+            "    <Group template={:content}>",
             "        <Button phx-click=\"arrange\">Arrange<\/Button>",
             "        <Button phx-click=\"update\">Update<\/Button>",
             "        <Button phx-click=\"remove\">Remove<\/Button>",
-            "    <\/Menu:content>",
+            "    <\/Group>",
             "<\/Menu>"
           ],
           "syntax" : "html",
@@ -209,31 +209,6 @@
             }
           ],
           "type" : "paragraph"
-        },
-        {
-          "anchor" : "Attributes",
-          "level" : 2,
-          "text" : "Attributes",
-          "type" : "heading"
-        },
-        {
-          "items" : [
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu\/style",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            }
-          ],
-          "type" : "unorderedList"
         },
         {
           "anchor" : "Children",
@@ -279,6 +254,30 @@
             }
           ],
           "type" : "unorderedList"
+        },
+        {
+          "anchor" : "SwiftUI-Documentation",
+          "level" : 2,
+          "text" : "SwiftUI Documentation",
+          "type" : "heading"
+        },
+        {
+          "inlineContent" : [
+            {
+              "text" : "See ",
+              "type" : "text"
+            },
+            {
+              "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Menu",
+              "isActive" : true,
+              "type" : "reference"
+            },
+            {
+              "text" : " for more details on this View.",
+              "type" : "text"
+            }
+          ],
+          "type" : "paragraph"
         }
       ],
       "kind" : "content"
@@ -459,43 +458,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/menu\/body"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this menu.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative9MenuStyle33_E8370A60BF551560F0179D5B501909FDLLO",
-          "text" : "MenuStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "menu-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/menu\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu\/View-Implementations" : {
       "abstract" : [
 
@@ -506,37 +468,6 @@
       "title" : "View Implementations",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/menu\/view-implementations"
-    },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle" : {
-      "abstract" : [
-
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "enum"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "MenuStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "MenuStyle"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "MenuStyle",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/menustyle"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
       "abstract" : [
@@ -589,6 +520,18 @@
       "title" : "RootRegistry",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/rootregistry"
+    },
+    "https:\/\/developer.apple.com\/documentation\/swiftui\/Menu" : {
+      "identifier" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Menu",
+      "title" : "SwiftUI.Menu",
+      "titleInlineContent" : [
+        {
+          "code" : "SwiftUI.Menu",
+          "type" : "codeVoice"
+        }
+      ],
+      "type" : "link",
+      "url" : "https:\/\/developer.apple.com\/documentation\/swiftui\/Menu"
     }
   },
   "relationshipsSections" : [
@@ -612,14 +555,7 @@
   "topicSections" : [
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/MenuStyle"
-      ],
-      "title" : "Supporting Types"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu\/body",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu\/style"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Menu\/body"
       ],
       "title" : "Instance Properties"
     },

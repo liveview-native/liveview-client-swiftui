@@ -1,7 +1,7 @@
 {
   "abstract" : [
     {
-      "code" : "accessory-linear-capacity",
+      "code" : "accessory_linear_capacity",
       "type" : "codeVoice"
     }
   ],
@@ -9,8 +9,8 @@
     "paths" : [
       [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle"
       ]
     ]
@@ -21,7 +21,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:14LiveViewNative10GaugeStyle33_B85EC247652BDDF84D69319EE5D78E5BLLO23accessoryLinearCapacityyA2DmF",
+    "externalID" : "s:14LiveViewNative10GaugeStyle33_B9E381080FCE031D385C1A115AB35E2BLLO23accessoryLinearCapacityyA2DmF",
     "fragments" : [
       {
         "kind" : "keyword",
@@ -44,7 +44,7 @@
     "role" : "symbol",
     "roleHeading" : "Case",
     "symbolKind" : "case",
-    "title" : "accessory-linear-capacity"
+    "title" : "GaugeStyle.accessoryLinearCapacity"
   },
   "primaryContentSections" : [
     {
@@ -90,16 +90,16 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators" : {
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers" : {
       "abstract" : [
 
       ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicators",
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ControlsAndIndicatorsModifiers",
       "kind" : "article",
       "role" : "collectionGroup",
-      "title" : "Controls and Indicators",
+      "title" : "Controls and Indicators Modifiers",
       "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/controlsandindicators"
+      "url" : "\/documentation\/liveviewnative\/controlsandindicatorsmodifiers"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Gauge" : {
       "abstract" : [
@@ -181,7 +181,7 @@
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryLinearCapacity" : {
       "abstract" : [
         {
-          "code" : "accessory-linear-capacity",
+          "code" : "accessory_linear_capacity",
           "type" : "codeVoice"
         }
       ],
@@ -202,9 +202,43 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyle\/accessoryLinearCapacity",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "accessory-linear-capacity",
+      "title" : "GaugeStyle.accessoryLinearCapacity",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/gaugestyle\/accessorylinearcapacity"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier" : {
+      "abstract" : [
+        {
+          "text" : "Alters the visual style of any gauges within this view.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "GaugeStyleModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/GaugeStyleModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "GaugeStyleModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "gauge_style",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/gaugestylemodifier"
     }
   },
   "schemaVersion" : {

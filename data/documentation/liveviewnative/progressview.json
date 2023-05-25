@@ -167,8 +167,8 @@
           "code" : [
             "<ProgressView value={0.5} \/>",
             "<ProgressView value={0.5} total={2}>",
-            "    <ProgressView:label>Completed Percentage<\/ProgressView:label>",
-            "    <ProgressView:current-value-label>25%<\/ProgressView:current-value-label>",
+            "    <Text template={:label}>Completed Percentage<\/Text>",
+            "    <Text template={:current-value-label}>25%<\/Text>",
             "<\/ProgressView>"
           ],
           "syntax" : "html",
@@ -278,20 +278,6 @@
                   "inlineContent" : [
                     {
                       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView\/countsDown",
-                      "isActive" : true,
-                      "type" : "reference"
-                    }
-                  ],
-                  "type" : "paragraph"
-                }
-              ]
-            },
-            {
-              "content" : [
-                {
-                  "inlineContent" : [
-                    {
-                      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView\/style",
                       "isActive" : true,
                       "type" : "reference"
                     }
@@ -598,43 +584,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/progressview\/countsdown"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView\/style" : {
-      "abstract" : [
-        {
-          "text" : "The style to apply to this progress view.",
-          "type" : "text"
-        }
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "var"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "style"
-        },
-        {
-          "kind" : "text",
-          "text" : ": "
-        },
-        {
-          "kind" : "typeIdentifier",
-          "preciseIdentifier" : "s:14LiveViewNative08ProgressB5Style33_C9AFB328B467261C434223EDB3950494LLO",
-          "text" : "ProgressViewStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView\/style",
-      "kind" : "symbol",
-      "role" : "symbol",
-      "title" : "progress-view-style",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/progressview\/style"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView\/timerIntervalEnd" : {
       "abstract" : [
         {
@@ -815,37 +764,6 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/progressview\/view-implementations"
     },
-    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressViewStyle" : {
-      "abstract" : [
-
-      ],
-      "fragments" : [
-        {
-          "kind" : "keyword",
-          "text" : "enum"
-        },
-        {
-          "kind" : "text",
-          "text" : " "
-        },
-        {
-          "kind" : "identifier",
-          "text" : "ProgressViewStyle"
-        }
-      ],
-      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressViewStyle",
-      "kind" : "symbol",
-      "navigatorTitle" : [
-        {
-          "kind" : "identifier",
-          "text" : "ProgressViewStyle"
-        }
-      ],
-      "role" : "symbol",
-      "title" : "ProgressViewStyle",
-      "type" : "topic",
-      "url" : "\/documentation\/liveviewnative\/progressviewstyle"
-    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/RootRegistry" : {
       "abstract" : [
         {
@@ -944,14 +862,7 @@
     },
     {
       "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressViewStyle"
-      ],
-      "title" : "Supporting Types"
-    },
-    {
-      "identifiers" : [
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView\/body",
-        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView\/style"
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ProgressView\/body"
       ],
       "title" : "Instance Properties"
     },

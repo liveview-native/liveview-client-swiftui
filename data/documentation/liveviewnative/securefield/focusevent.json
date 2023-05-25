@@ -61,7 +61,7 @@
     "role" : "symbol",
     "roleHeading" : "Instance Property",
     "symbolKind" : "property",
-    "title" : "phx-focus"
+    "title" : "focusEvent"
   },
   "primaryContentSections" : [
     {
@@ -297,7 +297,7 @@
       "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SecureField\/focusEvent",
       "kind" : "symbol",
       "role" : "symbol",
-      "title" : "phx-focus",
+      "title" : "focusEvent",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/securefield\/focusevent"
     },

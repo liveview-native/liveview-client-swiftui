@@ -12,7 +12,7 @@
   },
   "kind" : "symbol",
   "metadata" : {
-    "externalID" : "s:m:s:e:s:7SwiftUI10EdgeInsetsV14LiveViewNativeE4fromACs7Decoder_p_tKcfc",
+    "externalID" : "s:m:s:e:s:7SwiftUI10AnyGestureV14LiveViewNativeE10CodingKeysO",
     "modules" : [
       {
         "name" : "LiveViewNative"
@@ -37,6 +37,108 @@
       "title" : "LiveViewNative",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies an animation when a value changes.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "AnimationModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AnimationModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "animation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/animationmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a transition when an element’s content changes.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "ContentTransitionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ContentTransitionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "content_transition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/contenttransitionmodifier"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape" : {
+      "abstract" : [
+        {
+          "text" : "A view that displays the a shape.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "Shape"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Shape"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Shape",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/shape"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI" : {
       "abstract" : [
@@ -84,9 +186,126 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/alignment"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Angle" : {
+      "abstract" : [
+        {
+          "text" : "A rotation in degrees or radians.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI5AngleV",
+          "text" : "Angle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Angle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Angle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Angle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/angle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that creates a conic gradient.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI15AngularGradientV",
+          "text" : "AngularGradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AngularGradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AngularGradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/angulargradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/AnimationModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9AnimationV",
+          "text" : "Animation"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Animation"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Animation",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/animation"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle" : {
       "abstract" : [
-
+        {
+          "text" : "A color, gradient, or other style.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -116,6 +335,50 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/anyshapestyle"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyTransition" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI13AnyTransitionV",
+          "text" : "AnyTransition"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyTransition",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "AnyTransition"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "AnyTransition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/anytransition"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Axis" : {
       "abstract" : [
 
@@ -132,6 +395,41 @@
       "title" : "Axis",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/axis"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/BlendMode" : {
+      "abstract" : [
+        {
+          "text" : "Mode for blending colors.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9BlendModeO",
+          "text" : "BlendMode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/BlendMode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "BlendMode"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "BlendMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/blendmode"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Color" : {
       "abstract" : [
@@ -184,6 +482,260 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/color"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ColorRenderingMode" : {
+      "abstract" : [
+        {
+          "text" : "One of the working color space and storage formats.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI18ColorRenderingModeO",
+          "text" : "ColorRenderingMode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ColorRenderingMode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ColorRenderingMode"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ColorRenderingMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/colorrenderingmode"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ColorScheme" : {
+      "abstract" : [
+        {
+          "text" : "A value that represents a system appearance.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI11ColorSchemeO",
+          "text" : "ColorScheme"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ColorScheme",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ColorScheme"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ColorScheme",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/colorscheme"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentMode" : {
+      "abstract" : [
+        {
+          "text" : "Constants that define how a view’s content fills the available space.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI11ContentModeO",
+          "text" : "ContentMode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentMode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ContentMode"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ContentMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/contentmode"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for the ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/ContentTransitionModifier",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : " modifier.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI17ContentTransitionV",
+          "text" : "ContentTransition"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ContentTransition"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ContentTransition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/contenttransition"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ControlSize" : {
+      "abstract" : [
+        {
+          "text" : "The size classes that apply to controls.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI11ControlSizeO",
+          "text" : "ControlSize"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ControlSize",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ControlSize"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ControlSize",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/controlsize"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/CoordinateSpace" : {
+      "abstract" : [
+        {
+          "text" : "A named coordinate space for resolving locations.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI15CoordinateSpaceO",
+          "text" : "CoordinateSpace"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/CoordinateSpace",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "CoordinateSpace"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "CoordinateSpace",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/coordinatespace"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Edge" : {
+      "abstract" : [
+        {
+          "text" : "A value that represents a side.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI4EdgeO",
+          "text" : "Edge"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Edge",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Edge"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Edge",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/edge"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EdgeInsets" : {
       "abstract" : [
         {
@@ -219,6 +771,41 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/edgeinsets"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EllipticalGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that draws a gradient in an ellipse.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI18EllipticalGradientV",
+          "text" : "EllipticalGradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EllipticalGradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "EllipticalGradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "EllipticalGradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/ellipticalgradient"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EnvironmentValues" : {
       "abstract" : [
         {
@@ -253,6 +840,85 @@
       "title" : "EnvironmentValues",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/environmentvalues"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/FillStyle" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for filling a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI9FillStyleV",
+          "text" : "FillStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/FillStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "FillStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "FillStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/fillstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Font" : {
+      "abstract" : [
+        {
+          "text" : "A font value.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI4FontV",
+          "text" : "Font"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Font",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Font"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Font",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/font"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Gradient" : {
       "abstract" : [
@@ -318,6 +984,41 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/griditem"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/HierarchicalShapeStyle" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that maps to a numbered content style.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI22HierarchicalShapeStyleV",
+          "text" : "HierarchicalShapeStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/HierarchicalShapeStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "HierarchicalShapeStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "HierarchicalShapeStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/hierarchicalshapestyle"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/HorizontalAlignment" : {
       "abstract" : [
         {
@@ -353,9 +1054,47 @@
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/horizontalalignment"
     },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ImagePaint" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that repeats an image.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI10ImagePaintV",
+          "text" : "ImagePaint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ImagePaint",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ImagePaint"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ImagePaint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/imagepaint"
+    },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/LinearGradient" : {
       "abstract" : [
-
+        {
+          "text" : "A shape style that creates a gradient between two points.",
+          "type" : "text"
+        }
       ],
       "fragments" : [
         {
@@ -384,6 +1123,76 @@
       "title" : "LinearGradient",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/lineargradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ListItemTint" : {
+      "abstract" : [
+        {
+          "text" : "A tint for a list row.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI12ListItemTintV",
+          "text" : "ListItemTint"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ListItemTint",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ListItemTint"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ListItemTint",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/listitemtint"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Material" : {
+      "abstract" : [
+        {
+          "text" : "A translucent shape style.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI8MaterialV",
+          "text" : "Material"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Material",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Material"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Material",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/material"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/PinnedScrollableViews" : {
       "abstract" : [
@@ -419,6 +1228,432 @@
       "title" : "PinnedScrollableViews",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/pinnedscrollableviews"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/PresentationDetent" : {
+      "abstract" : [
+        {
+          "text" : "A type that indicates where on-screen a sheet can snap to.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI18PresentationDetentV",
+          "text" : "PresentationDetent"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/PresentationDetent",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "PresentationDetent"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "PresentationDetent",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/presentationdetent"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Prominence" : {
+      "abstract" : [
+        {
+          "text" : "A value that indicates the prominence of an element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI10ProminenceO",
+          "text" : "Prominence"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Prominence",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Prominence"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Prominence",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/prominence"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RadialGradient" : {
+      "abstract" : [
+        {
+          "text" : "A shape style that draws a gradient in a circle.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI14RadialGradientV",
+          "text" : "RadialGradient"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RadialGradient",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RadialGradient"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RadialGradient",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/radialgradient"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RoundedCornerStyle" : {
+      "abstract" : [
+        {
+          "text" : "A style for rounded corners.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI18RoundedCornerStyleO",
+          "text" : "RoundedCornerStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RoundedCornerStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "RoundedCornerStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "RoundedCornerStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/roundedcornerstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollBounceBehavior" : {
+      "abstract" : [
+        {
+          "text" : "The ways that a scrollable view can bounce when it reaches the end of its content.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI20ScrollBounceBehaviorV",
+          "text" : "ScrollBounceBehavior"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollBounceBehavior",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScrollBounceBehavior"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ScrollBounceBehavior",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/scrollbouncebehavior"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollDismissesKeyboardMode" : {
+      "abstract" : [
+        {
+          "text" : "The ways that scrollable content can interact with the software keyboard.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI27ScrollDismissesKeyboardModeV",
+          "text" : "ScrollDismissesKeyboardMode"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollDismissesKeyboardMode",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScrollDismissesKeyboardMode"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ScrollDismissesKeyboardMode",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/scrolldismisseskeyboardmode"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollIndicatorVisibility" : {
+      "abstract" : [
+        {
+          "text" : "The visibility of scroll indicators of a UI element.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI25ScrollIndicatorVisibilityV",
+          "text" : "ScrollIndicatorVisibility"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollIndicatorVisibility",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ScrollIndicatorVisibility"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ScrollIndicatorVisibility",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/scrollindicatorvisibility"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ShadowStyle" : {
+      "abstract" : [
+        {
+          "text" : "A shadow configuration.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI11ShadowStyleV",
+          "text" : "ShadowStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ShadowStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ShadowStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ShadowStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/shadowstyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/StrokeStyle" : {
+      "abstract" : [
+        {
+          "text" : "Configuration for stroking a ",
+          "type" : "text"
+        },
+        {
+          "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/Shape",
+          "isActive" : true,
+          "type" : "reference"
+        },
+        {
+          "text" : ".",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI11StrokeStyleV",
+          "text" : "StrokeStyle"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/StrokeStyle",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "StrokeStyle"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "StrokeStyle",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/strokestyle"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/SubmitTriggers" : {
+      "abstract" : [
+
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI14SubmitTriggersV",
+          "text" : "SubmitTriggers"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/SubmitTriggers",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "SubmitTriggers"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "SubmitTriggers",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/submittriggers"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ToolbarPlacement" : {
+      "abstract" : [
+        {
+          "text" : "The placement of a toolbar.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI16ToolbarPlacementV",
+          "text" : "ToolbarPlacement"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ToolbarPlacement",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarPlacement"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ToolbarPlacement",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/toolbarplacement"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ToolbarRole" : {
+      "abstract" : [
+        {
+          "text" : "The role of a toolbar.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI11ToolbarRoleV",
+          "text" : "ToolbarRole"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ToolbarRole",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "ToolbarRole"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "ToolbarRole",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/toolbarrole"
     },
     "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint" : {
       "abstract" : [
@@ -489,6 +1724,75 @@
       "title" : "VerticalAlignment",
       "type" : "topic",
       "url" : "\/documentation\/liveviewnative\/swiftui\/verticalalignment"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility" : {
+      "abstract" : [
+        {
+          "text" : "A value that represents a hidden state.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "extension"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "preciseIdentifier" : "s:7SwiftUI10VisibilityO",
+          "text" : "Visibility"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "Visibility"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "Visibility",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/swiftui\/visibility"
+    },
+    "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier" : {
+      "abstract" : [
+        {
+          "text" : "Applies a transition when an element is inserted or removed.",
+          "type" : "text"
+        }
+      ],
+      "fragments" : [
+        {
+          "kind" : "keyword",
+          "text" : "struct"
+        },
+        {
+          "kind" : "text",
+          "text" : " "
+        },
+        {
+          "kind" : "identifier",
+          "text" : "TransitionModifier"
+        }
+      ],
+      "identifier" : "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/TransitionModifier",
+      "kind" : "symbol",
+      "navigatorTitle" : [
+        {
+          "kind" : "identifier",
+          "text" : "TransitionModifier"
+        }
+      ],
+      "role" : "symbol",
+      "title" : "transition",
+      "type" : "topic",
+      "url" : "\/documentation\/liveviewnative\/transitionmodifier"
     }
   },
   "schemaVersion" : {
@@ -503,19 +1807,56 @@
     {
       "identifiers" : [
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Alignment",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Angle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AngularGradient",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Animation",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyShapeStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/AnyTransition",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Color",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentTransition",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EdgeInsets",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EllipticalGradient",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/EnvironmentValues",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/FillStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Font",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Gradient",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/GridItem",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/HierarchicalShapeStyle",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/HorizontalAlignment",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ImagePaint",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/LinearGradient",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ListItemTint",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Material",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/PinnedScrollableViews",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/PresentationDetent",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RadialGradient",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollBounceBehavior",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollDismissesKeyboardMode",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ScrollIndicatorVisibility",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ShadowStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/StrokeStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/SubmitTriggers",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ToolbarPlacement",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ToolbarRole",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/UnitPoint",
         "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/VerticalAlignment"
       ],
       "title" : "Extended Structures"
+    },
+    {
+      "identifiers" : [
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/BlendMode",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ColorRenderingMode",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ColorScheme",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ContentMode",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/ControlSize",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/CoordinateSpace",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Edge",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Prominence",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/RoundedCornerStyle",
+        "doc:\/\/LiveViewNative\/documentation\/LiveViewNative\/SwiftUI\/Visibility"
+      ],
+      "title" : "Extended Enumerations"
     },
     {
       "identifiers" : [
