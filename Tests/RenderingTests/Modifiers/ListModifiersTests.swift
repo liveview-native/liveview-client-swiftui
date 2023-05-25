@@ -285,4 +285,54 @@ final class ListsModifiersTests: XCTestCase {
         }
         #endif
     }
+    
+    func testBadge() throws {
+        #if os(iOS) || os(macOS)
+        try assertMatch(
+            #"""
+            <List modifiers='[{"style":"plain","type":"list_style"}]'>
+                <Text id="0" modifiers='[{"content":null,"count":null,"label":"World","type":"badge"}]'>Hello</Text>
+            </List>
+            """#,
+            size: .init(width: 200, height: 50)
+        ) {
+            List {
+                Text("Hello")
+                    .badge("World")
+            }
+            .listStyle(.plain)
+        }
+        try assertMatch(
+            #"""
+            <List modifiers='[{"style":"plain","type":"list_style"}]'>
+                <Text id="0" modifiers='[{"content":null,"count":3,"label":null,"type":"badge"}]'>Hello</Text>
+            </List>
+            """#,
+            size: .init(width: 200, height: 50)
+        ) {
+            List {
+                Text("Hello")
+                    .badge(3)
+            }
+            .listStyle(.plain)
+        }
+        try assertMatch(
+            #"""
+            <List modifiers='[{"style":"plain","type":"list_style"}]'>
+                <Text id="0" modifiers='[{"content":"content","count":null,"label":null,"type":"badge"}]'>
+                    Hello
+                    <Text template="content" color="system-red">World</Text>
+                </Text>
+            </List>
+            """#,
+            size: .init(width: 200, height: 50)
+        ) {
+            List {
+                Text("Hello")
+                    .badge(Text("World").foregroundColor(.red))
+            }
+            .listStyle(.plain)
+        }
+        #endif
+    }
 }

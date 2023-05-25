@@ -49,6 +49,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 16.0, macOS 13.0, *)
 struct BadgeModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// The name of a template element to use as the badge content.
     /// 
@@ -82,6 +83,7 @@ struct BadgeModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
+        #if os(iOS) || os(macOS)
         if let reference = self.content {
             content
                 .badge(context.children(of: element, forTemplate: reference).first?.asElement().flatMap(Text<R>.init(overrideElement:))?.body)
@@ -92,6 +94,9 @@ struct BadgeModifier<R: RootRegistry>: ViewModifier, Decodable {
         } else {
             content
         }
+        #else
+        content
+        #endif
     }
 
     enum CodingKeys: String, CodingKey {
