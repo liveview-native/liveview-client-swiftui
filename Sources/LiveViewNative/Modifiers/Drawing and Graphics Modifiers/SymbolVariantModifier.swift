@@ -21,7 +21,7 @@ import SwiftUI
 struct SymbolVariantModifier: ViewModifier, Decodable {
     /// The variant to use for symbols.
     ///
-    /// See ``LiveViewNative/SwiftUI/SymboVariants`` for a list of possible values.
+    /// See ``LiveViewNative/SwiftUI/SymbolVariants`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
