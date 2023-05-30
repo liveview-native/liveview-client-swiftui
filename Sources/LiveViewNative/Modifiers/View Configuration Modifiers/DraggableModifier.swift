@@ -10,16 +10,21 @@ import SwiftUI
 /// Activates this view as the source of a drag and drop operation.
 ///
 /// ```html
+/// <Text modifiers={draggable(@native, payload: "ABC")}>ABC</Text>
 /// <Text modifiers={draggable(@native, payload: "ABC", preview: :my_preview)}>
 ///     ABC
 ///     <Image system-name="heart.fill" template={:my_preview}>
 /// </Text>
 /// ```
+/// ## Arguments
+/// * ``payload``
+/// * ``preview``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 16.0, macOS 13.0, *)
 struct DraggableModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// A closure that returns a single instance or a value conforming to Transferable that represents the draggable data from this view.
+    /// A string that represents the draggable data from this view.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -45,16 +50,12 @@ struct DraggableModifier<R: RootRegistry>: ViewModifier, Decodable {
     func body(content: Content) -> some View {
         #if !os(watchOS)
         if let preview {
-            content.draggable(
-                payload,
-                preview:
-                    {
-                    context.buildChildren(of: element, forTemplate: preview)
-                            .environment(\.coordinatorEnvironment, coordinatorEnvironment)
-                            .environment(\.anyLiveContextStorage, context.storage)
-                    }
-            )
-        }else{
+            content.draggable(payload) {
+                            context.buildChildren(of: element, forTemplate: preview)
+                                .environment(\.coordinatorEnvironment, coordinatorEnvironment)
+                                .environment(\.anyLiveContextStorage, context.storage)
+                        }
+        } else {
             content.draggable(payload)
         }
         #else
