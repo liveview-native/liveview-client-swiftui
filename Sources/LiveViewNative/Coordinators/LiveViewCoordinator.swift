@@ -211,11 +211,29 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         }
                 }
                 self.session.socket!.encode = {
+                    // Binary encode for sending data payloads.
                     if let data = $0 as? [Any],
-                       let rawData = (data.last as? [String:Data])?["__fileChunk__"] as? Data {
-                        return try! JSONSerialization
-                            .data(withJSONObject: Array<Any>(data.dropLast() + [rawData as NSData]),
-                                  options: JSONSerialization.WritingOptions())
+                       let payload = (data.last as? [String:Data])?[""] as? Data {
+                        let (joinRef, ref, event, topic, _) = (data[0], data[1], data[2], data[3], data[4]) as! (String, String, String, String, Any)
+                        
+                        var result = Data([
+                            0, // push
+                            UInt8(joinRef.count),
+                            UInt8(ref.count),
+                            UInt8(topic.count),
+                            UInt8(event.count),
+                        ])
+                        result.append(Data(joinRef.utf8))
+                        result.append(Data(ref.utf8))
+                        result.append(Data(topic.utf8))
+                        result.append(Data(event.utf8))
+                        
+                        result.append(payload)
+                        
+                        print(result.count)
+                        print(result)
+                        
+                        return payload
                     } else {
                         return try! JSONSerialization
                           .data(withJSONObject: $0,
@@ -224,7 +242,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 }
                 let chunk = try Data(contentsOf: file)
                 try await withCheckedThrowingContinuation { continuation in
-                    uploadChannel?.push("chunk", payload: ["__fileChunk__":chunk])
+                    uploadChannel?.push("chunk", payload: ["":chunk])
                         .receive("error") { error in
                             continuation.resume(throwing: LiveConnectionError.joinError(error))
                         }
