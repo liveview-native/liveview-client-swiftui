@@ -72,10 +72,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter value: The event value to provide to the backend event handler. The value _must_ be  serializable using `JSONSerialization`.
     /// - Parameter target: The value of the `phx-target` attribute.
     /// - Throws: ``LiveConnectionError/eventError(_:)`` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
-    public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws {
+    @discardableResult
+    public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> Payload? {
         // isValidJSONObject only accepts objects, but we want to check that the value can be serialized as a field of an object
         precondition(JSONSerialization.isValidJSONObject(["a": value]))
-        try await doPushEvent("event", payload: [
+        return try await doPushEvent("event", payload: [
             "type": type,
             "event": event,
             "value": value,
@@ -83,9 +84,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         ])
     }
     
-    internal func doPushEvent(_ event: String, payload: Payload) async throws {
+    @discardableResult
+    internal func doPushEvent(_ event: String, payload: Payload) async throws -> Payload? {
         guard let channel = channel else {
-            return
+            return nil
         }
         
         let token = self.currentConnectionToken
@@ -111,6 +113,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                   let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
             await session.redirect(redirect)
         }
+        
+        return replyPayload
     }
     
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
@@ -170,6 +174,68 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         receiveEvent(event)
             .sink(receiveValue: handler)
             .store(in: &eventHandlers)
+    }
+    
+    public func uploadFiles(
+        _ files: [URL],
+        for uploadConfig: UploadConfig
+    ) async throws {
+        do {
+            let upload = try await doPushEvent("allow_upload", payload: [
+                "ref": uploadConfig.ref,
+                "entries": files.enumerated().map { (index, file) in
+                    let attributes = try FileManager.default.attributesOfItem(atPath: file.path(percentEncoded: false))
+                    return [
+                        "last_modified": ((attributes[FileAttributeKey.modificationDate] as? Date) ?? Date()).timeIntervalSince1970,
+                        "name": file.lastPathComponent,
+                        "relative_path": "",
+                        "size": attributes[FileAttributeKey.size]!,
+                        "type": attributes[FileAttributeKey.type]!,
+                        "ref": String(index)
+                    ]
+                }
+            ])
+            guard let upload else { return }
+            for (index, file) in files.enumerated() {
+                guard let entries = upload["entries"] as? [String:String],
+                      let entry = entries[String(index)]
+                else { continue }
+                let uploadChannel = self.session.socket?.channel("lvu:\(index)", params: ["token": entry])
+                try await withCheckedThrowingContinuation { continuation in
+                    uploadChannel?.join()
+                        .receive("error") { error in
+                            continuation.resume(throwing: LiveConnectionError.joinError(error))
+                        }
+                        .receive("ok") { join in
+                            continuation.resume(returning: ())
+                        }
+                }
+                self.session.socket!.encode = {
+                    if let data = $0 as? [Any],
+                       let rawData = (data.last as? [String:Data])?["__fileChunk__"] as? Data {
+                        return try! JSONSerialization
+                            .data(withJSONObject: Array<Any>(data.dropLast() + [rawData as NSData]),
+                                  options: JSONSerialization.WritingOptions())
+                    } else {
+                        return try! JSONSerialization
+                          .data(withJSONObject: $0,
+                                options: JSONSerialization.WritingOptions())
+                    }
+                }
+                let chunk = try Data(contentsOf: file)
+                try await withCheckedThrowingContinuation { continuation in
+                    uploadChannel?.push("chunk", payload: ["__fileChunk__":chunk])
+                        .receive("error") { error in
+                            continuation.resume(throwing: LiveConnectionError.joinError(error))
+                        }
+                        .receive("ok") { join in
+                            continuation.resume(returning: ())
+                        }
+                }
+            }
+        } catch {
+            print(error)
+        }
     }
     
     private func handleDiff(payload: Payload, baseURL: URL) throws {
@@ -278,6 +344,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 else { return }
                 try! self.handleDiff(payload: message.payload, baseURL: self.url)
             }
+        }
+        channel.on("config") { message in
+            print(message)
         }
         channel.on("phx_close") { [weak self, weak channel] message in
             Task { @MainActor in

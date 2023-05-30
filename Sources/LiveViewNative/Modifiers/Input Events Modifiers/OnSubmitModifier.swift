@@ -64,7 +64,7 @@ struct OnSubmitModifier: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.onSubmit(of: triggers) {
-            action()
+            action(value: <#T##Any#>, didSend: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
         }
     }
 
