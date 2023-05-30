@@ -133,4 +133,41 @@ final class LayoutFundamentalsModifiersTests: XCTestCase {
             }
         }
     }
+    
+    func testBackground() throws {
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"alignment":"bottom","content":"bg","fill_style":null,"ignores_safe_area_edges":null,"shape":null,"style":null,"type":"background"}]'>
+                Hello, world!
+                <Text template="bg" font="caption">Behind</Text>
+            </Text>
+            """#
+        ) {
+            Text("Hello, world!")
+                .background(alignment: .bottom) {
+                    Text("Behind")
+                        .font(.caption)
+                }
+        }
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"alignment":null,"content":null,"fill_style":null,"ignores_safe_area_edges":null,"shape":null,"style":{"concrete_style":"color","modifiers":[],"style":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null}},"type":"background"}]'>
+                Hello, world!
+            </Text>
+            """#
+        ) {
+            Text("Hello, world!")
+                .background(.red)
+        }
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"alignment":null,"content":null,"fill_style":null,"ignores_safe_area_edges":null,"shape":{"key":null,"properties":{},"static":"capsule"},"style":{"concrete_style":"color","modifiers":[],"style":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null}},"type":"background"}]'>
+                Hello, world!
+            </Text>
+            """#
+        ) {
+            Text("Hello, world!")
+                .background(.red, in: Capsule())
+        }
+    }
 }
