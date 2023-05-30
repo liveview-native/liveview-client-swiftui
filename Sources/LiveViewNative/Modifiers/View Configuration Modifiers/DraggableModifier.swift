@@ -48,7 +48,7 @@ struct DraggableModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
     
     func body(content: Content) -> some View {
-        #if !os(watchOS)
+        #if os(iOS) || os(macOS)
         if let preview {
             content.draggable(payload) {
                             context.buildChildren(of: element, forTemplate: preview)
