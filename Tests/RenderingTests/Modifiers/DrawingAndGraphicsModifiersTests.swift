@@ -524,4 +524,27 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
         }
         #endif
     }
+    
+    func testSymbolVariant() throws {
+        let variantNames = [
+            "none",
+            "circle",
+            "square",
+            "rectangle",
+            "fill",
+            "slash"
+        ]
+        let variants: [SymbolVariants] = try .init(jsonValues: variantNames)
+        
+        for (index, variant) in variants.enumerated() {
+            try assertMatch(
+                #"""
+                <Image system-name="envelope.badge" modifiers='[{"type":"symbol_variant","variant":"\#(variantNames[index])"}]' />
+                """#
+            ) {
+                Image(systemName: "envelope.badge")
+                    .symbolVariant(variant)
+            }
+        }
+    }
 }
