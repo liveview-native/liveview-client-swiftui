@@ -502,4 +502,26 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
                 .shadow(color: .gray, radius: 2, x: 2, y: 2)
         }
     }
+    
+    func testProjectionEffect() throws {
+        #if !os(watchOS)
+        try assertMatch(
+            #"""
+            <Text modifiers='[{"transform":[-0.5,6.123233995736766e-17,0.0,0.0,-6.123233995736766e-17,-0.5,0.0,0.0,0.0,0.0,0.5,0.0,0.0,1.0,1.0,1.0],"type":"projection_effect"}]'>Hello</Text>
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            Text("Hello")
+                .projectionEffect(.init(
+                    CATransform3DScale(
+                        CATransform3DRotate(
+                            CATransform3DMakeTranslation(0, 1, 1),
+                            .pi, 0, 0, 1
+                        ),
+                        0.5, 0.5, 0.5
+                    )
+                ))
+        }
+        #endif
+    }
 }

@@ -564,5 +564,4 @@ class FragmentTests: XCTestCase {
             "\n  \n    0\n  \n    1\n  \n\n  \n    0\n  \n    1\n  \n"
         )
     }
-
 }
