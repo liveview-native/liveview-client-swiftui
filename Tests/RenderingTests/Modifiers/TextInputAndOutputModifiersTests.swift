@@ -153,6 +153,23 @@ final class TextInputAndOutputModifiersTests: XCTestCase {
         }
     }
     
+    func testUnderline() throws {
+        for enabled in [true, false] {
+            try assertMatch(
+                #"""
+                <Text modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"is_active":\#(enabled),"pattern":"dash_dot","type":"underline"}]'>
+                    Hello, world!
+                </Text>
+                """#,
+                size: .init(width: 100, height: 100),
+                lifetime: .keepAlways
+            ) {
+                Text("Hello, world!")
+                    .underline(enabled, pattern: .dashDot, color: .red)
+            }
+        }
+    }
+    
     func testTextFieldStyle() throws {
         #if os(iOS)
         try assertMatch(

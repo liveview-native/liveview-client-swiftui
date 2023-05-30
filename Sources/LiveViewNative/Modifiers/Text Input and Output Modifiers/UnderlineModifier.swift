@@ -1,31 +1,31 @@
 //
-//  StrikethroughModifier.swift
+//  UnderlineModifier.swift
 //  LiveViewNative
 //
-//  Created by Carson Katri on 4/6/2023.
+//  Created by Carson Katri on 5/23/2023.
 //
 
 import SwiftUI
 
-/// Adds a line through ``Text``.
+/// Underlines ``Text`` elements.
 ///
 /// The line can be customized with the ``pattern`` and ``color`` arguments.
 ///
 /// ```html
-/// <Text modifiers={strikethrough(@native, color: :red, pattern: :dash_dot)}>
+/// <Text modifiers={underline(@native, color: :red, pattern: :dash_dot)}>
 ///     Hello, world!
 /// </Text>
 /// ```
 ///
 /// ## Arguments
-/// * [`is_active`](doc:StrikethroughModifier/isActive)
+/// * ``isActive``
 /// * ``pattern``
 /// * ``color``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct StrikethroughModifier: ViewModifier, Decodable {
-    /// `is_active`, enables/disables the effect.
+struct UnderlineModifier: ViewModifier, Decodable {
+    /// `is_active`, enables/disables the effect. Defaults to `true`.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -33,7 +33,7 @@ struct StrikethroughModifier: ViewModifier, Decodable {
 
     /// The pattern to use for the line. Defaults to `solid`.
     ///
-    //// See ``LiveViewNative/SwiftUI/Text/LineStyle/Pattern`` for a list of possible values.
+    /// See ``LiveViewNative/SwiftUI/Text/LineStyle/Pattern`` for a list of possible values.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -48,6 +48,6 @@ struct StrikethroughModifier: ViewModifier, Decodable {
     private let color: SwiftUI.Color?
 
     func body(content: Content) -> some View {
-        content.strikethrough(isActive, pattern: pattern, color: color)
+        content.underline(isActive, pattern: pattern, color: color)
     }
 }
