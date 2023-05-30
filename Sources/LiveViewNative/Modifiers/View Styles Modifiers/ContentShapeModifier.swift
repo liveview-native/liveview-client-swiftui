@@ -10,17 +10,9 @@ import SwiftUI
 /// Sets the content shape for this view.
 ///
 /// ```html
-/// <HStack modifiers={content_shape(@native, shape: :rectangle)}>
-///   <Image system-name="heart.circle"></Image>
-/// </HStack>
-///
-/// <HStack modifiers={content_shape(@native, kind: :hover_effect, shape: :rectangle)}>
-///   <Image system-name="heart.circle"></Image>
-/// </HStack>
-///
-/// <HStack modifiers={content_shape(@native, kind: [:hover_effect, :interaction], shape: :rectangle, eo_fill: true)}>
-///   <Image system-name="heart.circle"></Image>
-/// </HStack>
+/// <Button modifiers={content_shape(@native, shape: :rectangle)}>Click Me!</Button>
+/// <Button modifiers={content_shape(@native, kind: :hover_effect, shape: :rectangle)}>Click Me!</Button>
+/// <Button modifiers={content_shape(@native, kind: [:hover_effect, :interaction], shape: :rectangle, eo_fill: true)}>Click Me!</Button>
 /// ```
 ///
 /// ## Arguments
@@ -30,7 +22,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct ContentShapeModifier: ViewModifier, Decodable {
+struct ContentShapeModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// The kinds to apply to this content shape.
     ///
     /// See ``LiveViewNative/SwiftUI/ContentShapeKinds`` for a list possible values.
@@ -41,16 +33,11 @@ struct ContentShapeModifier: ViewModifier, Decodable {
     
     /// The shape to use.
     ///
-    /// Possible values:
-    /// * `capsule`
-    /// * `circle`
-    /// * `container_relative_shape`
-    /// * `ellipse`
-    /// * `rectangle`
+    /// See ``ShapeReference`` for more details on creating shape arguments.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private var shape: ShapeKind
+    private var shape: ShapeReference
     
     /// A Boolean that indicates whether the shape is interpreted with the even-odd winding number rule. Default value is `false`
     #if swift(>=5.8)
@@ -58,47 +45,28 @@ struct ContentShapeModifier: ViewModifier, Decodable {
     #endif
     private var eoFill: Bool = false
 
-    func body(content: Content) -> some View {
-        let kind = kind ?? []
-        
-        switch shape {
-        case .capsule:
-            content.contentShape(kind, Capsule(), eoFill: eoFill)
-        case .circle:
-            content.contentShape(kind, Circle(), eoFill: eoFill)
-        case .containerRelativeShape:
-            content.contentShape(kind, ContainerRelativeShape(), eoFill: eoFill)
-        case .ellipse:
-            content.contentShape(kind, Ellipse(), eoFill: eoFill)
-        case .rectangle:
-            content.contentShape(kind, Rectangle(), eoFill: eoFill)
-        }
-    }
-}
+    @ObservedElement private var element
+    @LiveContext<R> private var context
 
-/// The shape kind to use.
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-private enum ShapeKind: String, Decodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case capsule
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case circle
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case containerRelativeShape = "container_relative_shape"
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case ellipse
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case rectangle
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.kind = try container.decode(ContentShapeKinds.self, forKey: .kind)
+        self.shape = try container.decode(ShapeReference.self, forKey: .shape)
+    }
+
+    func body(content: Content) -> some View {
+        let kind = kind ?? [.interaction]
+        
+        content.contentShape(
+            kind,
+            shape.resolve(on: element, in: context),
+            eoFill: eoFill
+        )
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case kind
+        case shape
+    }
 }
