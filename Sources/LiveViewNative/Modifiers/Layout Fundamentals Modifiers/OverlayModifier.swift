@@ -25,7 +25,7 @@ import SwiftUI
 /// ### ShapeStyle
 ///
 /// Provide a ``LiveViewNative/SwiftUI/AnyShapeStyle`` to the ``style`` argument to fill the overlay with a style.
-/// Use ``ignoresSafeAreaEdges`` to control how the background interacts with safe areas.
+/// Use ``ignoresSafeAreaEdges`` to control how the overlay interacts with safe areas.
 ///
 /// ```html
 /// <Text modifiers={@native |> overlay(style: {:material, :ultra_thin})}>
@@ -72,7 +72,7 @@ struct OverlayModifier<R: RootRegistry>: ViewModifier, Decodable {
     #endif
     private let content: String?
     
-    /// The ``LiveViewNative/SwiftUI/AnyShapeStyle`` to fill the background with.
+    /// The ``LiveViewNative/SwiftUI/AnyShapeStyle`` to fill the overlay with.
     ///
     /// See ``LiveViewNative/SwiftUI/AnyShapeStyle`` for more details.
     #if swift(>=5.8)
@@ -80,7 +80,7 @@ struct OverlayModifier<R: RootRegistry>: ViewModifier, Decodable {
     #endif
     private let style: AnyShapeStyle?
     
-    /// The shape to use for the background.
+    /// The shape to use for the overlay.
     /// Use ``style`` to customize the shape's fill.
     ///
     /// See ``ShapeReference`` for more details.
@@ -119,8 +119,10 @@ struct OverlayModifier<R: RootRegistry>: ViewModifier, Decodable {
                 .overlay(alignment: alignment) {
                     context.buildChildren(of: element, forTemplate: reference)
                 }
-        } else if let shape {
-            content.overlay(style ?? AnyShapeStyle(.background), in: shape.resolve(on: element, in: context), fillStyle: fillStyle)
+        } else if let shape,
+                  let style
+        {
+            content.overlay(style, in: shape.resolve(on: element, in: context), fillStyle: fillStyle)
         } else if let style {
             content.overlay(style, ignoresSafeAreaEdges: ignoresSafeAreaEdges)
         } else {
