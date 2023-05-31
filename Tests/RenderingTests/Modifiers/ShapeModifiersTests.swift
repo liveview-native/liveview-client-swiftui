@@ -106,4 +106,25 @@ final class ShapeModifiersTests: XCTestCase {
                 .trim(from: 0.5, to: 1)
         }
     }
+    
+    func testContainerShape() throws {
+        try assertMatch(
+            #"""
+            <ContainerRelativeShape modifiers='[{"shape":{"key":null,"properties":{},"static":"circle"},"type":"container_shape"}]' />
+            """#,
+            size: .init(width: 100, height: 100)
+        ) {
+            ContainerRelativeShape()
+                .containerShape(Circle())
+        }
+        try assertMatch(
+            #"""
+            <ContainerRelativeShape modifiers='[{"shape":{"key":null,"properties":{},"static":"capsule"},"type":"container_shape"}]' />
+            """#,
+            size: .init(width: 200, height: 100)
+        ) {
+            ContainerRelativeShape()
+                .containerShape(Capsule())
+        }
+    }
 }
