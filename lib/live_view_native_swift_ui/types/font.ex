@@ -12,7 +12,7 @@ defmodule LiveViewNativeSwiftUi.Types.Font do
   end
   def cast({:system, [{:size, _} | _] = properties}), do: cast({:system, properties, []})
   def cast({:system, [{:size, _} | _] = properties, modifiers}) do
-    {:ok, %__MODULE__{ type: :system, properties: properties, modifiers: Enum.map(modifiers, &cast_modifier/1) }}
+    {:ok, %__MODULE__{ type: :system, properties: Enum.into(properties, %{}), modifiers: Enum.map(modifiers, &cast_modifier/1) }}
   end
 
   def cast({:custom, name, [fixed_size: fixed_size]}), do: cast({:custom, name, [fixed_size: fixed_size], []})

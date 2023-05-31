@@ -32,6 +32,12 @@ import SwiftUI
 /// {:system, :subheadline, [design: :serif, weight: :bold]}
 /// ```
 ///
+/// Provide a size instead of a text style to use a custom size.
+/// ```elixir
+/// {:system, [size: 21]}
+/// {:system, [size: 21, weight: :bold]}
+/// ```
+///
 /// ### Custom Fonts
 /// Fonts can be created by name as well.
 ///
