@@ -198,6 +198,7 @@ struct List<R: RootRegistry>: View {
     }
     
     private var onDeleteHandler: ((IndexSet) -> Void)? {
+        guard delete.event != nil else { return nil }
         return { indices in
             var meta = element.buildPhxValuePayload()
             // todo: what about multiple indicies?
@@ -207,6 +208,7 @@ struct List<R: RootRegistry>: View {
     }
     
     private var onMoveHandler: ((IndexSet, Int) -> Void)? {
+        guard move.event != nil else { return nil }
         return { indices, index in
             var meta = element.buildPhxValuePayload()
             meta["index"] = indices.first!
