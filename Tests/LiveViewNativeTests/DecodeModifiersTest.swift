@@ -21,21 +21,6 @@ final class DecodeModifiersTest: XCTestCase {
         XCTAssertEqual(decoded, expected)
     }
     
-    func testDecodeFrame() throws {
-        let fixed = """
-        {"type": "frame", "width": 100}
-        """
-        try assertDecodeModifier(fixed, expected: FrameModifier.fixed(width: 100, height: nil, alignment: .center))
-        let flexible = """
-        {"type": "frame", "min_height": 100, "max_height": 200, "max_width": 300, "alignment": "leading"}
-        """
-        try assertDecodeModifier(flexible, expected: FrameModifier.flexible(minWidth: nil, idealWidth: nil, maxWidth: 300, minHeight: 100, idealHeight: nil, maxHeight: 200, alignment: .leading))
-        let invalid = """
-        {"type": "frame", "width": 100, "max_height": 300}
-        """
-        XCTAssertThrowsError(try decoder.decode(FrameModifier.self, from: invalid.data(using: .utf8)!))
-    }
-    
     func testDecodeListRowInsets() throws {
         let data = """
         {"type": "list_row_insets", "insets": 10}

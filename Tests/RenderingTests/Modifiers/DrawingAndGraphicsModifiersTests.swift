@@ -201,7 +201,7 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
         for antialiased in [true, false] {
             try assertMatch(
             #"""
-            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-mint","white":null},"type":"foreground_color"},{"alignment":null,"height":120.0,"type":"frame","width":120.0},{"antialiased":\#(antialiased),"type":"clipped"}]' />
+            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-mint","white":null},"type":"foreground_color"},{"alignment":"center","height":120.0,"type":"frame","width":120.0},{"antialiased":\#(antialiased),"type":"clipped"}]' />
             """#,
             size: .init(width: 100, height: 100)
             ) {
@@ -455,7 +455,7 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
     func testScaledToFill() throws {
         try assertMatch(
             #"""
-            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"type":"foreground_color"},{"type":"scaled_to_fill"},{"alignment":null,"height":20.0,"type":"frame","width":50.0}]' />
+            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"type":"foreground_color"},{"type":"scaled_to_fill"},{"alignment":"center","height":20.0,"type":"frame","width":50.0}]' />
             """#,
             size: .init(width: 100, height: 100)
         ) {
@@ -469,7 +469,7 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
     func testScaledToFit() throws {
         try assertMatch(
             #"""
-            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"type":"foreground_color"},{"type":"scaled_to_fit"},{"alignment":null,"height":20.0,"type":"frame","width":50.0}]' />
+            <Circle modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"type":"foreground_color"},{"type":"scaled_to_fit"},{"alignment":"center","height":20.0,"type":"frame","width":50.0}]' />
             """#,
             size: .init(width: 100, height: 100)
         ) {
