@@ -139,14 +139,13 @@ final class LayoutFundamentalsModifiersTests: XCTestCase {
             #"""
             <Text modifiers='[{"alignment":"bottom","content":"bg","fill_style":null,"ignores_safe_area_edges":null,"shape":null,"style":null,"type":"background"}]'>
                 Hello, world!
-                <Text template="bg" font="caption">Behind</Text>
+                <Text template="bg">Behind</Text>
             </Text>
             """#
         ) {
             Text("Hello, world!")
                 .background(alignment: .bottom) {
                     Text("Behind")
-                        .font(.caption)
                 }
         }
         try assertMatch(

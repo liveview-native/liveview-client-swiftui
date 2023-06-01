@@ -17,48 +17,13 @@ final class TextTests: XCTestCase {
             Text("Hello, world!")
         }
     }
-
-    func testTextStyles() throws {
-        for style in Font.TextStyle.allCases {
-            try assertMatch(#"<Text font="\#(style)">Hello, world!</Text>"#) {
-                Text("Hello, world!").font(.system(style, weight: .regular))
-            }
-        }
-    }
-
-    func testTextWeights() throws {
-        let allWeights: [String:Font.Weight] = [
-            "ultraLight": .ultraLight,
-            "thin": .thin,
-            "light": .light,
-            "regular": .regular,
-            "medium": .medium,
-            "semibold": .semibold,
-            "bold": .bold,
-            "heavy": .heavy,
-            "black": .black,
-        ]
-        for (name, weight) in allWeights {
-            try assertMatch(name: "weight-\(name)", #"<Text font="body" font-weight="\#(name)">Hello, world!</Text>"#) {
-                Text("Hello, world!").font(.system(.body, weight: weight))
-            }
-        }
-    }
-
-    func testTextColor() throws {
-        for color in [Color.primary, Color.red, Color.blue] {
-            try assertMatch(#"<Text color="system-\#(color)">Hello, world!</Text>"#) {
-                Text("Hello, world!").foregroundColor(color)
-            }
-        }
-    }
     
     func testTextNesting() throws {
         try assertMatch(#"""
 <Text>
     <Image system-name="person.crop.circle.fill" />
     <Text verbatim=" " />
-    <Text color="system-secondary">John Doe</Text>
+    <Text modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-secondary","white":null},"type":"foreground_color"}]'>John Doe</Text>
     <Text verbatim="
 " />
     Plain text<Text verbatim=" " />

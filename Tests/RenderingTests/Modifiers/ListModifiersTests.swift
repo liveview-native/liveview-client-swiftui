@@ -321,7 +321,7 @@ final class ListsModifiersTests: XCTestCase {
             <List modifiers='[{"style":"plain","type":"list_style"}]'>
                 <Text id="0" modifiers='[{"content":"content","count":null,"label":null,"type":"badge"}]'>
                     Hello
-                    <Text template="content" color="system-red">World</Text>
+                    <Text template="content" modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-red","white":null},"type":"foreground_color"}]'>World</Text>
                 </Text>
             </List>
             """#,

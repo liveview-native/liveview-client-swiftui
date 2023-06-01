@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```html
 /// <Link destination="https://native.live">
-///     Go to <Text font="body" font-weight="bold">LiveView Native</Text>
+///     Go to <Text modifiers={font_weight(@native, weight: :bold)}>LiveView Native</Text>
 /// </Link>
 /// ```
 ///
