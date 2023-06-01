@@ -1,14 +1,9 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.SymbolVariant do
   use LiveViewNativePlatform.Modifier
 
+  alias LiveViewNativeSwiftUi.Types.SymbolVariants
+
   modifier_schema "symbol_variant" do
-    field :variant, Ecto.Enum, values: ~w(
-        none
-        circle
-        square
-        rectangle
-        fill
-        slash
-    )a
+    field :variant, SymbolVariants
   end
 end

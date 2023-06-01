@@ -9,7 +9,7 @@ import Foundation
 @testable import LiveViewNative
 
 extension Array where Element: Decodable {
-    init(jsonValues: [String]) throws {
+    init(jsonValues: some Encodable) throws {
         self = try makeJSONDecoder().decode(
             Self.self,
             from: JSONEncoder().encode(jsonValues)
