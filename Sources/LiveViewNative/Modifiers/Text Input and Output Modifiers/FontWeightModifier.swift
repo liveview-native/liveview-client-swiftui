@@ -24,7 +24,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct FontWeightModifier: ViewModifier, Decodable, Equatable {
+struct FontWeightModifier: ViewModifier, Decodable, Equatable, TextModifier {
     /// The font weight to use for child elements.
     ///
     /// See ``LiveViewNative/SwiftUI/Font/Weight`` for more details on creating font weights.
@@ -35,5 +35,9 @@ struct FontWeightModifier: ViewModifier, Decodable, Equatable {
 
     func body(content: Content) -> some View {
         content.fontWeight(weight)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.fontWeight(weight)
     }
 }

@@ -86,7 +86,7 @@ struct BadgeModifier<R: RootRegistry>: ViewModifier, Decodable {
         #if os(iOS) || os(macOS)
         if let reference = self.content {
             content
-                .badge(context.children(of: element, forTemplate: reference).first?.asElement().flatMap(Text<R>.init(overrideElement:))?.body)
+                .badge(context.children(of: element, forTemplate: reference).first?.asElement().flatMap(Text<R>.init(element:))?.body)
         } else if let label {
             content.badge(label)
         } else if let count {

@@ -24,7 +24,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct FontWidthModifier: ViewModifier, Decodable {
+struct FontWidthModifier: ViewModifier, Decodable, TextModifier {
     /// The font width to use for child elements.
     ///
     /// See ``LiveViewNative/SwiftUI/Font/Width`` for more details on creating font widths.
@@ -43,6 +43,10 @@ struct FontWidthModifier: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.fontWidth(width)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.fontWidth(width)
     }
 
     enum CodingKeys: String, CodingKey {

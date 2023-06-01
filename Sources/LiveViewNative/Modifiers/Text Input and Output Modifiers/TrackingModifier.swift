@@ -20,7 +20,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct TrackingModifier: ViewModifier, Decodable, Equatable {
+struct TrackingModifier: ViewModifier, Decodable, Equatable, TextModifier {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -28,5 +28,9 @@ struct TrackingModifier: ViewModifier, Decodable, Equatable {
     
     func body(content: Content) -> some View {
         content.tracking(tracking)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.tracking(tracking)
     }
 }

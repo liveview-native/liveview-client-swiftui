@@ -24,7 +24,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct StrikethroughModifier: ViewModifier, Decodable {
+struct StrikethroughModifier: ViewModifier, Decodable, TextModifier {
     /// `is_active`, enables/disables the effect.
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -49,5 +49,9 @@ struct StrikethroughModifier: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.strikethrough(isActive, pattern: pattern, color: color)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.strikethrough(isActive, pattern: pattern, color: color)
     }
 }

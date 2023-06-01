@@ -22,36 +22,18 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 @available(iOS 16.1, watchOS 9.1, *)
-struct FontDesignModifier: ViewModifier, Decodable {
+struct FontDesignModifier: ViewModifier, Decodable, TextModifier {
     /// The font design to apply to the view.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     private var design: Font.Design
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let designString = try container.decode(String.self, forKey: .design)
-
-        switch designString {
-        case "default":
-            design = .default
-        case "monospaced":
-            design = .monospaced
-        case "rounded":
-            design = .rounded
-        case "serif":
-            design = .serif
-        default:
-            throw DecodingError.dataCorruptedError(forKey: .design, in: container, debugDescription: "expected valid value for Font.Design");
-        }
-    }
 
     func body(content: Content) -> some View {
         content.fontDesign(design)
     }
     
-    enum CodingKeys: String, CodingKey {
-        case design
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.fontDesign(design)
     }
 }

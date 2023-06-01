@@ -20,7 +20,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct BaselineOffsetModifier: ViewModifier, Decodable {
+struct BaselineOffsetModifier: ViewModifier, Decodable, TextModifier {
     /// The vertical offset to apply.
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -29,6 +29,10 @@ struct BaselineOffsetModifier: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.baselineOffset(offset)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.baselineOffset(offset)
     }
 }
 
