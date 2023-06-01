@@ -11,6 +11,7 @@ import LiveViewNativeCore
 enum ImageModifierType: String, Decodable {
     case resizable
     case antialiased
+    case symbolRenderingMode = "symbol_rendering_mode"
     case renderingMode = "rendering_mode"
     case interpolation
     
@@ -20,6 +21,8 @@ enum ImageModifierType: String, Decodable {
             return try ResizableModifier(from: decoder)
         case .antialiased:
             return try AntialiasedModifier(from: decoder)
+        case .symbolRenderingMode:
+            return try SymbolRenderingModeModifier(from: decoder)
         case .renderingMode:
             return try RenderingModeModifier(from: decoder)
         case .interpolation:

@@ -61,7 +61,7 @@ import LiveViewNativeCore
 /// </Text>
 /// ```
 ///
-/// These modifiers can be used on ``Text`` elements.
+/// These modifiers can be used on ``Text`` elements:
 /// * ``FontModifier``
 /// * ``FontWeightModifier``
 /// * ``ForegroundColorModifier``

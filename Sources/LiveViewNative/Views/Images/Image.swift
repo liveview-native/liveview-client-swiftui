@@ -15,15 +15,48 @@ import SwiftUI
 /// The platform provides a wide variety of symbol images which are specified with the `system-name` attribute.
 /// See [Apple's documentation](https://developer.apple.com/sf-symbols/) for more information.
 ///
-/// The [`symbol-color`](doc:Image/symbolColor) and [`symbol-scale`](doc:Image/symbolScale) attributes may also be provided.
-/// ```html
-/// <Image system-name="cloud.sun.rain" symbol-color="#ff0000" symbol-scale="large" />
-/// ```
 /// ### Asset Catalog
 /// Specify the `name` attribute to use a named image from the app's asset catalog.
 /// ```html
 /// <Image name="MyCustomImage" />
 /// ```
+///
+/// ### Variable Value
+/// Some symbols and asset images support a value input. Use the ``variableValue`` attribute to set this value.
+///
+/// ```html
+/// <Image system-name="chart.bar.fill" variable-value={0.3} />
+/// <Image system-name="chart.bar.fill" variable-value={0.6} />
+/// <Image system-name="chart.bar.fill" variable-value={1.0} />
+/// ```
+///
+/// ### Image Labels
+/// Text content within the image will be used as the accessibility label.
+///
+/// ```html
+/// <Image name="landscape">
+///   Mountain landscape with a lake in the foreground
+/// </Image>
+/// ```
+///
+/// ### Modifying Images
+/// Use image modifiers to customize the appearance of an image.
+///
+/// ```html
+/// <Image system-name="heart.fill" modifiers={@native |> resizable() |> symbol_rendering_mode(mode: :multicolor)} />
+/// ```
+///
+/// These modifiers can be used on ``Image`` elements:
+/// * ``ResizableModifier``
+/// * ``AntialiasedModifier``
+/// * ``SymbolRenderingModeModifier``
+/// * ``RenderingModeModifier``
+/// * ``InterpolationModifier``
+///
+/// ## Attributes
+/// * ``systemName``
+/// * ``name``
+/// * ``variableValue``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -31,22 +64,24 @@ struct Image<R: RootRegistry>: View {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
+    /// The name of the system image (SF Symbol) to display.
     ///
+    /// See [Apple's documentation](https://developer.apple.com/sf-symbols/) for more information.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     @Attribute("system-name") private var systemName: String?
-    ///
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("variable-value") private var variableValue: Double?
-    
-    ///
+    /// The name of an image in the app's asset catalog.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     @Attribute("name") private var name: String?
+    
+    /// The value represented by this image, in the range `0.0` to `1.0`.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @Attribute("variable-value") private var variableValue: Double?
     
     @Attribute("modifiers") private var modifiers: ImageModifierStack?
     
