@@ -343,10 +343,10 @@ struct ShareLink<R: RootRegistry>: View {
                 let title = element.attributeValue(for: "title") ?? ""
                 let image = element.elementChildren()
                     .first(where: { $0.attributeValue(for: "template") == "image" })
-                    .flatMap({ Image(overrideElement: $0).image })
+                    .flatMap({ Image<R>(element: $0).body })
                 let icon = element.elementChildren()
                     .first(where: { $0.attributeValue(for: "template") == "icon" })
-                    .flatMap({ Image(overrideElement: $0).image })
+                    .flatMap({ Image<R>(element: $0).body })
                 
                 let data = PreviewData(
                     title: title,

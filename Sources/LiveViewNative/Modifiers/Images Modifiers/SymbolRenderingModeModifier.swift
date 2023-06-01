@@ -20,7 +20,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct SymbolRenderingModeModifier: ViewModifier, Decodable {
+struct SymbolRenderingModeModifier: ViewModifier, Decodable, ImageModifier {
     /// A symbol rendering mode.
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -46,6 +46,10 @@ struct SymbolRenderingModeModifier: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.symbolRenderingMode(mode)
+    }
+    
+    func apply(to image: SwiftUI.Image) -> SwiftUI.Image {
+        image.symbolRenderingMode(mode)
     }
     
     enum CodingKeys: String, CodingKey {

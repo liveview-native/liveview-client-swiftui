@@ -27,87 +27,84 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct Image: View {
-    /// When enabled, resizes the Image to fill all available space
+struct Image<R: RootRegistry>: View {
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+    
+    ///
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Attribute("resizable") private var resizable: Bool
-    @ObservedElement private var observedElement: ElementNode
-    private let overrideElement: ElementNode?
-    private var element: ElementNode {
-        overrideElement ?? observedElement
+    @Attribute("system-name") private var systemName: String?
+    ///
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @Attribute("variable-value") private var variableValue: Double?
+    
+    ///
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @Attribute("name") private var name: String?
+    
+    @Attribute("modifiers") private var modifiers: ImageModifierStack?
+    
+    init() {}
+    
+    init(element: ElementNode) {
+        self._element = .init(element: element)
+        self._systemName = .init("system-name", element: element)
+        self._variableValue = .init("variable-value", element: element)
+        self._name = .init("name", element: element)
+        self._modifiers = .init("modifiers", element: element)
     }
     
-    init(overrideElement: ElementNode? = nil) {
-        self.overrideElement = overrideElement
-    }
-    
-    public var body: some View {
-        image?
-            // todo: this probably only works for symbols
-            .resizableIfPresent(resizable: resizable)
-            .scaledIfPresent(scale: symbolScale)
-            .foregroundColorIfPresent(color: symbolColor)
-    }
-    
-    var image: SwiftUI.Image? {
-        switch mode {
-        case .symbol(let name):
-            return SwiftUI.Image(systemName: name)
-        case .asset(let name):
-            return SwiftUI.Image(name)
-        default:
-            return nil
-        }
-    }
-    
-    private var mode: Mode? {
-        if let systemName = element.attributeValue(for: "system-name") {
-            return .symbol(systemName)
-        } else if let name = element.attributeValue(for: "name") {
-            return .asset(name)
+    public var body: SwiftUI.Image? {
+        if let image {
+            var result = image
+            for modifier in modifiers?.stack ?? [] {
+                result = modifier.apply(to: result)
+            }
+            return result
         } else {
             return nil
         }
     }
     
-    /// The foreground color of the symbol.
-    ///
-    /// If no color is provided, the symbol will use a color appropriate for the environment.
-    ///
-    /// See ``LiveViewNative/SwiftUI/Color/init(fromNamedOrCSSHex:)``.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    private var symbolColor: SwiftUI.Color? {
-        if let attr = element.attributeValue(for: "symbol-color") {
-            return SwiftUI.Color(fromNamedOrCSSHex: attr)
+    private var image: SwiftUI.Image? {
+        if let systemName {
+            return SwiftUI.Image(systemName: systemName, variableValue: variableValue)
+        } else if let name {
+            if let variableValue {
+                if let label {
+                    return SwiftUI.Image(name, variableValue: variableValue, label: label)
+                } else {
+                    return SwiftUI.Image(name, variableValue: variableValue)
+                }
+            } else {
+                if let label {
+                    return SwiftUI.Image(name, label: label)
+                } else {
+                    return SwiftUI.Image(name)
+                }
+            }
         } else {
             return nil
         }
     }
     
-    /// The display scale of the symbol.
-    ///
-    /// Possible values:
-    /// - `small`
-    /// - `medium`
-    /// - `large`
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    private var symbolScale: SwiftUI.Image.Scale? {
-        switch element.attributeValue(for: "symbol-scale") {
-        case nil:
-            return nil
-        case "small":
-            return .small
-        case "medium":
-            return .medium
-        case "large":
-            return .large
-        default:
+    var label: SwiftUI.Text? {
+        if let labelNode = element.children().first {
+            switch labelNode.data {
+            case let .element(element):
+                return Text<R>(element: ElementNode(node: labelNode, data: element)).body
+            case let .leaf(label):
+                return .init(label)
+            case .root:
+                return nil
+            }
+        } else {
             return nil
         }
     }
@@ -117,35 +114,5 @@ extension Image {
     enum Mode {
         case symbol(String)
         case asset(String)
-    }
-}
-
-fileprivate extension SwiftUI.Image {
-    func resizableIfPresent(resizable: Bool) -> SwiftUI.Image {
-        if resizable {
-            return self.resizable()
-        } else {
-            return self
-        }
-    }
-
-    @ViewBuilder
-    func scaledIfPresent(scale: SwiftUI.Image.Scale?) -> some View {
-        if let scale = scale {
-            self.imageScale(scale)
-        } else {
-            self
-        }
-    }
-}
-
-fileprivate extension View {
-    @ViewBuilder
-    func foregroundColorIfPresent(color: SwiftUI.Color?) -> some View {
-        if let color = color {
-            self.foregroundColor(color)
-        } else {
-            self
-        }
     }
 }

@@ -169,6 +169,8 @@ enum ModifierContainer<R: RootRegistry>: Decodable {
             }
         } else if ShapeModifierType(rawValue: type) != nil
                     || FinalShapeModifierType(rawValue: type) != nil
+                    || TextModifierType(rawValue: type) != nil
+                    || ImageModifierType(rawValue: type) != nil
         {
             self = .inert
         } else {
