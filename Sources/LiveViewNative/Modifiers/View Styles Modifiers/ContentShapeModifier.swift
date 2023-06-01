@@ -51,15 +51,13 @@ struct ContentShapeModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.kind = try container.decode(ContentShapeKinds.self, forKey: .kind)
+        self.kind = try container.decodeIfPresent(ContentShapeKinds.self, forKey: .kind) ?? .interaction
         self.shape = try container.decode(ShapeReference.self, forKey: .shape)
     }
 
     func body(content: Content) -> some View {
-        let kind = kind ?? [.interaction]
-        
         content.contentShape(
-            kind,
+            kind!,
             shape.resolve(on: element, in: context),
             eoFill: eoFill
         )
