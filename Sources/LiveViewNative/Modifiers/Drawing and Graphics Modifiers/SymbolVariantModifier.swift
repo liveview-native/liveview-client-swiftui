@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Makes symbols within the view show a particular variant.
 ///
-/// See ``LiveViewNative/SwiftUI/SymbolVariants`` for a list of possible values
+/// See ``LiveViewNative/SwiftUI/SymbolVariants`` for a list of possible values.
 ///
 /// ```html
 /// <Image system-name="envelope" modifiers={symbol_variant(@native, variant: :fill)} />
