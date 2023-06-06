@@ -30,7 +30,7 @@ defmodule LvnTutorialWeb.CatsListLive do
   end
 
   def render(%{platform_id: :swiftui} = assigns) do
-    ~Z"""
+    ~SUI"""
     <List>
       <%= for {name, favorite} <- @cats_and_favorites do %>
         <HStack id={name}>
@@ -43,7 +43,7 @@ defmodule LvnTutorialWeb.CatsListLive do
         </HStack>
       <% end %>
     </List>
-    """swiftui
+    """
   end
 
   def get_cats_and_favorites() do

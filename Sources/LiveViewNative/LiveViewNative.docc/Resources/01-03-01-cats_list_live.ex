@@ -29,12 +29,12 @@ defmodule LvnTutorialWeb.CatsListLive do
   end
 
   def render(%{platform_id: :swiftui} = assigns) do
-    ~Z"""
+    ~SUI"""
     <List>
       <%= for name <- @cats do %>
         <Text id={name}><%= name %></Text>
       <% end %>
     </List>
-    """swiftui
+    """
   end
 end
