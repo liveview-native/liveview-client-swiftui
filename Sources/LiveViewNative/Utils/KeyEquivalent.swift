@@ -51,7 +51,7 @@ extension KeyEquivalent: Decodable {
             self = .delete
         case "end":
             self = .end
-        case "escap":
+        case "escape":
             self = .escape
         case "home":
             self = .home
