@@ -1,13 +1,8 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
-
-#if swift(>=5.8)
-let swiftSettings = [SwiftSetting.unsafeFlags(["-emit-extension-block-symbols"])]
-#else
-let swiftSettings = [SwiftSetting]()
-#endif
+import CompilerPluginSupport
 
 let package = Package(
     name: "LiveViewNative",
@@ -30,6 +25,8 @@ let package = Package(
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.2"),
         .package(url: "https://github.com/apple/swift-markdown.git", branch: "main"),
+        
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -40,8 +37,11 @@ let package = Package(
                 "SwiftSoup",
                 "SwiftPhoenixClient",
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
+                "LiveViewNativeMacros"
             ],
-            swiftSettings: swiftSettings,
+            swiftSettings: [
+                SwiftSetting.unsafeFlags(["-emit-extension-block-symbols"])
+            ],
             plugins: [
                 .plugin(name: "BuiltinRegistryGeneratorPlugin")
             ]
@@ -112,5 +112,20 @@ let package = Package(
         //     ),
         //     dependencies: [.target(name: "TutorialRepoGenerator")]
         // )
+        
+        .macro(
+            name: "LiveViewNativeMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
+        .testTarget(
+            name: "LiveViewNativeMacrosTests",
+            dependencies: [
+                "LiveViewNativeMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
     ]
 )
