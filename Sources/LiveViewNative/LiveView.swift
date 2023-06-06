@@ -57,11 +57,19 @@ public struct LiveView<R: RootRegistry>: View {
                             ErrorView<R>(html: trace)
                         } else {
                             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+                                #if swift(>=5.9)
                                 SwiftUI.ContentUnavailableView {
                                     SwiftUI.Label("No Connection", systemImage: "network.slash")
                                 } description: {
                                     SwiftUI.Text("The app will reconnect when network connection is regained.")
                                 }
+                                #else
+                                SwiftUI.VStack {
+                                    SwiftUI.Text("Connection Failed")
+                                        .font(.subheadline)
+                                    SwiftUI.Text(error.localizedDescription)
+                                }
+                                #endif
                             } else {
                                 SwiftUI.VStack {
                                     SwiftUI.Text("Connection Failed")
