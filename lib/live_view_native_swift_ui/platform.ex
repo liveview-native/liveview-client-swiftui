@@ -21,6 +21,7 @@ defmodule LiveViewNativeSwiftUi.Platform do
     def context(struct) do
       LiveViewNativePlatform.Context.define(:swiftui,
         custom_modifiers: struct.custom_modifiers,
+        render_macro: :sigil_SUI,
         otp_app: :live_view_native_swift_ui
       )
     end
