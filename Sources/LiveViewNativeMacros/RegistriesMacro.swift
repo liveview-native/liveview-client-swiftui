@@ -10,20 +10,25 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-/// Implementation of the `#AggregateRegistry` macro, which takes an expression
-/// of any type and produces a tuple containing the value of that expression
-/// and the source code that produced the value. For example
+/// Implementation of the `#Registries` macro, which creates the `Registries` typealias for an `AggregateRegistry`.
 ///
-///     struct MyAppRegistry: RootRegistry {
-///         #Registries(
-///             AVKitRegistry.self,
-///             PhotoKitRegistry.self
-///         )
-///     }
+/// For example
+///
+///     #Registries<
+///         MyAppRegistry,
+///         AVKitRegistry<Self>,
+///         PhotoKitRegistry<Self>
+///     >
 ///
 ///  will expand to
 ///
-///     _MultiRegistry
+///     _MultiRegistry<
+///         MyAppRegistry,
+///         _MultiRegistry<
+///             AVKitRegistry<Self>,
+///             PhotoKitRegistry<Self>
+///         >
+///     >
 public enum RegistriesMacro {}
 
 extension RegistriesMacro: DeclarationMacro {
