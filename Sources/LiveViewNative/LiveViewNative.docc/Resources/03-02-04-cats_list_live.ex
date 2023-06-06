@@ -30,7 +30,7 @@ defmodule LvnTutorialWeb.CatsListLive do
   end
 
   def render(%{platform_id: :swiftui} = assigns) do
-    ~SUI"""
+    ~SWIFTUI"""
     <List modifiers={navigation_title(@native, title: "Cats!")}>
       <%= for {name, favorite} <- @cats_and_favorites do %>
         <NavigationLink id={name} destination={"/cats/#{name}"}>

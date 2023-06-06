@@ -30,7 +30,7 @@ defmodule LvnTutorialWeb.CatsListLive do
   end
 
   def render(%{platform_id: :swiftui} = assigns) do
-    ~SUI"""
+    ~SWIFTUI"""
     <List>
       <%= for name <- @cats do %>
         <HStack id={name}>

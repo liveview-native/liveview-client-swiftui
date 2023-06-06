@@ -29,7 +29,7 @@ defmodule LvnTutorialWeb.CatsListLive do
   end
 
   def render(%{platform_id: :swiftui} = assigns) do
-    ~SUI"""
+    ~SWIFTUI"""
     <Text>Hello, world!</Text>
     """
   end

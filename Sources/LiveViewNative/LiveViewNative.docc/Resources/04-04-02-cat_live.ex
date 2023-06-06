@@ -12,7 +12,7 @@ defmodule LvnTutorialWeb.CatLive do
   end
 
   def render(%{platform_id: :swiftui} = assigns) do
-    ~SUI"""
+    ~SWIFTUI"""
     <VStack modifiers={navigation_title(@native, title: @name)}>
       <AsyncImage url={"/images/cats/#{@name}.jpg"} modifiers={frame(@native, width: 300, height: 300)} />
     </VStack>
