@@ -11,12 +11,12 @@ defmodule LvnTutorialWeb.CatLive do
   end
 
   def render(%{platform_id: :swiftui} = assigns) do
-    ~Z"""
+    ~SUI"""
     <VStack modifiers={navigation_title(@native, title: @name)}>
       <AsyncImage url={"/images/cats/#{@name}.jpg"} modifiers={frame(@native, width: 300, height: 300)} />
       <CatRating score={@score} />
     </VStack>
-    """swiftui
+    """
   end
 
   def handle_event("change-score", score, socket) do
