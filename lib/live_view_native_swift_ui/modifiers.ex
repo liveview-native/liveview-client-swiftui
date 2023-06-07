@@ -1,8 +1,8 @@
 defmodule LiveViewNativeSwiftUi.Modifiers do
   use LiveViewNativePlatform.Modifiers
 
-  defimpl Phoenix.HTML.Safe do
-    def to_iodata(%{stack: stack}) do
+  defimpl Jason.Encoder do
+    def encode(%{stack: stack}, opts) do
       modifiers =
         Enum.reduce(stack, [], fn %modifier_schema{} = modifier, acc ->
           key = apply(modifier_schema, :modifier_name, [])
@@ -24,12 +24,18 @@ defmodule LiveViewNativeSwiftUi.Modifiers do
 
       case modifiers do
         [] ->
-          ""
+          nil
 
         modifiers ->
-          Jason.encode!(modifiers)
-          |> Phoenix.HTML.Engine.html_escape()
+          Jason.Encode.list(modifiers, opts)
       end
+    end
+  end
+
+  defimpl Phoenix.HTML.Safe do
+    def to_iodata(struct) do
+      Jason.encode!(struct)
+        |> Phoenix.HTML.Engine.html_escape()
     end
   end
 end

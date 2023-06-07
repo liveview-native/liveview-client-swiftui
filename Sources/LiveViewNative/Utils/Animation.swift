@@ -206,6 +206,12 @@ extension Animation: Decodable {
                 try properties.decode(Double.self, forKey: .c1y),
                 duration: try properties.decodeIfPresent(Double.self, forKey: .duration) ?? 0.35
             )
+        case .keyframe:
+            if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+                base = .init(try container.decode(KeyframeAnimation.self, forKey: .properties))
+            } else {
+                base = .default
+            }
         }
         
         var modifiers = try container.nestedUnkeyedContainer(forKey: .modifiers)
@@ -245,6 +251,7 @@ extension Animation: Decodable {
         case interactiveSpring = "interactive_spring"
         case interpolatingSpring = "interpolating_spring"
         case timingCurve = "timing_curve"
+        case keyframe
         
         enum EasingProperties: String, CodingKey {
             case duration
@@ -293,3 +300,315 @@ extension Animation: Decodable {
         }
     }
 }
+
+/// An animation that plays a list of keyframes.
+///
+/// ```elixir
+/// [
+///   initial_value: 0.0,
+///   keyframes: [
+///     {:linear, 1.0, [duration: 0.36]},
+///     {:spring, 1.5, [duration: 0.8, spring: :bouncy]},
+///     {:spring, 1.0, [spring: :bouncy]}
+///   ]
+/// ]
+/// ```
+///
+/// See ``LiveViewNative/KeyframeAnimation/Keyframe`` for more details.
+#if swift(>=5.9)
+@_documentation(visibility: public)
+@available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
+struct KeyframeAnimation: CustomAnimation, Decodable {
+    let initialValue: Double
+    let keyframes: [Keyframe]
+    
+    func animate<V>(value: V, time: TimeInterval, context: inout AnimationContext<V>) -> V? where V : VectorArithmetic {
+        let timeline = KeyframeTimeline(initialValue: initialValue) {
+            KeyframeTrack(\Double.self) {
+                KeyframeTrackContentBuilder.buildArray(keyframes.map(\.value))
+            }
+        }
+        guard time <= timeline.duration else { return nil }
+        return value.scaled(by: timeline.value(time: time))
+    }
+    
+    /// A single keyframe in an animation.
+    ///
+    /// There are several types of keyframe.
+    ///
+    /// ### :move
+    /// Moves to a particular value without interpolating.
+    ///
+    /// ```elixir
+    /// {:move, 1.0}
+    /// ```
+    ///
+    /// ### :linear
+    /// Linear interpolation to a value.
+    /// See ``LiveViewNative/SwiftUI/UnitCurve`` for a list of possible values.
+    ///
+    /// ```elixir
+    /// {:linear, 1.0, [duration: 1.0]}
+    /// {:linear, 1.0, [duration: 0.5, timing_curve: :ease_in_out]}
+    /// ```
+    ///
+    /// ### :cubic
+    /// A cubic bezier curve interpolation.
+    ///
+    /// ```elixir
+    /// {:cubic, [duration: 0.5]}
+    /// {:cubic, [duration: 1.0, start_velocity: 1.0, end_velocity: 0.1]}
+    /// ```
+    ///
+    /// ### :spring
+    /// A spring function interpolation.
+    /// See ``LiveViewNative/SwiftUI/Spring`` for more details.
+    ///
+    /// ```elixir
+    /// {:spring, [spring: :bouncy]}
+    /// {:spring, [duration: 0.5, spring: :snappy, start_velocity: 1.0]}
+    /// ```
+    @_documentation(visibility: public)
+    enum Keyframe: Hashable, Decodable {
+        case move(_ value: Double)
+        case linear(_ value: Double, duration: Double, timingCurve: UnitCurve = .linear)
+        case cubic(_ value: Double, duration: Double, startVelocity: Double?, endVelocity: Double?)
+        case spring(_ value: Double, duration: Double?, spring: Spring, startVelocity: Double?)
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let value = try container.decode(Double.self, forKey: .value)
+            switch try container.decode(KeyframeType.self, forKey: .type) {
+            case .move:
+                self = .move(value)
+            case .linear:
+                let properties = try container.nestedContainer(keyedBy: CodingKeys.LinearKeys.self, forKey: .properties)
+                self = .linear(
+                    value,
+                    duration: try properties.decode(Double.self, forKey: .duration),
+                    timingCurve: try properties.decodeIfPresent(UnitCurve.self, forKey: .timingCurve) ?? .linear
+                )
+            case .cubic:
+                let properties = try container.nestedContainer(keyedBy: CodingKeys.CubicKeys.self, forKey: .properties)
+                self = .cubic(
+                    value,
+                    duration: try properties.decode(Double.self, forKey: .duration),
+                    startVelocity: try properties.decodeIfPresent(Double.self, forKey: .startVelocity),
+                    endVelocity: try properties.decodeIfPresent(Double.self, forKey: .endVelocity)
+                )
+            case .spring:
+                let properties = try container.nestedContainer(keyedBy: CodingKeys.SpringKeys.self, forKey: .properties)
+                self = .spring(
+                    value,
+                    duration: try properties.decodeIfPresent(Double.self, forKey: .duration),
+                    spring: try properties.decode(Spring.self, forKey: .spring),
+                    startVelocity: try properties.decodeIfPresent(Double.self, forKey: .startVelocity)
+                )
+            }
+        }
+        
+        enum CodingKeys: String, CodingKey {
+            case type
+            case value
+            case properties
+            
+            enum LinearKeys: String, CodingKey {
+                case value
+                case duration
+                case timingCurve
+            }
+            
+            enum CubicKeys: String, CodingKey {
+                case value
+                case duration
+                case startVelocity
+                case endVelocity
+            }
+            
+            enum SpringKeys: String, CodingKey {
+                case value
+                case duration
+                case spring
+                case startVelocity
+            }
+        }
+        
+        enum KeyframeType: String, Decodable {
+            case move
+            case linear
+            case cubic
+            case spring
+        }
+        
+        @KeyframeTrackContentBuilder<Double>
+        var value: some KeyframeTrackContent<Double> {
+            switch self {
+            case let .move(value):
+                MoveKeyframe(value)
+            case let .linear(value, duration, timingCurve):
+                LinearKeyframe(value, duration: duration, timingCurve: timingCurve)
+            case let .cubic(value, duration, startVelocity, endVelocity):
+                CubicKeyframe(value, duration: duration, startVelocity: startVelocity, endVelocity: endVelocity)
+            case let .spring(value, duration, spring, startVelocity):
+                SpringKeyframe(value, duration: duration, spring: spring, startVelocity: startVelocity)
+            }
+        }
+    }
+}
+
+/// A timing curve.
+///
+/// Possible values:
+/// * `ease_in_out`
+/// * `ease_in`
+/// * `ease_out`
+/// * `circular_ease_in`
+/// * `circular_ease_out`
+/// * `circular_ease_in_out`
+/// * `linear`
+/// * `[start, end]` - where `start` and `end` are ``LiveViewNative/SwiftUI/UnitPoint`` values.
+@_documentation(visibility: public)
+@available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
+extension UnitCurve: Decodable {
+    public init(from decoder: Decoder) throws {
+        if let container = try? decoder.singleValueContainer() {
+            switch try container.decode(String.self) {
+            case "ease_in_out": self = .easeInOut
+            case "ease_in": self = .easeIn
+            case "ease_out": self = .easeOut
+            case "circular_ease_in": self = .circularEaseIn
+            case "circular_ease_out": self = .circularEaseOut
+            case "circular_ease_in_out": self = .circularEaseInOut
+            case "linear": self = .linear
+            case let `default`: throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown unit curve '\(`default`)'"))
+            }
+        } else {
+            var container = try decoder.unkeyedContainer()
+            let start = try container.decode(UnitPoint.self)
+            let end = try container.decode(UnitPoint.self)
+            self = .bezier(startControlPoint: start, endControlPoint: end)
+        }
+    }
+}
+
+/// A configurable spring.
+///
+/// There are many ways to create a spring.
+///
+/// The simplest method is to use a preset spring with an atom name.
+///
+/// ```elixir
+/// :smooth
+/// :snappy
+/// :bouncy
+/// ```
+///
+/// It can be further configured with the `duration` and `extra_bounce` properties.
+///
+/// ```elixir
+/// {:smooth, [duration: 1.0, extra_bounce: 1.0]}
+/// {:bouncy, [extra_bounce: 0.2]}
+/// ```
+///
+/// Custom springs can also be created with a variety of properties.
+///
+/// ### duration, bounce
+/// ```elixir
+/// [duration: 1.0]
+/// [bounce: 0.3]
+/// [duration: 1.0, bounce: 0.3]
+/// ```
+///
+/// ### response, damping_ratio
+/// ```elixir
+/// [response: 1.0, damping_ratio: 0.5]
+/// ```
+///
+/// ### settling_duration, damping_ratio, epsilon
+/// ```elixir
+/// [settling_duration: 0.3, damping_ratio: 0.5]
+/// [settling_duration: 0.3, damping_ratio: 0.5, epsilon: 0.01]
+/// ```
+///
+/// ### mass, stiffness, damping, allow_over_damping
+/// ```elixir
+/// [stiffness: 0.5, damping: 0.3]
+/// [mass: 0.75, stiffness: 0.5, damping: 0.3, allow_over_damping: true]
+/// ```
+@_documentation(visibility: public)
+@available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
+extension Spring: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if container.allKeys.contains(.type) {
+            switch try container.decode(SpringType.self, forKey: .type) {
+            case .smooth:
+                self = .smooth(
+                    duration: try container.decodeIfPresent(Double.self, forKey: .duration) ?? 0.5,
+                    extraBounce: try container.decodeIfPresent(Double.self, forKey: .extraBounce) ?? 0
+                )
+            case .snappy:
+                self = .snappy(
+                    duration: try container.decodeIfPresent(Double.self, forKey: .duration) ?? 0.5,
+                    extraBounce: try container.decodeIfPresent(Double.self, forKey: .extraBounce) ?? 0
+                )
+            case .bouncy:
+                self = .bouncy(
+                    duration: try container.decodeIfPresent(Double.self, forKey: .duration) ?? 0.5,
+                    extraBounce: try container.decodeIfPresent(Double.self, forKey: .extraBounce) ?? 0
+                )
+            }
+        } else if container.allKeys.isEmpty {
+            self.init()
+        } else if container.allKeys.contains(.duration) || container.allKeys.contains(.bounce) {
+            self.init(
+                duration: try container.decodeIfPresent(Double.self, forKey: .duration) ?? 0.5,
+                bounce: try container.decodeIfPresent(Double.self, forKey: .bounce) ?? 0
+            )
+        } else if container.allKeys.contains([.response, .dampingRatio]) {
+            self.init(
+                response: try container.decode(Double.self, forKey: .response),
+                dampingRatio: try container.decode(Double.self, forKey: .dampingRatio)
+            )
+        } else if container.allKeys.contains([.settlingDuration, .dampingRatio]) {
+            self.init(
+                settlingDuration: try container.decode(Double.self, forKey: .settlingDuration),
+                dampingRatio: try container.decode(Double.self, forKey: .dampingRatio),
+                epsilon: try container.decodeIfPresent(Double.self, forKey: .epsilon) ?? 0.001
+            )
+        } else {
+            self.init(
+                mass: try container.decodeIfPresent(Double.self, forKey: .mass) ?? 1.0,
+                stiffness: try container.decode(Double.self, forKey: .stiffness),
+                damping: try container.decode(Double.self, forKey: .damping),
+                allowOverDamping: try container.decodeIfPresent(Bool.self, forKey: .allowOverDamping) ?? false
+            )
+        }
+    }
+    
+    enum SpringType: String, Decodable {
+        case smooth
+        case snappy
+        case bouncy
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+        case extraBounce
+        
+        case duration
+        case bounce
+        
+        case response
+        case dampingRatio
+        
+        case settlingDuration
+        case epsilon
+        
+        case mass
+        case stiffness
+        case damping
+        case allowOverDamping
+    }
+}
+#endif

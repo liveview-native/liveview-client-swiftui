@@ -105,6 +105,10 @@ extension AggregateRegistry {
     public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
         return Registries.loadingView(for: url, state: state)
     }
+    
+    public static func errorView(for error: Error) -> some View {
+        return Registries.errorView(for: error)
+    }
 }
 
 /// A helper type that represents either one of two `RawRepresentable<String>` types.
@@ -160,6 +164,10 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
 
     public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
         return First.loadingView(for: url, state: state)
+    }
+    
+    public static func errorView(for error: Error) -> some View {
+        return First.errorView(for: error)
     }
 }
 

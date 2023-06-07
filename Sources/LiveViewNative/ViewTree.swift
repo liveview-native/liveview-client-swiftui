@@ -142,6 +142,10 @@ extension ViewTreeBuilder {
     }
 }
 
+extension CodingUserInfoKey {
+    static var modifierAnimationScale: Self { .init(rawValue: "modifierAnimationScale")! }
+}
+
 enum ModifierContainer<R: RootRegistry>: Decodable {
     case builtin(BuiltinRegistry<R>.BuiltinModifier)
     case custom(R.CustomModifier)

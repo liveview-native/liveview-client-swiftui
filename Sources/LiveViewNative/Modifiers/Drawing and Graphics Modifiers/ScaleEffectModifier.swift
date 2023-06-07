@@ -17,24 +17,40 @@ import SwiftUI
 ///
 /// ## Arguments
 /// * ``scale``
+/// * ``x``
+/// * ``y``
 /// * ``anchor``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
 struct ScaleEffectModifier: ViewModifier, Decodable {
     /// The horizontal and vertical amount to scale the view.
+    ///
+    /// Takes precedence over ``x`` and ``y``.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let scale: CGSize
+    private let scale: CGSize?
+    
+    /// The horizontal amount to scale.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    private let x: Double?
+    
+    /// The vertical amount to scale.
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    private let y: Double?
 
-    /// The ``LiveViewNative/SwiftUI/UnitPoint`` from which to apply the transformation.
+    /// The ``LiveViewNative/SwiftUI/UnitPoint`` from which to apply the transformation. Defaults to `center`.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let anchor: UnitPoint
+    private let anchor: UnitPoint?
 
     func body(content: Content) -> some View {
-        content.scaleEffect(scale, anchor: anchor)
+        content.scaleEffect(scale ?? .init(width: x ?? 1, height: y ?? 1), anchor: anchor ?? .center)
     }
 }
