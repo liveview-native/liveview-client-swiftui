@@ -4,6 +4,15 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Frame do
   modifier_schema "frame" do
     field :width, :float
     field :height, :float
+
+    field :min_width, :float
+    field :ideal_width, :float
+    field :max_width, :float
+
+    field :min_height, :float
+    field :ideal_height, :float
+    field :max_height, :float
+
     field :alignment, Ecto.Enum, values: ~w(
       bottom
       bottom_leading
@@ -16,6 +25,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Frame do
       top_trailing
       trailing
       trailing_first_text_baseline
-    )a
+    )a, default: :center
   end
 end
