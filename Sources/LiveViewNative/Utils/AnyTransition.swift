@@ -98,6 +98,18 @@ import SwiftUI
 /// {:modifier, [active: foreground_style(@native, primary: {:color, :red}), identity: foreground_style(@native, primary: {:color, :green})]}
 /// ```
 ///
+/// ### :symbol_effect
+/// Arguments:
+/// * `effect` - The ``LiveViewNative/SwiftUI/SymbolEffectTransition`` to apply. Defaults to `automatic`.
+/// * `options` - The ``LiveViewNative/SwiftUI/SymbolEffectOptions`` used to configure the transition.
+///
+/// ```elixir
+/// :symbol_effect
+/// {:symbol_effect, :appear}
+/// {:symbol_effect, [:disappear, :up]}
+/// {:symbol_effect, [:appear, :by_layer], [:repeating, {:speed, 0.2}]}
+/// ```
+///
 /// See [`SwiftUI.AnyTransition.modifier`](https://developer.apple.com/documentation/swiftui/anytransition/modifier(active:identity:)) for more details on this transition.
 #if swift(>=5.8)
 @_documentation(visibility: public)
@@ -156,6 +168,18 @@ extension AnyTransition {
                 active: AppliedModifiers<R>(try properties.decode(String.self, forKey: .active).replacingOccurrences(of: "&quot;", with: "\"")),
                 identity: AppliedModifiers<R>(try properties.decode(String.self, forKey: .identity).replacingOccurrences(of: "&quot;", with: "\""))
             )
+        case .symbolEffect:
+            if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+                #if canImport(Symbols)
+                self.init(
+                    (try? container.decodeIfPresent(SymbolEffectTransition.self, forKey: .properties)) ?? .symbolEffect
+                )
+                #else
+                self = .identity
+                #endif
+            } else {
+                self = .identity
+            }
         }
     }
     
@@ -185,6 +209,9 @@ extension AnyTransition {
         case combined
         case animation
         case modifier
+        
+        @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
+        case symbolEffect = "symbol_effect"
     }
     
     enum CodingKeys: String, CodingKey {
@@ -227,5 +254,149 @@ extension AnyTransition {
             case active
             case identity
         }
+        
+        enum SymbolEffect: String, CodingKey {
+            case effect
+            case options
+        }
     }
 }
+
+#if canImport(Symbols)
+/// A transition applied to a system image.
+///
+/// Possible values:
+/// * `automatic`
+/// * `appear` - Supports the options `up`, `down`, `by_layer`, and `whole_symbol`.
+/// * `disappear` - Supports the options `up`, `down`, `by_layer`, and `whole_symbol`.
+///
+/// ```elixir
+/// :automatic
+/// :disappear
+/// [:appear, :down, :by_layer]
+/// ````
+@available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
+extension SymbolEffectTransition: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let effect: any (SymbolEffect & TransitionSymbolEffect)
+        if var container = try? container.nestedUnkeyedContainer(forKey: .effect) {
+            let partialEffect = try container.decode(TransitionSymbolEffectType.self)
+            var options = [String]()
+            while !container.isAtEnd {
+                options.append(try container.decode(String.self))
+            }
+            effect = partialEffect.effect(options: options)
+        } else {
+            effect = try container.decode(TransitionSymbolEffectType.self, forKey: .effect).effect(options: [])
+        }
+        
+        self.init(
+            effect: effect,
+            options: try container.decode(SymbolEffectOptions.self, forKey: .options)
+        )
+    }
+    
+    enum CodingKeys: CodingKey {
+        case effect
+        case options
+    }
+    
+    enum TransitionSymbolEffectType: String, Decodable {
+        case automatic
+        case appear
+        case disappear
+        
+        func effect(options: [String]) -> any (SymbolEffect & TransitionSymbolEffect) {
+            switch self {
+            case .automatic:
+                return AutomaticSymbolEffect.automatic
+            case .appear:
+                var result = AppearSymbolEffect.appear
+                for option in options {
+                    switch option {
+                    case "up": result = result.up
+                    case "down": result = result.down
+                    case "by_layer": result = result.byLayer
+                    case "whole_symbol": result = result.wholeSymbol
+                    default: continue
+                    }
+                }
+                return result
+            case .disappear:
+                var result = DisappearSymbolEffect.disappear
+                for option in options {
+                    switch option {
+                    case "up": result = result.up
+                    case "down": result = result.down
+                    case "by_layer": result = result.byLayer
+                    case "whole_symbol": result = result.wholeSymbol
+                    default: continue
+                    }
+                }
+                return result
+            }
+        }
+    }
+}
+
+/// Options applied to a symbol effect.
+///
+/// ### :repeating
+/// Causes the effect to repeat indefinitely.
+///
+/// ### :non_repeating
+/// Disables repeating of the effect.
+///
+/// ### :speed
+/// The speed multiplier.
+///
+/// ```elixir
+/// {:speed, 0.25}
+/// ```
+///
+/// ### :repeat
+/// Repeat a specified number of times.
+///
+/// ```elixir
+/// {:repeat, 3}
+/// ```
+@available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
+extension SymbolEffectOptions: Decodable {
+    public init(from decoder: Decoder) throws {
+        var container = try decoder.unkeyedContainer()
+        self = .default
+        while !container.isAtEnd {
+            if let value = try? container.decode(String.self) {
+                switch value {
+                case "repeating":
+                    self = self.repeating
+                case "non_repeating":
+                    self = self.nonRepeating
+                case let `default`:
+                    throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown symbol effect option '\(`default`)'"))
+                }
+            } else {
+                let option = try container.nestedContainer(keyedBy: CodingKeys.self)
+                switch try option.decode(OptionType.self, forKey: .type) {
+                case .speed:
+                    self = self.speed(try option.decode(Double.self, forKey: .properties))
+                case .repeat:
+                    self = self.repeat(try option.decodeIfPresent(Int.self, forKey: .properties))
+                }
+            }
+        }
+    }
+    
+    enum CodingKeys: CodingKey {
+        case type
+        case properties
+    }
+    
+    enum OptionType: String, Decodable {
+        case speed
+        case `repeat`
+    }
+}
+#endif
