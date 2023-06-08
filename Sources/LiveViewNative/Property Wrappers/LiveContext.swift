@@ -138,7 +138,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         of element: ElementNode
     ) -> [NodeChildrenSequence.Element] {
         element.children().filter {
-            !($0.asElement()?.attributes.contains(where: { $0.name.rawValue == "template" }) ?? false)
+            !$0.attributes.contains(where: { $0.name.rawValue == "template" })
         }
     }
 }
