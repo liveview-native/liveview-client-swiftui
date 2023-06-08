@@ -22,8 +22,23 @@ import SwiftUI
 /// </Button>
 /// ```
 ///
-/// ## Attributes
+/// Use the ``selection`` argument to synchronize the selected detent's index with the backend.
+///
+/// ```html
+/// <VStack modifiers={presentation_detents(@native, detents: [...], selection: :active_detent)}>
+///   ...
+/// </VStack>
+/// ```
+///
+/// ```elixir
+/// defmodule MyAppWeb.SheetLive do
+///   native_binding :active_detent, Integer, 0
+/// end
+/// ```
+///
+/// ## Arguments
 /// - ``detents``
+/// - ``selection``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -34,9 +49,30 @@ struct PresentationDetentsModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let detents: Set<PresentationDetent>
+    private let detents: [PresentationDetent]
+    
+    @LiveBinding private var selection: Int
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.detents = try container.decode([PresentationDetent].self, forKey: .detents)
+        self._selection = try LiveBinding(decoding: .selection, in: container)
+    }
     
     func body(content: Content) -> some View {
-        content.presentationDetents(detents)
+        if _selection.isBound {
+            content.presentationDetents(Set(detents), selection: Binding {
+                detents[selection]
+            } set: {
+                selection = detents.firstIndex(of: $0)!
+            })
+        } else {
+            content.presentationDetents(Set(detents))
+        }
+    }
+    
+    enum CodingKeys: CodingKey {
+        case detents
+        case selection
     }
 }
