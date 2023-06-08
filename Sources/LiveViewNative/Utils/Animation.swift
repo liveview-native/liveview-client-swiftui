@@ -83,6 +83,16 @@ import SwiftUI
 ///
 /// See [`SwiftUI.Animation.interpolatingSpring`](https://developer.apple.com/documentation/swiftui/animation/interpolatingspring(mass:stiffness:damping:initialvelocity:)) for more details on this animation.
 ///
+/// #### :keyframe
+/// Pass a ``KeyframeAnimation`` as the second element in the tuple.
+/// ```elixir
+/// {:keyframe, [initial_value: 1.0, keyframes: [
+///   {:linear, 1.0, [duration: 0.36]},
+///   {:spring, 1.5, [duration: 0.8, spring: :bouncy]},
+///   {:spring, 1.0, [spring: :bouncy]}
+/// ]]}
+/// ```
+///
 /// ### Animation Modifiers
 /// Modifiers can be applied to any animation as the third tuple element.
 ///
