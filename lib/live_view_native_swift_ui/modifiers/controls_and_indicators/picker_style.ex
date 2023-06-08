@@ -10,6 +10,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.PickerStyle do
       radio_group
       segmented
       wheel
+      palette
     )a)
   end
 end
