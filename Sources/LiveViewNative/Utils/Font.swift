@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// A font value.
 ///
@@ -311,11 +312,21 @@ extension Font.Design: Decodable {
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-extension Font.TextStyle: Decodable {
+extension Font.TextStyle: Decodable, AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        try self.init(from: value)
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        switch try container.decode(String.self) {
-        case "large_title": self = .largeTitle
+        try self.init(from: try container.decode(String.self))
+    }
+    
+    public init(from string: String) throws {
+        switch string {
+        case "large_title", "large-title": self = .largeTitle
         case "title": self = .title
         case "title2": self = .title2
         case "title3": self = .title3
