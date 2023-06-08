@@ -218,7 +218,11 @@ extension Animation: Decodable {
             )
         case .keyframe:
             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+                #if swift(>=5.9)
                 base = .init(try container.decode(KeyframeAnimation.self, forKey: .properties))
+                #else
+                base = .default
+                #endif
             } else {
                 base = .default
             }
@@ -311,6 +315,7 @@ extension Animation: Decodable {
     }
 }
 
+#if swift(>=5.9)
 /// An animation that plays a list of keyframes.
 ///
 /// ```elixir
@@ -325,7 +330,6 @@ extension Animation: Decodable {
 /// ```
 ///
 /// See ``LiveViewNative/KeyframeAnimation/Keyframe`` for more details.
-#if swift(>=5.9)
 @_documentation(visibility: public)
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
 struct KeyframeAnimation: CustomAnimation, Decodable {
