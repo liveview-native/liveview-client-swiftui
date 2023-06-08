@@ -47,7 +47,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 @available(iOS 17, macOS 14, tvOS 17, watchOS 10, *)
-struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable, Sendable {
+struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// The initial value of the animation.
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -76,10 +76,16 @@ struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable, Senda
     private let modifiers: String
     
     /// A list of atoms with the names of the modifier's properties to animate.
+    ///
+    /// For example, to animate the `y` property of an ``OffsetModifier`` modifier:
+    ///
+    /// ```elixir
+    /// [offset: [:y]]
+    /// ```
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let properties: [String]
+    private let properties: [String:[String]]
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -87,7 +93,7 @@ struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable, Senda
         self.trigger = try container.decode(String.self, forKey: .trigger)
         self.keyframes = try container.decode([KeyframeAnimation.Keyframe].self, forKey: .keyframes)
         self.modifiers = try container.decode(String.self, forKey: .modifiers)
-        self.properties = try container.decode([String].self, forKey: .properties)
+        self.properties = try container.decode([String:[String]].self, forKey: .properties)
     }
     
     func body(content: Content) -> some View {
@@ -125,13 +131,15 @@ struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable, Senda
         @ObservedElement private var element
         @LiveContext<R> private var context
         
-        nonisolated init(_ modifiers: String, value: Double, properties: [String], content: Content) throws {
+        nonisolated init(_ modifiers: String, value: Double, properties: [String:[String]], content: Content) throws {
             self.content = content
             
             let modified = NSArray(array: (try JSONSerialization.jsonObject(with: Data(modifiers.utf8)) as! [[NSString:Any]])
-                .map({
-                    Dictionary(uniqueKeysWithValues: $0.map({
-                        if properties.contains(String($0.key)) {
+                .compactMap({ (modifier) -> NSDictionary? in
+                    guard let type = modifier["type"] as? String
+                    else { return nil }
+                    return Dictionary<NSString, Any>(uniqueKeysWithValues: modifier.map({
+                        if (properties[type]?.contains(String($0.key)) ?? false) {
                             return ($0.key, NSNumber(value: value) as Any)
                         } else {
                             return ($0.key, $0.value)
