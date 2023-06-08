@@ -28,7 +28,7 @@ import SwiftUI
 ///         {:spring, 1.0, [spring: :bouncy]}
 ///       ],
 ///       modifiers: @native |> scale_effect(x: 1.0, y: 1.0),
-///       properties: [:x, :y]
+///       properties: [scale_effect: [:x, :y]]
 ///     )
 ///   }
 /// />
