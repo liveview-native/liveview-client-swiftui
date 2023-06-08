@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 6/7/2023.
 //
 
+#if swift(>=5.9)
 import SwiftUI
 
 /// Use keyframes to animate specific modifiers.
@@ -98,7 +99,6 @@ struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable {
     
     func body(content: Content) -> some View {
         content
-            #if swift(>=5.9)
             .keyframeAnimator(
                 initialValue: initialValue,
                 trigger: trigger
@@ -113,7 +113,6 @@ struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable {
                     KeyframeTrackContentBuilder.buildArray(keyframes.map(\.value))
                 }
             }
-            #endif
     }
     
     enum CodingKeys: CodingKey {
@@ -156,3 +155,4 @@ struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable {
         }
     }
 }
+#endif
