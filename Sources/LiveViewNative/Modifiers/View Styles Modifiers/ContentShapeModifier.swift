@@ -29,7 +29,7 @@ struct ContentShapeModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let kind: ContentShapeKinds?
+    private let kind: ContentShapeKinds
     
     /// The shape to use.
     ///
@@ -57,7 +57,7 @@ struct ContentShapeModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.contentShape(
-            kind!,
+            kind,
             shape.resolve(on: element, in: context),
             eoFill: eoFill
         )
