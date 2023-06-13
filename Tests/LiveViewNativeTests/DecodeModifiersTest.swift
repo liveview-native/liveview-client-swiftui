@@ -7,7 +7,7 @@
 
 import XCTest
 import SwiftUI
-@testable import LiveViewNative
+@_spi(LiveViewNative) @testable import LiveViewNative
 
 final class DecodeModifiersTest: XCTestCase {
 
