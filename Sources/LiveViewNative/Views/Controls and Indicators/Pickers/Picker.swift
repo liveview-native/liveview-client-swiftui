@@ -14,7 +14,7 @@ import SwiftUI
 /// Use the `content` children to specify the options for the picker, and the `label` children to provide a label.
 ///
 /// ```html
-/// <Picker value-binding="transport" picker-style="menu">
+/// <Picker value-binding="transport">
 ///     <Text template={:label}>Transportation</Text>
 ///     <Group template={:content}>
 ///         <Label system-image="car" modifiers={tag(@native, tag: "car")}>Car</Label>

@@ -16,9 +16,9 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 struct TagModifier: ViewModifier, Decodable {
-    private let value: String?
+    private let tag: String?
     
     func body(content: Content) -> some View {
-        content.tag(value)
+        content.tag(tag)
     }
 }

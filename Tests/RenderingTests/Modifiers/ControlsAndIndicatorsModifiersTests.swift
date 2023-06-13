@@ -103,27 +103,27 @@ final class ControlsAndIndicatorsModifiersTests: XCTestCase {
             <VStack>
                 <Picker value="a" modifiers='[{"type": "picker_style", "style": "automatic"}]'>
                     <Text template="label">Automatic</Text>
-                    <Text template="content" modifiers='[{"type": "tag", "value": "a"}]'>a</Text>
+                    <Text template="content" modifiers='[{"type": "tag", "tag": "a"}]'>a</Text>
                 </Picker>
                 <Picker value="a" modifiers='[{"type": "picker_style", "style": "inline"}]'>
                     <Text template="label">Inline</Text>
-                    <Text template="content" modifiers='[{"type": "tag", "value": "a"}]'>a</Text>
+                    <Text template="content" modifiers='[{"type": "tag", "tag": "a"}]'>a</Text>
                 </Picker>
                 <Picker value="a" modifiers='[{"type": "picker_style", "style": "menu"}]'>
                     <Text template="label">Menu</Text>
-                    <Text template="content" modifiers='[{"type": "tag", "value": "a"}]'>a</Text>
+                    <Text template="content" modifiers='[{"type": "tag", "tag": "a"}]'>a</Text>
                 </Picker>
                 <Picker value="a" modifiers='[{"type": "picker_style", "style": "navigation_link"}]'>
                     <Text template="label">Navigation Link</Text>
-                    <Text template="content" modifiers='[{"type": "tag", "value": "a"}]'>a</Text>
+                    <Text template="content" modifiers='[{"type": "tag", "tag": "a"}]'>a</Text>
                 </Picker>
                 <Picker value="a" modifiers='[{"type": "picker_style", "style": "segmented"}]'>
                     <Text template="label">Segmented</Text>
-                    <Text template="content" modifiers='[{"type": "tag", "value": "a"}]'>a</Text>
+                    <Text template="content" modifiers='[{"type": "tag", "tag": "a"}]'>a</Text>
                 </Picker>
                 <Picker value="a" modifiers='[{"type": "picker_style", "style": "wheel"}]'>
                     <Text template="label">Wheel</Text>
-                    <Text template="content" modifiers='[{"type": "tag", "value": "a"}]'>a</Text>
+                    <Text template="content" modifiers='[{"type": "tag", "tag": "a"}]'>a</Text>
                 </Picker>
             </VStack>
             """#

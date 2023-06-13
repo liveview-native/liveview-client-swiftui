@@ -46,9 +46,9 @@ final class PickerTests: XCTestCase {
             <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "automatic"}]'>
                 <Text template="label">Pick an icon</Text>
                 <Group template="content">
-                    <Label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><Text>paperplane</Text></Label>
-                    <Label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><Text>graduationcap</Text></Label>
-                    <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
+                    <Label system-image="paperplane" modifiers='[{"type": "tag", "tag": "paperplane"}]'><Text>paperplane</Text></Label>
+                    <Label system-image="graduationcap" modifiers='[{"type": "tag", "tag": "graduationcap"}]'><Text>graduationcap</Text></Label>
+                    <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "tag": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
                 </Group>
             </Picker>
             """#) {
@@ -74,9 +74,9 @@ final class PickerTests: XCTestCase {
             <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "inline"}]'>
                 <Text template="label">Pick an icon</Text>
                 <Group template="content">
-                    <Label system-image="paperplane" modifiers='[{"type": "tag", "value": "paperplane"}]'><Text>paperplane</Text></Label>
-                    <Label system-image="graduationcap" modifiers='[{"type": "tag", "value": "graduationcap"}]'><Text>graduationcap</Text></Label>
-                    <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "value": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
+                    <Label system-image="paperplane" modifiers='[{"type": "tag", "tag": "paperplane"}]'><Text>paperplane</Text></Label>
+                    <Label system-image="graduationcap" modifiers='[{"type": "tag", "tag": "graduationcap"}]'><Text>graduationcap</Text></Label>
+                    <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "tag": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
                 </Group>
             </Picker>
             """#) {

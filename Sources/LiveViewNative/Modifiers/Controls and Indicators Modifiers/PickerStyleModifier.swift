@@ -51,6 +51,14 @@ struct PickerStyleModifier: ViewModifier, Decodable {
 #if os(iOS) || os(watchOS)
             content.pickerStyle(.wheel)
 #endif
+        case .palette:
+            if #available(iOS 17, macOS 14, *) {
+#if swift(>=5.9) && (os(iOS) || os(macOS))
+                content.pickerStyle(.palette)
+#endif
+            } else {
+                content
+            }
         }
     }
 }
@@ -95,4 +103,9 @@ private enum PickerStyle: String, Decodable {
     #endif
     @available(iOS 16.0, watchOS 9.0, *)
     case wheel
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(iOS 17.0, macOS 14.0, *)
+    case palette
 }
