@@ -130,7 +130,7 @@ struct Table<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "selection") private var selection = Selection.multiple([])
+    @LiveBinding(attribute: "selection") private var selection = Selection.none
     /// Synchronizes the columns to sort by with the server.
     ///
     /// The order is serialized as a list of maps with an `id` and `order` property.
@@ -330,6 +330,8 @@ fileprivate extension SwiftUI.Table where Value == TableRow, Rows == TableForEac
         @TableColumnBuilder<TableRow, TableColumnSort> columns: () -> Columns
     ) {
         switch selection.wrappedValue {
+        case .none:
+            self.init(rows, sortOrder: sortOrder, columns: columns)
         case .single(_):
             self.init(rows, selection: selection.single, sortOrder: sortOrder, columns: columns)
         case .multiple(_):

@@ -260,6 +260,10 @@ public struct Event: DynamicProperty, Decodable {
     public struct EventHandler {
         let owner: Event
         
+        var event: String? {
+            owner.event ?? owner.name.flatMap(owner.element.attributeValue(for:))
+        }
+        
         public func callAsFunction(value: Any = [String:String](), didSend: (() -> Void)? = nil) {
             Task {
                 try await self.callAsFunction(value: value)
@@ -268,7 +272,7 @@ public struct Event: DynamicProperty, Decodable {
         }
         
         public func callAsFunction(value: Any = [String:String]()) async throws {
-            guard let event = owner.event ?? owner.name.flatMap(owner.element.attributeValue(for:)) else {
+            guard let event else {
                 return
             }
             try await withCheckedThrowingContinuation { continuation in

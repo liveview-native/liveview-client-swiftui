@@ -7,6 +7,7 @@
 
 /// Selection of either a single value or set of values.
 enum Selection: Codable {
+    case none
     case single(String?)
     case multiple(Set<String>)
     
@@ -33,7 +34,7 @@ enum Selection: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if container.decodeNil() {
-            self = .single(nil)
+            self = .none
         } else if let item = try? container.decode(String.self) {
             self = .single(item)
         } else {
@@ -44,6 +45,8 @@ enum Selection: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
+        case .none:
+            try container.encodeNil()
         case .single(let selection):
             try container.encode(selection)
         case .multiple(let selection):

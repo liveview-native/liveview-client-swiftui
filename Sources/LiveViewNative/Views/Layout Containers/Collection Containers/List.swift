@@ -166,7 +166,7 @@ struct List<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "selection") private var selection = Selection.single(nil)
+    @LiveBinding(attribute: "selection") private var selection = Selection.none
     
     public var body: some View {
         #if os(watchOS)
@@ -175,6 +175,10 @@ struct List<R: RootRegistry>: View {
         }
         #else
         switch selection {
+        case .none:
+            SwiftUI.List {
+                content
+            }
         case .single:
             SwiftUI.List(selection: $selection.single) {
                 content
@@ -188,12 +192,13 @@ struct List<R: RootRegistry>: View {
     }
     
     private var content: some View {
-        forEach(nodes: element.children(), context: context.storage)
+        forEach(nodes: context.children(of: element), context: context.storage)
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }
     
     private var onDeleteHandler: ((IndexSet) -> Void)? {
+        guard delete.event != nil else { return nil }
         return { indices in
             var meta = element.buildPhxValuePayload()
             // todo: what about multiple indicies?
@@ -203,6 +208,7 @@ struct List<R: RootRegistry>: View {
     }
     
     private var onMoveHandler: ((IndexSet, Int) -> Void)? {
+        guard move.event != nil else { return nil }
         return { indices, index in
             var meta = element.buildPhxValuePayload()
             meta["index"] = indices.first!
