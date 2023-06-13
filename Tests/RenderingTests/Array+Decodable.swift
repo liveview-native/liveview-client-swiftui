@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@testable import LiveViewNative
+@_spi(LiveViewNative) @testable import LiveViewNative
 
 extension Array where Element: Decodable {
     init(jsonValues: some Encodable) throws {
