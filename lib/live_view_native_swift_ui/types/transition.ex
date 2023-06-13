@@ -10,12 +10,15 @@ defmodule LiveViewNativeSwiftUi.Types.Transition do
   def cast(combined) when is_list(combined) and length(combined) > 0 do
     {:ok, %__MODULE__{ type: :combined, properties: %{ transitions: Enum.map(combined, fn t -> elem(cast(t), 1) end) } }}
   end
+
   def cast(value) when is_atom(value), do: {:ok, %__MODULE__{ type: value, properties: %{} }}
-  def cast({:asymmetric, [insertion: insertion, removal: removal]}) do
+
+  def cast({:asymmetric = type, [insertion: insertion, removal: removal]}) do
     {:ok, i} = cast(insertion)
     {:ok, r} = cast(removal)
-    {:ok, %__MODULE__{ type: :asymmetric, properties: %{ insertion: i, removal: r } }}
+    {:ok, %__MODULE__{ type: type, properties: %{ insertion: i, removal: r } }}
   end
+
   def cast({
     :modifier,
     [
@@ -31,9 +34,16 @@ defmodule LiveViewNativeSwiftUi.Types.Transition do
       }
     }}
   end
+
+  def cast({:symbol_effect = type, effect}), do: cast({type, effect, []})
+  def cast({:symbol_effect = type, effect, options}) when is_list(options) do
+    {:ok, %__MODULE__{ type: type, properties: %{ effect: effect, options: Enum.map(options, &cast_symbol_effect_option/1) } }}
+  end
+
   def cast({value, [ {k, _} | _ ] = properties}) when is_atom(value) and is_atom(k) do
     {:ok, %__MODULE__{ type: value, properties: Enum.into(properties, %{}) }}
   end
+
   def cast({transition, animation}) do
     {:ok, t} = cast(transition)
     case Animation.cast(animation) do
@@ -48,4 +58,12 @@ defmodule LiveViewNativeSwiftUi.Types.Transition do
 
   def cast_modifier({type, properties}) when is_list(properties), do: %{ type: type, properties: Enum.into(properties, %{}) }
   def cast_modifier({type, properties}), do: %{ type: type, properties: properties }
+
+  def cast_symbol_effect_option(type) when is_atom(type), do: Atom.to_string(type)
+  def cast_symbol_effect_option({type, properties}) when is_atom(type) and is_list(properties) do
+    %{ type: type, properties: Enum.into(properties, %{}) }
+  end
+  def cast_symbol_effect_option({type, properties}) when is_atom(type) do
+    %{ type: type, properties: properties }
+  end
 end
