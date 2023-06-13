@@ -7,7 +7,7 @@
 
 import Foundation
 
-func makeJSONDecoder() -> JSONDecoder {
+@_spi(LiveViewNative) public func makeJSONDecoder() -> JSONDecoder {
     snakeCaseDecoder
 }
 

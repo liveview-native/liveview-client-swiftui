@@ -23,7 +23,7 @@ import LiveViewNativeCore
 @propertyWrapper
 public struct LiveContext<R: RootRegistry>: DynamicProperty {
     @Environment(\.anyLiveContextStorage) private var anyStorage
-    var storage: LiveContextStorage<R> {
+    @_spi(LiveViewNative) public var storage: LiveContextStorage<R> {
         anyStorage as! LiveContextStorage<R>
     }
     
@@ -143,7 +143,12 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     }
 }
 
-struct LiveContextStorage<R: RootRegistry> {
+@_spi(LiveViewNative) public struct LiveContextStorage<R: RootRegistry> {
     let coordinator: LiveViewCoordinator<R>
     let url: URL
+    
+    @_spi(LiveViewNative) public init(coordinator: LiveViewCoordinator<R>, url: URL) {
+        self.coordinator = coordinator
+        self.url = url
+    }
 }

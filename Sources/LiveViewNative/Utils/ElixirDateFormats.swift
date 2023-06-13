@@ -50,8 +50,8 @@ struct ElixirDateTimeFormat: ParseableFormatStyle {
     var parseStrategy = ElixirDateTimeOrDateParseStrategy()
 }
 
-struct ElixirDateTimeOrDateParseStrategy: ParseStrategy {
-    func parse(_ value: String) throws -> Date {
+@_spi(LiveViewNative) public struct ElixirDateTimeOrDateParseStrategy: ParseStrategy {
+    @_spi(LiveViewNative) public func parse(_ value: String) throws -> Date {
         guard let value = dateTimeFormatter.date(from: value) ?? dateFormatter.date(from: value)
         else { throw DateParseError.invalidDate }
         return value
@@ -70,8 +70,8 @@ extension FormatStyle where Self == ElixirDateFormat {
     static var elixirDate: ElixirDateFormat { .init() }
 }
 
-extension ParseStrategy where Self == ElixirDateTimeOrDateParseStrategy {
-    static var elixirDateTimeOrDate: ElixirDateTimeOrDateParseStrategy { .init() }
+@_spi(LiveViewNative) public extension ParseStrategy where Self == ElixirDateTimeOrDateParseStrategy {
+    @_spi(LiveViewNative) static var elixirDateTimeOrDate: ElixirDateTimeOrDateParseStrategy { .init() }
 }
 
 extension ParseStrategy where Self == ElixirDateParseStrategy {

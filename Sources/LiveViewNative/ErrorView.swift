@@ -12,20 +12,20 @@ enum ErrorSource {
     case error(Error)
 }
 
-struct ErrorView<R: RootRegistry>: View {
+@_spi(LiveViewNative) public struct ErrorView<R: RootRegistry>: View {
     let source: ErrorSource
     
-    init(html: String) {
+    @_spi(LiveViewNative) public init(html: String) {
         self.source = .html(html)
     }
     
-    init(_ error: Error) {
+    @_spi(LiveViewNative) public init(_ error: Error) {
         self.source = .error(error)
     }
     
     @State private var isPresented = false
     
-    var body: some View {
+    @_spi(LiveViewNative) public var body: some View {
         switch source {
         case let .html(html):
             WebErrorView(html: html)

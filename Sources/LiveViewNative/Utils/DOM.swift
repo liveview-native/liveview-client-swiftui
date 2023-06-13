@@ -27,7 +27,7 @@ public struct ElementNode: Sendable {
     let node: Node
     let data: ElementData
     
-    init(node: Node, data: ElementData) {
+    @_spi(LiveViewNative) public init(node: Node, data: ElementData) {
         self.node = node
         self.data = data
     }
