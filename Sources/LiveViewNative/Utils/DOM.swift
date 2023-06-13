@@ -23,7 +23,7 @@ import LiveViewNativeCore
 /// - ``depthFirstChildren()``
 /// - ``elementChildren()``
 /// - ``innerText()``
-public struct ElementNode: Sendable {
+public struct ElementNode {
     let node: Node
     let data: ElementData
     
