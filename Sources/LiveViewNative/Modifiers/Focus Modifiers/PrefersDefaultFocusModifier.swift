@@ -61,14 +61,16 @@ struct PrefersDefaultFocusModifier: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
+        #if !os(iOS)
         if let namespace = namespaces[namespace] {
             content
-                #if !os(iOS)
                 .prefersDefaultFocus(prefersDefaultFocus, in: namespace)
-                #endif
         } else {
             content
         }
+        #else
+        content
+        #endif
     }
 
     enum CodingKeys: CodingKey {

@@ -56,6 +56,13 @@ struct StrokeBorderModifier: FinalShapeModifier, Decodable {
     }
     
     func apply(to shape: any InsettableShape) -> some View {
-        AnyView(shape.strokeBorder(content, style: style ?? .init(), antialiased: antialiased))
+        let modified = shape.strokeBorder(content, style: style ?? .init(), antialiased: antialiased)
+        return modified.eraseToAnyView()
+    }
+}
+
+private extension View {
+    func eraseToAnyView() -> AnyView {
+        AnyView(self)
     }
 }

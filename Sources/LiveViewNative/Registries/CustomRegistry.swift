@@ -40,7 +40,7 @@ import LiveViewNativeCore
 /// ### Supporting Types
 /// - ``EmptyRegistry``
 /// - ``ViewModifierBuilder``
-public protocol CustomRegistry {
+public protocol CustomRegistry<Root> {
     /// The root custom registry type that the live view coordinator and context use.
     ///
     /// Conform you registry type to ``RootRegistry``, which sets this type to `Self` automatically, if you intend to use your registry directly.

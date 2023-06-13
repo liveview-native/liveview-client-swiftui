@@ -8,9 +8,37 @@
 import Foundation
 import SwiftUI
 
+#if swift(>=5.9)
+/// A macro that combines multiple registries together.
+///
+/// ```swift
+/// struct AppRegistries: AggregateRegistry {
+///     #Registries<
+///         MyRegistry,
+///         LiveFormsRegistry<Self>,
+///         AVKitRegistry<Self>
+///     >
+/// }
+/// ```
+@freestanding(declaration, names: named(Registries))
+public macro Registries() = #externalMacro(module: "LiveViewNativeMacros", type: "RegistriesMacro")
+#endif
+
 /// An aggregate registry combines multiple other registries together, allowing you to use tags/modifiers declared by any of them.
 ///
-/// To conform to this protocol, provide the `Registries` typealias, using the `Registry2`/`Registry3`/etc. types:
+/// In Swift 5.9, use the ``LiveViewNative/Registries`` macro to combine registries together.
+///
+/// ```swift
+/// struct AppRegistries: AggregateRegistry {
+///     #Registries<
+///         MyRegistry,
+///         LiveFormsRegistry<Self>,
+///         AVKitRegistry<Self>
+///     >
+/// }
+/// ```
+///
+/// When using a Swift version < 5.9, conform to this protocol manually, provide the `Registries` typealias using the `Registry2`/`Registry3`/etc. types:
 /// ```swift
 /// struct AppRegistries: AggregateRegistry {
 ///     typealias Registries = Registry2<
