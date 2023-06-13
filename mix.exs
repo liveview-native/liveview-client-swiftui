@@ -4,7 +4,7 @@ defmodule LiveViewNativeSwiftUi.MixProject do
   def project do
     [
       app: :live_view_native_swift_ui,
-      version: "0.0.7",
+      version: "0.0.8-rc.0",
       elixir: "~> 1.13",
       description: "LiveView Native platform for SwiftUI",
       package: package(),
