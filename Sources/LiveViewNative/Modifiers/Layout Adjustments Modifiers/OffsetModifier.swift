@@ -30,14 +30,14 @@ struct OffsetModifier: ViewModifier, Decodable, Equatable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let x: CGFloat
+    private let x: CGFloat?
     /// The offset to apply to the y axis.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let y: CGFloat
+    private let y: CGFloat?
 
     func body(content: Content) -> some View {
-        content.offset(x: x, y: y)
+        content.offset(x: x ?? 0, y: y ?? 0)
     }
 }
