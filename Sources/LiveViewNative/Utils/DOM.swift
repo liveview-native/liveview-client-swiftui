@@ -76,6 +76,10 @@ public struct ElementNode {
         attribute(named: name) != nil
     }
     
+    public func attributeValue<T: AttributeDecodable>(_: T.Type = T.self, for name: AttributeName) throws -> T? {
+        try T.init(from: attribute(named: name))
+    }
+    
     /// The text of this element.
     ///
     /// The returned string only incorporates the direct text node children, not any text nodes within nested elements.
