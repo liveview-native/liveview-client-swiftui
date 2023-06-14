@@ -159,8 +159,7 @@ enum ShapeReference: Decodable {
         }
     }
     
-    @_disfavoredOverload
-    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyInsettableShape {
+    func resolveInsettableShape<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyInsettableShape {
         switch self {
         case let .static(anyShape):
             return AnyInsettableShape(anyShape)

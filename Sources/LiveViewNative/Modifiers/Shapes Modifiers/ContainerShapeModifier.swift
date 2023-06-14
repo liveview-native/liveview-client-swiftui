@@ -49,7 +49,7 @@ struct ContainerShapeModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
     
     func body(content: Content) -> some View {
-        content.containerShape(shape.resolve(on: element, in: context))
+        content.containerShape(shape.resolveInsettableShape(on: element, in: context))
     }
     
     enum CodingKeys: CodingKey {
