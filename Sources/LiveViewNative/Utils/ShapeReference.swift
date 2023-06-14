@@ -62,7 +62,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 enum ShapeReference: Decodable {
-    case `static`(AnyShape)
+    case `static`(any InsettableShape)
     case key(String)
     
     init(from decoder: Decoder) throws {
@@ -72,28 +72,28 @@ enum ShapeReference: Decodable {
         } else {
             let staticContainer = try container.nestedContainer(keyedBy: CodingKeys.PropertiesKeys.self, forKey: .properties)
             switch try container.decode(StaticShape.self, forKey: .static) {
-            case .capsule: self = .static(AnyShape(
+            case .capsule: self = .static(
                 Capsule(style: try staticContainer.decodeIfPresent(RoundedCornerStyle.self, forKey: .style) ?? .circular)
-            ))
-            case .circle: self = .static(AnyShape(Circle()))
-            case .containerRelativeShape: self = .static(AnyShape(ContainerRelativeShape()))
-            case .ellipse: self = .static(AnyShape(Ellipse()))
-            case .rectangle: self = .static(AnyShape(Rectangle()))
+            )
+            case .circle: self = .static(Circle())
+            case .containerRelativeShape: self = .static(ContainerRelativeShape())
+            case .ellipse: self = .static(Ellipse())
+            case .rectangle: self = .static(Rectangle())
             case .roundedRectangle:
                 let style = try staticContainer.decodeIfPresent(RoundedCornerStyle.self, forKey: .style) ?? .circular
                 if let radius = try staticContainer.decodeIfPresent(CGFloat.self, forKey: .radius) {
-                    self = .static(AnyShape(RoundedRectangle(
+                    self = .static(RoundedRectangle(
                         cornerRadius: radius,
                         style: style
-                    )))
+                    ))
                 } else {
-                    self = .static(AnyShape(RoundedRectangle(
+                    self = .static(RoundedRectangle(
                         cornerSize: .init(
                             width: try staticContainer.decode(CGFloat.self, forKey: .width),
                             height: try staticContainer.decode(CGFloat.self, forKey: .height)
                         ),
                         style: style
-                    )))
+                    ))
                 }
             }
         }
@@ -126,7 +126,7 @@ enum ShapeReference: Decodable {
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyShape {
         switch self {
         case let .static(anyShape):
-            return anyShape
+            return AnyShape(anyShape)
         case let .key(keyName):
             return context.children(of: element, forTemplate: keyName)
                 .compactMap { $0.asElement() }
@@ -153,9 +153,79 @@ enum ShapeReference: Decodable {
                             modifier.apply(to: shape)
                         }.eraseToAnyShape()
                     } else {
-                        return AnyShape(shape)
+                        return .init(shape)
                     }
-                }.first ?? AnyShape(Rectangle())
+                }.first ?? .init(Rectangle())
+        }
+    }
+    
+    func resolveInsettableShape<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyInsettableShape {
+        switch self {
+        case let .static(anyShape):
+            return AnyInsettableShape(anyShape)
+        case let .key(keyName):
+            return context.children(of: element, forTemplate: keyName)
+                .compactMap { $0.asElement() }
+                .compactMap {
+                    let shape: any InsettableShape
+                    switch $0.tag {
+                    case "Capsule":
+                        shape = Capsule(from: $0)
+                    case "Circle":
+                        shape = Circle()
+                    case "ContainerRelativeShape":
+                        shape = ContainerRelativeShape()
+                    case "Ellipse":
+                        shape = Ellipse()
+                    case "Rectangle":
+                        shape = Rectangle()
+                    case "RoundedRectangle":
+                        shape = RoundedRectangle(from: $0)
+                    default:
+                        shape = Rectangle()
+                    }
+                    if let modifiers = try? ShapeModifierStack(from: $0.attribute(named: "modifiers")) {
+                        let modified = modifiers.stack.reduce(EitherAnyShape.insettable(shape)) { shape, modifier in
+                            modifier.apply(to: shape)
+                        }
+                        switch modified {
+                        case .shape:
+                            return .init(shape)
+                        case let .insettable(insettable):
+                            return .init(insettable)
+                        }
+                    } else {
+                        return .init(shape)
+                    }
+                }.first ?? .init(Rectangle())
+        }
+    }
+    
+    struct AnyInsettableShape: InsettableShape {
+        let _path: (CGRect) -> Path
+        let _inset: (CGFloat) -> any InsettableShape
+        let _sizeThatFits: (ProposedViewSize) -> CGSize
+        
+        init(_ shape: some InsettableShape) {
+            self._path = shape.path(in:)
+            self._inset = shape.inset(by:)
+            self._sizeThatFits = shape.sizeThatFits(_:)
+        }
+        
+        typealias InsetShape = Self
+        
+        static let role: ShapeRole = .fill
+        
+        func path(in rect: CGRect) -> Path {
+            _path(rect)
+        }
+        
+        func sizeThatFits(_ proposal: ProposedViewSize) -> CGSize {
+            _sizeThatFits(proposal)
+        }
+        
+        func inset(by amount: CGFloat) -> Self.InsetShape {
+            .init(_inset(amount))
         }
     }
 }
