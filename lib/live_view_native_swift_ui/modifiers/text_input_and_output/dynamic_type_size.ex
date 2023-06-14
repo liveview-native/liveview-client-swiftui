@@ -17,4 +17,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.DynamicTypeSize do
       accessibility_5
     )a
   end
+
+  def params(size) when is_atom(size) and not is_boolean(size) and not is_nil(size), do: [size: size]
+  def params(params), do: params
 end
