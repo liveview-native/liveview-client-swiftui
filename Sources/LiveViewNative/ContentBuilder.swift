@@ -438,6 +438,40 @@ public extension ContentBuilder {
         .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
         .environment(\.anyLiveContextStorage, context.context)
     }
+    /// Builds nested SwiftUI `View` content.
+    ///
+    /// Use this to include SwiftUI `View` elements that are nested within another DSL.
+    ///
+    /// ```swift
+    /// MapContentBuilder.buildView(
+    ///   element.children(),
+    ///   in: context
+    /// )
+    /// ```
+    @ViewBuilder
+    static func buildChildrenViews<R: RootRegistry>(
+        of element: ElementNode,
+        forTemplate template: String? = nil,
+        in context: Context<R>
+    ) -> some View {
+        if let template {
+            ViewTreeBuilder().fromNodes(
+                element.children()
+                    .filter({ $0.attributes.contains(where: { $0.name == "template" && $0.value == template }) }),
+                context: context.context
+            )
+                .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
+                .environment(\.anyLiveContextStorage, context.context)
+        } else {
+            ViewTreeBuilder().fromNodes(
+                element.children()
+                    .filter({ !$0.attributes.contains(where: { $0.name == "template" }) }),
+                context: context.context
+            )
+                .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
+                .environment(\.anyLiveContextStorage, context.context)
+        }
+    }
     
     /// Builds nested content with a ``ContentBuilder`` other than `Self`.
     ///
