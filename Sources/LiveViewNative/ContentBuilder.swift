@@ -6,7 +6,6 @@
 //
 
 import LiveViewNativeCore
-import MapKit
 import SwiftUI
 
 /// A protocol add-on libraries conform to support custom DSLs.
