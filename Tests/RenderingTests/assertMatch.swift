@@ -8,7 +8,7 @@
 import XCTest
 import SwiftUI
 import Foundation
-@testable import LiveViewNative
+@_spi(LiveViewNative) @testable import LiveViewNative
 import LiveViewNativeCore
 
 extension XCTestCase {
