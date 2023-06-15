@@ -58,8 +58,10 @@ struct ContextMenuModifier<R: RootRegistry>: ViewModifier, Decodable {
                 context.buildChildren(of: element, forTemplate: menuItems)
             } preview: {
                 context.buildChildren(of: element, forTemplate: preview)
-                    .environment(\.coordinatorEnvironment, coordinatorEnvironment)
-                    .environment(\.anyLiveContextStorage, context.storage)
+                    .environment(
+                        coordinatorEnvironment: coordinatorEnvironment,
+                        context: context.storage
+                    )
             }
         } else {
             content.contextMenu {

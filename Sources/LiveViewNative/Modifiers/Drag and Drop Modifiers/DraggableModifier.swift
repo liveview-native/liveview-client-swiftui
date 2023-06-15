@@ -51,10 +51,12 @@ struct DraggableModifier<R: RootRegistry>: ViewModifier, Decodable {
         #if os(iOS) || os(macOS)
         if let preview {
             content.draggable(payload) {
-                            context.buildChildren(of: element, forTemplate: preview)
-                                .environment(\.coordinatorEnvironment, coordinatorEnvironment)
-                                .environment(\.anyLiveContextStorage, context.storage)
-                        }
+                context.buildChildren(of: element, forTemplate: preview)
+                    .environment(
+                        coordinatorEnvironment: coordinatorEnvironment,
+                        context: context.storage
+                    )
+            }
         } else {
             content.draggable(payload)
         }

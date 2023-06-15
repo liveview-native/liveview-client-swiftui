@@ -23,7 +23,7 @@ private struct LiveContextStorageKey: EnvironmentKey {
 
 /// Provides access to ``LiveViewCoordinator`` properties via the environment.
 /// This exists to type-erase the coordinator, since environment properties can't be generic.
-struct CoordinatorEnvironment {
+@_spi(LiveViewNative) public struct CoordinatorEnvironment {
     let pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void
     let elementChanged: AnyPublisher<NodeRef, Never>
     let document: Document
@@ -54,14 +54,25 @@ extension EnvironmentValues {
         set { self[ElementKey.self] = newValue }
     }
     
-    var coordinatorEnvironment: CoordinatorEnvironment? {
+    @_spi(LiveViewNative) public var coordinatorEnvironment: CoordinatorEnvironment? {
         get { self[CoordinatorEnvironment.Key.self] }
         set { self[CoordinatorEnvironment.Key.self] = newValue }
     }
     
     // This property should only be accessed via the `@LiveContext` property wrapper.
-    var anyLiveContextStorage: Any? {
+    @_spi(LiveViewNative) public var anyLiveContextStorage: Any? {
         get { self[LiveContextStorageKey.self] }
         set { self[LiveContextStorageKey.self] = newValue }
+    }
+}
+
+@_spi(LiveViewNative) public extension View {
+    func environment<R: RootRegistry>(
+        coordinatorEnvironment: CoordinatorEnvironment?,
+        context: LiveContextStorage<R>?
+    ) -> some View {
+        self
+            .environment(\.coordinatorEnvironment, coordinatorEnvironment)
+            .environment(\.anyLiveContextStorage, context)
     }
 }

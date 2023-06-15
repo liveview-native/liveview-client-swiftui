@@ -48,8 +48,10 @@ struct DigitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier, Decodable {
             #if os(watchOS)
             .digitalCrownAccessory {
                 context.buildChildren(of: element, forTemplate: self.content)
-                    .environment(\.coordinatorEnvironment, coordinatorEnvironment)
-                    .environment(\.anyLiveContextStorage, context.storage)
+                    .environment(
+                        coordinatorEnvironment: coordinatorEnvironment,
+                        context: context.storage
+                    )
             }
             #endif
     }
