@@ -9,7 +9,9 @@ import Foundation
 import SwiftUI
 import LiveViewNativeCore
 
-struct ViewTreeBuilder<R: RootRegistry> {
+@_spi(LiveViewNative) public struct ViewTreeBuilder<R: RootRegistry> {
+    @_spi(LiveViewNative) public init() {}
+    
     func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
         let context = LiveContextStorage(coordinator: coordinator, url: url)
         return fromNodes(nodes, context: context)
@@ -17,7 +19,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
     }
     
     @ViewBuilder
-    func fromNodes<Nodes>(_ nodes: Nodes, context: LiveContextStorage<R>) -> some View
+    @_spi(LiveViewNative) public func fromNodes<Nodes>(_ nodes: Nodes, context: LiveContextStorage<R>) -> some View
         where Nodes: RandomAccessCollection, Nodes.Index == Int, Nodes.Element == Node
     {
         let e = nodes
