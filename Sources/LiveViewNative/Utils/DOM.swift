@@ -68,7 +68,7 @@ public struct ElementNode {
     /// The value of the attribute with the given name, decoded to a concrete type.
     ///
     /// The attribute is decoded to the type ``T``, which must conform to the ``AttributeDecodable`` protocol.
-    public func attributeValue<T: AttributeDecodable>(_: T.Type = T.self, for name: AttributeName) throws -> T {
+    public func attributeValue<T: AttributeDecodable>(_: T.Type, for name: AttributeName) throws -> T {
         try T.init(from: attribute(named: name))
     }
     
