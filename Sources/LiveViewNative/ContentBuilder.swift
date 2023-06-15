@@ -443,13 +443,13 @@ public extension ContentBuilder {
     /// Use this to include SwiftUI `View` elements that are nested within another DSL.
     ///
     /// ```swift
-    /// MapContentBuilder.buildView(
-    ///   element.children(),
+    /// MapContentBuilder.buildChildViews(
+    ///   of: element,
     ///   in: context
     /// )
     /// ```
     @ViewBuilder
-    static func buildChildrenViews<R: RootRegistry>(
+    static func buildChildViews<R: RootRegistry>(
         of element: ElementNode,
         forTemplate template: String? = nil,
         in context: Context<R>
