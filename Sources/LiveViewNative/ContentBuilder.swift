@@ -135,11 +135,14 @@ import SwiftUI
 /// Use ``buildChildren(of:forTemplate:in:)`` to build the children of an element with this DSL.
 /// ``ContentBuilderContext`` can be used to access the ``Context`` from the environment in a `View` type.
 ///
+/// ``ObservedElement`` should be created with `observeChildren` set to `true` so that updates to the content are applied.
+/// If this is not set, the content will be static.
+///
 /// - Note: This method will automatically handle `template` attributes. However, for more manual construction use ``build(_:in:)-5jedi`` and ``build(_:in:)-604l2``.
 ///
 /// ```swift
 /// struct MyChart<R: RootRegistry>: View {
-///     @ObservedElement private var element
+///     @ObservedElement(observeChildren: true) private var element
 ///     @ContentBuilderContext<R> private var context
 ///
 ///     var body: some View {

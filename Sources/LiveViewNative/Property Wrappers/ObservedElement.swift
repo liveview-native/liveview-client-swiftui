@@ -53,7 +53,7 @@ import Combine
 public struct ObservedElement {
     @Environment(\.element.nodeRef) private var environmentNodeRef: NodeRef?
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
-    @StateObject private var observer = Observer()
+    @StateObject private var observer: Observer
     
     private let overrideNodeRef: NodeRef?
     
@@ -62,12 +62,14 @@ public struct ObservedElement {
     }
     
     /// Creates an `ObservedElement` that observes changes to the view's element.
-    public init() {
+    public init(observeChildren: Bool = false) {
         self.overrideNodeRef = nil
+        self._observer = .init(wrappedValue: .init(observeChildren: observeChildren))
     }
     
-    public init(element: ElementNode) {
+    public init(element: ElementNode, observeChildren: Bool = false) {
         self.overrideNodeRef = element.node.id
+        self._observer = .init(wrappedValue: .init(observeChildren: observeChildren))
     }
     
     /// The observed element in the document, with all current data.
@@ -94,19 +96,30 @@ extension ObservedElement: DynamicProperty {
               let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
-        self.observer.update(ref: nodeRef, elementChanged: coordinator.elementChanged)
+        self.observer.update(ref: nodeRef, children: coordinator.document[nodeRef].children().map(\.id), elementChanged: coordinator.elementChanged)
     }
 }
 
 extension ObservedElement {
     private class Observer: ObservableObject {
         private var cancellable: AnyCancellable?
+        private var observeChildren = false
         
-        fileprivate func update(ref: NodeRef, elementChanged: AnyPublisher<NodeRef, Never>) {
+        init(observeChildren: Bool) {
+            self.observeChildren = observeChildren
+        }
+        
+        fileprivate func update(ref: NodeRef, children: [NodeRef], elementChanged: AnyPublisher<NodeRef, Never>) {
             if cancellable == nil {
                 cancellable = elementChanged
-                    .filter {
-                        $0 == ref
+                    .filter { [weak self] in
+                        if $0 == ref {
+                            return true
+                        } else if self?.observeChildren == true {
+                            return children.contains($0)
+                        } else {
+                            return false
+                        }
                     }
                     .sink { [unowned self] _ in
                         self.objectWillChange.send()
