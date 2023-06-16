@@ -14,4 +14,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.FontWeight do
       ultra_light
     )a
   end
+
+  def params(weight) when is_atom(weight) and not is_boolean(weight) and not is_nil(weight), do: [weight: weight]
+  def params(params), do: params
 end
