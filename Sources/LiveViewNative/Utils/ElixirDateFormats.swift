@@ -21,16 +21,16 @@ fileprivate let dateFormatter: DateFormatter = {
     return formatter
 }()
 
-struct ElixirDateFormat: ParseableFormatStyle {
-    func format(_ value: Date) -> String {
+public struct ElixirDateFormat: ParseableFormatStyle {
+    public func format(_ value: Date) -> String {
         dateFormatter.string(from: value)
     }
     
-    var parseStrategy = ElixirDateParseStrategy()
+    public var parseStrategy = ElixirDateParseStrategy()
 }
 
-struct ElixirDateParseStrategy: ParseStrategy {
-    func parse(_ value: String) throws -> Date {
+public struct ElixirDateParseStrategy: ParseStrategy {
+    public func parse(_ value: String) throws -> Date {
         guard let value = dateFormatter.date(from: value) else {
             throw DateParseError.invalidDate
         }
@@ -38,20 +38,20 @@ struct ElixirDateParseStrategy: ParseStrategy {
     }
 }
 
-struct ElixirDateTimeFormat: ParseableFormatStyle {
-    typealias FormatInput = Date
+public struct ElixirDateTimeFormat: ParseableFormatStyle {
+    public typealias FormatInput = Date
     
-    typealias FormatOutput = String
+    public typealias FormatOutput = String
     
-    func format(_ value: Date) -> String {
+    public func format(_ value: Date) -> String {
         dateTimeFormatter.string(from: value)
     }
     
-    var parseStrategy = ElixirDateTimeOrDateParseStrategy()
+    public var parseStrategy = ElixirDateTimeOrDateParseStrategy()
 }
 
-struct ElixirDateTimeOrDateParseStrategy: ParseStrategy {
-    func parse(_ value: String) throws -> Date {
+public struct ElixirDateTimeOrDateParseStrategy: ParseStrategy {
+    public func parse(_ value: String) throws -> Date {
         guard let value = dateTimeFormatter.date(from: value) ?? dateFormatter.date(from: value)
         else { throw DateParseError.invalidDate }
         return value
@@ -62,18 +62,18 @@ private enum DateParseError: Error {
     case invalidDate
 }
 
-extension FormatStyle where Self == ElixirDateTimeFormat {
+public extension FormatStyle where Self == ElixirDateTimeFormat {
     static var elixirDateTime: ElixirDateTimeFormat { .init() }
 }
 
-extension FormatStyle where Self == ElixirDateFormat {
+public extension FormatStyle where Self == ElixirDateFormat {
     static var elixirDate: ElixirDateFormat { .init() }
 }
 
-extension ParseStrategy where Self == ElixirDateTimeOrDateParseStrategy {
+public extension ParseStrategy where Self == ElixirDateTimeOrDateParseStrategy {
     static var elixirDateTimeOrDate: ElixirDateTimeOrDateParseStrategy { .init() }
 }
 
-extension ParseStrategy where Self == ElixirDateParseStrategy {
+public extension ParseStrategy where Self == ElixirDateParseStrategy {
     static var elixirDate: ElixirDateParseStrategy { .init() }
 }
