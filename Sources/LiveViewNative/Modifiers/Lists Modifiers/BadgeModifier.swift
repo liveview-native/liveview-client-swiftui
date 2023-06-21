@@ -39,7 +39,7 @@ import SwiftUI
 /// <List>
 ///   <Text id="a" modifiers={@native |> badge(content: :error)}>
 ///     Server A
-///     <Text template={:error} modifiers={foreground_color(@native, color: :red)}>
+///     <Text template={:error} modifiers={foreground_color(:red)}>
 ///       Down
 ///     </Text>
 ///   </Text>
