@@ -18,7 +18,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct BoldModifier: ViewModifier, Decodable {
+struct BoldModifier: ViewModifier, Decodable, TextModifier {
     /// Enables/disables the bold effect.
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -27,5 +27,9 @@ struct BoldModifier: ViewModifier, Decodable {
     
     func body(content: Content) -> some View {
         content.bold(isActive)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.bold(isActive)
     }
 }

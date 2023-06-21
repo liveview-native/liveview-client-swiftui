@@ -202,14 +202,14 @@ enum ShapeReference: Decodable {
     }
     
     struct AnyInsettableShape: InsettableShape {
-        let _path: (CGRect) -> Path
-        let _inset: (CGFloat) -> any InsettableShape
-        let _sizeThatFits: (ProposedViewSize) -> CGSize
+        let _path: @Sendable (CGRect) -> Path
+        let _inset: @Sendable (CGFloat) -> any InsettableShape
+        let _sizeThatFits: @Sendable (ProposedViewSize) -> CGSize
         
         init(_ shape: some InsettableShape) {
-            self._path = shape.path(in:)
-            self._inset = shape.inset(by:)
-            self._sizeThatFits = shape.sizeThatFits(_:)
+            self._path = { shape.path(in: $0) }
+            self._inset = { shape.inset(by: $0) }
+            self._sizeThatFits = { shape.sizeThatFits($0) }
         }
         
         typealias InsetShape = Self

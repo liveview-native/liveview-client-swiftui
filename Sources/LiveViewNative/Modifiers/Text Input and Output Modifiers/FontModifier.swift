@@ -24,7 +24,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct FontModifier: ViewModifier, Decodable {
+struct FontModifier: ViewModifier, Decodable, TextModifier {
     /// The font to use for child elements.
     ///
     /// See ``LiveViewNative/SwiftUI/Font`` for more details on creating fonts.
@@ -35,5 +35,9 @@ struct FontModifier: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.font(font)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.font(font)
     }
 }

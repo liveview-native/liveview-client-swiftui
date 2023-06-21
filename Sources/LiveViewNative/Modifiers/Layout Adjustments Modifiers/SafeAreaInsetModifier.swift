@@ -19,7 +19,7 @@ import SwiftUI
 ///     ...
 ///     <GroupBox template={:bottom_bar} id="bottom_bar">
 ///         <HStack template={:label}>
-///             <Text font-weight="bold" font="title2">Bottom Bar</Text>
+///             <Text>Bottom Bar</Text>
 ///             <Spacer />
 ///         </HStack>
 ///         <Text>This will allow the list to scroll further up so no rows are covered.</Text>

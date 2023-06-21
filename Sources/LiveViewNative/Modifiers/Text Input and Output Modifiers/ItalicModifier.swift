@@ -18,7 +18,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct ItalicModifier: ViewModifier, Decodable {
+struct ItalicModifier: ViewModifier, Decodable, TextModifier {
     /// Enables/disables the italic effect.
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -27,5 +27,9 @@ struct ItalicModifier: ViewModifier, Decodable {
     
     func body(content: Content) -> some View {
         content.italic(isActive)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.italic(isActive)
     }
 }

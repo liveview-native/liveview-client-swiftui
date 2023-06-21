@@ -51,29 +51,34 @@ import Combine
 /// ```
 @propertyWrapper
 public struct ObservedElement {
-    @Environment(\.element.nodeRef) private var environmentNodeRef: NodeRef?
+    @Environment(\.element.nodeRef) private var nodeRef: NodeRef?
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
     @StateObject private var observer: Observer
     
-    private let overrideNodeRef: NodeRef?
-    
-    private var nodeRef: NodeRef? {
-        overrideNodeRef ?? environmentNodeRef
-    }
+    private let overrideElement: ElementNode?
     
     /// Creates an `ObservedElement` that observes changes to the view's element.
     public init(observeChildren: Bool = false) {
-        self.overrideNodeRef = nil
+        self.overrideElement = nil
         self._observer = .init(wrappedValue: .init(observeChildren: observeChildren))
     }
     
     public init(element: ElementNode, observeChildren: Bool = false) {
-        self.overrideNodeRef = element.node.id
+        self.overrideElement = element
         self._observer = .init(wrappedValue: .init(observeChildren: observeChildren))
+    }
+    
+    public init() {
+        self.overrideElement = nil
+        self._observer = .init(wrappedValue: .init(observeChildren: false))
     }
     
     /// The observed element in the document, with all current data.
     public var wrappedValue: ElementNode {
+        if let overrideElement {
+            return overrideElement
+        }
+        
         guard let nodeRef,
               let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")

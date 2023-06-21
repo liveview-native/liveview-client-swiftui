@@ -22,11 +22,15 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct MonospacedDigitModifier: ViewModifier, Decodable, Equatable {
+struct MonospacedDigitModifier: ViewModifier, Decodable, Equatable, TextModifier {
     init(from decoder: Decoder) throws {
     }
 
     func body(content: Content) -> some View {
         return content.monospacedDigit()
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.monospacedDigit()
     }
 }

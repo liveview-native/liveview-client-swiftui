@@ -20,7 +20,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct KerningModifier: ViewModifier, Decodable {
+struct KerningModifier: ViewModifier, Decodable, TextModifier {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
@@ -28,5 +28,9 @@ struct KerningModifier: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.kerning(kerning)
+    }
+    
+    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
+        text.kerning(kerning)
     }
 }
