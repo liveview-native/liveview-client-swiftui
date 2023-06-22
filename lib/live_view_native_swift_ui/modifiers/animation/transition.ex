@@ -6,4 +6,13 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Transition do
   modifier_schema "transition" do
     field :transition, Transition
   end
+
+  def params(params) do
+    with {:ok, _} <- Transition.cast(params) do
+      [transition: params]
+    else
+      _ ->
+        params
+    end
+  end
 end
