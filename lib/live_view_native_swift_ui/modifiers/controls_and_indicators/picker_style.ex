@@ -13,4 +13,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.PickerStyle do
       palette
     )a)
   end
+
+  def params(style) when is_atom(style), do: [style: style]
+  def params(params), do: params
 end

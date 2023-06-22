@@ -11,4 +11,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.DatePickerStyle do
       stepper_field
     )a)
   end
+
+  def params(style) when is_atom(style), do: [style: style]
+  def params(params), do: params
 end
