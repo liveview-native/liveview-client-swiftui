@@ -512,6 +512,18 @@ public protocol ContentModifier<Builder>: Decodable {
     ) -> Builder.Content
 }
 
+public struct EmptyContentModifier<Builder: ContentBuilder>: ContentModifier {
+    public init() {}
+    
+    public func apply<R>(
+        to content: Builder.Content,
+        on element: ElementNode,
+        in context: Builder.Context<R>
+    ) -> Builder.Content where R : RootRegistry {
+        return content
+    }
+}
+
 /// A type-erased ``ContentModifier`` in a stack.
 private struct AnyContentBuilderModifier<R: RootRegistry, Builder: ContentBuilder>: Decodable {
     let modifier: any ContentModifier<Builder>

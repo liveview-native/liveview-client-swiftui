@@ -122,7 +122,7 @@ struct OverlayModifier<R: RootRegistry>: ViewModifier, Decodable {
         } else if let shape,
                   let style
         {
-            content.overlay(style, in: shape.resolve(on: element, in: context), fillStyle: fillStyle)
+            content.overlay(style, in: shape.resolve(on: element), fillStyle: fillStyle)
         } else if let style {
             content.overlay(style, ignoresSafeAreaEdges: ignoresSafeAreaEdges)
         } else {
