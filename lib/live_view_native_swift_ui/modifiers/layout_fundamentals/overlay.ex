@@ -24,9 +24,9 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Overlay do
     field :fill_style, FillStyle
   end
 
-  def params({type, _} = style, [in: shape, fill_style: fill_style]) when is_atom(type), do: [style: style, shape: shape, fill_style: fill_style]
-  def params({type, _} = style, [in: shape]) when is_atom(type), do: [style: style, shape: shape]
-  def params({type, _} = style, [ignores_safe_area_edges: edges]) when is_atom(type), do: [style: style, ignores_safe_area_edges: edges]
-  def params({type, _} = style) when is_atom(type), do: [style: style]
+  def params({type, _} = style, [in: shape, fill_style: fill_style]) when is_atom(type) and not is_boolean(type) and not is_nil(type), do: [style: style, shape: shape, fill_style: fill_style]
+  def params({type, _} = style, [in: shape]) when is_atom(type) and not is_boolean(type) and not is_nil(type), do: [style: style, shape: shape]
+  def params({type, _} = style, [ignores_safe_area_edges: edges]) when is_atom(type) and not is_boolean(type) and not is_nil(type), do: [style: style, ignores_safe_area_edges: edges]
+  def params({type, _} = style) when is_atom(type) and not is_boolean(type) and not is_nil(type), do: [style: style]
   def params(params), do: params
 end
