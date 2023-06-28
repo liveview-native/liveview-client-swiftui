@@ -124,7 +124,7 @@ struct BackgroundModifier<R: RootRegistry>: ViewModifier, Decodable {
                     context.buildChildren(of: element, forTemplate: reference)
                 }
         } else if let shape {
-            content.background(style ?? AnyShapeStyle(.background), in: shape.resolve(on: element, in: context), fillStyle: fillStyle)
+            content.background(style ?? AnyShapeStyle(.background), in: shape.resolve(on: element), fillStyle: fillStyle)
         } else if let style {
             content.background(style, ignoresSafeAreaEdges: ignoresSafeAreaEdges)
         } else {

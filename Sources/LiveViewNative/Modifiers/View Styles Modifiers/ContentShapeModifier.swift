@@ -58,7 +58,7 @@ struct ContentShapeModifier<R: RootRegistry>: ViewModifier, Decodable {
     func body(content: Content) -> some View {
         content.contentShape(
             kind,
-            shape.resolve(on: element, in: context),
+            shape.resolve(on: element),
             eoFill: eoFill
         )
     }

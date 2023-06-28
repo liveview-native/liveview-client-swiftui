@@ -61,11 +61,11 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-enum ShapeReference: Decodable {
+public enum ShapeReference: Decodable {
     case `static`(any InsettableShape)
     case key(String)
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if let key = try container.decodeIfPresent(String.self, forKey: .key) {
             self = .key(key)
@@ -123,12 +123,14 @@ enum ShapeReference: Decodable {
         }
     }
     
-    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyShape {
+    public func resolve(on element: ElementNode) -> AnyShape {
         switch self {
         case let .static(anyShape):
             return AnyShape(anyShape)
         case let .key(keyName):
-            return context.children(of: element, forTemplate: keyName)
+            return element.children()
+                .lazy
+                .filter({ $0.attributes.contains(where: { $0.name == "template" && $0.value == keyName }) })
                 .compactMap { $0.asElement() }
                 .compactMap {
                     let shape: any InsettableShape
@@ -159,12 +161,14 @@ enum ShapeReference: Decodable {
         }
     }
     
-    func resolveInsettableShape<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyInsettableShape {
+    public func resolveInsettableShape(on element: ElementNode) -> AnyInsettableShape {
         switch self {
         case let .static(anyShape):
             return AnyInsettableShape(anyShape)
         case let .key(keyName):
-            return context.children(of: element, forTemplate: keyName)
+            return element.children()
+                .lazy
+                .filter({ $0.attributes.contains(where: { $0.name == "template" && $0.value == keyName }) })
                 .compactMap { $0.asElement() }
                 .compactMap {
                     let shape: any InsettableShape
@@ -201,7 +205,7 @@ enum ShapeReference: Decodable {
         }
     }
     
-    struct AnyInsettableShape: InsettableShape {
+    public struct AnyInsettableShape: InsettableShape {
         let _path: @Sendable (CGRect) -> Path
         let _inset: @Sendable (CGFloat) -> any InsettableShape
         let _sizeThatFits: @Sendable (ProposedViewSize) -> CGSize
@@ -212,19 +216,19 @@ enum ShapeReference: Decodable {
             self._sizeThatFits = { shape.sizeThatFits($0) }
         }
         
-        typealias InsetShape = Self
+        public typealias InsetShape = Self
         
-        static let role: ShapeRole = .fill
+        public static let role: ShapeRole = .fill
         
-        func path(in rect: CGRect) -> Path {
+        public func path(in rect: CGRect) -> Path {
             _path(rect)
         }
         
-        func sizeThatFits(_ proposal: ProposedViewSize) -> CGSize {
+        public func sizeThatFits(_ proposal: ProposedViewSize) -> CGSize {
             _sizeThatFits(proposal)
         }
         
-        func inset(by amount: CGFloat) -> Self.InsetShape {
+        public func inset(by amount: CGFloat) -> Self.InsetShape {
             .init(_inset(amount))
         }
     }

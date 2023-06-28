@@ -64,7 +64,7 @@ struct ClipShapeModifier<R: RootRegistry>: ViewModifier, Decodable {
 
     func body(content: Content) -> some View {
         content.clipShape(
-            shape.resolve(on: element, in: context),
+            shape.resolve(on: element),
             style: style
         )
     }
