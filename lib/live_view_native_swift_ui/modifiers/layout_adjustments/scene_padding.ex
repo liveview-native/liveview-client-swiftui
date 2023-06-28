@@ -9,6 +9,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.ScenePadding do
   end
 
   def params(padding, [edges: edges]), do: [padding: padding, edges: edges]
-  def params(padding) when is_atom(padding), do: [padding: padding]
+  def params(padding) when is_atom(padding) and not is_boolean(padding) and not is_nil(padding), do: [padding: padding]
   def params(params), do: params
 end
