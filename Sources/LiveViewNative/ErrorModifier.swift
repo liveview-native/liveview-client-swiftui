@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct ErrorModifier<R: RootRegistry>: ViewModifier {
+public struct ErrorModifier<R: RootRegistry>: ViewModifier {
     let type: String
     let error: any Error
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .overlay {
                 ErrorView<R>(error)

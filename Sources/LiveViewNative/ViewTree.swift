@@ -146,13 +146,13 @@ extension CodingUserInfoKey {
     static var modifierAnimationScale: Self { .init(rawValue: "modifierAnimationScale")! }
 }
 
-enum ModifierContainer<R: RootRegistry>: Decodable {
+public enum ModifierContainer<R: RootRegistry>: Decodable {
     case builtin(BuiltinRegistry<R>.BuiltinModifier)
     case custom(R.CustomModifier)
     case error(ErrorModifier<R>)
     case inert
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try container.decode(String.self, forKey: .type)
         if let type = R.ModifierType(rawValue: type) {
@@ -258,6 +258,10 @@ private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
 extension View {
     func applyModifiers<R: RootRegistry>(_: R.Type = R.self) -> some View {
         ModifierObserver<Self, R>(parent: self)
+    }
+    
+    public func _applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<ModifierContainer<R>>, element: ElementNode, context: LiveContext<R>) -> some View {
+        applyModifiers(modifiers, element: element, context: context.storage)
     }
     
     @ViewBuilder
