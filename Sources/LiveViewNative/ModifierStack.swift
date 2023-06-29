@@ -9,8 +9,13 @@ import SwiftUI
 
 /// A container that decodes a modifier stack.
 ///
-/// Use ``apply(to:)`` to use the modifier stack on a View.
-public struct _ModifierStack<R: RootRegistry>: Decodable {
+/// Use this as a modifier:
+///
+/// ```swift
+/// content
+///     .modifier(modifierStack)
+/// ```
+public struct _ModifierStack<R: RootRegistry>: Decodable, ViewModifier {
     private let stack: [ModifierContainer<R>]
     
     @ObservedElement private var element
@@ -21,7 +26,7 @@ public struct _ModifierStack<R: RootRegistry>: Decodable {
         self.stack = try container.decode([ModifierContainer<R>].self)
     }
     
-    public func apply(to content: some View) -> some View {
+    public func body(content: Content) -> some View {
         content
             .applyModifiers(stack[...], element: element, context: context.storage)
     }
