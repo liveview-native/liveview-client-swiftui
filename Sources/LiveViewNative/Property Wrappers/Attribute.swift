@@ -47,33 +47,32 @@ public struct Attribute<T>: DynamicProperty {
     private let name: AttributeName
     private let defaultValue: T?
     private let transform: (LiveViewNativeCore.Attribute?) throws -> T
+    
+    @StateObject private var storage: Storage = .init()
 
     /// Create an `Attribute` with an ``AttributeDecodable`` type.
     public init(wrappedValue: T? = nil, _ name: AttributeName) where T: AttributeDecodable {
-        self.name = name
-        self.defaultValue = wrappedValue
-        self.transform = { try T(from: $0) }
+        self.init(wrappedValue: wrappedValue, name, transform: { try T(from: $0) }, element: nil)
     }
     
     /// Create an `Attribute` with a `transform` function that converts the attribute into the desired type.
     public init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?) throws -> T) {
-        self.name = name
-        self.defaultValue = wrappedValue
-        self.transform = transform
+        self.init(wrappedValue: wrappedValue, name, transform: transform, element: nil)
     }
     
     init(wrappedValue: T? = nil, _ name: AttributeName, element: ElementNode) where T: AttributeDecodable {
-        self.name = name
-        self.defaultValue = wrappedValue
-        self.transform = { try T(from: $0) }
-        self._element = .init(element: element)
+        self.init(wrappedValue: wrappedValue, name, transform: { try T(from: $0) }, element: element)
     }
     
-    init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?) throws -> T, element: ElementNode) {
+    init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?) throws -> T, element: ElementNode?) {
         self.name = name
         self.defaultValue = wrappedValue
         self.transform = transform
-        self._element = .init(element: element)
+        if let element {
+            self._element = .init(element: element)
+        } else {
+            self._element = .init()
+        }
     }
 
     /// Gets the decoded value of the attribute.
@@ -81,6 +80,33 @@ public struct Attribute<T>: DynamicProperty {
     /// If attribute decoding fails, this will return the default value the property wrapper was constructed with.
     /// If no default value was provided, the app will crash.
     public var wrappedValue: T {
+        // Use the cached value if possible. Otherwise, decode on demand.
+        guard let value = storage.value else {
+            return decode()
+        }
+        return value
+    }
+    
+    /// Container that holds the cached decoded attribute value, and the previous attribute for comparison.
+    private final class Storage: ObservableObject {
+        var value: T?
+        var previousValue: LiveViewNativeCore.Attribute?
+    }
+    
+    /// Before the View's body is produced, check if the attribute needs to be recomputed.
+    public mutating func update() {
+        let attribute = element.attribute(named: name)
+        
+        // Only recompute the attribute if the attribute is different.
+        guard storage.previousValue != attribute
+        else { return }
+        
+        self.storage.value = decode()
+        self.storage.previousValue = attribute
+    }
+    
+    /// Decodes the attribute if possible.
+    private func decode() -> T {
         do {
             return try transform(element.attribute(named: name))
         } catch {
