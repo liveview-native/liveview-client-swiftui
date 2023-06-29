@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
@@ -23,7 +24,9 @@ import SwiftUI
 /// - ``LiveViewModel``
 public struct LiveView<R: RootRegistry>: View {
     @State private var hasAppeared = false
-    @ObservedObject var session: LiveSessionCoordinator<R>
+    
+    @StateObject var storage: LiveSessionCoordinatorStorage
+    
     @State private var hasSetupNavigationControllerDelegate = false
     
     @ObservedObject private var rootCoordinator: LiveViewCoordinator<R>
@@ -32,18 +35,39 @@ public struct LiveView<R: RootRegistry>: View {
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
     public init(session: LiveSessionCoordinator<R>) {
-        self._session = .init(wrappedValue: session)
+        self._storage = .init(wrappedValue: .init(session: session))
         self.rootCoordinator = session.rootCoordinator
+    }
+    
+    public init(_ host: some LiveViewHost, configuration: LiveSessionConfiguration = .init()) {
+        self.init(session: .init(host.url, config: configuration))
+    }
+    
+    public init(url: URL, configuration: LiveSessionConfiguration = .init()) {
+        self.init(session: .init(url, config: configuration))
+    }
+    
+    final class LiveSessionCoordinatorStorage: ObservableObject {
+        var session: LiveSessionCoordinator<R>
+        
+        var cancellable: AnyCancellable?
+        
+        init(session: LiveSessionCoordinator<R>) {
+            self.session = session
+            self.cancellable = session.objectWillChange.sink { [weak self] _ in
+                self?.objectWillChange.send()
+            }
+        }
     }
 
     public var body: some View {
         SwiftUI.VStack {
-            switch session.state {
+            switch storage.session.state {
             case .connected:
                 rootNavEntry
             default:
                 if R.LoadingView.self == Never.self {
-                    switch session.state {
+                    switch storage.session.state {
                     case .connected:
                         fatalError()
                     case .notConnected:
@@ -80,18 +104,18 @@ public struct LiveView<R: RootRegistry>: View {
                         }
                     }
                 } else {
-                    R.loadingView(for: session.url, state: session.state)
+                    R.loadingView(for: storage.session.url, state: storage.session.state)
                 }
             }
         }
             .task {
-                await session.connect()
+                await storage.session.connect()
             }
     }
         
     @ViewBuilder
     private var rootNavEntry: some View {
-        switch session.config.navigationMode {
+        switch storage.session.config.navigationMode {
         case .enabled:
             navigationStack
         case .splitView:
@@ -105,7 +129,7 @@ public struct LiveView<R: RootRegistry>: View {
     
     @ViewBuilder
     private var navigationStack: some View {
-        NavigationStack(path: $session.navigationPath) {
+        NavigationStack(path: $storage.session.navigationPath) {
             navigationRoot
                 .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
                     NavStackEntryView(entry)
@@ -118,16 +142,16 @@ public struct LiveView<R: RootRegistry>: View {
             navigationRoot
         } detail: {
             NavigationStack(path: Binding<[LiveNavigationEntry<R>]> {
-                Array(session.navigationPath.dropFirst())
+                Array(storage.session.navigationPath.dropFirst())
             } set: { value in
                 var result = value
-                if let first = session.navigationPath.first {
+                if let first = storage.session.navigationPath.first {
                     result.insert(first, at: 0)
                 }
-                session.navigationPath = result
+                storage.session.navigationPath = result
             }) {
                 SwiftUI.Group {
-                    if let entry = session.navigationPath.first {
+                    if let entry = storage.session.navigationPath.first {
                         NavStackEntryView(entry)
                     }
                 }
@@ -143,8 +167,8 @@ public struct LiveView<R: RootRegistry>: View {
     private func tabView(_ tabs: [LiveSessionConfiguration.NavigationMode.Tab]) -> some View {
         SwiftUI.TabView(selection: $selectedTab) {
             ForEach(tabs) { tab in
-                NavigationStack(path: $session.navigationPath) {
-                    NavStackEntryView(.init(url: selectedTab ?? session.url, coordinator: rootCoordinator))
+                NavigationStack(path: $storage.session.navigationPath) {
+                    NavStackEntryView(.init(url: selectedTab ?? storage.session.url, coordinator: rootCoordinator))
                         .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
                             NavStackEntryView(entry)
                         }
@@ -158,13 +182,23 @@ public struct LiveView<R: RootRegistry>: View {
         .onChange(of: selectedTab) { newValue in
             guard let newValue else { return }
             Task {
-                session.rootCoordinator.url = newValue
-                await session.rootCoordinator.reconnect()
+                storage.session.rootCoordinator.url = newValue
+                await storage.session.rootCoordinator.reconnect()
             }
         }
     }
     
     private var navigationRoot: some View {
-        NavStackEntryView(.init(url: session.url, coordinator: rootCoordinator))
+        NavStackEntryView(.init(url: storage.session.url, coordinator: rootCoordinator))
+    }
+}
+
+extension LiveView where R == EmptyRegistry {
+    public init(_ host: some LiveViewHost, configuration: LiveSessionConfiguration = .init()) {
+        self.init(session: .init(host.url, config: configuration))
+    }
+    
+    public init(url: URL, configuration: LiveSessionConfiguration = .init()) {
+        self.init(session: .init(url, config: configuration))
     }
 }

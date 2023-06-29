@@ -63,6 +63,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     
     var isMounted: Bool = false
     
+    public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
+        self.init(host.url, config: config, customRegistryType: customRegistryType)
+    }
+    
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
