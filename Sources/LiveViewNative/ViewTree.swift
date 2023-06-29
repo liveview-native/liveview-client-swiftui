@@ -203,7 +203,6 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     @LiveContext<R> private var context
     @Attribute("modifiers", transform: { attribute in
         guard let encoded = attribute?.value else { return [] }
-        print("Decoding modifiers \(encoded)")
         
         let decoder = makeJSONDecoder()
         
