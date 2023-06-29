@@ -90,7 +90,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             }
         }
         
-        public extension BuiltinRegistry {
+        extension BuiltinRegistry {
             enum ModifierType: String {
         \(modifierCases)
             }
