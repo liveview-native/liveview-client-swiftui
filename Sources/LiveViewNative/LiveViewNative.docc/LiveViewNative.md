@@ -13,17 +13,15 @@ The LiveViewNative Swift package lets you use Phoenix LiveView to build native i
 3. Select *Add Package*
 
 ## Usage
-Create a `LiveSessionCoordinator` and pass in the URL to your Phoenix server. Then use `LiveView` to connect to that session.
+Create a `LiveView` and pass in a ``LiveViewHost`` or the `URL` to your Phoenix server.
 
 ```swift
 import SwiftUI
 import LiveViewNative
 
 struct ContentView: View {
-    @StateObject private var session = LiveSessionCoordinator(URL(string: "http://localhost:4000")!)
-
     var body: some View {
-        LiveView(session: session)
+        LiveView(.localhost)
     }
 }
 ```
