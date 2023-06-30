@@ -28,19 +28,13 @@ public struct LiveSessionConfiguration {
     }
     
     public init(
-        navigationMode: NavigationMode? = nil,
+        navigationMode: NavigationMode = .disabled,
         connectParams: ((URL) -> [String: Any])? = nil,
-        urlSession: URLSession? = nil
+        urlSession: URLSession = .shared
     ) {
-        if let navigationMode {
-            self.navigationMode = navigationMode
-        }
-        if let connectParams {
-            self.connectParams = connectParams
-        }
-        if let urlSession {
-            self.urlSession = urlSession
-        }
+        self.navigationMode = navigationMode
+        self.connectParams = connectParams
+        self.urlSession = urlSession
     }
     
     /// Possible modes for live view navigation.
