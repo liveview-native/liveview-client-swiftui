@@ -73,22 +73,28 @@ struct ViewTreeBuilder<R: RootRegistry> {
 
         let modified = view.applyModifiers(R.self)
         let bound = applyBindings(to: modified, element: element, context: context)
-        let withIDAndTag = applyIDAndTag(element: element, to: bound)
+        let withID = applyID(element: element, to: bound)
+        let withIDAndTag = applyTag(element: element, to: withID)
 
         return withIDAndTag
             .environment(\.element, element)
             .preference(key: ProvidedBindingsKey.self, value: []) // reset for the next View.
     }
-    
+
     @ViewBuilder
-    private func applyIDAndTag(element: ElementNode, to view: some View) -> some View {
-        let tag = element.attributeValue(for: "tag")
-        
+    private func applyID(element: ElementNode, to view: some View) -> some View {
         if let id = element.attributeValue(for: "id") {
-            view.id(id).tag(tag)
+            view.id(id)
         } else {
-            view.tag(tag)
+            view
         }
+    }
+
+    @ViewBuilder
+    private func applyTag(element: ElementNode, to view: some View) -> some View {
+        let tag = element.attributeValue(for: "tag")
+
+        view.tag(tag)
     }
     
     @ViewBuilder
