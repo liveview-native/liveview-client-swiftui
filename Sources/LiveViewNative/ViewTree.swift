@@ -201,19 +201,18 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     @ObservedElement private var element
     @LiveContext<R> private var context
+    @Attribute("modifiers", transform: { attribute in
+        guard let encoded = attribute?.value else { return [] }
+        
+        let decoder = makeJSONDecoder()
+        
+        guard let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8))
+        else { return [] }
+        
+        return decoded
+    }) private var modifiers: [ModifierContainer<R>]
     
     var body: some View {
-        let modifiers: [ModifierContainer<R>]
-        if let encoded = element.attributeValue(for: "modifiers") {
-            let decoder = makeJSONDecoder()
-            if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
-                modifiers = decoded
-            } else {
-                modifiers = []
-            }
-        } else {
-            modifiers = []
-        }
         return parent
             .applyModifiers(modifiers[...], element: element, context: context.storage)
     }
