@@ -92,9 +92,11 @@ struct ViewTreeBuilder<R: RootRegistry> {
 
     @ViewBuilder
     private func applyTag(element: ElementNode, to view: some View) -> some View {
-        let tag = element.attributeValue(for: "tag")
-
-        view.tag(tag)
+        if let tag = element.attributeValue(for: "tag") {
+            view.tag(Optional<String>.some(tag))
+        } else {
+            view
+        }
     }
     
     @ViewBuilder
