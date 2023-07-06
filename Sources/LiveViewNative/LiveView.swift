@@ -9,6 +9,26 @@ import Foundation
 import SwiftUI
 import Combine
 
+#if swift(>=5.9)
+/// Create a ``LiveView`` with a list of addons.
+///
+/// Use this macro to automatically register any addons.
+/// Specialize the addon registries with ``EmptyRegistry``.
+///
+/// ```swift
+/// #LiveView(.localhost, addons: [ChartsRegistry<EmptyRegistry>.self, AVKitRegistry<EmptyRegistry>.self])
+/// ```
+///
+/// - Note: This macro erases the underlying ``LiveView`` to `AnyView`.
+/// This may incur a minor performance hit when updating the `View` containing the ``LiveView``.
+@freestanding(expression)
+public macro LiveView<Host: LiveViewHost>(
+    _ host: Host,
+    configuration: LiveSessionConfiguration = .init(),
+    addons: [any CustomRegistry<EmptyRegistry>.Type]
+) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
+#endif
+
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
 /// The `LiveView` attempts to connect immediately when it appears.

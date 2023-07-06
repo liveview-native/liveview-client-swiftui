@@ -12,6 +12,7 @@ import LiveViewNativeMacros
 
 let testMacros: [String: Macro.Type] = [
     "Registries": RegistriesMacro.self,
+    "LiveView": LiveViewMacro.self
 ]
 
 final class LiveViewNativeMacrosTests: XCTestCase {
@@ -33,6 +34,63 @@ final class LiveViewNativeMacrosTests: XCTestCase {
                         PhotoKitRegistry<Self>,
                         LiveFormsRegistry<Self>>>
             }
+            """,
+            macros: testMacros
+        )
+    }
+    
+    func testLiveViewMacro() {
+        assertMacroExpansion(
+            """
+            #LiveView(.localhost, configuration: .init(), addons: [AVKitRegistry<EmptyRegistry>.self])
+            """,
+            expandedSource: """
+            { () -> AnyView in
+                enum __macro_local_8RegistryfMu_: AggregateRegistry {
+                    typealias Registries = AVKitRegistry<Self>
+                }
+            
+                return AnyView(LiveView<__macro_local_8RegistryfMu_>(.localhost, configuration: .init()))
+            }()
+            """,
+            macros: testMacros
+        )
+        assertMacroExpansion(
+            """
+            #LiveView(
+                .automatic(development: .localhost(port: 5000), production: .custom(URL(string: "example.com")!)),
+                addons: [
+                    AVKitRegistry<EmptyRegistry>.self,
+                    ChartsRegistry<EmptyRegistry>.self
+                ]
+            )
+            """,
+            expandedSource: """
+            { () -> AnyView in
+                enum __macro_local_8RegistryfMu_: AggregateRegistry {
+                    typealias Registries = _MultiRegistry<
+                            AVKitRegistry<Self>,
+                            ChartsRegistry<Self>>
+                }
+            
+                return AnyView(LiveView<__macro_local_8RegistryfMu_>(
+                .automatic(development: .localhost(port: 5000), production: .custom(URL(string: "example.com")!))))
+            }()
+            """,
+            macros: testMacros
+        )
+        assertMacroExpansion(
+            """
+            #LiveView(.localhost, configuration: .init(), addons: [AVKitRegistry<_>.self, ChartsRegistry<Self>.self, PhotoKitRegistry<_>.self])
+            """,
+            expandedSource: """
+            { () -> AnyView in
+                enum __macro_local_8RegistryfMu_: AggregateRegistry {
+                    typealias Registries = _MultiRegistry<AVKitRegistry<Self>, _MultiRegistry<ChartsRegistry<Self>, PhotoKitRegistry<Self>>>
+                }
+            
+                return AnyView(LiveView<__macro_local_8RegistryfMu_>(.localhost, configuration: .init()))
+            }()
             """,
             macros: testMacros
         )
