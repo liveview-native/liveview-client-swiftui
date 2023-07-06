@@ -13,10 +13,10 @@ import Combine
 /// Create a ``LiveView`` with a list of addons.
 ///
 /// Use this macro to automatically register any addons.
-/// Specialize the addon registries with ``EmptyRegistry``.
+/// Use a placeholder type (`_`) as the root for each registry.
 ///
 /// ```swift
-/// #LiveView(.localhost, addons: [ChartsRegistry<EmptyRegistry>.self, AVKitRegistry<EmptyRegistry>.self])
+/// #LiveView(.localhost, addons: [ChartsRegistry<_>.self, AVKitRegistry<_>.self])
 /// ```
 ///
 /// - Note: This macro erases the underlying ``LiveView`` to `AnyView`.
