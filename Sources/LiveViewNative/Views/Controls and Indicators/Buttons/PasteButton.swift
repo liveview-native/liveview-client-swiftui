@@ -55,7 +55,7 @@ struct PasteButton<R: RootRegistry>: View {
         SwiftUI.PasteButton(payloadType: String.self) { strings in
             click(value: ["value": strings]) {}
         }
-            .preference(key: ProvidedBindingsKey.self, value: ["phx-click"])
+            .preference(key: _ProvidedBindingsKey.self, value: ["phx-click"])
         #endif
     }
 }

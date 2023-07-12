@@ -57,7 +57,7 @@ public struct Button<R: RootRegistry>: View {
             context.buildChildren(of: element)
         }
         .disabled(disabled)
-        .preference(key: ProvidedBindingsKey.self, value: ["phx-click"])
+        .preference(key: _ProvidedBindingsKey.self, value: ["phx-click"])
     }
     
     private func handleClick() {

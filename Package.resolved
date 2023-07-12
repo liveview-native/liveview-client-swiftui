@@ -37,6 +37,15 @@
       }
     },
     {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-syntax.git",
+      "state" : {
+        "revision" : "83c2be9f6268e9f67622f130440cf43928c6bfb0",
+        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-05-20-a"
+      }
+    },
+    {
       "identity" : "swiftphoenixclient",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davidstump/SwiftPhoenixClient.git",
