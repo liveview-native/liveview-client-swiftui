@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 import LiveViewNativeCore
 
 /// The working-copy data model for a ``LiveView``.
@@ -51,9 +52,16 @@ public class LiveViewModel: ObservableObject {
     }
     
     func updateBindings(payload: Payload) {
-        for (key, value) in payload {
-            bindingValues[key] = value
-            bindingUpdatedByServer.send((key, value))
+        if let data = payload["data"] as? [String:Any] {
+            let animation = (payload["animation"] as? [String:Any])
+                .flatMap({ try? JSONSerialization.data(withJSONObject: $0) })
+                .flatMap({ try? makeJSONDecoder().decode(Animation.self, from: $0) })
+            withAnimation(animation) {
+                for (key, value) in data {
+                    bindingValues[key] = value
+                    bindingUpdatedByServer.send((key, value))
+                }
+            }
         }
     }
     
