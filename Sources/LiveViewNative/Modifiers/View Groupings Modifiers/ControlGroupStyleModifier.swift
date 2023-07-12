@@ -47,6 +47,12 @@ struct ControlGroupStyleModifier: ViewModifier, Decodable {
         #endif
     }
 }
+#else
+struct ControlGroupStyleModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif
 
 /// A style for a ``ControlGroup`` element.

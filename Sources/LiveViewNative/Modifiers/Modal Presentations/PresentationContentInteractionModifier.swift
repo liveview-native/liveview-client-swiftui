@@ -64,4 +64,10 @@ struct PresentationContentInteractionModifier: ViewModifier, Decodable {
         case interaction
     }
 }
+#else
+struct PresentationContentInteractionModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif

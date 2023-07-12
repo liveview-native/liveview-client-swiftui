@@ -82,4 +82,10 @@ struct PresentationBackgroundModifier<R: RootRegistry>: ViewModifier, Decodable 
         case content
     }
 }
+#else
+struct PresentationBackgroundModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif

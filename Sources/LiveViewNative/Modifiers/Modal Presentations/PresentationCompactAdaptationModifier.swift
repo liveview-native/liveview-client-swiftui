@@ -63,6 +63,12 @@ struct PresentationCompactAdaptationModifier: ViewModifier, Decodable {
             )
     }
 }
+#else
+struct PresentationCompactAdaptationModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif
 
 /// An alternate presentation style for compact size classes.

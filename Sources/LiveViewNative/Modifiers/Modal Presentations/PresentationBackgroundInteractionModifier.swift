@@ -70,4 +70,10 @@ struct PresentationBackgroundInteractionModifier: ViewModifier, Decodable {
         case maximumDetent
     }
 }
+#else
+struct PresentationBackgroundInteractionModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif

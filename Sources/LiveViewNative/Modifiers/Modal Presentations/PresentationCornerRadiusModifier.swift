@@ -38,4 +38,10 @@ struct PresentationCornerRadiusModifier: ViewModifier, Decodable {
         content.presentationCornerRadius(radius)
     }
 }
+#else
+struct PresentationCornerRadiusModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif

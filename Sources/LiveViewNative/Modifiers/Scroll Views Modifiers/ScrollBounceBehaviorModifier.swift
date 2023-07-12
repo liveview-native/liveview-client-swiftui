@@ -41,4 +41,10 @@ struct ScrollBounceBehaviorModifier: ViewModifier, Decodable {
         content.scrollBounceBehavior(behavior, axes: axes)
     }
 }
+#else
+struct ScrollBounceBehaviorModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif

@@ -63,4 +63,10 @@ struct MenuOrderModifier: ViewModifier, Decodable {
         case order
     }
 }
+#else
+struct MenuOrderModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif
