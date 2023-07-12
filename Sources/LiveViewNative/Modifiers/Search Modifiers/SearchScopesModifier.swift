@@ -45,13 +45,10 @@ import SwiftUI
 /// * ``scopes``
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16, macOS 13, tvOS 16, *)
 struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// Synchronizes the active scope with the server.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @ChangeTracked private var active: String?
 
     /// Indicates when the scope options are displayed.
@@ -60,9 +57,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// * `automatic`
     /// * `on_search_presentation`
     /// * `on_text_entry`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let activation: String?
     
     @available(iOS 16.4, macOS 13.3, watchOS 9.4, *)
@@ -76,9 +71,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
     
     /// An atom that references the element containing the list of scopes.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let scopes: String
     
     @ObservedElement private var element
@@ -114,3 +107,4 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
         case scopes
     }
 }
+#endif

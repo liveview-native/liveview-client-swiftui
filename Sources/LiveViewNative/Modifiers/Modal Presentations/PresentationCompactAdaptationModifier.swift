@@ -39,15 +39,12 @@ import SwiftUI
 /// * ``vertical``
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 struct PresentationCompactAdaptationModifier: ViewModifier, Decodable {
     /// The adaptation for horizontally compact size classes.
     ///
     /// See ``LiveViewNative/SwiftUI/PresentationAdaptation`` for a list of possible values.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     let horizontal: PresentationAdaptation
     /// The adaptation for vertically compact size classes.
     /// Takes preference over ``horizontal`` for size classes that are compact in both dimensions.
@@ -66,6 +63,7 @@ struct PresentationCompactAdaptationModifier: ViewModifier, Decodable {
             )
     }
 }
+#endif
 
 /// An alternate presentation style for compact size classes.
 ///
@@ -77,7 +75,6 @@ struct PresentationCompactAdaptationModifier: ViewModifier, Decodable {
 /// * `full_screen_cover`
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 extension PresentationAdaptation: Decodable {
     public init(from decoder: Decoder) throws {
@@ -91,3 +88,4 @@ extension PresentationAdaptation: Decodable {
         }
     }
 }
+#endif

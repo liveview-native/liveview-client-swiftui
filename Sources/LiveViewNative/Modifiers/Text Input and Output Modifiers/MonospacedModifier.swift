@@ -24,12 +24,9 @@ import SwiftUI
 /// * ``isActive``
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct MonospacedModifier: ViewModifier, Decodable, Equatable, TextModifier {
     /// A boolean that indicates whether the monospaced font should be used.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let isActive: Bool
 
     func body(content: Content) -> some View {
@@ -44,3 +41,4 @@ struct MonospacedModifier: ViewModifier, Decodable, Equatable, TextModifier {
         }
     }
 }
+#endif

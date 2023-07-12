@@ -17,12 +17,9 @@ import SwiftUI
 /// - ``ControlGroupStyle``
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct ControlGroupStyleModifier: ViewModifier, Decodable {
     /// The style to apply to control groups.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let style: ControlGroupStyle
     
     func body(content: Content) -> some View {
@@ -50,11 +47,11 @@ struct ControlGroupStyleModifier: ViewModifier, Decodable {
         #endif
     }
 }
+#endif
 
 /// A style for a ``ControlGroup`` element.
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 fileprivate enum ControlGroupStyle: String, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -76,3 +73,4 @@ fileprivate enum ControlGroupStyle: String, Decodable {
     #endif
     case navigation
 }
+#endif

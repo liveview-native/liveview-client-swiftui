@@ -26,7 +26,6 @@ import SwiftUI
 /// - ``order``
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 struct MenuOrderModifier: ViewModifier, Decodable {
     /// The order in which menu items are shown.
@@ -64,3 +63,4 @@ struct MenuOrderModifier: ViewModifier, Decodable {
         case order
     }
 }
+#endif

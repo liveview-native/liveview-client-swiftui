@@ -26,7 +26,6 @@ import SwiftUI
 /// - ``radius``
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 struct PresentationCornerRadiusModifier: ViewModifier, Decodable {
     /// The corner radius to use. Specifying `nil` will use the system's default corner radius.
@@ -39,3 +38,4 @@ struct PresentationCornerRadiusModifier: ViewModifier, Decodable {
         content.presentationCornerRadius(radius)
     }
 }
+#endif

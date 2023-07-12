@@ -30,7 +30,6 @@ import SwiftUI
 /// - `maximum_detent`: If the ``mode`` is `enabled`, an optional detent up through which interaction is enabled (see ``LiveViewNative/SwiftUI/PresentationDetent``).
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 struct PresentationBackgroundInteractionModifier: ViewModifier, Decodable {
     /// The interaction mode.
@@ -71,3 +70,4 @@ struct PresentationBackgroundInteractionModifier: ViewModifier, Decodable {
         case maximumDetent
     }
 }
+#endif

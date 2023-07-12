@@ -34,27 +34,20 @@ import SwiftUI
 /// - ``alignment``
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 struct PresentationBackgroundModifier<R: RootRegistry>: ViewModifier, Decodable {
     /// The shape style to use as the background for the sheet content.
     ///
     /// See ``LiveViewNative/SwiftUI/AnyShapeStyle`` for how to specify styles
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let style: AnyShapeStyle?
     /// A reference to the view to use as the background content.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let content: String?
     /// How to align the ``content`` view within the sheet.
     ///
     /// This value is not used when a style is provided, as shape styles fill the view.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let alignment: Alignment?
     
     @LiveContext<R> private var context
@@ -89,3 +82,4 @@ struct PresentationBackgroundModifier<R: RootRegistry>: ViewModifier, Decodable 
         case content
     }
 }
+#endif

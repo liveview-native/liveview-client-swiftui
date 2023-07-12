@@ -29,7 +29,6 @@ import SwiftUI
 /// - ``interaction``
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 struct PresentationContentInteractionModifier: ViewModifier, Decodable {
     /// How swipe gestures on the content are handled.
@@ -65,3 +64,4 @@ struct PresentationContentInteractionModifier: ViewModifier, Decodable {
         case interaction
     }
 }
+#endif
