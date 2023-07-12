@@ -63,4 +63,10 @@ struct MenuActionDismissBehaviorModifier: ViewModifier, Decodable {
         case behavior
     }
 }
+#else
+struct MenuActionDismissBehaviorModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif

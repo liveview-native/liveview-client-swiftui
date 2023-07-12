@@ -41,4 +41,10 @@ struct MonospacedModifier: ViewModifier, Decodable, Equatable, TextModifier {
         }
     }
 }
+#else
+struct MonospacedModifier: ViewModifier, Decodable {
+    func body(content: Content) -> some View {
+        content
+    }
+}
 #endif

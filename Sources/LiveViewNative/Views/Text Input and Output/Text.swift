@@ -477,8 +477,10 @@ enum TextModifierType: String, Decodable {
             }
         case .fontWidth:
             return try FontWidthModifier(from: decoder)
+        #if swift(>=5.8)
         case .monospaced:
             return try MonospacedModifier(from: decoder)
+        #endif
         }
     }
 }
