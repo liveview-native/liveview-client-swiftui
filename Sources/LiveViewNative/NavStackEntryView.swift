@@ -31,9 +31,12 @@ struct NavStackEntryView<R: RootRegistry>: View {
             .onReceive(coordinator.receiveEvent("_native_bindings"), perform: liveViewModel.updateBindings)
             .onReceive(
                 liveViewModel.bindingUpdatedByClient
-                    .collect(.byTime(RunLoop.main, RunLoop.main.minimumTolerance))
+                    .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
             ) { updates in
                 Task {
+                    // In some cases, the bindings will update as the page is navigating.
+                    // Don't send the bindings to the wrong live view in this case.
+                    guard entry.url == coordinator.url else { return }
                     try? await coordinator.pushEvent(type: "_native_bindings", event: "_native_bindings", value: Dictionary(updates, uniquingKeysWith: { cur, new in new }))
                 }
             }

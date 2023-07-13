@@ -149,40 +149,17 @@ public struct LiveBinding<Value: Codable> {
     /// Setting this property will send an event to the server to update its value as well.
     public var wrappedValue: Value {
         get {
-            let valueError: Error?
-            if let bindingName {
-                do {
-                    return try data.getValue(from: liveViewModel, bindingName: bindingName)
-                } catch {
-                    valueError = error
-                }
-            } else {
-                valueError = nil
-            }
-            if case .local(let value) = data.mode {
-                return value
+            if let boundValue = data.value {
+                return boundValue
             } else if let initialLocalValue {
                 return initialLocalValue
             } else {
-                if let valueError {
-                    fatalError(valueError.localizedDescription)
-                } else {
-                    fatalError("@LiveBinding must have binding name or default value")
-                }
+                fatalError("@LiveBinding must have binding name or default value")
             }
         }
         nonmutating set {
-            // update the local value
-            data.mode = .local(newValue)
-            data.objectWillChange.send()
-            // if we are bound, update the view model, which will send an update to the backend
-            if let bindingName {
-                let encoder = FragmentEncoder()
-                // todo: if encoding fails, what should happen?
-                try! newValue.encode(to: encoder)
-                data.skipNextUpdate = true
-                liveViewModel.setBinding(bindingName, to: encoder.unwrap() as Any)
-            }
+            data.value = newValue
+            data.localValueChanged.send() // make sure to send a signal when the client changes the value.
         }
     }
     
@@ -200,7 +177,7 @@ public struct LiveBinding<Value: Codable> {
 
 extension LiveBinding: DynamicProperty {
     public func update() {
-        // don't need to do anything, just need to conform to DynamicProperty to make sure our @StateObject gets installed
+        data.bind(to: liveViewModel, bindingName: bindingName)
     }
 }
 
@@ -214,52 +191,44 @@ extension LiveBinding {
 
 extension LiveBinding {
     class Data: ObservableObject {
-        var mode: Mode = .uninitialized
-        var skipNextUpdate = false
-        private var serverCancellable: AnyCancellable?
-        private var clientCancellable: AnyCancellable?
+        /// The current value of the binding.
+        var value: Value?
         
-        func getValue(from liveViewModel: LiveViewModel, bindingName: String) throws -> Value {
-            switch mode {
-            case .uninitialized:
-                serverCancellable = liveViewModel.bindingUpdatedByServer
-                    .filter { $0.0 == bindingName }
-                    .sink { [unowned self] _ in
-                        self.mode = .needsUpdateFromViewModel
-                        self.objectWillChange.send()
-                    }
-                clientCancellable = liveViewModel.bindingUpdatedByClient
-                    .filter { $0.0 == bindingName }
-                    .sink { [unowned self] _ in
-                        if self.skipNextUpdate {
-                            self.skipNextUpdate = false
-                        } else {
-                            self.mode = .needsUpdateFromViewModel
-                            self.objectWillChange.send()
-                        }
-                    }
-                return try getValueFromViewModel(liveViewModel, bindingName: bindingName)
-            case .needsUpdateFromViewModel:
-                return try getValueFromViewModel(liveViewModel, bindingName: bindingName)
-            case .local(let value):
-                return value
+        /// A publisher used to track when the value is changed by the client.
+        let localValueChanged: ObjectWillChangePublisher = .init()
+        
+        var valueCancellable: AnyCancellable?
+        var cancellable: AnyCancellable?
+        
+        func bind(to model: LiveViewModel, bindingName: String?) {
+            if let bindingName {
+                if valueCancellable == nil && cancellable == nil,
+                   let defaultValue = model.bindingValues[bindingName]
+                {
+                    let decoder = FragmentDecoder(data: defaultValue)
+                    value = try! Value(from: decoder)
+                }
+                // Watch for local changes to the value.
+                valueCancellable = self.localValueChanged.sink { [weak self, weak model] _ in
+                    guard let value = self?.value else { return }
+                    let encoder = FragmentEncoder()
+                    try! value.encode(to: encoder)
+                    guard let encodedValue = encoder.unwrap()
+                    else { return }
+                    model?.setBinding(bindingName, to: encodedValue)
+                }
+                // Watch for changes from the server.
+                cancellable = model.bindingUpdatedByServer
+                    .filter({ $0.0 == bindingName })
+                    .sink(receiveValue: { [weak self] newValue in
+                        let decoder = FragmentDecoder(data: newValue.1)
+                        self?.value = try! Value(from: decoder)
+                        self?.objectWillChange.send()
+                    })
+            } else {
+                valueCancellable = nil
+                cancellable = nil
             }
-        }
-        
-        private func getValueFromViewModel(_ liveViewModel: LiveViewModel, bindingName: String) throws -> Value {
-            guard let defaultPayload = liveViewModel.bindingValues[bindingName] else {
-                throw LiveBindingError.missingDefaultPayload(bindingName)
-            }
-            // todo: if decoding fails, what should happen?
-            let value = try Value(from: FragmentDecoder(data: defaultPayload))
-            mode = .local(value)
-            return value
-        }
-        
-        enum Mode {
-            case uninitialized
-            case needsUpdateFromViewModel
-            case local(Value)
         }
     }
 }
