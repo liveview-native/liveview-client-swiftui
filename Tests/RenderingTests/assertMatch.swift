@@ -100,7 +100,9 @@ extension XCTestCase {
             document[document.root()].children(),
             coordinator: session.rootCoordinator,
             url: session.url
-        ).environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
+        )
+            .environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
+            .environmentObject(LiveViewModel())
         
         let modifyViewForRender: (any View) -> any View = {
             if useDrawingGroup {
