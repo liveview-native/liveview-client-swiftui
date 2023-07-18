@@ -21,7 +21,7 @@ extension Axis.Set: Decodable, AttributeDecodable {
         if let alignment = Self(string: string) {
             self = alignment
         } else {
-            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for HorizontalAlignment"))
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Axis.Set"))
         }
     }
     
@@ -42,5 +42,24 @@ extension Axis.Set: Decodable, AttributeDecodable {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
         self = result
+    }
+}
+
+/// A horizontal or vertical dimension.
+///
+/// Possible values:
+/// * `horizontal`
+/// * `vertical`
+extension Axis: Decodable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        switch try container.decode(String.self) {
+        case "horizontal":
+            self = .horizontal
+        case "vertical":
+            self = .vertical
+        default:
+            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Axis"))
+        }
     }
 }

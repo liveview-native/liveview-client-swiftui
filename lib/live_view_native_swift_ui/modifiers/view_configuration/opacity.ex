@@ -5,6 +5,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Opacity do
     field :opacity, :float
   end
 
-  def params(opacity) when is_float(opacity), do: [opacity: opacity]
+  def params(opacity) when is_number(opacity), do: [opacity: opacity]
   def params(params), do: params
 end

@@ -27,6 +27,16 @@ public struct LiveSessionConfiguration {
     public init() {
     }
     
+    public init(
+        navigationMode: NavigationMode = .disabled,
+        connectParams: ((URL) -> [String: Any])? = nil,
+        urlSession: URLSession = .shared
+    ) {
+        self.navigationMode = navigationMode
+        self.connectParams = connectParams
+        self.urlSession = urlSession
+    }
+    
     /// Possible modes for live view navigation.
     public enum NavigationMode {
         /// Navigation is entirely disabled. The live view will stay on the URL it was initially connected to.

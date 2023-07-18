@@ -11,6 +11,7 @@ import SwiftSyntaxMacros
 @main
 struct LiveViewNativeMacrosPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
-        RegistriesMacro.self
+        RegistriesMacro.self,
+        LiveViewMacro.self
     ]
 }

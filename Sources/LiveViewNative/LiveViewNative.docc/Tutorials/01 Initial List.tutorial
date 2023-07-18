@@ -165,9 +165,7 @@
             }
             
             @Step {
-                Then, import the LiveViewNative package and add the session as a `@StateObject` variable, using the URL of your Phoenix project.
-                
-                The coordinator handles all networking for the LiveView, and so only one instance of it should exist. We use a `@State` variable for this so that the coordinator isn't re-created if SwiftUI re-creates the containing view.
+                Then, import the LiveViewNative package at the top of the file.
                 
                 @Comment {
                     project = "app"
@@ -177,7 +175,7 @@
             }
             
             @Step {
-                Lastly, add the `LiveView` to your view's body, passing in the coordinator.
+                Lastly, add the `LiveView` to your view's body, passing in ``LocalhostLiveViewHost/localhost(port:path:)`` as the host with a custom base path.
                 
                 Then, you can run the app in the Simulator and see it connecting to your Phoenix app. Make sure you've started the Phoenix server with `mix phx.server`!
                 
