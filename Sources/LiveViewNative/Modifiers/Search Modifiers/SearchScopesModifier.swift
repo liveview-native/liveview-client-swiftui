@@ -108,7 +108,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 }
 #else
-struct SearchScopesModifier: ViewModifier, Decodable {
+struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     func body(content: Content) -> some View {
         content
     }

@@ -83,7 +83,7 @@ struct PresentationBackgroundModifier<R: RootRegistry>: ViewModifier, Decodable 
     }
 }
 #else
-struct PresentationBackgroundModifier: ViewModifier, Decodable {
+struct PresentationBackgroundModifier<R: RootRegistry>: ViewModifier, Decodable {
     func body(content: Content) -> some View {
         content
     }
