@@ -6,7 +6,7 @@
       "location" : "https://github.com/liveviewnative/liveview-native-core-swift.git",
       "state" : {
         "branch" : "main",
-        "revision" : "ffea1b5ff768fd2eeea5d4bdfae606b18517f880"
+        "revision" : "5d2dbc8fdbeaa939a9b9a23deae62dc596c4a694"
       }
     },
     {
@@ -24,7 +24,7 @@
       "location" : "https://github.com/apple/swift-cmark.git",
       "state" : {
         "branch" : "gfm",
-        "revision" : "86aeb491675de6f077a3a6df6cbcac1a25dcbee1"
+        "revision" : "b1c49eb0752d727fda5dfa63c8bb23670592d7c9"
       }
     },
     {
@@ -33,7 +33,16 @@
       "location" : "https://github.com/apple/swift-markdown.git",
       "state" : {
         "branch" : "main",
-        "revision" : "ad0b81fed55c4a72fdaeb5535884bd2886de96f4"
+        "revision" : "3d4b36cff09f785adf5efb190d458a3d44e6df87"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-syntax.git",
+      "state" : {
+        "revision" : "67c5007099d9ffdd292f421f81f4efe5ee42963e",
+        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-07-10-a"
       }
     },
     {
@@ -50,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/scinfu/SwiftSoup.git",
       "state" : {
-        "revision" : "6778575285177365cbad3e5b8a72f2a20583cfec",
-        "version" : "2.4.3"
+        "revision" : "8b6cf29eead8841a1fa7822481cb3af4ddaadba6",
+        "version" : "2.6.1"
       }
     }
   ],
