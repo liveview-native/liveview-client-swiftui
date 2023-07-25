@@ -177,7 +177,20 @@ public struct LiveBinding<Value: Codable> {
 
 extension LiveBinding: DynamicProperty {
     public func update() {
-        data.bind(to: liveViewModel, bindingName: bindingName)
+        switch bindingNameSource {
+        case let .attribute(attribute):
+            data.bind(
+                to: liveViewModel,
+                bindingName: bindingName,
+                debounce: (try? element.attributeValue(Double.self, for: .init(namespace: attribute.name, name: "debounce"))) ?? 0
+            )
+        default:
+            data.bind(
+                to: liveViewModel,
+                bindingName: bindingName,
+                debounce: 0
+            )
+        }
     }
 }
 
@@ -200,7 +213,7 @@ extension LiveBinding {
         var valueCancellable: AnyCancellable?
         var cancellable: AnyCancellable?
         
-        func bind(to model: LiveViewModel, bindingName: String?) {
+        func bind(to model: LiveViewModel, bindingName: String?, debounce: Double) {
             if let bindingName {
                 if valueCancellable == nil && cancellable == nil,
                    let defaultValue = model.bindingValues[bindingName]
@@ -209,14 +222,16 @@ extension LiveBinding {
                     value = try! Value(from: decoder)
                 }
                 // Watch for local changes to the value.
-                valueCancellable = self.localValueChanged.sink { [weak self, weak model] _ in
-                    guard let value = self?.value else { return }
-                    let encoder = FragmentEncoder()
-                    try! value.encode(to: encoder)
-                    guard let encodedValue = encoder.unwrap()
-                    else { return }
-                    model?.setBinding(bindingName, to: encodedValue)
-                }
+                valueCancellable = self.localValueChanged
+                    .debounce(for: .init(debounce), scheduler: RunLoop.current)
+                    .sink { [weak self, weak model] _ in
+                        guard let value = self?.value else { return }
+                        let encoder = FragmentEncoder()
+                        try! value.encode(to: encoder)
+                        guard let encodedValue = encoder.unwrap()
+                        else { return }
+                        model?.setBinding(bindingName, to: encodedValue)
+                    }
                 // Watch for changes from the server.
                 cancellable = model.bindingUpdatedByServer
                     .filter({ $0.0 == bindingName })
