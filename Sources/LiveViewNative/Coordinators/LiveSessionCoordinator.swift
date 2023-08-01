@@ -61,6 +61,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
+    private var mergedEventSubjects: AnyCancellable?
+    private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
+    private var eventHandlers = Set<AnyCancellable>()
+    
     var isMounted: Bool = false
     
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
@@ -75,6 +79,12 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.url = url.appending(path: "").absoluteURL
         self.config = config
         self.rootCoordinator = .init(session: self, url: self.url)
+        self.mergedEventSubjects = self.rootCoordinator.eventSubject.compactMap({
+            [weak self] value in self.map({ ($0.rootCoordinator, value) })
+        })
+        .sink(receiveValue: { [weak self] value in
+            self?.eventSubject.send(value)
+        })
         self.$internalState.sink { state in
             if case .connected = state {
                 Task { [weak self] in
@@ -93,7 +103,21 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
         }.store(in: &cancellables)
-        $navigationPath.sink { entries in
+        $navigationPath.sink { [weak self] entries in
+            // Receive events from all live views.
+            if let self {
+                let allCoordinators = ([self.rootCoordinator] + entries.map(\.coordinator))
+                    .reduce(into: [LiveViewCoordinator<R>]()) { result, next in
+                        guard !result.contains(where: { $0 === next }) else { return }
+                        result.append(next)
+                    }
+                self.mergedEventSubjects = Publishers.MergeMany(allCoordinators.map({ coordinator in
+                    coordinator.eventSubject.map({ (coordinator, $0) })
+                }))
+                .sink(receiveValue: { [weak self] value in
+                    self?.eventSubject.send(value)
+                })
+            }
             guard let entry = entries.last else { return }
             Task {
                 // If the coordinator is not connected to the right URL, update it.
@@ -188,6 +212,34 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         disconnect()
         await connect()
         await self.rootCoordinator.reconnect()
+    }
+    
+    /// Creates a publisher that can be used to listen for server-sent LiveView events.
+    ///
+    /// - Parameter event: The event name that is being listened for.
+    /// - Returns: A publisher that emits event payloads.
+    ///
+    /// This event will be received from every LiveView handled by this session coordinator.
+    ///
+    /// See ``LiveViewCoordinator/receiveEvent(_:)`` for more details.
+    public func receiveEvent(_ event: String) -> some Publisher<(LiveViewCoordinator<R>, Payload), Never> {
+        eventSubject
+            .filter { $0.1.0 == event }
+            .map({ ($0.0, $0.1.1) })
+    }
+    
+    /// Permanently registers a handler for a server-sent LiveView event.
+    ///
+    /// - Parameter event: The event name that is being listened for.
+    /// - Parameter handler: A closure to invoke when the coordinator receives an event. The event value is provided as the closure's parameter.
+    ///
+    /// This event handler will be added to every LiveView handled by this session coordinator.
+    ///
+    /// See ``LiveViewCoordinator/handleEvent(_:handler:)`` for more details.
+    public func handleEvent(_ event: String, handler: @escaping (LiveViewCoordinator<R>, Payload) -> Void) {
+        receiveEvent(event)
+            .sink(receiveValue: handler)
+            .store(in: &eventHandlers)
     }
     
     func fetchDOM(url: URL) async throws -> String {
