@@ -45,8 +45,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private var currentConnectionToken: ConnectionAttemptToken?
     private var currentConnectionTask: Task<Void, Error>?
     
-    private var eventSubject = PassthroughSubject<(String, Payload), Never>()
-    private var eventHandlers = Set<AnyCancellable>()
+    private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
+    private(set) internal var eventHandlers = Set<AnyCancellable>()
     
     init(session: LiveSessionCoordinator<R>, url: URL) {
         self.session = session
@@ -81,6 +81,15 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             "value": value,
             "cid": target as Any
         ])
+    }
+    
+    public func pushEvent(type: String, event: String, value: some Encodable, target: Int? = nil) async throws {
+        try await pushEvent(
+            type: type,
+            event: event,
+            value: try JSONSerialization.jsonObject(with: JSONEncoder().encode(value)),
+            target: target
+        )
     }
     
     internal func doPushEvent(_ event: String, payload: Payload) async throws {
