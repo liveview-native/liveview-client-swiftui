@@ -102,7 +102,7 @@ extension XCTestCase {
             url: session.url
         )
             .environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
-            .environmentObject(LiveViewModel())
+            .environmentObject(LiveViewModel(bindingValue: EmptyRegistry.bindingValue, setBindingValue: EmptyRegistry.setBindingValue, globalBindings: { EmptyRegistry.globalBindings }, registerGlobalBinding: EmptyRegistry.registerGlobalBinding))
         
         let modifyViewForRender: (any View) -> any View = {
             if useDrawingGroup {
