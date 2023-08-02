@@ -30,7 +30,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
     }
     
     @ViewBuilder
-    fileprivate func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some View {
+    func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some View {
         switch node.data {
         case .root:
             fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
@@ -41,7 +41,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
         }
     }
     
-    fileprivate func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
+    func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
 
         let modified = view.applyModifiers(R.self)
@@ -210,10 +210,17 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let context: LiveContextStorage<R>
 
     var body: some View {
-        let remaining = modifiers.dropFirst()
-        // force-unwrap is okay, this view is never constructed with an empty slice
-        parent.modifier(modifiers.first!.modifier)
-            .applyModifiers(remaining, element: element, context: context)
+        if modifiers.isEmpty {
+            parent
+        } else {
+            ModifierApplicator<_, R>(
+                // force-unwrap is okay, this view is never constructed with an empty slice
+                parent: parent.modifier(modifiers.first!.modifier),
+                modifiers: modifiers.dropFirst(),
+                element: element,
+                context: context
+            )
+        }
     }
 }
 
@@ -245,11 +252,7 @@ extension View {
     
     @ViewBuilder
     func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<ModifierContainer<R>>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
-        if modifiers.isEmpty {
-            self
-        } else {
-            ModifierApplicator(parent: self, modifiers: modifiers, element: element, context: context)
-        }
+        ModifierApplicator(parent: self, modifiers: modifiers, element: element, context: context)
     }
     
     @ViewBuilder
@@ -259,16 +262,6 @@ extension View {
         } else {
             BindingApplicator(parent: self, bindings: bindings, element: element, context: context)
         }
-    }
-}
-
-// not fileprivate because it's used by LiveContext.
-internal struct NodeView<R: RootRegistry>: View {
-    let node: Node
-    let context: LiveContextStorage<R>
-    
-    var body: some View {
-        context.coordinator.builder.fromNode(node, context: context)
     }
 }
 
@@ -300,7 +293,7 @@ func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveConte
         switch $0 {
         case let .keyed(node, _),
              let .unkeyed(node):
-            NodeView(node: node, context: context)
+            context.coordinator.builder.fromNode(node, context: context)
         }
     }
 }
