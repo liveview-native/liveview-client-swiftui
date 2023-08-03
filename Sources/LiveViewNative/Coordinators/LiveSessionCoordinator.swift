@@ -358,8 +358,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             case .replace:
                 // If there is nothing to replace, change the root URL.
                 if !navigationPath.isEmpty {
-                    navigationPath.removeLast()
-                    navigationPath.append(entry)
+                    navigationPath[navigationPath.count - 1] = entry
                 }
             }
             try await coordinator.connect(domValues: self.domValues, redirect: true)
