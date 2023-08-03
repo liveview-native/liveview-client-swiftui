@@ -19,7 +19,6 @@ struct NavStackEntryView<R: RootRegistry>: View {
     }
     
     var body: some View {
-        let _ = Self._printChanges()
         elementTree
             .environmentObject(liveViewModel)
             .onReceive(coordinator.$document) { newDocument in
