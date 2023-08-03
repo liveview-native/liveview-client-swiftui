@@ -135,6 +135,11 @@ public protocol CustomRegistry<Root> {
     /// - Parameter error: The error of the view is reporting.
     @ViewBuilder
     static func errorView(for error: Error) -> ErrorView
+    
+    static func setBindingValue(_ value: Any, forKey key: String, in scope: String?) throws
+    static func bindingValue(forKey key: String, in scope: String?) -> Any?
+    static var globalBindings: Set<String> { get }
+    static func registerGlobalBinding(_ key: String)
 }
 
 extension CustomRegistry where LoadingView == Never {
@@ -148,6 +153,21 @@ extension CustomRegistry where ErrorView == Never {
     /// A default  implementation that falls back to the default framework error view.
     public static func errorView(for error: Error) -> Never {
         fatalError()
+    }
+}
+
+extension CustomRegistry {
+    public static func setBindingValue(_ value: Any, forKey key: String, in scope: String?) throws {
+        UserDefaults(suiteName: scope)?.setValue(value, forKey: key)
+    }
+    public static func bindingValue(forKey key: String, in scope: String?) -> Any? {
+        UserDefaults(suiteName: scope)?.value(forKey: key)
+    }
+    public static var globalBindings: Set<String> {
+        Set(UserDefaults.standard.stringArray(forKey: "_lvn_global_bindings") ?? [])
+    }
+    public static func registerGlobalBinding(_ key: String) {
+        UserDefaults.standard.setValue(Array<String>(globalBindings.union([key])), forKey: "_lvn_global_bindings")
     }
 }
 

@@ -41,7 +41,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     public private(set) var url: URL
     
     @Published var navigationPath = [LiveNavigationEntry<R>]()
-    private(set) var rootCoordinator: LiveViewCoordinator<R>!
+    var rootCoordinator: LiveViewCoordinator<R>!
     
     internal let config: LiveSessionConfiguration
     
@@ -321,6 +321,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         case .replaceTop:
             let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
             coordinator.url = redirect.to
+            coordinator.disconnect()
             let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
             case .push:
