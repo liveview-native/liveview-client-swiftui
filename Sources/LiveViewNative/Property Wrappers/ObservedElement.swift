@@ -101,27 +101,33 @@ extension ObservedElement: DynamicProperty {
               let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
-        self.observer.update(ref: nodeRef, children: coordinator.document[nodeRef].children().map(\.id), elementChanged: coordinator.elementChanged)
+        self.observer.update(
+            ref: nodeRef,
+            children: self.observer.observeChildren ? coordinator.document[nodeRef].children().map(\.id) : nil,
+            elementChanged: coordinator.elementChanged
+        )
     }
 }
 
 extension ObservedElement {
     private class Observer: ObservableObject {
         private var cancellable: AnyCancellable?
-        private var observeChildren = false
+        fileprivate var observeChildren = false
+        
+        let objectWillChange = ObjectWillChangePublisher()
         
         init(observeChildren: Bool) {
             self.observeChildren = observeChildren
         }
         
-        fileprivate func update(ref: NodeRef, children: [NodeRef], elementChanged: AnyPublisher<NodeRef, Never>) {
+        fileprivate func update(ref: NodeRef, children: [NodeRef]?, elementChanged: AnyPublisher<NodeRef, Never>) {
             if cancellable == nil {
                 cancellable = elementChanged
                     .filter { [weak self] in
                         if $0 == ref {
                             return true
                         } else if self?.observeChildren == true {
-                            return children.contains($0)
+                            return children?.contains($0) ?? false
                         } else {
                             return false
                         }
