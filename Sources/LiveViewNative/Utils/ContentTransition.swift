@@ -104,6 +104,8 @@ extension ContentTransition: Decodable {
 }
 
 #if canImport(Symbols)
+import Symbols
+
 /// A content transition applied to a system image.
 ///
 /// Possible values:
