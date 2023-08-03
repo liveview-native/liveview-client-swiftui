@@ -26,10 +26,10 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 /// - ``handleEvent(_:handler:)``
 @MainActor
 public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
-    @Published internal private(set) var internalState: LiveSessionCoordinator<R>.InternalState = .notConnected(reconnectAutomatically: false)
+    @Published internal private(set) var internalState: LiveSessionState = .notConnected
     
     var state: LiveSessionState {
-        internalState.publicState
+        internalState
     }
     
     let session: LiveSessionCoordinator<R>
@@ -56,8 +56,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             guard let self,
                   let redirect = LiveRedirect(from: payload, relativeTo: self.url)
             else { return }
-            Task {
-                await session.redirect(redirect)
+            Task { [weak session] in
+                try await session?.redirect(redirect)
             }
         }
     }
@@ -116,9 +116,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         if let diffPayload = replyPayload["diff"] as? Payload {
             try self.handleDiff(payload: diffPayload, baseURL: self.url)
-        } else if session.config.navigationMode.permitsRedirects,
+        } else if session.configuration.navigationMode.permitsRedirects,
                   let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
-            await session.redirect(redirect)
+            try await session.redirect(redirect)
         }
     }
     
@@ -206,74 +206,29 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         return document.children()
     }
     
-    func connect() async {
-        if let channel {
-            guard !channel.isJoined, !channel.isJoining else { return }
-        }
-        internalState = .startingConnection
-        do {
-            try await connectLiveView()
-        } catch {
-            self.internalState = .connectionFailed(error)
-        }
-    }
-    
-    func disconnect() {
-        if let channel {
-            channel.leave()
-        }
-        channel = nil
-        self.internalState = .notConnected(reconnectAutomatically: false)
-        self.document = nil
-    }
-    
-    func reconnect() async {
+    func connect(domValues: LiveSessionCoordinator<R>.DOMValues, redirect: Bool) async throws {
+        print("CONNECTING \(self.url)")
         self.disconnect()
-        await self.connect()
-    }
-    
-    private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> (String, String, String, String) {
-        let metaRes = try doc.select("meta[name=\"csrf-token\"]")
-        guard !metaRes.isEmpty() else {
-            throw LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken)
-        }
-        let phxCSRFToken = try metaRes[0].attr("content")
-//        let liveReloadEnabled = !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
         
-        let mainDivRes = try doc.select("div[data-phx-main]")
-        guard !mainDivRes.isEmpty() else {
-            throw LiveConnectionError.initialParseError(missingOrInvalid: .phxMain)
-        }
-        let mainDiv = mainDivRes[0]
-        let phxSession = try mainDiv.attr("data-phx-session")
-        let phxStatic = try mainDiv.attr("data-phx-static")
-//        let phxView = try mainDiv.attr("data-phx-view")
-        let phxID = try mainDiv.attr("id")
+        self.internalState = .connecting
         
-        return (phxCSRFToken, phxSession, phxStatic, phxID)
-    }
-    
-    // todo: don't use Any for the params
-    private func connectLiveView() async throws {
         guard let socket = session.socket else { return }
         
-        var connectParams = session.config.connectParams?(self.url) ?? [:]
+        var connectParams = session.configuration.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
-        connectParams["_csrf_token"] = session.phxCSRFToken
+        connectParams["_csrf_token"] = domValues.phxCSRFToken
         connectParams["_platform"] = "swiftui"
         connectParams["_platform_meta"] = try getPlatformMetadata()
         connectParams["_global_native_bindings"] = Dictionary(uniqueKeysWithValues: R.globalBindings.map({ ($0, R.bindingValue(forKey: $0, in: nil)) }))
 
         let params: Payload = [
-            "session": session.phxSession,
-            "static": session.phxStatic,
-            (session.isMounted ? "redirect": "url"): self.url.absoluteString,
+            "session": domValues.phxSession,
+            "static": domValues.phxStatic,
+            (redirect ? "redirect": "url"): self.url.absoluteString,
             "params": connectParams,
         ]
         
-        session.isMounted = true
-        
-        let channel = socket.channel("lv:\(session.phxID)", params: params)
+        let channel = socket.channel("lv:\(domValues.phxID)", params: params)
         self.channel = channel
         channel.onError { message in
             logger.error("[Channel] Error: \(String(describing: message))")
@@ -292,18 +247,32 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         channel.on("phx_close") { [weak self, weak channel] message in
             Task { @MainActor in
                 guard channel === self?.channel else { return }
-                self?.internalState = .notConnected(reconnectAutomatically: false)
+                self?.internalState = .notConnected
             }
         }
         
-        let renderedPayload: Payload = try await withCheckedThrowingContinuation { continuation in
-            self.internalState = .awaitingJoinResponse(continuation)
-            setupChannelJoinHandlers(channel: channel)
+        let joinResult = try await join(channel: channel)
+        
+        switch joinResult {
+        case .rendered(let payload):
+            self.handleJoinPayload(renderedPayload: payload)
+        case .redirect(let liveRedirect):
+            self.url = liveRedirect.to
+            try await self.connect(domValues: domValues, redirect: true)
         }
         
-        Task { @MainActor in
-            handleJoinPayload(renderedPayload: renderedPayload)
+        self.internalState = .connected
+    }
+    
+    func disconnect() {
+        if let channel,
+           channel.isJoined
+        {
+            channel.leave()
         }
+        channel = nil
+        self.internalState = .notConnected
+        self.document = nil
     }
     
     private func getPlatformMetadata() throws -> Payload {
@@ -361,70 +330,61 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
         #endif
     }
+    
+    enum JoinResult {
+        case rendered(Payload)
+        case redirect(LiveRedirect)
+    }
 
-    private func setupChannelJoinHandlers(channel: Channel) {
-        channel.join()
-            .receive("ok") { [weak self, weak channel] message in
-                guard let channel else { return }
-                guard let self = self else {
-                    // leave the channel so we don't get any more messages/automatic rejoins
-                    channel.leave()
-                    if case .awaitingJoinResponse(let continuation) = self?.internalState {
-                        continuation.resume(throwing: CancellationError())
+    private func join(channel: Channel) async throws -> JoinResult {
+        try await withCheckedThrowingContinuation { continuation in
+            channel.join()
+                .receive("ok") { [weak self, weak channel] message in
+                    guard let channel else {
+                        continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                        return
                     }
-                    return
-                }
-                let renderedPayload = (message.payload["rendered"] as! Payload)
-                if case .awaitingJoinResponse(let continuation) = self.internalState {
-                    // if we're in the state of attempting to establish the initial connection, resume the async task
-                    continuation.resume(returning: renderedPayload)
-                } else if self.internalState.reconnectAutomatically {
-                    // if we're in a state where, e.g., a previous attempt failed, but an automatic rejoin attempt succeeds, finish the join
-                    Task { @MainActor in
-                        self.handleJoinPayload(renderedPayload: renderedPayload)
-                    }
-                } else {
-                    // if we've received a message but don't have anything to do with it,
-                    // assume that that will continue to be the case, and leave the channel to prevent future messages
-                    channel.leave()
-                }
-            }
-            .receive("error") { [weak self, weak channel] message in
-                guard let channel else { return }
-                // TODO: reconsider this behavior, web tries to automatically rejoin, and we do to when an error is encountered after a successful join
-                // leave the channel, otherwise the it'll continue retrying indefinitely
-                // we want to control the retry behavior ourselves, so just leave the channel
-                channel.leave()
-                
-                guard let self = self else {
-                    if case .awaitingJoinResponse(let continuation) = self?.internalState {
-                        continuation.resume(throwing: CancellationError())
-                    }
-                    return
-                }
-                
-                if self.session.config.navigationMode.permitsRedirects,
-                   let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
-                    Task { @MainActor in
-                        await self.session.redirect(redirect)
-                    }
-                } else {
-                    if case .awaitingJoinResponse(let continuation) = self.internalState {
-                        continuation.resume(throwing: LiveConnectionError.joinError(message))
-                    } else if self.internalState.reconnectAutomatically {
-                        // TODO: reconnectAutomatically is a bit of a misnomer here,
-                        Task { @MainActor in
-                            self.internalState = .connectionFailed(LiveConnectionError.joinError(message))
+                    guard self != nil else {
+                        // leave the channel so we don't get any more messages/automatic rejoins
+                        if channel.isJoined {
+                            channel.leave()
                         }
+                        continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                        return
+                    }
+                    let renderedPayload = (message.payload["rendered"] as! Payload)
+                    continuation.resume(returning: .rendered(renderedPayload))
+                }
+                .receive("error") { [weak self, weak channel] message in
+                    guard let channel else {
+                        continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                        return
+                    }
+                    // TODO: reconsider this behavior, web tries to automatically rejoin, and we do to when an error is encountered after a successful join
+                    // leave the channel, otherwise the it'll continue retrying indefinitely
+                    // we want to control the retry behavior ourselves, so just leave the channel
+                    if channel.isJoined {
+                        channel.leave()
+                    }
+                    
+                    guard let self = self else {
+                        continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                        return
+                    }
+                    
+                    if self.session.configuration.navigationMode.permitsRedirects,
+                       let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
+                        continuation.resume(returning: .redirect(redirect))
+                    } else {
+                        continuation.resume(throwing: LiveConnectionError.joinError(message))
                     }
                 }
-            }
+        }
     }
     
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-        self.internalState = .connected
         self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
         self.document?.on(.changed) { [unowned self] doc, nodeRef in
             // text nodes don't have their own views, changes to them need to be handled by the parent Text view

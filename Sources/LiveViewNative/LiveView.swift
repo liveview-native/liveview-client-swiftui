@@ -91,9 +91,19 @@ public struct LiveView<R: RootRegistry>: View {
                     case .connected:
                         fatalError()
                     case .notConnected:
-                        SwiftUI.Text("Not Connected")
+                        if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+                            #if swift(>=5.9)
+                            SwiftUI.ContentUnavailableView {
+                                SwiftUI.Label("No Connection", systemImage: "network.slash")
+                            } description: {
+                                SwiftUI.Text("The app will reconnect when network connection is regained.")
+                            }
+                            #else
+                            SwiftUI.Text("Not Connected")
+                            #endif
+                        }
                     case .connecting:
-                        SwiftUI.Text("Connecting")
+                        SwiftUI.ProgressView("Connecting")
                     case .connectionFailed(let error):
                         if let error = error as? LiveConnectionError,
                            case let .initialFetchUnexpectedResponse(_, trace?) = error
@@ -135,7 +145,7 @@ public struct LiveView<R: RootRegistry>: View {
         
     @ViewBuilder
     private var rootNavEntry: some View {
-        switch storage.session.config.navigationMode {
+        switch storage.session.configuration.navigationMode {
         case .enabled:
             navigationStack
         case .splitView:
@@ -203,13 +213,13 @@ public struct LiveView<R: RootRegistry>: View {
             guard let newValue else { return }
             Task {
                 storage.session.rootCoordinator.url = newValue
-                await storage.session.rootCoordinator.reconnect()
+                await storage.session.reconnect()
             }
         }
     }
     
     private var navigationRoot: some View {
-        NavStackEntryView(.init(url: storage.session.url, coordinator: rootCoordinator))
+        NavStackEntryView(.init(url: storage.session.rootCoordinator.url, coordinator: rootCoordinator))
     }
 }
 
