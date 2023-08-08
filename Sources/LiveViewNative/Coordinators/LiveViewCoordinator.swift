@@ -271,8 +271,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 channel.onClose { _ in
                     continuation.resume()
                 }
+                channel.leave()
             }
-            channel.leave()
         }
         channel = nil
         self.internalState = .notConnected
