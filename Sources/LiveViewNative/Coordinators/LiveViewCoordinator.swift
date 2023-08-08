@@ -207,8 +207,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     func connect(domValues: LiveSessionCoordinator<R>.DOMValues, redirect: Bool) async throws {
-        print("CONNECTING \(self.url)")
-        self.disconnect()
+        await self.disconnect()
         
         self.internalState = .connecting
         
@@ -264,10 +263,15 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.internalState = .connected
     }
     
-    func disconnect() {
+    func disconnect() async {
         if let channel,
-           channel.isJoined
+           !channel.isClosed
         {
+            await withCheckedContinuation { continuation in
+                channel.onClose { _ in
+                    continuation.resume()
+                }
+            }
             channel.leave()
         }
         channel = nil
@@ -300,27 +304,25 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                     continuation.resume(returning: .rendered(renderedPayload))
                 }
                 .receive("error") { [weak self, weak channel] message in
-                    guard let channel else {
-                        continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
-                        return
-                    }
-                    // TODO: reconsider this behavior, web tries to automatically rejoin, and we do to when an error is encountered after a successful join
-                    // leave the channel, otherwise the it'll continue retrying indefinitely
-                    // we want to control the retry behavior ourselves, so just leave the channel
-                    if channel.isJoined {
-                        channel.leave()
-                    }
-                    
-                    guard let self = self else {
+                    guard channel != nil else {
                         continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
                         return
                     }
                     
-                    if self.session.configuration.navigationMode.permitsRedirects,
-                       let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
-                        continuation.resume(returning: .redirect(redirect))
-                    } else {
-                        continuation.resume(throwing: LiveConnectionError.joinError(message))
+                    Task { [weak self] in
+                        guard let self else {
+                            continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                            return
+                        }
+                        
+                        await self.disconnect()
+                        
+                        if self.session.configuration.navigationMode.permitsRedirects,
+                           let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
+                            continuation.resume(returning: .redirect(redirect))
+                        } else {
+                            continuation.resume(throwing: LiveConnectionError.joinError(message))
+                        }
                     }
                 }
         }
