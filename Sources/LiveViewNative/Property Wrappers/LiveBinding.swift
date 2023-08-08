@@ -216,7 +216,6 @@ extension LiveBinding {
         
         func bind(to model: LiveViewModel, bindingName: String?, debounce: Double) {
             if let bindingName {
-                print("BIND")
                 if valueCancellable == nil && cancellable == nil,
                    let defaultValue = model.bindingValues[bindingName]
                 {
@@ -250,7 +249,6 @@ extension LiveBinding {
                         self?.objectWillChange.send()
                     })
             } else {
-                print("UNBIND")
                 valueCancellable = nil
                 cancellable = nil
             }
