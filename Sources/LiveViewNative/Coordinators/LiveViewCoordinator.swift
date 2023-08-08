@@ -217,8 +217,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         var connectParams = session.configuration.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = domValues.phxCSRFToken
-        connectParams["_platform"] = "swiftui"
-        connectParams["_platform_meta"] = try getPlatformMetadata()
+        connectParams["_platform"] = session.platform
+        connectParams["_platform_meta"] = session.platformMeta
         connectParams["_global_native_bindings"] = Dictionary(uniqueKeysWithValues: R.globalBindings.map({ ($0, R.bindingValue(forKey: $0, in: nil)) }))
 
         let params: Payload = [
@@ -273,62 +273,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         channel = nil
         self.internalState = .notConnected
         self.document = nil
-    }
-    
-    private func getPlatformMetadata() throws -> Payload {
-        return [
-            "os_name": getOSName(),
-            "os_version": getOSVersion(),
-            "user_interface_idiom": getUserInterfaceIdiom()
-        ]
-    }
-
-    private func getOSName() -> String {
-        #if os(macOS)
-        return "macOS"
-        #elseif os(tvOS)
-        return "tvOS"
-        #elseif os(watchOS)
-        return "watchOS"
-        #else
-        return "iOS"
-        #endif
-    }
-
-    private func getOSVersion() -> String {
-        #if os(watchOS)
-        return WKInterfaceDevice.current().systemVersion
-        #elseif os(macOS)
-        let operatingSystemVersion = ProcessInfo.processInfo.operatingSystemVersion
-        let majorVersion = operatingSystemVersion.majorVersion
-        let minorVersion = operatingSystemVersion.minorVersion
-        let patchVersion = operatingSystemVersion.patchVersion
-        
-        return "\(majorVersion).\(minorVersion).\(patchVersion)"
-        #else
-        return UIDevice.current.systemVersion
-        #endif
-    }
-
-    private func getUserInterfaceIdiom() -> String {
-        #if os(watchOS)
-        return "watch"
-        #elseif os(macOS)
-        return "mac"
-        #else
-        switch UIDevice.current.userInterfaceIdiom {
-        case .phone:
-            return "phone"
-        case .pad:
-            return "pad"
-        case .mac:
-            return "mac"
-        case .tv:
-            return "tv"
-        default:
-            return "unspecified"
-        }
-        #endif
     }
     
     enum JoinResult {

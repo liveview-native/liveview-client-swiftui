@@ -59,8 +59,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
     
-    var isMounted: Bool = false
-    
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
     }
@@ -221,7 +219,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let data: Data
         let resp: URLResponse
         do {
-            (data, resp) = try await configuration.urlSession.data(from: url)
+            (data, resp) = try await configuration.urlSession.data(from: url.appending(queryItems: [
+                .init(name: "_platform", value: platform)
+            ]))
         } catch {
             throw LiveConnectionError.initialFetchError(error)
         }
@@ -386,5 +386,64 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
         }
+    }
+}
+
+extension LiveSessionCoordinator {
+    var platform: String { "swiftui" }
+    var platformMeta: Payload {
+        [
+            "os_name": getOSName(),
+            "os_version": getOSVersion(),
+            "user_interface_idiom": getUserInterfaceIdiom()
+        ]
+    }
+    
+    private func getOSName() -> String {
+        #if os(macOS)
+        return "macOS"
+        #elseif os(tvOS)
+        return "tvOS"
+        #elseif os(watchOS)
+        return "watchOS"
+        #else
+        return "iOS"
+        #endif
+    }
+
+    private func getOSVersion() -> String {
+        #if os(watchOS)
+        return WKInterfaceDevice.current().systemVersion
+        #elseif os(macOS)
+        let operatingSystemVersion = ProcessInfo.processInfo.operatingSystemVersion
+        let majorVersion = operatingSystemVersion.majorVersion
+        let minorVersion = operatingSystemVersion.minorVersion
+        let patchVersion = operatingSystemVersion.patchVersion
+        
+        return "\(majorVersion).\(minorVersion).\(patchVersion)"
+        #else
+        return UIDevice.current.systemVersion
+        #endif
+    }
+
+    private func getUserInterfaceIdiom() -> String {
+        #if os(watchOS)
+        return "watch"
+        #elseif os(macOS)
+        return "mac"
+        #else
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone:
+            return "phone"
+        case .pad:
+            return "pad"
+        case .mac:
+            return "mac"
+        case .tv:
+            return "tv"
+        default:
+            return "unspecified"
+        }
+        #endif
     }
 }
