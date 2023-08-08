@@ -158,6 +158,7 @@ public struct LiveBinding<Value: Codable> {
             }
         }
         nonmutating set {
+            data.objectWillChange.send()
             data.value = newValue
             data.localValueChanged.send() // make sure to send a signal when the client changes the value.
         }
@@ -215,6 +216,7 @@ extension LiveBinding {
         
         func bind(to model: LiveViewModel, bindingName: String?, debounce: Double) {
             if let bindingName {
+                print("BIND")
                 if valueCancellable == nil && cancellable == nil,
                    let defaultValue = model.bindingValues[bindingName]
                 {
@@ -222,8 +224,15 @@ extension LiveBinding {
                     value = try! Value(from: decoder)
                 }
                 // Watch for local changes to the value.
-                valueCancellable = self.localValueChanged
-                    .debounce(for: .init(debounce), scheduler: RunLoop.current)
+                let localValueChanged: AnyPublisher<(), Never>
+                if debounce > 0 {
+                    localValueChanged = self.localValueChanged
+                        .debounce(for: .init(debounce), scheduler: RunLoop.current)
+                        .eraseToAnyPublisher()
+                } else {
+                    localValueChanged = self.localValueChanged.eraseToAnyPublisher()
+                }
+                valueCancellable = localValueChanged
                     .sink { [weak self, weak model] _ in
                         guard let value = self?.value else { return }
                         let encoder = FragmentEncoder()
@@ -241,6 +250,7 @@ extension LiveBinding {
                         self?.objectWillChange.send()
                     })
             } else {
+                print("UNBIND")
                 valueCancellable = nil
                 cancellable = nil
             }

@@ -144,6 +144,7 @@ public struct FormState<Value: FormValue> {
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .bound:
                 boundValue = newValue
+//                data.objectWillChange.send()
             case .localInitial:
                 data.mode = .local(newValue)
                 data.objectWillChange.send()
