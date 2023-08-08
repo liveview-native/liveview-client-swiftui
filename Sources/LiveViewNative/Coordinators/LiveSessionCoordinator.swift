@@ -83,7 +83,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 let last = next.last ?? .init(url: self.url, coordinator: self.rootCoordinator)
                 if last.coordinator.url != last.url {
                     last.coordinator.url = last.url
-                    print("NAVIGATE BACK")
                     Task { @MainActor in
                         try await last.coordinator.connect(domValues: self.domValues, redirect: true)
                     }
@@ -166,10 +165,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    private func disconnect() {
-        rootCoordinator.disconnect()
+    private func disconnect() async {
+        await rootCoordinator.disconnect()
         for entry in self.navigationPath {
-            entry.coordinator.disconnect()
+            await entry.coordinator.disconnect()
         }
         self.navigationPath.removeAll()
         self.socket?.disconnect()
@@ -183,7 +182,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// This can be used to force the LiveView to reset, for example after an unrecoverable error occurs.
     public func reconnect() async {
-        self.disconnect()
+        await self.disconnect()
         await self.connect()
     }
     
@@ -351,7 +350,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         case .replaceTop:
             let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
             coordinator.url = redirect.to
-            coordinator.disconnect()
+            await coordinator.disconnect()
             let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
             case .push:
