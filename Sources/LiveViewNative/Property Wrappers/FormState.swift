@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import OSLog
+import LiveViewNativeCore
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 
@@ -17,7 +18,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 /// Additional data that's tied to the form element, but is not the primary value should use SwiftUI's `@State` property wrapper.
 ///
 /// ### Value Storage
-/// When a `value-binding` attribute is provided on the element, the value of that attributed is treated as the name of a ``LiveBinding`` to use as the value storage.
+/// When an attribute with the `bindingName` is provided on the element, the value of that attributed is treated as the name of a ``LiveBinding`` to use as the value storage.
 /// ``LiveBinding`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
 ///
 /// When the element this properrty wrapper is placed on is located of inside a `<LiveForm>` (see [LiveViewNativeLiveForm](https://github.com/liveview-native/liveview-native-live-form))
@@ -67,6 +68,7 @@ public struct FormState<Value: FormValue> {
     
     /// Creates a `FormState` property wrapper with a default value that will be used when no other value is present.
     ///
+    /// - Parameter bindingName: The name of the optional live binding storage value.
     /// - Parameter default: The default value of this property wrapper. See ``FormState`` for a discussion of how the default value is used.
     /// - Parameter sendChangeEvents: If `true`, changes to the form state's value will send an event to the server if the element has a `phx-change` attribute.
     ///
@@ -82,13 +84,15 @@ public struct FormState<Value: FormValue> {
     ///     }
     /// }
     /// ```
-    public init(default: Value, sendChangeEvents: Bool = true) {
+    public init(_ bindingName: AttributeName, default: Value, sendChangeEvents: Bool = true) {
+        self._boundValue = .init(attribute: bindingName)
         self.defaultValue = `default`
         self.sendChangeEvents = sendChangeEvents
     }
     
     /// Convenience initializer that creates a `FormState` property wrapper with `nil` as its default value.
     ///
+    /// - Parameter bindingName: The name of the optional live binding storage value.
     /// - Parameter sendChangeEvents: If `true`, changes to the form state's value will send an event to the server if the element has a `phx-change` attribute.
     /// 
     /// ## Example
@@ -103,8 +107,8 @@ public struct FormState<Value: FormValue> {
     ///     }
     /// }
     /// ```
-    public init(sendChangeEvents: Bool = true) where Value: ExpressibleByNilLiteral {
-        self.init(default: nil, sendChangeEvents: sendChangeEvents)
+    public init(_ bindingName: AttributeName, sendChangeEvents: Bool = true) where Value: ExpressibleByNilLiteral {
+        self.init(bindingName, default: nil, sendChangeEvents: sendChangeEvents)
     }
     
     /// The value for this form element.

@@ -12,7 +12,7 @@ import SwiftUI
 /// Any children of the field will be used as the label.
 ///
 /// ```html
-/// <TextField value-binding="first_name">
+/// <TextField text="first_name">
 ///     First Name
 /// </TextField>
 /// ```
@@ -20,7 +20,7 @@ import SwiftUI
 /// You can style the label by using elements inside.
 ///
 /// ```html
-/// <TextField value-binding="last_name">
+/// <TextField text="last_name">
 ///     <Text font-weight="bold" font="caption">Last Name</Text>
 /// </TextField>
 /// ```
@@ -30,7 +30,7 @@ import SwiftUI
 ///
 /// ```html
 /// <TextField
-///     value-binding="value"
+///     text="value"
 ///     modifiers={
 ///         @native
 ///         |> autocorrection_disabled(disable: true)
@@ -49,7 +49,7 @@ import SwiftUI
 /// ```html
 /// <VStack>
 ///     <TextField
-///         value-binding="amount"
+///         text="amount"
 ///         format="currency"
 ///         currency-code="usd"
 ///         modifier={@native |> keyboard_type(type: :decimal_pad)}
@@ -58,7 +58,7 @@ import SwiftUI
 ///     </TextField>
 ///
 ///     <TextField
-///         value-binding="bank_address"
+///         text="bank_address"
 ///         axis="vertical"
 ///     >
 ///         Enter Bank Address
@@ -70,6 +70,7 @@ import SwiftUI
 /// To input private text, such as a password, use ``SecureField``.
 ///
 /// ## Attributes
+/// * ``text``
 /// * ``format``
 /// * ``currencyCode``
 /// * ``nameStyle``
@@ -88,7 +89,7 @@ import SwiftUI
 struct TextField<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
     @LiveContext<R> var context
-    @FormState var value: String?
+    @FormState("text") var text: String?
     @FocusState private var isFocused: Bool
     
     #if swift(>=5.8)

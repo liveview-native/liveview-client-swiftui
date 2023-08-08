@@ -12,7 +12,7 @@ import SwiftUI
 /// Add elements within the toggle to provide a label.
 ///
 /// ```html
-/// <Toggle value-binding="is_on">
+/// <Toggle is-on="is_on">
 ///     Lights On
 /// </Toggle>
 /// ```
@@ -31,7 +31,7 @@ struct Toggle<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
-    @FormState(default: false) var value: Bool
+    @FormState("is-on", default: false) var value: Bool
     
     public var body: some View {
         SwiftUI.Toggle(isOn: $value) {

@@ -14,7 +14,7 @@ import SwiftUI
 /// Use the `content` children to specify the options for the picker, and the `label` children to provide a label.
 ///
 /// ```html
-/// <Picker value-binding="transport">
+/// <Picker selection="transport">
 ///     <Text template={:label}>Transportation</Text>
 ///     <Group template={:content}>
 ///         <Label system-image="car" modifiers={tag(@native, tag: "car")}>Car</Label>
@@ -30,6 +30,9 @@ import SwiftUI
 /// end
 /// ```
 ///
+/// ## Attributes
+/// - ``selection``
+///
 /// ## Children
 /// - `content`
 /// - `label`
@@ -39,10 +42,10 @@ import SwiftUI
 struct Picker<R: RootRegistry>: View {
     @LiveContext<R> private var context
     @ObservedElement private var element
-    @FormState private var value: String?
+    @FormState("selection") private var selection: String?
     
     var body: some View {
-        SwiftUI.Picker(selection: $value) {
+        SwiftUI.Picker(selection: $selection) {
             context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: false)
         } label: {
             context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: false)

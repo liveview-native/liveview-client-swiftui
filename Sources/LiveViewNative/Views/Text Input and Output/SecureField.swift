@@ -12,12 +12,13 @@ import SwiftUI
 /// This element is similar to ``TextField`` but for secure text, such as passwords.
 ///
 /// ```html
-/// <SecureField prompt="Required" value-binding="password">
+/// <SecureField prompt="Required" text="password">
 ///     Password
 /// </SecureField>
 /// ```
 ///
 /// ## Attributes
+/// * ``TextFieldProtocol/text``
 /// * ``TextFieldProtocol/prompt``
 ///
 /// ## Events
@@ -32,7 +33,7 @@ import SwiftUI
 struct SecureField<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
     @LiveContext<R> var context
-    @FormState var value: String?
+    @FormState("text") var text: String?
     @FocusState private var isFocused: Bool
     
     /// Sends an event when the field gains focus.

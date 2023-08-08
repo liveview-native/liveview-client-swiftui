@@ -13,8 +13,8 @@ import SwiftUI
 ///
 /// ```html
 /// <VStack modifiers={text_field_style(@native, style: :plain)}>
-///     <TextField value-binding="email">Email</TextField>
-///     <TextField value-binding="password">Password</TextField>
+///     <TextField text="email">Email</TextField>
+///     <TextField text="password">Password</TextField>
 /// </VStack>
 /// ```
 ///

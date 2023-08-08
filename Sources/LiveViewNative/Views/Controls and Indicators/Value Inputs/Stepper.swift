@@ -13,7 +13,7 @@ import SwiftUI
 ///
 ///
 /// ```html
-/// <Stepper value-binding="attendees">
+/// <Stepper value="attendees">
 ///     Attendees
 /// </Stepper>
 /// ```
@@ -23,7 +23,7 @@ import SwiftUI
 ///
 /// ```html
 /// <Stepper
-///     value-binding="attendees"
+///     value="attendees"
 ///     lower-bound={0}
 ///     upper-bound={16}
 ///     step={2}
@@ -33,6 +33,7 @@ import SwiftUI
 /// ```
 ///
 /// ## Attributes
+/// * ``value``
 /// * ``step``
 /// * ``lowerBound``
 /// * ``upperBound``
@@ -46,7 +47,7 @@ struct Stepper<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
-    @FormState(default: 0) var value: Double
+    @FormState("value", default: 0) var value: Double
     
     /// The amount to increment/decrement the value by.
     #if swift(>=5.8)

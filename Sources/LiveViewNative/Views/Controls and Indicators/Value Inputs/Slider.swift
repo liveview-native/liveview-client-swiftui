@@ -12,14 +12,14 @@ import SwiftUI
 /// By default, sliders choose values in the range 0-1.
 ///
 /// ```html
-/// <Slider value-binding="progress" />
+/// <Slider value="progress" />
 /// ```
 ///
 /// Use ``lowerBound`` and ``upperBound`` to specify the range of possible values.
 ///
 /// ```html
 /// <Slider
-///     value-binding="progress"
+///     value="progress"
 ///     lower-bound={-1}
 ///     upper-bound={2}
 /// />
@@ -29,7 +29,7 @@ import SwiftUI
 ///
 /// ```html
 /// <Slider
-///     value-binding="progress"
+///     value="progress"
 ///     lower-bound={0}
 ///     upper-bound={10}
 ///     step={1}
@@ -39,7 +39,7 @@ import SwiftUI
 /// Customize the appearance of the slider with the children `label`, `minimum-value-label` and `maximum-value-label`.
 ///
 /// ```html
-/// <Slider value-binding="value">
+/// <Slider value="value">
 ///     <Text template={:label}>Percent Completed</Text>
 ///     <Text template={:"minimum-value-label"}>0%</Text>
 ///     <Text template={:"maximum-value-label"}>100%</Text>
@@ -47,6 +47,7 @@ import SwiftUI
 /// ```
 ///
 /// ## Attributes
+/// * ``value``
 /// * ``lowerBound``
 /// * ``upperBound``
 /// * ``step``
@@ -65,7 +66,7 @@ struct Slider<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
-    @FormState(default: 0) var value: Double
+    @FormState("value", default: 0) var value: Double
     
     /// The lowest allowed value.
     #if swift(>=5.8)
