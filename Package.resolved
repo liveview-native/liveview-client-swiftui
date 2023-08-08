@@ -24,7 +24,7 @@
       "location" : "https://github.com/apple/swift-cmark.git",
       "state" : {
         "branch" : "gfm",
-        "revision" : "b1c49eb0752d727fda5dfa63c8bb23670592d7c9"
+        "revision" : "3bc2f3e25df0cecc5dc269f7ccae65d0f386f06a"
       }
     },
     {
@@ -43,15 +43,6 @@
       "state" : {
         "revision" : "67c5007099d9ffdd292f421f81f4efe5ee42963e",
         "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-07-10-a"
-      }
-    },
-    {
-      "identity" : "swift-syntax",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-syntax.git",
-      "state" : {
-        "revision" : "83c2be9f6268e9f67622f130440cf43928c6bfb0",
-        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-05-20-a"
       }
     },
     {
