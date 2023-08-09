@@ -180,16 +180,32 @@ extension LiveBinding: DynamicProperty {
     public func update() {
         switch bindingNameSource {
         case let .attribute(attribute):
-            data.bind(
-                to: liveViewModel,
-                bindingName: bindingName,
-                debounce: (try? element.attributeValue(Double.self, for: .init(namespace: attribute.name, name: "debounce"))) ?? 0
-            )
+            let target = try? element.attributeValue(Int.self, for: "phx-target")
+            let debounce = (try? element.attributeValue(Double.self, for: .init(namespace: attribute.name, name: "debounce"))) ?? 0
+            if let phxChange = element.attributeValue(for: "phx-change") {
+                data.bind(
+                    to: liveViewModel,
+                    source: .manual(element.attribute(named: attribute)),
+                    target: target,
+                    debounce: debounce,
+                    coordinator: coordinator
+                )
+            } else {
+                data.bind(
+                    to: liveViewModel,
+                    source: .nativeBinding(bindingName),
+                    target: target,
+                    debounce: debounce,
+                    coordinator: coordinator
+                )
+            }
         default:
             data.bind(
                 to: liveViewModel,
-                bindingName: bindingName,
-                debounce: 0
+                source: .nativeBinding(bindingName),
+                target: nil,
+                debounce: 0,
+                coordinator: coordinator
             )
         }
     }
@@ -208,49 +224,77 @@ extension LiveBinding {
         /// The current value of the binding.
         var value: Value?
         
+        let objectWillChange = ObjectWillChangePublisher()
+        
         /// A publisher used to track when the value is changed by the client.
         let localValueChanged: ObjectWillChangePublisher = .init()
         
         var valueCancellable: AnyCancellable?
         var cancellable: AnyCancellable?
         
-        func bind(to model: LiveViewModel, bindingName: String?, debounce: Double) {
-            if let bindingName {
-                if valueCancellable == nil && cancellable == nil,
-                   let defaultValue = model.bindingValues[bindingName]
-                {
-                    let decoder = FragmentDecoder(data: defaultValue)
-                    value = try! Value(from: decoder)
-                }
-                // Watch for local changes to the value.
-                let localValueChanged: AnyPublisher<(), Never>
-                if debounce > 0 {
-                    localValueChanged = self.localValueChanged
-                        .debounce(for: .init(debounce), scheduler: RunLoop.current)
-                        .eraseToAnyPublisher()
-                } else {
-                    localValueChanged = self.localValueChanged.eraseToAnyPublisher()
-                }
-                valueCancellable = localValueChanged
-                    .sink { [weak self, weak model] _ in
-                        guard let value = self?.value else { return }
-                        let encoder = FragmentEncoder()
-                        try! value.encode(to: encoder)
-                        guard let encodedValue = encoder.unwrap()
-                        else { return }
-                        model?.setBinding(bindingName, to: encodedValue)
+        enum Source {
+            case nativeBinding(String?)
+            case manual(LiveViewNativeCore.Attribute?)
+        }
+        
+        func bind(
+            to model: LiveViewModel,
+            source: Source,
+            target: Int?,
+            debounce: Double,
+            coordinator: CoordinatorEnvironment?
+        ) {
+            switch source {
+            case .nativeBinding(let bindingName):
+                if let bindingName {
+                    // automatic `native_binding` handling
+                    if valueCancellable == nil && cancellable == nil,
+                       let defaultValue = model.bindingValues[bindingName]
+                    {
+                        let decoder = FragmentDecoder(data: defaultValue)
+                        value = try! Value(from: decoder)
                     }
-                // Watch for changes from the server.
-                cancellable = model.bindingUpdatedByServer
-                    .filter({ $0.0 == bindingName })
-                    .sink(receiveValue: { [weak self] newValue in
-                        let decoder = FragmentDecoder(data: newValue.1)
-                        self?.value = try! Value(from: decoder)
-                        self?.objectWillChange.send()
-                    })
-            } else {
-                valueCancellable = nil
-                cancellable = nil
+                    // Watch for local changes to the value.
+                    let localValueChanged: AnyPublisher<(), Never>
+                    if debounce > 0 {
+                        localValueChanged = self.localValueChanged
+                            .debounce(for: .init(debounce), scheduler: RunLoop.current)
+                            .eraseToAnyPublisher()
+                    } else {
+                        localValueChanged = self.localValueChanged.eraseToAnyPublisher()
+                    }
+                    valueCancellable = localValueChanged
+                        .sink { [weak self, weak model] _ in
+                            guard let value = self?.value else { return }
+                            let encoder = FragmentEncoder()
+                            try! value.encode(to: encoder)
+                            guard let encodedValue = encoder.unwrap()
+                            else { return }
+                            model?.setBinding(bindingName, to: encodedValue)
+                        }
+                    // Watch for changes from the server.
+                    cancellable = model.bindingUpdatedByServer
+                        .filter({ $0.0 == bindingName })
+                        .sink(receiveValue: { [weak self] newValue in
+                            let decoder = FragmentDecoder(data: newValue.1)
+                            self?.value = try! Value(from: decoder)
+                            self?.objectWillChange.send()
+                        })
+                } else {
+                    valueCancellable = nil
+                    cancellable = nil
+                }
+            case .manual(let attribute):
+                if let attribute {
+                    if valueCancellable == nil,
+                       let attributeDecodable = Value.self as? AttributeDecodable.Type
+                    {
+                        value = try! attributeDecodable.init(from: attribute) as! Value
+                    }
+                } else {
+                    valueCancellable = nil
+                    cancellable = nil
+                }
             }
         }
     }
