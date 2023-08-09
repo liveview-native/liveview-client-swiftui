@@ -60,7 +60,7 @@ public struct FormState<Value: FormValue> {
     private let sendChangeEvents: Bool
     @StateObject private var data = FormStateData<Value>()
     // non-nil iff data.mode == .bound
-    @LiveBinding(attribute: "value-binding") private var boundValue: Value
+    @LiveBinding(attribute: "value-binding", sendChangeEvent: false) private var boundValue: Value
     
     @ObservedElement private var element: ElementNode
     @Environment(\.formModel) private var formModel: FormModel?
@@ -85,7 +85,7 @@ public struct FormState<Value: FormValue> {
     /// }
     /// ```
     public init(_ bindingName: AttributeName, default: Value, sendChangeEvents: Bool = true) {
-        self._boundValue = .init(attribute: bindingName)
+        self._boundValue = .init(attribute: bindingName, sendChangeEvent: false)
         self.defaultValue = `default`
         self.sendChangeEvents = sendChangeEvents
     }
