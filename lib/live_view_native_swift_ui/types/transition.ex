@@ -22,8 +22,8 @@ defmodule LiveViewNativeSwiftUi.Types.Transition do
   def cast({
     :modifier,
     [
-      active: %LiveViewNativePlatform.Context{ modifiers: active },
-      identity: %LiveViewNativePlatform.Context{ modifiers: identity }
+      active: %LiveViewNativePlatform.Env{ modifiers: active },
+      identity: %LiveViewNativePlatform.Env{ modifiers: identity }
     ]
   }) do
     {:ok, %__MODULE__{
