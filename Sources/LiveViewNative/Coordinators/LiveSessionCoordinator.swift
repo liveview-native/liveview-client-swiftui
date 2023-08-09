@@ -285,28 +285,33 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             wsEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
             wsEndpoint.path = "/live/websocket"
             let socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": domValues.phxCSRFToken]})
-            socket.onOpen { [weak self, weak socket] in
+            
+            var refs = [String]()
+            
+            refs.append(socket.onOpen { [weak self, weak socket] in
                 guard let socket else { return }
                 guard self != nil else {
                     socket.disconnect()
                     return
                 }
                 logger.debug("[Socket] Opened")
+                socket.off(refs)
                 continuation.resume(returning: socket)
-            }
-            socket.onClose { logger.debug("[Socket] Closed") }
-            socket.onError { [weak self, weak socket] (error) in
+            })
+            refs.append(socket.onError { [weak self, weak socket] (error) in
                 guard let socket else { return }
                 guard self != nil else {
                     socket.disconnect()
                     return
                 }
                 logger.error("[Socket] Error: \(String(describing: error))")
+                socket.off(refs)
                 continuation.resume(throwing: LiveConnectionError.socketError(error))
-            }
-            socket.logger = { message in logger.debug("[Socket] \(message)") }
+            })
             socket.connect()
         }
+        self.socket?.onClose { logger.debug("[Socket] Closed") }
+        self.socket?.logger = { message in logger.debug("[Socket] \(message)") }
         
         self.internalState = .connected
         
