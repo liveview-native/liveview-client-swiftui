@@ -268,10 +268,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
            !channel.isClosed
         {
             await withCheckedContinuation { continuation in
-                channel.onClose { _ in
-                    continuation.resume()
-                }
                 channel.leave()
+                    .receive("ok") { _ in
+                        continuation.resume()
+                    }
             }
         }
         channel = nil
