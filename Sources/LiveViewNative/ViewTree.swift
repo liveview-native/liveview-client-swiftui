@@ -269,12 +269,12 @@ private enum ForEachElement: Identifiable {
     case keyed(Node, id: String)
     case unkeyed(Node)
     
-    var id: AnyHashable {
+    var id: String {
         switch self {
         case let .keyed(_, id):
-            return AnyHashable(id)
+            return id
         case let .unkeyed(node):
-            return AnyHashable(node.id)
+            return "\(node.id)"
         }
     }
 }
