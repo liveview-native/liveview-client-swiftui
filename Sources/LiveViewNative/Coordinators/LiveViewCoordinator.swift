@@ -265,7 +265,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     func disconnect() async {
         if let channel,
-           !channel.isClosed
+           channel.isClosed
         {
             await withCheckedContinuation { continuation in
                 channel.onClose { _ in
