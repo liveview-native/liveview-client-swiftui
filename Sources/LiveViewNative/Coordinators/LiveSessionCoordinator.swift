@@ -105,6 +105,23 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 })
             }
         }.store(in: &cancellables)
+        handleEvent("_native_persistence_store") { coordinator, payload in
+            guard let value = payload["value"],
+                  let key = payload["key"] as? String,
+                  let options = payload["options"] as? [String:Any]
+            else { return }
+            try? config.persistenceStore.setValue(value, forKey: key, options: options)
+        }
+        handleEvent("_native_persistence_load") { coordinator, payload in
+            guard let key = payload["key"] as? String,
+                  let loadedEvent = payload["event"] as? String,
+                  let options = payload["options"] as? [String:Any],
+                  let value = try? config.persistenceStore.loadValue(forKey: key, options: options)
+            else { return }
+            Task {
+                try await coordinator.pushEvent(type: "click", event: loadedEvent, value: value)
+            }
+        }
     }
     
     /// Creates a new coordinator without a custom registry.
