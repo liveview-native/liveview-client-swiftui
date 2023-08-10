@@ -8,7 +8,7 @@
 import LiveViewNativeCore
 
 /// Selection of either a single value or set of values.
-enum Selection: Codable, AttributeDecodable {
+enum Selection: Codable, AttributeDecodable, Equatable {
     case none
     case single(String?)
     case multiple(Set<String>)

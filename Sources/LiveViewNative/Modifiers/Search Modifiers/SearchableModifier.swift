@@ -161,7 +161,7 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 }
 
-struct SearchToken: Identifiable, Codable {
+struct SearchToken: Identifiable, Codable, Equatable {
     let value: String
     var id: String { value }
     
