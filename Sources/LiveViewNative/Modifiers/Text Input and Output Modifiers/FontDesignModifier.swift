@@ -21,7 +21,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-@available(iOS 16.1, watchOS 9.1, *)
+@available(iOS 16.1, macOS 13.0, tvOS 16.1, watchOS 9.1, *)
 struct FontDesignModifier: ViewModifier, Decodable, TextModifier {
     /// The font design to apply to the view.
     #if swift(>=5.8)

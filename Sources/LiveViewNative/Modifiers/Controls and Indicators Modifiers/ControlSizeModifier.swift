@@ -34,4 +34,8 @@ struct ControlSizeModifier: ViewModifier, Decodable {
         content.controlSize(size)
         #endif
     }
+    
+    #if os(tvOS)
+    typealias ControlSize = Never
+    #endif
 }

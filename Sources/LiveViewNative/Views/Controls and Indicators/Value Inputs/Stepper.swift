@@ -43,6 +43,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 13.0, macOS 10.15, watchOS 9.0, *)
 struct Stepper<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -66,6 +67,7 @@ struct Stepper<R: RootRegistry>: View {
     @Attribute("upper-bound") private var upperBound: Double?
     
     public var body: some View {
+        #if !os(tvOS)
         if let lowerBound,
            let upperBound
         {
@@ -77,6 +79,7 @@ struct Stepper<R: RootRegistry>: View {
                 label
             }
         }
+        #endif
     }
     
     private var label: some View {

@@ -110,6 +110,7 @@ struct ShareLink<R: RootRegistry>: View {
     @Attribute("item") private var item: String?
     
     public var body: some View {
+        #if !os(tvOS)
         let useDefaultLabel = element.children().filter({
             guard let element = $0.asElement() else { return true }
             return element.tag != "SharePreview"
@@ -286,6 +287,7 @@ struct ShareLink<R: RootRegistry>: View {
                 }
             }
         }
+        #endif
     }
     
     private var label: some View {

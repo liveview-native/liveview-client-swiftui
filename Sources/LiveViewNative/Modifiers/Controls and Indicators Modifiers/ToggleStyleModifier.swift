@@ -30,9 +30,17 @@ struct ToggleStyleModifier: ViewModifier, Decodable {
         case .automatic:
             content.toggleStyle(.automatic)
         case .button:
+            #if os(tvOS)
+            content
+            #else
             content.toggleStyle(.button)
+            #endif
         case .`switch`:
+            #if os(tvOS)
+            content
+            #else
             content.toggleStyle(.switch)
+            #endif
         case .checkbox:
             #if os(macOS)
             content.toggleStyle(.checkbox)

@@ -33,7 +33,7 @@ struct TableStyleModifier: ViewModifier, Decodable {
     private let style: TableStyle
 
     func body(content: Content) -> some View {
-        #if os(watchOS)
+        #if os(watchOS) || os(tvOS)
         content
         #else
         switch style {

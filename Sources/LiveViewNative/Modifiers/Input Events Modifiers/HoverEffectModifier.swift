@@ -22,7 +22,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-@available(iOS 16.0, tvOS 16.0, *)
+@available(iOS 16.0, tvOS 17.0, *)
 struct HoverEffectModifier: ViewModifier, Decodable {
     /// The effect applied when the pointer hovers over a view. Defaults to `automatic`.
     ///
@@ -63,6 +63,7 @@ struct HoverEffectModifier: ViewModifier, Decodable {
     }
 }
 
+@available(tvOS 17.0, *)
 extension HoverEffectModifier {
     #if os(macOS) || os(watchOS)
     typealias HoverEffect = Never

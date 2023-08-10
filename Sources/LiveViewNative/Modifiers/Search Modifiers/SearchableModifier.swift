@@ -122,7 +122,9 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
         #if os(iOS) || os(macOS)
         case "sidebar": self.placement = .sidebar
         #endif
+        #if !os(tvOS)
         case "toolbar": self.placement = .toolbar
+        #endif
         case let `default`: throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "unknown placement '\(`default`)'"))
         }
 

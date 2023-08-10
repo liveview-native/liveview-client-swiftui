@@ -71,9 +71,13 @@ struct SwipeActionsModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 
     func body(content: Content) -> some View {
+        #if os(tvOS)
+        content
+        #else
         content.swipeActions(edge: edge, allowsFullSwipe: allowsFullSwipe) {
             context.buildChildren(of: element, forTemplate: self.content)
         }
+        #endif
     }
 
     enum CodingKeys: String, CodingKey {
