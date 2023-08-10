@@ -23,6 +23,8 @@ public struct LiveSessionConfiguration {
     /// The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.
     public var urlSession: URLSession = .shared
     
+    public var persistenceStore: LivePersistenceStore = UserDefaultsPersistenceStore()
+    
     /// Constructs a default, empty configuration.
     public init() {
     }
@@ -30,11 +32,25 @@ public struct LiveSessionConfiguration {
     public init(
         navigationMode: NavigationMode = .disabled,
         connectParams: ((URL) -> [String: Any])? = nil,
-        urlSession: URLSession = .shared
+        urlSession: URLSession = .shared,
+        persistenceStore: LivePersistenceStore = UserDefaultsPersistenceStore()
     ) {
         self.navigationMode = navigationMode
         self.connectParams = connectParams
         self.urlSession = urlSession
+        self.persistenceStore = persistenceStore
+    }
+    
+    public init<PersistenceStore: LivePersistenceStore>(
+        navigationMode: NavigationMode = .disabled,
+        connectParams: ((URL) -> [String: Any])? = nil,
+        urlSession: URLSession = .shared,
+        persistenceStore: PersistenceStore
+    ) {
+        self.navigationMode = navigationMode
+        self.connectParams = connectParams
+        self.urlSession = urlSession
+        self.persistenceStore = persistenceStore
     }
     
     /// Possible modes for live view navigation.
