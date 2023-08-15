@@ -57,7 +57,7 @@ struct ColorPicker<R: RootRegistry>: View {
     #endif
     @Attribute("supports-opacity") private var supportsOpacity: Bool
     
-    struct CodableColor: Codable, Equatable {
+    struct CodableColor: Codable {
         var r: CGFloat
         var g: CGFloat
         var b: CGFloat

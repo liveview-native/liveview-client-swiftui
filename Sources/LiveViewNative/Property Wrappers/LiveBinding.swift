@@ -91,7 +91,7 @@ import Combine
 /// }
 /// ```
 @propertyWrapper
-public struct LiveBinding<Value: Codable & Equatable> {
+public struct LiveBinding<Value: Codable> {
     @StateObject private var data = Data()
     
     private let initialLocalValue: Value?
@@ -109,8 +109,6 @@ public struct LiveBinding<Value: Codable & Equatable> {
             return name
         case .attribute(let attr):
             return element.attributeValue(for: attr)
-        case .changeTracked:
-            return nil
         }
     }
     
@@ -132,11 +130,6 @@ public struct LiveBinding<Value: Codable & Equatable> {
         self.sendChangeEvent = sendChangeEvent
     }
     
-    struct ChangeTrackedValue: Codable {
-        let value: Value
-        let change: String
-    }
-    
     /// Creates a `LiveBinding` by decoding its name from a container.
     ///
     /// This initializer should be used when the live binding is used as part of a view modifier.
@@ -145,16 +138,8 @@ public struct LiveBinding<Value: Codable & Equatable> {
     /// The name key is treated as optional when decoding.
     /// If a binding name is not provided, the `LiveBinding` operates in local mode.
     /// In that mode, the `initialValue` is used as the initial value of the property.
-    public init<K: CodingKey>(
-        decoding key: K,
-        in container: KeyedDecodingContainer<K>,
-        initialValue: Value? = nil,
-        sendChangeEvent: Bool = true
-    ) throws {
-        if let changeEvent = try? container.decodeIfPresent(ChangeTrackedValue.self, forKey: key)
-        {
-            self.bindingNameSource = .changeTracked(changeEvent)
-        } else if let name = try container.decodeIfPresent(String.self, forKey: key) {
+    public init<K: CodingKey>(decoding key: K, in container: KeyedDecodingContainer<K>, initialValue: Value? = nil, sendChangeEvent: Bool = true) throws {
+        if let name = try container.decodeIfPresent(String.self, forKey: key) {
             self.bindingNameSource = .fixed(name)
         } else {
             self.bindingNameSource = .none
@@ -204,7 +189,7 @@ extension LiveBinding: DynamicProperty {
             if let phxChange = element.attributeValue(for: "phx-change") {
                 data.bind(
                     to: liveViewModel,
-                    source: .attribute(element.attribute(named: attribute), changeEvent: phxChange, sendChangeEvent: sendChangeEvent),
+                    source: .manual(element.attribute(named: attribute), changeEvent: phxChange, sendChangeEvent: sendChangeEvent),
                     target: target,
                     debounce: debounce,
                     coordinator: coordinator
@@ -218,14 +203,6 @@ extension LiveBinding: DynamicProperty {
                     coordinator: coordinator
                 )
             }
-        case let .changeTracked(value):
-            data.bind(
-                to: liveViewModel,
-                source: .manual(value: value.value, changeEvent: value.change, sendChangeEvent: sendChangeEvent),
-                target: nil,
-                debounce: 0,
-                coordinator: coordinator
-            )
         default:
             data.bind(
                 to: liveViewModel,
@@ -243,7 +220,6 @@ extension LiveBinding {
         case none
         case fixed(String)
         case attribute(AttributeName)
-        case changeTracked(ChangeTrackedValue)
     }
 }
 
@@ -251,8 +227,6 @@ extension LiveBinding {
     class Data: ObservableObject {
         /// The current value of the binding.
         var value: Value?
-        
-        var previousInitialValue: Value?
         
         let objectWillChange = ObjectWillChangePublisher()
         
@@ -264,8 +238,7 @@ extension LiveBinding {
         
         enum Source {
             case nativeBinding(String?)
-            case attribute(LiveViewNativeCore.Attribute?, changeEvent: String, sendChangeEvent: Bool)
-            case manual(value: Value, changeEvent: String, sendChangeEvent: Bool)
+            case manual(LiveViewNativeCore.Attribute?, changeEvent: String, sendChangeEvent: Bool)
         }
         
         func bind(
@@ -315,7 +288,7 @@ extension LiveBinding {
                     valueCancellable = nil
                     cancellable = nil
                 }
-            case .attribute(let attribute, let changeEvent, let sendChangeEvent):
+            case .manual(let attribute, let changeEvent, let sendChangeEvent):
                 if let attribute {
                     if valueCancellable == nil {
                         if let attributeDecodable = Value.self as? AttributeDecodable.Type {
@@ -339,22 +312,6 @@ extension LiveBinding {
                     valueCancellable = nil
                     cancellable = nil
                 }
-            case let .manual(initialValue, changeEvent, sendChangeEvent):
-                if initialValue != previousInitialValue {
-                    value = initialValue
-                    previousInitialValue = initialValue
-                }
-                valueCancellable = localValueChanged
-                    .sink { [weak self] in
-                        guard sendChangeEvent,
-                              let value = self?.value,
-                              let encoded = try? JSONEncoder().encode(value),
-                              let object = try? JSONSerialization.jsonObject(with: encoded, options: [.fragmentsAllowed])
-                        else { return }
-                        Task {
-                            try await coordinator?.pushEvent("click", changeEvent, object, target)
-                        }
-                    }
             }
         }
     }
