@@ -27,11 +27,11 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 struct SheetModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// The live binding that controls when the sheet is presented.
+    /// The value that controls when the sheet is presented.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var isPresented: Bool
+    @ChangeTracked private var isPresented: Bool
     
     /// An optional event to trigger when the sheet is dismissed.
     ///
@@ -53,7 +53,7 @@ struct SheetModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self._isPresented = try LiveBinding(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: .isPresented, in: container)
         self._onDismiss = try container.decode(Event.self, forKey: .onDismiss)
         self.content = try container.decode(String.self, forKey: .content)
     }

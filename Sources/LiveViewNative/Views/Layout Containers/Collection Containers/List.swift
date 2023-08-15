@@ -166,7 +166,7 @@ struct List<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "selection") private var selection = Selection.none
+    @ChangeTracked(attribute: "selection") private var selection = Selection.none
     
     public var body: some View {
         #if os(watchOS)

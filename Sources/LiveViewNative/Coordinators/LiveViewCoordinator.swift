@@ -218,7 +218,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         connectParams["_csrf_token"] = domValues.phxCSRFToken
         connectParams["_platform"] = session.platform
         connectParams["_platform_meta"] = session.platformMeta
-        connectParams["_global_native_bindings"] = Dictionary(uniqueKeysWithValues: R.globalBindings.map({ ($0, R.bindingValue(forKey: $0, in: nil)) }))
 
         let params: Payload = [
             "session": domValues.phxSession,

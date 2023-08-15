@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// Presents a system color picker when tapped.
 ///
@@ -38,7 +39,7 @@ struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
-    /// The ``LiveBinding`` that stores the color value.
+    /// The ``ChangeTracked`` that stores the color value.
     ///
     /// The color is stored as a map with the keys `r`, `g`, `b`, and optionally `a`.
     ///
@@ -50,14 +51,32 @@ struct ColorPicker<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "selection") private var selection: CodableColor = .init(r: 0, g: 0, b: 0, a: 1)
+    @ChangeTracked(attribute: "selection") private var selection = CodableColor(r: 0, g: 0, b: 0, a: 1)
     /// Enables the selection of transparent colors.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     @Attribute("supports-opacity") private var supportsOpacity: Bool
     
-    struct CodableColor: Codable {
+    struct CodableColor: AttributeDecodable, Codable, Equatable {
+        init(from attribute: LiveViewNativeCore.Attribute?) throws {
+            guard let value = attribute?.value
+            else { throw AttributeDecodingError.missingAttribute(Self.self) }
+            self = try JSONDecoder().decode(Self.self, from: Data(value.utf8))
+        }
+        
+        init(
+            r: CGFloat,
+            g: CGFloat,
+            b: CGFloat,
+            a: CGFloat?
+        ) {
+            self.r = r
+            self.g = g
+            self.b = b
+            self.a = a
+        }
+        
         var r: CGFloat
         var g: CGFloat
         var b: CGFloat

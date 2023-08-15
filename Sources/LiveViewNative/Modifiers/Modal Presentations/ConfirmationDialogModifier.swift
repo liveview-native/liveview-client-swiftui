@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Displays a confirmation dialog when a live binding is active.
+/// Displays a confirmation dialog when ``isPresented`` is `true`.
 ///
 /// ```html
 /// <Button phx-click="toggle-show"
@@ -78,13 +78,13 @@ struct ConfirmationDialogModifier<R: RootRegistry>: ViewModifier, Decodable {
     #endif
     private let message: String?
     
-    /// The name of a live binding that controls when the dialog is shown.
+    /// The name of a value that controls when the dialog is shown.
     ///
     /// Set the binding to `true` to show the alert.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var isPresented: Bool
+    @ChangeTracked private var isPresented: Bool
     
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -96,7 +96,7 @@ struct ConfirmationDialogModifier<R: RootRegistry>: ViewModifier, Decodable {
         self.titleVisibility = try container.decode(Visibility.self, forKey: .titleVisibility)
         self.actions = try container.decode(String.self, forKey: .actions)
         self.message = try container.decodeIfPresent(String.self, forKey: .message)
-        self._isPresented = try LiveBinding(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: .isPresented, in: container)
     }
     
     func body(content: Content) -> some View {
