@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// A container organized by rows and columns.
 ///
@@ -130,7 +131,7 @@ struct Table<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "selection") private var selection = Selection.none
+    @ChangeTracked(attribute: "selection") private var selection = Selection.none
     /// Synchronizes the columns to sort by with the server.
     ///
     /// The order is serialized as a list of maps with an `id` and `order` property.
@@ -150,7 +151,7 @@ struct Table<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "sort-order") private var sortOrder = [TableColumnSort]()
+    @ChangeTracked(attribute: "sort-order") private var sortOrder = TableColumnSortContainer(value: [])
     
     public var body: some View {
         #if os(iOS) || os(macOS)
@@ -165,29 +166,29 @@ struct Table<R: RootRegistry>: View {
     private func table(rows: [TableRow], columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>]) -> some View {
         switch columns.count {
         case 1:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
             }
         case 2:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
             }
         case 3:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
             }
         case 4:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
                 columns[3]
             }
         case 5:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -195,7 +196,7 @@ struct Table<R: RootRegistry>: View {
                 columns[4]
             }
         case 6:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -204,7 +205,7 @@ struct Table<R: RootRegistry>: View {
                 columns[5]
             }
         case 7:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -214,7 +215,7 @@ struct Table<R: RootRegistry>: View {
                 columns[6]
             }
         case 8:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -225,7 +226,7 @@ struct Table<R: RootRegistry>: View {
                 columns[7]
             }
         case 9:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -237,7 +238,7 @@ struct Table<R: RootRegistry>: View {
                 columns[8]
             }
         case 10:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -318,6 +319,20 @@ fileprivate struct TableColumnSort: SortComparator, Codable, Equatable {
     
     func compare(_ lhs: TableRow, _ rhs: TableRow) -> ComparisonResult {
         .orderedSame
+    }
+}
+
+fileprivate struct TableColumnSortContainer: Codable, Equatable, AttributeDecodable {
+    var value: [TableColumnSort]
+    
+    init(value: [TableColumnSort]) {
+        self.value = value
+    }
+    
+    init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.value = try JSONDecoder().decode([TableColumnSort].self, from: Data(value.utf8))
     }
 }
 

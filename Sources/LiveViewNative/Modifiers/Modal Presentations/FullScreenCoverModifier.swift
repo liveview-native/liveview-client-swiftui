@@ -28,11 +28,11 @@ import SwiftUI
 #endif
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 struct FullScreenCoverModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// The live binding that controls when the view is presented.
+    /// The value that controls when the view is presented.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var isPresented: Bool
+    @ChangeTracked private var isPresented: Bool
     
     /// An optional event to trigger when the view is dismissed.
     ///
@@ -54,7 +54,7 @@ struct FullScreenCoverModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self._isPresented = try LiveBinding(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: .isPresented, in: container)
         self._onDismiss = try container.decode(Event.self, forKey: .onDismiss)
         self.content = try container.decode(String.self, forKey: .content)
     }

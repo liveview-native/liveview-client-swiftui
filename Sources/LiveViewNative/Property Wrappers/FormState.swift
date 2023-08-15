@@ -18,8 +18,8 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 /// Additional data that's tied to the form element, but is not the primary value should use SwiftUI's `@State` property wrapper.
 ///
 /// ### Value Storage
-/// When an attribute with the `bindingName` is provided on the element, the value of that attributed is treated as the name of a ``LiveBinding`` to use as the value storage.
-/// ``LiveBinding`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
+/// When an attribute with the `bindingName` is provided on the element, the value of that attributed is treated as the name of a ``ChangeTracked`` to use as the value storage.
+/// ``ChangeTracked`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
 ///
 /// When the element this properrty wrapper is placed on is located of inside a `<LiveForm>` (see [LiveViewNativeLiveForm](https://github.com/liveview-native/liveview-native-live-form))
 /// and it has a `name` attribute, the value will be stored on that form's ``FormModel``.
@@ -31,7 +31,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 /// See those docs for more information about how the element is obtained.
 ///
 /// ### Default Value
-/// If the value is using a ``LiveBinding``, the default value of the binding will be provided by the server outside of the element.
+/// If the value is using a ``ChangeTracked``, the default value of the binding will be provided by the server outside of the element.
 ///
 /// If the element has a `value` attribute, and the `Value` type conforms to ``AttributeDecodable``, the framework
 /// will try to construct the default value from the attribute. If those conditions are not satisfied, or ``AttributeDecodable/init(from:)`` fails,
@@ -60,7 +60,9 @@ public struct FormState<Value: FormValue> {
     private let sendChangeEvents: Bool
     @StateObject private var data = FormStateData<Value>()
     // non-nil iff data.mode == .bound
-    @LiveBinding(attribute: "value-binding", sendChangeEvent: false) private var boundValue: Value
+    @ChangeTracked private var boundValue: Value
+    
+    let valueAttribute: AttributeName
     
     @ObservedElement private var element: ElementNode
     @Environment(\.formModel) private var formModel: FormModel?
@@ -84,8 +86,9 @@ public struct FormState<Value: FormValue> {
     ///     }
     /// }
     /// ```
-    public init(_ bindingName: AttributeName, default: Value, sendChangeEvents: Bool = true) {
-        self._boundValue = .init(attribute: bindingName, sendChangeEvent: false)
+    public init(_ valueAttribute: AttributeName, default: Value, sendChangeEvents: Bool = true) {
+        self.valueAttribute = valueAttribute
+        self._boundValue = .init(wrappedValue: `default`, form: valueAttribute, sendChangeEvent: false)
         self.defaultValue = `default`
         self.sendChangeEvents = sendChangeEvents
     }
@@ -117,12 +120,8 @@ public struct FormState<Value: FormValue> {
             switch data.mode {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
-            case .bound:
+            case .local:
                 return boundValue
-            case .localInitial:
-                return initialValue
-            case .local(let value):
-                return value
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
@@ -142,15 +141,8 @@ public struct FormState<Value: FormValue> {
             switch data.mode {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
-            case .bound:
-                boundValue = newValue
-//                data.objectWillChange.send()
-            case .localInitial:
-                data.mode = .local(newValue)
-                data.objectWillChange.send()
             case .local:
-                data.mode = .local(newValue)
-                data.objectWillChange.send()
+                boundValue = newValue
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
@@ -178,23 +170,21 @@ public struct FormState<Value: FormValue> {
     
     // the initial value converts the element's `value` attribute if possible, otherwise uses the default value
     private var initialValue: Value {
-        return element.attribute(named: "value").flatMap(Value.fromAttribute(_:)) ?? defaultValue
+        return element.attribute(named: valueAttribute).flatMap(Value.fromAttribute(_:)) ?? defaultValue
     }
     
     private func resolveMode() {
         if case .unknown = data.mode {
-            if _boundValue.isBound {
-                data.mode = .bound
-            } else if let formModel {
+            if let formModel {
                 if let elementName = element.attributeValue(for: "name") {
                     data.setFormModel(formModel, elementName: elementName)
                     data.mode = .form(formModel)
                 } else {
                     print("Warning: @FormState used on a name-less element inside of a <live-form>. This may not behave as expected.")
-                    data.mode = .localInitial
+                    data.mode = .local
                 }
             } else {
-                data.mode = .localInitial
+                data.mode = .local
             }
         }
     }
@@ -236,12 +226,8 @@ private class FormStateData<Value: FormValue>: ObservableObject {
     enum Mode {
         // the mode has not yet been resolved
         case unknown
-        // use the LiveBinding
-        case bound
         // local mode, but the value has not been updated, so always return the initial value when reading
-        case localInitial
-        // local mode, has been set
-        case local(Value)
+        case local
         // managed by a form model, the initial value will be read when when the form model doesn't yet have a stored value
         case form(FormModel)
     }

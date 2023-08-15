@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Add a system search bar.
 ///
-/// Use a ``LiveBinding`` to synchronize the query.
+/// Use a ``ChangeTracked`` to synchronize the query.
 ///
 /// ```html
 /// <List modifiers={searchable(@native, text: :query)}>
@@ -72,13 +72,13 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var text: String
+    @ChangeTracked private var text: String
 
-    /// A ``LiveBinding`` for any selected tokens.
+    /// A ``ChangeTracked`` for any selected tokens.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "tokens") private var tokens: [SearchToken] = []
+    @ChangeTracked private var tokens: [SearchToken]
     
     /// `suggested_tokens`, a list of tokens to display.
     #if swift(>=5.8)
@@ -111,8 +111,8 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._text = try LiveBinding(decoding: .text, in: container)
-        self._tokens = try LiveBinding(decoding: .tokens, in: container, initialValue: [])
+        self._text = try ChangeTracked(decoding: .text, in: container)
+        self._tokens = try ChangeTracked(decoding: .tokens, in: container)
         self.suggestedTokens = try container.decodeIfPresent([SearchToken].self, forKey: .suggestedTokens)
         
         switch try container.decodeIfPresent(String.self, forKey: .placement) ?? "automatic" {
@@ -161,7 +161,7 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 }
 
-struct SearchToken: Identifiable, Codable {
+struct SearchToken: Identifiable, Codable, Equatable {
     let value: String
     var id: String { value }
     

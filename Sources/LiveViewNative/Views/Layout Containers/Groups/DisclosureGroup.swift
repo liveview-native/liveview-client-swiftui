@@ -58,7 +58,7 @@ struct DisclosureGroup<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "is-expanded") private var isExpanded = false
+    @ChangeTracked(attribute: "is-expanded") private var isExpanded = false
 
     public var body: some View {
 #if os(iOS) || os(macOS)

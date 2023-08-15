@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// Use this modifier alongside the ``SearchableModifier`` modifier.
 ///
-/// Create a ``LiveBinding`` to synchronize the selected scope with the server.
+/// Create a ``ChangeTracked`` to synchronize the selected scope with the server.
 ///
 /// ```elixir
 /// defmodule MyAppWeb.SearchLive do
@@ -51,7 +51,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "active") private var active: String?
+    @ChangeTracked private var active: String?
 
     /// Indicates when the scope options are displayed.
     ///
@@ -86,7 +86,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._active = try LiveBinding(decoding: .active, in: container)
+        self._active = try ChangeTracked(decoding: .active, in: container)
         self.activation = try container.decodeIfPresent(String.self, forKey: .activation)
         self.scopes = try container.decode(String.self, forKey: .scopes)
     }

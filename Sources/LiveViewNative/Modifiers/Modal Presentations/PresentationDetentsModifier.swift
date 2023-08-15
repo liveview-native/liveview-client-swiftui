@@ -51,24 +51,20 @@ struct PresentationDetentsModifier: ViewModifier, Decodable {
     #endif
     private let detents: [PresentationDetent]
     
-    @LiveBinding private var selection: Int
+    @ChangeTracked private var selection: Int
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.detents = try container.decode([PresentationDetent].self, forKey: .detents)
-        self._selection = try LiveBinding(decoding: .selection, in: container)
+        self._selection = try ChangeTracked(decoding: .selection, in: container)
     }
     
     func body(content: Content) -> some View {
-        if _selection.isBound {
-            content.presentationDetents(Set(detents), selection: Binding {
-                detents[selection]
-            } set: {
-                selection = detents.firstIndex(of: $0)!
-            })
-        } else {
-            content.presentationDetents(Set(detents))
-        }
+        content.presentationDetents(Set(detents), selection: Binding {
+            detents[selection]
+        } set: {
+            selection = detents.firstIndex(of: $0)!
+        })
     }
     
     enum CodingKeys: CodingKey {
