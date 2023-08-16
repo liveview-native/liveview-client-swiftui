@@ -6,7 +6,7 @@
       "location" : "https://github.com/liveviewnative/liveview-native-core-swift.git",
       "state" : {
         "branch" : "main",
-        "revision" : "5d2dbc8fdbeaa939a9b9a23deae62dc596c4a694"
+        "revision" : "b6a24652b35acd534fa437cb4cf4654fcb33828f"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-syntax.git",
       "state" : {
-        "revision" : "67c5007099d9ffdd292f421f81f4efe5ee42963e",
-        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-07-10-a"
+        "revision" : "2e3c42cf38defd998c87ecfe8df138f925d22736",
+        "version" : "509.0.0-swift-DEVELOPMENT-SNAPSHOT-2023-08-15-a"
       }
     },
     {
