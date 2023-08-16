@@ -86,7 +86,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._active = try ChangeTracked(decoding: .active, in: container)
+        self._active = try ChangeTracked(decoding: CodingKeys.active, in: decoder)
         self.activation = try container.decodeIfPresent(String.self, forKey: .activation)
         self.scopes = try container.decode(String.self, forKey: .scopes)
     }

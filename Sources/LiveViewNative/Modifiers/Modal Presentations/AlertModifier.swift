@@ -85,7 +85,7 @@ struct AlertModifier<R: RootRegistry>: ViewModifier, Decodable {
         self.title = try container.decode(String.self, forKey: .title)
         self.actions = try container.decode(String.self, forKey: .actions)
         self.message = try container.decodeIfPresent(String.self, forKey: .message)
-        self._isPresented = try ChangeTracked(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
     }
     
     func body(content: Content) -> some View {

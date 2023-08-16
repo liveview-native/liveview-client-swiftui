@@ -82,7 +82,7 @@ struct PopoverModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._isPresented = try ChangeTracked(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
         self.attachmentAnchor = try container.decodeIfPresent(
             PopoverAttachmentAnchor.self,
             forKey: .attachmentAnchor

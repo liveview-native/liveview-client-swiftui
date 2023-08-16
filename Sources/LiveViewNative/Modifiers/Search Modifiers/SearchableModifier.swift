@@ -111,8 +111,8 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._text = try ChangeTracked(decoding: .text, in: container)
-        self._tokens = try ChangeTracked(decoding: .tokens, in: container)
+        self._text = try ChangeTracked(decoding: CodingKeys.text, in: decoder)
+        self._tokens = try ChangeTracked(decoding: CodingKeys.tokens, in: decoder)
         self.suggestedTokens = try container.decodeIfPresent([SearchToken].self, forKey: .suggestedTokens)
         
         switch try container.decodeIfPresent(String.self, forKey: .placement) ?? "automatic" {

@@ -215,7 +215,7 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
         } else {
             ModifierApplicator<_, R>(
                 // force-unwrap is okay, this view is never constructed with an empty slice
-                parent: parent.modifier(modifiers.first!.modifier),
+                parent: parent.modifier(modifiers.first!.modifier).environment(\.modifierChangeTrackingContext, ModifierChangeTrackingContext()),
                 modifiers: modifiers.dropFirst(),
                 element: element,
                 context: context

@@ -54,7 +54,7 @@ struct FullScreenCoverModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self._isPresented = try ChangeTracked(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
         self._onDismiss = try container.decode(Event.self, forKey: .onDismiss)
         self.content = try container.decode(String.self, forKey: .content)
     }

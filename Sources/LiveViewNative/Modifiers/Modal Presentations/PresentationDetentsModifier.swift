@@ -56,7 +56,7 @@ struct PresentationDetentsModifier: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.detents = try container.decode([PresentationDetent].self, forKey: .detents)
-        self._selection = try ChangeTracked(decoding: .selection, in: container)
+        self._selection = try ChangeTracked(decoding: CodingKeys.selection, in: decoder)
     }
     
     func body(content: Content) -> some View {

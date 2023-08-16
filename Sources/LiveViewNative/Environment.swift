@@ -13,6 +13,14 @@ private struct FormModelKey: EnvironmentKey {
     static let defaultValue: FormModel? = nil
 }
 
+private struct ModifierChangeTrackingContextKey: EnvironmentKey {
+    static let defaultValue: ModifierChangeTrackingContext? = nil
+}
+
+final class ModifierChangeTrackingContext {
+    var values = [String:Any]()
+}
+
 private struct ElementKey: EnvironmentKey {
     static let defaultValue: ElementNode? = nil
 }
@@ -46,6 +54,12 @@ extension EnvironmentValues {
     public var formModel: FormModel? {
         get { self[FormModelKey.self] }
         set { self[FormModelKey.self] = newValue }
+    }
+    
+    /// The context for collecting `ChangeTracked` properties of a modifier into a single map.
+    var modifierChangeTrackingContext: ModifierChangeTrackingContext? {
+        get { self[ModifierChangeTrackingContextKey.self] }
+        set { self[ModifierChangeTrackingContextKey.self] = newValue }
     }
     
     /// The DOM element that the view was constructed from.

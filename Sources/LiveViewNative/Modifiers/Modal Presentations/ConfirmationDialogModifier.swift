@@ -96,7 +96,7 @@ struct ConfirmationDialogModifier<R: RootRegistry>: ViewModifier, Decodable {
         self.titleVisibility = try container.decode(Visibility.self, forKey: .titleVisibility)
         self.actions = try container.decode(String.self, forKey: .actions)
         self.message = try container.decodeIfPresent(String.self, forKey: .message)
-        self._isPresented = try ChangeTracked(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
     }
     
     func body(content: Content) -> some View {
