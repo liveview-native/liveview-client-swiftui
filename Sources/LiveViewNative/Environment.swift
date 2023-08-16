@@ -18,7 +18,25 @@ private struct ModifierChangeTrackingContextKey: EnvironmentKey {
 }
 
 final class ModifierChangeTrackingContext {
-    var values = [String:Any]()
+    var values = [String:WeakRef]()
+    
+    final class WeakRef {
+        weak var value: CurrentValueSubject<any Encodable, Never>?
+        
+        init(_ value: CurrentValueSubject<any Encodable, Never>) {
+            self.value = value
+        }
+    }
+    
+    func collect() -> [String:any Encodable] {
+        values.compactMapValues(\.value?.value)
+    }
+    
+    func encode(_ values: [String:any Encodable]) throws -> [String:Any] {
+        try values.mapValues({
+            try JSONSerialization.jsonObject(with: JSONEncoder().encode($0), options: .fragmentsAllowed)
+        })
+    }
 }
 
 private struct ElementKey: EnvironmentKey {

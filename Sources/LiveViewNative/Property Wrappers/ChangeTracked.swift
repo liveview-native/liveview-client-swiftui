@@ -28,8 +28,7 @@ public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
             localValue.value
         }
         nonmutating set {
-            localValue.value = newValue
-            localValue.localValueChanged.send()
+            localValue.localValueChanged.send(newValue)
         }
     }
     
@@ -87,8 +86,8 @@ extension ChangeTracked where Value: AttributeDecodable {
                         self?.objectWillChange.send()
                     },
                 localValueChanged
-                    .compactMap({ [weak self] _ in self?.value })
                     .sink(receiveValue: { [weak self] localValue in
+                        self?.value = localValue
                         Task { [weak self] in
                             guard self?.sendChangeEvent == true,
                                   let event = await changeTracked.element.attributeValue(for: "phx-change")
@@ -142,8 +141,8 @@ extension ChangeTracked where Value: FormValue {
                         self?.objectWillChange.send()
                     },
                 localValueChanged
-                    .compactMap({ [weak self] _ in self?.value })
                     .sink(receiveValue: { [weak self] localValue in
+                        self?.value = localValue
                         Task { [weak self] in
                             guard self?.sendChangeEvent == true,
                                   let event = await changeTracked.element.attributeValue(for: "phx-change")
@@ -175,6 +174,8 @@ extension ChangeTracked where Value: Decodable {
         
         let key: String
         
+        let currentValue: CurrentValueSubject<any Encodable, Never>
+        
         init(value: Value, key: any CodingKey) {
             self.key = key.stringValue
                 .reduce(into: [String]()) { partialResult, character in
@@ -186,6 +187,7 @@ extension ChangeTracked where Value: Decodable {
                 }
                 .map({ $0.lowercased() })
                 .joined(separator: "_")
+            self.currentValue = .init(value)
             super.init(value: value)
         }
         
@@ -193,28 +195,33 @@ extension ChangeTracked where Value: Decodable {
             to changeTracked: ChangeTracked<Value>
         ) {
             let modifierChangeTrackingContext = changeTracked.modifierChangeTrackingContext
-            if modifierChangeTrackingContext?.values.keys.contains(self.key) == false {
-                modifierChangeTrackingContext?.values[self.key] = self.value
+            if modifierChangeTrackingContext?.values[self.key]?.value !== self.currentValue {
+                modifierChangeTrackingContext?.values[self.key] = .init(self.currentValue)
             }
             
             if changeTracked.initialValue != previousInitialValue {
                 self.value = changeTracked.initialValue
+                self.currentValue.send(changeTracked.initialValue)
                 previousInitialValue = changeTracked.initialValue
             }
             
             cancellables = [
                 localValueChanged
-                    .compactMap({ [weak self] _ in self?.value })
                     .removeDuplicates()
-                    .sink(receiveValue: { localValue in
+                    .sink(receiveValue: { [weak self] localValue in
+                        guard let self,
+                              localValue != self.value
+                        else { return }
                         self.objectWillChange.send()
+                        self.value = localValue
+                        self.currentValue.send(localValue)
                         Task { [weak self, weak modifierChangeTrackingContext] in
-                            guard let self else { return }
-                            modifierChangeTrackingContext?.values[self.key] = localValue
-                            print("Client set the value to", localValue)
-                            if let value = modifierChangeTrackingContext?.values {
-                                try await changeTracked.event(value: value)
-                            }
+                            guard let self,
+                                  let modifierChangeTrackingContext
+                            else { return }
+                            var values = modifierChangeTrackingContext.collect()
+                            values[self.key] = localValue
+                            try await changeTracked.event(value: modifierChangeTrackingContext.encode(values))
                         }
                     })
             ]
@@ -232,7 +239,7 @@ extension ChangeTracked {
         var value: Value
         
         let objectWillChange = ObjectWillChangePublisher()
-        let localValueChanged = ObjectWillChangePublisher()
+        let localValueChanged = PassthroughSubject<Value, Never>()
         
         init(value: Value) {
             self.value = value
