@@ -55,10 +55,12 @@ extension ChangeTracked where Value: AttributeDecodable {
     }
     
     final class ElementLocalValue: LocalValue {
-        var cancellables = Set<AnyCancellable>()
+        var cancellable: AnyCancellable?
         
         let attribute: AttributeName
         let sendChangeEvent: Bool
+        
+        var previousValue: Value?
         
         init(value: Value, attribute: AttributeName, sendChangeEvent: Bool) {
             self.attribute = attribute
@@ -69,33 +71,31 @@ extension ChangeTracked where Value: AttributeDecodable {
         override func bind(
             to changeTracked: ChangeTracked<Value>
         ) {
-            if cancellables.isEmpty,
-               let value = try? changeTracked.element.attributeValue(Value.self, for: self.attribute)
+            if let value = try? changeTracked.element.attributeValue(Value.self, for: self.attribute),
+               value != previousValue
             {
                 self.value = value
+                self.previousValue = value
             }
-            cancellables = [
-                changeTracked.$element
-                    .compactMap({ [weak self] _ in
-                        guard let attribute = self?.attribute else { return Value?.none }
-                        return try? changeTracked.element.attributeValue(Value.self, for: attribute)
-                    })
-                    .removeDuplicates()
-                    .sink { [weak self] serverValue in
-                        self?.value = serverValue
-                        self?.objectWillChange.send()
-                    },
-                localValueChanged
-                    .sink(receiveValue: { [weak self] localValue in
-                        self?.value = localValue
-                        Task { [weak self] in
-                            guard self?.sendChangeEvent == true,
-                                  let event = await changeTracked.element.attributeValue(for: "phx-change")
-                            else { return }
-                            try await changeTracked.coordinator?.pushEvent(event, "click", localValue, try? changeTracked.element.attributeValue(Int.self, for: "phx-target"))
-                        }
-                    })
-            ]
+            cancellable = localValueChanged
+                .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
+                .compactMap(\.last)
+                .sink(receiveValue: { [weak self] localValue in
+                    self?.objectWillChange.send()
+                    self?.value = localValue
+                    Task { [weak self] in
+                        guard let self,
+                              self.sendChangeEvent,
+                              let event = await changeTracked.element.attributeValue(for: "phx-change")
+                        else { return }
+                        try await changeTracked.coordinator?.pushEvent(
+                            "click",
+                            event,
+                            JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed),
+                            try? changeTracked.element.attributeValue(Int.self, for: "phx-target")
+                        )
+                    }
+                })
         }
     }
 }
@@ -107,10 +107,12 @@ extension ChangeTracked where Value: FormValue {
     }
     
     final class FormLocalValue: LocalValue {
-        var cancellables = Set<AnyCancellable>()
+        var cancellable: AnyCancellable?
         
         let attribute: AttributeName
         let sendChangeEvent: Bool
+        
+        var previousValue: Value?
         
         init(value: Value, attribute: AttributeName, sendChangeEvent: Bool) {
             self.attribute = attribute
@@ -118,39 +120,45 @@ extension ChangeTracked where Value: FormValue {
             super.init(value: value)
         }
         
+        private func attributeValue(on element: ElementNode) -> Value? {
+            if Value.self == Bool.self {
+                return element.attributeBoolean(for: self.attribute) as? Value
+            } else if let attribute = element.attribute(named: self.attribute) {
+                return Value.fromAttribute(attribute)
+            } else {
+                return nil
+            }
+        }
+        
         override func bind(
             to changeTracked: ChangeTracked<Value>
         ) {
-            if cancellables.isEmpty,
-               let attribute = changeTracked.element.attribute(named: self.attribute),
-               let value = Value.fromAttribute(attribute)
+            if let value = attributeValue(on: changeTracked.element),
+               value != previousValue
             {
                 self.value = value
+                self.previousValue = value
             }
-            cancellables = [
-                changeTracked.$element
-                    .compactMap({ [weak self] _ in
-                        guard let attributeName = self?.attribute,
-                              let attribute = changeTracked.element.attribute(named: attributeName)
-                        else { return Value?.none }
-                        return Value.fromAttribute(attribute)
-                    })
-                    .removeDuplicates()
-                    .sink { [weak self] serverValue in
-                        self?.value = serverValue
-                        self?.objectWillChange.send()
-                    },
-                localValueChanged
-                    .sink(receiveValue: { [weak self] localValue in
-                        self?.value = localValue
-                        Task { [weak self] in
-                            guard self?.sendChangeEvent == true,
-                                  let event = await changeTracked.element.attributeValue(for: "phx-change")
-                            else { return }
-                            try await changeTracked.coordinator?.pushEvent(event, "click", localValue, try? changeTracked.element.attributeValue(Int.self, for: "phx-target"))
-                        }
-                    })
-            ]
+            
+            cancellable = localValueChanged
+                .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
+                .compactMap(\.last)
+                .sink(receiveValue: { [weak self] localValue in
+                    self?.objectWillChange.send()
+                    self?.value = localValue
+                    Task { [weak self] in
+                        guard let self,
+                              self.sendChangeEvent,
+                              let event = await changeTracked.element.attributeValue(for: "phx-change")
+                        else { return }
+                        try await changeTracked.coordinator?.pushEvent(
+                            "click",
+                            event,
+                            JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed),
+                            try? changeTracked.element.attributeValue(Int.self, for: "phx-target")
+                        )
+                    }
+                })
         }
     }
 }
@@ -207,7 +215,8 @@ extension ChangeTracked where Value: Decodable {
             
             cancellables = [
                 localValueChanged
-                    .removeDuplicates()
+                    .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
+                    .compactMap(\.last)
                     .sink(receiveValue: { [weak self] localValue in
                         guard let self,
                               localValue != self.value

@@ -88,7 +88,7 @@ public struct FormState<Value: FormValue> {
     /// ```
     public init(_ valueAttribute: AttributeName, default: Value, sendChangeEvents: Bool = true) {
         self.valueAttribute = valueAttribute
-        self._boundValue = .init(wrappedValue: `default`, form: valueAttribute, sendChangeEvent: false)
+        self._boundValue = .init(wrappedValue: `default`, form: valueAttribute, sendChangeEvent: sendChangeEvents)
         self.defaultValue = `default`
         self.sendChangeEvents = sendChangeEvents
     }
@@ -190,16 +190,21 @@ public struct FormState<Value: FormValue> {
     }
     
     private func sendChangeEventIfNecessary() {
-        guard sendChangeEvents,
-              let changeEvent = element.attributeValue(for: "phx-change") else {
+        switch data.mode {
+        case .local:
             return
-        }
-        let name = element.attributeValue(for: "name") ?? "value"
-        let encoder = FragmentEncoder()
-        try! wrappedValue.encode(to: encoder)
-        let value = encoder.unwrap() as Any
-        Task {
-            try? await coordinator!.pushEvent("native-form", changeEvent, [name: value], nil)
+        default:
+            guard sendChangeEvents,
+                  let changeEvent = element.attributeValue(for: "phx-change") else {
+                return
+            }
+            let name = element.attributeValue(for: "name") ?? "value"
+            let encoder = FragmentEncoder()
+            try! wrappedValue.encode(to: encoder)
+            let value = encoder.unwrap() as Any
+            Task {
+                try? await coordinator!.pushEvent("native-form", changeEvent, [name: value], nil)
+            }
         }
     }
     
