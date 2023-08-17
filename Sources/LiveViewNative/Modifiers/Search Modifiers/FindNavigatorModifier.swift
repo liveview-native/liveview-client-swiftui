@@ -12,7 +12,18 @@ import SwiftUI
 /// Use this modifier with a ``TextEditor``:
 ///
 /// ```html
-/// <TextEditor text="my_text" modifiers={find_navigator(@native, is_presented: :show)} />
+/// <TextEditor text="my_text" modifiers={find_navigator(@native, is_presented: @show, change: "navigator-changed")} />
+/// ```
+///
+/// ```elixir
+/// defmodule AppWeb.TestLive do
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
+///
+///   def handle_event("navigator-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
+/// end
 /// ```
 ///
 /// ## Arguments
@@ -22,7 +33,7 @@ import SwiftUI
 #endif
 @available(iOS 16.0, *)
 struct FindNavigatorModifier: ViewModifier, Decodable {
-    /// A binding that controls whether the find navigator is shown.
+    /// A value that controls whether the find navigator is shown.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif

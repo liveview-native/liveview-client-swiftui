@@ -22,17 +22,19 @@ import SwiftUI
 /// </Button>
 /// ```
 ///
-/// Use the ``selection`` argument to synchronize the selected detent's index with the backend.
+/// Use the ``selection`` and `change` arguments to synchronize the selected detent's index with the backend.
 ///
 /// ```html
-/// <VStack modifiers={presentation_detents(@native, detents: [...], selection: :active_detent)}>
+/// <VStack modifiers={presentation_detents(@native, detents: [...], selection: @active_detent, change: "presentation-changed")}>
 ///   ...
 /// </VStack>
 /// ```
 ///
 /// ```elixir
 /// defmodule MyAppWeb.SheetLive do
-///   native_binding :active_detent, Integer, 0
+///   def handle_event("presentation-changed", %{ "selection" => selection }, socket) do
+///     {:noreply, assign(socket, active_detent: selection)}
+///   end
 /// end
 /// ```
 ///

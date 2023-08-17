@@ -13,15 +13,9 @@ import LiveViewNativeCore
 /// The color is stored as a map with the keys `r`, `g`, `b`, and optionally `a`.
 ///
 /// ```html
-/// <ColorPicker selection="favorite_color" supports-opacity>
+/// <ColorPicker selection={@favorite_color} phx-change="color-changed" supports-opacity>
 ///     Favorite Color
 /// </ColorPicker>
-/// ```
-///
-/// ```elixir
-/// defmodule MyAppWeb.FavoriteColor do
-///   native_binding :favorite_color, Map, %{ "r" => 1, "g" => 0, "b" => 1, "a" => 1 }
-/// end
 /// ```
 ///
 /// > Selected colors are in the sRGB color space.
@@ -39,15 +33,9 @@ struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
-    /// The ``ChangeTracked`` that stores the color value.
+    /// The currently selected color value.
     ///
     /// The color is stored as a map with the keys `r`, `g`, `b`, and optionally `a`.
-    ///
-    /// ```elixir
-    /// defmodule MyAppWeb.FavoriteColor do
-    ///   native_binding :favorite_color, Map, %{ "r" => 1, "g" => 0, "b" => 1, "a" => 1 }
-    /// end
-    /// ```
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif

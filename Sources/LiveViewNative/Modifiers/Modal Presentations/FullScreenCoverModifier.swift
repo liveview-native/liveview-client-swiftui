@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-/// A modifier that presents another view in full screen when a binding is activated.
+/// A modifier that presents another view in full screen when ``isPresented`` is `true`.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={full_screen_cover(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={full_screen_cover(@native, content: :content, is_presented: @show, change: "presentation-changed")}>
 ///   Present Sheet
 ///   <VStack template={:content}>
 ///     <Text>Hello, world!</Text>
@@ -18,6 +18,17 @@ import SwiftUI
 ///   </VStack>
 /// </Button>
 /// ```
+///
+/// ```elixir
+/// defmodule AppWeb.TestLive do
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
+///
+///   def handle_event("presentation-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
+/// end
+/// ``` 
 ///
 ///## Arguments
 ///- ``isPresented``

@@ -7,18 +7,29 @@
 
 import SwiftUI
 
-/// A modifier that presents another view as a popover when a binding is activated.
+/// A modifier that presents another view as a popover when ``isPresented`` is `true`.
 ///
 /// - Note: Popovers are rendered as a sheet on iOS. Use ``PresentationCompactAdaptationModifier`` to customize this behavior.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={popover(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={popover(@native, content: :content, is_presented: @show, change: "presentation-changed")}>
 ///   Present Popover
 ///   <VStack template={:content}>
 ///     <Text>Hello, world!</Text>
 ///     <Button phx-click="toggle">Dismiss</Button>
 ///   </VStack>
 /// </Button>
+/// ```
+///
+/// ```elixir
+/// defmodule AppWeb.TestLive do
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
+///
+///   def handle_event("presentation-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
+/// end
 /// ```
 ///
 /// Change the ``attachmentAnchor`` and ``arrowEdge`` to customize the placement of the popover.

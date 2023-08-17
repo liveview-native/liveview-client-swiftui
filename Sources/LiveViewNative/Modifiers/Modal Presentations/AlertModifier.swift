@@ -13,7 +13,7 @@ import SwiftUI
 /// <Button phx-click="toggle-show"
 ///     modifiers={
 ///         @native
-///         |> alert(title: "My Alert", message: :message, actions: :actions, is_presented: :show)
+///         |> alert(title: "My Alert", message: :message, actions: :actions, is_presented: @show, change: "presentation-changed")
 ///     }
 /// >
 ///   Present Alert
@@ -30,10 +30,12 @@ import SwiftUI
 ///
 /// ```elixir
 /// defmodule AppWeb.TestLive do
-///     use AppWeb, :live_view
-///     use LiveViewNative.LiveView
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
 ///
-///     native_binding :show, Atom, false
+///   def handle_event("presentation-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
 /// end
 /// ```
 ///
@@ -70,7 +72,7 @@ struct AlertModifier<R: RootRegistry>: ViewModifier, Decodable {
     
     /// The name of a value that controls when the alert is shown.
     ///
-    /// Set the binding to `true` to show the alert.
+    /// Set the value to `true` to show the alert.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif

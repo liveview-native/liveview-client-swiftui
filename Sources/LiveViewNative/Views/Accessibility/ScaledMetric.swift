@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Updates a binding based on the dynamic type size in the current context.
+/// Tracks changed to the dynamic type size in the current context.
 ///
 /// Use this element to scale a value with the accessibility dynamic type size.
 ///
@@ -26,7 +26,7 @@ import SwiftUI
 /// ```
 ///
 /// The initial ``value`` of `100` will be used when dynamic type is disabled.
-/// If the dynamic type size is changed, the binding referenced by ``scaledValue`` will be updated with a scaled version of ``value``.
+/// If the dynamic type size is changed, the event referenced by `phx-change` will be updated with a scaled version of ``value``.
 ///
 /// Optionally provide a ``LiveViewNative/SwiftUI/Font/TextStyle`` to scale relative to with the ``relativeStyle`` attribute.
 ///

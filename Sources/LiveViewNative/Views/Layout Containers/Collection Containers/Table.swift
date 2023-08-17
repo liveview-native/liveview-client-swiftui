@@ -44,10 +44,10 @@ import LiveViewNativeCore
 /// ```
 ///
 /// ### Sorting Tables
-/// Use the ``sortOrder`` binding to handle changes in the sorting options.
+/// Use the ``sortOrder`` attribute to handle changes in the sorting options.
 ///
 /// ```html
-/// <Table sort-order="sports_sort_order">
+/// <Table sort-order={@sports_sort_order} phx-change="sort-changed">
 ///     ...
 ///     <Group template={:rows}>
 ///         <%= for sport <- Enum.sort_by(
@@ -65,25 +65,13 @@ import LiveViewNativeCore
 /// </Table>
 /// ```
 ///
-/// ```elixir
-/// defmodule MyAppWeb.SportsLive do
-///   native_binding :sports_sort_order, List, []
-/// end
-/// ```
-///
 /// ### Selecting Rows
-/// Use the ``selection`` binding to synchronize the selected row(s) with the LiveView.
+/// Use the ``selection`` attribute to synchronize the selected row(s) with the LiveView.
 ///
 /// ```html
-/// <Table selection="selected_sports">
+/// <Table selection={@selected_sports} phx-change="selection-changed">
 ///     ...
 /// </Table>
-/// ```
-///
-/// ```elixir
-/// defmodule MyAppWeb.SportsLive do
-///   native_binding :selected_sports, List, []
-/// end
 /// ```
 ///
 /// ## Bindings
@@ -111,23 +99,11 @@ struct Table<R: RootRegistry>: View {
     
     /// Synchronizes the selected rows with the server.
     ///
-    /// To allow an arbitrary number of rows to be selected, use the `List` type for the binding.
+    /// To allow an arbitrary number of rows to be selected, provide a `List` value.
     /// Use an empty list as the default value to start with no selection.
     ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///   native_binding :selected_sports, List, []
-    /// end
-    /// ```
-    ///
-    /// To only allow a single selection, use the `String` type for the binding.
+    /// To only allow a single selection, use the `String` type for the value.
     /// Use `nil` as the default value to start with no selection.
-    ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///   native_binding :selected_sport, String, nil
-    /// end
-    /// ```
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif

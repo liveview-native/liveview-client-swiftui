@@ -11,22 +11,24 @@ import SwiftUI
 ///
 /// Use this modifier alongside the ``SearchableModifier`` modifier.
 ///
-/// Create a ``ChangeTracked`` to synchronize the selected scope with the server.
+/// Create an event handler to synchronize the selected scope with the server.
 ///
 /// ```elixir
 /// defmodule MyAppWeb.SearchLive do
-///   native_binding :active_scope, String, "photos"
+///   def handle_event("scope-changed", %{ "active" => scope }, socket) do
+///     {:noreply, assign(socket, active_scope: scope)}
+///   end
 /// end
 /// ```
 ///
-/// Provide the name of this binding, as well as a list of elements with the ``TagModifier`` modifier to create the scopes.
+/// Provide the name of the scope to ``active``, as well as a list of elements with the ``TagModifier`` modifier to create the scopes.
 ///
 /// ```html
 /// <List
 ///     modifiers={
 ///         @native
 ///         |> searchable(...)
-///         |> search_scopes(active: :active_scope, scopes: :scope_list)
+///         |> search_scopes(active: @active_scope, scopes: :scope_list, change: "scope-changed")
 ///     }
 /// >
 ///     ...

@@ -7,16 +7,27 @@
 
 import SwiftUI
 
-/// A modifier that presents another view as a sheet when a binding is activated.
+/// A modifier that presents another view as a sheet when ``isPresented`` is activated.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={sheet(content: :content, is_presented: @show, change: "presentation-changed")}>
 ///   Present Sheet
 ///   <VStack template={:content}>
 ///     <Text>Hello, world!</Text>
 ///     <Button phx-click="toggle">Dismiss</Button>
 ///   </VStack>
 /// </Button>
+/// ```
+///
+/// ```elixir
+/// defmodule AppWeb.TestLive do
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
+///
+///   def handle_event("presentation-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
+/// end
 /// ```
 ///
 ///## Arguments

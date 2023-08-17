@@ -12,14 +12,16 @@ import SwiftUI
 /// Use a ``ChangeTracked`` to synchronize the query.
 ///
 /// ```html
-/// <List modifiers={searchable(@native, text: :query)}>
+/// <List modifiers={searchable(@native, text: @query, change: "search-changed")}>
 ///     ...
 /// </List>
 /// ```
 ///
 /// ```elixir
 /// defmodule MyAppWeb.SearchLive do
-///   native_binding :query, :string, ""
+///   def handle_event("search-changed", %{ "text" => text }, socket) do
+///     {:noreply, assign(socket, query: text)}
+///   end
 /// end
 /// ```
 ///
@@ -28,15 +30,9 @@ import SwiftUI
 /// ### Tokens
 /// Tokens can be added alongside the query to provide extra filtering capabilities.
 ///
-/// Create a separate `native_binding` for the tokens.
+/// Send a list of active tokens to the ``token`` argument, and a list of suggested tokens to the [`suggested_tokens`](doc:SearchableModifier/suggestedTokens) argument.
 ///
-/// ```elixir
-/// native_binding :my_tokens, List, []
-/// ```
-///
-/// Provide the name of this binding to the ``tokens`` argument, and a list of suggested tokens to the [`suggested_tokens`](doc:SearchableModifier/suggestedTokens) argument.
-///
-/// Add a child element for each token to specify how it should be rendered.
+/// Add a child element for each token to specify how it should be rendered. Tokens will be sent to the change event alongside the ``text``.
 ///
 /// - Note: You can use [`Phoenix.HTML.Tag.content_tag/2`](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Tag.html#content_tag/2) to dynamically render an element for each token.
 ///

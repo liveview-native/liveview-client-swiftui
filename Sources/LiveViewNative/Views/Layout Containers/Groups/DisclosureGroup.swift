@@ -22,18 +22,12 @@ import SwiftUI
 /// </DisclosureGroup>
 /// ```
 ///
-/// To synchronize the expansion state with the server, use the ``isExpanded`` binding.
+/// To synchronize the expansion state with the server, use the ``isExpanded`` attribute.
 ///
 /// ```html
-/// <DisclosureGroup is-expanded="actions_option">
+/// <DisclosureGroup is-expanded={@actions_open} phx-change="actions-group-changed">
 ///     ...
 /// </DisclosureGroup>
-/// ```
-///
-/// ```elixir
-/// defmodule MyAppWeb.EditorLive do
-///     native_binding :actions_open, Atom, true
-/// end
 /// ```
 ///
 /// ## Bindings

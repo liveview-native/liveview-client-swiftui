@@ -20,9 +20,9 @@ public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
     let initialValue: Value
     @Event("phx-change", type: "click") var event: Event.EventHandler
     
-    /// The value of the binding.
+    /// The value of the attribute/argument.
     ///
-    /// Setting this property will send an event to the server to update its value as well.
+    /// Setting this property will send a change event to the server.
     public var wrappedValue: Value {
         get {
             localValue.value
@@ -33,8 +33,6 @@ public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
     }
     
     /// A SwiftUI `Binding` that provides read and write access to the underlying data.
-    ///
-    /// Access this binding with the dollar sign prefix. If a property is declared as `@ChangeTracked(name: "value") var value`, then the projected value binding can be access as `$value`.
     public var projectedValue: Binding<Value> {
         Binding {
             wrappedValue
@@ -244,10 +242,12 @@ private protocol LocalValueProtocol: ObservableObject {
 
 extension ChangeTracked {
     class LocalValue: ObservableObject {
-        /// The current value of the binding.
+        /// The current value.
         var value: Value
         
         let objectWillChange = ObjectWillChangePublisher()
+        
+        /// An publisher that emits new values from the client.
         let localValueChanged = PassthroughSubject<Value, Never>()
         
         init(value: Value) {

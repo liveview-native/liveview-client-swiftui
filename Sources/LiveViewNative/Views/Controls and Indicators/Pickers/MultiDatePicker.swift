@@ -10,22 +10,16 @@ import SwiftUI
 /// A control that allows the user to pick multiple dates (not datetimes).
 ///
 /// ```html
-/// <MultiDatePicker selection="dates" start="2023-01-01" end="2023-02-01">
+/// <MultiDatePicker selection={@dates} phx-change="dates-changed" start="2023-01-01" end="2023-02-01">
 ///     <Text>Pick as many dates as you like!</Text>
 /// </MultiDatePicker>
 /// ```
 ///
 /// The element's children are used as the control's label.
 ///
-/// ```elixir
-/// defmodule MyAppWeb.DatesLive do
-///     native_binding :dates, List, ["2023-01-15"]
-/// end
-/// ```
-///
 /// The value is a list of date strings of the form "yyyy-MM-dd".
 ///
-/// - Note: This control does not support reading the intial value from the `value` attribute on the element.
+/// - Note: This control does not support reading the intial value from the `selection` attribute on the element.
 ///
 /// ## Attributes
 /// - ``selection``
