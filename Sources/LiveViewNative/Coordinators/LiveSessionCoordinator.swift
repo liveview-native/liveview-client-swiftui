@@ -31,37 +31,33 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 /// - ``LiveConnectionError``
 @MainActor
 public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
-    @Published internal private(set) var internalState: InternalState = .notConnected(reconnectAutomatically: false)
+    @Published internal private(set) var internalState: LiveSessionState = .notConnected
     /// The current state of the live view connection.
     public var state: LiveSessionState {
-        internalState.publicState
+        internalState
     }
     
     /// The current URL this live view is connected to.
     public private(set) var url: URL
     
     @Published var navigationPath = [LiveNavigationEntry<R>]()
-    private(set) var rootCoordinator: LiveViewCoordinator<R>!
+    var rootCoordinator: LiveViewCoordinator<R>!
     
-    internal let config: LiveSessionConfiguration
-    
-    // Values extracted from the DOM
-    var phxSession: String = ""
-    var phxStatic: String = ""
-    var phxView: String = ""
-    var phxID: String = ""
-    var phxCSRFToken: String = ""
+    internal let configuration: LiveSessionConfiguration
     
     // Socket connection
     var socket: Socket?
     
-    var liveReloadEnabled: Bool = false
+    private var domValues: DOMValues!
+    
     private var liveReloadSocket: Socket?
     private var liveReloadChannel: Channel?
     
     private var cancellables = Set<AnyCancellable>()
     
-    var isMounted: Bool = false
+    private var mergedEventSubjects: AnyCancellable?
+    private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
+    private var eventHandlers = Set<AnyCancellable>()
     
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
@@ -73,36 +69,40 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter customRegistryType: The type of the registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM. This can generally be inferred automatically.
     public init(_ url: URL, config: LiveSessionConfiguration = .init(), customRegistryType _: R.Type = R.self) {
         self.url = url.appending(path: "").absoluteURL
-        self.config = config
+        self.configuration = config
         self.rootCoordinator = .init(session: self, url: self.url)
-        self.$internalState.sink { state in
-            if case .connected = state {
-                Task { [weak self] in
-                    await self?.rootCoordinator.connect()
-                }
-            }
-        }.store(in: &cancellables)
-        $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { prev, next in
+        self.mergedEventSubjects = self.rootCoordinator.eventSubject.compactMap({
+            [weak self] value in self.map({ ($0.rootCoordinator, value) })
+        })
+        .sink(receiveValue: { [weak self] value in
+            self?.eventSubject.send(value)
+        })
+        $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
+            guard let self else { return }
             if prev.count > next.count {
                 let last = next.last ?? .init(url: self.url, coordinator: self.rootCoordinator)
                 if last.coordinator.url != last.url {
                     last.coordinator.url = last.url
-                    Task {
-                        await last.coordinator.reconnect()
+                    Task { @MainActor in
+                        try await last.coordinator.connect(domValues: self.domValues, redirect: true)
                     }
                 }
             }
         }.store(in: &cancellables)
-        $navigationPath.sink { entries in
-            guard let entry = entries.last else { return }
-            Task {
-                // If the coordinator is not connected to the right URL, update it.
-                if entry.coordinator.url != entry.url {
-                    entry.coordinator.url = entry.url
-                    await entry.coordinator.reconnect()
-                } else {
-                    await entry.coordinator.connect()
-                }
+        // Receive events from all live views.
+        $navigationPath.sink { [weak self] entries in
+            if let self {
+                let allCoordinators = ([self.rootCoordinator] + entries.map(\.coordinator))
+                    .reduce(into: [LiveViewCoordinator<R>]()) { result, next in
+                        guard !result.contains(where: { $0 === next }) else { return }
+                        result.append(next)
+                    }
+                self.mergedEventSubjects = Publishers.MergeMany(allCoordinators.map({ coordinator in
+                    coordinator.eventSubject.map({ (coordinator, $0) })
+                }))
+                .sink(receiveValue: { [weak self] value in
+                    self?.eventSubject.send(value)
+                })
             }
         }.store(in: &cancellables)
     }
@@ -122,61 +122,58 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// This is an async function which completes when the connection has been established or failed.
     public func connect() async {
-        guard case .notConnected = state else {
-            return
-        }
-        
-        do {
-            try await self.doConnect()
-        } catch {
-            // doConnect only throws CancellationErrors, which we swallow
-        }
-    }
-    
-    private func doConnect() async throws {
-        guard case .notConnected = state else {
+        guard case .notConnected = internalState else {
             return
         }
         
         logger.debug("Connecting to \(self.url.absoluteString)")
         
-        internalState = .startingConnection
+        internalState = .connecting
         
         let html: String
         do {
             html = try await fetchDOM(url: self.url)
-        } catch let error as LiveConnectionError {
-            internalState = .connectionFailed(error)
-            return
-        }
-        
-        try Task.checkCancellation()
-        
-        do {
-            let doc = try SwiftSoup.parse(html)
-            try self.extractDOMValues(doc)
         } catch {
             internalState = .connectionFailed(error)
             return
         }
         
+        let domValues: DOMValues
+        do {
+            let doc = try SwiftSoup.parse(html)
+            domValues = try self.extractDOMValues(doc)
+        } catch {
+            internalState = .connectionFailed(error)
+            return
+        }
+        
+        self.domValues = domValues
+        
         if socket == nil {
             do {
-                try await self.connectSocket()
-            } catch let error as LiveConnectionError {
+                try await self.connectSocket(domValues)
+            } catch {
                 internalState = .connectionFailed(error)
                 return
             }
         }
+        
+        do {
+            try await rootCoordinator.connect(domValues: domValues, redirect: false)
+        } catch {
+            self.internalState = .connectionFailed(error)
+        }
     }
     
-    private func disconnect() {
-        self.rootCoordinator.disconnect()
-        navigationPath.removeAll()
+    private func disconnect() async {
+        await rootCoordinator.disconnect()
+        for entry in self.navigationPath {
+            await entry.coordinator.disconnect()
+        }
+        self.navigationPath.removeAll()
         self.socket?.disconnect()
         self.socket = nil
-        // when deliberately disconnect, don't let pending connections continue
-        internalState = .notConnected(reconnectAutomatically: false)
+        self.internalState = .notConnected
     }
     
     /// Forces the session to disconnect then connect.
@@ -185,16 +182,45 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// This can be used to force the LiveView to reset, for example after an unrecoverable error occurs.
     public func reconnect() async {
-        disconnect()
-        await connect()
-        await self.rootCoordinator.reconnect()
+        await self.disconnect()
+        await self.connect()
+    }
+    
+    /// Creates a publisher that can be used to listen for server-sent LiveView events.
+    ///
+    /// - Parameter event: The event name that is being listened for.
+    /// - Returns: A publisher that emits event payloads.
+    ///
+    /// This event will be received from every LiveView handled by this session coordinator.
+    ///
+    /// See ``LiveViewCoordinator/receiveEvent(_:)`` for more details.
+    public func receiveEvent(_ event: String) -> some Publisher<(LiveViewCoordinator<R>, Payload), Never> {
+        eventSubject
+            .filter { $0.1.0 == event }
+            .map({ ($0.0, $0.1.1) })
+    }
+    
+    /// Permanently registers a handler for a server-sent LiveView event.
+    ///
+    /// - Parameter event: The event name that is being listened for.
+    /// - Parameter handler: A closure to invoke when the coordinator receives an event. The event value is provided as the closure's parameter.
+    ///
+    /// This event handler will be added to every LiveView handled by this session coordinator.
+    ///
+    /// See ``LiveViewCoordinator/handleEvent(_:handler:)`` for more details.
+    public func handleEvent(_ event: String, handler: @escaping (LiveViewCoordinator<R>, Payload) -> Void) {
+        receiveEvent(event)
+            .sink(receiveValue: handler)
+            .store(in: &eventHandlers)
     }
     
     func fetchDOM(url: URL) async throws -> String {
         let data: Data
         let resp: URLResponse
         do {
-            (data, resp) = try await config.urlSession.data(from: url)
+            (data, resp) = try await configuration.urlSession.data(from: url.appending(queryItems: [
+                .init(name: "_platform", value: platform)
+            ]))
         } catch {
             throw LiveConnectionError.initialFetchError(error)
         }
@@ -212,86 +238,94 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> Void {
+    struct DOMValues {
+        let phxCSRFToken: String
+        let phxSession: String
+        let phxStatic: String
+        let phxView: String
+        let phxID: String
+        let liveReloadEnabled: Bool
+    }
+    
+    private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> DOMValues {
         let metaRes = try doc.select("meta[name=\"csrf-token\"]")
         guard !metaRes.isEmpty() else {
             throw LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken)
         }
-        self.phxCSRFToken = try metaRes[0].attr("content")
-        self.liveReloadEnabled = !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
         
         let mainDivRes = try doc.select("div[data-phx-main]")
         guard !mainDivRes.isEmpty() else {
             throw LiveConnectionError.initialParseError(missingOrInvalid: .phxMain)
         }
         let mainDiv = mainDivRes[0]
-        self.phxSession = try mainDiv.attr("data-phx-session")
-        self.phxStatic = try mainDiv.attr("data-phx-static")
-        self.phxView = try mainDiv.attr("data-phx-view")
-        self.phxID = try mainDiv.attr("id")
+        return .init(
+            phxCSRFToken: try metaRes[0].attr("content"),
+            phxSession: try mainDiv.attr("data-phx-session"),
+            phxStatic: try mainDiv.attr("data-phx-static"),
+            phxView: try mainDiv.attr("data-phx-view"),
+            phxID: try mainDiv.attr("id"),
+            liveReloadEnabled: !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
+        )
     }
 
-    private func connectSocket() async throws {
+    private func connectSocket(_ domValues: DOMValues) async throws {
         let cookies = HTTPCookieStorage.shared.cookies(for: self.url)
         
-        let configuration = config.urlSession.configuration
+        let configuration = configuration.urlSession.configuration
         for cookie in cookies! {
             configuration.httpCookieStorage!.setCookie(cookie)
         }
     
-        let _: Void = try await withCheckedThrowingContinuation { continuation in
-            self.internalState = .awaitingSocketConnection(continuation)
-            doConnectSocket(urlSessionConfiguration: configuration)
-        }
-        
-        if liveReloadEnabled {
-            Task {
-                await self.connectLiveReloadSocket(urlSessionConfiguration: configuration)
+        self.socket = try await withCheckedThrowingContinuation { [weak self] continuation in
+            guard let self else {
+                return continuation.resume(throwing: LiveConnectionError.sessionCoordinatorReleased)
             }
-        }
-    }
-    
-    private func doConnectSocket(urlSessionConfiguration config: URLSessionConfiguration) {
-        var wsEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
-        wsEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
-        wsEndpoint.path = "/live/websocket"
-        let socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: config) }, paramsClosure: {["_csrf_token": self.phxCSRFToken]})
-        self.socket = socket
-        socket.onOpen { [weak self, weak socket] in
-            guard let socket else { return }
-            guard let self = self else {
-                socket.disconnect()
-                return
-            }
-            logger.debug("[Socket] Opened")
-            if case .awaitingSocketConnection(let continuation) = self.internalState {
-                continuation.resume()
-            }
-            DispatchQueue.main.async {
-                self.internalState = .connected
-            }
-        }
-        socket.onClose { logger.debug("[Socket] Closed") }
-        socket.onError { [weak self, weak socket] (error) in
-            guard let socket else { return }
-            guard let self = self else {
-                socket.disconnect()
-                return
-            }
-            logger.error("[Socket] Error: \(String(describing: error))")
-            if case .awaitingSocketConnection(let continuation) = self.internalState {
-                continuation.resume(throwing: LiveConnectionError.socketError(error))
-            } else {
-                Task { @MainActor in
-                    self.internalState = .connectionFailed(LiveConnectionError.socketError(error))
+            
+            var wsEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
+            wsEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
+            wsEndpoint.path = "/live/websocket"
+            let socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": domValues.phxCSRFToken]})
+            
+            var refs = [String]()
+            
+            refs.append(socket.onOpen { [weak self, weak socket] in
+                guard let socket else { return }
+                guard self != nil else {
+                    socket.disconnect()
+                    return
                 }
-            }
+                logger.debug("[Socket] Opened")
+                socket.off(refs)
+                continuation.resume(returning: socket)
+            })
+            refs.append(socket.onError { [weak self, weak socket] (error) in
+                guard let socket else { return }
+                guard self != nil else {
+                    socket.disconnect()
+                    return
+                }
+                logger.error("[Socket] Error: \(String(describing: error))")
+                socket.off(refs)
+                continuation.resume(throwing: LiveConnectionError.socketError(error))
+            })
+            socket.connect()
         }
-        socket.logger = { message in logger.debug("[Socket] \(message)") }
-        socket.connect()
+        self.socket?.onClose { logger.debug("[Socket] Closed") }
+        self.socket?.logger = { message in logger.debug("[Socket] \(message)") }
+        
+        self.internalState = .connected
+        
+        if domValues.liveReloadEnabled {
+            await self.connectLiveReloadSocket(urlSessionConfiguration: configuration)
+        }
     }
     
     private func connectLiveReloadSocket(urlSessionConfiguration: URLSessionConfiguration) async {
+        if let liveReloadSocket = self.liveReloadSocket {
+            liveReloadSocket.disconnect()
+            self.liveReloadSocket = nil
+        }
+        
         logger.debug("[LiveReload] attempting to connect...")
 
         var liveReloadEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
@@ -316,25 +350,23 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    func redirect(_ redirect: LiveRedirect) async {
+    func redirect(_ redirect: LiveRedirect) async throws {
         switch redirect.mode {
         case .replaceTop:
             let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
             coordinator.url = redirect.to
+            await coordinator.disconnect()
             let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
             case .push:
                 navigationPath.append(entry)
             case .replace:
                 // If there is nothing to replace, change the root URL.
-                if navigationPath.isEmpty {
-                    rootCoordinator.url = redirect.to
-                    await rootCoordinator.reconnect()
-                } else {
-                    navigationPath.removeLast()
-                    navigationPath.append(entry)
+                if !navigationPath.isEmpty {
+                    navigationPath[navigationPath.count - 1] = entry
                 }
             }
+            try await coordinator.connect(domValues: self.domValues, redirect: true)
         case .multiplex:
             switch redirect.kind {
             case .push:
@@ -346,7 +378,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 // If there is nothing to replace, change the root URL.
                 if navigationPath.isEmpty {
                     rootCoordinator.url = redirect.to
-                    await rootCoordinator.reconnect()
+                    try await rootCoordinator.connect(domValues: self.domValues, redirect: true)
                 } else {
                     navigationPath.removeLast()
                     // If we are replacing the current path with the previous one, just pop the URL so the previous one is on top.
@@ -362,43 +394,60 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 }
 
 extension LiveSessionCoordinator {
-    // The internal state enum stores more details associated with particular states but that we don't want publicly exposed.
-    enum InternalState {
-        case notConnected(reconnectAutomatically: Bool)
-        case startingConnection
-        case awaitingSocketConnection(CheckedContinuation<Void, Swift.Error>)
-        case awaitingJoinResponse(CheckedContinuation<Payload, Swift.Error>)
-        case connected
-        case connectionFailed(Error)
+    var platform: String { "swiftui" }
+    var platformMeta: Payload {
+        [
+            "os_name": getOSName(),
+            "os_version": getOSVersion(),
+            "user_interface_idiom": getUserInterfaceIdiom()
+        ]
+    }
+    
+    private func getOSName() -> String {
+        #if os(macOS)
+        return "macOS"
+        #elseif os(tvOS)
+        return "tvOS"
+        #elseif os(watchOS)
+        return "watchOS"
+        #else
+        return "iOS"
+        #endif
+    }
+
+    private func getOSVersion() -> String {
+        #if os(watchOS)
+        return WKInterfaceDevice.current().systemVersion
+        #elseif os(macOS)
+        let operatingSystemVersion = ProcessInfo.processInfo.operatingSystemVersion
+        let majorVersion = operatingSystemVersion.majorVersion
+        let minorVersion = operatingSystemVersion.minorVersion
+        let patchVersion = operatingSystemVersion.patchVersion
         
-        var publicState: LiveSessionState {
-            switch self {
-            case .notConnected(reconnectAutomatically: _):
-                return .notConnected
-            case .startingConnection, .awaitingSocketConnection(_), .awaitingJoinResponse(_):
-                return .connecting
-            case .connected:
-                return .connected
-            case .connectionFailed(let error):
-                return .connectionFailed(error)
-            }
+        return "\(majorVersion).\(minorVersion).\(patchVersion)"
+        #else
+        return UIDevice.current.systemVersion
+        #endif
+    }
+
+    private func getUserInterfaceIdiom() -> String {
+        #if os(watchOS)
+        return "watch"
+        #elseif os(macOS)
+        return "mac"
+        #else
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone:
+            return "phone"
+        case .pad:
+            return "pad"
+        case .mac:
+            return "mac"
+        case .tv:
+            return "tv"
+        default:
+            return "unspecified"
         }
-        
-        var reconnectAutomatically: Bool {
-            switch self {
-            case .notConnected(reconnectAutomatically: let b):
-                return b
-            case .startingConnection, .awaitingSocketConnection(_), .awaitingJoinResponse(_):
-                // connection attempt tokens should make this unreachable, but just in case
-                return false
-            case .connected:
-                //
-                return false
-            case .connectionFailed(_):
-                // if we've previously encountered and error, and SwiftPhoenixClient automatically tries to rejoin the channel
-                // and it succeeds, we accept the join
-                return true
-            }
-        }
+        #endif
     }
 }

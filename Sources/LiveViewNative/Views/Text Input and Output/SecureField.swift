@@ -55,7 +55,7 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
         }
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+            .preference(key: _ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
     }
     
     var label: some View {

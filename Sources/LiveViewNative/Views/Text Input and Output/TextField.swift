@@ -35,7 +35,7 @@ import SwiftUI
 ///         @native
 ///         |> autocorrection_disabled(disable: true)
 ///         |> text_input_autocapitalization(autocapitalization: :words)
-///         |> keyboard_type(type: :web_search)
+///         |> keyboard_type(keyboard_type: :web_search)
 ///         |> submit_label(submit_label: :search)
 ///     }
 /// >
@@ -52,7 +52,7 @@ import SwiftUI
 ///         value-binding="amount"
 ///         format="currency"
 ///         currency-code="usd"
-///         modifier={@native |> keyboard_type(type: :decimal_pad)}
+///         modifier={@native |> keyboard_type(keyboard_type: :decimal_pad)}
 ///     >
 ///         Enter Amount
 ///     </TextField>
@@ -154,7 +154,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
         field
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .preference(key: ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+            .preference(key: _ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
     }
     
     @ViewBuilder

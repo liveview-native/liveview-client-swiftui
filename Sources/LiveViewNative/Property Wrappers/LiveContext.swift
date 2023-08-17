@@ -50,7 +50,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     public func buildElement(_ element: ElementNode) -> some View {
         // can't use coordinator.builder.fromElement here, as it causes an infinitely recursive type when used with custom attributes
         // so use ElementView to break the cycle
-        return ElementView(element: element, context: storage)
+        return coordinator.builder.fromElement(element, context: storage)
     }
     
     /// Builds a view representing the children of the current element in the current context.

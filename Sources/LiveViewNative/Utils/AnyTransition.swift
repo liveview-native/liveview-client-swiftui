@@ -263,6 +263,8 @@ extension AnyTransition {
 }
 
 #if canImport(Symbols)
+import Symbols
+
 /// A transition applied to a system image.
 ///
 /// Possible values:

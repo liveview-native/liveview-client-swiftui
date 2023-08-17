@@ -40,9 +40,9 @@ extension BuiltinRegistry {
 }
 
 /// A preference key that specifies what bindings the View handles internally.
-enum ProvidedBindingsKey: PreferenceKey {
-    static var defaultValue: Set<String> { [] }
-    static func reduce(value: inout Set<String>, nextValue: () -> Set<String>) {
+public enum _ProvidedBindingsKey: PreferenceKey {
+    public static var defaultValue: Set<String> { [] }
+    public static func reduce(value: inout Set<String>, nextValue: () -> Set<String>) {
         value = nextValue()
     }
 }
@@ -61,7 +61,7 @@ fileprivate struct ProvidedBindingsReader<Content: View, ApplyBinding: View>: Vi
                 applyBinding()
             }
         }
-        .onPreferenceChange(ProvidedBindingsKey.self) { self.providesBinding = $0.contains(binding) }
+        .onPreferenceChange(_ProvidedBindingsKey.self) { self.providesBinding = $0.contains(binding) }
     }
 }
 

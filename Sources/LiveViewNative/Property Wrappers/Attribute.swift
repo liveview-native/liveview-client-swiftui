@@ -91,6 +91,8 @@ public struct Attribute<T>: DynamicProperty {
     private final class Storage: ObservableObject {
         var value: T?
         var previousValue: LiveViewNativeCore.Attribute?
+        
+        let objectWillChange = ObjectWillChangePublisher()
     }
     
     /// Before the View's body is produced, check if the attribute needs to be recomputed.
