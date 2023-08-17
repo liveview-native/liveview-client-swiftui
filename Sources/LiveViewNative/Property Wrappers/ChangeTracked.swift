@@ -83,15 +83,9 @@ extension ChangeTracked where Value: AttributeDecodable {
                     self?.value = localValue
                     Task { [weak self] in
                         guard let self,
-                              self.sendChangeEvent,
-                              let event = await changeTracked.element.attributeValue(for: "phx-change")
+                              self.sendChangeEvent
                         else { return }
-                        try await changeTracked.coordinator?.pushEvent(
-                            "click",
-                            event,
-                            JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed),
-                            try? changeTracked.element.attributeValue(Int.self, for: "phx-target")
-                        )
+                        try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed))
                     }
                 })
         }
@@ -146,15 +140,9 @@ extension ChangeTracked where Value: FormValue {
                     self?.value = localValue
                     Task { [weak self] in
                         guard let self,
-                              self.sendChangeEvent,
-                              let event = await changeTracked.element.attributeValue(for: "phx-change")
+                              self.sendChangeEvent
                         else { return }
-                        try await changeTracked.coordinator?.pushEvent(
-                            "click",
-                            event,
-                            JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed),
-                            try? changeTracked.element.attributeValue(Int.self, for: "phx-target")
-                        )
+                        try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed))
                     }
                 })
         }
