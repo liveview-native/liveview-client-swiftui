@@ -68,10 +68,10 @@ final class ControlsAndIndicatorsModifiersTests: XCTestCase {
         try assertMatch(
             #"""
             <VStack>
-                <DatePicker value="2023-05-04" modifiers='[{"type": "date_picker_style", "style": "automatic"}]'>Automatic</DatePicker>
-                <DatePicker value="2023-05-04" modifiers='[{"type": "date_picker_style", "style": "compact"}]'>Compact</DatePicker>
-                <DatePicker value="2023-05-04" modifiers='[{"type": "date_picker_style", "style": "graphical"}]'>Graphical</DatePicker>
-                <DatePicker value="2023-05-04" modifiers='[{"type": "date_picker_style", "style": "wheel"}]'>Wheel</DatePicker>
+                <DatePicker selection="2023-05-04" modifiers='[{"type": "date_picker_style", "style": "automatic"}]'>Automatic</DatePicker>
+                <DatePicker selection="2023-05-04" modifiers='[{"type": "date_picker_style", "style": "compact"}]'>Compact</DatePicker>
+                <DatePicker selection="2023-05-04" modifiers='[{"type": "date_picker_style", "style": "graphical"}]'>Graphical</DatePicker>
+                <DatePicker selection="2023-05-04" modifiers='[{"type": "date_picker_style", "style": "wheel"}]'>Wheel</DatePicker>
             </VStack>
             """#
         ) {
@@ -101,27 +101,27 @@ final class ControlsAndIndicatorsModifiersTests: XCTestCase {
         try assertMatch(
             #"""
             <VStack>
-                <Picker value="a" modifiers='[{"type": "picker_style", "style": "automatic"}]'>
+                <Picker selection="a" modifiers='[{"type": "picker_style", "style": "automatic"}]'>
                     <Text template="label">Automatic</Text>
                     <Text template="content" tag="a">a</Text>
                 </Picker>
-                <Picker value="a" modifiers='[{"type": "picker_style", "style": "inline"}]'>
+                <Picker selection="a" modifiers='[{"type": "picker_style", "style": "inline"}]'>
                     <Text template="label">Inline</Text>
                     <Text template="content" tag="a">a</Text>
                 </Picker>
-                <Picker value="a" modifiers='[{"type": "picker_style", "style": "menu"}]'>
+                <Picker selection="a" modifiers='[{"type": "picker_style", "style": "menu"}]'>
                     <Text template="label">Menu</Text>
                     <Text template="content" tag="a">a</Text>
                 </Picker>
-                <Picker value="a" modifiers='[{"type": "picker_style", "style": "navigation_link"}]'>
+                <Picker selection="a" modifiers='[{"type": "picker_style", "style": "navigation_link"}]'>
                     <Text template="label">Navigation Link</Text>
                     <Text template="content" tag="a">a</Text>
                 </Picker>
-                <Picker value="a" modifiers='[{"type": "picker_style", "style": "segmented"}]'>
+                <Picker selection="a" modifiers='[{"type": "picker_style", "style": "segmented"}]'>
                     <Text template="label">Segmented</Text>
                     <Text template="content" tag="a">a</Text>
                 </Picker>
-                <Picker value="a" modifiers='[{"type": "picker_style", "style": "wheel"}]'>
+                <Picker selection="a" modifiers='[{"type": "picker_style", "style": "wheel"}]'>
                     <Text template="label">Wheel</Text>
                     <Text template="content" tag="a">a</Text>
                 </Picker>

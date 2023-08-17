@@ -102,11 +102,11 @@ final class PickerTests: XCTestCase {
         try assertMatch(
             #"""
             <VStack>
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "compact"}]'>
+                <DatePicker selection="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "compact"}]'>
                     <Text>Pick a date</Text>
                 </DatePicker>
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "graphical"}]' />
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" displayed-components="date" modifiers='[{"type": "date_picker_style", "style": "wheel"}]' />
+                <DatePicker selection="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "graphical"}]' />
+                <DatePicker selection="\#(date.formatted(.elixirDateTime))" displayed-components="date" modifiers='[{"type": "date_picker_style", "style": "wheel"}]' />
             </VStack>
             """#) {
                 VStack {
