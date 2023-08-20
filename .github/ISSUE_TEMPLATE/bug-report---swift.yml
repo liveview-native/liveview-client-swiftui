@@ -9,7 +9,6 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report! Using this form will allow us to triage and respond to your issue more quickly. In some cases issues may not be device specific but to help us reproduce your problem giving us detailed information helps save time.
-  - type: 
   - type: textarea
     id: what-happened
     attributes:
