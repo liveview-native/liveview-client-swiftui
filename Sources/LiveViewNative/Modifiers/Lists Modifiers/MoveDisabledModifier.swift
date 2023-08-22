@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List>
-///     <Label modifiers={move_disabled(@native, is_disabled: true)}>
+///     <Label modifiers={move_disabled(true)}>
 ///         This label cannot be moved when list is editable
 ///     </Label>
 /// </List>

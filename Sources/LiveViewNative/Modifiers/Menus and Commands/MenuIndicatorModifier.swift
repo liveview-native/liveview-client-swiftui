@@ -10,7 +10,7 @@ import SwiftUI
 /// Specifies whether the indicator on a ``Menu`` should be visible.
 ///
 /// ```html
-/// <Menu modifiers={menu_style(@native, style: :button) |> menu_indicator(visibility: :hidden)}>
+/// <Menu modifiers={menu_style(:button) |> menu_indicator(visibility: :hidden)}>
 ///     <Text template={:label}>
 ///         Edit Actions
 ///     </Text>

@@ -12,10 +12,10 @@ import SwiftUI
 /// Use this modifier in the content of a ``SheetModifier``.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, on_dismiss: "dismiss", is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={sheet(content: :content, on_dismiss: "dismiss", is_presented: :show)}>
 ///   Present Sheet
 ///
-///   <VStack template={:content} modifiers={interactive_dismiss_disabled(@native)}>
+///   <VStack template={:content} modifiers={interactive_dismiss_disabled(true)}>
 ///     <Text>Hello, world!</Text>
 ///     <Button phx-click="toggle">Dismiss</Button>
 ///   </VStack>

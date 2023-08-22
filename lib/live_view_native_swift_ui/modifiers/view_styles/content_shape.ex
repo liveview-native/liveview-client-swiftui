@@ -9,14 +9,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.ContentShape do
     field :eo_fill, :boolean
   end
 
-  def params(shape, params) when is_list(params) do
-    with {:ok, _} <- ContentShapeKind.cast(shape) do
-      [{:kind, shape} | params]
-    else
-      _ ->
-        [{:shape, shape} | params]
-    end
-  end
+  def params(kind, shape, params) when is_list(params), do: [{:shape, shape}, {:kind, kind} | params]
   def params(params) do
     with {:ok, _} <- ContentShapeKind.cast(params) do
       [kind: params]

@@ -19,19 +19,19 @@ import SwiftUI
 /// Create a fixed frame with a `width` and/or `height`.
 ///
 /// ```html
-/// <Rectangle modifiers={frame(@native, width: 100, height: 50)} />
+/// <Rectangle modifiers={frame(width: 100, height: 50)} />
 /// ```
 ///
 /// A flexible frame will choose a size between a min and max.
 ///
 /// ```html
-/// <Rectangle modifiers={frame(@native, min_width: 0, ideal_width: 15, max_width: 50)} />
+/// <Rectangle modifiers={frame(min_width: 0, ideal_width: 15, max_width: 50)} />
 /// ```
 ///
 /// Use a very large `max_width` or `max_height` to make an element fill its parent.
 ///
 /// ```html
-/// <Rectangle modifiers={frame(@native, max_width: 99999, max_height: 99999)} />
+/// <Rectangle modifiers={frame(max_width: 99999, max_height: 99999)} />
 /// ```
 ///
 /// - Note: Fixed and flexible frame arguments cannot be mixed. Fixed frame arguments will take precedence.

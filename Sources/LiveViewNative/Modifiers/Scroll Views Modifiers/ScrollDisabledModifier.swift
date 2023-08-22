@@ -10,7 +10,7 @@ import SwiftUI
 /// Disables or enables scrolling in scrollable views.
 ///
 /// ```html
-/// <List modifiers={@native |> scroll_disabled(disabled: true)}>
+/// <List modifiers={scroll_disabled(true)}>
 ///     <Text>One</Text>
 ///     <Text>Two</Text>
 ///     <Text>Three</Text>

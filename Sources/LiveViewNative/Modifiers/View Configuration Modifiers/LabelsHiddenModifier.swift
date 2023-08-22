@@ -14,7 +14,7 @@ import SwiftUI
 ///
 /// ```html
 /// <Toggle
-///   modifiers={@native |> labels_hidden([])}
+///   modifiers={labels_hidden([])}
 ///   is-on="toggle"
 /// >
 ///   Labelled Toggle

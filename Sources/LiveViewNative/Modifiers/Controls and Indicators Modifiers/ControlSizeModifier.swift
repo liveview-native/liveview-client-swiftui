@@ -10,8 +10,8 @@ import SwiftUI
 /// Sets the size of controls within this view.
 ///
 /// ```html
-/// <Button modifiers={control_size(@native, size: :mini) |> button_style(style: :bordered_prominent)}>Mini</Button>
-/// <Button modifiers={control_size(@native, size: :large) |> button_style(style: :bordered_prominent)}>Regular</Button>
+/// <Button modifiers={control_size(:mini) |> button_style(:bordered_prominent)}>Mini</Button>
+/// <Button modifiers={control_size(:large) |> button_style(:bordered_prominent)}>Regular</Button>
 /// ```
 ///
 /// ## Arguments

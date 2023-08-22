@@ -12,8 +12,8 @@ import SwiftUI
 /// Use this modifier alongside the ``SearchSuggestionsModifier`` modifier to set the text or token completion for an element.
 ///
 /// ```html
-/// <Text modifiers={search_completion(@native, completion: "text completion")}>text completion</Text>
-/// <Text modifiers={search_completion(@native, token: "custom")}>Custom Token</Text>
+/// <Text modifiers={search_completion(completion: "text completion")}>text completion</Text>
+/// <Text modifiers={search_completion(token: "custom")}>Custom Token</Text>
 /// ```
 ///
 /// ## Arguments

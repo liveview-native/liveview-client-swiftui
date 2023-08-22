@@ -12,7 +12,7 @@ import SwiftUI
 /// Use this modifier to enable selection of non-editable ``Text`` elements.
 ///
 /// ```html
-/// <Text modifiers={text_selection(@native, selectable: true)}>
+/// <Text modifiers={text_selection(true)}>
 ///     Hello, world!
 /// </Text>
 /// ```

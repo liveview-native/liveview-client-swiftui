@@ -8,6 +8,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.PrefersDefaultFocus do
     field :namespace, Namespace
   end
 
-  # def params(prefers_default_focus \\ true, [in: namespace]), do: [prefers_default_focus: prefers_default_focus, namespace: namespace]
+  def params(prefers_default_focus, [in: namespace]), do: [prefers_default_focus: prefers_default_focus, namespace: namespace]
+  def params([in: namespace]), do: [namespace: namespace]
   def params(params), do: params
 end

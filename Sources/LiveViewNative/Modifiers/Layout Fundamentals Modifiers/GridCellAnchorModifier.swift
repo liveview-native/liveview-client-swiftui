@@ -14,7 +14,7 @@ import SwiftUI
 /// ```html
 /// <Grid>
 ///     <GridRow>
-///         <Text modifiers={@native |> grid_cell_anchor(anchor: {0.5, 1})}>
+///         <Text modifiers={grid_cell_anchor({0.5, 1})}>
 ///             Customized cell anchor
 ///         </Text>
 ///     </GridRow>

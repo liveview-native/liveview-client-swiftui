@@ -10,7 +10,7 @@ import SwiftUI
 /// Enables/disables antialiasing.
 ///
 /// ```html
-/// <Image system-name="heart.fill" modifiers={antialiased(@native, is_active: true)} />
+/// <Image system-name="heart.fill" modifiers={antialiased(true)} />
 /// ```
 ///
 /// ## Arguments

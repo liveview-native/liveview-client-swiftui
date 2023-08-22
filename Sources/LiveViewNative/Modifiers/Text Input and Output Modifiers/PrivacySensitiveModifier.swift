@@ -10,7 +10,7 @@ import SwiftUI
 /// Marks the view as containing sensitive, private user data.
 ///
 /// ```html
-/// <Text modifiers={privacy_sensitive(@native, sensitive: true)}>Private Information</Text>
+/// <Text modifiers={privacy_sensitive(true)}>Private Information</Text>
 /// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)

@@ -17,15 +17,14 @@ import SwiftUI
 ///     <HStack
 ///       id={@item.id}
 ///       modifiers={
-///         @native
-///         |> swipe_actions(edge: :trailing, allows_full_swipe: false, content: :delete)
+///         swipe_actions(edge: :trailing, allows_full_swipe: false, content: :delete)
 ///         |> swipe_actions(edge: :trailing, allows_full_swipe: false, content: :flag)
 ///       }>
 ///       <Text><%= item %></Text>
 ///       <Button template={:flag} phx-click="flag_item" phx-value-item-id={@item.id}>
 ///         <Image system-name="flag" />
 ///       </Button>
-///       <Button template={:delete} phx-click="delete_item" phx-value-item-id={@item.id} modifiers={tint(@native, color: :red)}>
+///       <Button template={:delete} phx-click="delete_item" phx-value-item-id={@item.id} modifiers={tint(:red)}>
 ///         <Image system-name="trash" />
 ///       </Button>
 ///     </HStack>

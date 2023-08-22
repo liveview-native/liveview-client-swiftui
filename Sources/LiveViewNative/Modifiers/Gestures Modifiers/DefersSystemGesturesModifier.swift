@@ -13,9 +13,8 @@ import SwiftUI
 ///
 /// ```html
 /// <Rectangle modifiers={
-///     @native
-///         |> gesture(...)
-///         |> defers_system_gestures(edges: :vertical)
+///   gesture(...)
+///     |> defers_system_gestures(on: :vertical)
 /// } />
 /// ```
 ///

@@ -16,15 +16,14 @@ import SwiftUI
 /// ```html
 /// <List
 ///     modifiers={
-///         @native
-///             |> searchable(...)
-///             |> search_suggestions(suggestions: :my_suggestions)
+///         searchable(...)
+///             |> search_suggestions(:my_suggestions)
 ///     }
 /// >
 ///     ...
 ///     <Group template={:my_suggestions}>
-///         <Text modifiers={search_completion(@native, completion: "text completion")}>text completion</Text>
-///         <Text modifiers={search_completion(@native, token: "Custom")}>Custom Token</Text>
+///         <Text modifiers={search_completion(completion: "text completion")}>text completion</Text>
+///         <Text modifiers={search_completion(token: "Custom")}>Custom Token</Text>
 ///     </Group>
 /// <List>
 /// ```

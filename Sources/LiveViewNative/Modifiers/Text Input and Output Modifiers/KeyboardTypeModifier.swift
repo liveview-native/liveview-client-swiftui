@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the keyboard type for this view.
 ///
 /// ```html
-/// <TextField modifiers={keyboard_type(@native, keyboard_type: :email_address)}>
+/// <TextField modifiers={keyboard_type(:email_address)}>
 ///     Email
 /// </TextField>
 /// ```

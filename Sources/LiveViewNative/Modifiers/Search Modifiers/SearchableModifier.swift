@@ -12,7 +12,7 @@ import SwiftUI
 /// Use a ``ChangeTracked`` to synchronize the query.
 ///
 /// ```html
-/// <List modifiers={searchable(@native, text: @query, change: "search-changed")}>
+/// <List modifiers={searchable(text: @query, change: "search-changed")}>
 ///     ...
 /// </List>
 /// ```
@@ -39,7 +39,7 @@ import SwiftUI
 /// ```html
 /// <List
 ///     modifiers={
-///         @native |> searchable(
+///         searchable(
 ///             text: :query,
 ///             tokens: :my_tokens,
 ///             suggested_tokens: ["cats", "dogs"]

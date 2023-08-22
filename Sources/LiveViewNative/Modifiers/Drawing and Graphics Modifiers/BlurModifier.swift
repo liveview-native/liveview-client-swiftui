@@ -12,7 +12,7 @@ import SwiftUI
 /// Set the ``radius`` to control the strength of the blur.
 ///
 /// ```html
-/// <Text modifiers={blur(@native, radius: 2)}>Hello, world!</Text>
+/// <Text modifiers={blur(radius: 2)}>Hello, world!</Text>
 /// ```
 ///
 /// ## Arguments

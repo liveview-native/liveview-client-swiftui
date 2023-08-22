@@ -14,7 +14,7 @@ import SwiftUI
 /// Optionally provide a ``LiveViewNative/SwiftUI/StrokeStyle`` to configure the stroke.
 ///
 /// ```html
-/// <Circle modifiers={stroke(@native, content: {:color, :red}, style: [line_width: 10])}>
+/// <Circle modifiers={stroke({:color, :red}, style: [line_width: 10])}>
 /// ```
 ///
 /// - Note: This modifier applies a stroke to the edges of the ``Shape``.

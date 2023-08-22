@@ -15,12 +15,12 @@ import SwiftUI
 /// Apply this modifier to the modal presentation's content.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={popover(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={popover(content: :content, is_presented: :show)}>
 ///   Present Popover
 ///   <Text
 ///     template={:content}
 ///     modifiers={
-///       @native |> presentation_compact_adaptation(
+///       presentation_compact_adaptation(
 ///         horizontal: :popover,
 ///         vertical: :full_screen_cover
 ///       )

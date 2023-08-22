@@ -21,7 +21,7 @@ import SwiftUI
 /// A customizable toolbar is a toolbar modifier with an `id`.
 ///
 /// ```elixir
-/// toolbar(@native, id: "unique-toolbar-id", content: :my_toolbar_content)
+/// toolbar(id: "unique-toolbar-id", content: :my_toolbar_content)
 /// ```
 ///
 /// - Precondition: All items in a customizable toolbar *must* have an `id` attribute.

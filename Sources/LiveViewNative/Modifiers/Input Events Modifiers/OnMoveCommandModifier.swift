@@ -32,7 +32,7 @@ import SwiftUI
 /// Pass the name of this event to the ``action`` argument.
 ///
 /// ```html
-/// <Slider value={@value} modifiers={on_move_command(@native, action: "adjust")}>
+/// <Slider value={@value} modifiers={on_move_command(perform: "adjust")}>
 ///     Value
 /// </Slider>
 /// ```
@@ -40,7 +40,7 @@ import SwiftUI
 /// Now when the slider is focused, the left/right keys can be used to adjust the value.
 ///
 /// ## Arguments
-/// * ``action``
+/// * ``perform``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

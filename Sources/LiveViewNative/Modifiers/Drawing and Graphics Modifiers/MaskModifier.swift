@@ -12,13 +12,12 @@ import SwiftUI
 /// ```html
 /// <Image system-name="envelope.badge.fill"
 ///     modifiers={
-///         @native
-///         |> foreground_color(color: :blue)
-///         |> font(font: {:system, :large_title})
+///         foreground_color(:blue)
+///         |> font({:system, :large_title})
 ///         |> mask(alignment: :center, mask: :mask)
 ///     }
 /// >
-///     <Rectangle template={:mask} modifiers={@native |> opacity(opacity: 0.1)} />
+///     <Rectangle template={:mask} modifiers={opacity(0.1)} />
 /// </Image>
 /// ```
 ///

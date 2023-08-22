@@ -10,7 +10,7 @@ import SwiftUI
 /// Configures the view’s title for purposes of navigation, using a string.
 ///
 /// ```html
-/// <VStack modifiers={navigation_title(@native, title: "Navigation Title")}>
+/// <VStack modifiers={navigation_title("Navigation Title")}>
 ///     <Text>Top</Text>
 ///     <Text>Bottom</Text>
 /// </VStack>

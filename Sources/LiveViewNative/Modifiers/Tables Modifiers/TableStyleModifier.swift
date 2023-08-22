@@ -12,7 +12,7 @@ import SwiftUI
 /// See ``TableStyle`` for a list of possible values.
 ///
 /// ```html
-/// <Table modifiers={@native |> table_style(style: :inset)}
+/// <Table modifiers={table_style(:inset)}
 ///     ...
 /// </Table>
 /// ```

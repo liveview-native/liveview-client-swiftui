@@ -10,7 +10,7 @@ import SwiftUI
 /// Fires an event when this view disappears.
 ///
 /// ```html
-/// <Text modifiers={on_appear(@native, perform: "appear")}>Option A</Text>
+/// <Text modifiers={on_appear(perform: "appear")}>Option A</Text>
 /// ```
 ///
 /// ## Arguments

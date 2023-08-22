@@ -10,7 +10,7 @@ import SwiftUI
 /// Configures the view’s subtitle for purposes of navigation.
 ///
 /// ```html
-/// <VStack modifiers={navigation_subtitle(@native, subtitle: "Subtitle Label")}>
+/// <VStack modifiers={navigation_subtitle("Subtitle Label")}>
 ///     <Text>Top</Text>
 ///     <Text>Bottom</Text>
 /// </VStack>

@@ -12,7 +12,7 @@ import SwiftUI
 /// Pass an ``angle`` in degrees or radians to rotate the element.
 ///
 /// ```html
-/// <Text modifiers={rotation_effect(@native, angle: {:degrees, 22})}>
+/// <Text modifiers={rotation_effect({:degrees, 22})}>
 ///     Rotation by passing an angle in degrees
 /// </Text>
 /// ```

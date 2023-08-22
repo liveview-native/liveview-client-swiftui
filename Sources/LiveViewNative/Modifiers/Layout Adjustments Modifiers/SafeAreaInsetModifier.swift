@@ -15,7 +15,7 @@ import SwiftUI
 /// Nested content is referenced by its namespace using the ``content`` argument.
 ///
 /// ```html
-/// <List modifiers={safe_area_inset(@native, edge: :bottom, content: :bottom_bar)}>
+/// <List modifiers={safe_area_inset(edge: :bottom, content: :bottom_bar)}>
 ///     ...
 ///     <GroupBox template={:bottom_bar} id="bottom_bar">
 ///         <HStack template={:label}>

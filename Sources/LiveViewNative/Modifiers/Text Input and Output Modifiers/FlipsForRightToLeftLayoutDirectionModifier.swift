@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets whether this view mirrors its contents horizontally when the layout direction is right-to-left.
 ///
 /// ```html
-/// <Text modifiers={flips_for_right_to_left_layout_direction(@native, enabled: true)}>
+/// <Text modifiers={flips_for_right_to_left_layout_direction(true)}>
 ///     Hello, world!
 /// </Text>
 /// ```

@@ -12,8 +12,8 @@ import SwiftUI
 /// The effect can be toggled with the [`is_active`](doc:BoldModifier/isActive) argument.
 ///
 /// ```html
-/// <Text modifiers={bold(@native)}>Hello, world!</Text>
-/// <Text modifiers={bold(@native, is_active: false)}>Hello, world!</Text>
+/// <Text modifiers={bold([])}>Hello, world!</Text>
+/// <Text modifiers={bold(false)}>Hello, world!</Text>
 /// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)

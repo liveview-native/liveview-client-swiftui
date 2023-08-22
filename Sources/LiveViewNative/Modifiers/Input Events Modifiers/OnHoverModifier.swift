@@ -28,11 +28,11 @@ import SwiftUI
 /// Pass the name of this event to the ``action`` argument.
 ///
 /// ```html
-/// <Text modifiers={on_hover(@native, action: "hover")}>Hover Here</Text>
+/// <Text modifiers={on_hover(perform: "hover")}>Hover Here</Text>
 /// ```
 ///
 /// ## Arguments
-/// * ``action``
+/// * ``perform``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

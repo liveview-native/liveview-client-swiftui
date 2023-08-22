@@ -12,7 +12,7 @@ import SwiftUI
 /// The line can be customized with the ``pattern`` and ``color`` arguments.
 ///
 /// ```html
-/// <Text modifiers={underline(@native, color: :red, pattern: :dash_dot)}>
+/// <Text modifiers={underline(color: :red, pattern: :dash_dot)}>
 ///     Hello, world!
 /// </Text>
 /// ```

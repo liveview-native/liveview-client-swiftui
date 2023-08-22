@@ -12,7 +12,7 @@ import SwiftUI
 /// Specify a ``name`` for the coordinate space.
 ///
 /// ```html
-/// <VStack modifiers={coordinate_space(@native, name: "stack")}>
+/// <VStack modifiers={coordinate_space("stack")}>
 ///     ...
 /// </VStack>
 /// ```

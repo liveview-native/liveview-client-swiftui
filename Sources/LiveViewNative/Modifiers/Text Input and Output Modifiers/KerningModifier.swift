@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the spacing, or kerning, between characters for the text in this view.
 ///
 /// ```html
-/// <Text modifiers={kerning(@native, kerning: 0.2)}>
+/// <Text modifiers={kerning(0.2)}>
 ///     Hello, world!
 /// </Text>
 /// ```

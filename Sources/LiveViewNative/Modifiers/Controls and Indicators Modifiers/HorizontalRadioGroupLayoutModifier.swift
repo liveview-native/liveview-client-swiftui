@@ -10,7 +10,7 @@ import SwiftUI
 /// Changes radio-group style ``Picker``s to lay out horizontally.
 ///
 /// ```html
-/// <Picker modifiers={picker_style(@native, style: :radio_group) |> horizontal_radio_group_layout()}>
+/// <Picker modifiers={picker_style(:radio_group) |> horizontal_radio_group_layout()}>
 ///     ...
 /// </Picker>
 /// ```

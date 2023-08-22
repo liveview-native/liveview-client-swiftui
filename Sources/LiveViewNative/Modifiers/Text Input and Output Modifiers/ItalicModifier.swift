@@ -12,8 +12,8 @@ import SwiftUI
 /// The effect can be toggled with the [`is_active`](doc:ItalicModifier/isActive) argument.
 ///
 /// ```html
-/// <Text modifiers={italic(@native)}>Hello, world!</Text>
-/// <Text modifiers={italic(@native, is_active: false)}>Hello, world!</Text>
+/// <Text modifiers={italic([])}>Hello, world!</Text>
+/// <Text modifiers={italic(false)}>Hello, world!</Text>
 /// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)

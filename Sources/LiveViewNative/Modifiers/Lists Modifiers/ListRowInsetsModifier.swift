@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List>
-///     <Text id="item" modifiers={list_row_insets(@native, insets: [top: 0, leading: 25, bottom: 0, trailing: 0])}>
+///     <Text id="item" modifiers={list_row_insets([top: 0, leading: 25, bottom: 0, trailing: 0])}>
 ///         Item
 ///     </Text>
 /// </List>

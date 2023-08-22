@@ -12,7 +12,7 @@ import SwiftUI
 /// See ``ListStyle`` for a list of possible values.
 ///
 /// ```html
-/// <List modifiers={list_style(@native, style: :inset_grouped)}>
+/// <List modifiers={list_style(:inset_grouped)}>
 ///     ...
 /// </List>
 /// ```

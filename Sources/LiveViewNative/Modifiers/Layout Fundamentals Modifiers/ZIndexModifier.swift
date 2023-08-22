@@ -11,8 +11,8 @@ import SwiftUI
 ///
 /// ```html
 /// <VStack>
-///    <Text modifiers={z_index(@native, value: 2.0)}>This element will be above</Text>
-///    <Text modifiers={z_index(@native, value: 1.0)}>This element will be below</Text>
+///    <Text modifiers={z_index(2.0)}>This element will be above</Text>
+///    <Text modifiers={z_index(1.0)}>This element will be below</Text>
 /// </VStack>
 ///
 /// ## Arguments

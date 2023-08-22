@@ -12,7 +12,7 @@ import SwiftUI
 /// You can use groups to apply modifiers to multiple elements without code duplication.
 ///
 /// ```html
-/// <Group modifiers={@native |> tint(color: :orange)}>
+/// <Group modifiers={tint(:orange)}>
 ///     <Button>Orange Button</Button>
 ///     <Toggle>Orange Toggle</Toggle>
 ///     <Slider>Orange Slider</Slider>

@@ -12,7 +12,7 @@ import SwiftUI
 /// While this modifier defaults to false when used, the typical usage of SwiftUI is to not call this modifier and allow showing of the back button.
 ///
 /// ```html
-/// <VStack modifiers={navigation_bar_back_button_hidden(@native, hides_back_button: true)}>
+/// <VStack modifiers={navigation_bar_back_button_hidden(true)}>
 ///     <Text>Top</Text>
 ///     <Text>Bottom</Text>
 /// </VStack>

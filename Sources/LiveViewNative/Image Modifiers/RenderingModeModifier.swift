@@ -13,8 +13,8 @@ import SwiftUI
 /// The `template` mode renders nontransparent pixels as the foreground color.
 ///
 /// ```html
-/// <Image name="dot_green" modifiers={rendering_mode(@native, mode: :original)} />
-/// <Image name="dot_green" modifiers={rendering_mode(@native, mode: :template)} />
+/// <Image name="dot_green" modifiers={rendering_mode(:original)} />
+/// <Image name="dot_green" modifiers={rendering_mode(:template)} />
 /// ```
 ///
 /// This modifier can also be used to render multicolor SF Symbols.
@@ -23,7 +23,7 @@ import SwiftUI
 /// ```html
 /// <Image
 ///   system-name="person.crop.circle.badge.plus"
-///   modifiers={rendering_mode(@native, mode: :original)}
+///   modifiers={rendering_mode(:original)}
 /// />
 /// ```
 ///

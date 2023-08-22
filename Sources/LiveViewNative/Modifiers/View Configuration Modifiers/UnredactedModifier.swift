@@ -10,7 +10,7 @@ import SwiftUI
 /// Removes any reason to apply a redaction to this view hierarchy.
 ///
 /// ```html
-/// <VStack modifiers={unredacted(@native)}>
+/// <VStack modifiers={unredacted([])}>
 ///   ...
 /// </VStack>
 /// ```

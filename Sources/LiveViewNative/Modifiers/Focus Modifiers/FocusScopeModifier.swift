@@ -13,9 +13,9 @@ import SwiftUI
 ///
 /// ```html
 /// <NamespaceContext id={:my_namespace}>
-///     <VStack modifiers={focus_scope(@native, namespace: :my_namespace)}>
+///     <VStack modifiers={focus_scope(:my_namespace)}>
 ///         <TextField>Username</TextField>
-///         <TextField modifiers={prefers_default_focus(@native, namespace: :my_namespace)}>Password</TextField>
+///         <TextField modifiers={prefers_default_focus(in: :my_namespace)}>Password</TextField>
 ///     </VStack>
 /// </NamespaceContext>
 /// ```

@@ -12,7 +12,7 @@ import SwiftUI
 /// Help text is used as the element's accessibility hint, and displayed as a tooltip on macOS.
 ///
 /// ```html
-/// <Button modifiers={@native |> hint(text: "Performs a cool action when clicked")}>
+/// <Button modifiers={hint("Performs a cool action when clicked")}>
 ///   Click Me
 /// </Button>
 /// ```

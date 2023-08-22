@@ -13,11 +13,10 @@ import SwiftUI
 ///
 /// ```html
 /// <TabView
-///     modifiers={
-///         @native
-///             |> tab_view_style(style: :page)
-///             |> index_view_style(style: :page_always)
-///     }
+///   modifiers={
+///     tab_view_style(:page)
+///     |> index_view_style(:page_always)
+///   }
 /// >
 ///     ...
 /// </TabView>

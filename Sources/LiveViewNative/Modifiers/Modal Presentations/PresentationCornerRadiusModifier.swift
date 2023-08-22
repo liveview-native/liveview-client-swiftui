@@ -12,10 +12,10 @@ import SwiftUI
 /// Use this modifier in the content of a ``SheetModifier``.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={sheet(content: :content, is_presented: :show)}>
 ///   Present Sheet
 ///
-///   <VStack template={:content} modifiers={presentation_corner_radius(@native, radius: 50)}>
+///   <VStack template={:content} modifiers={presentation_corner_radius(50)}>
 ///     <Text>Hello, world!</Text>
 ///     <Button phx-click="toggle">Dismiss</Button>
 ///   </VStack>

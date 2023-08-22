@@ -56,7 +56,7 @@ import LiveViewNativeCore
 /// Use text modifiers to customize the appearance of text.
 ///
 /// ```html
-/// <Text modifiers={@native |> font(font: {:system, :large_title}) |> bold()}>
+/// <Text modifiers={font({:system, :large_title}) |> bold()}>
 ///     Hello, world!
 /// </Text>
 /// ```
@@ -87,7 +87,7 @@ import LiveViewNativeCore
 ///
 /// ```html
 /// <Text>
-///     <Image system-name="person.crop.circle.fill" /><Text value="Doe John" format="name" modifiers={@native |> foreground_color(color: :blue) |> bold()} />
+///     <Image system-name="person.crop.circle.fill" /><Text value="Doe John" format="name" modifiers={foreground_color(:blue) |> bold()} />
 ///     <Text verbatim={"\n"} />
 ///     Check out this thing I made: <Link destination="mysite.com">mysite.com</Link>
 /// </Text>

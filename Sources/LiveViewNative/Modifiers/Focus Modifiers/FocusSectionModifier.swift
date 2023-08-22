@@ -19,7 +19,7 @@ import SwiftUI
 ///
 /// ```html
 /// <HStack>
-///     <VStack modifiers={focus_section(@native, [])}>
+///     <VStack modifiers={focus_section([])}>
 ///         <Button>A</Button>
 ///         <Button>B</Button>
 ///         <Button>C</Button>

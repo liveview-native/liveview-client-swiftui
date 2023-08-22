@@ -56,7 +56,7 @@ import SwiftUI
 /// :my_shape
 /// ```
 /// ```html
-/// <Rectangle template={:my_shape} modifiers={rotation(@native, angle: {:degrees, 45})} />
+/// <Rectangle template={:my_shape} modifiers={rotation({:degrees, 45})} />
 /// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)

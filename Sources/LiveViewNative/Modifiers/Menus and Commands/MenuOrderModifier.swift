@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the order of items in a menu.
 ///
 /// ```html
-/// <Menu modifiers={menu_order(@native, order: :fixed) |> frame(height: 500, alignment: :bottom)}>
+/// <Menu modifiers={menu_order(:fixed) |> frame(height: 500, alignment: :bottom)}>
 ///     <Text template={:label}>
 ///         Edit Actions
 ///     </Text>

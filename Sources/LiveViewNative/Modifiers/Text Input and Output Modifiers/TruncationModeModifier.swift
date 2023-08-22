@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the truncation mode for lines of text that are too long to fit in the available space.
 ///
 /// ```html
-/// <Text modifiers={truncation_mode(@native, mode: :tail)}>
+/// <Text modifiers={truncation_mode(:tail)}>
 ///   This text is truncated at the end if it overflows
 /// </Text>
 /// ```

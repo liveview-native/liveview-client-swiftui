@@ -13,7 +13,7 @@ import SwiftUI
 /// For example, we can make the navigation bar use the system red color.
 ///
 /// ```html
-/// <Text modifiers={toolbar_background(@native, style: {:color, :red}, bars: :navigation_bar)}>
+/// <Text modifiers={toolbar_background({:color, :red}, bars: :navigation_bar)}>
 ///     ...
 /// </Text>
 /// ```
@@ -21,7 +21,7 @@ import SwiftUI
 /// Use the ``visibility`` argument to hide or show a toolbar background.
 ///
 /// ```html
-/// <Text modifiers={toolbar_background(@native, visibility: :hidden, bars: :navigation_bar)}>
+/// <Text modifiers={toolbar_background(:hidden, bars: :navigation_bar)}>
 ///     ...
 /// </Text>
 /// ```

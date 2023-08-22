@@ -10,7 +10,7 @@ import SwiftUI
 /// Scales this view to fit its parent, maintaining this view’s aspect ratio.
 ///
 /// ```html
-/// <Text modifiers={scaled_to_fit(@native)}>
+/// <Text modifiers={scaled_to_fit([])}>
 ///   This view will fit its parent.
 /// </Text>
 /// ```

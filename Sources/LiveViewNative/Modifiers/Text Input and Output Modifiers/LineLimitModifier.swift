@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the maximum number of lines that text can occupy in this view.
 ///
 /// ```html
-/// <Text modifiers={line_limit(@native, number: 2)}>Hello, world!</Text>
+/// <Text modifiers={line_limit(2)}>Hello, world!</Text>
 /// ```
 ///
 /// ## Arguments

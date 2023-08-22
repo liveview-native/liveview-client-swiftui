@@ -11,7 +11,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List>
-///     <Label modifiers={delete_disabled(@native, is_disabled: true)}>
+///     <Label modifiers={delete_disabled(true)}>
 ///         This label cannot be deleted when list is editable
 ///     </Label>
 /// </List>

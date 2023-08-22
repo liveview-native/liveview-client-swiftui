@@ -12,7 +12,7 @@ import SwiftUI
 /// Optionally provide a ``LiveViewNative/SwiftUI/FillStyle`` to configure how the shape should be drawn.
 ///
 /// ```html
-/// <Circle modifiers={fill(@native, content: {:color, :red}, style: [antialiased: false])} />
+/// <Circle modifiers={fill({:color, :red}, style: [antialiased: false])} />
 /// ```
 ///
 /// ## Arguments

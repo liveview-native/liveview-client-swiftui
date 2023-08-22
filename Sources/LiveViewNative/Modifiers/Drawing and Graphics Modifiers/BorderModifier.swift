@@ -10,7 +10,7 @@ import SwiftUI
 /// Applies a border to any element.
 ///
 /// ```html
-/// <Text modifiers={border(@native, content: {:color, :purple}, width: 4)}>
+/// <Text modifiers={border({:color, :purple}, width: 4)}>
 ///   Purple border inside the view bounds.
 /// </Text>
 /// ```

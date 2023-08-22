@@ -95,7 +95,7 @@ import SwiftUI
 /// The arguments to this transition should be modifier stacks.
 ///
 /// ```elixir
-/// {:modifier, [active: foreground_style(@native, primary: {:color, :red}), identity: foreground_style(@native, primary: {:color, :green})]}
+/// {:modifier, [active: foreground_style({:color, :red}), identity: foreground_style({:color, :green})]}
 /// ```
 ///
 /// ### :symbol_effect

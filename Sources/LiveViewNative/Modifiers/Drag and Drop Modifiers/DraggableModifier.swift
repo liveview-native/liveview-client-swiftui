@@ -10,8 +10,8 @@ import SwiftUI
 /// Activates this view as the source of a drag and drop operation.
 ///
 /// ```html
-/// <Text modifiers={draggable(@native, payload: "ABC")}>ABC</Text>
-/// <Text modifiers={draggable(@native, payload: "ABC", preview: :my_preview)}>
+/// <Text modifiers={draggable("ABC")}>ABC</Text>
+/// <Text modifiers={draggable("ABC", preview: :my_preview)}>
 ///     ABC
 ///     <Image system-name="heart.fill" template={:my_preview}>
 /// </Text>

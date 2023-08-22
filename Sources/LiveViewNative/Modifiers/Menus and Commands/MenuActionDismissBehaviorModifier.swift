@@ -10,7 +10,7 @@ import SwiftUI
 /// Controls whether a menu is dismissed automatically after an action is performed.
 ///
 /// ```html
-/// <Menu modifiers={menu_action_dismiss_behavior(@native, behavior: :disabled)}>
+/// <Menu modifiers={menu_action_dismiss_behavior(:disabled)}>
 ///     <Text template={:label}>
 ///         Edit Actions
 ///     </Text>

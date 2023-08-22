@@ -12,7 +12,7 @@ import SwiftUI
 /// The offset will be applied to any child ``Text`` element.
 /// 
 /// ```html
-/// <Text modifiers={baseline_offset(@native, offset: 10)}
+/// <Text modifiers={baseline_offset(10)}
 /// ```
 /// 
 /// ## Arguments

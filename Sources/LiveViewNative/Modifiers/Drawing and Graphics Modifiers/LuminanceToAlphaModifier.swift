@@ -15,14 +15,13 @@ import SwiftUI
 /// <Image
 ///     system-name="heart.fill"
 ///     modifiers={
-///         @native
-///             |> background(alignment: :center, content: :heart_bg)
-///             |> foreground_color(color: :red)
+///         background(alignment: :center, content: :heart_bg)
+///             |> foreground_color(:red)
 ///             |> luminance_to_alpha()
 ///     }
 /// >
 ///     <background:heart_bg>
-///         <Circle modifiers={@native |> frame(width: 32, height: 32) |> foreground_color(color: :red)} />
+///         <Circle modifiers={frame(width: 32, height: 32) |> foreground_color(:red)} />
 ///     </background:heart_bg>
 /// </Image>
 /// ```

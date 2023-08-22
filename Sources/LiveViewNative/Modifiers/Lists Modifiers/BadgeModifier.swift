@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List>
-///   <Text id="a" modifiers={@native |> badge(label: "Active")}>
+///   <Text id="a" modifiers={badge("Active")}>
 ///     Server A
 ///   </Text>
 ///   ...
@@ -24,7 +24,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List>
-///   <Text id="a" modifiers={@native |> badge(count: 3)}>
+///   <Text id="a" modifiers={badge(3)}>
 ///     Server A
 ///   </Text>
 ///   ...
@@ -37,7 +37,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List>
-///   <Text id="a" modifiers={@native |> badge(content: :error)}>
+///   <Text id="a" modifiers={badge(content: :error)}>
 ///     Server A
 ///     <Text template={:error} modifiers={foreground_color(:red)}>
 ///       Down

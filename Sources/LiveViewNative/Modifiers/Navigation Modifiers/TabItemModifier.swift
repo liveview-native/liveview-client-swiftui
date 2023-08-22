@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```html
 /// <TabView>
-///     <Rectangle modifiers={tab_item(@native, label: :my_label}>
+///     <Rectangle modifiers={tab_item(:my_label)}>
 ///         <Group template={:my_label}>
 ///             <Image system-name="person.crop.circle.fill" />
 ///             <Text>Profile</Text>

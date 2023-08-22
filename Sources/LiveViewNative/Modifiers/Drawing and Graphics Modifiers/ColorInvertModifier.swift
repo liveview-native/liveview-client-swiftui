@@ -10,7 +10,7 @@ import SwiftUI
 /// Inverts the colors in this view.
 ///
 /// ```html
-/// <Circle modifiers={@native |> foreground_style(primary: {:color, :red}) |> color_invert()} />
+/// <Circle modifiers={foreground_style({:color, :red}) |> color_invert()} />
 /// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)
