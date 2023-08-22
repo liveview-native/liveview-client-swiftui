@@ -6,4 +6,13 @@ defmodule LiveViewNativeSwiftUi.Modifiers.ProjectionEffect do
   modifier_schema "projection_effect" do
     field :transform, ProjectionTransform
   end
+
+  def params(params) do
+    with {:ok, _} <- ProjectionTransform.cast(params) do
+      [transform: params]
+    else
+      _ ->
+        params
+    end
+  end
 end
