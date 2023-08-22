@@ -10,4 +10,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.SearchScopes do
 
     change_event()
   end
+
+  def params(active, params) when is_list(params), do: [{:active, active} | params]
+  def params(params), do: params
 end

@@ -1,7 +1,8 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.Sheet do
   use LiveViewNativePlatform.Modifier
 
-  alias LiveViewNativeSwiftUi.Types.{Event, KeyName}
+  alias LiveViewNativeSwiftUi.Types.KeyName
+  alias LiveViewNativePlatform.Modifier.Types.Event
 
   modifier_schema "sheet" do
     field(:is_presented, :boolean)

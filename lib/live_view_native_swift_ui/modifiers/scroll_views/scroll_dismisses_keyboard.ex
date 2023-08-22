@@ -9,4 +9,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.ScrollDismissesKeyboard do
         never
     )a
   end
+
+  def params(mode) when is_atom(mode) and not is_boolean(mode) and not is_nil(mode), do: [mode: mode]
+  def params(params), do: params
 end

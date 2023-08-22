@@ -14,4 +14,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.ConfirmationDialog do
 
     change_event()
   end
+
+  def params(title, params) when is_binary(title) and is_list(params), do: [{:title, title} | params]
+  def params(params), do: params
 end
