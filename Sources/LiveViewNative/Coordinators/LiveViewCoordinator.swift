@@ -242,6 +242,14 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 try! self.handleDiff(payload: message.payload, baseURL: self.url)
             }
         }
+        channel.on("live_redirect") { [weak self] message in
+            Task {
+                guard let self,
+                      let redirect = LiveRedirect(from: message.payload, relativeTo: self.url)
+                else { return }
+                try await self.session.redirect(redirect)
+            }
+        }
         channel.on("phx_close") { [weak self, weak channel] message in
             Task { @MainActor in
                 guard channel === self?.channel else { return }
