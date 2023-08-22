@@ -8,4 +8,14 @@ defmodule LiveViewNativeSwiftUi.Modifiers.RotationEffect do
     field :angle, Angle
     field :anchor, UnitPoint
   end
+
+  def params(angle, [anchor: anchor]), do: [angle: angle, anchor: anchor]
+  def params(params) do
+    with {:ok, _} <- Angle.cast(params) do
+      [angle: params, anchor: :center]
+    else
+      _ ->
+        params
+    end
+  end
 end

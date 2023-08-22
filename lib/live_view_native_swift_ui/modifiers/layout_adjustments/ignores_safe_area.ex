@@ -7,5 +7,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.IgnoresSafeArea do
     field :regions, Ecto.Enum, values: ~w(all container keyboard)a, default: :all
     field :edges, EdgeSet
   end
-end
 
+  def params(regions, [edges: edges]), do: [regions: regions, edges: edges]
+  def params(params), do: params
+end

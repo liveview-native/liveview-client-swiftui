@@ -46,24 +46,24 @@ struct OnDeleteCommandModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Event private var action: Event.EventHandler
+    @Event private var perform: Event.EventHandler
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._action = try container.decode(Event.self, forKey: .action)
+        self._perform = try container.decode(Event.self, forKey: .perform)
     }
 
     func body(content: Content) -> some View {
         content
             #if os(macOS)
             .onDeleteCommand {
-                action()
+                perform()
             }
             #endif
     }
 
     enum CodingKeys: String, CodingKey {
-        case action
+        case perform
     }
 }

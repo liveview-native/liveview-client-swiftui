@@ -1,7 +1,7 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.KeyboardShortcut do
   use LiveViewNativePlatform.Modifier
 
-  alias LiveViewNativeSwiftUi.Types.EventModifier
+  alias LiveViewNativePlatform.Types.EventModifier
   alias LiveViewNativeSwiftUi.Types.KeyEquivalent
 
   modifier_schema "keyboard_shortcut" do

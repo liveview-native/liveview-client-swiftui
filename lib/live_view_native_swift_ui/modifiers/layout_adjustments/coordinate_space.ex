@@ -4,4 +4,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.CoordinateSpace do
   modifier_schema "coordinate_space" do
     field :name, :string
   end
+
+  def params(name) when is_binary(name), do: [name: name]
+  def params(params), do: params
 end
