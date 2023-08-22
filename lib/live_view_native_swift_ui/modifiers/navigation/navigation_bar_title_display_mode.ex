@@ -8,4 +8,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.NavigationBarTitleDisplayMode do
       large
     )a)
   end
+
+  def params(display_mode) when is_atom(display_mode) and not is_boolean(display_mode) and not is_nil(display_mode), do: [display_mode: display_mode]
+  def params(params), do: params
 end

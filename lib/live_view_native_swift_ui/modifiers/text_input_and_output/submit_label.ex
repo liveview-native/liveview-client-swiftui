@@ -14,4 +14,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.SubmitLabel do
       continue
     )a)
   end
+
+  def params(submit_label) when is_atom(submit_label) and not is_boolean(submit_label) and not is_nil(submit_label), do: [submit_label: submit_label]
 end

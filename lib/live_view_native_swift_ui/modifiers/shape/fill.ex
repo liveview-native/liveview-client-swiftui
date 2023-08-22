@@ -7,4 +7,14 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Fill do
     field :content, ShapeStyle
     field :style, FillStyle
   end
+
+  def params(content, params) when is_list(params), do: [{:content, content} | params]
+  def params(params) do
+    with {:ok, _} <- ShapeStyle.cast(params) do
+      [content: params]
+    else
+      _ ->
+        params
+    end
+  end
 end

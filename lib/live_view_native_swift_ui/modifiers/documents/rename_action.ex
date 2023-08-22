@@ -1,7 +1,7 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.RenameAction do
   use LiveViewNativePlatform.Modifier
 
-  alias LiveViewNativePlatform.Types.Event
+  alias LiveViewNativePlatform.Modifier.Types.Event
 
   modifier_schema "rename_action" do
     field :action, Event

@@ -2,7 +2,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.OnTapGesture do
   use LiveViewNativePlatform.Modifier
 
   alias LiveViewNativeSwiftUi.Types.Gesture
-  alias LiveViewNativePlatform.Types.Event
+  alias LiveViewNativePlatform.Modifier.Types.Event
 
   modifier_schema "gesture" do
     field :gesture, Gesture

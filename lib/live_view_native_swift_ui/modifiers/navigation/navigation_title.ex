@@ -4,4 +4,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.NavigationTitle do
   modifier_schema "navigation_title" do
     field :title, :string
   end
+
+  def params(title) when is_binary(title), do: [title: title]
+  def params(params), do: params
 end

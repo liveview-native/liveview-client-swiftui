@@ -4,4 +4,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Help do
   modifier_schema "help" do
     field :text, :string
   end
+
+  def params(text) when is_binary(text), do: [text: text]
+  def params(params), do: params
 end

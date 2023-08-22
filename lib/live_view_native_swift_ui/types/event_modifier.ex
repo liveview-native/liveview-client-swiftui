@@ -1,4 +1,4 @@
-defmodule LiveViewNativePlatform.Types.EventModifier do
+defmodule LiveViewNativePlatform.Modifier.Types.EventModifier do
   use LiveViewNativePlatform.Modifier.Type
   def type, do: {:array, :string}
 

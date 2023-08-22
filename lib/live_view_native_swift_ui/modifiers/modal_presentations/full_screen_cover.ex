@@ -1,7 +1,8 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.FullScreenCover do
   use LiveViewNativePlatform.Modifier
 
-  alias LiveViewNativeSwiftUi.Types.{Event, KeyName}
+  alias LiveViewNativeSwiftUi.Types.KeyName
+  alias LiveViewNativePlatform.Modifier.Types.Event
 
   modifier_schema "full_screen_cover" do
     field(:is_presented, :boolean)
