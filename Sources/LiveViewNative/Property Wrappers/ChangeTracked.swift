@@ -58,8 +58,6 @@ extension ChangeTracked where Value: AttributeDecodable {
         let attribute: AttributeName
         let sendChangeEvent: Bool
         
-        var previousValue: Value?
-        
         init(value: Value, attribute: AttributeName, sendChangeEvent: Bool) {
             self.attribute = attribute
             self.sendChangeEvent = sendChangeEvent
@@ -70,10 +68,9 @@ extension ChangeTracked where Value: AttributeDecodable {
             to changeTracked: ChangeTracked<Value>
         ) {
             if let value = try? changeTracked.element.attributeValue(Value.self, for: self.attribute),
-               value != previousValue
+               value != self.value
             {
                 self.value = value
-                self.previousValue = value
             }
             cancellable = localValueChanged
                 .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
@@ -104,8 +101,6 @@ extension ChangeTracked where Value: FormValue {
         let attribute: AttributeName
         let sendChangeEvent: Bool
         
-        var previousValue: Value?
-        
         init(value: Value, attribute: AttributeName, sendChangeEvent: Bool) {
             self.attribute = attribute
             self.sendChangeEvent = sendChangeEvent
@@ -126,10 +121,9 @@ extension ChangeTracked where Value: FormValue {
             to changeTracked: ChangeTracked<Value>
         ) {
             if let value = attributeValue(on: changeTracked.element),
-               value != previousValue
+               value != self.value
             {
                 self.value = value
-                self.previousValue = value
             }
             
             cancellable = localValueChanged

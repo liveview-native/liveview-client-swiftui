@@ -40,7 +40,6 @@ struct FindNavigatorModifier: ViewModifier, Decodable {
     @ChangeTracked private var isPresented: Bool
     
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
         self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
     }
 
