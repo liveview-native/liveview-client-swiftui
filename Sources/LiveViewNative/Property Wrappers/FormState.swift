@@ -18,7 +18,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 /// Additional data that's tied to the form element, but is not the primary value should use SwiftUI's `@State` property wrapper.
 ///
 /// ### Value Storage
-/// When an attribute with the `bindingName` is provided on the element, the value of that attributed is treated as the name of a ``ChangeTracked`` to use as the value storage.
+/// When an attribute with the `bindingName` is provided on the element, the value of that attribute is treated as the name of a ``ChangeTracked`` to use as the value storage.
 /// ``ChangeTracked`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
 ///
 /// When the element this properrty wrapper is placed on is located of inside a `<LiveForm>` (see [LiveViewNativeLiveForm](https://github.com/liveview-native/liveview-native-live-form))
