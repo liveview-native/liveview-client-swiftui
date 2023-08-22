@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report! Using this form will allow us to triage and respond to your issue more quickly. In some cases issues may not be device specific but to help us reproduce your problem giving us detailed information helps save time.
+        Thanks for taking the time to fill out this bug report! Using this form will allow us to triage and respond to your issue more quickly. In some cases issues may not be device specific but to help us reproduce your problem giving us detailed information helps save time. If you are running from `main` please ensure you have updated your pacakges: `Packages` > `Update to Latest Package Versions` before reporting any issues.
   - type: textarea
     id: what-happened
     attributes:
@@ -28,15 +28,15 @@ body:
   - type: input
     id: xcode_version
     attributes:
-      label: XCode Version
-      description: What version of XCode are you using? (XCode -> About XCode to get the version)
+      label: Xcode Version
+      description: What version of Xcode are you using? (Xcode -> About Xcode to get the version)
     validations:
       required: true
   - type: input
     id: swift_version
     attributes:
       label: Swift Version
-      description: What version of Swift are you using? (XCode -> About XCode to get the version)
+      description: What version of Swift are you using? (Xcode -> About Xcode to get the version)
   - type: dropdown
     id: device_target
     attributes:
