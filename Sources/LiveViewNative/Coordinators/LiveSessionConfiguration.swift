@@ -11,8 +11,8 @@ import SwiftUI
 public struct LiveSessionConfiguration {
     /// Whether this session allows its live view to navigate.
     ///
-    /// By default, navigation is ``NavigationMode-swift.enum/disabled``.
-    public var navigationMode: NavigationMode = .disabled
+    /// By default, navigation is ``NavigationMode-swift.enum/enabled``.
+    public var navigationMode: NavigationMode = .enabled
     /// A closure that is invoked by the coordinator to get the parameters that should be sent to the server when the live view connects.
     ///
     /// The closure receives the URL of the live view being connected to. If live navigation is performed, it will be invoked multiple times with different URLs.
@@ -28,7 +28,7 @@ public struct LiveSessionConfiguration {
     }
     
     public init(
-        navigationMode: NavigationMode = .disabled,
+        navigationMode: NavigationMode = .enabled,
         connectParams: ((URL) -> [String: Any])? = nil,
         urlSession: URLSession = .shared
     ) {
