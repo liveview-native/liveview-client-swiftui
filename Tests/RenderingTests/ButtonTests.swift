@@ -62,7 +62,7 @@ final class ButtonTests: XCTestCase {
         try assertMatch(#"<RenameButton />"#) {
             RenameButton()
         }
-        try assertMatch(#"<RenameButton modifiers='[{"type":"rename_action","event":"rename","target":null}]' />"#) {
+        try assertMatch(#"<RenameButton modifiers='[{"type":"rename_action","action":{ "event": "rename" }}]' />"#) {
             RenameButton()
                 .renameAction {}
         }

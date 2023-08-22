@@ -413,7 +413,7 @@ final class DrawingAndGraphicsModifiersTests: XCTestCase {
             #"""
             <Image
                 system-name="envelope.badge.fill"
-                modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-blue","white":null},"type":"foreground_color"},{"font":{"modifiers":[],"properties":{"style":"large_title"},"type":"system"},"type":"font"},{"alignment":"center","content":"mask","type":"mask"}]'
+                modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-blue","white":null},"type":"foreground_color"},{"font":{"modifiers":[],"properties":{"style":"large_title"},"type":"system"},"type":"font"},{"alignment":"center","mask":"mask","type":"mask"}]'
             >
                 <Rectangle template="mask" modifiers='[{"opacity":0.1,"type":"opacity"}]' />
             </Image>
