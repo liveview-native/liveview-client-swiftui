@@ -13,6 +13,32 @@ private struct FormModelKey: EnvironmentKey {
     static let defaultValue: FormModel? = nil
 }
 
+private struct ModifierChangeTrackingContextKey: EnvironmentKey {
+    static let defaultValue: ModifierChangeTrackingContext? = nil
+}
+
+final class ModifierChangeTrackingContext {
+    var values = [String:WeakRef]()
+    
+    final class WeakRef {
+        weak var value: CurrentValueSubject<any Encodable, Never>?
+        
+        init(_ value: CurrentValueSubject<any Encodable, Never>) {
+            self.value = value
+        }
+    }
+    
+    func collect() -> [String:any Encodable] {
+        values.compactMapValues(\.value?.value)
+    }
+    
+    func encode(_ values: [String:any Encodable]) throws -> [String:Any] {
+        try values.mapValues({
+            try JSONSerialization.jsonObject(with: JSONEncoder().encode($0), options: .fragmentsAllowed)
+        })
+    }
+}
+
 private struct ElementKey: EnvironmentKey {
     static let defaultValue: ElementNode? = nil
 }
@@ -46,6 +72,12 @@ extension EnvironmentValues {
     public var formModel: FormModel? {
         get { self[FormModelKey.self] }
         set { self[FormModelKey.self] = newValue }
+    }
+    
+    /// The context for collecting `ChangeTracked` properties of a modifier into a single map.
+    var modifierChangeTrackingContext: ModifierChangeTrackingContext? {
+        get { self[ModifierChangeTrackingContextKey.self] }
+        set { self[ModifierChangeTrackingContextKey.self] = newValue }
     }
     
     /// The DOM element that the view was constructed from.

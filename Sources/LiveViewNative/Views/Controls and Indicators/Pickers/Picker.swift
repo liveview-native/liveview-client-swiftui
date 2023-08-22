@@ -14,7 +14,7 @@ import SwiftUI
 /// Use the `content` children to specify the options for the picker, and the `label` children to provide a label.
 ///
 /// ```html
-/// <Picker selection="transport">
+/// <Picker selection={@transport} phx-change="transport-changed">
 ///     <Text template={:label}>Transportation</Text>
 ///     <Group template={:content}>
 ///         <Label system-image="car" tag="car">Car</Label>
@@ -22,12 +22,6 @@ import SwiftUI
 ///         <Label system-image="tram" tag="tram">Tram</Label>
 ///     </Group>
 /// </Picker>
-/// ```
-///
-/// ```elixir
-/// defmodule MyAppWeb.PickerLive do
-///     native_binding :transport, String, "tram"
-/// end
 /// ```
 ///
 /// ## Attributes

@@ -7,16 +7,27 @@
 
 import SwiftUI
 
-/// A modifier that presents another view as a sheet when a binding is activated.
+/// A modifier that presents another view as a sheet when ``isPresented`` is activated.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={sheet(content: :content, is_presented: @show, change: "presentation-changed")}>
 ///   Present Sheet
 ///   <VStack template={:content}>
 ///     <Text>Hello, world!</Text>
 ///     <Button phx-click="toggle">Dismiss</Button>
 ///   </VStack>
 /// </Button>
+/// ```
+///
+/// ```elixir
+/// defmodule AppWeb.TestLive do
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
+///
+///   def handle_event("presentation-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
+/// end
 /// ```
 ///
 ///## Arguments
@@ -27,11 +38,11 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 struct SheetModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// The live binding that controls when the sheet is presented.
+    /// The value that controls when the sheet is presented.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var isPresented: Bool
+    @ChangeTracked private var isPresented: Bool
     
     /// An optional event to trigger when the sheet is dismissed.
     ///
@@ -53,7 +64,7 @@ struct SheetModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self._isPresented = try LiveBinding(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
         self._onDismiss = try container.decode(Event.self, forKey: .onDismiss)
         self.content = try container.decode(String.self, forKey: .content)
     }

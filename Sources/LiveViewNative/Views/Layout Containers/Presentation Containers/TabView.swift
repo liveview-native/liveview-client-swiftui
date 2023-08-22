@@ -38,17 +38,11 @@ struct TabView<R: RootRegistry>: View {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "selection") private var selection: String?
+    @ChangeTracked(attribute: "selection") private var selection: String? = nil
     
     var body: some View {
-        if _selection.isBound {
-            SwiftUI.TabView(selection: $selection) {
-                context.buildChildren(of: element)
-            }
-        } else {
-            SwiftUI.TabView {
-                context.buildChildren(of: element)
-            }
+        SwiftUI.TabView(selection: $selection) {
+            context.buildChildren(of: element)
         }
     }
 }

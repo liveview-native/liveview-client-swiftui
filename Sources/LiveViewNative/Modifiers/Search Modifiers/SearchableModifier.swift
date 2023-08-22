@@ -9,17 +9,19 @@ import SwiftUI
 
 /// Add a system search bar.
 ///
-/// Use a ``LiveBinding`` to synchronize the query.
+/// Use a ``ChangeTracked`` to synchronize the query.
 ///
 /// ```html
-/// <List modifiers={searchable(@native, text: :query)}>
+/// <List modifiers={searchable(@native, text: @query, change: "search-changed")}>
 ///     ...
 /// </List>
 /// ```
 ///
 /// ```elixir
 /// defmodule MyAppWeb.SearchLive do
-///   native_binding :query, :string, ""
+///   def handle_event("search-changed", %{ "text" => text }, socket) do
+///     {:noreply, assign(socket, query: text)}
+///   end
 /// end
 /// ```
 ///
@@ -28,15 +30,9 @@ import SwiftUI
 /// ### Tokens
 /// Tokens can be added alongside the query to provide extra filtering capabilities.
 ///
-/// Create a separate `native_binding` for the tokens.
+/// Send a list of active tokens to the ``token`` argument, and a list of suggested tokens to the [`suggested_tokens`](doc:SearchableModifier/suggestedTokens) argument.
 ///
-/// ```elixir
-/// native_binding :my_tokens, List, []
-/// ```
-///
-/// Provide the name of this binding to the ``tokens`` argument, and a list of suggested tokens to the [`suggested_tokens`](doc:SearchableModifier/suggestedTokens) argument.
-///
-/// Add a child element for each token to specify how it should be rendered.
+/// Add a child element for each token to specify how it should be rendered. Tokens will be sent to the change event alongside the ``text``.
 ///
 /// - Note: You can use [`Phoenix.HTML.Tag.content_tag/2`](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Tag.html#content_tag/2) to dynamically render an element for each token.
 ///
@@ -72,13 +68,13 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var text: String
+    @ChangeTracked private var text: String
 
-    /// A ``LiveBinding`` for any selected tokens.
+    /// A ``ChangeTracked`` for any selected tokens.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "tokens") private var tokens: [SearchToken] = []
+    @ChangeTracked private var tokens: [SearchToken]
     
     /// `suggested_tokens`, a list of tokens to display.
     #if swift(>=5.8)
@@ -111,8 +107,8 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._text = try LiveBinding(decoding: .text, in: container)
-        self._tokens = try LiveBinding(decoding: .tokens, in: container, initialValue: [])
+        self._text = try ChangeTracked(decoding: CodingKeys.text, in: decoder)
+        self._tokens = try ChangeTracked(decoding: CodingKeys.tokens, in: decoder)
         self.suggestedTokens = try container.decodeIfPresent([SearchToken].self, forKey: .suggestedTokens)
         
         switch try container.decodeIfPresent(String.self, forKey: .placement) ?? "automatic" {
@@ -161,7 +157,7 @@ struct SearchableModifier<R: RootRegistry>: ViewModifier, Decodable {
     }
 }
 
-struct SearchToken: Identifiable, Codable {
+struct SearchToken: Identifiable, Codable, Equatable {
     let value: String
     var id: String { value }
     

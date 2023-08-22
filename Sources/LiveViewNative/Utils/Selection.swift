@@ -5,8 +5,10 @@
 //  Created by Carson Katri on 2/21/23.
 //
 
+import LiveViewNativeCore
+
 /// Selection of either a single value or set of values.
-enum Selection: Codable {
+enum Selection: Codable, AttributeDecodable, Equatable {
     case none
     case single(String?)
     case multiple(Set<String>)
@@ -51,6 +53,16 @@ enum Selection: Codable {
             try container.encode(selection)
         case .multiple(let selection):
             try container.encode(selection)
+        }
+    }
+    
+    init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        if value.isEmpty {
+            self = .single(nil)
+        } else {
+            self = .single(value)
         }
     }
 }

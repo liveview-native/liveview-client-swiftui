@@ -7,24 +7,26 @@
 
 import SwiftUI
 
-/// Updates a binding based on the dynamic type size in the current context.
+/// Tracks changed to the dynamic type size in the current context.
 ///
 /// Use this element to scale a value with the accessibility dynamic type size.
 ///
 /// ```html
-/// <ScaledMetric scaled-value-binding={:scaled_value} value={100} relative-to="large-title">
+/// <ScaledMetric phx-change="scaled-value-changed" value={100} relative-to="large-title">
 ///   <Image system-name="heart" resizable modifiers={frame(@native, width: @scaled_value, height: @scaled_value)}>
 /// </ScaledMetric>
 /// ```
 ///
 /// ```elixir
 /// defmodule MyAppWeb.AccessibilityLive do
-///   native_binding :scaled_value, Float, 100.0
+///   def handle_event("scaled-value-changed", scaled_value, socket) do
+///     {:noreply, assign(socket, scaled_value: scaled_value)}
+///   end
 /// end
 /// ```
 ///
 /// The initial ``value`` of `100` will be used when dynamic type is disabled.
-/// If the dynamic type size is changed, the binding referenced by ``scaledValue`` will be updated with a scaled version of ``value``.
+/// If the dynamic type size is changed, the event referenced by `phx-change` will be updated with a scaled version of ``value``.
 ///
 /// Optionally provide a ``LiveViewNative/SwiftUI/Font/TextStyle`` to scale relative to with the ``relativeStyle`` attribute.
 ///
@@ -41,11 +43,11 @@ struct ScaledMetric<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
-    /// The binding to update with the scaled ``value``.
+    /// The event to update with the scaled ``value``.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "scaled-value-binding") private var scaledValue: Double
+    @Event("phx-change", type: "click") private var onChange
     
     /// The initial value to scale.
     #if swift(>=5.8)
@@ -63,20 +65,20 @@ struct ScaledMetric<R: RootRegistry>: View {
     var body: some View {
         ScaledMetricObserver(
             scaledMetric: .init(wrappedValue: value, relativeTo: relativeStyle),
-            value: $scaledValue,
+            onChange: onChange,
             content: context.buildChildren(of: element)
         )
     }
     
     private struct ScaledMetricObserver<Content: View>: View {
         let scaledMetric: SwiftUI.ScaledMetric<Double>
-        @Binding var value: Double
+        let onChange: Event.EventHandler
         let content: Content
         
         var body: some View {
             content
                 .task(id: scaledMetric.wrappedValue) {
-                    value = scaledMetric.wrappedValue
+                    onChange(value: scaledMetric.wrappedValue)
                 }
         }
     }

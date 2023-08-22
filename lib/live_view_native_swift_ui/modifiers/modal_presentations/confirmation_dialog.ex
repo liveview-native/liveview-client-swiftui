@@ -1,7 +1,7 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.ConfirmationDialog do
   use LiveViewNativePlatform.Modifier
 
-  alias LiveViewNativeSwiftUi.Types.{KeyName, NativeBindingName}
+  alias LiveViewNativeSwiftUi.Types.{KeyName}
 
   modifier_schema "confirmation_dialog" do
     field(:title, :string)
@@ -10,6 +10,8 @@ defmodule LiveViewNativeSwiftUi.Modifiers.ConfirmationDialog do
 
     field(:actions, KeyName)
     field(:message, KeyName, default: nil)
-    field(:is_presented, NativeBindingName)
+    field(:is_presented, :boolean)
+
+    change_event()
   end
 end

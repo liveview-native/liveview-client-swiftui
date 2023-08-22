@@ -10,9 +10,6 @@ import LiveViewNativeCore
 
 /// A form value is any type that can be stored in a ``FormModel`` and used with ``FormState``.
 ///
-/// The `Codable` representation is used for sending form events and when a live binding is used.
-/// See ``FormState`` for more information about how form values and live bindings interact.
-///
 /// A number of out-of-the-box `FormValue` implementations are provided:
 /// 1. `Optional`, when the `Wrapped` type itself conforms to `FormValue`
 /// 2. `String`

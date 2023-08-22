@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-/// A modifier that presents another view in full screen when a binding is activated.
+/// A modifier that presents another view in full screen when ``isPresented`` is `true`.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={full_screen_cover(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={full_screen_cover(@native, content: :content, is_presented: @show, change: "presentation-changed")}>
 ///   Present Sheet
 ///   <VStack template={:content}>
 ///     <Text>Hello, world!</Text>
@@ -18,6 +18,17 @@ import SwiftUI
 ///   </VStack>
 /// </Button>
 /// ```
+///
+/// ```elixir
+/// defmodule AppWeb.TestLive do
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
+///
+///   def handle_event("presentation-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
+/// end
+/// ``` 
 ///
 ///## Arguments
 ///- ``isPresented``
@@ -28,11 +39,11 @@ import SwiftUI
 #endif
 @available(iOS 16.0, tvOS 16.0, watchOS 9.0, *)
 struct FullScreenCoverModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// The live binding that controls when the view is presented.
+    /// The value that controls when the view is presented.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var isPresented: Bool
+    @ChangeTracked private var isPresented: Bool
     
     /// An optional event to trigger when the view is dismissed.
     ///
@@ -54,7 +65,7 @@ struct FullScreenCoverModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self._isPresented = try LiveBinding(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
         self._onDismiss = try container.decode(Event.self, forKey: .onDismiss)
         self.content = try container.decode(String.self, forKey: .content)
     }

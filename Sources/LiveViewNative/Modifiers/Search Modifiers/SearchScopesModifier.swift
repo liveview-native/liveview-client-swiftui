@@ -11,22 +11,24 @@ import SwiftUI
 ///
 /// Use this modifier alongside the ``SearchableModifier`` modifier.
 ///
-/// Create a ``LiveBinding`` to synchronize the selected scope with the server.
+/// Create an event handler to synchronize the selected scope with the server.
 ///
 /// ```elixir
 /// defmodule MyAppWeb.SearchLive do
-///   native_binding :active_scope, String, "photos"
+///   def handle_event("scope-changed", %{ "active" => scope }, socket) do
+///     {:noreply, assign(socket, active_scope: scope)}
+///   end
 /// end
 /// ```
 ///
-/// Provide the name of this binding, as well as a list of elements with the ``TagModifier`` modifier to create the scopes.
+/// Provide the name of the scope to ``active``, as well as a list of elements with the ``TagModifier`` modifier to create the scopes.
 ///
 /// ```html
 /// <List
 ///     modifiers={
 ///         @native
 ///         |> searchable(...)
-///         |> search_scopes(active: :active_scope, scopes: :scope_list)
+///         |> search_scopes(active: @active_scope, scopes: :scope_list, change: "scope-changed")
 ///     }
 /// >
 ///     ...
@@ -51,7 +53,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "active") private var active: String?
+    @ChangeTracked private var active: String?
 
     /// Indicates when the scope options are displayed.
     ///
@@ -86,7 +88,7 @@ struct SearchScopesModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._active = try LiveBinding(decoding: .active, in: container)
+        self._active = try ChangeTracked(decoding: CodingKeys.active, in: decoder)
         self.activation = try container.decodeIfPresent(String.self, forKey: .activation)
         self.scopes = try container.decode(String.self, forKey: .scopes)
     }

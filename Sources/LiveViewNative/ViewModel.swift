@@ -17,39 +17,7 @@ public class LiveViewModel: ObservableObject {
     private var forms = [String: FormModel]()
     var cachedNavigationTitle: NavigationTitleModifier?
     
-    private(set) var bindings = [String: NativeBinding]()
-    private(set) var bindingScope: String?
-    
-    private(set) var bindingValues = [String: Any]()
-    let bindingUpdatedByServer = PassthroughSubject<(String, Any), Never>()
-    let bindingUpdatedByClient = PassthroughSubject<(String, Any), Never>()
-    
-    let bindingValue: (String, String?) -> Any?
-    let setBindingValue: (Any, String, String?) throws -> ()
-    let globalBindings: () -> Set<String>
-    let registerGlobalBinding: (String) -> ()
-    
-    init(
-        bindingValue: @escaping (String, String?) -> Any?,
-        setBindingValue: @escaping (Any, String, String?) throws -> (),
-        globalBindings: @escaping () -> Set<String>,
-        registerGlobalBinding: @escaping (String) -> ()
-    ) {
-        self.bindingValue = bindingValue
-        self.setBindingValue = setBindingValue
-        self.globalBindings = globalBindings
-        self.registerGlobalBinding = registerGlobalBinding
-    }
-    
-    struct NativeBinding {
-        let persist: PersistenceMode
-        
-        enum PersistenceMode: String {
-            case scoped
-            case global
-            case none
-        }
-    }
+    init() {}
     
     /// Get or create a ``FormModel`` for the given `<live-form>`.
     ///
@@ -78,72 +46,6 @@ public class LiveViewModel: ObservableObject {
         }
         for id in forms.keys where !formIDs.contains(id) {
             forms.removeValue(forKey: id)
-        }
-    }
-    
-    func updateBindings(payload: Payload) {
-        if let data = payload["data"] as? [String:Any] {
-            let animation = (payload["animation"] as? [String:Any])
-                .flatMap({ try? JSONSerialization.data(withJSONObject: $0) })
-                .flatMap({ try? makeJSONDecoder().decode(Animation.self, from: $0) })
-            withAnimation(animation) {
-                for (key, value) in data {
-                    bindingValues[key] = value
-                    bindingUpdatedByServer.send((key, value))
-                    storeBinding(key, value: value)
-                }
-            }
-        }
-    }
-    
-    func setBinding(_ name: String, to encodedValue: Any) {
-        bindingValues[name] = encodedValue
-        bindingUpdatedByClient.send((name, encodedValue))
-        storeBinding(name, value: encodedValue)
-    }
-    
-    func storeBinding(_ key: String, value: Any) {
-        if let options = bindings[key] {
-            switch options.persist {
-            case .scoped:
-                try? setBindingValue(value, key, self.bindingScope)
-            case .global:
-                try? setBindingValue(value, key, nil)
-            case .none:
-                break
-            }
-        }
-    }
-    
-    func initBindings(payload: Payload) {
-        self.bindingScope = payload["scope"] as? String
-        for (key, options) in (payload["bindings"] as? [String:[String:Any]] ?? [:]) {
-            let binding = NativeBinding(
-                persist: (options["persist"] as? String).flatMap(NativeBinding.PersistenceMode.init(rawValue:)) ?? .none
-            )
-            self.bindings[key] = binding
-            
-            let defaultValue = options["default"]
-            
-            switch binding.persist {
-            case .scoped:
-                if let value = bindingValue(key, self.bindingScope) {
-                    self.bindingValues[key] = value
-                    setBinding(key, to: value)
-                } else {
-                    self.bindingValues[key] = defaultValue
-                }
-            case .global:
-                registerGlobalBinding(key)
-                if let value = bindingValue(key, nil) {
-                    self.bindingValues[key] = value
-                    setBinding(key, to: value)
-                } else {
-                    self.bindingValues[key] = defaultValue
-                }
-            case .none:
-                self.bindingValues[key] = defaultValue
-            }
         }
     }
 }

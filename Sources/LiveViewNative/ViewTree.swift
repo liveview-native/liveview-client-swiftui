@@ -215,7 +215,7 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
         } else {
             ModifierApplicator<_, R>(
                 // force-unwrap is okay, this view is never constructed with an empty slice
-                parent: parent.modifier(modifiers.first!.modifier),
+                parent: parent.modifier(modifiers.first!.modifier).environment(\.modifierChangeTrackingContext, ModifierChangeTrackingContext()),
                 modifiers: modifiers.dropFirst(),
                 element: element,
                 context: context
@@ -269,12 +269,12 @@ private enum ForEachElement: Identifiable {
     case keyed(Node, id: String)
     case unkeyed(Node)
     
-    var id: AnyHashable {
+    var id: String {
         switch self {
         case let .keyed(_, id):
-            return AnyHashable(id)
+            return id
         case let .unkeyed(node):
-            return AnyHashable(node.id)
+            return "\(node.id)"
         }
     }
 }

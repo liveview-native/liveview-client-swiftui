@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-/// Displays a system-style alert when a live binding is active.
+/// Displays a system-style alert when a ``isPresented`` is `true`.
 ///
 /// ```html
 /// <Button phx-click="toggle-show"
 ///     modifiers={
 ///         @native
-///         |> alert(title: "My Alert", message: :message, actions: :actions, is_presented: :show)
+///         |> alert(title: "My Alert", message: :message, actions: :actions, is_presented: @show, change: "presentation-changed")
 ///     }
 /// >
 ///   Present Alert
@@ -30,10 +30,12 @@ import SwiftUI
 ///
 /// ```elixir
 /// defmodule AppWeb.TestLive do
-///     use AppWeb, :live_view
-///     use LiveViewNative.LiveView
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
 ///
-///     native_binding :show, Atom, false
+///   def handle_event("presentation-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
 /// end
 /// ```
 ///
@@ -68,13 +70,13 @@ struct AlertModifier<R: RootRegistry>: ViewModifier, Decodable {
     #endif
     private let message: String?
     
-    /// The name of a live binding that controls when the alert is shown.
+    /// The name of a value that controls when the alert is shown.
     ///
-    /// Set the binding to `true` to show the alert.
+    /// Set the value to `true` to show the alert.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var isPresented: Bool
+    @ChangeTracked private var isPresented: Bool
     
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -85,7 +87,7 @@ struct AlertModifier<R: RootRegistry>: ViewModifier, Decodable {
         self.title = try container.decode(String.self, forKey: .title)
         self.actions = try container.decode(String.self, forKey: .actions)
         self.message = try container.decodeIfPresent(String.self, forKey: .message)
-        self._isPresented = try LiveBinding(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
     }
     
     func body(content: Content) -> some View {

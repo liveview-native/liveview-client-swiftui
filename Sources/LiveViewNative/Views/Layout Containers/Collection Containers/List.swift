@@ -30,18 +30,12 @@ import SwiftUI
 /// ```
 ///
 /// ### Selecting Rows
-/// Use the ``selection`` binding to synchronize the selected row(s) with the LiveView.
+/// Use the ``selection`` attribute to set the selected row(s).
 ///
 /// ```html
-/// <List selection="selected_sports">
+/// <List selection={@selected_sports} phx-change="selection-changed">
 ///     ...
 /// </List>
-/// ```
-///
-/// ```elixir
-/// defmodule MyAppWeb.SportsLive do
-///   native_binding :selected_sports, List, []
-/// end
 /// ```
 ///
 /// ### Deleting and Moving Rows
@@ -146,27 +140,15 @@ struct List<R: RootRegistry>: View {
     
     /// Synchronizes the selected rows with the server.
     ///
-    /// To allow an arbitrary number of rows to be selected, use the `List` type for the binding.
+    /// To allow an arbitrary number of rows to be selected, use the `List` type for the value.
     /// Use an empty list as the default value to start with no selection.
     ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///   native_binding :selected_sports, List, []
-    /// end
-    /// ```
-    ///
-    /// To only allow a single selection, use the `String` type for the binding.
+    /// To only allow a single selection, use the `String` type for the value.
     /// Use `nil` as the default value to start with no selection.
-    ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///   native_binding :selected_sport, String, nil
-    /// end
-    /// ```
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding(attribute: "selection") private var selection = Selection.none
+    @ChangeTracked(attribute: "selection") private var selection = Selection.none
     
     public var body: some View {
         #if os(watchOS)

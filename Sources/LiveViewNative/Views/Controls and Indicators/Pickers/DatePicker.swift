@@ -13,7 +13,7 @@ import LiveViewNativeCore
 /// The value of this control is an Elixir-style ISO 8601 date or datetime string (i.e., the result of `DateTime.to_iso8601`).
 ///
 /// ```html
-/// <DatePicker value="2023-03-14T15:19:26.535Z">
+/// <DatePicker selection="2023-03-14T15:19:26.535Z">
 ///     <Text>Pick a date</Text>
 /// </DatePicker>
 /// ```

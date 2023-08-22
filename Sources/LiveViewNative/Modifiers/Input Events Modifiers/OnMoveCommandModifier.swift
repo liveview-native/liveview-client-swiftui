@@ -15,15 +15,13 @@ import SwiftUI
 /// 
 /// ```elixir
 /// defmodule MyAppWeb.SliderLive do
-///   native_binding :value, Float, 0
-///    
 ///   @impl true
 ///   def handle_event("adjust", %{ "direction" => direction }, socket) do
 ///     case direction do
 ///       "right" ->
-///         {:noreply, assign_native_bindings(socket, value: socket.assigns.value + 0.1)}
+///         {:noreply, assign(socket, value: socket.assigns.value + 0.1)}
 ///       "left" ->
-///         {:noreply, assign_native_bindings(socket, value: socket.assigns.value - 0.1)}
+///         {:noreply, assign(socket, value: socket.assigns.value - 0.1)}
 ///       _ ->
 ///         {:noreply, socket}
 ///     end
@@ -34,7 +32,7 @@ import SwiftUI
 /// Pass the name of this event to the ``action`` argument.
 ///
 /// ```html
-/// <Slider value="value" modifiers={on_move_command(@native, action: "adjust")}>
+/// <Slider value={@value} modifiers={on_move_command(@native, action: "adjust")}>
 ///     Value
 /// </Slider>
 /// ```

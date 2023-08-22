@@ -12,15 +12,10 @@ import SwiftUI
 /// Add elements within the toggle to provide a label.
 ///
 /// ```html
-/// <Toggle is-on="is_on">
+/// <Toggle is-on={@lights_on} phx-change="toggled-lights">
 ///     Lights On
 /// </Toggle>
 /// ```
-///
-/// > Booleans in Elixir are atoms, so bindings can be declared with
-/// > ```elixir
-/// > native_binding :is_on, Atom, false
-/// > ```
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)

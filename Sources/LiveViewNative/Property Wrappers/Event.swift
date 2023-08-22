@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import LiveViewNativeCore
+import AsyncAlgorithms
 
 /// A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.
 ///
@@ -89,39 +90,39 @@ public struct Event: DynamicProperty, Decodable {
     @Attribute("phx-throttle") private var throttleAttribute: Double?
     
     final class Handler: ObservableObject {
-        let currentEvent = PassthroughSubject<(() -> ())?, Never>()
+        let channel = AsyncChannel<(String, String, Any, Int?)>()
         
-        private var cancellable: AnyCancellable?
-
-        private var cancellables = Set<AnyCancellable>()
+        private var handlerTask: Task<(), Error>?
         
         private var debounce: Double?
         var throttle: Double?
         
         init() {}
         
-        func update(debounce: Double?, throttle: Double?) {
-            guard cancellable == nil || debounce != self.debounce || throttle != self.throttle
+        func update(coordinator: CoordinatorEnvironment?, debounce: Double?, throttle: Double?) {
+            guard handlerTask == nil || debounce != self.debounce || throttle != self.throttle
             else { return }
+            handlerTask?.cancel()
             self.debounce = debounce
             self.throttle = throttle
             if let debounce = debounce {
-                cancellable = currentEvent
-                    .debounce(for: .init(debounce / 1000), scheduler: RunLoop.main)
-                    .sink(receiveValue: { value in
-                        value?()
-                    })
+                handlerTask = Task {
+                    for await event in channel.debounce(for: .milliseconds(debounce)) {
+                        try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                    }
+                }
             } else if let throttle = throttle {
-                cancellable = currentEvent
-                    .throttle(for: .init(throttle / 1000), scheduler: RunLoop.main, latest: true)
-                    .sink(receiveValue: { value in
-                        value?()
-                    })
+                handlerTask = Task {
+                    for await event in channel.throttle(for: .milliseconds(throttle)) {
+                        try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                    }
+                }
             } else {
-                cancellable = currentEvent
-                    .sink(receiveValue: { value in
-                        value?()
-                    })
+                handlerTask = Task {
+                    for await event in channel {
+                        try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                    }
+                }
             }
         }
     }
@@ -252,7 +253,7 @@ public struct Event: DynamicProperty, Decodable {
     }
     
     public func update() {
-        handler.update(debounce: debounce ?? debounceAttribute, throttle: throttle ?? throttleAttribute)
+        handler.update(coordinator: coordinatorEnvironment, debounce: debounce ?? debounceAttribute, throttle: throttle ?? throttleAttribute)
     }
     
     /// An action that you invoke to send an event to the server.
@@ -275,18 +276,7 @@ public struct Event: DynamicProperty, Decodable {
             guard let event else {
                 return
             }
-            try await withCheckedThrowingContinuation { continuation in
-                owner.handler.currentEvent.send({
-                    Task {
-                        do {
-                            try await owner.coordinatorEnvironment?.pushEvent(owner.type, event, owner.params ?? value, owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init))
-                            continuation.resume()
-                        } catch {
-                            continuation.resume(with: .failure(error))
-                        }
-                    }
-                })
-            }
+            await owner.handler.channel.send((owner.type, event, owner.params ?? value, owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init)))
         }
     }
 }

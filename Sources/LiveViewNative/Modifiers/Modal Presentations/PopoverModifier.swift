@@ -7,18 +7,29 @@
 
 import SwiftUI
 
-/// A modifier that presents another view as a popover when a binding is activated.
+/// A modifier that presents another view as a popover when ``isPresented`` is `true`.
 ///
 /// - Note: Popovers are rendered as a sheet on iOS. Use ``PresentationCompactAdaptationModifier`` to customize this behavior.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={popover(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={popover(@native, content: :content, is_presented: @show, change: "presentation-changed")}>
 ///   Present Popover
 ///   <VStack template={:content}>
 ///     <Text>Hello, world!</Text>
 ///     <Button phx-click="toggle">Dismiss</Button>
 ///   </VStack>
 /// </Button>
+/// ```
+///
+/// ```elixir
+/// defmodule AppWeb.TestLive do
+///   use AppWeb, :live_view
+///   use LiveViewNative.LiveView
+///
+///   def handle_event("presentation-changed", %{ "is_presented" => show }, socket) do
+///     {:noreply, assign(socket, show: show)}
+///   end
+/// end
 /// ```
 ///
 /// Change the ``attachmentAnchor`` and ``arrowEdge`` to customize the placement of the popover.
@@ -48,11 +59,11 @@ import SwiftUI
 #endif
 @available(iOS 16.0, macOS 13.0, *)
 struct PopoverModifier<R: RootRegistry>: ViewModifier, Decodable {
-    /// The live binding that controls when the popover is presented.
+    /// The value that controls when the popover is presented.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @LiveBinding private var isPresented: Bool
+    @ChangeTracked private var isPresented: Bool
 
     /// The point where the popover attaches to the element. Defaults to `{:rect, :bounds}`
     ///
@@ -82,7 +93,7 @@ struct PopoverModifier<R: RootRegistry>: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._isPresented = try LiveBinding(decoding: .isPresented, in: container)
+        self._isPresented = try ChangeTracked(decoding: CodingKeys.isPresented, in: decoder)
         self.attachmentAnchor = try container.decodeIfPresent(
             PopoverAttachmentAnchor.self,
             forKey: .attachmentAnchor
