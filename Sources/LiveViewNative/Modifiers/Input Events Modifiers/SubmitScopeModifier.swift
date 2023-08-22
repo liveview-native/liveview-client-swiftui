@@ -13,10 +13,10 @@ import SwiftUI
 /// 
 /// ```html
 /// <Form modifiers={on_submit(@native, action: "submit")}>
-///   <TextField value-binding="username">Username</TextField>
-///   <SecureField value-binding="password">Password</SecureField>
+///   <TextField text="username">Username</TextField>
+///   <SecureField text="password">Password</SecureField>
 ///   
-///   <TextField value-binding="tags" modifiers={submit_scope(@native, is_blocking: true)}>Tags</TextField>
+///   <TextField text="tags" modifiers={submit_scope(@native, is_blocking: true)}>Tags</TextField>
 /// </Form>
 /// ```
 /// 

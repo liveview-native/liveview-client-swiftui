@@ -10,7 +10,7 @@ import SwiftUI
 /// A control that allows the user to pick multiple dates (not datetimes).
 ///
 /// ```html
-/// <MultiDatePicker value-binding="dates" start="2023-01-01" end="2023-02-01">
+/// <MultiDatePicker selection="dates" start="2023-01-01" end="2023-02-01">
 ///     <Text>Pick as many dates as you like!</Text>
 /// </MultiDatePicker>
 /// ```
@@ -28,6 +28,7 @@ import SwiftUI
 /// - Note: This control does not support reading the intial value from the `value` attribute on the element.
 ///
 /// ## Attributes
+/// - ``selection``
 /// - ``start``
 /// - ``end``
 #if swift(>=5.8)
@@ -47,13 +48,13 @@ struct MultiDatePicker<R: RootRegistry>: View {
     @_documentation(visibility: public)
     #endif
     @Attribute("end") private var end: Date?
-    @FormState(default: []) private var dates: Set<SelectedDate>
+    @FormState("selection", default: []) private var selection: Set<SelectedDate>
     
     private var dateComponents: Binding<Set<DateComponents>> {
         Binding {
-            Set(self.dates.map(\.dateComponents))
+            Set(self.selection.map(\.dateComponents))
         } set: {
-            self.dates = Set($0.map(SelectedDate.init(dateComponents:)))
+            self.selection = Set($0.map(SelectedDate.init(dateComponents:)))
         }
     }
     

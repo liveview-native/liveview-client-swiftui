@@ -24,6 +24,7 @@ import LiveViewNativeCore
 /// You can optionally specify a start and/or end date to limit the selectable range of the date picker.
 ///
 /// ## Attributes
+/// - ``selection``
 /// - ``start``
 /// - ``end``
 /// - ``components``
@@ -34,7 +35,7 @@ import LiveViewNativeCore
 struct DatePicker<R: RootRegistry>: View {
     @LiveContext<R> private var context
     @ObservedElement private var element
-    @FormState(default: CodableDate()) private var value: CodableDate
+    @FormState("selection", default: CodableDate()) private var selection: CodableDate
     ///The start date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -74,30 +75,22 @@ struct DatePicker<R: RootRegistry>: View {
     typealias DatePickerComponents = Never
     #endif
     
-    private var dateBinding: Binding<Date> {
-        Binding {
-            value.date
-        } set: { newValue in
-            value.date = newValue
-        }
-    }
-    
     var body: some View {
 #if os(iOS) || os(macOS)
         if let start, let end {
-            SwiftUI.DatePicker(selection: dateBinding, in: start...end, displayedComponents: components) {
+            SwiftUI.DatePicker(selection: $selection.date, in: start...end, displayedComponents: components) {
                 context.buildChildren(of: element)
             }
         } else if let start {
-            SwiftUI.DatePicker(selection: dateBinding, in: start..., displayedComponents: components) {
+            SwiftUI.DatePicker(selection: $selection.date, in: start..., displayedComponents: components) {
                 context.buildChildren(of: element)
             }
         } else if let end {
-            SwiftUI.DatePicker(selection: dateBinding, in: ...end, displayedComponents: components) {
+            SwiftUI.DatePicker(selection: $selection.date, in: ...end, displayedComponents: components) {
                 context.buildChildren(of: element)
             }
         } else {
-            SwiftUI.DatePicker(selection: dateBinding, displayedComponents: components) {
+            SwiftUI.DatePicker(selection: $selection.date, displayedComponents: components) {
                 context.buildChildren(of: element)
             }
         }

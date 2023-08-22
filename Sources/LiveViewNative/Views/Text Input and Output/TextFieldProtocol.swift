@@ -12,7 +12,7 @@ import SwiftUI
 #endif
 protocol TextFieldProtocol: View {
     var element: ElementNode { get }
-    var value: String? { get nonmutating set }
+    var text: String? { get nonmutating set }
     
     var focusEvent: Event.EventHandler { get }
     var blurEvent: Event.EventHandler { get }
@@ -29,17 +29,17 @@ protocol TextFieldProtocol: View {
 extension TextFieldProtocol {
     func valueBinding<S: ParseableFormatStyle>(format: S) -> Binding<S.FormatInput?> where S.FormatOutput == String {
         .init {
-            try? value.flatMap(format.parseStrategy.parse)
+            try? text.flatMap(format.parseStrategy.parse)
         } set: {
-            value = $0.flatMap(format.format)
+            text = $0.flatMap(format.format)
         }
     }
     
     var textBinding: Binding<String> {
         Binding {
-            value ?? ""
+            text ?? ""
         } set: {
-            value = $0
+            text = $0
         }
     }
     

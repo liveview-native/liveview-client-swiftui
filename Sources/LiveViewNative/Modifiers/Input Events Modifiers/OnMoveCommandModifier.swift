@@ -34,7 +34,7 @@ import SwiftUI
 /// Pass the name of this event to the ``action`` argument.
 ///
 /// ```html
-/// <Slider value-binding="value" modifiers={on_move_command(@native, action: "adjust")}>
+/// <Slider value="value" modifiers={on_move_command(@native, action: "adjust")}>
 ///     Value
 /// </Slider>
 /// ```

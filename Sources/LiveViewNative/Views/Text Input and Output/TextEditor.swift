@@ -10,7 +10,7 @@ import SwiftUI
 /// A multi-line, long-form text editor.
 ///
 /// ```html
-/// <TextEditor value-binding="my_text" phx-focus="editor_focused" />
+/// <TextEditor text="my_text" phx-focus="editor_focused" />
 /// ```
 ///
 /// ## Events
@@ -22,7 +22,7 @@ import SwiftUI
 @available(iOS 16.0, macOS 13.0, *)
 struct TextEditor: TextFieldProtocol {
     @ObservedElement var element: ElementNode
-    @FormState var value: String?
+    @FormState("text") var text: String?
     @FocusState private var isFocused: Bool
     
     /// An event that fires when the text editor is focused.
