@@ -12,11 +12,11 @@ import SwiftUI
 /// This modifier can be used to prevent an ``OnSubmitModifier`` modifier on a parent element from triggering when a child element is submitted.
 /// 
 /// ```html
-/// <Form modifiers={on_submit(@native, action: "submit")}>
+/// <Form modifiers={on_submit("submit")}>
 ///   <TextField text="username">Username</TextField>
 ///   <SecureField text="password">Password</SecureField>
 ///   
-///   <TextField text="tags" modifiers={submit_scope(@native, is_blocking: true)}>Tags</TextField>
+///   <TextField text="tags" modifiers={submit_scope(true)}>Tags</TextField>
 /// </Form>
 /// ```
 /// 

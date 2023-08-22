@@ -13,10 +13,10 @@ import SwiftUI
 ///
 /// Use this modifier in the content of a ``SheetModifier``:
 /// ```html
-/// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={sheet(content: :content, is_presented: :show)}>
 ///   Present Sheet
 ///
-///   <VStack template={:content} modifiers={presentation_detents(@native, detents: [:medium, {:height, 100}]) |> presentation_content_interaction(interaction: :scrolls)}>
+///   <VStack template={:content} modifiers={presentation_detents([:medium, {:height, 100}]) |> presentation_content_interaction(:scrolls)}>
 ///     <ScrollView>
 ///       <Text>Hello, world!</Text>
 ///       <Button phx-click="toggle">Dismiss</Button>

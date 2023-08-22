@@ -22,7 +22,7 @@ import SwiftUI
 /// Pass the name of this event to the ``action`` argument.
 /// 
 /// ```html
-/// <List modifiers={@native |> on_delete_command(action: "remove_last")}>
+/// <List modifiers={on_delete_command(perform: "remove_last")}>
 ///   <%= for i <- 0..@count do %>
 ///     <Text id={"#{i}"}>
 ///       <%= i %>
@@ -34,7 +34,7 @@ import SwiftUI
 /// Whenever backspace or delete is pressed, the number of items in the list is decreased.
 /// 
 /// ## Arguments
-/// * ``action``
+/// * ``perform``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif

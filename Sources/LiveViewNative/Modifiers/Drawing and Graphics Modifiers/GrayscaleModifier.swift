@@ -12,7 +12,7 @@ import SwiftUI
 /// A grayscale effect reduces the intensity of colors in this view.
 ///
 /// ```html
-/// <Label modifiers={@native |> foreground_color(color: :red) |> grayscale(amount: 0.5)}>Color Text</Label>
+/// <Label modifiers={foreground_color(:red) |> grayscale(0.5)}>Color Text</Label>
 /// ```
 ///
 /// ## Arguments

@@ -18,9 +18,9 @@ import SwiftUI
 /// In this example, you can see how adding padding to the <doc:ContainerRelativeShape> causes the shape to be inset.
 ///
 /// ```html
-/// <ZStack modifiers={@native |> container_shape(shape: :capsule)}>
+/// <ZStack modifiers={container_shape(:capsule)}>
 ///   <%= for {color, index} <- Enum.with_index([:red, :orange, :yellow, :green, :blue, :purple]) do %>
-///     <ContainerRelativeShape modifiers={fill(@native, content: {:color, color}) |> padding(length: index * 30)} />
+///     <ContainerRelativeShape modifiers={fill({:color, color}) |> padding(index * 30)} />
 ///   <% end %>
 /// </ZStack>
 /// ```

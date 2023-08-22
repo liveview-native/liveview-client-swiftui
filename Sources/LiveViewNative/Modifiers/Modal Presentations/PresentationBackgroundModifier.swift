@@ -15,10 +15,10 @@ import SwiftUI
 ///
 /// This example uses a shape style:
 /// ```html
-/// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={sheet(content: :content, is_presented: :show)}>
 ///   Present Sheet
 ///
-///   <VStack template={:content} modifiers={presentation_background(@native, style: {:linear_gradient, [gradient: {:colors, [:red, :blue]}]})}>
+///   <VStack template={:content} modifiers={presentation_background({:linear_gradient, [gradient: {:colors, [:red, :blue]}]})}>
 ///     <presentation_background:background>
 ///       <Color name="system-orange" />
 ///     </presentation_background:background>

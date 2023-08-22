@@ -12,7 +12,7 @@ import SwiftUI
 /// Pass ``LiveViewNative/SwiftUI/EdgeInsets`` to the ``insets`` argument to set different padding amounts for each edge.
 ///
 /// ```html
-/// <Text modifiers={padding(@native, insets: [top: 10, bottom: 20])}>
+/// <Text modifiers={padding(insets: [top: 10, bottom: 20])}>
 ///     ...
 /// </Text>
 /// ```
@@ -20,10 +20,10 @@ import SwiftUI
 /// Set a ``length`` value to inset a set of ``edges`` by the same amount.
 ///
 /// ```html
-/// <Text modifiers={padding(@native, length: 10)}>
+/// <Text modifiers={padding(10)}>
 ///     ...
 /// </Text>
-/// <Text modifiers={padding(@native, edges: :horizontal, length: 10)}>
+/// <Text modifiers={padding(:horizontal, 10)}>
 ///     ...
 /// </Text>
 /// ```
@@ -31,7 +31,7 @@ import SwiftUI
 /// To use the system padding amount, omit the ``length`` argument.
 ///
 /// ```html
-/// <Text modifiers={padding(@native)}>
+/// <Text modifiers={padding([])}>
 ///     ...
 /// </Text>
 /// ```

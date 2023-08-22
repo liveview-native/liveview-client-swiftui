@@ -12,7 +12,7 @@ import SwiftUI
 /// ```html
 /// <Text
 ///     modifiers={
-///         textCase(@native, text_case: :uppercase)
+///         text_case(:uppercase)
 ///     }
 /// >
 ///   This text is displayed in uppercase.

@@ -12,7 +12,7 @@ import SwiftUI
 /// ```html
 /// <Button
 ///     modifiers={
-///         disabled(@native, disabled: true)
+///         disabled(true)
 ///     }
 /// >
 ///  <Label>This button is disabled</Label>

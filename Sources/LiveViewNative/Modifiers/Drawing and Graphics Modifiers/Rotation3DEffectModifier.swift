@@ -12,7 +12,7 @@ import SwiftUI
 /// Provide the ``angle`` and ``axis`` to rotate around to create the modifier.
 ///
 /// ```html
-/// <Text modifiers={rotation_3d_effect(@native, angle: {:degrees, 45}, axis: {0, 1, 0})}>
+/// <Text modifiers={rotation_3d_effect({:degrees, 45}, axis: {0, 1, 0})}>
 ///     Rotation by passing an angle in degrees
 /// </Text>
 /// ```

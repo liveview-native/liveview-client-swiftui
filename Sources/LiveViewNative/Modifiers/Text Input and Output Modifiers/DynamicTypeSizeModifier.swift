@@ -12,7 +12,7 @@ import SwiftUI
 /// ```html
 /// <Text
 ///     modifiers={
-///         dynamicTypeSize(@native, size: .x_large)
+///         dynamicTypeSize(:x_large)
 ///     }
 /// >
 ///  This element has extra large text.

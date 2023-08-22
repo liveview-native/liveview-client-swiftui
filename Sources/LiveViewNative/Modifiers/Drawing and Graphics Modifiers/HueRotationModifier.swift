@@ -17,9 +17,8 @@ import SwiftUI
 ///         <Rectangle
 ///             id={Integer.to_string(item)}
 ///             modifiers={
-///                 @native
-///                     |> foreground_style(primary: {:linear_gradient, %{ :gradient => {:colors, [:blue, :red, :green]}, :start_point => {0.5, 0}, :end_point => {0.5, 1} }})
-///                     |> hue_rotation(angle: {:degrees, item * 36})
+///                 foreground_style({:linear_gradient, %{ :gradient => {:colors, [:blue, :red, :green]}, :start_point => {0.5, 0}, :end_point => {0.5, 1} }})
+///                     |> hue_rotation({:degrees, item * 36})
 ///                     |> frame(width: 60, height: 60, alignment: :center)
 ///             }
 ///         />

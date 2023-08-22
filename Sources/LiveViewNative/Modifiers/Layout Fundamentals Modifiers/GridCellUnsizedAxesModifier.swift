@@ -21,7 +21,7 @@ import SwiftUI
 ///         <Text>Ocean Blue</Text>
 ///         <Rectangle
 ///             fill-color="system-blue"
-///             modifiers={@native |> grid_cell_unsized_axes(axes: :all)}
+///             modifiers={grid_cell_unsized_axes(:all)}
 ///         />
 ///     </GridRow>
 /// </Grid>

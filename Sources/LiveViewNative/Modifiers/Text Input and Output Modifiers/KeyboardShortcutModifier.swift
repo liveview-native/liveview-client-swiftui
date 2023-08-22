@@ -10,10 +10,10 @@ import SwiftUI
 /// Assigns a keyboard shortcut to the modified control.
 ///
 /// ```html
-/// <Button modifiers={keyboard_shortcut(@native, key: "+")}>Click Me!</Button>
-/// <Button modifiers={keyboard_shortcut(@native, key: "7")}>Click Me!</Button>
-/// <Button modifiers={keyboard_shortcut(@native, key: "s", modifiers: [:command])}>Click Me!</Button>
-/// <Button modifiers={keyboard_shortcut(@native, key: "s", modifiers: [:command, :shift])}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut("+")}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut("7")}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut("s", modifiers: [:command])}>Click Me!</Button>
+/// <Button modifiers={keyboard_shortcut("s", modifiers: [:command, :shift])}>Click Me!</Button>
 /// ```
 ///
 /// ## Arguments

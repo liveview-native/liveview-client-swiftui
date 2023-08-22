@@ -14,7 +14,7 @@ import SwiftUI
 /// This modifier ensures an element does not extend beyond the size it needs to present its children.
 ///
 /// ```html
-/// <ZStack modifiers={fixed_size(@native)}>
+/// <ZStack modifiers={fixed_size([])}>
 ///     <Rectangle fill-color="system-red" />
 ///     <Text>Hello, world!</Text>
 /// </ZStack>
@@ -25,7 +25,7 @@ import SwiftUI
 /// By default, both axes are fixed. Pass ``horizontal`` and/or ``vertical`` to specify which axes should be fixed to their ideal size.
 ///
 /// ```html
-/// <ZStack modifiers={fixed_size(@native, vertical: true)}>
+/// <ZStack modifiers={fixed_size(vertical: true)}>
 ///     <Rectangle fill-color="system-red" />
 ///     <Text>Hello, world!</Text>
 /// </ZStack>

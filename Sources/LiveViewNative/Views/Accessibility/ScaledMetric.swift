@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```html
 /// <ScaledMetric phx-change="scaled-value-changed" value={100} relative-to="large-title">
-///   <Image system-name="heart" resizable modifiers={frame(@native, width: @scaled_value, height: @scaled_value)}>
+///   <Image system-name="heart" resizable modifiers={frame(width: @scaled_value, height: @scaled_value)}>
 /// </ScaledMetric>
 /// ```
 ///

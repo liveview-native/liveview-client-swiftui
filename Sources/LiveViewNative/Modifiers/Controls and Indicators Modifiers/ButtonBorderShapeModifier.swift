@@ -10,10 +10,10 @@ import SwiftUI
 /// Alters the shape of any bordered buttons' borders.
 ///
 /// ```html
-/// <Button modifiers={button_style(@native, style: :bordered) |> button_border_shape(shape: :capsule)}>
+/// <Button modifiers={button_style(:bordered) |> button_border_shape(:capsule)}>
 ///     Capsule
 /// </Button>
-/// <Button modifiers={button_style(@native, style: :bordered) |> button_border_shape(shape: :rounded_rectangle, radius: 15)}>
+/// <Button modifiers={button_style(:bordered) |> button_border_shape(shape: :rounded_rectangle, radius: 15)}>
 ///     Rounded rectangle
 /// </Button>
 /// ```

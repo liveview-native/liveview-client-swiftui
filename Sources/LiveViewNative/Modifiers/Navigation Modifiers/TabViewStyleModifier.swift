@@ -12,7 +12,7 @@ import SwiftUI
 /// See ``TabViewStyle`` for a list of possible values.
 ///
 /// ```html
-/// <TabView modifiers={tab_view_style(@native, style: :page)}>
+/// <TabView modifiers={tab_view_style(:page)}>
 ///     ...
 /// </TabView>
 /// ```

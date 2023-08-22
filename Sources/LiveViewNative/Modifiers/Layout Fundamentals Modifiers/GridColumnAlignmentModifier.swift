@@ -21,7 +21,7 @@ import SwiftUI
 ///         <Text>Ocean Blue</Text>
 ///         <Rectangle
 ///             fill-color="system-blue"
-///             modifiers={@native |> grid_column_alignment(guide: :trailing)}
+///             modifiers={grid_column_alignment(:trailing)}
 ///         />
 ///     </GridRow>
 /// </Grid>

@@ -12,8 +12,8 @@ import SwiftUI
 /// See ``LiveViewNative/SwiftUI/SymbolVariants`` for a list of possible values.
 ///
 /// ```html
-/// <Image system-name="envelope" modifiers={symbol_variant(@native, variant: :fill)} />
-/// <Image system-name="envelope" modifiers={symbol_variant(@native, variant: [:circle, :fill])} />
+/// <Image system-name="envelope" modifiers={symbol_variant(:fill)} />
+/// <Image system-name="envelope" modifiers={symbol_variant([:circle, :fill])} />
 /// ```
 ///
 /// ## Arguments

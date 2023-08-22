@@ -43,7 +43,7 @@ import SwiftUI
 /// Use image modifiers to customize the appearance of an image.
 ///
 /// ```html
-/// <Image system-name="heart.fill" modifiers={@native |> resizable() |> symbol_rendering_mode(mode: :multicolor)} />
+/// <Image system-name="heart.fill" modifiers={resizable([]) |> symbol_rendering_mode(mode: :multicolor)} />
 /// ```
 ///
 /// These modifiers can be used on ``Image`` elements:

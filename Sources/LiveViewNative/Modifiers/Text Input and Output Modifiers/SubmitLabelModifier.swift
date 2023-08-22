@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the submit label for this view.
 ///
 /// ```html
-/// <TextField modifiers={submit_label(@native, submit_label: :search)}>
+/// <TextField modifiers={submit_label(:search)}>
 ///     Search for...
 /// </TextField>
 /// ```

@@ -12,7 +12,7 @@ import SwiftUI
 /// Note: The system may fall back to a more appropriate effect.
 ///
 /// ```html
-/// <Label modifiers={hover_effect(@native, effect: :lift)}>
+/// <Label modifiers={hover_effect(:lift)}>
 ///     Do you lift bro
 /// </Label>
 /// ```

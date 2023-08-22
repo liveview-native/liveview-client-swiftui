@@ -12,7 +12,7 @@ import SwiftUI
 /// Pass a ``LiveViewNative/SwiftUI/Font`` to the ``font`` argument to change the value.
 ///
 /// ```html
-/// <Text modifiers={font(@native, font: {:system, :large_title, [design: :serif]})}>
+/// <Text modifiers={font({:system, :large_title, [design: :serif]})}>
 ///     Hello, world!
 /// </Text>
 /// ```

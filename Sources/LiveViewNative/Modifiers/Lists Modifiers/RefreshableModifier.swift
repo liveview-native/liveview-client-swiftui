@@ -12,7 +12,7 @@ import SwiftUI
 /// Provide the name of an event to trigger when the system refresh action is triggered.
 ///
 /// ```html
-/// <List modifiers={refreshable(@native, action: "reload_items")}>
+/// <List modifiers={refreshable(action: "reload_items")}>
 ///     ...
 /// </List>
 /// ```
@@ -20,7 +20,7 @@ import SwiftUI
 /// A map can be specified as well to customize the event handling. See [`Event`](doc:Event/init(from:)) for more details.
 ///
 /// ```html
-/// <List modifiers={refreshable(@native, action: %{ :event => "reload_items", :params => %{ "index" => 1 } })}>
+/// <List modifiers={refreshable(action: %{ :event => "reload_items", :params => %{ "index" => 1 } })}>
 ///     ...
 /// </List>
 /// ```

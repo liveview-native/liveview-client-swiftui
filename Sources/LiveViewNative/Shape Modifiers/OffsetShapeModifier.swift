@@ -12,7 +12,7 @@ import SwiftUI
 /// - Note: This modifier only applies to ``Shape`` elements, and is separate from the ``OffsetModifier`` modifier.
 ///
 /// ```html
-/// <Circle modifiers={shape_offset(@native, x: 10, y: 50)} />
+/// <Circle modifiers={offset_shape(x: 10, y: 50)} />
 /// ```
 #if swift(>=5.8)
 @_documentation(visibility: public)

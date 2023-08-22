@@ -11,16 +11,15 @@ import SwiftUI
 ///
 /// ```html
 /// <HStack>
-///     <ZStack
-///         modifier={
-///             @native
-///                 |> drawing_group(opaque: false, color_mode: :non_linear)
-///                 |> opacity(opacity: 0.5)
-///         }
-///     >
-///         <Text>Hello, world!</Text>
-///         <Text modifiers={blur(@native, radius: 2)}>Hello, world!</Text>
-///     </ZStack>
+///   <ZStack
+///     modifier={
+///       drawing_group(opaque: false, color_mode: :non_linear)
+///       |> opacity(opacity: 0.5)
+///     }
+///   >
+///     <Text>Hello, world!</Text>
+///     <Text modifiers={blur(radius: 2)}>Hello, world!</Text>
+///   </ZStack>
 /// </HStack>
 /// ```
 ///

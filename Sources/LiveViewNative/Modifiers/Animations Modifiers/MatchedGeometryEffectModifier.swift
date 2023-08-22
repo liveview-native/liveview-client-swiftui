@@ -21,13 +21,13 @@ import SwiftUI
 /// Use the same `id` argument for elements that should be paired.
 ///
 /// ```html
-/// <VStack modifiers={@native |> animation(value: Atom.to_string(@is_flipped))}>
+/// <VStack modifiers={animation(value: Atom.to_string(@is_flipped))}>
 ///     <%= if @is_flipped do %>
-///         <Text id="a" modifiers={@native |> matched_geometry_effect(id: "a", namespace: :animation)}>A</Text>
-///         <Text id="b" modifiers={@native |> matched_geometry_effect(id: "b", namespace: :animation)}>B</Text>
+///         <Text id="a" modifiers={matched_geometry_effect(id: "a", namespace: :animation)}>A</Text>
+///         <Text id="b" modifiers={matched_geometry_effect(id: "b", namespace: :animation)}>B</Text>
 ///     <% else %>
-///         <Text id="b" modifiers={@native |> matched_geometry_effect(id: "b", namespace: :animation)}>B</Text>
-///         <Text id="a" modifiers={@native |> matched_geometry_effect(id: "a", namespace: :animation)}>A</Text>
+///         <Text id="b" modifiers={matched_geometry_effect(id: "b", namespace: :animation)}>B</Text>
+///         <Text id="a" modifiers={matched_geometry_effect(id: "a", namespace: :animation)}>A</Text>
 ///     <% end %>
 ///     <Button phx-click="flip">Flip</Button>
 /// </VStack>

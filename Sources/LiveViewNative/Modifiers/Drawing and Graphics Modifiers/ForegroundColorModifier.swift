@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Applies a foreground color to a view.
 /// ```html
-/// <Text modifiers={foreground_color(@native, color: :mint)}>
+/// <Text modifiers={foreground_color(:mint)}>
 ///   Minty fresh text.
 /// </Text>
 /// ```

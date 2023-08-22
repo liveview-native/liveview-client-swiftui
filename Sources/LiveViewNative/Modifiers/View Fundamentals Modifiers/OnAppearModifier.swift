@@ -10,7 +10,7 @@ import SwiftUI
 /// Fires an event when this view appears.
 ///
 /// ```html
-/// <Text modifiers={on_appear(@native, perform: "appear")}>Hello</Text>
+/// <Text modifiers={on_appear(perform: "appear")}>Hello</Text>
 /// ```
 ///
 /// ## Arguments

@@ -10,7 +10,7 @@ import SwiftUI
 /// Adjusts the scaling of images within an element.
 ///
 /// ```html
-/// <HStack modifiers={image_scale(@native, scale: :large)}>
+/// <HStack modifiers={image_scale(:large)}>
 ///   <Image system-name="heart.fill"></Image>
 /// </HStack>
 /// ```

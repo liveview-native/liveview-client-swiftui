@@ -10,14 +10,14 @@ import SwiftUI
 /// Adds a context menu with actions and an optional preview. to the given view.
 ///
 /// ```html
-/// <Text modifiers={context_menu(@native, menu_items: :items, preview: :preview)}>
+/// <Text modifiers={context_menu(menu_items: :items, preview: :preview)}>
 ///   My Menu
 ///
 ///   <Group template={:items}>
 ///     <Button>Action 1</Button>
 ///     <Button>Action 2</Button>
 ///   </Group>
-///   <Rectangle template={:preview} fill-color="system-red" modifiers={frame(@native, width: 100, height: 100)} />
+///   <Rectangle template={:preview} fill-color="system-red" modifiers={frame(width: 100, height: 100)} />
 /// </Text>
 /// ```
 ///

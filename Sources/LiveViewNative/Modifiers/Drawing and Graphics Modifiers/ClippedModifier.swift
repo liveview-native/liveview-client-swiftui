@@ -12,8 +12,7 @@ import SwiftUI
 /// ```html
 /// <Circle
 ///     modifiers={
-///         @native
-///         |> foreground_color(color: :mint)
+///         foreground_color(:mint)
 ///         |> frame(width: 20, height: 20)
 ///         |> clipped(antialiased: true)
 ///     }

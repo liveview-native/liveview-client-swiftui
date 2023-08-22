@@ -12,8 +12,7 @@ import SwiftUI
 /// ```html
 /// <Button phx-click="toggle-show"
 ///     modifiers={
-///         @native
-///         |> confirmation_dialog(title: "Are you sure?", title_visibility: :visible, actions: :actions, is_presented: @show, change: "presentation-changed")
+///         confirmation_dialog("Are you sure?", title_visibility: :visible, actions: :actions, is_presented: @show, change: "presentation-changed")
 ///     }
 /// >
 ///   Present Confirmation Dialog

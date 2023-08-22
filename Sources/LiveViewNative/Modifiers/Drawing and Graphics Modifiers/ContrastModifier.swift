@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the contrast and separation between similar colors in this view.
 ///
 /// ```html
-/// <Circle modifiers={@native |> foreground_style(primary: {:color, :red}) |> contrast(amount: 0.5)} />
+/// <Circle modifiers={foreground_style({:color, :red}) |> contrast(0.5)} />
 /// ```
 ///
 /// ## Arguments

@@ -12,7 +12,7 @@ import SwiftUI
 /// ```html
 /// <Text
 ///     modifiers={
-///         opacity(@native, opacity: 0.5)
+///         opacity(0.5)
 ///     }
 /// >Hello World!</Text>
 /// ```

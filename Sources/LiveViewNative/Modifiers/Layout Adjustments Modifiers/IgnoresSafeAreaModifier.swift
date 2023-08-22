@@ -10,7 +10,7 @@ import SwiftUI
 /// Expands the view out of its safe area.
 ///
 /// ```html
-/// <Text modifiers={ignores_safe_area(@native, regions: :container, edges: :top)}>
+/// <Text modifiers={ignores_safe_area(:container, edges: :top)}>
 ///     ...
 /// </Text>
 /// ```

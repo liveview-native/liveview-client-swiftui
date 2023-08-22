@@ -10,7 +10,7 @@ import SwiftUI
 /// Adds a shadow to this view.
 ///
 /// ```html
-/// <Text modifiers={shadow(@native, color: :gray, radius: 2, x: 2, y: 2)}>Shadowed Text</Text>
+/// <Text modifiers={shadow(color: :gray, radius: 2, x: 2, y: 2)}>Shadowed Text</Text>
 /// ```
 ///
 /// ## Arguments

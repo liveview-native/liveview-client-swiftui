@@ -11,7 +11,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.OnTapGesture do
     field :mask, Ecto.Enum, values: ~w(none gesture subviews all)a, default: :all
   end
 
-  def params(gesture, [action: action, priority: priority, mask: mask]),
-    do: [gesture: gesture, action: action, priority: priority, mask: mask]
+  def params(gesture, params), do: [{:gesture, gesture} | params]
   def params(params), do: params
 end

@@ -12,9 +12,8 @@ import SwiftUI
 /// ```html
 /// <Circle
 ///     modifiers={
-///         @native
-///         |> frame(width: 32, height: 32)
-///         |> allows_hit_testing(enabled: true)
+///         frame(width: 32, height: 32)
+///         |> allows_hit_testing(true)
 ///     }
 /// />
 /// ```

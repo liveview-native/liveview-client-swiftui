@@ -14,7 +14,7 @@ import SwiftUI
 /// ```html
 /// <VStack
 ///     modifiers={
-///         preferred_color_scheme(@native, color_scheme: :light)
+///         preferred_color_scheme(:light)
 ///     }
 /// >
 ///   This view will present in light mode, regardless of the system setting.

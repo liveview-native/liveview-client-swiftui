@@ -32,11 +32,10 @@ import SwiftUI
 /// <TextField
 ///     text="value"
 ///     modifiers={
-///         @native
-///         |> autocorrection_disabled(disable: true)
-///         |> text_input_autocapitalization(autocapitalization: :words)
-///         |> keyboard_type(keyboard_type: :web_search)
-///         |> submit_label(submit_label: :search)
+///         autocorrection_disabled(true)
+///         |> text_input_autocapitalization(:words)
+///         |> keyboard_type(:web_search)
+///         |> submit_label(:search)
 ///     }
 /// >
 ///     Enter Search Text
@@ -52,7 +51,7 @@ import SwiftUI
 ///         text="amount"
 ///         format="currency"
 ///         currency-code="usd"
-///         modifier={@native |> keyboard_type(keyboard_type: :decimal_pad)}
+///         modifier={keyboard_type(:decimal_pad)}
 ///     >
 ///         Enter Amount
 ///     </TextField>

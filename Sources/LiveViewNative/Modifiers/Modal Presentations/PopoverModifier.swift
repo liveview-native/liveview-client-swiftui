@@ -12,7 +12,7 @@ import SwiftUI
 /// - Note: Popovers are rendered as a sheet on iOS. Use ``PresentationCompactAdaptationModifier`` to customize this behavior.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={popover(@native, content: :content, is_presented: @show, change: "presentation-changed")}>
+/// <Button phx-click="toggle" modifiers={popover(content: :content, is_presented: @show, change: "presentation-changed")}>
 ///   Present Popover
 ///   <VStack template={:content}>
 ///     <Text>Hello, world!</Text>
@@ -37,7 +37,7 @@ import SwiftUI
 /// ```html
 /// <Button
 ///   modifiers={
-///     popover(@native,
+///     popover(
 ///       content: :content,
 ///       is_presented: :show,
 ///       attachment_anchor: {:point, :bottom},

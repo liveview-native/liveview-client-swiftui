@@ -12,7 +12,7 @@ import SwiftUI
 /// Provide a ``startFraction`` and/or ``endFraction`` to trim the beginning/end of the ``Shape``.
 ///
 /// ```html
-/// <Circle modifiers={trim(@native, start_fraction: 0.5, end_fraction: 1)} />
+/// <Circle modifiers={trim(from: 0.5, to: 1)} />
 /// ```
 ///
 /// ## Arguments

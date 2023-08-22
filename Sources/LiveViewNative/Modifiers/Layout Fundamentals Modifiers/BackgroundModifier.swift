@@ -18,7 +18,7 @@ import SwiftUI
 ///
 /// ```html
 /// <HStack>
-///   <Image system-name="heart.fill" modifiers={@native |> background(alignment: :center, content: :bg_content)}>
+///   <Image system-name="heart.fill" modifiers={background(alignment: :center, content: :bg_content)}>
 ///     <Circle template={:bg_content} />
 ///   </Image>
 /// </HStack>
@@ -30,7 +30,7 @@ import SwiftUI
 /// Use ``ignoresSafeAreaEdges`` to control how the background interacts with safe areas.
 ///
 /// ```html
-/// <Text modifiers={@native |> background(style: {:color, :red})}>
+/// <Text modifiers={background({:color, :red})}>
 ///   Hello, world!
 /// </Text>
 /// ```
@@ -43,7 +43,7 @@ import SwiftUI
 /// Optionally provide the ``style`` and ``fillStyle`` arguments to customize the fill.
 ///
 /// ```html
-/// <Text modifiers={@native |> background(style: {:color, :red}, shape: :capsule)}>
+/// <Text modifiers={background({:color, :red}, in: :capsule)}>
 ///   Hello, world!
 /// </Text>
 /// ```

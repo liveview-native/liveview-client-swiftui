@@ -10,7 +10,7 @@ import SwiftUI
 /// Adds a reason to apply a redaction to this view hierarchy.
 ///
 /// ```html
-/// <VStack modifiers={redacted(@native, reason: :placeholder)}>
+/// <VStack modifiers={redacted(reason: :placeholder)}>
 ///   <Text>Title</Text>
 ///   <Text>Sub Title</Text>
 /// </VStack>

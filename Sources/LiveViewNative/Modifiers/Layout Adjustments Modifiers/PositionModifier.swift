@@ -12,7 +12,7 @@ import SwiftUI
 /// The center of the element is placed at the provided ``x`` and ``y`` coordinates in its parent's coordinate space.
 ///
 /// ```html
-/// <Text modifiers={position(@native, x: 100, y: 50)}>
+/// <Text modifiers={position(x: 100, y: 50)}>
 ///     Hello, world!
 /// </Text>
 /// ```

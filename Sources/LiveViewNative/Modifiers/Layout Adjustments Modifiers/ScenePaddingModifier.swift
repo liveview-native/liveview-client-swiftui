@@ -10,7 +10,7 @@ import SwiftUI
 /// Adds a specified kind of padding to the specified edges of this view using an amount that’s appropriate for the current scene.
 ///
 /// ```html
-/// <Text modifiers={scene_padding(@native, padding: :minimum, edges: :top)}>
+/// <Text modifiers={scene_padding(:minimum, edges: :top)}>
 ///     ...
 /// </Text>
 /// ```

@@ -10,8 +10,8 @@ import SwiftUI
 /// Enables an image to fill the available space.
 ///
 /// ```html
-/// <Image system-name="heart.fill" modifiers={resizable(@native)} />
-/// <Image system-name="heart.fill" modifiers={resizable(@native, resizing_mode: :tile)} />
+/// <Image system-name="heart.fill" modifiers={resizable([])} />
+/// <Image system-name="heart.fill" modifiers={resizable(resizing_mode: :tile)} />
 /// ```
 ///
 /// ## Arguments

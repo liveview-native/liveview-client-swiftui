@@ -13,7 +13,7 @@ import SwiftUI
 /// ```html
 /// <Text
 ///     modifiers={
-///         monospaced_digit(@native)
+///         monospaced_digit([])
 ///     }
 /// >
 ///   The following numbers are monospaced: 1234567890

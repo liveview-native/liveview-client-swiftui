@@ -20,7 +20,7 @@ import SwiftUI
 /// ```html
 /// <List>
 ///     <Text
-///         modifiers={list_row_separator_tint(@native, color: :blue, edges: :bottom)}
+///         modifiers={list_row_separator_tint(:blue, edges: :bottom)}
 ///         id="blue"
 ///     >
 ///         Blue Below
@@ -29,7 +29,7 @@ import SwiftUI
 ///         Neutral
 ///     </Text>
 ///     <Text
-///         modifiers={list_row_separator_tint(@native, color: :green, edges: :top)}
+///         modifiers={list_row_separator_tint(:green, edges: :top)}
 ///         id="green"
 ///     >
 ///         Green Above
