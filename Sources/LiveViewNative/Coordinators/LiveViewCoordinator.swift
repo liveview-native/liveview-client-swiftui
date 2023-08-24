@@ -119,6 +119,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         } else if session.configuration.navigationMode.permitsRedirects,
                   let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
             try await session.redirect(redirect)
+        } else if session.configuration.navigationMode.permitsRedirects,
+                  let redirect = (replyPayload["redirect"] as? Payload),
+                  let destination = (redirect["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
+        {
+            try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
         }
     }
     
@@ -248,6 +253,22 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                       let redirect = LiveRedirect(from: message.payload, relativeTo: self.url)
                 else { return }
                 try await self.session.redirect(redirect)
+            }
+        }
+        channel.on("live_patch") { [weak self] message in
+            Task {
+                guard let self,
+                      let redirect = LiveRedirect(from: message.payload, relativeTo: self.url, mode: .patch)
+                else { return }
+                try await self.session.redirect(redirect)
+            }
+        }
+        channel.on("redirect") { [weak self] message in
+            Task {
+                guard let self,
+                      let destination = (message.payload["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
+                else { return }
+                try await self.session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
             }
         }
         channel.on("phx_close") { [weak self, weak channel] message in
