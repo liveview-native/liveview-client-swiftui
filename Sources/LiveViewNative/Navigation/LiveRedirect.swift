@@ -56,14 +56,25 @@ struct LiveRedirect {
         /// 2. If the kind is ``LiveRedirect/Kind/redirect`` and the destination is the same as the previous path, the current entry is popped and no new ``LiveViewCoordinator`` is connected.
         /// Otherwise a new ``LiveViewCoordinator`` is created in place of the top-most entry.
         case multiplex
+        
+        /// A `live_patch` style redirect.
+        ///
+        /// This replaces the URL of the page without reloading anything. It can be a push or replace kind.
+        case patch
     }
     
-    init?(from payload: Payload, relativeTo rootURL: URL) {
+    init(kind: Kind, to: URL, mode: Mode) {
+        self.kind = kind
+        self.to = to
+        self.mode = mode
+    }
+    
+    init?(from payload: Payload, relativeTo rootURL: URL, mode: Mode = .replaceTop) {
         guard let kind = (payload["kind"] as? String).flatMap(Kind.init),
               let to = (payload["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: rootURL) })
         else { return nil }
         self.kind = kind
         self.to = to.appending(path: "").absoluteURL
-        self.mode = (payload["mode"] as? String).flatMap(Mode.init) ?? .replaceTop
+        self.mode = (payload["mode"] as? String).flatMap(Mode.init) ?? mode
     }
 }
