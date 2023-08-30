@@ -278,17 +278,19 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             }
         }
         
-        let joinResult = try await join(channel: channel)
-        
-        switch joinResult {
-        case .rendered(let payload):
-            self.handleJoinPayload(renderedPayload: payload)
-        case .redirect(let liveRedirect):
-            self.url = liveRedirect.to
-            try await self.connect(domValues: domValues, redirect: true)
+        for try await joinResult in join(channel: channel) {
+            print("Received join result \(joinResult)")
+            switch joinResult {
+            case .rendered(let payload):
+                self.handleJoinPayload(renderedPayload: payload)
+            case .redirect(let liveRedirect):
+                self.url = liveRedirect.to
+                try await self.connect(domValues: domValues, redirect: true)
+            }
+            
+            self.internalState = .connected
         }
         
-        self.internalState = .connected
     }
     
     func disconnect() async {
@@ -312,12 +314,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         case redirect(LiveRedirect)
     }
 
-    private func join(channel: Channel) async throws -> JoinResult {
-        try await withCheckedThrowingContinuation { continuation in
-            channel.join()
+    private func join(channel: Channel) -> AsyncThrowingStream<JoinResult, Error> {
+        return AsyncThrowingStream<JoinResult, Error> { [weak channel] (continuation: AsyncThrowingStream<JoinResult, Error>.Continuation) -> Void in
+            channel?.join()
                 .receive("ok") { [weak self, weak channel] message in
                     guard let channel else {
-                        continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                        continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
                         return
                     }
                     guard self != nil else {
@@ -325,21 +327,21 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         if channel.isJoined {
                             channel.leave()
                         }
-                        continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                        continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
                         return
                     }
                     let renderedPayload = (message.payload["rendered"] as! Payload)
-                    continuation.resume(returning: .rendered(renderedPayload))
+                    continuation.yield(.rendered(renderedPayload))
                 }
                 .receive("error") { [weak self, weak channel] message in
                     guard channel != nil else {
-                        continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                        continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
                         return
                     }
                     
                     Task { [weak self] in
                         guard let self else {
-                            continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+                            continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
                             return
                         }
                         
@@ -347,12 +349,18 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         
                         if self.session.configuration.navigationMode.permitsRedirects,
                            let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
-                            continuation.resume(returning: .redirect(redirect))
+                            continuation.yield(.redirect(redirect))
                         } else {
-                            continuation.resume(throwing: LiveConnectionError.joinError(message))
+                            continuation.finish(throwing: LiveConnectionError.joinError(message))
                         }
                     }
                 }
+            channel?.on("phx_close") { _ in
+                continuation.finish()
+            }
+            continuation.onTermination = { [weak channel] termination in
+                channel?.leave()
+            }
         }
     }
     
