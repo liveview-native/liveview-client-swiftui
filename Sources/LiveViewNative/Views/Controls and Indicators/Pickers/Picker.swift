@@ -27,9 +27,6 @@ import SwiftUI
 /// ## Attributes
 /// - ``selection``
 ///
-/// ## Attributes
-/// - ``selection``
-///
 /// ## Children
 /// - `content`
 /// - `label`
