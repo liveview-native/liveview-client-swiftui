@@ -280,7 +280,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         let joinTask = Task {
             for try await joinResult in join(channel: channel) {
-                print("Received join result \(joinResult)")
                 switch joinResult {
                 case .rendered(let payload):
                     self.handleJoinPayload(renderedPayload: payload)
