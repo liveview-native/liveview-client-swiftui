@@ -278,19 +278,24 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             }
         }
         
-        for try await joinResult in join(channel: channel) {
-            print("Received join result \(joinResult)")
-            switch joinResult {
-            case .rendered(let payload):
-                self.handleJoinPayload(renderedPayload: payload)
-            case .redirect(let liveRedirect):
-                self.url = liveRedirect.to
-                try await self.connect(domValues: domValues, redirect: true)
+        let joinTask = Task {
+            for try await joinResult in join(channel: channel) {
+                print("Received join result \(joinResult)")
+                switch joinResult {
+                case .rendered(let payload):
+                    self.handleJoinPayload(renderedPayload: payload)
+                case .redirect(let liveRedirect):
+                    self.url = liveRedirect.to
+                    try await self.connect(domValues: domValues, redirect: true)
+                }
+                
+                self.internalState = .connected
             }
-            
-            self.internalState = .connected
         }
         
+        channel.onClose { _ in
+            joinTask.cancel()
+        }
     }
     
     func disconnect() async {
@@ -355,7 +360,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         }
                     }
                 }
-            channel?.on("phx_close") { _ in
+            channel?.onClose { _ in
                 continuation.finish()
             }
             continuation.onTermination = { [weak channel] termination in
