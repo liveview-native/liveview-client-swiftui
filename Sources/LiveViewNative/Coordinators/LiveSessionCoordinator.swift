@@ -121,7 +121,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// This function is a no-op unless ``state`` is ``LiveSessionState/notConnected``.
     ///
     /// This is an async function which completes when the connection has been established or failed.
-    public func connect(connectRootCoordinator: Bool = true) async {
+    public func connect() async {
         guard case .notConnected = internalState else {
             return
         }
@@ -158,12 +158,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
         }
         
-        if connectRootCoordinator {
-            do {
-                try await rootCoordinator.connect(domValues: domValues, redirect: false)
-            } catch {
-                self.internalState = .connectionFailed(error)
-            }
+        do {
+            try await rootCoordinator.connect(domValues: domValues, redirect: false)
+        } catch {
+            self.internalState = .connectionFailed(error)
         }
     }
     
