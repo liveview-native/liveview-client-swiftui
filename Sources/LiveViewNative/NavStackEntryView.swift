@@ -30,23 +30,21 @@ struct NavStackEntryView<R: RootRegistry>: View {
             }
             .onChange(of: scenePhase) { newValue in
                 guard coordinator.url == entry.url else { return }
-                Task {
-                    switch newValue {
-                    case .background:
-                        await coordinator.disconnect()
-                    case .active:
-                        if coordinator.session.socket?.isConnected == false {
-                            await coordinator.session.connect(connectRootCoordinator: false)
-                            try await coordinator.connect(domValues: coordinator.session.domValues, redirect: false)
-                        } else {
-                            try await coordinator.connect(domValues: coordinator.session.domValues, redirect: true)
-                        }
-                    case .inactive:
-                        break
-                    @unknown default:
-                        break
-                    }
-                }
+//                Task {
+//                    switch newValue {
+//                    case .active:
+//                        if coordinator.session.socket?.isConnected == false {
+//                            await coordinator.session.connect(connectRootCoordinator: false)
+//                            try await coordinator.connect(domValues: coordinator.session.domValues, redirect: false)
+//                        } else {
+//                            try await coordinator.connect(domValues: coordinator.session.domValues, redirect: true)
+//                        }
+//                    case .inactive:
+//                        break
+//                    @unknown default:
+//                        break
+//                    }
+//                }
             }
     }
     
