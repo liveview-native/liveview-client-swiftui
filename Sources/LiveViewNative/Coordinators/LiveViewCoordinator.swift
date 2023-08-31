@@ -308,9 +308,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                     }
             }
         }
-        channel = nil
-        self.internalState = .notConnected
-        self.document = nil
+        await MainActor.run { [weak self] in
+            self?.channel = nil
+            self?.internalState = .notConnected
+            self?.document = nil
+        }
     }
     
     enum JoinResult {

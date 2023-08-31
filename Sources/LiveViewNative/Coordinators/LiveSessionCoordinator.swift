@@ -83,7 +83,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 let last = next.last ?? .init(url: self.url, coordinator: self.rootCoordinator)
                 if last.coordinator.url != last.url {
                     last.coordinator.url = last.url
-                    Task { @MainActor in
+                    Task {
                         try await last.coordinator.connect(domValues: self.domValues, redirect: true)
                     }
                 }
