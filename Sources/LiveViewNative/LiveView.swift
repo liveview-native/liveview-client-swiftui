@@ -51,6 +51,8 @@ public struct LiveView<R: RootRegistry>: View {
     
     @ObservedObject private var rootCoordinator: LiveViewCoordinator<R>
     
+    @Environment(\.scenePhase) private var scenePhase
+    
     /// Creates a new LiveView attached to the given coordinator.
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
@@ -140,6 +142,14 @@ public struct LiveView<R: RootRegistry>: View {
         }
             .task {
                 await storage.session.connect()
+            }
+            .onChange(of: scenePhase) { newValue in
+                guard case .active = newValue,
+                      storage.session.socket?.isConnected == false
+                else { return }
+                Task {
+                    await storage.session.connect()
+                }
             }
     }
         
