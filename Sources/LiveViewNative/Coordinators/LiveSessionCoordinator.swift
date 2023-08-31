@@ -48,7 +48,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     // Socket connection
     var socket: Socket?
     
-    private(set) var domValues: DOMValues!
+    private var domValues: DOMValues!
     
     private var liveReloadSocket: Socket?
     private var liveReloadChannel: Channel?
@@ -165,7 +165,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    func disconnect() async {
+    private func disconnect() async {
         await rootCoordinator.disconnect()
         for entry in self.navigationPath {
             await entry.coordinator.disconnect()
