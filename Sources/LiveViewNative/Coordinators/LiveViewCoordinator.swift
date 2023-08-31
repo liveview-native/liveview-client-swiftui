@@ -282,7 +282,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             for try await joinResult in join(channel: channel) {
                 switch joinResult {
                 case .rendered(let payload):
-                    self.handleJoinPayload(renderedPayload: payload)
+                    await MainActor.run {
+                        self.internalState = .connecting
+                    }
+                    await MainActor.run {
+                        self.handleJoinPayload(renderedPayload: payload)
+                    }
                 case .redirect(let liveRedirect):
                     self.url = liveRedirect.to
                     try await self.connect(domValues: domValues, redirect: true)
