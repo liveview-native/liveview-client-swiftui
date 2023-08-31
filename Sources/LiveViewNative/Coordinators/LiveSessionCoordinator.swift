@@ -48,7 +48,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     // Socket connection
     var socket: Socket?
     
-    private var domValues: DOMValues!
+    private(set) var domValues: DOMValues!
     
     private var liveReloadSocket: Socket?
     private var liveReloadChannel: Channel?
@@ -121,7 +121,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// This function is a no-op unless ``state`` is ``LiveSessionState/notConnected``.
     ///
     /// This is an async function which completes when the connection has been established or failed.
-    public func connect() async {
+    public func connect(connectRootCoordinator: Bool = true) async {
         guard case .notConnected = internalState else {
             return
         }
@@ -158,14 +158,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
         }
         
-        do {
-            try await rootCoordinator.connect(domValues: domValues, redirect: false)
-        } catch {
-            self.internalState = .connectionFailed(error)
+        if connectRootCoordinator {
+            do {
+                try await rootCoordinator.connect(domValues: domValues, redirect: false)
+            } catch {
+                self.internalState = .connectionFailed(error)
+            }
         }
     }
     
-    private func disconnect() async {
+    func disconnect() async {
         await rootCoordinator.disconnect()
         for entry in self.navigationPath {
             await entry.coordinator.disconnect()

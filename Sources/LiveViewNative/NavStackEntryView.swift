@@ -12,6 +12,7 @@ struct NavStackEntryView<R: RootRegistry>: View {
     private let entry: LiveNavigationEntry<R>
     @ObservedObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel()
+    @Environment(\.scenePhase) private var scenePhase
     
     init(_ entry: LiveNavigationEntry<R>) {
         self.entry = entry
@@ -25,6 +26,26 @@ struct NavStackEntryView<R: RootRegistry>: View {
                 if let doc = newDocument {
                     // todo: doing this every time the DOM changes is probably not efficient
                     liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
+                }
+            }
+            .onChange(of: scenePhase) { newValue in
+                guard coordinator.url == entry.url else { return }
+                Task {
+                    switch newValue {
+                    case .background:
+                        await coordinator.disconnect()
+                    case .active:
+                        if coordinator.session.socket?.isConnected == false {
+                            await coordinator.session.connect(connectRootCoordinator: false)
+                            try await coordinator.connect(domValues: coordinator.session.domValues, redirect: false)
+                        } else {
+                            try await coordinator.connect(domValues: coordinator.session.domValues, redirect: true)
+                        }
+                    case .inactive:
+                        break
+                    @unknown default:
+                        break
+                    }
                 }
             }
     }
