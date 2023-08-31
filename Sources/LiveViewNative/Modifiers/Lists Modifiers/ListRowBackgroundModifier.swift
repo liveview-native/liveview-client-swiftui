@@ -15,7 +15,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List>
-///     <Text modifiers={list_row_background(@native, content: :my_background)}>
+///     <Text modifiers={list_row_background(content: :my_background)}>
 ///         ...
 ///         <Capsule template={:my_background} fill-color="system-red" />
 ///     </Text>

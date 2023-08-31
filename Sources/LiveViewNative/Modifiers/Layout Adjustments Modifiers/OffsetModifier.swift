@@ -12,7 +12,7 @@ import SwiftUI
 /// ```html
 /// <Text
 ///     modifiers={
-///         offset(@native, x: 24, y: 48)
+///         offset(x: 24, y: 48)
 ///     }
 /// >
 ///   This text is offset by 24 on the x axis and 48 on the y axis.

@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the alignment of a text view that contains multiple lines of text.
 ///
 /// ```html
-/// <Text modifiers={multiline_text_alignment(@native, alignment: :trailing)}>
+/// <Text modifiers={multiline_text_alignment(:trailing)}>
 ///   Hello world.
 ///   Goodbye cruel world.
 /// </Text>

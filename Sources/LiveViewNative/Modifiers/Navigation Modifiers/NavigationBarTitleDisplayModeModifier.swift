@@ -11,11 +11,10 @@ import SwiftUI
 ///
 /// ```html
 /// <VStack
-///     modifiers={
-///         @native
-///             |> navigation_title:(title: "Live View Native")
-///             |> navigation_bar_title_display_mode(display_mode: :large)
-///     }
+///   modifiers={
+///     navigation_title("Live View Native")
+///     |> navigation_bar_title_display_mode(:large)
+///   }
 /// >
 ///     <Text>Top</Text>
 ///     <Text>Bottom</Text>

@@ -13,13 +13,12 @@ import SwiftUI
 ///
 /// ```html
 /// <Text
-///     modifiers={
-///         @native
-///             |> content_transition(transition: :numeric_text)
-///             |> animation(value: @count)
-///     }
+///   modifiers={
+///     content_transition(:numeric_text)
+///       |> animation(value: @count)
+///   }
 /// >
-///     <%= @count %>
+///   <%= @count %>
 /// </Text>
 /// ```
 ///

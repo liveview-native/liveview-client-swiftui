@@ -19,7 +19,7 @@ import SwiftUI
 /// <Image
 ///   system-name="heart.fill"
 ///   modifiers={
-///     @native |> keyframe_animator(
+///     keyframe_animator(
 ///       initial_value: 1.0,
 ///       trigger: "#{@liked}",
 ///       keyframes: [
@@ -27,7 +27,7 @@ import SwiftUI
 ///         {:spring, 1.5, [duration: 0.8, spring: :bouncy]},
 ///         {:spring, 1.0, [spring: :bouncy]}
 ///       ],
-///       modifiers: @native |> scale_effect(x: 1.0, y: 1.0),
+///       modifiers: scale_effect(x: 1.0, y: 1.0),
 ///       properties: [scale_effect: [:x, :y]]
 ///     )
 ///   }

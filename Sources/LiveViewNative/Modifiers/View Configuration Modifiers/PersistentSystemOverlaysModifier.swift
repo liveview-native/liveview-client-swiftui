@@ -12,7 +12,7 @@ import SwiftUI
 /// - Note: This sets a preference, which the system may ignore.
 ///
 /// ```html
-/// <Text modifiers={@native |> persistent_system_overlays(visibility: :hidden)}>
+/// <Text modifiers={persistent_system_overlays(:hidden)}>
 ///   Immersive Content
 /// </Text>
 /// ```

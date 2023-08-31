@@ -10,8 +10,8 @@ import SwiftUI
 /// Defines the destination of a drag and drop operation that handles the dropped content with an event that you specify.
 ///
 /// ```html
-/// <Text modifiers={draggable(@native, payload: "ABC")}>ABC</Text>
-/// <Text modifiers={drop_destination(@native, action: "drop")}>
+/// <Text modifiers={draggable("ABC")}>ABC</Text>
+/// <Text modifiers={drop_destination(action: "drop")}>
 ///     Drop Here
 /// </Text>
 /// ```

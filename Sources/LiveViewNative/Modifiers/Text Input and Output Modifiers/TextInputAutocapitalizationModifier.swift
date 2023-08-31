@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets how often the shift key in the keyboard is automatically enabled.
 ///
 /// ```html
-/// <TextField modifiers={text_input_autocapitalization(@native, autocapitalization: :words)}>
+/// <TextField modifiers={text_input_autocapitalization(:words)}>
 ///     Full name
 /// </TextField>
 /// ```

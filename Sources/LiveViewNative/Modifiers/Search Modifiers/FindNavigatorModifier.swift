@@ -12,7 +12,7 @@ import SwiftUI
 /// Use this modifier with a ``TextEditor``:
 ///
 /// ```html
-/// <TextEditor text="my_text" modifiers={find_navigator(@native, is_presented: @show, change: "navigator-changed")} />
+/// <TextEditor text="my_text" modifiers={find_navigator(is_presented: @show, change: "navigator-changed")} />
 /// ```
 ///
 /// ```elixir

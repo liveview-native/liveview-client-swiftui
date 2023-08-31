@@ -10,9 +10,9 @@ import SwiftUI
 /// Sets the content shape for this view.
 ///
 /// ```html
-/// <Button modifiers={content_shape(@native, shape: :rectangle)}>Click Me!</Button>
-/// <Button modifiers={content_shape(@native, kind: :hover_effect, shape: :rectangle)}>Click Me!</Button>
-/// <Button modifiers={content_shape(@native, kind: [:hover_effect, :interaction], shape: :rectangle, eo_fill: true)}>Click Me!</Button>
+/// <Button modifiers={content_shape(:rectangle)}>Click Me!</Button>
+/// <Button modifiers={content_shape(:hover_effect, shape: :rectangle)}>Click Me!</Button>
+/// <Button modifiers={content_shape([:hover_effect, :interaction], shape: :rectangle, eo_fill: true)}>Click Me!</Button>
 /// ```
 ///
 /// ## Arguments

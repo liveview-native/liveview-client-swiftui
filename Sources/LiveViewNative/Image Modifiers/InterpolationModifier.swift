@@ -15,11 +15,11 @@ import SwiftUI
 /// ```html
 /// <Image
 ///   name="dot_green"
-///   modifiers={@native |> resizable() |> interpolation(interpolation: :none)}
+///   modifiers={resizable([]) |> interpolation(:none)}
 /// />
 /// <Image
 ///   name="dot_green"
-///   modifiers={@native |> resizable() |> interpolation(interpolation: :medium)}
+///   modifiers={resizable([]) |> interpolation(:medium)}
 /// />
 /// ```
 ///

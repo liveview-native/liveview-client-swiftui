@@ -17,6 +17,6 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Mask do
       trailing
       trailing_first_text_baseline
     )a, default: :center
-    field :content, KeyName
+    field :mask, KeyName
   end
 end

@@ -10,7 +10,7 @@ import SwiftUI
 /// A modifier that presents another view in full screen when ``isPresented`` is `true`.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={full_screen_cover(@native, content: :content, is_presented: @show, change: "presentation-changed")}>
+/// <Button phx-click="toggle" modifiers={full_screen_cover(content: :content, is_presented: @show, change: "presentation-changed")}>
 ///   Present Sheet
 ///   <VStack template={:content}>
 ///     <Text>Hello, world!</Text>

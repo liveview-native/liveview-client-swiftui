@@ -10,10 +10,10 @@ import SwiftUI
 /// Applies a font design to any element.
 ///
 /// ```html
-/// <Text modifiers={font_design(@native, design: :default)}>This text is default</Text>
-/// <Text modifiers={font_design(@native, design: :monospaced)}>This text is monospaced</Text>
-/// <Text modifiers={font_design(@native, design: :rounded)}>This text is rounded</Text>
-/// <Text modifiers={font_design(@native, design: :serif)}>This text is serif</Text>
+/// <Text modifiers={font_design(:default)}>This text is default</Text>
+/// <Text modifiers={font_design(:monospaced)}>This text is monospaced</Text>
+/// <Text modifiers={font_design(:rounded)}>This text is rounded</Text>
+/// <Text modifiers={font_design(:serif)}>This text is serif</Text>
 /// ```
 ///
 /// ## Arguments

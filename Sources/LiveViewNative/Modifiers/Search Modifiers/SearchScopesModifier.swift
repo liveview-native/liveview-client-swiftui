@@ -26,9 +26,8 @@ import SwiftUI
 /// ```html
 /// <List
 ///     modifiers={
-///         @native
-///         |> searchable(...)
-///         |> search_scopes(active: @active_scope, scopes: :scope_list, change: "scope-changed")
+///         searchable(...)
+///         |> search_scopes(@active_scope, scopes: :scope_list, change: "scope-changed")
 ///     }
 /// >
 ///     ...

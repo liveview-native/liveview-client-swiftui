@@ -10,7 +10,7 @@ import SwiftUI
 /// Specifies the visibility of the background for scrollable views within this view.
 ///
 /// ```html
-/// <List modifiers={@native |> scroll_content_background(visibility: :hidden)}>
+/// <List modifiers={scroll_content_background(:hidden)}>
 ///     <Text>One</Text>
 ///     <Text>Two</Text>
 ///     <Text>Three</Text>

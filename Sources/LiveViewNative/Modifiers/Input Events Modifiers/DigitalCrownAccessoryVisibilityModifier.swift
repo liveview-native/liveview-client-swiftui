@@ -13,13 +13,10 @@ import SwiftUI
 ///
 /// ```html
 /// <List modifiers={
-///     @native
-///     |> digital_crown_accessory(content: :dca_view)
-///     |> digital_crown_accessory_visibility(visibility: :visible)
+///   digital_crown_accessory(content: :dca_view)
+///   |> digital_crown_accessory_visibility(:visible)
 /// }>
-///     <digital_crown_accessory:dca_view>
-///         <Image system-name="heart.fill" />
-///     </digital_crown_accessory:dca_view>
+///   <Image template={:dca_view} system-name="heart.fill" />
 /// </List>
 /// ```
 ///

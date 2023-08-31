@@ -17,19 +17,19 @@ import SwiftUI
 /// <List>
 ///     <Label system-image="gear" id="gear">Default</Label>
 ///     <Label
-///         modifiers={list_item_tint(@native, tint: :monochrome)}
+///         modifiers={list_item_tint(:monochrome)}
 ///         system-image="square.lefthalf.filled" id="monochrome"
 ///     >
 ///         Monochrome
 ///     </Label>
 ///     <Label
-///         modifiers={list_item_tint(@native, tint: {:fixed, :red})}
+///         modifiers={list_item_tint({:fixed, :red})}
 ///         system-image="paintpalette.fill" id="fixed"
 ///     >
 ///         Fixed Red
 ///     </Label>
 ///     <Label
-///         modifiers={list_item_tint(@native, tint: {:preferred, :red})}
+///         modifiers={list_item_tint({:preferred, :red})}
 ///         system-image="swatchpalette.fill" id="preferred"
 ///     >
 ///         Preferred Red

@@ -10,7 +10,7 @@ import SwiftUI
 /// Configures the behavior in which scrollable content interacts with the software keyboard.
 ///
 /// ```html
-/// <List modifiers={@native |> scroll_dismisses_keyboard(mode: :never)}>
+/// <List modifiers={scroll_dismisses_keyboard(:never)}>
 ///     <Text>One</Text>
 ///     <Text>Two</Text>
 ///     <Text>Three</Text>

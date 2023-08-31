@@ -10,7 +10,7 @@ import SwiftUI
 /// Brighten the intensity of the colors in a view.
 ///
 /// ```html
-/// <Color name="system-red" modifiers={@native |> brightness(amount: 0.5)} />
+/// <Color name="system-red" modifiers={brightness(0.5)} />
 /// ```
 ///
 /// ## Arguments

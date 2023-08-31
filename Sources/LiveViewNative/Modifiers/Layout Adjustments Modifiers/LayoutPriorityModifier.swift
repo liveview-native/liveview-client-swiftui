@@ -17,7 +17,7 @@ import SwiftUI
 /// ```html
 /// <HStack>
 ///     <Text>Long string with a default priority of 0</Text>
-///     <Text modifiers={layout_priority(@native, value: 1)}>
+///     <Text modifiers={layout_priority(1)}>
 ///         Long string with higher layout priority of 1
 ///     </Text>
 /// </HStack>

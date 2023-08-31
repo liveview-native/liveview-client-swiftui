@@ -13,7 +13,7 @@ import SwiftUI
 /// Some modifiers cause shapes to no longer be insettable, such as ``TrimModifier``.
 ///
 /// ```html
-/// <Circle modifiers={inset(@native, amount: 10)} />
+/// <Circle modifiers={inset(10)} />
 /// ```
 ///
 /// ## Arguments

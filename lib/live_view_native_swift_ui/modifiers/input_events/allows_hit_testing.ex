@@ -4,4 +4,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.AllowsHitTesting do
   modifier_schema "allows_hit_testing" do
     field :enabled, :boolean
   end
+
+  def params(enabled) when is_boolean(enabled), do: [enabled: enabled]
+  def params(params), do: params
 end

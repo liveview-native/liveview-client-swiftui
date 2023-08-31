@@ -28,11 +28,11 @@ import SwiftUI
 /// Pass the name of this event to the ``action`` argument.
 ///
 /// ```html
-/// <Text modifiers={on_hover(@native, action: "hover")}>Hover Here</Text>
+/// <Text modifiers={on_hover(perform: "hover")}>Hover Here</Text>
 /// ```
 ///
 /// ## Arguments
-/// * ``action``
+/// * ``perform``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -44,24 +44,24 @@ struct OnHoverModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Event private var action: Event.EventHandler
+    @Event private var perform: Event.EventHandler
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._action = try container.decode(Event.self, forKey: .action)
+        self._perform = try container.decode(Event.self, forKey: .perform)
     }
 
     func body(content: Content) -> some View {
         content
             #if os(iOS) || os(macOS)
             .onHover { isHovering in
-                action(value: isHovering)
+                perform(value: isHovering)
             }
             #endif
     }
 
     enum CodingKeys: String, CodingKey {
-        case action
+        case perform
     }
 }

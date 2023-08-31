@@ -1,9 +1,9 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.OnDisappear do
   use LiveViewNativePlatform.Modifier
-  
-  alias LiveViewNativeSwiftUi.Types.Event
+
+  alias LiveViewNativePlatform.Modifier.Types.Event
 
   modifier_schema "on_disappear" do
-    field :action, Event
+    field :perform, Event
   end
 end

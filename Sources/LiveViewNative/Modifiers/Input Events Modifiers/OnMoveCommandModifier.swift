@@ -32,7 +32,7 @@ import SwiftUI
 /// Pass the name of this event to the ``action`` argument.
 ///
 /// ```html
-/// <Slider value={@value} modifiers={on_move_command(@native, action: "adjust")}>
+/// <Slider value={@value} modifiers={on_move_command(perform: "adjust")}>
 ///     Value
 /// </Slider>
 /// ```
@@ -40,7 +40,7 @@ import SwiftUI
 /// Now when the slider is focused, the left/right keys can be used to adjust the value.
 ///
 /// ## Arguments
-/// * ``action``
+/// * ``perform``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -52,12 +52,12 @@ struct OnMoveCommandModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Event private var action: Event.EventHandler
+    @Event private var perform: Event.EventHandler
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._action = try container.decode(Event.self, forKey: .action)
+        self._perform = try container.decode(Event.self, forKey: .perform)
     }
 
     func body(content: Content) -> some View {
@@ -66,21 +66,21 @@ struct OnMoveCommandModifier: ViewModifier, Decodable {
             .onMoveCommand { direction in
                 switch direction {
                 case .up:
-                    action(value: ["direction": "up"])
+                    perform(value: ["direction": "up"])
                 case .down:
-                    action(value: ["direction": "down"])
+                    perform(value: ["direction": "down"])
                 case .left:
-                    action(value: ["direction": "left"])
+                    perform(value: ["direction": "left"])
                 case .right:
-                    action(value: ["direction": "right"])
+                    perform(value: ["direction": "right"])
                 @unknown default:
-                    action(value: ["direction": String(describing: direction)])
+                    perform(value: ["direction": String(describing: direction)])
                 }
             }
             #endif
     }
 
     enum CodingKeys: String, CodingKey {
-        case action
+        case perform
     }
 }

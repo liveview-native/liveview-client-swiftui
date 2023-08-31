@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```html
 /// <%= if @show do %>
-///     <Text modifiers={transition(@native, transition: :scale)}>Scaled</Text>
+///     <Text modifiers={transition(:scale)}>Scaled</Text>
 /// <% end %>
 /// ```
 ///

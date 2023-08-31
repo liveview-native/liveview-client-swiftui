@@ -1,3 +1,8 @@
 defmodule LiveViewNativeSwiftUi do
-  use LiveViewNativePlatform.Platform
+  use LiveViewNativePlatform
+
+  def platforms,
+    do: [
+      LiveViewNativeSwiftUi.Platform
+    ]
 end

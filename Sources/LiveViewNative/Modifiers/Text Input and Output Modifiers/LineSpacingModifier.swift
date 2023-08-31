@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the amount of space between lines of text in this view.
 ///
 /// ```html
-/// <Text modifiers={line_spacing(@native, line_spacing: 0.2)}>
+/// <Text modifiers={line_spacing(0.2)}>
 ///     Hello, world!
 /// </Text>
 /// ```

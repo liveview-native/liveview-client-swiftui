@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List>
-///     <Section modifiers={header_prominence(@native, prominence: :increased} id="increased">
+///     <Section modifiers={header_prominence(:increased} id="increased">
 ///         ...
 ///     </Section>
 ///     ...

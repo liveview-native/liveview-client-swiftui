@@ -18,7 +18,7 @@ import SwiftUI
 ///         <Text>Column 2</Text>
 ///     </GridRow>
 ///     <GridRow>
-///         <Text modifiers={@native |> grid_cell_columns(count: 2)}>
+///         <Text modifiers={grid_cell_columns(2)}>
 ///             Multi-Column Content
 ///         </Text>
 ///     </GridRow>

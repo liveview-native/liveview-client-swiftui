@@ -10,7 +10,7 @@ import SwiftUI
 /// Scales this view’s rendered output by the given vertical and horizontal size amounts, relative to an anchor point.
 ///
 /// ```html
-/// <Text modifiers={scale_effect(@native, scale: [0.5, 0.5], anchor: :bottom)}>
+/// <Text modifiers={scale_effect(scale: [0.5, 0.5], anchor: :bottom)}>
 ///     Scale by a width and height factor
 /// </Text>
 /// ```

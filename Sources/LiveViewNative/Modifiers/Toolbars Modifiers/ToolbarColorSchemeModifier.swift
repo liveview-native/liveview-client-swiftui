@@ -12,7 +12,7 @@ import SwiftUI
 /// Pass the ``colorScheme`` argument to change the color scheme of the toolbar's background.
 ///
 /// ```html
-/// <Text modifiers={toolbar_color_scheme(@native, color_scheme: :dark, bars: :navigation_bar)}>
+/// <Text modifiers={toolbar_color_scheme(:dark, bars: :navigation_bar)}>
 ///     ...
 /// </Text>
 /// ```

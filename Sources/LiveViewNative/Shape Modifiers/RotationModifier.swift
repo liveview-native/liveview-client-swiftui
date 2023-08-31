@@ -12,7 +12,7 @@ import SwiftUI
 /// Pass an ``LiveViewNative/SwiftUI/Angle`` to rotate by.
 ///
 /// ```html
-/// <Circle modifiers={rotation(@native, angle: {:degrees, 10})} />
+/// <Circle modifiers={rotation({:degrees, 10})} />
 /// ```
 ///
 /// ## Arguments

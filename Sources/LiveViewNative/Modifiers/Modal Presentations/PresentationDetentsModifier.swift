@@ -12,10 +12,10 @@ import SwiftUI
 /// Use this modifier in the content of a ``SheetModifier``.
 ///
 /// ```html
-/// <Button phx-click="toggle" modifiers={sheet(@native, content: :content, on_dismiss: "dismiss", is_presented: :show)}>
+/// <Button phx-click="toggle" modifiers={sheet(content: :content, on_dismiss: "dismiss", is_presented: :show)}>
 ///   Present Sheet
 ///
-///   <VStack template={:content} modifiers={presentation_detents(@native, detents: [:medium, {:fraction, 0.3}, {:height, 100}])}>
+///   <VStack template={:content} modifiers={presentation_detents([:medium, {:fraction, 0.3}, {:height, 100}])}>
 ///     <Text>Hello, world!</Text>
 ///     <Button phx-click="toggle">Dismiss</Button>
 ///   </VStack>
@@ -25,7 +25,7 @@ import SwiftUI
 /// Use the ``selection`` and `change` arguments to synchronize the selected detent's index with the backend.
 ///
 /// ```html
-/// <VStack modifiers={presentation_detents(@native, detents: [...], selection: @active_detent, change: "presentation-changed")}>
+/// <VStack modifiers={presentation_detents([...], selection: @active_detent, change: "presentation-changed")}>
 ///   ...
 /// </VStack>
 /// ```

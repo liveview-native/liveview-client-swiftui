@@ -12,13 +12,12 @@ import SwiftUI
 /// ```html
 /// <Image system-name="envelope.badge.fill"
 ///     modifiers={
-///         @native
-///         |> foreground_color(color: :blue)
-///         |> font(font: {:system, :large_title})
-///         |> mask(alignment: :center, content: :mask)
+///         foreground_color(:blue)
+///         |> font({:system, :large_title})
+///         |> mask(alignment: :center, mask: :mask)
 ///     }
 /// >
-///     <Rectangle template={:mask} modifiers={@native |> opacity(opacity: 0.1)} />
+///     <Rectangle template={:mask} modifiers={opacity(0.1)} />
 /// </Image>
 /// ```
 ///
@@ -41,7 +40,7 @@ struct MaskModifier<R: RootRegistry>: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let content: String
+    private let mask: String
     
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -50,17 +49,17 @@ struct MaskModifier<R: RootRegistry>: ViewModifier, Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.alignment = try container.decode(Alignment.self, forKey: .alignment)
-        self.content = try container.decode(String.self, forKey: .content)
+        self.mask = try container.decode(String.self, forKey: .mask)
     }
 
     func body(content: Content) -> some View {
         content.mask(alignment: alignment) {
-            context.buildChildren(of: element, forTemplate: self.content)
+            context.buildChildren(of: element, forTemplate: self.mask)
         }
     }
 
     enum CodingKeys: String, CodingKey {
         case alignment
-        case content
+        case mask
     }
 }

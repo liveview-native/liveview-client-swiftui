@@ -12,7 +12,7 @@ import SwiftUI
 /// Pass a ``LiveViewNative/SwiftUI/Font/Weight`` to the ``weight`` argument to change the value.
 ///
 /// ```html
-/// <Text modifiers={font_weight(@native, weight: :bold)}>
+/// <Text modifiers={font_weight(:bold)}>
 ///     Hello, world!
 /// </Text>
 /// ```

@@ -14,7 +14,7 @@ import SwiftUI
 /// ```html
 /// <RenameButton
 ///     modifiers={
-///         rename_action(@native, event: "begin_rename", target: @myself)
+///         rename_action(%{ event: "begin_rename", target: @myself })
 ///     }
 /// />
 /// ```
@@ -30,33 +30,21 @@ struct RenameActionModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    private let event: String
-    /// The LiveView or LiveComponent to perform the event on.
-    ///
-    /// In a component, you may use the `@myself` assign to handle the event on the LiveComponent.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    private let target: Int?
-    @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
+    @Event private var action: Event.EventHandler
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.event = try container.decode(String.self, forKey: .event)
-        self.target = try container.decode(Int?.self, forKey: .target)
+        self._action = try container.decode(Event.self, forKey: .action)
     }
 
     private enum CodingKeys: String, CodingKey {
-        case event
-        case target
+        case action
     }
     
     func body(content: Content) -> some View {
         content
             .renameAction {
-                Task {
-                    try await coordinatorEnvironment?.pushEvent("click", event, [String:Any](), target)
-                }
+                action(value: [String:String]())
             }
     }
 }

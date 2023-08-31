@@ -15,13 +15,12 @@ import SwiftUI
 /// <HStack>
 ///     <ZStack
 ///         modifiers={
-///             @native
-///             |> compositing_group()
-///             |> opacity(opacity: 0.5)
+///             compositing_group([])
+///             |> opacity(0.5)
 ///         }
 ///     >
 ///         <Text>Hello, world!</Text>
-///         <Text modifiers={blur(@native, radius: 2)}>Hello, world!</Text>
+///         <Text modifiers={blur(radius: 2)}>Hello, world!</Text>
 ///     </ZStack>
 /// </HStack>
 /// ```

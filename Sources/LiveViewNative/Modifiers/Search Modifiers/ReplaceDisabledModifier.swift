@@ -12,7 +12,7 @@ import SwiftUI
 /// Use this modifier with a ``TextEditor``:
 ///
 /// ```html
-/// <TextEditor text="my_text" modifiers={replace_disabled(@native, disabled: true)} />
+/// <TextEditor text="my_text" modifiers={replace_disabled(true)} />
 /// ```
 ///
 /// ## Arguments

@@ -17,10 +17,10 @@ import SwiftUI
 ///
 /// ```html
 /// <List list-style="plain">
-///     <Section modifiers={list_section_separator_tint(@native, color: :blue, edges: :bottom)} id="blue">
+///     <Section modifiers={list_section_separator_tint(:blue, edges: :bottom)} id="blue">
 ///         ...
 ///     </Section>
-///     <Section modifiers={list_section_separator_tint(@native, color: :green)} id="green">
+///     <Section modifiers={list_section_separator_tint(:green)} id="green">
 ///         ...
 ///     </Section>
 /// </List>

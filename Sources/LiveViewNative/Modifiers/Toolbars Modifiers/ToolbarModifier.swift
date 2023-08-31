@@ -13,7 +13,7 @@ import LiveViewNativeCore
 /// Use the available toolbar elements to place items in the toolbar.
 ///
 /// ```html
-/// <Text modifiers={toolbar(@native, content: :my_toolbar_content)}>
+/// <Text modifiers={toolbar(content: :my_toolbar_content)}>
 ///     ...
 ///     <Group template={:my_toolbar_content}>
 ///         <ToolbarItem placement="confirmation-action">
@@ -41,7 +41,7 @@ import LiveViewNativeCore
 /// - Note: ``ToolbarItemGroup`` cannot be used in a customizable toolbar.
 ///
 /// ```html
-/// <Text modifiers={toolbar(@native, id: "my-main-bar", content: :editable_bar)}>
+/// <Text modifiers={toolbar(id: "my-main-bar", content: :editable_bar)}>
 ///     ...
 ///     <Group template={:editable_bar}>
 ///         <ToolbarItem id="search" placement="secondary-action">

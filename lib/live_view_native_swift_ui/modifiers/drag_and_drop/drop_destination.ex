@@ -1,7 +1,7 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.DropDestination do
   use LiveViewNativePlatform.Modifier
 
-  alias LiveViewNativeSwiftUi.Types.Event
+  alias LiveViewNativePlatform.Modifier.Types.Event
 
   modifier_schema "drop_destination" do
     field :action, Event

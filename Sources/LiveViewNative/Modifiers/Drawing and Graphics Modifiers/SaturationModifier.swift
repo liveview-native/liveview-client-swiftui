@@ -12,7 +12,7 @@ import SwiftUI
 /// Use color saturation to increase or decrease the intensity of colors in a view.
 ///
 /// ```html
-/// <Label modifiers={@native |> foreground_color(color: :red) |> saturation(amount: 0.5)}>Color Text</Label>
+/// <Label modifiers={foreground_color(:red) |> saturation(0.5)}>Color Text</Label>
 /// ```
 ///
 /// ## Arguments

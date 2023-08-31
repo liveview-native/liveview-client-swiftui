@@ -11,14 +11,13 @@ import SwiftUI
 ///
 /// ```html
 /// <HStack>
-///     <Color name="system-yellow" modifiers={@native |> frame(width: 50, height: 50, alignment: :center)} />
+///     <Color name="system-yellow" modifiers={frame(width: 50, height: 50, alignment: :center)} />
 ///     <Color name="system-red"
 ///         modifiers={
-///             @native
-///             |> frame(width: 50, height: 50, alignment: :center)
-///             |> rotation_effect(angle: {:degrees, 45})
-///             |> padding(all: -20)
-///             |> blend_mode(blend_mode: :color_burn)
+///             frame(width: 50, height: 50, alignment: :center)
+///             |> rotation_effect({:degrees, 45})
+///             |> padding(-20)
+///             |> blend_mode(:color_burn)
 ///         }
 ///     />
 /// </HStack>

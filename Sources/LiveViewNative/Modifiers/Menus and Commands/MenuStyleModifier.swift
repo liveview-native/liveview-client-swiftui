@@ -12,7 +12,7 @@ import SwiftUI
 /// The `button` style may be combined with the ``ButtonStyleModifier`` modifier to alter the button's appearance.
 ///
 /// ```html
-/// <Menu modifiers={menu_style(@native, style: :button) |> button_style(style: :bordered_prominent)}>
+/// <Menu modifiers={menu_style(:button) |> button_style(style: :bordered_prominent)}>
 ///     <Text template={:label}>
 ///         Edit Actions
 ///     </Text>

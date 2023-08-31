@@ -13,7 +13,7 @@ import SwiftUI
 /// 
 /// ```html
 /// <Text
-///     modifiers={toolbar_title_menu(@native, content: :my_menu)}
+///     modifiers={toolbar_title_menu(content: :my_menu)}
 /// >
 ///     ...
 ///     <Group template={:my_menu}>

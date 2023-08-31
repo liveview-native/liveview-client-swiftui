@@ -10,7 +10,7 @@ import SwiftUI
 /// Clips this view to its bounding frame, with the specified corner ``radius``.
 ///
 /// ```html
-/// <Image name="MyCustomImage" modifiers={@native |> corner_radius(radius: 8)} />
+/// <Image name="MyCustomImage" modifiers={corner_radius(8)} />
 /// ```
 ///
 /// ## Arguments

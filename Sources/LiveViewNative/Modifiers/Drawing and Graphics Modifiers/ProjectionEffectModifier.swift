@@ -14,7 +14,7 @@ import SwiftUI
 /// - Note: The frame of the element is not affected.
 ///
 /// ```html
-/// <Text modifiers={projection_effect(@native, transform: [
+/// <Text modifiers={projection_effect([
 ///     {:translate, {50, 0, 10}},
 ///     {:rotate, {:degrees, 45}, {0, 0, 1}},
 ///     {:scale, 0.5}

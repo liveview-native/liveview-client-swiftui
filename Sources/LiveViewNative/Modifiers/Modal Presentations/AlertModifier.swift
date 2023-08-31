@@ -12,8 +12,7 @@ import SwiftUI
 /// ```html
 /// <Button phx-click="toggle-show"
 ///     modifiers={
-///         @native
-///         |> alert(title: "My Alert", message: :message, actions: :actions, is_presented: @show, change: "presentation-changed")
+///         alert("My Alert", message: :message, actions: :actions, is_presented: @show, change: "presentation-changed")
 ///     }
 /// >
 ///   Present Alert

@@ -10,4 +10,14 @@ defmodule LiveViewNativeSwiftUi.Modifiers.MatchedGeometryEffect do
     field :anchor, UnitPoint
     field :is_source, :boolean, default: true
   end
+
+  def params([id: id, in: namespace, properties: properties, anchor: anchor, is_source: is_source]),
+    do: [
+      id: id,
+      namespace: namespace,
+      properties: properties,
+      anchor: anchor,
+      is_source: is_source
+    ]
+  def params(params), do: params
 end

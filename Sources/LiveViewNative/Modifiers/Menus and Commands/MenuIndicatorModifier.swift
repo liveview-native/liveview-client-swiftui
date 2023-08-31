@@ -10,7 +10,7 @@ import SwiftUI
 /// Specifies whether the indicator on a ``Menu`` should be visible.
 ///
 /// ```html
-/// <Menu modifiers={menu_style(@native, style: :button) |> menu_indicator_visibility(visibility: :hidden)}>
+/// <Menu modifiers={menu_style(:button) |> menu_indicator(visibility: :hidden)}>
 ///     <Text template={:label}>
 ///         Edit Actions
 ///     </Text>
@@ -28,7 +28,7 @@ import SwiftUI
 @_documentation(visibility: public)
 #endif
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
-struct MenuIndicatorVisibilityModifier: ViewModifier, Decodable {
+struct MenuIndicatorModifier: ViewModifier, Decodable {
     /// The indicator visibility.
     ///
     /// See ``LiveViewNative/SwiftUI/Visibility`` for possible values.
@@ -38,8 +38,9 @@ struct MenuIndicatorVisibilityModifier: ViewModifier, Decodable {
     private let visibility: Visibility
     
     func body(content: Content) -> some View {
-#if !os(watchOS)
-        content.menuIndicator(visibility)
-#endif
+        content
+            #if !os(watchOS)
+            .menuIndicator(visibility)
+            #endif
     }
 }

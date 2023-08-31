@@ -12,7 +12,7 @@ import SwiftUI
 /// Provide a ``ShapeReference`` to clip the element with.
 ///
 /// ```html
-/// <Text modifiers={clip_shape(@native, shape: :circle)}>
+/// <Text modifiers={clip_shape(:circle)}>
 ///     Hello,
 ///     world!
 /// </Text>
@@ -22,10 +22,10 @@ import SwiftUI
 /// This lets you apply modifiers to the clip shape.
 ///
 /// ```html
-/// <Text modifiers={clip_shape(@native, shape: :my_shape)}>
+/// <Text modifiers={clip_shape(:my_shape)}>
 ///     Hello,
 ///     world!
-///     <Rectangle template={:my_shape} modifiers={@native |> rotation(angle: {:degrees, 45})} />
+///     <Rectangle template={:my_shape} modifiers={rotation({:degrees, 45})} />
 /// </Text>
 /// ```
 ///

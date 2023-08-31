@@ -12,7 +12,7 @@ import SwiftUI
 /// Any child ``TextField`` will be given the specified ``style``.
 ///
 /// ```html
-/// <VStack modifiers={text_field_style(@native, style: :plain)}>
+/// <VStack modifiers={text_field_style(:plain)}>
 ///     <TextField text="email">Email</TextField>
 ///     <TextField text="password">Password</TextField>
 /// </VStack>

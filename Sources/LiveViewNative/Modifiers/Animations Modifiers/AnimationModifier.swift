@@ -16,8 +16,8 @@ import SwiftUI
 ///
 /// ```html
 /// <Rectangle
-///     modifiers={animation(@native, value: @color)}
-///     fill-color={@color}
+///   modifiers={animation(value: @color)}
+///   fill-color={@color}
 /// />
 /// ```
 ///
@@ -27,8 +27,8 @@ import SwiftUI
 ///
 /// ```html
 /// <Rectangle
-///     modifiers={animation(@native, animation: :ease_out, value: @color)}
-///     fill-color={@color}
+///   modifiers={animation(animation: :ease_out, value: @color)}
+///   fill-color={@color}
 /// />
 /// ```
 ///

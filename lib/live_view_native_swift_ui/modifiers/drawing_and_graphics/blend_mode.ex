@@ -26,4 +26,8 @@ defmodule LiveViewNativeSwiftUi.Modifiers.BlendMode do
       destination_out
     )a)
   end
+
+  def params(blend_mode) when is_atom(blend_mode) and not is_boolean(blend_mode) and not is_nil(blend_mode),
+    do: [blend_mode: blend_mode]
+  def params(params), do: params
 end

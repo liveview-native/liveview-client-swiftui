@@ -1,9 +1,9 @@
 defmodule LiveViewNativeSwiftUi.Modifiers.OnAppear do
   use LiveViewNativePlatform.Modifier
-  
-  alias LiveViewNativeSwiftUi.Types.Event
+
+  alias LiveViewNativePlatform.Modifier.Types.Event
 
   modifier_schema "on_appear" do
-    field :action, Event
+    field :perform, Event
   end
 end

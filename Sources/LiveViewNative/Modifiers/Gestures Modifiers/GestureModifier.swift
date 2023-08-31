@@ -14,7 +14,7 @@ import SwiftUI
 /// Pass in a ``gesture`` and an event name.
 ///
 /// ```html
-/// <Rectangle modifiers={gesture(@native, gesture: :spatial_tap, action: "on_tap")} />
+/// <Rectangle modifiers={gesture(:spatial_tap, action: "on_tap")} />
 /// ```
 ///
 /// ```elixir
@@ -122,7 +122,7 @@ enum GesturePriority: String, Decodable {
     /// ```html
     /// <Button
     ///     phx-click="button_event"
-    ///     modifiers={gesture(@native, gesture: :tap, action: "gesture_event", priority: :low)}
+    ///     modifiers={gesture(:tap, action: "gesture_event", priority: :low)}
     /// >
     ///     Button Event Only
     /// </Button>
@@ -136,7 +136,7 @@ enum GesturePriority: String, Decodable {
     /// ```html
     /// <Button
     ///     phx-click="button_event"
-    ///     modifiers={gesture(@native, gesture: :tap, action: "gesture_event", priority: :high)}
+    ///     modifiers={gesture(:tap, action: "gesture_event", priority: :high)}
     /// >
     ///     Gesture Event Only
     /// </Button>
@@ -150,7 +150,7 @@ enum GesturePriority: String, Decodable {
     /// ```html
     /// <Button
     ///     phx-click="button_event"
-    ///     modifiers={gesture(@native, gesture: :tap, action: "gesture_event", priority: :simultaneous)}
+    ///     modifiers={gesture(:tap, action: "gesture_event", priority: :simultaneous)}
     /// >
     ///     Button and Gesture Events
     /// </Button>

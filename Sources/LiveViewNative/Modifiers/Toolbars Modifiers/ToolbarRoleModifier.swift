@@ -12,7 +12,7 @@ import SwiftUI
 /// A toolbar's role can affect its layout on certain platforms.
 ///
 /// ```html
-/// <Text modifiers={toolbar_role(@native, role: :browser)}>
+/// <Text modifiers={toolbar_role(:browser)}>
 ///     ...
 /// </Text>
 /// ```

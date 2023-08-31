@@ -35,4 +35,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.TextContentType do
       shipment_tracking_number
     )a)
   end
+
+  def params(text_content_type) when is_atom(text_content_type) and not is_boolean(text_content_type) and not is_nil(text_content_type), do: [text_content_type: text_content_type]
+  def params(params), do: params
 end

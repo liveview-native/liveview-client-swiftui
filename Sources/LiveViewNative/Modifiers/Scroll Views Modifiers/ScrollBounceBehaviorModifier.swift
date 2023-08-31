@@ -10,7 +10,7 @@ import SwiftUI
 /// Configures the bounce behavior of scrollable views along the specified axis.
 ///
 /// ```html
-/// <List modifiers={@native |> scroll_bounce_behavior(behavior: :always, axes: :all)}>
+/// <List modifiers={scroll_bounce_behavior(:always, axes: :all)}>
 ///     <Text>One</Text>
 ///     <Text>Two</Text>
 ///     <Text>Three</Text>

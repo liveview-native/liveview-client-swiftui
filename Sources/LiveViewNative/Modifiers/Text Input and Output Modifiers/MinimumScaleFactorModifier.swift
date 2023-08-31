@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the minimum amount that text in this view scales down to fit in the available space.
 ///
 /// ```html
-/// <Text modifiers={minimum_scale_factor(@native, factor: 0.8)}
+/// <Text modifiers={minimum_scale_factor(0.8)}
 /// ```
 ///
 /// ## Arguments

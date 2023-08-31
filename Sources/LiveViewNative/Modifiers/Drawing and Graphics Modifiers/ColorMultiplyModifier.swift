@@ -10,7 +10,7 @@ import SwiftUI
 /// Adds a color multiplication effect to this view.
 ///
 /// ```html
-/// <Label modifiers={foreground_style(@native, primary: {:color, :mint}) |> color_multiply(color: :blue)}>Color Text</Label>
+/// <Label modifiers={foreground_style({:color, :mint}) |> color_multiply(:blue)}>Color Text</Label>
 /// ```
 ///
 /// ## Arguments

@@ -13,7 +13,7 @@ import SwiftUI
 /// ```html
 /// <Text
 ///     modifiers={
-///         monospaced(@native, is_active: true)
+///         monospaced(true)
 ///     }
 /// >
 ///   This text is monospaced.

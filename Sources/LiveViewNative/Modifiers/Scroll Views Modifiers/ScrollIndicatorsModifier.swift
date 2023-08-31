@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the visibility of scroll indicators within this view.
 ///
 /// ```html
-/// <List modifiers={@native |> scroll_indicators(visibility: :visible, axis: :vertical)}>
+/// <List modifiers={scroll_indicators(:visible, axis: :vertical)}>
 ///     <Text>One</Text>
 ///     <Text>Two</Text>
 ///     <Text>Three</Text>

@@ -12,7 +12,7 @@ import SwiftUI
 /// ```html
 /// <VStack>
 ///     modifiers={
-///         status_bar_hidden(@native, hidden: true)
+///         status_bar_hidden(true)
 ///     }
 /// >
 ///   <Text>The status bar should be hidden</Text>

@@ -14,7 +14,7 @@ import SwiftUI
 ///
 /// ```html
 /// <List list-style="plain">
-///     <Section modifiers={list_section_separator(@native, visibility: :hidden)} id="hidden">
+///     <Section modifiers={list_section_separator(visibility: :hidden)} id="hidden">
 ///         ...
 ///     </Section>
 ///     <Section id="default">

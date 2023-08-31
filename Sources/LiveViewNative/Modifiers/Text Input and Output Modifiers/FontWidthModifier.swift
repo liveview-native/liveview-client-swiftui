@@ -12,7 +12,7 @@ import SwiftUI
 /// Pass a ``LiveViewNative/SwiftUI/Font/Width`` to the ``width`` argument to change the value.
 ///
 /// ```html
-/// <Text modifiers={font_width(@native, width: :expanded)}>
+/// <Text modifiers={font_width(:expanded)}>
 ///     Hello, world!
 /// </Text>
 /// ```

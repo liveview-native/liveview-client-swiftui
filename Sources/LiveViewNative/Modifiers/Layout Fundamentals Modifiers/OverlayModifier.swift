@@ -17,8 +17,8 @@ import SwiftUI
 /// This allows any arbitrary elements to be placed above the element.
 ///
 /// ```html
-/// <Circle modifiers={@native |> overlay(alignment: :center, content: :my_icon)}>
-///   <Image system-name="heart.fill" template={:my_icon} modifiers={foreground_style(@native, primary: {:color, :red})} />
+/// <Circle modifiers={overlay(alignment: :center, content: :my_icon)}>
+///   <Image system-name="heart.fill" template={:my_icon} modifiers={foreground_style({:color, :red})} />
 /// </Circle>
 /// ```
 ///
@@ -28,7 +28,7 @@ import SwiftUI
 /// Use ``ignoresSafeAreaEdges`` to control how the overlay interacts with safe areas.
 ///
 /// ```html
-/// <Text modifiers={@native |> overlay(style: {:material, :ultra_thin})}>
+/// <Text modifiers={overlay({:material, :ultra_thin})}>
 ///   Hello, world!
 /// </Text>
 /// ```
@@ -39,7 +39,7 @@ import SwiftUI
 /// Optionally provide the ``style`` and ``fillStyle`` arguments to customize the fill.
 ///
 /// ```html
-/// <Text modifiers={@native |> overlay(style: {:material, :ultra_thin}, shape: :capsule)}>
+/// <Text modifiers={overlay({:material, :ultra_thin}, in: :capsule)}>
 ///   Hello, world!
 /// </Text>
 /// ```

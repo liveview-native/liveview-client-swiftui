@@ -12,7 +12,7 @@ import SwiftUI
 /// Apply this modifier to a ``TextField`` or ``SecureField`` to receive an event when the submit button is pressed.
 /// 
 /// ```html
-/// <TextField modifiers={on_submit(@native, action: "submit")}>
+/// <TextField modifiers={on_submit("submit")}>
 ///     Type here
 /// </TextField>
 /// ```
@@ -21,9 +21,8 @@ import SwiftUI
 /// 
 /// ```html
 /// <List modifiers={
-///     @native
-///         |> searchable(text: :query)
-///         |> on_submit(action: "submit", triggers: :search)
+///   searchable(text: :query)
+///   |> on_submit(of: :search, "submit")
 /// }>
 ///     ...
 /// </List>

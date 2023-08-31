@@ -6,4 +6,13 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Font do
   modifier_schema "font" do
     field :font, Font
   end
+
+  def params(params) do
+    with {:ok, _} <- Font.cast(params) do
+      [font: params]
+    else
+      _ ->
+        params
+    end
+  end
 end

@@ -12,4 +12,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.Rotation3DEffect do
     field :anchor_z, :float, default: 0.0
     field :perspective, :float, default: 1.0
   end
+
+  def params(angle, params) when is_list(params), do: [{:angle, angle} | params]
+  def params(params), do: params
 end

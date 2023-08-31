@@ -10,7 +10,7 @@ import SwiftUI
 /// Sets the rendering mode for symbol images within this view.
 ///
 /// ```html
-/// <HStack modifiers={symbol_rendering_mode(@native, mode: :multicolor)}>
+/// <HStack modifiers={symbol_rendering_mode(:multicolor)}>
 ///   <Image system-name="heart.circle"></Image>
 /// </HStack>
 /// ```

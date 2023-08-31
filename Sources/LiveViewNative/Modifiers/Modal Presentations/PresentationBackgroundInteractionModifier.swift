@@ -15,9 +15,9 @@ import SwiftUI
 /// <VStack>
 ///   <Button>Click me!</Button>
 ///   
-///   <Button phx-click="toggle" modifiers={sheet(@native, content: :content, on_dismiss: "dismiss", is_presented: :show)}>
+///   <Button phx-click="toggle" modifiers={sheet(content: :content, on_dismiss: "dismiss", is_presented: :show)}>
 ///     Present Sheet
-///     <VStack template={:content} modifiers={presentation_detents(@native, detents: [{:fraction, 0.3}, {:height, 100}]) |> presentation_background_interaction(mode: :enabled, maximum_detent: {:height, 100})}>
+///     <VStack template={:content} modifiers={presentation_detents([{:fraction, 0.3}, {:height, 100}]) |> presentation_background_interaction({:enabled, up_through: {:height, 100}})}>
 ///       <Text>Hello, world!</Text>
 ///       <Button phx-click="toggle">Dismiss</Button>
 ///     </VStack>

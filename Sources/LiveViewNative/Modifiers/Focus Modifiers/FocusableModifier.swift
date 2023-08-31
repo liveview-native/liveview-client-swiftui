@@ -12,12 +12,12 @@ import SwiftUI
 /// You can apply this modifier to elements that do not receive focus by default.
 ///
 /// ```html
-/// <Rectangle modifiers={focusable(@native, [])} />
+/// <Rectangle modifiers={focusable([])} />
 /// ```
 ///
 /// Or disable focusability for an element.
 /// ```html
-/// <Button modifiers={focusable(@native, is_focusable: false)}>
+/// <Button modifiers={focusable(false)}>
 ///     Click Me
 /// </Button>
 /// ```

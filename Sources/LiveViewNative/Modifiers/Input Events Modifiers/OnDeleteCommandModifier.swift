@@ -22,7 +22,7 @@ import SwiftUI
 /// Pass the name of this event to the ``action`` argument.
 /// 
 /// ```html
-/// <List modifiers={@native |> on_delete_command(action: "remove_last")}>
+/// <List modifiers={on_delete_command(perform: "remove_last")}>
 ///   <%= for i <- 0..@count do %>
 ///     <Text id={"#{i}"}>
 ///       <%= i %>
@@ -34,7 +34,7 @@ import SwiftUI
 /// Whenever backspace or delete is pressed, the number of items in the list is decreased.
 /// 
 /// ## Arguments
-/// * ``action``
+/// * ``perform``
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
@@ -46,24 +46,24 @@ struct OnDeleteCommandModifier: ViewModifier, Decodable {
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
-    @Event private var action: Event.EventHandler
+    @Event private var perform: Event.EventHandler
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self._action = try container.decode(Event.self, forKey: .action)
+        self._perform = try container.decode(Event.self, forKey: .perform)
     }
 
     func body(content: Content) -> some View {
         content
             #if os(macOS)
             .onDeleteCommand {
-                action()
+                perform()
             }
             #endif
     }
 
     enum CodingKeys: String, CodingKey {
-        case action
+        case perform
     }
 }

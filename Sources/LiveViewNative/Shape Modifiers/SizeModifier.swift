@@ -13,7 +13,7 @@ import SwiftUI
 /// Use the ``FrameModifier`` modifier to adjust the bounding box of an element.
 ///
 /// ```html
-/// <Rectangle modifiers={size(@native, width: 100, height: 100)} />
+/// <Rectangle modifiers={size(width: 100, height: 100)} />
 /// ```
 ///
 /// ## Arguments
