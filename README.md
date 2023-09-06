@@ -48,5 +48,4 @@ be found at <https://hexdocs.pm/live_view_native_swift_ui>.
 ## Resources
 
 - Browse the [documentation](https://liveview-native.github.io/liveview-client-swiftui/documentation/liveviewnative/) to read about the API.
-- Follow the [tutorial](https://liveview-native.github.io/liveview-client-swiftui/tutorials/yourfirstapp) to get a step-by-step walkthrough of building an app with LiveView Native.
 - Check out the [ElixirConf '22 chat app](https://github.com/liveview-native/elixirconf_chat) for an example of a complete app.
