@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import LiveViewNative
 
 @main
 struct frontendApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LiveView(.localhost(path: CommandLine.arguments[1]))
         }
     }
 }

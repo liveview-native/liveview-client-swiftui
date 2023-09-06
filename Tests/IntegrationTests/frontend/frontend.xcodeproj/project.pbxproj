@@ -8,12 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		002DA4C92AA7DAC20069AF4E /* frontendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DA4C82AA7DAC20069AF4E /* frontendApp.swift */; };
-		002DA4CB2AA7DAC20069AF4E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DA4CA2AA7DAC20069AF4E /* ContentView.swift */; };
 		002DA4CD2AA7DAC30069AF4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 002DA4CC2AA7DAC30069AF4E /* Assets.xcassets */; };
-		002DA4D12AA7DAC30069AF4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 002DA4D02AA7DAC30069AF4E /* Preview Assets.xcassets */; };
-		002DA4DB2AA7DAC30069AF4E /* frontendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DA4DA2AA7DAC30069AF4E /* frontendTests.swift */; };
-		002DA4E52AA7DAC30069AF4E /* frontendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DA4E42AA7DAC30069AF4E /* frontendUITests.swift */; };
+		002DA4E52AA7DAC30069AF4E /* LiveViewNativeTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DA4E42AA7DAC30069AF4E /* LiveViewNativeTestCase.swift */; };
 		002DA4F72AA7DBED0069AF4E /* LiveViewNative in Frameworks */ = {isa = PBXBuildFile; productRef = 002DA4F62AA7DBED0069AF4E /* LiveViewNative */; };
+		008F6D5B2AA903D00059B560 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F6D5A2AA903D00059B560 /* NavigationTests.swift */; };
+		008F6D5D2AA9040D0059B560 /* UpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008F6D5C2AA9040D0059B560 /* UpdateTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,15 +35,14 @@
 /* Begin PBXFileReference section */
 		002DA4C52AA7DAC20069AF4E /* frontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = frontend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		002DA4C82AA7DAC20069AF4E /* frontendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = frontendApp.swift; sourceTree = "<group>"; };
-		002DA4CA2AA7DAC20069AF4E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		002DA4CC2AA7DAC30069AF4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		002DA4CE2AA7DAC30069AF4E /* frontend.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = frontend.entitlements; sourceTree = "<group>"; };
-		002DA4D02AA7DAC30069AF4E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		002DA4D62AA7DAC30069AF4E /* frontendTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = frontendTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		002DA4DA2AA7DAC30069AF4E /* frontendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = frontendTests.swift; sourceTree = "<group>"; };
 		002DA4E02AA7DAC30069AF4E /* frontendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = frontendUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		002DA4E42AA7DAC30069AF4E /* frontendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = frontendUITests.swift; sourceTree = "<group>"; };
+		002DA4E42AA7DAC30069AF4E /* LiveViewNativeTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveViewNativeTestCase.swift; sourceTree = "<group>"; };
 		002DA4F42AA7DB030069AF4E /* liveview-client-swiftui */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "liveview-client-swiftui"; path = ../../..; sourceTree = "<group>"; };
+		008F6D5A2AA903D00059B560 /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
+		008F6D5C2AA9040D0059B560 /* UpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,7 +76,6 @@
 			children = (
 				002DA4F32AA7DB030069AF4E /* Packages */,
 				002DA4C72AA7DAC20069AF4E /* frontend */,
-				002DA4D92AA7DAC30069AF4E /* frontendTests */,
 				002DA4E32AA7DAC30069AF4E /* frontendUITests */,
 				002DA4C62AA7DAC20069AF4E /* Products */,
 				002DA4F52AA7DBEC0069AF4E /* Frameworks */,
@@ -99,34 +96,18 @@
 			isa = PBXGroup;
 			children = (
 				002DA4C82AA7DAC20069AF4E /* frontendApp.swift */,
-				002DA4CA2AA7DAC20069AF4E /* ContentView.swift */,
 				002DA4CC2AA7DAC30069AF4E /* Assets.xcassets */,
 				002DA4CE2AA7DAC30069AF4E /* frontend.entitlements */,
-				002DA4CF2AA7DAC30069AF4E /* Preview Content */,
 			);
 			path = frontend;
-			sourceTree = "<group>";
-		};
-		002DA4CF2AA7DAC30069AF4E /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				002DA4D02AA7DAC30069AF4E /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		002DA4D92AA7DAC30069AF4E /* frontendTests */ = {
-			isa = PBXGroup;
-			children = (
-				002DA4DA2AA7DAC30069AF4E /* frontendTests.swift */,
-			);
-			path = frontendTests;
 			sourceTree = "<group>";
 		};
 		002DA4E32AA7DAC30069AF4E /* frontendUITests */ = {
 			isa = PBXGroup;
 			children = (
-				002DA4E42AA7DAC30069AF4E /* frontendUITests.swift */,
+				002DA4E42AA7DAC30069AF4E /* LiveViewNativeTestCase.swift */,
+				008F6D5A2AA903D00059B560 /* NavigationTests.swift */,
+				008F6D5C2AA9040D0059B560 /* UpdateTests.swift */,
 			);
 			path = frontendUITests;
 			sourceTree = "<group>";
@@ -253,7 +234,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				002DA4D12AA7DAC30069AF4E /* Preview Assets.xcassets in Resources */,
 				002DA4CD2AA7DAC30069AF4E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,7 +259,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				002DA4CB2AA7DAC20069AF4E /* ContentView.swift in Sources */,
 				002DA4C92AA7DAC20069AF4E /* frontendApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,7 +267,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				002DA4DB2AA7DAC30069AF4E /* frontendTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,7 +274,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				002DA4E52AA7DAC30069AF4E /* frontendUITests.swift in Sources */,
+				008F6D5B2AA903D00059B560 /* NavigationTests.swift in Sources */,
+				002DA4E52AA7DAC30069AF4E /* LiveViewNativeTestCase.swift in Sources */,
+				008F6D5D2AA9040D0059B560 /* UpdateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
