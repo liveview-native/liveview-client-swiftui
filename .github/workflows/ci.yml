@@ -46,3 +46,14 @@ jobs:
         shell: bash
         run: |
           xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
+      - name: Run integration tests on iOS Simulator
+        shell: bash
+        working-directory: Tests/IntegrationTests
+        run: |
+          cd backend && mix deps.get && mix phx.server &
+          cd ../frontend && xcodebuild test -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath IntegrationTestResults
+      - uses: kishikawakatsumi/xcresulttool@v1
+        with:
+          path: Tests/IntegrationTests/frontend/IntegrationTestResults.xcresult
+        continue-on-error: true
+        if: success() || failure()
