@@ -20,9 +20,9 @@ final class LifecycleTests: LiveViewNativeTestCase {
         app.navigationBars.element.buttons.element.tap() // go back
         
         // FIXME: This form of navigation is not working.
-//        app.buttons["push_navigate:replace"].tap() // navigate to page 2 (replacing the current page)
-//        XCTAssertEqual(app.staticTexts.element.label, "Page 2")
-//        XCTAssertEqual(app.navigationBars.element.buttons.count, 0)
+        app.buttons["push_navigate:replace"].tap() // navigate to page 2 (replacing the current page)
+        XCTAssertEqual(app.staticTexts.element.label, "Page 2")
+        XCTAssertEqual(app.navigationBars.element.buttons.count, 0)
     }
     
     func testPresentationModifiers() {
