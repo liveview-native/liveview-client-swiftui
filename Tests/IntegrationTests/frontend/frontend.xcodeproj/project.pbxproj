@@ -13,7 +13,6 @@
 		002DA4D12AA7DAC30069AF4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 002DA4D02AA7DAC30069AF4E /* Preview Assets.xcassets */; };
 		002DA4DB2AA7DAC30069AF4E /* frontendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DA4DA2AA7DAC30069AF4E /* frontendTests.swift */; };
 		002DA4E52AA7DAC30069AF4E /* frontendUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DA4E42AA7DAC30069AF4E /* frontendUITests.swift */; };
-		002DA4E72AA7DAC30069AF4E /* frontendUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DA4E62AA7DAC30069AF4E /* frontendUITestsLaunchTests.swift */; };
 		002DA4F72AA7DBED0069AF4E /* LiveViewNative in Frameworks */ = {isa = PBXBuildFile; productRef = 002DA4F62AA7DBED0069AF4E /* LiveViewNative */; };
 /* End PBXBuildFile section */
 
@@ -45,7 +44,6 @@
 		002DA4DA2AA7DAC30069AF4E /* frontendTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = frontendTests.swift; sourceTree = "<group>"; };
 		002DA4E02AA7DAC30069AF4E /* frontendUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = frontendUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		002DA4E42AA7DAC30069AF4E /* frontendUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = frontendUITests.swift; sourceTree = "<group>"; };
-		002DA4E62AA7DAC30069AF4E /* frontendUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = frontendUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		002DA4F42AA7DB030069AF4E /* liveview-client-swiftui */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "liveview-client-swiftui"; path = ../../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				002DA4E42AA7DAC30069AF4E /* frontendUITests.swift */,
-				002DA4E62AA7DAC30069AF4E /* frontendUITestsLaunchTests.swift */,
 			);
 			path = frontendUITests;
 			sourceTree = "<group>";
@@ -299,7 +296,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				002DA4E72AA7DAC30069AF4E /* frontendUITestsLaunchTests.swift in Sources */,
 				002DA4E52AA7DAC30069AF4E /* frontendUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,6 +455,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -495,6 +493,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
