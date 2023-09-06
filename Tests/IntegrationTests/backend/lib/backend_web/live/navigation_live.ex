@@ -14,12 +14,12 @@ defmodule BackendWeb.NavigationLive do
     {:noreply, push_navigate(socket, to: "/navigation-page2")}
   end
 
-  def handle_event("push_navigate:replace", _params, socket) do
-    {:noreply, push_navigate(socket, to: "/navigation-page2", replace: true)}
-  end
-
   def handle_event("redirect", _params, socket) do
     {:noreply, redirect(socket, to: "/navigation-page2")}
+  end
+
+  def handle_event("push_navigate:replace", _params, socket) do
+    {:noreply, push_navigate(socket, to: "/navigation-page2", replace: true)}
   end
 end
 

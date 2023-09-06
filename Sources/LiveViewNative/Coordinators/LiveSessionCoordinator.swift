@@ -364,6 +364,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 // If there is nothing to replace, change the root URL.
                 if !navigationPath.isEmpty {
                     navigationPath[navigationPath.count - 1] = entry
+                } else {
+                    self.url = redirect.to
                 }
             }
             try await coordinator.connect(domValues: self.domValues, redirect: true)
@@ -378,6 +380,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 // If there is nothing to replace, change the root URL.
                 if navigationPath.isEmpty {
                     rootCoordinator.url = redirect.to
+                    self.url = redirect.to
                     try await rootCoordinator.connect(domValues: self.domValues, redirect: true)
                 } else {
                     navigationPath.removeLast()
@@ -401,6 +404,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 // If there is nothing to replace, change the root URL.
                 if !navigationPath.isEmpty {
                     navigationPath[navigationPath.count - 1] = entry
+                } else {
+                    self.url = redirect.to
                 }
             }
         }
