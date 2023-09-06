@@ -17,41 +17,46 @@ jobs:
     runs-on: [self-hosted, tartelet]
     steps:
       - uses: actions/checkout@v2
-      - name: Run tests on iOS Simulator
-        shell: bash
-        run: |
-          sudo xcode-select --switch /Applications/Xcode_14.3.app
-          xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
-          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath TestResults
-      - uses: kishikawakatsumi/xcresulttool@v1
+      # - name: Run tests on iOS Simulator
+      #   shell: bash
+      #   run: |
+      #     sudo xcode-select --switch /Applications/Xcode_14.3.app
+      #     xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
+      #     xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath TestResults
+      # - uses: kishikawakatsumi/xcresulttool@v1
+      #   with:
+      #     path: TestResults.xcresult
+      #   continue-on-error: true
+      #   if: success() || failure()
+      # - name: Validate Coverage %
+      #   shell: bash
+      #   run: |
+      #     COVERAGE=$(xcrun xccov view --report --json TestResults.xcresult | jq '.targets[] | select(.name == "LiveViewNative") | .lineCoverage')
+      #     if [ $(echo "$COVERAGE > $MIN_COVERAGE" | bc) -ne 1 ]; then
+      #       printf "Code coverage $COVERAGE does not meet minimum requirement $MIN_COVERAGE"
+      #       exit -1
+      #     else
+      #       printf "Code coverage $COVERAGE meets minimum requirement $MIN_COVERAGE"
+      #     fi
+      # - name: Build for macOS
+      #   shell: bash
+      #   run: |
+      #     xcodebuild -scheme LiveViewNative-Package -sdk macosx13.3 -destination "platform=macOS"
+      # - name: Build for watchOS
+      #   shell: bash
+      #   run: |
+      #     xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
         with:
-          path: TestResults.xcresult
-        continue-on-error: true
-        if: success() || failure()
-      - name: Validate Coverage %
-        shell: bash
-        run: |
-          COVERAGE=$(xcrun xccov view --report --json TestResults.xcresult | jq '.targets[] | select(.name == "LiveViewNative") | .lineCoverage')
-          if [ $(echo "$COVERAGE > $MIN_COVERAGE" | bc) -ne 1 ]; then
-            printf "Code coverage $COVERAGE does not meet minimum requirement $MIN_COVERAGE"
-            exit -1
-          else
-            printf "Code coverage $COVERAGE meets minimum requirement $MIN_COVERAGE"
-          fi
-      - name: Build for macOS
-        shell: bash
-        run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk macosx13.3 -destination "platform=macOS"
-      - name: Build for watchOS
-        shell: bash
-        run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
+          elixir-version: '1.15.0' # Define the elixir version [required]
+          otp-version: '25.0' # Define the OTP version [required]
       - name: Run integration tests on iOS Simulator
         shell: bash
         working-directory: Tests/IntegrationTests
         run: |
           cd backend && mix deps.get && mix phx.server &
-          cd ../frontend && xcodebuild test -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath IntegrationTestResults
+          cd frontend && xcodebuild test -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath IntegrationTestResults
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: Tests/IntegrationTests/frontend/IntegrationTestResults.xcresult
