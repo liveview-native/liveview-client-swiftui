@@ -47,10 +47,9 @@ jobs:
       #   run: |
       #     xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
       - name: Set up Elixir
-        uses: erlef/setup-beam@v1
-        with:
-          elixir-version: '1.15.0' # Define the elixir version [required]
-          otp-version: '25.0' # Define the OTP version [required]
+        shell: bash
+        run: |
+          brew install elixir
       - name: Run integration tests on iOS Simulator
         shell: bash
         working-directory: Tests/IntegrationTests
