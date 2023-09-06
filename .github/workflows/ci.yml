@@ -55,7 +55,7 @@ jobs:
         working-directory: Tests/IntegrationTests
         run: |
           cd backend && mix deps.get && mix phx.server &
-          cd frontend && xcodebuild test -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath IntegrationTestResults
+          cd frontend && xcodebuild test -scheme frontendUITests -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath IntegrationTestResults
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: Tests/IntegrationTests/frontend/IntegrationTestResults.xcresult
