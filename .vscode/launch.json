@@ -1,0 +1,76 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Debug TutorialRepoGenerator",
+            "program": "${workspaceFolder:liveview-client-swiftui}/.build/debug/TutorialRepoGenerator",
+            "args": [],
+            "cwd": "${workspaceFolder:liveview-client-swiftui}",
+            "preLaunchTask": "swift: Build Debug TutorialRepoGenerator"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Release TutorialRepoGenerator",
+            "program": "${workspaceFolder:liveview-client-swiftui}/.build/release/TutorialRepoGenerator",
+            "args": [],
+            "cwd": "${workspaceFolder:liveview-client-swiftui}",
+            "preLaunchTask": "swift: Build Release TutorialRepoGenerator"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Debug DocumentationExtensionGenerator",
+            "program": "${workspaceFolder:liveview-client-swiftui}/.build/debug/DocumentationExtensionGenerator",
+            "args": [],
+            "cwd": "${workspaceFolder:liveview-client-swiftui}",
+            "preLaunchTask": "swift: Build Debug DocumentationExtensionGenerator"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Release DocumentationExtensionGenerator",
+            "program": "${workspaceFolder:liveview-client-swiftui}/.build/release/DocumentationExtensionGenerator",
+            "args": [],
+            "cwd": "${workspaceFolder:liveview-client-swiftui}",
+            "preLaunchTask": "swift: Build Release DocumentationExtensionGenerator"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Debug BuiltinRegistryGenerator",
+            "program": "${workspaceFolder:liveview-client-swiftui}/.build/debug/BuiltinRegistryGenerator",
+            "args": [],
+            "cwd": "${workspaceFolder:liveview-client-swiftui}",
+            "preLaunchTask": "swift: Build Debug BuiltinRegistryGenerator"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "name": "Release BuiltinRegistryGenerator",
+            "program": "${workspaceFolder:liveview-client-swiftui}/.build/release/BuiltinRegistryGenerator",
+            "args": [],
+            "cwd": "${workspaceFolder:liveview-client-swiftui}",
+            "preLaunchTask": "swift: Build Release BuiltinRegistryGenerator"
+        }
+    ]
+}
