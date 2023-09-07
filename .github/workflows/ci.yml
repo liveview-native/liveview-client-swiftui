@@ -56,7 +56,7 @@ jobs:
         run: |
           cd backend && mix deps.get && mix phx.server &
           cd frontend && xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
-          xcodebuild test -scheme frontendUITests -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -resultBundlePath IntegrationTestResults
+          xcodebuild test -scheme frontendUITests -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -resultBundlePath IntegrationTestResults -retry-tests-on-failure
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: Tests/IntegrationTests/frontend/IntegrationTestResults.xcresult
