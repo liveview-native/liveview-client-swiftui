@@ -106,7 +106,7 @@ public protocol CustomRegistry<Root> {
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
     static func lookup(_ name: TagName, element: ElementNode) -> CustomView
-    
+
     /// This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.
     ///
     /// If your custom registry does not support any custom modifiers, you can set the `ModifierType` type alias to ``EmptyRegistry/None`` and omit this method.
@@ -135,17 +135,23 @@ public protocol CustomRegistry<Root> {
     /// - Parameter error: The error of the view is reporting.
     @ViewBuilder
     static func errorView(for error: Error) -> ErrorView
+
+    /// This method is called by LiveView Native when it needs to apply class modifiers to a view.
+    ///
+    /// If you do not implement this method, class names are ignored.
+    @ViewBuilder
+    static func applyClass(parent: any View) -> any View
 }
 
 extension CustomRegistry where LoadingView == Never {
-    /// A default  implementation that falls back to the default framework loading view.
+    /// A default implementation that falls back to the default framework loading view.
     public static func loadingView(for url: URL, state: LiveSessionState) -> Never {
         fatalError()
     }
 }
 
 extension CustomRegistry where ErrorView == Never {
-    /// A default  implementation that falls back to the default framework error view.
+    /// A default implementation that falls back to the default framework error view.
     public static func errorView(for error: Error) -> Never {
         fatalError()
     }
@@ -155,6 +161,14 @@ extension CustomRegistry where ErrorView == Never {
 public struct EmptyRegistry {
 }
 extension EmptyRegistry: RootRegistry {
+    public static func applyClass(parent: any View) -> any View {
+        return parent
+    }
+    
+    public static func applyClass(parent: any View) -> String {
+        return "TODO: Remove this"
+    }
+
     /// A type that can be used as ``CustomRegistry/TagName`` or ``CustomRegistry/ModifierType`` for registries which don't support any custom tags or attributes.
     public struct None: RawRepresentable {
         public typealias RawValue = String

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import LiveViewNativeCore
+import LiveViewNativeCore
 
 struct ViewTreeBuilder<R: RootRegistry> {
     func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
@@ -44,8 +45,9 @@ struct ViewTreeBuilder<R: RootRegistry> {
     func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
 
-        let modified = view.applyModifiers(R.self)
-        let bound = applyBindings(to: modified, element: element, context: context)
+        let withClassModifiers: some View = applyClassModifiers(to: view, element: element, context: context)
+        let withAllModifiers = withClassModifiers.applyModifiers(R.self)
+        let bound = applyBindings(to: withAllModifiers, element: element, context: context)
         let withID = applyID(element: element, to: bound)
         let withIDAndTag = applyTag(element: element, to: withID)
 
@@ -107,6 +109,21 @@ struct ViewTreeBuilder<R: RootRegistry> {
             element.attributes.filter({
                 $0.name.rawValue.starts(with: "phx-") && $0.value != nil
             })[...],
+            element: element,
+            context: context
+        )
+    }
+
+    @ViewBuilder
+    private func applyClassModifiers(
+        to view: some View,
+        element: ElementNode,
+        context: LiveContextStorage<R>
+    ) -> some View {
+        view.applyClassModifiers(
+            element.attributes.first(where: {
+                $0.name.rawValue == "class"
+            }),
             element: element,
             context: context
         )
@@ -224,6 +241,26 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     }
 }
 
+private struct ClassModifierApplicator<Parent: View, R: RootRegistry>: View {
+    let parent: Parent
+    let className: LiveViewNativeCore.Attribute?
+    let element: ElementNode
+    let context: LiveContextStorage<R>
+
+    var body: some View {
+        if let classNameAttr = className {
+            if let classNamesString = classNameAttr.value {
+                let classNames = classNamesString.components(separatedBy: " ")
+
+//                return classNames.reduce(parent, { acc, className in
+//                    R.applyClass(parent: acc)
+//                })
+            }
+        }
+        return parent
+    }
+}
+
 private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     let bindings: ArraySlice<LiveViewNativeCore.Attribute>
@@ -254,7 +291,12 @@ extension View {
     func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<ModifierContainer<R>>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
         ModifierApplicator(parent: self, modifiers: modifiers, element: element, context: context)
     }
-    
+
+    @ViewBuilder
+    func applyClassModifiers<R: RootRegistry>(_ className: LiveViewNativeCore.Attribute?, element: ElementNode, context: LiveContextStorage<R>) -> some View {
+        ClassModifierApplicator(parent: self, className: className, element: element, context: context)
+    }
+
     @ViewBuilder
     func applyBindings<R: RootRegistry>(_ bindings: ArraySlice<LiveViewNativeCore.Attribute>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
         if bindings.isEmpty {
