@@ -45,7 +45,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
     func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
 
-        let withClassModifiers: some View = applyClassModifiers(to: view, element: element, context: context)
+        let withClassModifiers = applyClassModifiers(to: view, element: element, context: context)
         let withAllModifiers = withClassModifiers.applyModifiers(R.self)
         let bound = applyBindings(to: withAllModifiers, element: element, context: context)
         let withID = applyID(element: element, to: bound)
@@ -252,9 +252,9 @@ private struct ClassModifierApplicator<Parent: View, R: RootRegistry>: View {
             if let classNamesString = classNameAttr.value {
                 let classNames = classNamesString.components(separatedBy: " ")
 
-//                return classNames.reduce(parent, { acc, className in
-//                    R.applyClass(parent: acc)
-//                })
+                return classNames.reduce(parent, { acc, className in
+                    R.applyClass(parent: acc, className: className) as! Parent
+                })
             }
         }
         return parent
@@ -294,7 +294,11 @@ extension View {
 
     @ViewBuilder
     func applyClassModifiers<R: RootRegistry>(_ className: LiveViewNativeCore.Attribute?, element: ElementNode, context: LiveContextStorage<R>) -> some View {
-        ClassModifierApplicator(parent: self, className: className, element: element, context: context)
+        if let value = className {
+            ClassModifierApplicator(parent: self, className: value, element: element, context: context)
+        } else {
+            self
+        }
     }
 
     @ViewBuilder

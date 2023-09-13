@@ -140,7 +140,7 @@ public protocol CustomRegistry<Root> {
     ///
     /// If you do not implement this method, class names are ignored.
     @ViewBuilder
-    static func applyClass(parent: any View) -> any View
+    static func applyClass(parent: any View, className: String) -> any View
 }
 
 extension CustomRegistry where LoadingView == Never {
@@ -161,12 +161,8 @@ extension CustomRegistry where ErrorView == Never {
 public struct EmptyRegistry {
 }
 extension EmptyRegistry: RootRegistry {
-    public static func applyClass(parent: any View) -> any View {
+    public static func applyClass(parent: any View, className: String) -> any View {
         return parent
-    }
-    
-    public static func applyClass(parent: any View) -> String {
-        return "TODO: Remove this"
     }
 
     /// A type that can be used as ``CustomRegistry/TagName`` or ``CustomRegistry/ModifierType`` for registries which don't support any custom tags or attributes.

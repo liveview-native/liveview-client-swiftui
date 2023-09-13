@@ -110,8 +110,8 @@ extension AggregateRegistry {
         return Registries.errorView(for: error)
     }
 
-    public static func applyClass(parent: any View) -> any View {
-        return Registries.applyClass(parent: parent)
+    public static func applyClass(parent: any View, className: String) -> any View {
+        return Registries.applyClass(parent: parent, className: className)
     }
 }
 
@@ -174,8 +174,8 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
         return First.errorView(for: error)
     }
 
-    public static func applyClass(parent: any View) -> any View {
-        return First.applyClass(parent: parent)
+    public static func applyClass(parent: any View, className: String) -> any View {
+        return First.applyClass(parent: parent, className: className)
     }
 }
 
