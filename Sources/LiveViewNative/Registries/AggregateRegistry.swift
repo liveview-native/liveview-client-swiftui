@@ -109,10 +109,6 @@ extension AggregateRegistry {
     public static func errorView(for error: Error) -> some View {
         return Registries.errorView(for: error)
     }
-
-    public static func applyClass(parent: any View, className: String) -> any View {
-        return Registries.applyClass(parent: parent, className: className)
-    }
 }
 
 /// A helper type that represents either one of two `RawRepresentable<String>` types.
@@ -172,10 +168,6 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
     
     public static func errorView(for error: Error) -> some View {
         return First.errorView(for: error)
-    }
-
-    public static func applyClass(parent: any View, className: String) -> any View {
-        return First.applyClass(parent: parent, className: className)
     }
 }
 

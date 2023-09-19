@@ -96,7 +96,9 @@ public protocol CustomRegistry<Root> {
     ///
     /// Generally, implementors will use an opaque return type on their ``errorView(for:)`` implementations and this will be inferred automatically.
     associatedtype ErrorView: View = Never
-    
+    /// The type of view this registry produces for stylesheets.
+    associatedtype Stylesheet: StylesheetProtocol = EmptyStylesheet
+
     /// This method is called by LiveView Native when it needs to construct a custom view.
     ///
     /// If your custom registry does not support any elements, you can set the `TagName` type alias to ``EmptyRegistry/None`` and omit this method.
@@ -106,7 +108,7 @@ public protocol CustomRegistry<Root> {
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
     static func lookup(_ name: TagName, element: ElementNode) -> CustomView
-
+    
     /// This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.
     ///
     /// If your custom registry does not support any custom modifiers, you can set the `ModifierType` type alias to ``EmptyRegistry/None`` and omit this method.
@@ -135,12 +137,6 @@ public protocol CustomRegistry<Root> {
     /// - Parameter error: The error of the view is reporting.
     @ViewBuilder
     static func errorView(for error: Error) -> ErrorView
-
-    /// This method is called by LiveView Native when it needs to apply class modifiers to a view.
-    ///
-    /// If you do not implement this method, class names are ignored.
-    @ViewBuilder
-    static func applyClass(parent: any View, className: String) -> any View
 }
 
 extension CustomRegistry where LoadingView == Never {
@@ -161,10 +157,6 @@ extension CustomRegistry where ErrorView == Never {
 public struct EmptyRegistry {
 }
 extension EmptyRegistry: RootRegistry {
-    public static func applyClass(parent: any View, className: String) -> any View {
-        return parent
-    }
-
     /// A type that can be used as ``CustomRegistry/TagName`` or ``CustomRegistry/ModifierType`` for registries which don't support any custom tags or attributes.
     public struct None: RawRepresentable {
         public typealias RawValue = String
@@ -174,7 +166,6 @@ extension EmptyRegistry: RootRegistry {
             return nil
         }
     }
-    
     public typealias TagName = None
     public typealias ModifierType = None
 }
@@ -193,4 +184,17 @@ extension CustomRegistry where ModifierType == EmptyRegistry.None, CustomModifie
 
 /// A root registry is a ``CustomRegistry`` type that can be used directly as the registry for a ``LiveSessionCoordinator``.
 public protocol RootRegistry: CustomRegistry where Root == Self {
+}
+
+/// The stylesheet protocol can be defined within a ``CustomRegistry`` to apply modifiers to views based on class names.
+public protocol StylesheetProtocol: ViewModifier {
+    init(_ className: String)
+}
+
+public struct EmptyStylesheet: StylesheetProtocol {
+    public init(_ className: String) {}
+    
+    public func body(content: Content) -> some View {
+        content
+    }
 }

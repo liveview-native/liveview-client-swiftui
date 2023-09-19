@@ -15,7 +15,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
     @Argument(transform: { URL(filePath: $0) }) private var output: URL
     @Option(name: .customLong("view")) private var views: [String] = []
     @Option(name: .customLong("modifier")) private var modifiers: [String] = []
-
+    
     static let denylist = [
         "Shape",
         "TextFieldProtocol",

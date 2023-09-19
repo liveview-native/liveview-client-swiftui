@@ -243,21 +243,24 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
 
 private struct ClassModifierApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
-    let className: LiveViewNativeCore.Attribute?
+    let classNames: ArraySlice<String>
     let element: ElementNode
     let context: LiveContextStorage<R>
 
     var body: some View {
-        if let classNameAttr = className {
-            if let classNamesString = classNameAttr.value {
-                let classNames = classNamesString.components(separatedBy: " ")
+        if classNames.isEmpty {
+            parent
+        } else {
+            let stylesheet = R.Stylesheet(classNames.first!)
 
-                return classNames.reduce(parent, { acc, className in
-                    R.applyClass(parent: acc, className: className) as! Parent
-                })
-            }
+            ClassModifierApplicator<_, R>(
+                // force-unwrap is okay, this view is never constructed with an empty slice
+                parent: parent.modifier(stylesheet),
+                classNames: classNames.dropFirst(),
+                element: element,
+                context: context
+            )
         }
-        return parent
     }
 }
 
@@ -293,9 +296,16 @@ extension View {
     }
 
     @ViewBuilder
-    func applyClassModifiers<R: RootRegistry>(_ className: LiveViewNativeCore.Attribute?, element: ElementNode, context: LiveContextStorage<R>) -> some View {
-        if let value = className {
-            ClassModifierApplicator(parent: self, className: value, element: element, context: context)
+    func applyClassModifiers<R: RootRegistry>(_ attr: LiveViewNativeCore.Attribute?, element: ElementNode, context: LiveContextStorage<R>) -> some View {
+        if let className = attr {
+            if let value = className.value {
+                let classNames = value.components(separatedBy: " ")
+                let classNamesSlice = ArraySlice(classNames[0...classNames.endIndex - 1])
+
+                ClassModifierApplicator(parent: self, classNames: classNamesSlice, element: element, context: context)
+            } else {
+                self
+            }
         } else {
             self
         }
