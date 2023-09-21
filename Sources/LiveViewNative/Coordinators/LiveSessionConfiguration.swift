@@ -23,6 +23,9 @@ public struct LiveSessionConfiguration {
     /// The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.
     public var urlSession: URLSession = .shared
     
+    /// The transition used when the live view changes connects.
+    public var transition: AnyTransition?
+    
     /// Constructs a default, empty configuration.
     public init() {
     }
@@ -30,11 +33,13 @@ public struct LiveSessionConfiguration {
     public init(
         navigationMode: NavigationMode = .enabled,
         connectParams: ((URL) -> [String: Any])? = nil,
-        urlSession: URLSession = .shared
+        urlSession: URLSession = .shared,
+        transition: AnyTransition? = nil
     ) {
         self.navigationMode = navigationMode
         self.connectParams = connectParams
         self.urlSession = urlSession
+        self.transition = transition
     }
     
     /// Possible modes for live view navigation.

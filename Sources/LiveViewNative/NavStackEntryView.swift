@@ -31,43 +31,54 @@ struct NavStackEntryView<R: RootRegistry>: View {
     
     @ViewBuilder
     private var elementTree: some View {
-        if coordinator.url == entry.url {
-            switch coordinator.state {
-            case .connected:
-                coordinator.builder.fromNodes(coordinator.document![coordinator.document!.root()].children(), coordinator: coordinator, url: coordinator.url)
-                    .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: coordinator.document!))
-                    .onPreferenceChange(NavigationTitleModifierKey.self) { navigationTitle in
-                        self.liveViewModel.cachedNavigationTitle = navigationTitle
-                    }
-            default:
-                let content = SwiftUI.Group {
-                    if R.LoadingView.self == Never.self {
-                        switch coordinator.state {
-                        case .connected:
-                            fatalError()
-                        case .notConnected:
-                            SwiftUI.Text("Not Connected")
-                        case .connecting:
-                            SwiftUI.Text("Connecting")
-                        case .connectionFailed(let error):
-                            SwiftUI.VStack {
-                                SwiftUI.Text("Connection Failed")
-                                    .font(.subheadline)
-                                SwiftUI.Text(error.localizedDescription)
-                            }
+        SwiftUI.Group {
+            if coordinator.url == entry.url {
+                switch coordinator.state {
+                case .connected:
+                    coordinator.builder.fromNodes(coordinator.document![coordinator.document!.root()].children(), coordinator: coordinator, url: coordinator.url)
+                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: coordinator.document!))
+                        .onPreferenceChange(NavigationTitleModifierKey.self) { navigationTitle in
+                            self.liveViewModel.cachedNavigationTitle = navigationTitle
                         }
+                        .transition(coordinator.session.configuration.transition ?? .identity)
+                default:
+                    let content = SwiftUI.Group {
+                        if R.LoadingView.self == Never.self {
+                            switch coordinator.state {
+                            case .connected:
+                                fatalError()
+                            case .notConnected:
+                                SwiftUI.Text("Not Connected")
+                            case .connecting:
+                                SwiftUI.ProgressView("Connecting")
+                            case .connectionFailed(let error):
+                                SwiftUI.VStack {
+                                    SwiftUI.Text("Connection Failed")
+                                        .font(.subheadline)
+                                    SwiftUI.Text(error.localizedDescription)
+                                }
+                            }
+                        } else {
+                            R.loadingView(for: coordinator.url, state: coordinator.state)
+                        }
+                    }
+                    .transition(coordinator.session.configuration.transition ?? .identity)
+                    if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
+                        content.modifier(cachedNavigationTitle)
                     } else {
-                        R.loadingView(for: coordinator.url, state: coordinator.state)
+                        content
                     }
                 }
-                if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
-                    content.modifier(cachedNavigationTitle)
-                } else {
-                    content
-                }
+            } else if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
+                SwiftUI.Text("").modifier(cachedNavigationTitle)
             }
-        } else if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
-            SwiftUI.Text("").modifier(cachedNavigationTitle)
         }
+        .animation(coordinator.session.configuration.transition.map({ _ in .default }), value: { () -> Bool in
+            if case .connected = coordinator.state {
+                return true
+            } else {
+                return false
+            }
+        }())
     }
 }
