@@ -107,7 +107,7 @@ struct ColorView: View {
     }
 }
 
-private let colorRegex = try! NSRegularExpression(pattern: "^#[0-9a-f]{6}$", options: .caseInsensitive)
+private let colorRegex = try! Regex("^#[0-9a-f]{6}$").ignoresCase()
 
 extension SwiftUI.Color.RGBColorSpace: AttributeDecodable, Decodable {
     public init(from decoder: Decoder) throws {
@@ -180,7 +180,7 @@ extension SwiftUI.Color: Decodable {
             return nil
         }
         
-        if colorRegex.firstMatch(in: string, options: [], range: NSRange(location: 0, length: string.utf16.count)) != nil {
+        if (try? colorRegex.firstMatch(in: string)) != nil {
             let r = Int(string[string.index(string.startIndex, offsetBy: 1)..<string.index(string.startIndex, offsetBy: 3)], radix: 16)!
             let g = Int(string[string.index(string.startIndex, offsetBy: 3)..<string.index(string.startIndex, offsetBy: 5)], radix: 16)!
             let b = Int(string[string.index(string.startIndex, offsetBy: 5)..<string.index(string.startIndex, offsetBy: 7)], radix: 16)!
