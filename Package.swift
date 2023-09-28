@@ -3,12 +3,6 @@
 
 import PackageDescription
 
-#if swift(>=5.8)
-let swiftSettings = [SwiftSetting.unsafeFlags(["-emit-extension-block-symbols"])]
-#else
-let swiftSettings = [SwiftSetting]()
-#endif
-
 let package = Package(
     name: "LiveViewNative",
     platforms: [
@@ -43,7 +37,6 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift")
             ],
-            swiftSettings: swiftSettings,
             plugins: [
                 .plugin(name: "BuiltinRegistryGeneratorPlugin")
             ]
