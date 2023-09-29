@@ -52,6 +52,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
 
         return withIDAndTag
             .environment(\.element, element)
+            .environmentObject(ObservedElement.Observer(element.node.id))
             .preference(key: _ProvidedBindingsKey.self, value: []) // reset for the next View.
     }
 
