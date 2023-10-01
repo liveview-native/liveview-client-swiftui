@@ -24,21 +24,19 @@ struct ViewTreeBuilder<R: RootRegistry> {
         forEach(nodes: nodes, context: context)
     }
     
-    // alias for typing
-    @inline(__always)
-    fileprivate func f(_ n: Node, _ c: LiveContextStorage<R>) -> some View {
-        return fromNode(n, context: c)
-    }
-    
-    @ViewBuilder
-    func fromNode(_ node: Node, context: LiveContextStorage<R>) -> some View {
-        switch node.data {
-        case .root:
-            fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
-        case .leaf(let content):
-            SwiftUI.Text(content)
-        case .element(let element):
-            fromElement(ElementNode(node: node, data: element), context: context)
+    struct NodeView: View {
+        let node: Node
+        let context: LiveContextStorage<R>
+        
+        var body: some View {
+            switch node.data {
+            case .root:
+                fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
+            case .leaf(let content):
+                SwiftUI.Text(content)
+            case .element(let element):
+                context.coordinator.builder.fromElement(ElementNode(node: node, data: element), context: context)
+            }
         }
     }
     
@@ -234,6 +232,14 @@ private enum ForEachElement: Identifiable {
             return "\(node.id)"
         }
     }
+    
+    var node: Node {
+        switch self {
+        case let .keyed(node, _),
+             let .unkeyed(node):
+            return node
+        }
+    }
 }
 // not fileprivate because List needs to use it so it has access to ForEach modifiers
 func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContextStorage<R>) -> some DynamicViewContent {
@@ -247,11 +253,7 @@ func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveConte
         }
     }
     return ForEach(elements) {
-        switch $0 {
-        case let .keyed(node, _),
-             let .unkeyed(node):
-            context.coordinator.builder.fromNode(node, context: context)
-        }
+        ViewTreeBuilder<R>.NodeView(node: $0.node, context: context)
     }
 }
 
