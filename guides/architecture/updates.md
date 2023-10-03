@@ -1,5 +1,5 @@
 # Updates
-Whenever the assigns change, the template is re-evaluated for any changes. If something changed, a `diff` event is sent to the client. `liveview-native-core` handles most of this process.
+Whenever the template changes, a [`diff` event](https://github.com/liveview-native/liveview-client-swiftui/blob/9895c3b16d84a2683dcb1f127994be6c1bdf4919/Sources/LiveViewNative/Coordinators/LiveViewCoordinator.swift#L250-L257) is sent to the client. `liveview-native-core` handles most of this process.
 
 ## Update Process
 1. When the page loads, Phoenix sends a JSON representation of the [`Phoenix.LiveView.Rendered` struct](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.Engine.html#module-phoenix-liveview-rendered)
@@ -42,20 +42,19 @@ This is done through the `Observer` class. [It subscribes to the Combine publish
 ```mermaid
 flowchart TD
     subgraph LiveViewCoordinator
-        PD[Publisher Dictionary]
-        PD --> VP1[Node #1 Publisher]
-        PD --> VP2[Node #2 Publisher]
-        PD --> VP3[Node #3 Publisher]
+        LVC[LiveViewCoordinator]
+        LVC --> |node #1 changed| VP1[Node #1 Publisher]
+        LVC --> VP2[Node #2 Publisher]
+        LVC --> VP3[Node #... Publisher]
     end
 
-    O -.- |sink| VP1
-    VP1 ~~~ OE3
+    VP1 -.-> |node #1 changed| O
 
     subgraph Environment
         O[Observer]
     end
 
-    subgraph Node #1
+    subgraph Node #1 SwiftUI View
         OE1["@ObservedElement"]
         A1["@Attribute"]
         A2["@Attribute"]
