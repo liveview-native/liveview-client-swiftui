@@ -53,14 +53,17 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         self.url = url
         if let other {
             self.channel = other.channel
-            if let document = other.document {
-                self.document = try! Document.parse(document.toString())
+            if let rendered = other.rendered {
+                // create a new document that won't be merged into.
+                // should core have a "clone document" ability?
+                self.document = try! Document.parse(rendered.buildString())
             }
             self.rendered = other.rendered
             self.currentConnectionToken = other.currentConnectionToken
             self.currentConnectionTask = other.currentConnectionTask
             self.eventSubject = other.eventSubject
             self.eventHandlers = other.eventHandlers
+            self.internalState = other.internalState
         }
         
         self.handleEvent("native_redirect") { [weak self] payload in

@@ -389,7 +389,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
         case .patch:
             // patch is like `replaceTop`, but it does not disconnect.
-            let coordinator = LiveViewCoordinator(session: self, url: redirect.to, from: navigationPath.last?.coordinator ?? rootCoordinator)
+            let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
+            coordinator.url = redirect.to
             let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
             case .push:
