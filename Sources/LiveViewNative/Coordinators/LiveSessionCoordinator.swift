@@ -80,11 +80,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
             if prev.count > next.count {
-                let last = next.last ?? .init(url: self.url, coordinator: self.rootCoordinator)
-                if last.coordinator.url != last.url {
-                    last.coordinator.url = last.url
+                let last = next.last?.coordinator ?? rootCoordinator
+                if case .notConnected = last?.state {
                     Task {
-                        try await last.coordinator.connect(domValues: self.domValues, redirect: true)
+                        try await last?.connect(domValues: self.domValues, redirect: true)
                     }
                 }
             }
@@ -353,9 +352,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     func redirect(_ redirect: LiveRedirect) async throws {
         switch redirect.mode {
         case .replaceTop:
-            let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
-            coordinator.url = redirect.to
-            await coordinator.disconnect()
+            await (navigationPath.last?.coordinator ?? rootCoordinator)?.disconnect()
+            let coordinator = LiveViewCoordinator(session: self, url: redirect.to)
             let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
             case .push:
@@ -391,8 +389,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
         case .patch:
             // patch is like `replaceTop`, but it does not disconnect.
-            let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
-            coordinator.url = redirect.to
+            let coordinator = LiveViewCoordinator(session: self, url: redirect.to, from: navigationPath.last?.coordinator ?? rootCoordinator)
             let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
             case .push:

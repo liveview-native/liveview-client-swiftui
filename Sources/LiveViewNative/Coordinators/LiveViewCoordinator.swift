@@ -48,9 +48,20 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-    init(session: LiveSessionCoordinator<R>, url: URL) {
+    init(session: LiveSessionCoordinator<R>, url: URL, from other: LiveViewCoordinator<R>? = nil) {
         self.session = session
         self.url = url
+        if let other {
+            self.channel = other.channel
+            if let document = other.document {
+                self.document = try! Document.parse(document.toString())
+            }
+            self.rendered = other.rendered
+            self.currentConnectionToken = other.currentConnectionToken
+            self.currentConnectionTask = other.currentConnectionTask
+            self.eventSubject = other.eventSubject
+            self.eventHandlers = other.eventHandlers
+        }
         
         self.handleEvent("native_redirect") { [weak self] payload in
             guard let self,
@@ -316,7 +327,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         await MainActor.run { [weak self] in
             self?.channel = nil
             self?.internalState = .notConnected
-            self?.document = nil
         }
     }
     
