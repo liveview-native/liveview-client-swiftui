@@ -15,7 +15,6 @@ import SwiftUI
 /// * `based_on_size`
 #if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 extension ScrollBounceBehavior: Decodable {
     public init(from decoder: Decoder) throws {
@@ -30,3 +29,4 @@ extension ScrollBounceBehavior: Decodable {
         }
     }
 }
+#endif

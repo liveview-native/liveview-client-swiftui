@@ -440,8 +440,10 @@ enum TextModifierType: String, Decodable {
     @available(iOS 16.1, macOS 13.0, tvOS 16.1, watchOS 9.1, *)
     case fontDesign = "font_design"
     case fontWidth = "font_width"
+    #if swift(>=5.8)
     @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
     case monospaced
+    #endif
     
     func decode(from decoder: Decoder) throws -> any TextModifier {
         switch self {
@@ -475,8 +477,10 @@ enum TextModifierType: String, Decodable {
             }
         case .fontWidth:
             return try FontWidthModifier(from: decoder)
+        #if swift(>=5.8)
         case .monospaced:
             return try MonospacedModifier(from: decoder)
+        #endif
         }
     }
 }
