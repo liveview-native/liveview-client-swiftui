@@ -1,4 +1,4 @@
-defmodule LiveViewNativeSwiftUi.MixProject do
+defmodule LiveViewNative.SwiftUI.MixProject do
   use Mix.Project
 
   def project do
@@ -23,9 +23,11 @@ defmodule LiveViewNativeSwiftUi.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:jason, "~> 1.2"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:live_view_native_platform, "~> 0.1"}
+      {:jason, "~> 1.2"},
+      {:live_view_native_platform, "~> 0.1"},
+      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet"},
+      {:nimble_parsec, "~> 1.3"}
     ]
   end
 
