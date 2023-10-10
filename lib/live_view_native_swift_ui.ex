@@ -1,4 +1,4 @@
-defmodule LiveViewNativeSwiftUi do
+defmodule LiveViewNative.SwiftUI do
   use LiveViewNativePlatform
 
   def platforms,
