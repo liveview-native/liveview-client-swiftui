@@ -58,7 +58,7 @@ public struct LiveView<R: RootRegistry>: View {
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
     public init(session: LiveSessionCoordinator<R>) {
         self._storage = .init(wrappedValue: .init(session: session))
-        self.rootCoordinator = session.rootCoordinator
+        self.rootCoordinator = session.navigationPath.first!.coordinator
     }
     
     public init(_ host: some LiveViewHost, configuration: LiveSessionConfiguration = .init()) {
@@ -169,7 +169,11 @@ public struct LiveView<R: RootRegistry>: View {
     
     @ViewBuilder
     private var navigationStack: some View {
-        NavigationStack(path: $storage.session.navigationPath) {
+        NavigationStack(path: Binding {
+            storage.session.navigationPath.dropFirst()
+        } set: { value in
+            storage.session.navigationPath[1...] = value
+        }) {
             navigationRoot
                 .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
                     NavStackEntryView(entry)
@@ -222,7 +226,7 @@ public struct LiveView<R: RootRegistry>: View {
         .onChange(of: selectedTab) { newValue in
             guard let newValue else { return }
             Task {
-                storage.session.rootCoordinator.url = newValue
+                storage.session.navigationPath.first!.coordinator.url = newValue
                 await storage.session.reconnect()
             }
         }
