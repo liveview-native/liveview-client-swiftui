@@ -41,6 +41,12 @@ struct ButtonStyleModifier: ViewModifier, Decodable {
             }
         case .plain:
             content.buttonStyle(.plain)
+        case .card:
+            if #available(tvOS 14.0, *) {
+                content.buttonStyle(.card)
+            } else {
+                content
+            }
         }
     }
 }
@@ -71,4 +77,10 @@ private enum ButtonStyle: String, Decodable {
     @_documentation(visibility: public)
     #endif
     case plain
+    
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(tvOS 14.0, *)
+    case card
 }
