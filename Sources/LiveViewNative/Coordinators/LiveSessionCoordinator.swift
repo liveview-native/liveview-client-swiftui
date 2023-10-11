@@ -169,7 +169,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         for entry in self.navigationPath {
             await entry.coordinator.disconnect()
         }
-        self.navigationPath.removeAll()
+        self.navigationPath = [self.navigationPath.first!]
         self.socket?.disconnect()
         self.socket = nil
         self.state = .notConnected
