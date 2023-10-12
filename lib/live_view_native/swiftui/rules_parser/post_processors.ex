@@ -53,6 +53,28 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
     {rest, [{String.to_atom(variable_name), [], args}, String.to_atom(scope)], context}
   end
 
+  def to_scoped_ime_ast(rest, [[nil, variable], scope], context, _line, _offset) do
+    {rest, [variable, String.to_atom(scope)], context}
+  end
+
+  def to_scoped_ime_ast(rest, [variable, scope], context, _line, _offset) do
+    {rest, [variable, String.to_atom(scope)], context}
+  end
+
+  defp combine_chain_ast_parts(outer, inner) when is_atom(outer) do
+    if Regex.match?(~r/^[A-Z]/, Atom.to_string(outer)) do
+      {:., [], [outer, inner]}
+    else
+      case outer do
+        {:., [], [nil, part]} ->
+          {:., [], [nil, {:., [], [part, inner]}]}
+
+        _ ->
+          {:., [], [outer, inner]}
+      end
+    end
+  end
+
   defp combine_chain_ast_parts({:., [], [nil, part]}, inner) do
     {:., [], [nil, {:., [], [part, inner]}]}
   end
