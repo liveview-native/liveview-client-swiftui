@@ -42,7 +42,8 @@ let package = Package(
                 "SwiftPhoenixClient",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
-                "LiveViewNativeMacros"
+                "LiveViewNativeMacros",
+                "LiveViewNativeStylesheet"
             ],
             plugins: [
                 .plugin(name: "BuiltinRegistryGeneratorPlugin")

@@ -18,7 +18,7 @@ final class MacroTests: XCTestCase {
             
                 static let name = "test"
             
-                init(width: Double?, height: Double?) {
+                init(_ width: Double?, height: Double?) {
                     self.width = width
                     self.height = height
                 }
