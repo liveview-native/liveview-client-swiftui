@@ -234,10 +234,10 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
-    test "snake_case" do
-      input = "font(family: snake_case(family))"
+    test "underscore" do
+      input = "font(family: underscore(family))"
 
-      output = {:font, [], [[family: {Elixir, [], {:snake_case, [], [{:family, [], Elixir}]}}]]}
+      output = {:font, [], [[family: {Elixir, [], {:underscore, [], [{:family, [], Elixir}]}}]]}
 
       assert parse(input) == output
     end
@@ -259,9 +259,9 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "to_ime in the middle of a chain" do
-      input = "color(foo.to_ime(color).bar)"
+      input = "color(.foo.to_ime(color).bar)"
 
-      output = {:color, [], [{:., [], [:foo, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :bar]}]}]}
+      output = {:color, [], [{:., [], [nil, {:., [], [:foo, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :bar]}]}]}]}
 
       assert parse(input) == output
     end

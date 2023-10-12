@@ -1,5 +1,6 @@
 defmodule LiveViewNative.SwiftUI.RulesParser do
   use LiveViewNative.Stylesheet.RulesParser, :mock
+  alias LiveViewNative.SwiftUI.RulesParser.Modifiers
 
   def __using__(_) do
     quote do
@@ -9,6 +10,24 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
   end
 
   def parse(rules) do
-    rules
+    case Modifiers.modifiers(rules) do
+      {:ok, [output], _unconsumed = "", _context, _current_line_and_offset, _} ->
+        output
+
+      {:ok, output, _unconsumed = "", _context, _current_line_and_offset, _} ->
+        output
+
+      {:error, message, _unconsumed, _context, {line, column}, _} ->
+        # TODO: Improve errors:
+        # - Point to column with error in source rules
+        throw(
+          SyntaxError.message(%{
+            file: "Rules",
+            line: line,
+            column: column,
+            description: message
+          })
+        )
+    end
   end
 end
