@@ -38,14 +38,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   end
 
   def to_implicit_ime_ast(rest, [[], variable_name], context, _line, _offset, false) do
-    # IO.inspect(sections, label: "chain_ast_after")
-
     {rest, [String.to_atom(variable_name)], context}
   end
 
   def to_implicit_ime_ast(rest, [args, variable_name], context, _line, _offset, false) do
-    # IO.inspect(sections, label: "chain_ast_after")
-
     {rest, [{String.to_atom(variable_name), [], args}], context}
   end
 
@@ -60,7 +56,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   defp combine_chain_ast_parts({:., [], [nil, part]}, inner) do
     {:., [], [nil, {:., [], [part, inner]}]}
   end
-
 
   defp combine_chain_ast_parts(outer, inner) do
     {:., [], [outer, inner]}

@@ -37,7 +37,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> post_traverse({:to_scoped_ime_ast, []})
 
   ime_function = fn is_initial ->
-    ignore(string("to_ime"))
+    if is_initial do
+      empty()
+    else
+      ignore(string("."))
+    end
+    |> ignore(string("to_ime"))
     |> enclosed("(", variable(), ")")
     |> post_traverse({:to_ime_function_call_ast, [is_initial]})
   end
@@ -48,17 +53,19 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       # Scoped
       # Color.red
       scoped_ime,
+      # to_ime(color)
+      ime_function.(true),
       # Implicit
       # .red
-      implicit_ime.(true),
-      # to_ime(color)
-      ime_function.(true)
+      implicit_ime.(true)
     ])
     |> repeat(
-      # <other_ime>.red
-      implicit_ime.(false),
-      # <other_ime>.to_ime(color)
-      ime_function.(false)
+      choice([
+        # <other_ime>.to_ime(color)
+        ime_function.(false),
+        # <other_ime>.red
+        implicit_ime.(false)
+      ])
     )
     |> post_traverse({:chain_ast, []})
   )
