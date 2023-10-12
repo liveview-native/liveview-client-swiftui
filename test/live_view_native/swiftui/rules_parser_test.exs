@@ -186,8 +186,9 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses variables" do
       input = "foo(color_name)"
-
       output = {:foo, [], [{Elixir, [], {:color_name, [], Elixir}}]}
+
+      assert parse(input) == output
     end
   end
 
