@@ -42,11 +42,10 @@ struct ButtonStyleModifier: ViewModifier, Decodable {
         case .plain:
             content.buttonStyle(.plain)
         case .card:
-            if #available(tvOS 14.0, *) {
-                content.buttonStyle(.card)
-            } else {
-                content
-            }
+            content
+                #if os(tvOS)
+                .buttonStyle(.card)
+                #endif
         }
     }
 }
