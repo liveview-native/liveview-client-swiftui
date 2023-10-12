@@ -1,6 +1,7 @@
 import SwiftSyntax
 import SwiftSyntaxMacros
 import SwiftSyntaxBuilder
+import SwiftDiagnostics
 
 public enum ParseableExpressionMacro: ExtensionMacro {
     public static func expansion(
@@ -12,7 +13,8 @@ public enum ParseableExpressionMacro: ExtensionMacro {
     ) throws -> [ExtensionDeclSyntax] {
         let signatures = declaration.memberBlock.members
             .compactMap({ member -> FunctionParameterListSyntax? in
-                guard let decl: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self)
+                guard let decl: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self),
+                      diagnoseParameters(decl.signature.parameterClause.parameters, in: context)
                 else { return nil }
                 return decl.signature.parameterClause.parameters
             })
@@ -31,6 +33,58 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                 }
             }
         ]
+    }
+    
+    static func diagnoseParameters(_ parameters: FunctionParameterListSyntax, in context: some MacroExpansionContext) -> Bool {
+        // All labelled arguments must appear at the end.
+        if let lastWildcard = parameters.lastIndex(where: { $0.firstName.tokenKind == .wildcard }),
+           let firstLabelled = parameters.lastIndex(where: { $0.firstName.tokenKind != .wildcard })
+        {
+            guard lastWildcard < firstLabelled else {
+                context.diagnose(
+                    Diagnostic(
+                        node: Syntax(parameters),
+                        message: SignatureError.LabelledArgumentsAtEnd(),
+                        fixIt: .replace(
+                            message: SignatureError.LabelledArgumentsAtEnd.FixIt(),
+                            oldNode: parameters,
+                            newNode: FunctionParameterListSyntax(
+                                parameters.sorted(by: { a, b in
+                                    switch (a.firstName.tokenKind == .wildcard, b.firstName.tokenKind == .wildcard) {
+                                    case (false, true):
+                                        return false
+                                    default:
+                                        return true
+                                    }
+                                })
+                                .enumerated()
+                                .map({ (offset, element) in
+                                    element.with(\.trailingComma, offset == parameters.count - 1 ? nil : .commaToken(trailingTrivia: .space))
+                                })
+                            )
+                        )
+                    )
+                )
+                return false
+            }
+        }
+           
+        // All labelled arguments must be optional.
+        for labelledArgument in parameters where labelledArgument.firstName.tokenKind != .wildcard {
+            guard labelledArgument.type.is(OptionalTypeSyntax.self) else {
+                context.diagnose(Diagnostic(
+                    node: Syntax(labelledArgument.type),
+                    message: SignatureError.RequiredLabelledArgument(),
+                    fixIt: .replace(
+                        message: SignatureError.RequiredLabelledArgument.FixIt(),
+                        oldNode: labelledArgument.type,
+                        newNode: OptionalTypeSyntax(wrappedType: labelledArgument.type)
+                    )
+                ))
+                return false
+            }
+        }
+        return true
     }
     
     static func signatureParser(_ signature: FunctionParameterListSyntax) -> ExprSyntax {
@@ -158,5 +212,37 @@ public enum ParseableExpressionMacro: ExtensionMacro {
             )
         }
         """#)
+    }
+    
+    enum SignatureError {
+        static let domain = "ParseableExpression.SignatureError"
+        
+        struct RequiredLabelledArgument: DiagnosticMessage {
+            let message = "Labelled arguments must be optional"
+            
+            let diagnosticID: MessageID = .init(domain: SignatureError.domain, id: "RequiredLabelledArgument")
+            
+            let severity: DiagnosticSeverity = .error
+            
+            struct FixIt: FixItMessage {
+                let message: String = "Add '?'"
+                
+                let fixItID: MessageID = .init(domain: SignatureError.domain, id: "RequiredLabelledArgument.FixIt")
+            }
+        }
+        
+        struct LabelledArgumentsAtEnd: DiagnosticMessage {
+            let message = "Labelled arguments must appear after wildcard arguments"
+            
+            let diagnosticID: MessageID = .init(domain: SignatureError.domain, id: "LabelledArgumentsAtEnd")
+            
+            let severity: DiagnosticSeverity = .error
+            
+            struct FixIt: FixItMessage {
+                let message: String = "Reorder arguments"
+                
+                let fixItID: MessageID = .init(domain: SignatureError.domain, id: "LabelledArgumentsAtEnd.FixIt")
+            }
+        }
     }
 }

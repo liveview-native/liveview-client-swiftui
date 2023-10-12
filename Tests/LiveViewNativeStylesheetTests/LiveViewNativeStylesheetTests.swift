@@ -88,6 +88,21 @@ struct ColorModifier: ViewModifier {
     }
 }
 
+@ParseableExpression
+struct BackgroundModifier: ViewModifier {
+    static var name: String { "background" }
+    
+    let content: String?
+    
+    init(content: String?) {
+        self.content = content
+    }
+    
+    func body(content: Content) -> some View {
+        content.background(.foreground)
+    }
+}
+
 indirect enum TestColor: ParseableModifierValue, Equatable {
     case foo
     case bar
@@ -199,17 +214,17 @@ final class LiveViewNativeStylesheetTests: XCTestCase {
     }
     
     func testStylesheet() throws {
-let stylesheet = try Stylesheet<TestRegistry>(
-    from: #"""
-    %{
-        "w-82" => [{:frame, [], [[width: 82]]}],
-        "fg-color-clear" => [{:foregroundColor, [], [[color: {:., [], [nil, :clear]}]]}],
-        "fg-color:elixirpurple" => [
-            {:foregroundColor, [], [[color: {:., [], [nil, :elixirpurple]}]]}
-        ]
-    }
-    """#
-)
+        let stylesheet = try Stylesheet<TestRegistry>(
+            from: #"""
+            %{
+                "w-82" => [{:frame, [], [[width: 82]]}],
+                "fg-color-clear" => [{:foregroundColor, [], [[color: {:., [], [nil, :clear]}]]}],
+                "fg-color:elixirpurple" => [
+                    {:foregroundColor, [], [[color: {:., [], [nil, :elixirpurple]}]]}
+                ]
+            }
+            """#
+        )
         print(stylesheet)
     }
     
@@ -226,6 +241,10 @@ let stylesheet = try Stylesheet<TestRegistry>(
     func testAnyShapeStyle() throws {
         let style = try AnyShapeStyle.parser().parse(#"{:., [], [nil, {:., [], [:primary, {:., [], [{:opacity, [], [0.5]}, {:blend_mode, [], [:difference]}]}]}]}"#)
         print(style)
+    }
+    
+    func testBackground() throws {
+        print(try BackgroundModifier.parser().parse(#"{:background, [], [[content: :content]]}"#))
     }
 }
 

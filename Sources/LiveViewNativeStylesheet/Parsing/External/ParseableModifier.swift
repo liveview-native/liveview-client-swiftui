@@ -11,7 +11,7 @@ public protocol ParseableModifier<P> {
     static var arguments: ModifierArgumentsBody { get }
 }
 
-extension ParseableModifier where P == StandardModifierParser<Self> {
+public extension ParseableModifier where P == StandardModifierParser<Self> {
     static func parser() -> P {
         StandardModifierParser<Self>()
     }
@@ -64,37 +64,37 @@ struct ModifierArgument<Root, Output: ParseableModifierValue>: Parser {
     }
 }
 
-protocol ParseableModifierValue {
+public protocol ParseableModifierValue {
     associatedtype _ParserType: Parser<Substring.UTF8View, Self>
     static func parser() -> _ParserType
 }
 
 extension Bool: ParseableModifierValue {
-    static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser() -> some Parser<Substring.UTF8View, Self> {
         Parsers.BoolParser()
     }
 }
 
 extension Int: ParseableModifierValue {
-    static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser() -> some Parser<Substring.UTF8View, Self> {
         Parsers.IntParser()
     }
 }
 
 extension Double: ParseableModifierValue {
-    static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser() -> some Parser<Substring.UTF8View, Self> {
         Parsers.FloatParser()
     }
 }
 
 extension String: ParseableModifierValue {
-    static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser() -> some Parser<Substring.UTF8View, Self> {
         StringLiteral()
     }
 }
 
 extension Array: ParseableModifierValue where Element: ParseableModifierValue {
-    static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser() -> some Parser<Substring.UTF8View, Self> {
         ListLiteral {
             Element.parser()
         }
