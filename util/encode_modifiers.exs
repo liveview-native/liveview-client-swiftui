@@ -5,7 +5,7 @@ Mix.install([
 ])
 
 defmodule ModifierEncoder do
-  @native LiveViewNativePlatform.context(%LiveViewNativeSwiftUi.Platform{})
+  @native LiveViewNativePlatform.context(%LiveViewNative.SwiftUI.Platform{})
 
   use LiveViewNative.Extensions.Modifiers,
     custom_modifiers: [],

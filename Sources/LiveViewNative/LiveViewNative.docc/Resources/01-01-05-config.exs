@@ -7,9 +7,9 @@
 # General application configuration
 import Config
 
-config :live_view_native, :platforms, [LiveViewNativeSwiftUi.Platform]
+config :live_view_native, :platforms, [LiveViewNative.SwiftUI.Platform]
 
-config :live_view_native, LiveViewNativeSwiftUi.Platform,
+config :live_view_native, LiveViewNative.SwiftUI.Platform,
   app_name: "LVNTutorial",
   custom_modifiers: []
 
