@@ -14,9 +14,9 @@ import SwiftUI
 /// ```html
 /// <LazyVGrid
 ///     columns={[
-///         LiveViewNativeSwiftUi.Types.GridItem.fixed(100),
-///         LiveViewNativeSwiftUi.Types.GridItem.flexible(),
-///         LiveViewNativeSwiftUi.Types.GridItem.adaptive(50),
+///         LiveViewNative.SwiftUI.Types.GridItem.fixed(100),
+///         LiveViewNative.SwiftUI.Types.GridItem.flexible(),
+///         LiveViewNative.SwiftUI.Types.GridItem.adaptive(50),
 ///     ] |> Jason.encode!}
 /// >
 ///     <%= for i <- 1..50 do %>
