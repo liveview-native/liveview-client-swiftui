@@ -285,8 +285,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       output = MockSheet.compile(["color-red"], target: :all)
 
       assert output == %{"color-red" => [
-        {:color, [], [{:., [], [nil, :red]}]},
-        {:color, [], [{:., [], [nil, :blue]}]}
+        {:color, [], [{:., [], [nil, :red]}]}
       ]}
     end
   end

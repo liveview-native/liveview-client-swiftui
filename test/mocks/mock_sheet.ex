@@ -4,7 +4,6 @@ defmodule MockSheet do
   ~SHEET"""
   "color-red" do
     color(.red)
-    color(.blue)
   end
   """
 
