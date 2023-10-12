@@ -8,6 +8,7 @@ defmodule LiveViewNativeSwiftUi.Modifiers.ButtonStyle do
       bordered_prominent
       borderless
       plain
+      card
     )a)
   end
 
