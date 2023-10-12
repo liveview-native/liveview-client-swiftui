@@ -155,12 +155,13 @@ struct KeyframeAnimatorModifier<R: RootRegistry>: ViewModifier, Decodable {
                     })) as NSDictionary
                 })) as NSArray
             let encoded = try JSONSerialization.data(withJSONObject: modified, options: .sortedKeys)
-            self.stack = try makeJSONDecoder().decode([ModifierContainer<R>].self, from: encoded)
+//            self.stack = try makeJSONDecoder().decode([ModifierContainer<R>].self, from: encoded)
+            self.stack = []
+            #warning("todo")
         }
         
         var body: some View {
             content
-                .applyModifiers(stack[...], element: element, context: context.storage)
         }
     }
 }

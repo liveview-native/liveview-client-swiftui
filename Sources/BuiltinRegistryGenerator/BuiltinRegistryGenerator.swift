@@ -59,11 +59,21 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             .map(viewCase(path:))
             .joined(separator: "\n")
         
+//        let modifiers = modifiers
+//            .map(URL.init(fileURLWithPath:))
+//            .filter(isAllowed(path:))
         let modifiers = modifiers
             .map(URL.init(fileURLWithPath:))
-            .filter(isAllowed(path:))
+            .filter({
+                [
+                    "BoldModifier"
+                ].contains($0.deletingPathExtension().lastPathComponent)
+            })
         let modifierCases = try modifiers
             .map(modifierCase(path:))
+            .joined(separator: "\n")
+        let modifierParsers = try modifiers
+            .map(modifierParser(path:))
             .joined(separator: "\n")
         let modifierSwitchCases = try modifiers
             .map(modifierSwitchCase(path:))
@@ -71,6 +81,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         
         let generated = """
         import SwiftUI
+        import LiveViewNativeStylesheet
         
         // This switch can't be inlined into BuiltinRegistry.lookup because it results in that method's return type
         // being a massive pile of nested _ConditionalContents. Instead, lift it out into a separate View type
@@ -91,14 +102,27 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         }
         
         extension BuiltinRegistry {
-            enum ModifierType: String {
-        \(modifierCases)
-            }
-        
-            @ViewModifierBuilder
-            static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
-                switch type {
-        \(modifierSwitchCases)
+            struct BuiltinModifier: ViewModifier, ParseableModifierValue {
+                enum Storage {
+                    \(modifierCases)
+                }
+                
+                let storage: Storage
+                
+                init(_ storage: Storage) {
+                    self.storage = storage
+                }
+                
+                public func body(content: Content) -> some View {
+                    switch storage {
+                    \(modifierSwitchCases)
+                    }
+                }
+                
+                public static func parser() -> some Parser<Substring.UTF8View, Self> {
+                    OneOf {
+                        \(modifierParsers)
+                    }
                 }
             }
         }
@@ -216,8 +240,28 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             "Modifier"
         }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
         return """
-                case \(name.toCamelCase()) = "\(name.toSnakeCase())"
+                case \(name.toCamelCase())(any ViewModifier)
         """
+    }
+    
+    func modifierParser(path: URL) throws -> String {
+        let name = path.deletingPathExtension().lastPathComponent.firstMatch(of: Regex {
+            Capture {
+                OneOrMore(.any)
+            }
+            "Modifier"
+        }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
+        if let availability = try availability(path: path) {
+            return """
+                    if #available(\(availability)) {
+                        \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "").parser().map({ Self.init(.\(name.toCamelCase())($0)) })
+                    }
+            """
+        } else {
+            return """
+                    \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "").parser().map({ Self.init(.\(name.toCamelCase())($0)) })
+            """
+        }
     }
     
     func modifierSwitchCase(path: URL) throws -> String {
@@ -229,15 +273,17 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
         if let availability = try availability(path: path) {
             return """
-                    case .\(name.toCamelCase()):
+                    case let .\(name.toCamelCase())(modifier):
                         if #available(\(availability)) {
-                            try \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "")(from: decoder)
+                            content.modifier(modifier as! \(name)Modifier\(try isGeneric(path: path) ? "<R>" : ""))
+                        } else {
+                            content
                         }
             """
         } else {
             return """
-                    case .\(name.toCamelCase()):
-                        try \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "")(from: decoder)
+                    case let .\(name.toCamelCase())(modifier):
+                        content.modifier(modifier as! \(name)Modifier\(try isGeneric(path: path) ? "<R>" : ""))
             """
         }
     }

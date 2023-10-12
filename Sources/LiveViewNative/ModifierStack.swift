@@ -23,11 +23,11 @@ public struct _ModifierStack<R: RootRegistry>: Decodable, ViewModifier {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.stack = try container.decode([ModifierContainer<R>].self)
+        self.stack = []
+        #warning("todo")
     }
     
     public func body(content: Content) -> some View {
         content
-            .applyModifiers(stack[...], element: element, context: context.storage)
     }
 }
