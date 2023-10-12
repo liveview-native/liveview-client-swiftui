@@ -180,13 +180,6 @@ extension Color {
     }
 }
 
-enum TestRegistry: RootRegistry {
-    public typealias Modifiers = _ConditionalModifier<
-        FrameModifier,
-        ForegroundColorModifier
-    >
-}
-
 final class LiveViewNativeStylesheetTests: XCTestCase {
     func testSimpleFrame() throws {
         XCTAssertEqual(
@@ -214,7 +207,7 @@ final class LiveViewNativeStylesheetTests: XCTestCase {
     }
     
     func testStylesheet() throws {
-        let stylesheet = try Stylesheet<TestRegistry>(
+        let stylesheet = try Stylesheet(
             from: #"""
             %{
                 "w-82" => [{:frame, [], [[width: 82]]}],

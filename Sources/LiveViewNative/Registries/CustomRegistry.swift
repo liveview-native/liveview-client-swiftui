@@ -7,6 +7,7 @@
 
 import SwiftUI
 import LiveViewNativeCore
+import LiveViewNativeStylesheet
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///
@@ -64,22 +65,6 @@ public protocol CustomRegistry<Root> {
     ///
     /// This will default to the ``EmptyRegistry/None`` type if you don't support any custom tags.
     associatedtype TagName: RawRepresentable = EmptyRegistry.None where TagName.RawValue == String
-    /// A type represnting the custom modifier types that this registry can handle.
-    ///
-    /// This type must be `RawRepresentable` and its raw values must be strings.
-    ///
-    /// Generally, this is an enum which declares variants for the support attributes:
-    /// ```swift
-    /// struct MyRegistry: RootRegistry {
-    ///     enum AttributeName: String {
-    ///         case foo
-    ///         case barBaz
-    ///     }
-    /// }
-    /// ```
-    ///
-    /// This will default to the ``EmptyRegistry/None`` type if you don't support any custom modifiers.
-    associatedtype ModifierType: RawRepresentable = EmptyRegistry.None where ModifierType.RawValue == String
     /// The type of view this registry returns from the `lookup` method.
     ///
     /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-5bvqg`` implementations and this will be inferred automatically.
@@ -87,7 +72,7 @@ public protocol CustomRegistry<Root> {
     /// The type of view modifier this registry returns from the `decodeModifiers` method.
     ///
     /// Generally, implementors will use an opaque return type on their ``decodeModifier(_:from:context:)-4cqvs`` implementations and this will be inferred automatically.
-    associatedtype CustomModifier: ViewModifier = EmptyModifier
+    associatedtype CustomModifier: ViewModifier & ParseableModifierValue = EmptyModifier
     /// The type of view this registry produces for loading views.
     ///
     /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-6jd3b`` implementations and this will be inferred automatically.
@@ -106,18 +91,6 @@ public protocol CustomRegistry<Root> {
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
     static func lookup(_ name: TagName, element: ElementNode) -> CustomView
-    
-    /// This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.
-    ///
-    /// If your custom registry does not support any custom modifiers, you can set the `ModifierType` type alias to ``EmptyRegistry/None`` and omit this method.
-    ///
-    /// - Parameter type: The type of the modifier.
-    /// - Parameter decoder: The decoder representing the JSON object of the modifier. Implement `Decodable` on your modifier type and call `MyModifier(from: decoder)` to use it.
-    /// - Parameter context: The live context in which the view is being built.
-    /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
-    /// - Throws: If decoding the modifier fails.
-    @ViewModifierBuilder
-    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> CustomModifier
     
     /// This method is called when it needs a view to display while connecting to the live view.
     ///
@@ -172,12 +145,6 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
     /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/TagName`` type alias, this implementation will be used.
     public static func lookup(_ name: TagName, element: ElementNode) -> Never {
         fatalError()
-    }
-}
-extension CustomRegistry where ModifierType == EmptyRegistry.None, CustomModifier == EmptyModifier {
-    /// A default implementation that does not provide any custom modifiers. If you omit the ``CustomRegistry/ModifierType`` type alias, this implementation will be used.
-    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder) -> EmptyModifier {
-        EmptyModifier()
     }
 }
 

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import LiveViewNativeCore
+import LiveViewNativeStylesheet
 
 struct ViewTreeBuilder<R: RootRegistry> {
     func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
@@ -81,22 +82,6 @@ struct ViewTreeBuilder<R: RootRegistry> {
         } 
     }
     
-    private func applyModifiers(encoded: String?, to view: some View, element: ElementNode, context: LiveContextStorage<R>) -> some View {
-        let modifiers: [ModifierContainer<R>]
-        if let encoded {
-            let decoder = makeJSONDecoder()
-
-            if let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8)) {
-                modifiers = decoded
-            } else {
-                modifiers = []
-            }
-        } else {
-            modifiers = []
-        }
-        return view.applyModifiers(modifiers[...], element: element, context: context)
-    }
-    
     @ViewBuilder
     private func applyBindings(
         to view: some View,
@@ -130,40 +115,17 @@ extension CodingUserInfoKey {
     static var modifierAnimationScale: Self { .init(rawValue: "modifierAnimationScale")! }
 }
 
-enum ModifierContainer<R: RootRegistry>: Decodable {
+enum ModifierContainer<R: RootRegistry>: ParseableModifierValue {
     case builtin(BuiltinRegistry<R>.BuiltinModifier)
     case custom(R.CustomModifier)
     case error(ErrorModifier<R>)
     case inert
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let type = try container.decode(String.self, forKey: .type)
-        if let type = R.ModifierType(rawValue: type) {
-            do {
-                self = .custom(try R.decodeModifier(type, from: decoder))
-            } catch {
-                self = .error(ErrorModifier<R>(type: type.rawValue, error: error))
-            }
-        } else if let type = BuiltinRegistry<R>.ModifierType(rawValue: type) {
-            do {
-                self = .builtin(try BuiltinRegistry<R>.decodeModifier(type, from: decoder))
-            } catch {
-                self = .error(ErrorModifier<R>(type: type.rawValue, error: error))
-            }
-        } else if ShapeModifierType(rawValue: type) != nil
-                    || FinalShapeModifierType(rawValue: type) != nil
-                    || TextModifierType(rawValue: type) != nil
-                    || ImageModifierType(rawValue: type) != nil
-        {
-            self = .inert
-        } else {
-            self = .error(ErrorModifier<R>(type: type, error: ViewTreeBuilder<R>.Error.unknownModifierType))
+    static func parser() -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            R.CustomModifier.parser().map({ .custom($0) })
+            BuiltinRegistry.BuiltinModifier.parser().map({ .builtin($0) })
         }
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case type
     }
     
     @ViewModifierBuilder
@@ -185,42 +147,14 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     @ObservedElement private var element
     @LiveContext<R> private var context
-    @Attribute("modifiers", transform: { attribute in
-        guard let encoded = attribute?.value else { return [] }
+    @Attribute("class", transform: { attribute in
+        guard let classNames = attribute?.value else { return [] }
         
-        let decoder = makeJSONDecoder()
-        
-        guard let decoded = try? decoder.decode([ModifierContainer<R>].self, from: Data(encoded.utf8))
-        else { return [] }
-        
-        return decoded
-    }) private var modifiers: [ModifierContainer<R>]
+        return classNames.split(separator: " ")
+    }) private var classNames: [Substring]
     
     var body: some View {
         return parent
-            .applyModifiers(modifiers[...], element: element, context: context.storage)
-    }
-}
-
-// this view is required to to break the infinitely-recursive type that occurs if the body of this view is inlined into applyAttributes(_:context:)
-private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
-    let parent: Parent
-    let modifiers: ArraySlice<ModifierContainer<R>>
-    let element: ElementNode
-    let context: LiveContextStorage<R>
-
-    var body: some View {
-        if modifiers.isEmpty {
-            parent
-        } else {
-            ModifierApplicator<_, R>(
-                // force-unwrap is okay, this view is never constructed with an empty slice
-                parent: parent.modifier(modifiers.first!.modifier).environment(\.modifierChangeTrackingContext, ModifierChangeTrackingContext()),
-                modifiers: modifiers.dropFirst(),
-                element: element,
-                context: context
-            )
-        }
     }
 }
 
@@ -248,11 +182,6 @@ private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
 extension View {
     func applyModifiers<R: RootRegistry>(_: R.Type = R.self) -> some View {
         ModifierObserver<Self, R>(parent: self)
-    }
-    
-    @ViewBuilder
-    func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<ModifierContainer<R>>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
-        ModifierApplicator(parent: self, modifiers: modifiers, element: element, context: context)
     }
     
     @ViewBuilder

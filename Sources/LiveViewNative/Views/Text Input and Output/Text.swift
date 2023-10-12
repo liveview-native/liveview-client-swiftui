@@ -429,7 +429,7 @@ enum TextModifierType: String, Decodable {
     case font
     case fontWeight = "font_weight"
     case foregroundColor = "foreground_color"
-    case bold
+//    case bold
     case italic
     case strikethrough
     case underline
@@ -453,8 +453,8 @@ enum TextModifierType: String, Decodable {
             return try FontWeightModifier(from: decoder)
         case .foregroundColor:
             return try ForegroundColorModifier(from: decoder)
-        case .bold:
-            return try BoldModifier(from: decoder)
+//        case .bold:
+//            return try BoldModifier(from: decoder)
         case .italic:
             return try ItalicModifier(from: decoder)
         case .strikethrough:

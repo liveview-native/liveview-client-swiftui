@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import LiveViewNativeStylesheet
 
 #if swift(>=5.9)
 /// A macro that combines multiple registries together.
@@ -98,10 +99,6 @@ extension AggregateRegistry {
         return Registries.lookup(name, element: element)
     }
 
-    public static func decodeModifier(_ type: Registries.ModifierType, from decoder: Decoder) throws -> some ViewModifier {
-        return try Registries.decodeModifier(type, from: decoder)
-    }
-
     public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
         return Registries.loadingView(for: url, state: state)
     }
@@ -148,17 +145,6 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
             First.lookup(name, element: element)
         case .second(let name):
             Second.lookup(name, element: element)
-        }
-    }
-
-    public typealias ModifierType = _EitherRawString<First.ModifierType, Second.ModifierType>
-
-    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
-        switch type {
-        case .first(let type):
-            try First.decodeModifier(type, from: decoder)
-        case .second(let type):
-            try Second.decodeModifier(type, from: decoder)
         }
     }
 
