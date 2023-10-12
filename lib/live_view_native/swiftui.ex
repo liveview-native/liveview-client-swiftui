@@ -3,6 +3,6 @@ defmodule LiveViewNative.SwiftUI do
 
   def platforms,
     do: [
-      LiveViewNativeSwiftUi.Platform
+      LiveViewNative.SwiftUI.Platform
     ]
 end
