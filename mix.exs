@@ -7,6 +7,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       version: "0.1.0",
       elixir: "~> 1.15",
       description: "LiveView Native platform for SwiftUI",
+      elixirc_paths: elixirc_paths(Mix.env()),
       package: package(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -32,6 +33,9 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   end
 
   @source_url "https://github.com/liveview-native/liveview-client-swiftui"
+
+  defp elixirc_paths(:test), do: ["lib", "test/mocks"]
+  defp elixirc_paths(_), do: ["lib"]
 
   # Hex package configuration
   defp package do
