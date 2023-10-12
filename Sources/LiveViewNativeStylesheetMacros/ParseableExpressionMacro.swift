@@ -19,7 +19,8 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                 return decl.signature.parameterClause.parameters
             })
         return [
-            try ExtensionDeclSyntax("extension \(type.trimmed): ParseableModifier") {
+            try ExtensionDeclSyntax("extension \(type.trimmed): ParseableExpressionProtocol") {
+                try TypealiasDeclSyntax("typealias _ParserType = StandardExpressionParser<Self>")
                 try VariableDeclSyntax("static var arguments: some Parser<Substring.UTF8View, Self>") {
                     #""[".utf8"#
                     FunctionCallExprSyntax(calledExpression: DeclReferenceExprSyntax(baseName: .identifier("OneOf")), trailingClosure: ClosureExprSyntax(statementsBuilder: {

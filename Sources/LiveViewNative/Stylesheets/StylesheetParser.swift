@@ -1,23 +1,19 @@
 import SwiftUI
-import Parsing
+import LiveViewNativeStylesheet
 
 struct StylesheetParser<R: RootRegistry>: Parser {
-    var body: some Parser<Substring.UTF8View, [String:[R.Modifiers]]> {
+    var body: some Parser<Substring.UTF8View, [String:[R.CustomModifier]]> {
         "%{".utf8
-        Many(into: [String:[R.Modifiers]]()) { sheet, pair in
+        Many(into: [String:[R.CustomModifier]]()) { sheet, pair in
             let (name, value) = pair
             sheet[name] = value
         } element: {
             Whitespace()
-            StringLiteral()
+            String.parser()
             Whitespace()
             "=>".utf8
             Whitespace()
-            ListLiteral {
-                Whitespace()
-                R.Modifiers.parser()
-                Whitespace()
-            }
+            Array<R.CustomModifier>.parser()
             Whitespace()
         } separator: {
             ",".utf8

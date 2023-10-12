@@ -1,19 +1,17 @@
 import SwiftUI
 import Parsing
 
-public protocol ParseableModifier<P> {
-    associatedtype P: Parser<Substring.UTF8View, Self> = StandardModifierParser<Self>
-    static func parser() -> P
+public protocol ParseableExpressionProtocol<_ParserType>: ParseableModifierValue {
     static var name: String { get }
     
-    associatedtype ModifierArgumentsBody: Parser<Substring.UTF8View, Self>
+    associatedtype ExpressionArgumentsBody: Parser<Substring.UTF8View, Self>
     @ParserBuilder<Substring.UTF8View>
-    static var arguments: ModifierArgumentsBody { get }
+    static var arguments: ExpressionArgumentsBody { get }
 }
 
-public extension ParseableModifier where P == StandardModifierParser<Self> {
-    static func parser() -> P {
-        StandardModifierParser<Self>()
+public extension ParseableExpressionProtocol where _ParserType == StandardExpressionParser<Self> {
+    static func parser() -> _ParserType {
+        StandardExpressionParser<Self>()
     }
 }
 
@@ -41,26 +39,11 @@ public enum ArgumentParseError: LocalizedError {
     }
 }
 
-public struct StandardModifierParser<Output: ParseableModifier>: Parser {
+public struct StandardExpressionParser<Output: ParseableExpressionProtocol>: Parser {
     public var body: some Parser<Substring.UTF8View, Output> {
         ASTNode(Output.name) {
             Output.arguments
         }.map(\.value)
-    }
-}
-
-struct ModifierArgument<Root, Output: ParseableModifierValue>: Parser {
-    let name: String
-    
-    init(_ name: String, type _: Output.Type = Output.self) {
-        self.name = name
-    }
-    
-    var body: some Parser<Substring.UTF8View, Output> {
-        name.utf8
-        ":".utf8
-        Whitespace()
-        Output.parser()
     }
 }
 
@@ -89,7 +72,10 @@ extension Double: ParseableModifierValue {
 
 extension String: ParseableModifierValue {
     public static func parser() -> some Parser<Substring.UTF8View, Self> {
-        StringLiteral()
+        OneOf {
+            StringLiteral()
+            AtomLiteral()
+        }
     }
 }
 
@@ -102,8 +88,8 @@ extension Array: ParseableModifierValue where Element: ParseableModifierValue {
 }
 
 /// A `ViewModifier` that switches between two possible modifier types.
-public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier, ParseableModifier
-    where TrueModifier: ViewModifier & ParseableModifier, FalseModifier: ViewModifier & ParseableModifier
+public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier, ParseableExpressionProtocol
+    where TrueModifier: ViewModifier & ParseableExpressionProtocol, FalseModifier: ViewModifier & ParseableExpressionProtocol
 {
     public static var name: String { "" }
     public static var arguments: some Parser<Substring.UTF8View, Self> {
@@ -142,7 +128,7 @@ public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier, P
     }
 }
 
-extension EmptyModifier: ParseableModifier {
+extension EmptyModifier: ParseableExpressionProtocol {
     public static var name: String { "" }
     public static var arguments: some Parser<Substring.UTF8View, Self> {
         Always(Self.identity)

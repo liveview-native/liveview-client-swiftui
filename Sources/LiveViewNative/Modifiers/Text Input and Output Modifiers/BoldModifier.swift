@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeStylesheet
 
 /// Makes any child ``Text`` elements bold.
 ///
@@ -18,12 +19,19 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct BoldModifier: ViewModifier, Decodable, TextModifier {
+@ParseableExpression
+struct BoldModifier: ViewModifier, TextModifier {
     /// Enables/disables the bold effect.
     #if swift(>=5.8)
     @_documentation(visibility: public)
     #endif
     private var isActive: Bool
+    
+    static let name = "bold"
+    
+    init(_ isActive: Bool) {
+        self.isActive = isActive
+    }
     
     func body(content: Content) -> some View {
         content.bold(isActive)
