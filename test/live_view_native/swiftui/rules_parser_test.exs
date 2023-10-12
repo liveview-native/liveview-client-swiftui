@@ -279,4 +279,15 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       # assert parse(input) == output
     end
   end
+
+  describe "Sheet test" do
+    test "ensure the swiftui sheet compiles as expected" do
+      output = MockSheet.compile(["color-red"], target: :all)
+
+      assert output == %{"color-red" => [
+        {:color, [], [{:., [], [nil, :red]}]},
+        {:color, [], [{:., [], [nil, :blue]}]}
+      ]}
+    end
+  end
 end
