@@ -27,15 +27,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> post_traverse({:to_implicit_ime_ast, [is_initial]})
   end
 
-  # Foo.bar
-  # Foo.baz(0.1)
-  scoped_ime =
-    module_name()
-    |> ignore(string("."))
-    |> concat(word())
-    |> wrap(optional(parsec(:brackets)))
-    |> post_traverse({:to_scoped_ime_ast, []})
-
   ime_function = fn is_initial ->
     if is_initial do
       empty()
@@ -46,6 +37,20 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> enclosed("(", variable(), ")")
     |> post_traverse({:to_ime_function_call_ast, [is_initial]})
   end
+
+  # Foo.bar
+  # Foo.baz(0.1)
+  scoped_ime =
+    module_name()
+    |> concat(
+      choice([
+        # <other_ime>.to_ime(color)
+        ime_function.(false),
+        # <other_ime>.red
+        implicit_ime.(false)
+      ])
+    )
+    |> post_traverse({:to_scoped_ime_ast, []})
 
   defparsec(
     :ime,

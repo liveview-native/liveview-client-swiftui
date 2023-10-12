@@ -245,7 +245,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "to_ime" do
       input = "color(to_ime(color))"
 
-      output = {:color, [], [{:., [], [nil, {Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}]}]}
+      output =
+        {:color, [], [{:., [], [nil, {Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}]}]}
 
       assert parse(input) == output
     end
@@ -253,19 +254,20 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "to_ime with chaining" do
       input = "color(to_ime(color).foo)"
 
-      output = {:color, [], [{:., [], [nil, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :foo]}]}]}
+      output =
+        {:color, [],
+         [{:., [], [nil, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :foo]}]}]}
 
       assert parse(input) == output
     end
 
     test "to_ime in the middle of a chain" do
-      input = "color(.foo.to_ime(color).bar)"
+      input = "color(Foo.to_ime(color).bar)"
 
-      output = {:color, [], [{:., [], [nil, {:., [], [:foo, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :bar]}]}]}]}
+      output = {:color, [], [{:., [], [:Foo, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :bar]}]}]}
 
       assert parse(input) == output
     end
-
 
     @tag :skip
     test "to_ime as a function call" do
