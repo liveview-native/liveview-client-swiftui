@@ -6,7 +6,7 @@ where BaseParser.Input == Substring.UTF8View, MemberParser.Input == Substring.UT
     let base: BaseParser
     let member: MemberParser
     
-    init(@ParserBuilder<Input> base: () -> BaseParser, @ParserBuilder<Input> member: () -> MemberParser) {
+    public init(@ParserBuilder<Input> base: () -> BaseParser, @ParserBuilder<Input> member: () -> MemberParser) {
         self.base = base()
         self.member = member()
     }
