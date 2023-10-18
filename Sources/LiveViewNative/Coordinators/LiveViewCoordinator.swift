@@ -188,11 +188,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
 
     private func handleDiff(payload: Payload, baseURL: URL) throws {
         handleEvents(payload: payload)
-        /*
-        let diff = try RootDiff(from: FragmentDecoder(data: payload))
-        self.rendered = try self.rendered.merge(with: diff)
-        self.document?.merge(with: try Document.parse(self.rendered.buildString()))
-        */
         try self.document?.merge_fragment_json(payload: payload)
     }
 
