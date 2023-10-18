@@ -12,7 +12,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "parses modifier function with content syntax" do
       input = "background(){:content}"
-      output = {:background, [], [[content: :content]]}
+      output = {:background, [], [[content: [:content]]]}
 
       assert parse(input) == output
 
@@ -36,6 +36,12 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         :content2
       }
       """
+
+      assert parse(input) == output
+
+      # supports string wrapped atoms
+      input = "background(){:\"star-red\"}"
+      output = {:background, [], [[content: [:"star-red"]]]}
 
       assert parse(input) == output
     end
@@ -282,7 +288,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
   describe "Sheet test" do
     test "ensure the swiftui sheet compiles as expected" do
-      output = MockSheet.compile(["color-red"], target: :all)
+      output = MockSheet.compile_ast(["color-red"], target: :all)
 
       assert output == %{"color-red" => [
         {:color, [], [{:., [], [nil, :red]}]}
