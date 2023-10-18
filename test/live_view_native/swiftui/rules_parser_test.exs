@@ -10,42 +10,6 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
-    test "parses modifier function with content syntax" do
-      input = "background(){:content}"
-      output = {:background, [], [[content: [:content]]]}
-
-      assert parse(input) == output
-
-      # permits whitespace surrounds
-      input = "background() { :content }"
-
-      assert parse(input) == output
-
-      # permits array of content references
-
-      input = "background() { [:content1, :content2] }"
-
-      output = {:background, [], [[content: [:content1, :content2]]]}
-
-      assert parse(input) == output
-
-      # permits multiline
-      input = """
-      background() {
-        :content1
-        :content2
-      }
-      """
-
-      assert parse(input) == output
-
-      # supports string wrapped atoms
-      input = "background(){:\"star-red\"}"
-      output = {:background, [], [[content: [:"star-red"]]]}
-
-      assert parse(input) == output
-    end
-
     test "parses modifier with multiple arguments" do
       input = "background(\"foo\", \"bar\")"
       output = {:background, [], ["foo", "bar"]}
@@ -65,7 +29,21 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
-    test "parses single modifier with atom as IME" do
+    test "parses atoms as an argument value" do
+      input = "background(content: :star_red)"
+      output = {:background, [], [[content: :star_red]]}
+
+      assert parse(input) == output
+    end
+
+    test "parses string wrapped atoms as an argument value" do
+      input = "background(content: :\"star-red\")"
+      output = {:background, [], [[content: :"star-red"]]}
+
+      assert parse(input) == output
+    end
+
+    test "parses a naked IME" do
       input = "font(.largeTitle)"
 
       output = {:font, [], [{:., [], [nil, :largeTitle]}]}
@@ -89,10 +67,10 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
-    test "parses chained IMEs within the content block" do
-      input = "background() { Color.red }"
+    test "parses naked chained IME" do
+      input = "font(.largeTitle.red)"
 
-      output = {:background, [], [[content: {:., [], [:Color, :red]}]]}
+      output = {:font, [], [{:., [], [nil, {:., [], [:largeTitle, :red]}]}]}
 
       assert parse(input) == output
     end
