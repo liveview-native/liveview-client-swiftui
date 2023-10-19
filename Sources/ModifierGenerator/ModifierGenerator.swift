@@ -24,6 +24,7 @@ struct ModifierGenerator: ParsableCommand {
         "opacity",
         "border",
         "hidden",
+        "animation"
     ]
 
     func run() throws {
@@ -41,13 +42,16 @@ struct ModifierGenerator: ParsableCommand {
 
 
         """#
-        for (modifier, signatures) in visitor.modifiers {
+        for (modifier, signatures) in visitor.modifiers.sorted(by: { $0.key < $1.key }) {
             guard Self.allowlist.contains(modifier)
             else {
                 FileHandle.standardError.write(Data("`\(modifier)` will be skipped\n".utf8))
                 continue
             }
-            let signatures = signatures.enumerated().map(signature(_:_:))
+            let signatures = signatures
+                .filter({ isValid($0.0) })
+                .enumerated()
+                .map(signature(_:_:))
             output.append(#"""
             @ParseableExpression
             struct _\#(modifier)Modifier<R: RootRegistry>: ViewModifier {
@@ -183,14 +187,18 @@ struct ModifierGenerator: ParsableCommand {
         )
     }
 
+    func isValid(_ signature: FunctionDeclSyntax) -> Bool {
+        for parameter in signature.signature.parameterClause.parameters {
+            // ViewBuilder closures with arguments cannot be used.
+            if parameter.isViewBuilder && parameter.type.as(FunctionTypeSyntax.self)?.parameters.count != 0 {
+                return false
+            }
+        }
+        return true
+    }
+
     func parameter(_ parameter: FunctionParameterSyntax, generics: [String:TypeSyntax]) -> FunctionParameterSyntax {
-        let isViewBuilder = parameter.attributes.contains(where: {
-            guard let attributeType = $0.as(AttributeSyntax.self)?.attributeName.as(MemberTypeSyntax.self),
-                  attributeType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
-                  attributeType.name.tokenKind == .identifier("ViewBuilder")
-            else { return false }
-            return true
-        })
+        let isViewBuilder = parameter.isViewBuilder
 
         // generic types are replaced with `Any*` erasers
         let genericBaseType: TypeSyntax?
@@ -219,7 +227,7 @@ struct ModifierGenerator: ParsableCommand {
                 .with(\.attributes, AttributeListSyntax([]))
                 .with(\.defaultValue, InitializerClauseSyntax(value: ExprSyntax(#"ViewReference(value: [])"#)))
         } else if let genericBaseType {
-            if genericBaseType.as(IdentifierTypeSyntax.self)?.name.text == "StringProtocol" {
+            if ["StringProtocol", "Equatable"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
                 return parameter.with(\.type, TypeSyntax("String"))
             } else {
                 return parameter.with(\.type, TypeSyntax("Any\(genericBaseType)")) // erase the generic
@@ -298,5 +306,17 @@ final class ModifierVisitor: SyntaxVisitor {
         }
 
         return .skipChildren
+    }
+}
+
+extension FunctionParameterSyntax {
+    var isViewBuilder: Bool {
+        attributes.contains(where: {
+            guard let attributeType = $0.as(AttributeSyntax.self)?.attributeName.as(MemberTypeSyntax.self),
+                  attributeType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
+                  attributeType.name.tokenKind == .identifier("ViewBuilder")
+            else { return false }
+            return true
+        })
     }
 }
