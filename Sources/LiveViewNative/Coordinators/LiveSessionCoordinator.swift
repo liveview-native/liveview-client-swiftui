@@ -411,11 +411,25 @@ extension LiveSessionCoordinator {
     var platform: String { "swiftui" }
     var platformParams: Payload {
         [
+            "app_version": getAppVersion(),
+            "app_build": getAppBuild(),
             "format": "swiftui",
             "os": getOSName(),
             "os_version": getOSVersion(),
             "target": getTarget()
         ]
+    }
+    
+    private func getAppVersion() -> String {
+        let dictionary = Bundle.main.infoDictionary!
+
+        return dictionary["CFBundleShortVersionString"] as! String
+    }
+    
+    private func getAppBuild() -> String {
+        let dictionary = Bundle.main.infoDictionary!
+
+        dictionary["CFBundleVersion"] as! String
     }
 
     private func getOSName() -> String {
