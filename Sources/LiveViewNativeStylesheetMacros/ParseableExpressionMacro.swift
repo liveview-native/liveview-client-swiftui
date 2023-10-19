@@ -11,6 +11,12 @@ public enum ParseableExpressionMacro: ExtensionMacro {
         conformingTo protocols: [TypeSyntax],
         in context: some MacroExpansionContext
     ) throws -> [ExtensionDeclSyntax] {
+        let accessLevel: DeclModifierListSyntax = declaration.modifiers.first(where: {
+            $0.name.tokenKind == .keyword(.private)
+            || $0.name.tokenKind == .keyword(.public)
+            || $0.name.tokenKind == .keyword(.fileprivate)
+            || $0.name.tokenKind == .keyword(.internal)
+        }).flatMap({ [$0] }) ?? []
         let signatures = declaration.memberBlock.members
             .compactMap({ member -> FunctionParameterListSyntax? in
                 guard let decl: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self),
@@ -19,9 +25,9 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                 return decl.signature.parameterClause.parameters
             })
         return [
-            try ExtensionDeclSyntax("extension \(type.trimmed): ParseableExpressionProtocol") {
-                try TypealiasDeclSyntax("typealias _ParserType = StandardExpressionParser<Self>")
-                try VariableDeclSyntax("static var arguments: some Parser<Substring.UTF8View, Self>") {
+            try ExtensionDeclSyntax.init("extension \(type.trimmed): ParseableExpressionProtocol") {
+                try TypeAliasDeclSyntax("\(accessLevel) typealias _ParserType = StandardExpressionParser<Self>")
+                try FunctionDeclSyntax("\(accessLevel) static func arguments(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self>") {
                     #""[".utf8"#
                     FunctionCallExprSyntax(calledExpression: DeclReferenceExprSyntax(baseName: .identifier("OneOf")), trailingClosure: ClosureExprSyntax(statementsBuilder: {
                         for signature in signatures {
@@ -30,7 +36,6 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                     })) {
                         
                     }
-                    #""]".utf8"#
                 }
             }
         ]
@@ -71,20 +76,20 @@ public enum ParseableExpressionMacro: ExtensionMacro {
         }
            
         // All labelled arguments must be optional.
-        for labelledArgument in parameters where labelledArgument.firstName.tokenKind != .wildcard {
-            guard labelledArgument.type.is(OptionalTypeSyntax.self) else {
-                context.diagnose(Diagnostic(
-                    node: Syntax(labelledArgument.type),
-                    message: SignatureError.RequiredLabelledArgument(),
-                    fixIt: .replace(
-                        message: SignatureError.RequiredLabelledArgument.FixIt(),
-                        oldNode: labelledArgument.type,
-                        newNode: OptionalTypeSyntax(wrappedType: labelledArgument.type)
-                    )
-                ))
-                return false
-            }
-        }
+//        for labelledArgument in parameters where labelledArgument.firstName.tokenKind != .wildcard {
+//            guard labelledArgument.type.is(OptionalTypeSyntax.self) else {
+//                context.diagnose(Diagnostic(
+//                    node: Syntax(labelledArgument.type),
+//                    message: SignatureError.RequiredLabelledArgument(),
+//                    fixIt: .replace(
+//                        message: SignatureError.RequiredLabelledArgument.FixIt(),
+//                        oldNode: labelledArgument.type,
+//                        newNode: OptionalTypeSyntax(wrappedType: labelledArgument.type)
+//                    )
+//                ))
+//                return false
+//            }
+//        }
         return true
     }
     
@@ -107,9 +112,9 @@ public enum ParseableExpressionMacro: ExtensionMacro {
         case 0:
             TypeSyntax("Bool")
         case 1:
-            labelledArguments.first!.type
+            TypeSyntax("\(labelledArguments.first!.type.unwrapped.trimmed)?")
         default:
-            TypeSyntax("(\(raw: labelledArguments.map({ "\($0.firstName.trimmed): \($0.type)" }).joined(separator: ",")))")
+            TypeSyntax("(\(raw: labelledArguments.map({ "\($0.firstName.trimmed): \($0.type.unwrapped.trimmed)?" }).joined(separator: ",")))")
         }
         
         return ExprSyntax(#"""
@@ -124,9 +129,9 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                             })
                     ) + (
                         labelledArguments.count == 1
-                            ? ["\(labelledArguments.first!.firstName.trimmed): labelled"]
+                            ? ["\(labelledArguments.first!.firstName.trimmed): labelled\(labelledArguments.first!.defaultValue.flatMap({ " ?? \($0.value)" }) ?? "!")"]
                             : labelledArguments.map({
-                                "\($0.firstName): labelled.\($0.firstName.trimmed)"
+                                "\($0.firstName): labelled.\($0.firstName.trimmed)\($0.defaultValue.flatMap({ " ?? \($0.value)" }) ?? "!")"
                             })
                     )
                 ).joined(separator: ","))
@@ -146,9 +151,9 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                     \#(wildcardArguments.enumerated().map({ (i, parameter) in
                         """
                         Whitespace()
-                        \(parameter.type.as(OptionalTypeSyntax.self)?.wrappedType ?? parameter.type).parser()
+                        \(parameter.type.as(OptionalTypeSyntax.self)?.wrappedType ?? parameter.type).parser(in: context)
                         Whitespace()
-                        \(i == wildcardArguments.count - 1 && labelledArguments.isEmpty ? "" : #"",".utf8"#)
+                        \(i == wildcardArguments.count - 1 ? "" : #"",".utf8"#)
                         Whitespace()
                         """
                     }).joined(separator: "\n"))
@@ -159,58 +164,74 @@ public enum ParseableExpressionMacro: ExtensionMacro {
             // Parse the labelled arguments
             \#(
                 raw: labelledArguments.isEmpty ? "Always(false)" : #"""
-                "[".utf8
-                Many(
-                    into: (\#(labelledArguments.count == 1
-                        ? "\(labelledArguments.first!.type).none"
-                        : labelledArguments.map({ "\($0.firstName.trimmed): \($0.type).none" }).joined(separator: ",")
-                    ))
-                ) { (result: inout \#(labelledType), argument: \#(labelledType)) in
-                    result = (
-                        \#(labelledArguments.count == 1
-                            ? "result ?? argument"
-                            : labelledArguments.map({ parameter in
-                                "result.\(parameter.firstName.trimmed) ?? argument.\(parameter.firstName.trimmed)"
-                            }).joined(separator: ",")
-                        )
-                    )
-                } element: {
-                    Whitespace()
-                    OneOf {
-                        \#(labelledArguments.map({ parameter in
-                            """
-                            Parse({ value -> \(labelledType) in
-                                (\(labelledArguments.count == 1
-                                    ? "value"
-                                    : labelledArguments.map({ assignmentParameter in
-                                            if assignmentParameter.firstName.tokenKind == parameter.firstName.tokenKind {
-                                                return "\(assignmentParameter.firstName.trimmed): value"
-                                            } else {
-                                                return "\(assignmentParameter.firstName.trimmed): .none"
-                                            }
-                                        }).joined(separator: ",")
-                                ))
-                            }) {
-                                "\(parameter.firstName.trimmed):".utf8
-                                Whitespace()
-                                \(parameter.type.as(OptionalTypeSyntax.self)?.wrappedType ?? parameter.type).parser()
-                            }
-                            """
-                        }).joined(separator: "\n"))
-                        _ErrorParse {
-                            Identifier().map(ArgumentParseError.unknownArgument)
-                            ":".utf8
+                OneOf {
+                    Parse {
+                        \#(!wildcardArguments.isEmpty
+                            ? #"""
                             Whitespace()
+                            ",".utf8
+                            Whitespace()
+                            """#
+                            : ""
+                        )
+                        "[".utf8
+                        Many(
+                            into: (\#(labelledArguments.count == 1
+                                ? "\(labelledArguments.first!.type.unwrapped.trimmed)?.none"
+                                : labelledArguments.map({ "\($0.firstName.trimmed): \($0.type.unwrapped.trimmed)?.none" }).joined(separator: ",")
+                            ))
+                        ) { (result: inout \#(labelledType), argument: \#(labelledType)) in
+                            result = (
+                                \#(labelledArguments.count == 1
+                                    ? "result ?? argument"
+                                    : labelledArguments.map({ parameter in
+                                        "result.\(parameter.firstName.trimmed) ?? argument.\(parameter.firstName.trimmed)"
+                                    }).joined(separator: ",")
+                                )
+                            )
+                        } element: {
+                            Whitespace()
+                            OneOf {
+                                \#(labelledArguments.map({ parameter in
+                                    """
+                                    Parse({ value -> \(labelledType) in
+                                        (\(labelledArguments.count == 1
+                                            ? "value"
+                                            : labelledArguments.map({ assignmentParameter in
+                                                    if assignmentParameter.firstName.tokenKind == parameter.firstName.tokenKind {
+                                                        return "\(assignmentParameter.firstName.trimmed): value"
+                                                    } else {
+                                                        return "\(assignmentParameter.firstName.trimmed): .none"
+                                                    }
+                                                }).joined(separator: ",")
+                                        ))
+                                    }) {
+                                        "\(parameter.firstName.trimmed):".utf8
+                                        Whitespace()
+                                        \(parameter.type.as(OptionalTypeSyntax.self)?.wrappedType ?? parameter.type).parser(in: context)
+                                    }
+                                    """
+                                }).joined(separator: "\n"))
+                                _ErrorParse {
+                                    Identifier().map(ArgumentParseError.unknownArgument)
+                                    ":".utf8
+                                    Whitespace()
+                                }
+                            }
+                            Whitespace()
+                        } separator: {
+                            ",".utf8
+                        } terminator: {
+                            "]".utf8
                         }
                     }
-                    Whitespace()
-                } separator: {
-                    ",".utf8
-                } terminator: {
-                    "]".utf8
+                    Always((\#(labelledArguments.count == 1
+                            ? "\(labelledArguments.first!.type.unwrapped.trimmed)?.none"
+                            : labelledArguments.map({ "\($0.firstName.trimmed): \($0.type.unwrapped.trimmed)?.none" }).joined(separator: ","))))
                 }
                 """#
-            )
+            )                
+            "]".utf8
         }
         """#)
     }
@@ -245,5 +266,11 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                 let fixItID: MessageID = .init(domain: SignatureError.domain, id: "LabelledArgumentsAtEnd.FixIt")
             }
         }
+    }
+}
+
+private extension TypeSyntax {
+    var unwrapped: TypeSyntax {
+        self.as(OptionalTypeSyntax.self)?.wrappedType ?? self
     }
 }

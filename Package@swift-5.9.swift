@@ -59,6 +59,16 @@ let package = Package(
         ),
         
         .executableTarget(
+            name: "ModifierGenerator",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+            ]
+        ),
+
+        .executableTarget(
             name: "BuiltinRegistryGenerator",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
@@ -142,6 +152,7 @@ let package = Package(
             name: "LiveViewNativeStylesheet",
             dependencies: [
                 "LiveViewNativeStylesheetMacros",
+                .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
                 .product(name: "Parsing", package: "swift-parsing"),
             ]
         ),

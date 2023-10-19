@@ -1,3 +1,5 @@
+@_exported import Parsing
+
 /// A macro that creates a parser for a custom type.
 ///
 /// An AST node is represented as a tuple in the following format:
