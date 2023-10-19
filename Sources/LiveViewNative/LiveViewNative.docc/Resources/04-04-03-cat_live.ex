@@ -6,11 +6,11 @@ defmodule LvnTutorialWeb.CatLive do
     {:ok, assign(socket, name: name)}
   end
 
-  def render(%{platform_id: :web} = assigns) do
+  def render(%{layout: :html} = assigns) do
     ~H""
   end
 
-  def render(%{platform_id: :swiftui} = assigns) do
+  def render(%{layout: :swiftui} = assigns) do
     ~SWIFTUI"""
     <VStack modifiers={navigation_title(@native, title: @name)}>
       <AsyncImage url={"/images/cats/#{@name}.jpg"} modifiers={frame(@native, width: 300, height: 300)} />

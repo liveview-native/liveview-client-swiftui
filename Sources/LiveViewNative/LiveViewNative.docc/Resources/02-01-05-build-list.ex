@@ -25,11 +25,11 @@ defmodule LvnTutorialWeb.CatsListLive do
     {:ok, assign(socket, cats: @cats)}
   end
 
-  def render(%{platform_id: :web} = assigns) do
+  def render(%{layout: :html} = assigns) do
     ~H""
   end
 
-  def render(%{platform_id: :swiftui} = assigns) do
+  def render(%{layout: :swiftui} = assigns) do
     ~SWIFTUI"""
     <List>
       <%= for name <- @cats do %>
