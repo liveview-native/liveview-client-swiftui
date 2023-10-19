@@ -221,16 +221,15 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         var connectParams = session.configuration.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
         connectParams["_csrf_token"] = domValues.phxCSRFToken
-        connectParams["_platform"] = session.platform
-        connectParams["_platform_meta"] = session.platformMeta
+        connectParams = session.connectParams
 
         let params: Payload = [
             "session": domValues.phxSession,
             "static": domValues.phxStatic,
             (redirect ? "redirect": "url"): self.url.absoluteString,
-            "params": connectParams,
+            "params": ["_lvn": connectParams],
         ]
-        
+
         let channel = socket.channel("lv:\(domValues.phxID)", params: params)
         self.channel = channel
         channel.onError { message in

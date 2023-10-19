@@ -219,7 +219,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let resp: URLResponse
         do {
             (data, resp) = try await configuration.urlSession.data(from: url.appending(queryItems: [
-                .init(name: "_platform", value: platform)
+                .init(name: "_lvn_platform", value: platform)
             ]))
         } catch {
             throw LiveConnectionError.initialFetchError(error)
@@ -409,14 +409,15 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 
 extension LiveSessionCoordinator {
     var platform: String { "swiftui" }
-    var platformMeta: Payload {
+    var connectParams: Payload {
         [
-            "os_name": getOSName(),
+            "format": "swiftui",
+            "os": getOSName(),
             "os_version": getOSVersion(),
-            "user_interface_idiom": getUserInterfaceIdiom()
+            "target": getTarget()
         ]
     }
-    
+
     private func getOSName() -> String {
         #if os(macOS)
         return "macOS"
@@ -444,7 +445,7 @@ extension LiveSessionCoordinator {
         #endif
     }
 
-    private func getUserInterfaceIdiom() -> String {
+    private func getTarget() -> String {
         #if os(watchOS)
         return "watch"
         #elseif os(macOS)
@@ -459,6 +460,8 @@ extension LiveSessionCoordinator {
             return "mac"
         case .tv:
             return "tv"
+        case .vision:
+            return "vision"
         default:
             return "unspecified"
         }
