@@ -16,8 +16,7 @@ public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
     @ObservedElement var element
     @Environment(\.coordinatorEnvironment) var coordinator
     @Environment(\.modifierChangeTrackingContext) var modifierChangeTrackingContext
-    
-    let initialValue: Value
+
     @Event("phx-change", type: "click") var event: Event.EventHandler
     
     /// The value of the attribute/argument.
@@ -25,7 +24,7 @@ public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
     /// Setting this property will send a change event to the server.
     public var wrappedValue: Value {
         get {
-            localValue.value
+            localValue.value!
         }
         nonmutating set {
             localValue.localValueChanged.send(newValue)
@@ -44,12 +43,19 @@ public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
     public func update() {
         localValue.bind(to: self)
     }
+    
+    public init() {
+        self._localValue = .init(wrappedValue: LocalValue())
+    }
 }
 
 extension ChangeTracked where Value: AttributeDecodable {
+    public init(attribute: AttributeName, sendChangeEvent: Bool = true) {
+        self._localValue = .init(wrappedValue: ElementLocalValue(attribute: attribute, sendChangeEvent: sendChangeEvent))
+    }
+    
     public init(wrappedValue: Value, attribute: AttributeName, sendChangeEvent: Bool = true) {
-        self._localValue = .init(wrappedValue: ElementLocalValue(value: wrappedValue, attribute: attribute, sendChangeEvent: sendChangeEvent))
-        self.initialValue = wrappedValue
+        self._localValue = .init(wrappedValue: ElementLocalValue(wrappedValue: wrappedValue, attribute: attribute, sendChangeEvent: sendChangeEvent))
     }
     
     final class ElementLocalValue: LocalValue {
@@ -58,10 +64,10 @@ extension ChangeTracked where Value: AttributeDecodable {
         let attribute: AttributeName
         let sendChangeEvent: Bool
         
-        init(value: Value, attribute: AttributeName, sendChangeEvent: Bool) {
+        init(wrappedValue: Value? = nil, attribute: AttributeName, sendChangeEvent: Bool) {
             self.attribute = attribute
             self.sendChangeEvent = sendChangeEvent
-            super.init(value: value)
+            super.init(value: wrappedValue)
         }
         
         override func bind(
@@ -92,7 +98,6 @@ extension ChangeTracked where Value: AttributeDecodable {
 extension ChangeTracked where Value: FormValue {
     public init(wrappedValue: Value, form attribute: AttributeName, sendChangeEvent: Bool = true) {
         self._localValue = .init(wrappedValue: FormLocalValue(value: wrappedValue, attribute: attribute, sendChangeEvent: sendChangeEvent))
-        self.initialValue = wrappedValue
     }
     
     final class FormLocalValue: LocalValue {
@@ -143,81 +148,6 @@ extension ChangeTracked where Value: FormValue {
     }
 }
 
-enum ChangeEventCodingKeys: String, CodingKey {
-    case change
-}
-
-extension ChangeTracked where Value: Decodable {
-    public init<K: CodingKey>(decoding key: K, in decoder: Decoder) throws {
-        let initialValue = try decoder.container(keyedBy: K.self).decode(Value.self, forKey: key)
-        self._event = try decoder.container(keyedBy: ChangeEventCodingKeys.self).decode(Event.self, forKey: .change)
-        self.initialValue = initialValue
-        self._localValue = .init(wrappedValue: ModifierLocalValue(value: initialValue, key: key))
-    }
-    
-    final class ModifierLocalValue: LocalValue {
-        var cancellables = Set<AnyCancellable>()
-        
-        var previousInitialValue: Value?
-        
-        let key: String
-        
-        let currentValue: CurrentValueSubject<any Encodable, Never>
-        
-        init(value: Value, key: any CodingKey) {
-            self.key = key.stringValue
-                .reduce(into: [String]()) { partialResult, character in
-                    if character.isUppercase || partialResult.isEmpty {
-                        partialResult.append(String(character))
-                    } else {
-                        partialResult[partialResult.count - 1].append(character)
-                    }
-                }
-                .map({ $0.lowercased() })
-                .joined(separator: "_")
-            self.currentValue = .init(value)
-            super.init(value: value)
-        }
-        
-        override func bind(
-            to changeTracked: ChangeTracked<Value>
-        ) {
-            let modifierChangeTrackingContext = changeTracked.modifierChangeTrackingContext
-            if modifierChangeTrackingContext?.values[self.key]?.value !== self.currentValue {
-                modifierChangeTrackingContext?.values[self.key] = .init(self.currentValue)
-            }
-            
-            if changeTracked.initialValue != previousInitialValue {
-                self.value = changeTracked.initialValue
-                self.currentValue.send(changeTracked.initialValue)
-                previousInitialValue = changeTracked.initialValue
-            }
-            
-            cancellables = [
-                localValueChanged
-                    .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
-                    .compactMap(\.last)
-                    .sink(receiveValue: { [weak self] localValue in
-                        guard let self,
-                              localValue != self.value
-                        else { return }
-                        self.objectWillChange.send()
-                        self.value = localValue
-                        self.currentValue.send(localValue)
-                        Task { [weak self, weak modifierChangeTrackingContext] in
-                            guard let self,
-                                  let modifierChangeTrackingContext
-                            else { return }
-                            var values = modifierChangeTrackingContext.collect()
-                            values[self.key] = localValue
-                            try await changeTracked.event(value: modifierChangeTrackingContext.encode(values))
-                        }
-                    })
-            ]
-        }
-    }
-}
-
 private protocol LocalValueProtocol: ObservableObject {
     func bind<Value>(to changeTracked: ChangeTracked<Value>)
 }
@@ -225,14 +155,14 @@ private protocol LocalValueProtocol: ObservableObject {
 extension ChangeTracked {
     class LocalValue: ObservableObject {
         /// The current value.
-        var value: Value
+        var value: Value?
         
         let objectWillChange = ObjectWillChangePublisher()
         
         /// An publisher that emits new values from the client.
         let localValueChanged = PassthroughSubject<Value, Never>()
         
-        init(value: Value) {
+        init(value: Value? = nil) {
             self.value = value
         }
         

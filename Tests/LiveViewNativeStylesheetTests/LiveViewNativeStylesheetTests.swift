@@ -137,6 +137,10 @@ indirect enum TestColor: ParseableModifierValue, Equatable {
     }
 }
 
+// .red.opacity(0.5)
+
+
+
 extension ForegroundStyle: ParseableModifierValue {
     public static func parser() -> some Parser<Substring.UTF8View, Self> {
         ConstantAtomLiteral("foreground").map({ Self.init() })
@@ -162,7 +166,7 @@ struct ShapeStyleModifier {
     }
 }
 
-extension Color {
+extension Color: ParseableModifierValue {
     static func parser() -> some Parser<Substring.UTF8View, Self> {
         MemberExpression {
             OneOf {
@@ -172,8 +176,10 @@ extension Color {
         } member: {
             OneOf {
                 ConstantAtomLiteral("clear").map({ Color.clear })
+                ConstantAtomLiteral("red").map({ Color.red })
+                ConstantAtomLiteral("purple").map({ Color.purple })
                 
-                AtomLiteral().map({ Color($0) })
+                StringLiteral().map({ Color($0) })
             }
         }
         .map(\.member)

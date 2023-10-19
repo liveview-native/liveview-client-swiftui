@@ -12,6 +12,7 @@ import SwiftPhoenixClient
 import Combine
 import OSLog
 import LiveViewNativeCore
+import LiveViewNativeStylesheet
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionCoordinator")
 
@@ -58,6 +59,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private var mergedEventSubjects: AnyCancellable?
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
+    
+    let stylesheet = try! Stylesheet<BuiltinRegistry<R>.BuiltinModifier>(from: "%{\"test\" => [{:navigationTitle, [], [{:__attr__, [], \"test-value\"}]}, {:navigationBarTitleDisplayMode, [], [{:., [], [nil, :inline]}]}]}", in: ParseableModifierContext())
     
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)

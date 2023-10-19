@@ -19,7 +19,7 @@ struct BuiltinRegistryGeneratorPlugin: BuildToolPlugin {
             .filter({ $0.type == .source })
             .map(\.path)
         let modifierFiles = target.sourceFiles
-            .filter({ $0.path.string.starts(with: target.directory.appending("Modifiers").string) })
+            .filter({ $0.path.string.hasSuffix("_GeneratedModifiers.swift") })
             .filter({ $0.type == .source })
             .map(\.path)
         return [

@@ -9,14 +9,14 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 extension Animation: ParseableModifierValue {
-    public static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
             OneOf {
                 "default".utf8.map({ Base.default })
-                Base.EaseIn.parser().map(Base.easeIn)
-                Base.EaseOut.parser().map(Base.easeOut)
-                Base.EaseInOut.parser().map(Base.easeInOut)
-                Base.Linear.parser().map(Base.linear)
+                Base.EaseIn.parser(in: context).map(Base.easeIn)
+                Base.EaseOut.parser(in: context).map(Base.easeOut)
+                Base.EaseInOut.parser(in: context).map(Base.easeInOut)
+                Base.Linear.parser(in: context).map(Base.linear)
                 "spring".utf8.map({ Base.spring })
                 "interactiveSpring".utf8.map({ Base.interactiveSpring })
                 "interpolatingSpring".utf8.map({ Base.interpolatingSpring })
@@ -25,7 +25,7 @@ extension Animation: ParseableModifierValue {
             }
         } member: {
             OneOf {
-                Modifier.Delay.parser().map(Modifier.delay)
+                Modifier.Delay.parser(in: context).map(Modifier.delay)
             }
         }
         .map { (base: Base, members: [Modifier]) in
