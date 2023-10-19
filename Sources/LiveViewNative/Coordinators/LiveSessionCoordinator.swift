@@ -409,7 +409,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 
 extension LiveSessionCoordinator {
     var platform: String { "swiftui" }
-    var connectParams: Payload {
+    var platformParams: Payload {
         [
             "format": "swiftui",
             "os": getOSName(),
