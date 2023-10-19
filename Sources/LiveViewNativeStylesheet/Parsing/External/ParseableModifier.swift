@@ -1,17 +1,18 @@
 import SwiftUI
 import Parsing
+import LiveViewNativeCore
 
 public protocol ParseableExpressionProtocol<_ParserType>: ParseableModifierValue {
     static var name: String { get }
     
     associatedtype ExpressionArgumentsBody: Parser<Substring.UTF8View, Self>
     @ParserBuilder<Substring.UTF8View>
-    static var arguments: ExpressionArgumentsBody { get }
+    static func arguments(in context: ParseableModifierContext) -> ExpressionArgumentsBody
 }
 
 public extension ParseableExpressionProtocol where _ParserType == StandardExpressionParser<Self> {
-    static func parser() -> _ParserType {
-        StandardExpressionParser<Self>()
+    static func parser(in context: ParseableModifierContext) -> _ParserType {
+        StandardExpressionParser<Self>(context: context)
     }
 }
 
@@ -40,38 +41,54 @@ public enum ArgumentParseError: LocalizedError {
 }
 
 public struct StandardExpressionParser<Output: ParseableExpressionProtocol>: Parser {
+    let context: ParseableModifierContext
+    
     public var body: some Parser<Substring.UTF8View, Output> {
         ASTNode(Output.name) {
-            Output.arguments
+            Output.arguments(in: context)
         }.map(\.value)
     }
 }
 
+public struct ParseableModifierContext {
+    public init() {}
+}
+
 public protocol ParseableModifierValue {
     associatedtype _ParserType: Parser<Substring.UTF8View, Self>
-    static func parser() -> _ParserType
+    static func parser(in context: ParseableModifierContext) -> _ParserType
+}
+
+extension ParseableModifierValue where Self: CaseIterable & RawRepresentable<String>, Self._ParserType == OneOf<Substring.UTF8View, Self, Parsers.OneOfMany<Parsers.MapConstant<ConstantAtomLiteral, Self>>> {
+    public static func parser(in context: ParseableModifierContext) -> _ParserType {
+        OneOf {
+            for `case` in Self.allCases {
+                ConstantAtomLiteral(`case`.rawValue).map({ `case` })
+            }
+        }
+    }
 }
 
 extension Bool: ParseableModifierValue {
-    public static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         Parsers.BoolParser()
     }
 }
 
 extension Int: ParseableModifierValue {
-    public static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         Parsers.IntParser()
     }
 }
 
 extension Double: ParseableModifierValue {
-    public static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         Parsers.FloatParser()
     }
 }
 
 extension String: ParseableModifierValue {
-    public static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             StringLiteral()
             AtomLiteral()
@@ -79,10 +96,67 @@ extension String: ParseableModifierValue {
     }
 }
 
+extension LocalizedStringKey: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            StringLiteral()
+            AtomLiteral()
+        }
+        .map(Self.init(_:))
+    }
+}
+
 extension Array: ParseableModifierValue where Element: ParseableModifierValue {
-    public static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ListLiteral {
-            Element.parser()
+            Element.parser(in: context)
+        }
+    }
+}
+
+extension CoreFoundation.CGFloat: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        Double.parser()
+            .map(Self.init(_:))
+    }
+}
+
+extension CoreFoundation.CGPoint: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ParseableCGPoint.parser(in: context)
+            .map({ Self.init(x: $0.x, y: $0.y) })
+    }
+    
+    @ParseableExpression
+    struct ParseableCGPoint {
+        static let name = "CGPoint"
+        
+        let x: CoreFoundation.CGFloat
+        let y: CoreFoundation.CGFloat
+        
+        init(x: CoreFoundation.CGFloat, y: CoreFoundation.CGFloat) {
+            self.x = x
+            self.y = y
+        }
+    }
+}
+
+extension CoreFoundation.CGSize: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ParseableCGSize.parser(in: context)
+            .map({ Self.init(width: $0.width, height: $0.height) })
+    }
+    
+    @ParseableExpression
+    struct ParseableCGSize {
+        static let name = "CGSize"
+        
+        let width: CoreFoundation.CGFloat
+        let height: CoreFoundation.CGFloat
+        
+        init(width: CoreFoundation.CGFloat, height: CoreFoundation.CGFloat) {
+            self.width = width
+            self.height = height
         }
     }
 }
@@ -92,8 +166,8 @@ public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier, P
     where TrueModifier: ViewModifier & ParseableExpressionProtocol, FalseModifier: ViewModifier & ParseableExpressionProtocol
 {
     public static var name: String { "" }
-    public static var arguments: some Parser<Substring.UTF8View, Self> {
-        Self.parser()
+    public static func arguments(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        Self.parser(in: context)
     }
     
     enum Storage {
@@ -116,13 +190,13 @@ public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier, P
         }
     }
     
-    public static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             TrueModifier
-                .parser()
+                .parser(in: context)
                 .map({ .init(storage: .trueModifier($0)) })
             FalseModifier
-                .parser()
+                .parser(in: context)
                 .map({ .init(storage: .falseModifier($0)) })
         }
     }
@@ -130,14 +204,14 @@ public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier, P
 
 extension EmptyModifier: ParseableExpressionProtocol {
     public static var name: String { "" }
-    public static var arguments: some Parser<Substring.UTF8View, Self> {
+    public static func arguments(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         Always(Self.identity)
     }
     public init(_ arguments: ()) {
         fatalError()
     }
     
-    public static func parser() -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         Parse({ Self.identity }) {}
     }
 }

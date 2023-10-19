@@ -7,14 +7,14 @@ struct AtomLiteral: Parser {
     }
 }
 
-struct ConstantAtomLiteral: Parser {
+public struct ConstantAtomLiteral: Parser {
     let value: String
     
-    init(_ value: String) {
+    public init(_ value: String) {
         self.value = value
     }
     
-    var body: some Parser<Substring.UTF8View, ()> {
+    public var body: some Parser<Substring.UTF8View, ()> {
         ":".utf8
         value.utf8
     }

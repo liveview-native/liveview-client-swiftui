@@ -121,10 +121,10 @@ enum ModifierContainer<R: RootRegistry>: ParseableModifierValue {
     case error(ErrorModifier<R>)
     case inert
     
-    static func parser() -> some Parser<Substring.UTF8View, Self> {
+    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
-            R.CustomModifier.parser().map({ .custom($0) })
-            BuiltinRegistry.BuiltinModifier.parser().map({ .builtin($0) })
+            R.CustomModifier.parser(in: context).map({ .custom($0) })
+            BuiltinRegistry.BuiltinModifier.parser(in: context).map({ .builtin($0) })
         }
     }
     
@@ -154,7 +154,11 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     }) private var classNames: [Substring]
     
     var body: some View {
-        return parent
+        return parent.applyModifiers(
+            classNames.reduce(into: []) {
+                $0.append(contentsOf: context.coordinator.session.stylesheet.classes[String($1)] ?? [])
+            }
+        )
     }
 }
 
@@ -179,9 +183,29 @@ private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
     }
 }
 
+private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
+    let parent: Parent
+    let modifiers: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>
+    
+    var body: some View {
+        parent
+            .modifier(modifiers.first!)
+            .applyModifiers(modifiers.dropFirst())
+    }
+}
+
 extension View {
     func applyModifiers<R: RootRegistry>(_: R.Type = R.self) -> some View {
         ModifierObserver<Self, R>(parent: self)
+    }
+    
+    @ViewBuilder
+    func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>) -> some View {
+        if modifiers.isEmpty {
+            self
+        } else {
+            ModifierApplicator(parent: self, modifiers: modifiers)
+        }
     }
     
     @ViewBuilder

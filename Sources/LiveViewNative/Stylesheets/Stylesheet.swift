@@ -1,10 +1,10 @@
 import SwiftUI
-@_exported import Parsing
+import LiveViewNativeStylesheet
 
-public struct Stylesheet<R: RootRegistry> {
-    public let classes: [String:[R.CustomModifier]]
+public struct Stylesheet<M: ViewModifier & ParseableModifierValue> {
+    public let classes: [String:[M]]
     
-    public init(from data: String) throws {
-        self.classes = try StylesheetParser<R>().parse(data.utf8)
+    public init(from data: String, in context: ParseableModifierContext) throws {
+        self.classes = try StylesheetParser<M>(context: context).parse(data.utf8)
     }
 }

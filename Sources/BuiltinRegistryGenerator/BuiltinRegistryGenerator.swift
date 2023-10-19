@@ -59,16 +59,9 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             .map(viewCase(path:))
             .joined(separator: "\n")
         
-//        let modifiers = modifiers
-//            .map(URL.init(fileURLWithPath:))
-//            .filter(isAllowed(path:))
-        let modifiers = modifiers
-            .map(URL.init(fileURLWithPath:))
-            .filter({
-                [
-                    "BoldModifier"
-                ].contains($0.deletingPathExtension().lastPathComponent)
-            })
+       let modifiers = modifiers
+           .map(URL.init(fileURLWithPath:))
+           .filter(isAllowed(path:))
         let modifierCases = try modifiers
             .map(modifierCase(path:))
             .joined(separator: "\n")
@@ -97,32 +90,6 @@ struct BuiltinRegistryGenerator: ParsableCommand {
                 default:
                     // log here that view type cannot be found
                     EmptyView()
-                }
-            }
-        }
-        
-        extension BuiltinRegistry {
-            struct BuiltinModifier: ViewModifier, ParseableModifierValue {
-                enum Storage {
-                    \(modifierCases)
-                }
-                
-                let storage: Storage
-                
-                init(_ storage: Storage) {
-                    self.storage = storage
-                }
-                
-                public func body(content: Content) -> some View {
-                    switch storage {
-                    \(modifierSwitchCases)
-                    }
-                }
-                
-                public static func parser() -> some Parser<Substring.UTF8View, Self> {
-                    OneOf {
-                        \(modifierParsers)
-                    }
                 }
             }
         }
