@@ -1,6 +1,14 @@
 defmodule LiveViewNative.SwiftUI.RulesParserTest do
   use ExUnit.Case
-  import LiveViewNative.SwiftUI.RulesParser, only: [parse: 1]
+  alias LiveViewNative.SwiftUI.RulesParser
+
+  def parse(input) do
+    RulesParser.parse(input,
+      context: %{
+        annotations: false
+      }
+    )
+  end
 
   describe "parse/1" do
     test "parses modifier function definition" do
@@ -133,6 +141,13 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
+    test "parses underscore numbers" do
+      input = "foo(1_000, 1_000_000_000_000, 1_000.4)"
+      output = {:foo, [], [1_000, 1_000_000_000_000, 1_000.4]}
+
+      assert parse(input) == output
+    end
+
     test "parses key/value pairs" do
       input = ~s|foo(bar: "baz", qux: .quux)|
       output = {:foo, [], [[bar: "baz", qux: {:., [], [nil, :quux]}]]}
@@ -261,6 +276,13 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       # output = {:color, [], [{:., [], [:foo, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :bar]}]}]}
 
       # assert parse(input) == output
+    end
+
+    test "event" do
+      input = ~s{searchable(change: event("search-event", throttle: 10_000))}
+      output = {:searchable, [], [[change: {:__event__, [], ["search-event", [throttle: 10_000]]}]]}
+
+      assert parse(input) == output
     end
   end
 

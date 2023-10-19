@@ -25,15 +25,28 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
 
   def plus(), do: string("+")
 
+  def underscored_integer() do
+    integer(min: 1)
+    |> repeat(
+      choice([
+        ascii_char([?0..?9]),
+        ignore(string("_"))
+        |> ascii_char([?0..?9])
+      ])
+      |> reduce({List, :to_string, []})
+    )
+    |> reduce({Enum, :join, [""]})
+  end
+
   def int() do
     optional(minus())
-    |> concat(integer(min: 1))
+    |> concat(underscored_integer())
     |> reduce({Enum, :join, [""]})
     |> map({String, :to_integer, []})
   end
 
   def frac() do
-    concat(string("."), integer(min: 1))
+    concat(string("."), underscored_integer())
   end
 
   def float() do
@@ -45,7 +58,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
 
   def atom() do
     ignore(string(":"))
-    |> concat(word())
+    |> choice([
+      double_quoted_string(),
+      word()
+    ])
     |> map({String, :to_atom, []})
   end
 
@@ -194,6 +210,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
       choice([
         literal(),
         parsec(:attr),
+        parsec(:event),
         parsec(:ime),
         parsec(:helper_function),
         parsec(:nested_attribute),
