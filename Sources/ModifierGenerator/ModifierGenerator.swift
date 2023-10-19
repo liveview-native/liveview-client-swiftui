@@ -13,18 +13,19 @@ struct ModifierGenerator: ParsableCommand {
     private var interface: URL
 
     static let allowlist = [
-        "bold",
-        "italic",
-        "background",
-        "overlay",
-        "navigationTitle",
-        "navigationBarTitleDisplayMode",
-        "position",
-        "offset",
-        "opacity",
-        "border",
-        "hidden",
-        "animation"
+        // "bold",
+        // "italic",
+        // "background",
+        // "overlay",
+        // "navigationTitle",
+        // "navigationBarTitleDisplayMode",
+        // "position",
+        // "offset",
+        // "opacity",
+        // "border",
+        // "hidden",
+        // "animation",
+        "transition"
     ]
 
     func run() throws {
@@ -49,9 +50,29 @@ struct ModifierGenerator: ParsableCommand {
                 continue
             }
             let signatures = signatures
+                // remove invalid function signatures (unsupported types/forms)
                 .filter({ isValid($0.0) })
                 .enumerated()
                 .map(signature(_:_:))
+                // remove duplicates
+                .reduce(into: [Signature]()) { result, next in
+                    func isDuplicate(_ lhs: Signature, _ rhs: Signature) -> Bool {
+                        guard lhs.parameters.count == rhs.parameters.count
+                        else { return false }
+                        for (a, b) in zip(lhs.parameters, rhs.parameters) {
+                            guard (a.type.as(MemberTypeSyntax.self)?.name.text ?? a.type.description) == (b.type.as(MemberTypeSyntax.self)?.name.text ?? b.type.description),
+                                  a.firstName.text == b.firstName.text
+                            else { return false }
+                        }
+                        return true
+                    }
+                    for previous in result {
+                        if isDuplicate(previous, next) {
+                            return
+                        }
+                    }
+                    result.append(next)
+                }
             output.append(#"""
             @ParseableExpression
             struct _\#(modifier)Modifier<R: RootRegistry>: ViewModifier {
@@ -118,6 +139,7 @@ struct ModifierGenerator: ParsableCommand {
     }
 
     struct Signature {
+        let parameters: [FunctionParameterSyntax]
         let `init`: String
         let `case`: String
         let content: String
@@ -144,6 +166,7 @@ struct ModifierGenerator: ParsableCommand {
         let changeTracked = caseParameters.filter({ $0.type.as(IdentifierTypeSyntax.self)?.name.text == "ChangeTracked" })
         let boundParameters = caseParameters.filter({ $0.type.as(IdentifierTypeSyntax.self)?.name.text != "ChangeTracked" })
         return Signature(
+            parameters: parameters,
             init: #"""
                 init(\#(FunctionParameterListSyntax(parameters).description)) {
                     self.value = ._\#(offset)\#(caseParameters.isEmpty ? "" : "(")\#(caseParameters.map({ "\($0.firstName.trimmed): \($0.firstName.trimmed)" }).joined(separator: ", "))\#(caseParameters.isEmpty ? "" : ")")
