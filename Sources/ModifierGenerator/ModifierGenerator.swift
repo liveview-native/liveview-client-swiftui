@@ -13,17 +13,17 @@ struct ModifierGenerator: ParsableCommand {
     private var interface: URL
 
     static let allowlist = [
-        // "bold",
-        // "italic",
-        // "background",
-        // "overlay",
+        "bold",
+        "italic",
+        "background",
+        "overlay",
         "navigationTitle",
         "navigationBarTitleDisplayMode",
-        // "position",
-        // "offset",
-        // "opacity",
-        // "border",
-        // "hidden",
+        "position",
+        "offset",
+        "opacity",
+        "border",
+        "hidden",
     ]
 
     func run() throws {
