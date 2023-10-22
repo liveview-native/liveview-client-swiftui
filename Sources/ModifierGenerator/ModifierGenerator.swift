@@ -12,20 +12,144 @@ struct ModifierGenerator: ParsableCommand {
     )
     private var interface: URL
 
-    static let allowlist = [
-        // "bold",
-        // "italic",
-        // "background",
-        // "overlay",
-        // "navigationTitle",
-        // "navigationBarTitleDisplayMode",
-        // "position",
-        // "offset",
-        // "opacity",
-        // "border",
-        // "hidden",
-        // "animation",
-        "transition"
+    static let denylist: Set<String> = [
+        "environment",
+        "environmentObject",
+        "transformEnvironment",
+        "preference",
+        "onPreferenceChange",
+        "transformPreference",
+        "anchorPreference",
+        "transformAnchorPreference",
+        "onChange",
+        "onReceive",
+
+        "alignmentGuide",
+        "layoutValue",
+
+        "focusedObject",
+        "focusedSceneObject",
+        "focusedSceneValue",
+        "focusedValue",
+        
+        "navigationDocument",
+        
+        "previewContext",
+        
+        // fixme: missing types
+        "accessibilityRotor",
+        "toolbar",
+        "accessibilityChartDescriptor",
+        "accessibilityFocused",
+        "accessibilityQuickAction",
+        "alert",
+        "buttonStyle",
+        "containerRelativeFrame",
+        "contextMenu",
+        "controlGroupStyle",
+        "copyable",
+        "cuttable",
+        "datePickerStyle",
+        "defaultFocus",
+        "digitalCrownRotation",
+        "disclosureGroupStyle",
+        "draggable",
+        "dropDestination",
+        "dynamicTypeSize",
+        "exportableToServices",
+        "exportsItemProviders",
+        "fileExporter",
+        "fileImporter",
+        "fileMover",
+        "focused",
+        "formStyle",
+        "gaugeStyle",
+        "gesture",
+        "groupBoxStyle",
+        "highPriorityGesture",
+        "importableFromServices",
+        "importsItemProviders",
+        "indexViewStyle",
+        "labelStyle",
+        "labeledContentStyle",
+        "listStyle",
+        "menuButtonStyle",
+        "menuStyle",
+        "navigationSplitViewStyle",
+        "onContinuousHover",
+        "onContinueUserActivity",
+        "onDrag",
+        "onDrop",
+        "onHover",
+        "onKeyPress",
+        "onOpenURL",
+        "onPasteCommand",
+        "onSubmit",
+        "onTapGesture",
+        "pageCommand",
+        "pasteDestination",
+        "pickerStyle",
+        "presentationDetents",
+        "presentedWindowStyle",
+        "presentedWindowToolbarStyle",
+        "progressViewStyle",
+        "scrollPosition",
+        "scrollTargetBehavior",
+        "searchCompletion",
+        "searchScopes",
+        "sensoryFeedback",
+        "simultaneousGesture",
+        "symbolEffect",
+        "tabViewStyle",
+        "tableStyle",
+        "textEditorStyle",
+        "textFieldStyle",
+        "textSelection",
+        "toggleStyle",
+        "transaction",
+        "userActivity",
+        
+        // fixme: type availability
+        "allowedDynamicRange",
+        "alternatingRowBackgrounds",
+        "badgeProminence",
+        "buttonRepeatBehavior",
+        "colorEffect",
+        "containerBackground",
+        "contentMargins",
+        "coordinateSpace",
+        "dialogSeverity",
+        "distortionEffect",
+        "fileDialogBrowserOptions",
+        "focusable",
+        "layerEffect",
+        "layoutDirectionBehavior",
+        "listSectionSpacing",
+        "menuActionDismissBehavior",
+        "onMoveCommand",
+        "ornament",
+        "paletteSelectionEffect",
+        "presentationBackgroundInteraction",
+        "presentationCompactAdaptation",
+        "presentationContentInteraction",
+        "scrollBounceBehavior",
+        "searchDictationBehavior",
+        "springLoadingBehavior",
+        "textScale",
+        "toolbarTitleDisplayMode",
+        "touchBar",
+        "touchBarItemPresence",
+        "typesettingLanguage",
+
+        // fixme: variadic enum cases
+        "toolbarBackground",
+        "toolbarColorScheme",
+
+        // fixme: labelled argument ordering
+        "mask",
+
+        // fixme: type collision
+        "shadow",
     ]
 
     func run() throws {
@@ -43,12 +167,18 @@ struct ModifierGenerator: ParsableCommand {
 
 
         """#
+
+        var modifierList = [String]()
+
         for (modifier, signatures) in visitor.modifiers.sorted(by: { $0.key < $1.key }) {
-            guard Self.allowlist.contains(modifier)
+            guard !modifier.starts(with: "_"),
+                  !Self.denylist.contains(modifier),
+                  !signatures.allSatisfy({ !isValid($0.0) })
             else {
                 FileHandle.standardError.write(Data("`\(modifier)` will be skipped\n".utf8))
                 continue
             }
+            modifierList.append(modifier)
             let signatures = signatures
                 // remove invalid function signatures (unsupported types/forms)
                 .filter({ isValid($0.0) })
@@ -87,7 +217,7 @@ struct ModifierGenerator: ParsableCommand {
                 @ObservedElement private var element
                 @LiveContext<R> private var context
             
-            \#(signatures.compactMap(\.changeTracked).joined(separator: "\n"))
+            \#(signatures.compactMap(\.properties).joined(separator: "\n"))
 
             \#(signatures.map(\.`init`).joined(separator: "\n"))
 
@@ -106,7 +236,7 @@ struct ModifierGenerator: ParsableCommand {
         extension BuiltinRegistry {
             struct BuiltinModifier: ViewModifier, ParseableModifierValue {
                 enum Storage {
-                    \#(Self.allowlist.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
+                    \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
                 }
                 
                 let storage: Storage
@@ -117,7 +247,7 @@ struct ModifierGenerator: ParsableCommand {
                 
                 public func body(content: Content) -> some View {
                     switch storage {
-                    \#(Self.allowlist.map({
+                    \#(modifierList.map({
                         """
                         case let .\($0)(modifier):
                             content.modifier(modifier)
@@ -128,7 +258,7 @@ struct ModifierGenerator: ParsableCommand {
                 
                 public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
                     OneOf {
-                        \#(Self.allowlist.map({ "_\($0)Modifier<R>.parser(in: context).map({ Self.init(.\($0)($0)) })" }).joined(separator: "\n"))
+                        \#(modifierList.map({ "_\($0)Modifier<R>.parser(in: context).map({ Self.init(.\($0)($0)) })" }).joined(separator: "\n"))
                     }
                 }
             }
@@ -143,7 +273,7 @@ struct ModifierGenerator: ParsableCommand {
         let `init`: String
         let `case`: String
         let content: String
-        let changeTracked: String?
+        let properties: String?
     }
 
     func signature(_ offset: Int, _ declarationSyntax: (FunctionDeclSyntax, availability: (AvailabilityArgumentListSyntax, Set<String>))) -> Signature {
@@ -162,15 +292,19 @@ struct ModifierGenerator: ParsableCommand {
         let parameters = decl.signature.parameterClause.parameters.map({ parameter($0, generics: generics) })
         let caseParameters = parameters
             .map({ $0.secondName != nil ? $0.with(\.firstName, $0.secondName!).with(\.secondName, nil) : $0 })
-        // Filter out `ChangeTracked` arguments.
+        // Filter out `ChangeTracked` and `Event` arguments.
         let changeTracked = caseParameters.filter({ $0.type.as(IdentifierTypeSyntax.self)?.name.text == "ChangeTracked" })
-        let boundParameters = caseParameters.filter({ $0.type.as(IdentifierTypeSyntax.self)?.name.text != "ChangeTracked" })
+        let events = caseParameters.filter({ $0.type.as(IdentifierTypeSyntax.self)?.name.text == "Event" })
+        var boundParameters = caseParameters.filter({ !["ChangeTracked", "Event"].contains($0.type.as(IdentifierTypeSyntax.self)?.name.text) })
+        if !boundParameters.isEmpty {
+            boundParameters[boundParameters.count - 1] = boundParameters.last!.with(\.trailingComma, nil)
+        }
         return Signature(
             parameters: parameters,
             init: #"""
                 init(\#(FunctionParameterListSyntax(parameters).description)) {
-                    self.value = ._\#(offset)\#(caseParameters.isEmpty ? "" : "(")\#(caseParameters.map({ "\($0.firstName.trimmed): \($0.firstName.trimmed)" }).joined(separator: ", "))\#(caseParameters.isEmpty ? "" : ")")
-                    \#(changeTracked
+                    self.value = ._\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(boundParameters.map({ "\($0.firstName.trimmed): \($0.firstName.trimmed)" }).joined(separator: ", "))\#(caseParameters.isEmpty ? "" : ")")
+                    \#((changeTracked + events)
                         .map({
                             #"self.__\#(offset)_\#(($0.secondName ?? $0.firstName).trimmed.description) = \#($0.secondName ?? $0.firstName)"#
                         })
@@ -179,7 +313,7 @@ struct ModifierGenerator: ParsableCommand {
                 }
             """#,
             case: #"""
-                    case _\#(offset)\#(caseParameters.isEmpty ? "" : "(")\#(FunctionParameterListSyntax(caseParameters).description)\#(caseParameters.isEmpty ? "" : ")")
+                    case _\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(FunctionParameterListSyntax(boundParameters).description)\#(boundParameters.isEmpty ? "" : ")")
             """#,
             content: #"""
                     \#(boundParameters.isEmpty ? "case ._\(offset)" : "case let ._\(offset)(\(boundParameters.map(\.firstName.trimmed.description).joined(separator: ", ")))"):
@@ -195,6 +329,8 @@ struct ModifierGenerator: ParsableCommand {
                                 case "ChangeTracked":
                                     // These are registered on the View so they get proper DynamicProperty treatment.
                                     return $0.firstName.tokenKind == .wildcard ? "__\(offset)_\($0.secondName!.text).projectedValue" : "\($0.firstName.text): __\(offset)_\(($0.secondName ?? $0.firstName).text).projectedValue"
+                                case "Event":
+                                    return $0.firstName.tokenKind == .wildcard ? "{ __\(offset)_\($0.secondName!.text).wrappedValue() }" : "\($0.firstName.text): { __\(offset)_\(($0.secondName ?? $0.firstName).text).wrappedValue() }"
                                 default:
                                     return $0.firstName.tokenKind == .wildcard ? $0.secondName!.text : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)"
                                 }
@@ -202,11 +338,20 @@ struct ModifierGenerator: ParsableCommand {
                             \#(unavailable.isEmpty ? "" : "#endif")
                         \#(availability.isEmpty ? "" : "} else { __content }")
             """#,
-            changeTracked: changeTracked
+            properties: #"""
+            \#(changeTracked
                 .map({
                     #"@ChangeTracked private var _\#(offset)_\#(($0.secondName ?? $0.firstName).trimmed.description): \#($0.type.as(IdentifierTypeSyntax.self)!.genericArgumentClause!.arguments.description)"#
                 })
                 .joined(separator: "\n")
+            )
+            \#(events
+                .map({
+                    #"@Event private var _\#(offset)_\#(($0.secondName ?? $0.firstName).trimmed.description): Event.EventHandler"#
+                })
+                .joined(separator: "\n")
+            )
+            """#
         )
     }
 
@@ -221,8 +366,6 @@ struct ModifierGenerator: ParsableCommand {
     }
 
     func parameter(_ parameter: FunctionParameterSyntax, generics: [String:TypeSyntax]) -> FunctionParameterSyntax {
-        let isViewBuilder = parameter.isViewBuilder
-
         // generic types are replaced with `Any*` erasers
         let genericBaseType: TypeSyntax?
         if let identifierType = parameter.type.as(IdentifierTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self),
@@ -243,17 +386,24 @@ struct ModifierGenerator: ParsableCommand {
             genericBaseType = nil
         }
 
-        if isViewBuilder {
+        if parameter.isViewBuilder {
             // nested View content is replaced with a `ViewReference`
             return parameter
                 .with(\.type, TypeSyntax("ViewReference"))
                 .with(\.attributes, AttributeListSyntax([]))
                 .with(\.defaultValue, InitializerClauseSyntax(value: ExprSyntax(#"ViewReference(value: [])"#)))
+        } else if let functionType = parameter.type.as(FunctionTypeSyntax.self) ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self),
+                  functionType.parameters.count == 0
+                    && functionType.returnClause.type.as(MemberTypeSyntax.self)?.name.text == "Void"
+        {
+            return parameter.with(\.type, TypeSyntax("Event")).with(\.defaultValue, nil)
         } else if let genericBaseType {
             if ["StringProtocol", "Equatable"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
                 return parameter.with(\.type, TypeSyntax("String"))
+            } else if ["BinaryInteger"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
+                return parameter.with(\.type, TypeSyntax("\(parameter.type.leadingTrivia)Int\(parameter.type.trailingTrivia)"))
             } else {
-                return parameter.with(\.type, TypeSyntax("Any\(genericBaseType)")) // erase the generic
+                return parameter.with(\.type, TypeSyntax("\(parameter.type.leadingTrivia)Any\(genericBaseType)\(parameter.type.trailingTrivia)")) // erase the generic
             }
         } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
                   memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
