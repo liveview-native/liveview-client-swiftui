@@ -413,6 +413,7 @@ extension LiveSessionCoordinator {
         [
             "app_version": getAppVersion(),
             "app_build": getAppBuild(),
+            "bundle_id": getBundleID(),
             "format": "swiftui",
             "os": getOSName(),
             "os_version": getOSVersion(),
@@ -429,7 +430,13 @@ extension LiveSessionCoordinator {
     private func getAppBuild() -> String {
         let dictionary = Bundle.main.infoDictionary!
 
-        dictionary["CFBundleVersion"] as! String
+        return dictionary["CFBundleVersion"] as! String
+    }
+    
+    private func getBundleID() -> String {
+        let dictionary = Bundle.main.infoDictionary!
+
+        return dictionary["CFBundleIdentifier"] as! String
     }
 
     private func getOSName() -> String {
