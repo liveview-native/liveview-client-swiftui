@@ -481,8 +481,6 @@ extension LiveSessionCoordinator {
             return "mac"
         case .tv:
             return "tv"
-        case .vision:
-            return "vision"
         default:
             return "unspecified"
         }
