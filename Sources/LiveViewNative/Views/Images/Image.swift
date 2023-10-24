@@ -83,8 +83,6 @@ struct Image<R: RootRegistry>: View {
     #endif
     @Attribute("variable-value") private var variableValue: Double?
     
-    @Attribute("modifiers") private var modifiers: ImageModifierStack?
-    
     init() {}
     
     init(element: ElementNode) {
@@ -92,22 +90,9 @@ struct Image<R: RootRegistry>: View {
         self._systemName = .init("system-name", element: element)
         self._variableValue = .init("variable-value", element: element)
         self._name = .init("name", element: element)
-        self._modifiers = .init("modifiers", element: element)
     }
     
     public var body: SwiftUI.Image? {
-        if let image {
-            var result = image
-            for modifier in modifiers?.stack ?? [] {
-                result = modifier.apply(to: result)
-            }
-            return result
-        } else {
-            return nil
-        }
-    }
-    
-    private var image: SwiftUI.Image? {
         if let systemName {
             return SwiftUI.Image(systemName: systemName, variableValue: variableValue)
         } else if let name {
