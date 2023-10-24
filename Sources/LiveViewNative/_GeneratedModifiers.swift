@@ -27,9 +27,9 @@ struct _accessibilityActionModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(label):
-            if #available(iOS 15.0,watchOS 8.0,tvOS 15.0,macOS 12.0, *) {
+            if #available(tvOS 15.0,iOS 15.0,macOS 12.0,watchOS 8.0, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(tvOS) || os(macOS)
+                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
                 .accessibilityAction(action: { __0_action.wrappedValue() }, label: { label.resolve(on: element, in: context) })
                 #endif
             } else { __content }
@@ -60,9 +60,9 @@ struct _accessibilityActionsModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(content):
-            if #available(iOS 16.0,watchOS 9.0,macOS 13.0,tvOS 16.0, *) {
+            if #available(macOS 13.0,watchOS 9.0,iOS 16.0,tvOS 16.0, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
                 .accessibilityActions({ content.resolve(on: element, in: context) })
                 #endif
             } else { __content }
@@ -93,9 +93,9 @@ struct _accessibilityChildrenModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(children):
-            if #available(macOS 12.0,tvOS 15.0,iOS 15.0,watchOS 8.0, *) {
+            if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
             __content
-                #if os(macOS) || os(tvOS) || os(iOS) || os(watchOS)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
                 .accessibilityChildren(children: { children.resolve(on: element, in: context) })
                 #endif
             } else { __content }
@@ -107,7 +107,7 @@ struct _accessibilityIgnoresInvertColorsModifier<R: RootRegistry>: ViewModifier 
     static var name: String { "accessibilityIgnoresInvertColors" }
 
     enum Value {
-        case _0(active: Swift.Bool = true)
+        case _0(active: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -118,7 +118,7 @@ struct _accessibilityIgnoresInvertColorsModifier<R: RootRegistry>: ViewModifier 
 
 
 
-    init(_ active: Swift.Bool = true) {
+    init(_ active: AttributeReference<Swift.Bool>) {
         self.value = ._0(active: active)
         
     }
@@ -126,10 +126,10 @@ struct _accessibilityIgnoresInvertColorsModifier<R: RootRegistry>: ViewModifier 
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(active):
-            if #available(macOS 11.0,watchOS 7.0,tvOS 14.0,iOS 14.0, *) {
+            if #available(macOS 11.0,tvOS 14.0,iOS 14.0,watchOS 7.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
-                .accessibilityIgnoresInvertColors(active)
+                #if os(macOS) || os(tvOS) || os(iOS) || os(watchOS)
+                .accessibilityIgnoresInvertColors(active.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -159,9 +159,9 @@ struct _accessibilityRepresentationModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(representation):
-            if #available(macOS 12.0,tvOS 15.0,iOS 15.0,watchOS 8.0, *) {
+            if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
             __content
-                #if os(macOS) || os(tvOS) || os(iOS) || os(watchOS)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
                 .accessibilityRepresentation(representation: { representation.resolve(on: element, in: context) })
                 #endif
             } else { __content }
@@ -199,16 +199,16 @@ struct _accessibilityShowsLargeContentViewerModifier<R: RootRegistry>: ViewModif
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(largeContentView):
-            if #available(macOS 12.0,watchOS 8.0,tvOS 15.0,iOS 15.0, *) {
+            if #available(iOS 15.0,watchOS 8.0,macOS 12.0,tvOS 15.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
                 .accessibilityShowsLargeContentViewer({ largeContentView.resolve(on: element, in: context) })
                 #endif
             } else { __content }
         case ._1:
-            if #available(tvOS 15.0,watchOS 8.0,iOS 15.0,macOS 12.0, *) {
+            if #available(iOS 15.0,watchOS 8.0,macOS 12.0,tvOS 15.0, *) {
             __content
-                #if os(tvOS) || os(watchOS) || os(iOS) || os(macOS)
+                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
                 .accessibilityShowsLargeContentViewer()
                 #endif
             } else { __content }
@@ -220,7 +220,7 @@ struct _allowsHitTestingModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "allowsHitTesting" }
 
     enum Value {
-        case _0(enabled: Swift.Bool)
+        case _0(enabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -231,7 +231,7 @@ struct _allowsHitTestingModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ enabled: Swift.Bool) {
+    init(_ enabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(enabled: enabled)
         
     }
@@ -239,10 +239,10 @@ struct _allowsHitTestingModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(enabled):
-            if #available(macOS 10.15,iOS 13.0,tvOS 13.0,watchOS 6.0, *) {
+            if #available(tvOS 13.0,macOS 10.15,iOS 13.0,watchOS 6.0, *) {
             __content
-                #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-                .allowsHitTesting(enabled)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
+                .allowsHitTesting(enabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -253,7 +253,7 @@ struct _allowsTighteningModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "allowsTightening" }
 
     enum Value {
-        case _0(flag: Swift.Bool)
+        case _0(flag: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -264,7 +264,7 @@ struct _allowsTighteningModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ flag: Swift.Bool) {
+    init(_ flag: AttributeReference<Swift.Bool>) {
         self.value = ._0(flag: flag)
         
     }
@@ -272,10 +272,10 @@ struct _allowsTighteningModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(flag):
-            if #available(tvOS 13.0,iOS 13.0,macOS 10.15,watchOS 6.0, *) {
+            if #available(iOS 13.0,watchOS 6.0,tvOS 13.0,macOS 10.15, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
-                .allowsTightening(flag)
+                #if os(iOS) || os(watchOS) || os(tvOS) || os(macOS)
+                .allowsTightening(flag.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -286,7 +286,7 @@ struct _animationModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "animation" }
 
     enum Value {
-        case _0(animation: SwiftUI.Animation?, value: String)
+        case _0(animation: SwiftUI.Animation?, value: AttributeReference<String>)
         case _1(animation: SwiftUI.Animation?)
     }
 
@@ -300,7 +300,7 @@ struct _animationModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ animation: SwiftUI.Animation?, value: String) {
+    init(_ animation: SwiftUI.Animation?, value: AttributeReference<String>) {
         self.value = ._0(animation: animation, value: value)
         
     }
@@ -312,16 +312,16 @@ struct _animationModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(animation, value):
-            if #available(tvOS 13.0,iOS 13.0,macOS 10.15,watchOS 6.0, *) {
+            if #available(watchOS 6.0,macOS 10.15,tvOS 13.0,iOS 13.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
-                .animation(animation, value: value)
+                #if os(watchOS) || os(macOS) || os(tvOS) || os(iOS)
+                .animation(animation, value: value.resolve(on: element, in: context))
                 #endif
             } else { __content }
         case let ._1(animation):
-            if #available(tvOS 15.0,iOS 15.0,macOS 12.0,watchOS 8.0, *) {
+            if #available(iOS 15.0,tvOS 15.0,macOS 12.0,watchOS 8.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
+                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
                 .animation(animation)
                 #endif
             } else { __content }
@@ -333,7 +333,7 @@ struct _autocorrectionDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "autocorrectionDisabled" }
 
     enum Value {
-        case _0(disable: Swift.Bool = true)
+        case _0(disable: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -344,7 +344,7 @@ struct _autocorrectionDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ disable: Swift.Bool = true) {
+    init(_ disable: AttributeReference<Swift.Bool>) {
         self.value = ._0(disable: disable)
         
     }
@@ -352,10 +352,10 @@ struct _autocorrectionDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(disable):
-            if #available(watchOS 8.0,macOS 10.15,iOS 13.0,tvOS 13.0, *) {
+            if #available(watchOS 8.0,iOS 13.0,macOS 10.15,tvOS 13.0, *) {
             __content
-                #if os(watchOS) || os(macOS) || os(iOS) || os(tvOS)
-                .autocorrectionDisabled(disable)
+                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
+                .autocorrectionDisabled(disable.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -427,51 +427,51 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(alignment, content):
-            if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,watchOS 8.0,macOS 12.0,iOS 15.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
                 .background(alignment: alignment, content: { content.resolve(on: element, in: context) })
                 #endif
             } else { __content }
         case let ._1(edges):
-            if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,watchOS 8.0,macOS 12.0,iOS 15.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
                 .background(ignoresSafeAreaEdges: edges)
                 #endif
             } else { __content }
         case let ._2(style, edges):
-            if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,watchOS 8.0,macOS 12.0,iOS 15.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
                 .background(style, ignoresSafeAreaEdges: edges)
                 #endif
             } else { __content }
         case let ._3(shape, fillStyle):
-            if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,watchOS 8.0,macOS 12.0,iOS 15.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
                 .background(in: shape, fillStyle: fillStyle)
                 #endif
             } else { __content }
         case let ._4(style, shape, fillStyle):
-            if #available(macOS 12.0,iOS 15.0,watchOS 8.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,watchOS 8.0,macOS 12.0,iOS 15.0, *) {
             __content
-                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
+                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
                 .background(style, in: shape, fillStyle: fillStyle)
                 #endif
             } else { __content }
         case let ._5(shape, fillStyle):
-            if #available(iOS 15.0,macOS 12.0,watchOS 8.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,watchOS 8.0,macOS 12.0,iOS 15.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
                 .background(in: shape, fillStyle: fillStyle)
                 #endif
             } else { __content }
         case let ._6(style, shape, fillStyle):
-            if #available(iOS 15.0,tvOS 15.0,watchOS 8.0,macOS 12.0, *) {
+            if #available(macOS 12.0,iOS 15.0,watchOS 8.0,tvOS 15.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
+                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
                 .background(style, in: shape, fillStyle: fillStyle)
                 #endif
             } else { __content }
@@ -502,9 +502,9 @@ struct _backgroundStyleModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(style):
-            if #available(tvOS 16.0,iOS 16.0,watchOS 9.0,macOS 13.0, *) {
+            if #available(macOS 13.0,watchOS 9.0,iOS 16.0,tvOS 16.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
                 .backgroundStyle(style)
                 #endif
             } else { __content }
@@ -516,7 +516,7 @@ struct _baselineOffsetModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "baselineOffset" }
 
     enum Value {
-        case _0(baselineOffset: CoreFoundation.CGFloat)
+        case _0(baselineOffset: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -527,7 +527,7 @@ struct _baselineOffsetModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ baselineOffset: CoreFoundation.CGFloat) {
+    init(_ baselineOffset: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(baselineOffset: baselineOffset)
         
     }
@@ -535,10 +535,10 @@ struct _baselineOffsetModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(baselineOffset):
-            if #available(watchOS 9.0,iOS 16.0,macOS 13.0,tvOS 16.0, *) {
+            if #available(iOS 16.0,tvOS 16.0,macOS 13.0,watchOS 9.0, *) {
             __content
-                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
-                .baselineOffset(baselineOffset)
+                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                .baselineOffset(baselineOffset.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -549,7 +549,7 @@ struct _blurModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "blur" }
 
     enum Value {
-        case _0(radius: CoreFoundation.CGFloat, opaque: Swift.Bool = false)
+        case _0(radius: AttributeReference<CoreFoundation.CGFloat>, opaque: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -560,7 +560,7 @@ struct _blurModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(radius: CoreFoundation.CGFloat, opaque: Swift.Bool = false) {
+    init(radius: AttributeReference<CoreFoundation.CGFloat>, opaque: AttributeReference<Swift.Bool>) {
         self.value = ._0(radius: radius, opaque: opaque)
         
     }
@@ -568,10 +568,10 @@ struct _blurModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(radius, opaque):
-            if #available(tvOS 13.0,iOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(iOS 13.0,macOS 10.15,tvOS 13.0,watchOS 6.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
-                .blur(radius: radius, opaque: opaque)
+                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+                .blur(radius: radius.resolve(on: element, in: context), opaque: opaque.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -582,7 +582,7 @@ struct _boldModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "bold" }
 
     enum Value {
-        case _0(isActive: Swift.Bool = true)
+        case _0(isActive: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -593,7 +593,7 @@ struct _boldModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isActive: Swift.Bool = true) {
+    init(_ isActive: AttributeReference<Swift.Bool>) {
         self.value = ._0(isActive: isActive)
         
     }
@@ -601,10 +601,10 @@ struct _boldModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isActive):
-            if #available(watchOS 9.0,iOS 16.0,macOS 13.0,tvOS 16.0, *) {
+            if #available(macOS 13.0,watchOS 9.0,tvOS 16.0,iOS 16.0, *) {
             __content
-                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
-                .bold(isActive)
+                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                .bold(isActive.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -615,7 +615,7 @@ struct _borderModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "border" }
 
     enum Value {
-        case _0(content: AnyShapeStyle, width: CoreFoundation.CGFloat = 1)
+        case _0(content: AnyShapeStyle, width: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -626,7 +626,7 @@ struct _borderModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ content: AnyShapeStyle, width: CoreFoundation.CGFloat = 1) {
+    init(_ content: AnyShapeStyle, width: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(content: content, width: width)
         
     }
@@ -634,10 +634,10 @@ struct _borderModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(content, width):
-            if #available(iOS 13.0,tvOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(tvOS 13.0,macOS 10.15,watchOS 6.0,iOS 13.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
-                .border(content, width: width)
+                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
+                .border(content, width: width.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -648,7 +648,7 @@ struct _brightnessModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "brightness" }
 
     enum Value {
-        case _0(amount: Swift.Double)
+        case _0(amount: AttributeReference<Swift.Double>)
     }
 
     let value: Value
@@ -659,7 +659,7 @@ struct _brightnessModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ amount: Swift.Double) {
+    init(_ amount: AttributeReference<Swift.Double>) {
         self.value = ._0(amount: amount)
         
     }
@@ -670,7 +670,7 @@ struct _brightnessModifier<R: RootRegistry>: ViewModifier {
             if #available(macOS 10.15,tvOS 13.0,iOS 13.0,watchOS 6.0, *) {
             __content
                 #if os(macOS) || os(tvOS) || os(iOS) || os(watchOS)
-                .brightness(amount)
+                .brightness(amount.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -700,9 +700,9 @@ struct _clipShapeModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(shape, style):
-            if #available(iOS 13.0,watchOS 6.0,macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15,iOS 13.0,watchOS 6.0, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .clipShape(shape, style: style)
                 #endif
             } else { __content }
@@ -714,7 +714,7 @@ struct _clippedModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "clipped" }
 
     enum Value {
-        case _0(antialiased: Swift.Bool = false)
+        case _0(antialiased: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -725,7 +725,7 @@ struct _clippedModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(antialiased: Swift.Bool = false) {
+    init(antialiased: AttributeReference<Swift.Bool>) {
         self.value = ._0(antialiased: antialiased)
         
     }
@@ -733,10 +733,10 @@ struct _clippedModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(antialiased):
-            if #available(iOS 13.0,watchOS 6.0,macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,iOS 13.0,watchOS 6.0,macOS 10.15, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
-                .clipped(antialiased: antialiased)
+                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
+                .clipped(antialiased: antialiased.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -766,9 +766,9 @@ struct _colorInvertModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(watchOS 6.0,iOS 13.0,macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15,iOS 13.0,watchOS 6.0, *) {
             __content
-                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .colorInvert()
                 #endif
             } else { __content }
@@ -799,9 +799,9 @@ struct _colorMultiplyModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(color):
-            if #available(watchOS 6.0,iOS 13.0,macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15,iOS 13.0,watchOS 6.0, *) {
             __content
-                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .colorMultiply(color)
                 #endif
             } else { __content }
@@ -832,9 +832,9 @@ struct _compositingGroupModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(iOS 13.0,watchOS 6.0,macOS 10.15,tvOS 13.0, *) {
+            if #available(iOS 13.0,macOS 10.15,tvOS 13.0,watchOS 6.0, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
+                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
                 .compositingGroup()
                 #endif
             } else { __content }
@@ -865,9 +865,9 @@ struct _containerShapeModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(shape):
-            if #available(macOS 12.0,watchOS 8.0,tvOS 15.0,iOS 15.0, *) {
+            if #available(iOS 15.0,watchOS 8.0,macOS 12.0,tvOS 15.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
                 .containerShape(shape)
                 #endif
             } else { __content }
@@ -879,7 +879,7 @@ struct _contrastModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "contrast" }
 
     enum Value {
-        case _0(amount: Swift.Double)
+        case _0(amount: AttributeReference<Swift.Double>)
     }
 
     let value: Value
@@ -890,7 +890,7 @@ struct _contrastModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ amount: Swift.Double) {
+    init(_ amount: AttributeReference<Swift.Double>) {
         self.value = ._0(amount: amount)
         
     }
@@ -898,10 +898,10 @@ struct _contrastModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(amount):
-            if #available(tvOS 13.0,iOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(macOS 10.15,tvOS 13.0,watchOS 6.0,iOS 13.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
-                .contrast(amount)
+                #if os(macOS) || os(tvOS) || os(watchOS) || os(iOS)
+                .contrast(amount.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -931,9 +931,9 @@ struct _defaultScrollAnchorModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(anchor):
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(iOS 17.0,macOS 14.0,tvOS 17.0,watchOS 10.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
                 .defaultScrollAnchor(anchor)
                 #endif
             } else { __content }
@@ -945,7 +945,7 @@ struct _defaultWheelPickerItemHeightModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "defaultWheelPickerItemHeight" }
 
     enum Value {
-        case _0(height: CoreFoundation.CGFloat)
+        case _0(height: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -956,7 +956,7 @@ struct _defaultWheelPickerItemHeightModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ height: CoreFoundation.CGFloat) {
+    init(_ height: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(height: height)
         
     }
@@ -967,7 +967,7 @@ struct _defaultWheelPickerItemHeightModifier<R: RootRegistry>: ViewModifier {
             if #available(watchOS 6.0, *) {
             __content
                 #if os(watchOS)
-                .defaultWheelPickerItemHeight(height)
+                .defaultWheelPickerItemHeight(height.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1011,7 +1011,7 @@ struct _deleteDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "deleteDisabled" }
 
     enum Value {
-        case _0(isDisabled: Swift.Bool)
+        case _0(isDisabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -1022,7 +1022,7 @@ struct _deleteDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isDisabled: Swift.Bool) {
+    init(_ isDisabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(isDisabled: isDisabled)
         
     }
@@ -1030,10 +1030,10 @@ struct _deleteDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isDisabled):
-            if #available(iOS 13.0,macOS 10.15,watchOS 6.0,tvOS 13.0, *) {
+            if #available(macOS 10.15,tvOS 13.0,iOS 13.0,watchOS 6.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
-                .deleteDisabled(isDisabled)
+                #if os(macOS) || os(tvOS) || os(iOS) || os(watchOS)
+                .deleteDisabled(isDisabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1045,7 +1045,7 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
 
     enum Value {
         case _0(titleKey: SwiftUI.LocalizedStringKey)
-        case _1(title: String)
+        case _1(title: AttributeReference<String>)
         case _2(label: TextReference)
         case _3
     }
@@ -1068,7 +1068,7 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
         self.value = ._0(titleKey: titleKey)
         self.__0_isSuppressed = isSuppressed
     }
-    init(_ title: String, isSuppressed: ChangeTracked<Swift.Bool>) {
+    init(_ title: AttributeReference<String>, isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._1(title: title)
         self.__1_isSuppressed = isSuppressed
     }
@@ -1084,30 +1084,30 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(titleKey):
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(macOS 14.0,watchOS 10.0,tvOS 17.0,iOS 17.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
                 .dialogSuppressionToggle(titleKey, isSuppressed: __0_isSuppressed.projectedValue)
                 #endif
             } else { __content }
         case let ._1(title):
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
-                .dialogSuppressionToggle(title, isSuppressed: __1_isSuppressed.projectedValue)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
+                .dialogSuppressionToggle(title.resolve(on: element, in: context), isSuppressed: __1_isSuppressed.projectedValue)
                 #endif
             } else { __content }
         case let ._2(label):
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .dialogSuppressionToggle(label.resolve(on: element, in: context), isSuppressed: __2_isSuppressed.projectedValue)
                 #endif
             } else { __content }
         case ._3:
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .dialogSuppressionToggle(isSuppressed: __3_isSuppressed.projectedValue)
                 #endif
             } else { __content }
@@ -1119,7 +1119,7 @@ struct _disabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "disabled" }
 
     enum Value {
-        case _0(disabled: Swift.Bool)
+        case _0(disabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -1130,7 +1130,7 @@ struct _disabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ disabled: Swift.Bool) {
+    init(_ disabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(disabled: disabled)
         
     }
@@ -1138,10 +1138,10 @@ struct _disabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(disabled):
-            if #available(tvOS 13.0,iOS 13.0,macOS 10.15,watchOS 6.0, *) {
+            if #available(macOS 10.15,watchOS 6.0,iOS 13.0,tvOS 13.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
-                .disabled(disabled)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                .disabled(disabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1152,7 +1152,7 @@ struct _fileDialogCustomizationIDModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "fileDialogCustomizationID" }
 
     enum Value {
-        case _0(id: Swift.String)
+        case _0(id: AttributeReference<Swift.String>)
     }
 
     let value: Value
@@ -1163,7 +1163,7 @@ struct _fileDialogCustomizationIDModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ id: Swift.String) {
+    init(_ id: AttributeReference<Swift.String>) {
         self.value = ._0(id: id)
         
     }
@@ -1174,7 +1174,7 @@ struct _fileDialogCustomizationIDModifier<R: RootRegistry>: ViewModifier {
             if #available(iOS 17.0,macOS 14.0, *) {
             __content
                 #if os(iOS) || os(macOS)
-                .fileDialogCustomizationID(id)
+                .fileDialogCustomizationID(id.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1185,7 +1185,7 @@ struct _fileDialogImportsUnresolvedAliasesModifier<R: RootRegistry>: ViewModifie
     static var name: String { "fileDialogImportsUnresolvedAliases" }
 
     enum Value {
-        case _0(imports: Swift.Bool)
+        case _0(imports: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -1196,7 +1196,7 @@ struct _fileDialogImportsUnresolvedAliasesModifier<R: RootRegistry>: ViewModifie
 
 
 
-    init(_ imports: Swift.Bool) {
+    init(_ imports: AttributeReference<Swift.Bool>) {
         self.value = ._0(imports: imports)
         
     }
@@ -1207,7 +1207,7 @@ struct _fileDialogImportsUnresolvedAliasesModifier<R: RootRegistry>: ViewModifie
             if #available(macOS 14.0,iOS 17.0, *) {
             __content
                 #if os(macOS) || os(iOS)
-                .fileDialogImportsUnresolvedAliases(imports)
+                .fileDialogImportsUnresolvedAliases(imports.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1218,7 +1218,7 @@ struct _findDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "findDisabled" }
 
     enum Value {
-        case _0(isDisabled: Swift.Bool = true)
+        case _0(isDisabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -1229,7 +1229,7 @@ struct _findDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isDisabled: Swift.Bool = true) {
+    init(_ isDisabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(isDisabled: isDisabled)
         
     }
@@ -1240,7 +1240,7 @@ struct _findDisabledModifier<R: RootRegistry>: ViewModifier {
             if #available(iOS 16.0, *) {
             __content
                 #if os(iOS)
-                .findDisabled(isDisabled)
+                .findDisabled(isDisabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1284,7 +1284,7 @@ struct _fixedSizeModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "fixedSize" }
 
     enum Value {
-        case _0(horizontal: Swift.Bool, vertical: Swift.Bool)
+        case _0(horizontal: AttributeReference<Swift.Bool>, vertical: AttributeReference<Swift.Bool>)
         case _1
     }
 
@@ -1298,7 +1298,7 @@ struct _fixedSizeModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(horizontal: Swift.Bool, vertical: Swift.Bool) {
+    init(horizontal: AttributeReference<Swift.Bool>, vertical: AttributeReference<Swift.Bool>) {
         self.value = ._0(horizontal: horizontal, vertical: vertical)
         
     }
@@ -1313,13 +1313,13 @@ struct _fixedSizeModifier<R: RootRegistry>: ViewModifier {
             if #available(iOS 13.0,tvOS 13.0,watchOS 6.0,macOS 10.15, *) {
             __content
                 #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
-                .fixedSize(horizontal: horizontal, vertical: vertical)
+                .fixedSize(horizontal: horizontal.resolve(on: element, in: context), vertical: vertical.resolve(on: element, in: context))
                 #endif
             } else { __content }
         case ._1:
-            if #available(iOS 13.0,tvOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(macOS 10.15,watchOS 6.0,iOS 13.0,tvOS 13.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
                 .fixedSize()
                 #endif
             } else { __content }
@@ -1331,7 +1331,7 @@ struct _flipsForRightToLeftLayoutDirectionModifier<R: RootRegistry>: ViewModifie
     static var name: String { "flipsForRightToLeftLayoutDirection" }
 
     enum Value {
-        case _0(enabled: Swift.Bool)
+        case _0(enabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -1342,7 +1342,7 @@ struct _flipsForRightToLeftLayoutDirectionModifier<R: RootRegistry>: ViewModifie
 
 
 
-    init(_ enabled: Swift.Bool) {
+    init(_ enabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(enabled: enabled)
         
     }
@@ -1350,10 +1350,10 @@ struct _flipsForRightToLeftLayoutDirectionModifier<R: RootRegistry>: ViewModifie
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(enabled):
-            if #available(iOS 13.0,tvOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(macOS 10.15,watchOS 6.0,iOS 13.0,tvOS 13.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
-                .flipsForRightToLeftLayoutDirection(enabled)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                .flipsForRightToLeftLayoutDirection(enabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1364,7 +1364,7 @@ struct _focusEffectDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "focusEffectDisabled" }
 
     enum Value {
-        case _0(disabled: Swift.Bool = true)
+        case _0(disabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -1375,7 +1375,7 @@ struct _focusEffectDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ disabled: Swift.Bool = true) {
+    init(_ disabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(disabled: disabled)
         
     }
@@ -1383,10 +1383,10 @@ struct _focusEffectDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(disabled):
-            if #available(macOS 14.0,iOS 17.0,watchOS 10.0,tvOS 17.0, *) {
+            if #available(watchOS 10.0,iOS 17.0,macOS 14.0,tvOS 17.0, *) {
             __content
-                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
-                .focusEffectDisabled(disabled)
+                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
+                .focusEffectDisabled(disabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1416,9 +1416,9 @@ struct _focusSectionModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(tvOS 15.0,macOS 13.0, *) {
+            if #available(macOS 13.0,tvOS 15.0, *) {
             __content
-                #if os(tvOS) || os(macOS)
+                #if os(macOS) || os(tvOS)
                 .focusSection()
                 #endif
             } else { __content }
@@ -1463,23 +1463,23 @@ struct _foregroundStyleModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(style):
-            if #available(watchOS 8.0,tvOS 15.0,macOS 12.0,iOS 15.0, *) {
+            if #available(tvOS 15.0,macOS 12.0,iOS 15.0,watchOS 8.0, *) {
             __content
-                #if os(watchOS) || os(tvOS) || os(macOS) || os(iOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .foregroundStyle(style)
                 #endif
             } else { __content }
         case let ._1(primary, secondary):
-            if #available(watchOS 8.0,tvOS 15.0,macOS 12.0,iOS 15.0, *) {
+            if #available(watchOS 8.0,macOS 12.0,iOS 15.0,tvOS 15.0, *) {
             __content
-                #if os(watchOS) || os(tvOS) || os(macOS) || os(iOS)
+                #if os(watchOS) || os(macOS) || os(iOS) || os(tvOS)
                 .foregroundStyle(primary, secondary)
                 #endif
             } else { __content }
         case let ._2(primary, secondary, tertiary):
-            if #available(iOS 15.0,macOS 12.0,tvOS 15.0,watchOS 8.0, *) {
+            if #available(watchOS 8.0,macOS 12.0,iOS 15.0,tvOS 15.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+                #if os(watchOS) || os(macOS) || os(iOS) || os(tvOS)
                 .foregroundStyle(primary, secondary, tertiary)
                 #endif
             } else { __content }
@@ -1491,9 +1491,9 @@ struct _frameModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "frame" }
 
     enum Value {
-        case _0(width: CoreFoundation.CGFloat? = nil, height: CoreFoundation.CGFloat? = nil, alignment: SwiftUI.Alignment = .center)
+        case _0(width: AttributeReference<CoreFoundation.CGFloat?>?, height: AttributeReference<CoreFoundation.CGFloat?>?, alignment: SwiftUI.Alignment = .center)
         case _1
-        case _2(minWidth: CoreFoundation.CGFloat? = nil, idealWidth: CoreFoundation.CGFloat? = nil, maxWidth: CoreFoundation.CGFloat? = nil, minHeight: CoreFoundation.CGFloat? = nil, idealHeight: CoreFoundation.CGFloat? = nil, maxHeight: CoreFoundation.CGFloat? = nil, alignment: SwiftUI.Alignment = .center)
+        case _2(minWidth: AttributeReference<CoreFoundation.CGFloat?>?, idealWidth: AttributeReference<CoreFoundation.CGFloat?>?, maxWidth: AttributeReference<CoreFoundation.CGFloat?>?, minHeight: AttributeReference<CoreFoundation.CGFloat?>?, idealHeight: AttributeReference<CoreFoundation.CGFloat?>?, maxHeight: AttributeReference<CoreFoundation.CGFloat?>?, alignment: SwiftUI.Alignment = .center)
     }
 
     let value: Value
@@ -1508,7 +1508,7 @@ struct _frameModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(width: CoreFoundation.CGFloat? = nil, height: CoreFoundation.CGFloat? = nil, alignment: SwiftUI.Alignment = .center) {
+    init(width: AttributeReference<CoreFoundation.CGFloat?>?, height: AttributeReference<CoreFoundation.CGFloat?>?, alignment: SwiftUI.Alignment = .center) {
         self.value = ._0(width: width, height: height, alignment: alignment)
         
     }
@@ -1516,7 +1516,7 @@ struct _frameModifier<R: RootRegistry>: ViewModifier {
         self.value = ._1
         
     }
-    init(minWidth: CoreFoundation.CGFloat? = nil, idealWidth: CoreFoundation.CGFloat? = nil, maxWidth: CoreFoundation.CGFloat? = nil, minHeight: CoreFoundation.CGFloat? = nil, idealHeight: CoreFoundation.CGFloat? = nil, maxHeight: CoreFoundation.CGFloat? = nil, alignment: SwiftUI.Alignment = .center) {
+    init(minWidth: AttributeReference<CoreFoundation.CGFloat?>?, idealWidth: AttributeReference<CoreFoundation.CGFloat?>?, maxWidth: AttributeReference<CoreFoundation.CGFloat?>?, minHeight: AttributeReference<CoreFoundation.CGFloat?>?, idealHeight: AttributeReference<CoreFoundation.CGFloat?>?, maxHeight: AttributeReference<CoreFoundation.CGFloat?>?, alignment: SwiftUI.Alignment = .center) {
         self.value = ._2(minWidth: minWidth, idealWidth: idealWidth, maxWidth: maxWidth, minHeight: minHeight, idealHeight: idealHeight, maxHeight: maxHeight, alignment: alignment)
         
     }
@@ -1524,24 +1524,24 @@ struct _frameModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(width, height, alignment):
-            if #available(macOS 10.15,watchOS 6.0,tvOS 13.0,iOS 13.0, *) {
+            if #available(tvOS 13.0,iOS 13.0,macOS 10.15,watchOS 6.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
-                .frame(width: width, height: height, alignment: alignment)
+                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
+                .frame(width: width?.resolve(on: element, in: context), height: height?.resolve(on: element, in: context), alignment: alignment)
                 #endif
             } else { __content }
         case ._1:
-            if #available(macOS 10.15,watchOS 6.0,tvOS 13.0,iOS 13.0, *) {
+            if #available(watchOS 6.0,tvOS 13.0,macOS 10.15,iOS 13.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                #if os(watchOS) || os(tvOS) || os(macOS) || os(iOS)
                 .frame()
                 #endif
             } else { __content }
         case let ._2(minWidth, idealWidth, maxWidth, minHeight, idealHeight, maxHeight, alignment):
-            if #available(iOS 13.0,macOS 10.15,watchOS 6.0,tvOS 13.0, *) {
+            if #available(macOS 10.15,iOS 13.0,watchOS 6.0,tvOS 13.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
-                .frame(minWidth: minWidth, idealWidth: idealWidth, maxWidth: maxWidth, minHeight: minHeight, idealHeight: idealHeight, maxHeight: maxHeight, alignment: alignment)
+                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
+                .frame(minWidth: minWidth?.resolve(on: element, in: context), idealWidth: idealWidth?.resolve(on: element, in: context), maxWidth: maxWidth?.resolve(on: element, in: context), minHeight: minHeight?.resolve(on: element, in: context), idealHeight: idealHeight?.resolve(on: element, in: context), maxHeight: maxHeight?.resolve(on: element, in: context), alignment: alignment)
                 #endif
             } else { __content }
         }
@@ -1571,9 +1571,9 @@ struct _geometryGroupModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0, *) {
+            if #available(watchOS 10.0,iOS 17.0,macOS 14.0,tvOS 17.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
+                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
                 .geometryGroup()
                 #endif
             } else { __content }
@@ -1585,7 +1585,7 @@ struct _grayscaleModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "grayscale" }
 
     enum Value {
-        case _0(amount: Swift.Double)
+        case _0(amount: AttributeReference<Swift.Double>)
     }
 
     let value: Value
@@ -1596,7 +1596,7 @@ struct _grayscaleModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ amount: Swift.Double) {
+    init(_ amount: AttributeReference<Swift.Double>) {
         self.value = ._0(amount: amount)
         
     }
@@ -1604,10 +1604,10 @@ struct _grayscaleModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(amount):
-            if #available(iOS 13.0,tvOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(watchOS 6.0,tvOS 13.0,macOS 10.15,iOS 13.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
-                .grayscale(amount)
+                #if os(watchOS) || os(tvOS) || os(macOS) || os(iOS)
+                .grayscale(amount.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1637,9 +1637,9 @@ struct _gridCellAnchorModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(anchor):
-            if #available(tvOS 16.0,iOS 16.0,macOS 13.0,watchOS 9.0, *) {
+            if #available(macOS 13.0,iOS 16.0,watchOS 9.0,tvOS 16.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
+                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
                 .gridCellAnchor(anchor)
                 #endif
             } else { __content }
@@ -1651,7 +1651,7 @@ struct _gridCellColumnsModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "gridCellColumns" }
 
     enum Value {
-        case _0(count: Swift.Int)
+        case _0(count: AttributeReference<Swift.Int>)
     }
 
     let value: Value
@@ -1662,7 +1662,7 @@ struct _gridCellColumnsModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ count: Swift.Int) {
+    init(_ count: AttributeReference<Swift.Int>) {
         self.value = ._0(count: count)
         
     }
@@ -1670,10 +1670,10 @@ struct _gridCellColumnsModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(count):
-            if #available(macOS 13.0,iOS 16.0,watchOS 9.0,tvOS 16.0, *) {
+            if #available(watchOS 9.0,iOS 16.0,macOS 13.0,tvOS 16.0, *) {
             __content
-                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
-                .gridCellColumns(count)
+                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
+                .gridCellColumns(count.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1686,7 +1686,7 @@ struct _helpModifier<R: RootRegistry>: ViewModifier {
     enum Value {
         case _0(textKey: SwiftUI.LocalizedStringKey)
         case _1(text: TextReference)
-        case _2(text: String)
+        case _2(text: AttributeReference<String>)
     }
 
     let value: Value
@@ -1709,7 +1709,7 @@ struct _helpModifier<R: RootRegistry>: ViewModifier {
         self.value = ._1(text: text)
         
     }
-    init(_ text: String) {
+    init(_ text: AttributeReference<String>) {
         self.value = ._2(text: text)
         
     }
@@ -1717,24 +1717,24 @@ struct _helpModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(textKey):
-            if #available(iOS 14.0,watchOS 7.0,macOS 11.0,tvOS 14.0, *) {
+            if #available(tvOS 14.0,macOS 11.0,iOS 14.0,watchOS 7.0, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .help(textKey)
                 #endif
             } else { __content }
         case let ._1(text):
-            if #available(iOS 14.0,watchOS 7.0,macOS 11.0,tvOS 14.0, *) {
+            if #available(macOS 11.0,watchOS 7.0,iOS 14.0,tvOS 14.0, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
                 .help(text.resolve(on: element, in: context))
                 #endif
             } else { __content }
         case let ._2(text):
-            if #available(iOS 14.0,watchOS 7.0,macOS 11.0,tvOS 14.0, *) {
+            if #available(macOS 11.0,watchOS 7.0,iOS 14.0,tvOS 14.0, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
-                .help(text)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                .help(text.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1764,9 +1764,9 @@ struct _hiddenModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(watchOS 6.0,iOS 13.0,macOS 10.15,tvOS 13.0, *) {
+            if #available(macOS 10.15,watchOS 6.0,iOS 13.0,tvOS 13.0, *) {
             __content
-                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
                 .hidden()
                 #endif
             } else { __content }
@@ -1811,7 +1811,7 @@ struct _hoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "hoverEffectDisabled" }
 
     enum Value {
-        case _0(disabled: Swift.Bool = true)
+        case _0(disabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -1822,7 +1822,7 @@ struct _hoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ disabled: Swift.Bool = true) {
+    init(_ disabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(disabled: disabled)
         
     }
@@ -1830,10 +1830,10 @@ struct _hoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(disabled):
-            if #available(tvOS 17.0,iOS 17.0,xrOS 1.0, *) {
+            if #available(tvOS 17.0,xrOS 1.0,iOS 17.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(xrOS)
-                .hoverEffectDisabled(disabled)
+                #if os(tvOS) || os(xrOS) || os(iOS)
+                .hoverEffectDisabled(disabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1877,8 +1877,8 @@ struct _inspectorColumnWidthModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "inspectorColumnWidth" }
 
     enum Value {
-        case _0(min: CoreFoundation.CGFloat? = nil, ideal: CoreFoundation.CGFloat, max: CoreFoundation.CGFloat? = nil)
-        case _1(width: CoreFoundation.CGFloat)
+        case _0(min: AttributeReference<CoreFoundation.CGFloat?>?, ideal: AttributeReference<CoreFoundation.CGFloat>, max: AttributeReference<CoreFoundation.CGFloat?>?)
+        case _1(width: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -1891,11 +1891,11 @@ struct _inspectorColumnWidthModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(min: CoreFoundation.CGFloat? = nil, ideal: CoreFoundation.CGFloat, max: CoreFoundation.CGFloat? = nil) {
+    init(min: AttributeReference<CoreFoundation.CGFloat?>?, ideal: AttributeReference<CoreFoundation.CGFloat>, max: AttributeReference<CoreFoundation.CGFloat?>?) {
         self.value = ._0(min: min, ideal: ideal, max: max)
         
     }
-    init(_ width: CoreFoundation.CGFloat) {
+    init(_ width: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._1(width: width)
         
     }
@@ -1903,17 +1903,17 @@ struct _inspectorColumnWidthModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(min, ideal, max):
-            if #available(iOS 17.0,macOS 14.0, *) {
+            if #available(macOS 14.0,iOS 17.0, *) {
             __content
-                #if os(iOS) || os(macOS)
-                .inspectorColumnWidth(min: min, ideal: ideal, max: max)
+                #if os(macOS) || os(iOS)
+                .inspectorColumnWidth(min: min?.resolve(on: element, in: context), ideal: ideal.resolve(on: element, in: context), max: max?.resolve(on: element, in: context))
                 #endif
             } else { __content }
         case let ._1(width):
             if #available(macOS 14.0,iOS 17.0, *) {
             __content
                 #if os(macOS) || os(iOS)
-                .inspectorColumnWidth(width)
+                .inspectorColumnWidth(width.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1924,7 +1924,7 @@ struct _interactionActivityTrackingTagModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "interactionActivityTrackingTag" }
 
     enum Value {
-        case _0(tag: Swift.String)
+        case _0(tag: AttributeReference<Swift.String>)
     }
 
     let value: Value
@@ -1935,7 +1935,7 @@ struct _interactionActivityTrackingTagModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ tag: Swift.String) {
+    init(_ tag: AttributeReference<Swift.String>) {
         self.value = ._0(tag: tag)
         
     }
@@ -1946,7 +1946,7 @@ struct _interactionActivityTrackingTagModifier<R: RootRegistry>: ViewModifier {
             if #available(iOS 16.0,tvOS 16.0,macOS 13.0,watchOS 9.0, *) {
             __content
                 #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
-                .interactionActivityTrackingTag(tag)
+                .interactionActivityTrackingTag(tag.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1957,7 +1957,7 @@ struct _interactiveDismissDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "interactiveDismissDisabled" }
 
     enum Value {
-        case _0(isDisabled: Swift.Bool = true)
+        case _0(isDisabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -1968,7 +1968,7 @@ struct _interactiveDismissDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isDisabled: Swift.Bool = true) {
+    init(_ isDisabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(isDisabled: isDisabled)
         
     }
@@ -1976,10 +1976,10 @@ struct _interactiveDismissDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isDisabled):
-            if #available(tvOS 15.0,macOS 12.0,watchOS 8.0,iOS 15.0, *) {
+            if #available(iOS 15.0,tvOS 15.0,macOS 12.0,watchOS 8.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
-                .interactiveDismissDisabled(isDisabled)
+                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                .interactiveDismissDisabled(isDisabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -1990,7 +1990,7 @@ struct _invalidatableContentModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "invalidatableContent" }
 
     enum Value {
-        case _0(invalidatable: Swift.Bool = true)
+        case _0(invalidatable: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -2001,7 +2001,7 @@ struct _invalidatableContentModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ invalidatable: Swift.Bool = true) {
+    init(_ invalidatable: AttributeReference<Swift.Bool>) {
         self.value = ._0(invalidatable: invalidatable)
         
     }
@@ -2009,10 +2009,10 @@ struct _invalidatableContentModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(invalidatable):
-            if #available(tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(watchOS 10.0,macOS 14.0,iOS 17.0,tvOS 17.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
-                .invalidatableContent(invalidatable)
+                #if os(watchOS) || os(macOS) || os(iOS) || os(tvOS)
+                .invalidatableContent(invalidatable.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2023,7 +2023,7 @@ struct _italicModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "italic" }
 
     enum Value {
-        case _0(isActive: Swift.Bool = true)
+        case _0(isActive: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -2034,7 +2034,7 @@ struct _italicModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isActive: Swift.Bool = true) {
+    init(_ isActive: AttributeReference<Swift.Bool>) {
         self.value = ._0(isActive: isActive)
         
     }
@@ -2042,10 +2042,10 @@ struct _italicModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isActive):
-            if #available(watchOS 9.0,iOS 16.0,macOS 13.0,tvOS 16.0, *) {
+            if #available(macOS 13.0,watchOS 9.0,tvOS 16.0,iOS 16.0, *) {
             __content
-                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
-                .italic(isActive)
+                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                .italic(isActive.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2056,7 +2056,7 @@ struct _kerningModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "kerning" }
 
     enum Value {
-        case _0(kerning: CoreFoundation.CGFloat)
+        case _0(kerning: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -2067,7 +2067,7 @@ struct _kerningModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ kerning: CoreFoundation.CGFloat) {
+    init(_ kerning: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(kerning: kerning)
         
     }
@@ -2075,10 +2075,10 @@ struct _kerningModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(kerning):
-            if #available(watchOS 9.0,macOS 13.0,iOS 16.0,tvOS 16.0, *) {
+            if #available(iOS 16.0,macOS 13.0,tvOS 16.0,watchOS 9.0, *) {
             __content
-                #if os(watchOS) || os(macOS) || os(iOS) || os(tvOS)
-                .kerning(kerning)
+                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+                .kerning(kerning.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2108,9 +2108,9 @@ struct _labelsHiddenModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(iOS 13.0,macOS 10.15,watchOS 6.0,tvOS 13.0, *) {
+            if #available(watchOS 6.0,iOS 13.0,tvOS 13.0,macOS 10.15, *) {
             __content
-                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+                #if os(watchOS) || os(iOS) || os(tvOS) || os(macOS)
                 .labelsHidden()
                 #endif
             } else { __content }
@@ -2122,7 +2122,7 @@ struct _layoutPriorityModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "layoutPriority" }
 
     enum Value {
-        case _0(value: Swift.Double)
+        case _0(value: AttributeReference<Swift.Double>)
     }
 
     let value: Value
@@ -2133,7 +2133,7 @@ struct _layoutPriorityModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ value: Swift.Double) {
+    init(_ value: AttributeReference<Swift.Double>) {
         self.value = ._0(value: value)
         
     }
@@ -2141,10 +2141,10 @@ struct _layoutPriorityModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(value):
-            if #available(watchOS 6.0,macOS 10.15,iOS 13.0,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15,watchOS 6.0,iOS 13.0, *) {
             __content
-                #if os(watchOS) || os(macOS) || os(iOS) || os(tvOS)
-                .layoutPriority(value)
+                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
+                .layoutPriority(value.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2155,7 +2155,7 @@ struct _lineSpacingModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "lineSpacing" }
 
     enum Value {
-        case _0(lineSpacing: CoreFoundation.CGFloat)
+        case _0(lineSpacing: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -2166,7 +2166,7 @@ struct _lineSpacingModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ lineSpacing: CoreFoundation.CGFloat) {
+    init(_ lineSpacing: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(lineSpacing: lineSpacing)
         
     }
@@ -2174,10 +2174,10 @@ struct _lineSpacingModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(lineSpacing):
-            if #available(iOS 13.0,macOS 10.15,watchOS 6.0,tvOS 13.0, *) {
+            if #available(iOS 13.0,watchOS 6.0,tvOS 13.0,macOS 10.15, *) {
             __content
-                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
-                .lineSpacing(lineSpacing)
+                #if os(iOS) || os(watchOS) || os(tvOS) || os(macOS)
+                .lineSpacing(lineSpacing.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2188,7 +2188,7 @@ struct _listRowHoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "listRowHoverEffectDisabled" }
 
     enum Value {
-        case _0(disabled: Swift.Bool = true)
+        case _0(disabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -2199,7 +2199,7 @@ struct _listRowHoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ disabled: Swift.Bool = true) {
+    init(_ disabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(disabled: disabled)
         
     }
@@ -2210,7 +2210,7 @@ struct _listRowHoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
             if #available(xrOS 1.0, *) {
             __content
                 #if os(xrOS)
-                .listRowHoverEffectDisabled(disabled)
+                .listRowHoverEffectDisabled(disabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2221,7 +2221,7 @@ struct _listRowSpacingModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "listRowSpacing" }
 
     enum Value {
-        case _0(spacing: CoreFoundation.CGFloat?)
+        case _0(spacing: AttributeReference<CoreFoundation.CGFloat?>?)
     }
 
     let value: Value
@@ -2232,7 +2232,7 @@ struct _listRowSpacingModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ spacing: CoreFoundation.CGFloat?) {
+    init(_ spacing: AttributeReference<CoreFoundation.CGFloat?>?) {
         self.value = ._0(spacing: spacing)
         
     }
@@ -2243,7 +2243,7 @@ struct _listRowSpacingModifier<R: RootRegistry>: ViewModifier {
             if #available(iOS 15.0, *) {
             __content
                 #if os(iOS)
-                .listRowSpacing(spacing)
+                .listRowSpacing(spacing?.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2273,9 +2273,9 @@ struct _luminanceToAlphaModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(tvOS 13.0,macOS 10.15,iOS 13.0,watchOS 6.0, *) {
+            if #available(tvOS 13.0,iOS 13.0,macOS 10.15,watchOS 6.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
+                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
                 .luminanceToAlpha()
                 #endif
             } else { __content }
@@ -2287,7 +2287,7 @@ struct _minimumScaleFactorModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "minimumScaleFactor" }
 
     enum Value {
-        case _0(factor: CoreFoundation.CGFloat)
+        case _0(factor: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -2298,7 +2298,7 @@ struct _minimumScaleFactorModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ factor: CoreFoundation.CGFloat) {
+    init(_ factor: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(factor: factor)
         
     }
@@ -2306,10 +2306,10 @@ struct _minimumScaleFactorModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(factor):
-            if #available(tvOS 13.0,iOS 13.0,macOS 10.15,watchOS 6.0, *) {
+            if #available(watchOS 6.0,tvOS 13.0,iOS 13.0,macOS 10.15, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
-                .minimumScaleFactor(factor)
+                #if os(watchOS) || os(tvOS) || os(iOS) || os(macOS)
+                .minimumScaleFactor(factor.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2320,7 +2320,7 @@ struct _monospacedModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "monospaced" }
 
     enum Value {
-        case _0(isActive: Swift.Bool = true)
+        case _0(isActive: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -2331,7 +2331,7 @@ struct _monospacedModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isActive: Swift.Bool = true) {
+    init(_ isActive: AttributeReference<Swift.Bool>) {
         self.value = ._0(isActive: isActive)
         
     }
@@ -2339,10 +2339,10 @@ struct _monospacedModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isActive):
-            if #available(iOS 16.0,macOS 13.0,tvOS 16.0,watchOS 9.0, *) {
+            if #available(watchOS 9.0,tvOS 16.0,iOS 16.0,macOS 13.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-                .monospaced(isActive)
+                #if os(watchOS) || os(tvOS) || os(iOS) || os(macOS)
+                .monospaced(isActive.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2372,9 +2372,9 @@ struct _monospacedDigitModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(iOS 15.0,macOS 12.0,tvOS 15.0,watchOS 8.0, *) {
+            if #available(watchOS 8.0,tvOS 15.0,iOS 15.0,macOS 12.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+                #if os(watchOS) || os(tvOS) || os(iOS) || os(macOS)
                 .monospacedDigit()
                 #endif
             } else { __content }
@@ -2386,7 +2386,7 @@ struct _moveDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "moveDisabled" }
 
     enum Value {
-        case _0(isDisabled: Swift.Bool)
+        case _0(isDisabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -2397,7 +2397,7 @@ struct _moveDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isDisabled: Swift.Bool) {
+    init(_ isDisabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(isDisabled: isDisabled)
         
     }
@@ -2405,10 +2405,10 @@ struct _moveDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isDisabled):
-            if #available(tvOS 13.0,macOS 10.15,watchOS 6.0,iOS 13.0, *) {
+            if #available(iOS 13.0,watchOS 6.0,macOS 10.15,tvOS 13.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
-                .moveDisabled(isDisabled)
+                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
+                .moveDisabled(isDisabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2419,7 +2419,7 @@ struct _navigationBarBackButtonHiddenModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "navigationBarBackButtonHidden" }
 
     enum Value {
-        case _0(hidesBackButton: Swift.Bool = true)
+        case _0(hidesBackButton: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -2430,7 +2430,7 @@ struct _navigationBarBackButtonHiddenModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ hidesBackButton: Swift.Bool = true) {
+    init(_ hidesBackButton: AttributeReference<Swift.Bool>) {
         self.value = ._0(hidesBackButton: hidesBackButton)
         
     }
@@ -2438,10 +2438,10 @@ struct _navigationBarBackButtonHiddenModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(hidesBackButton):
-            if #available(macOS 13.0,watchOS 6.0,iOS 13.0,tvOS 13.0, *) {
+            if #available(macOS 13.0,iOS 13.0,watchOS 6.0,tvOS 13.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
-                .navigationBarBackButtonHidden(hidesBackButton)
+                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
+                .navigationBarBackButtonHidden(hidesBackButton.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2471,9 +2471,9 @@ struct _navigationBarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(displayMode):
-            if #available(watchOS 8.0,iOS 14.0, *) {
+            if #available(iOS 14.0,watchOS 8.0, *) {
             __content
-                #if os(watchOS) || os(iOS)
+                #if os(iOS) || os(watchOS)
                 .navigationBarTitleDisplayMode(displayMode)
                 #endif
             } else { __content }
@@ -2504,9 +2504,9 @@ struct _navigationDestinationModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(destination):
-            if #available(iOS 16.0,tvOS 16.0,macOS 13.0,watchOS 9.0, *) {
+            if #available(macOS 13.0,iOS 16.0,tvOS 16.0,watchOS 9.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
                 .navigationDestination(isPresented: __0_isPresented.projectedValue, destination: { destination.resolve(on: element, in: context) })
                 #endif
             } else { __content }
@@ -2518,8 +2518,8 @@ struct _navigationSplitViewColumnWidthModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "navigationSplitViewColumnWidth" }
 
     enum Value {
-        case _0(width: CoreFoundation.CGFloat)
-        case _1(min: CoreFoundation.CGFloat? = nil, ideal: CoreFoundation.CGFloat, max: CoreFoundation.CGFloat? = nil)
+        case _0(width: AttributeReference<CoreFoundation.CGFloat>)
+        case _1(min: AttributeReference<CoreFoundation.CGFloat?>?, ideal: AttributeReference<CoreFoundation.CGFloat>, max: AttributeReference<CoreFoundation.CGFloat?>?)
     }
 
     let value: Value
@@ -2532,11 +2532,11 @@ struct _navigationSplitViewColumnWidthModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ width: CoreFoundation.CGFloat) {
+    init(_ width: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(width: width)
         
     }
-    init(min: CoreFoundation.CGFloat? = nil, ideal: CoreFoundation.CGFloat, max: CoreFoundation.CGFloat? = nil) {
+    init(min: AttributeReference<CoreFoundation.CGFloat?>?, ideal: AttributeReference<CoreFoundation.CGFloat>, max: AttributeReference<CoreFoundation.CGFloat?>?) {
         self.value = ._1(min: min, ideal: ideal, max: max)
         
     }
@@ -2544,17 +2544,17 @@ struct _navigationSplitViewColumnWidthModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(width):
-            if #available(tvOS 16.0,watchOS 9.0,macOS 13.0,iOS 16.0, *) {
+            if #available(macOS 13.0,watchOS 9.0,tvOS 16.0,iOS 16.0, *) {
             __content
-                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
-                .navigationSplitViewColumnWidth(width)
+                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                .navigationSplitViewColumnWidth(width.resolve(on: element, in: context))
                 #endif
             } else { __content }
         case let ._1(min, ideal, max):
-            if #available(tvOS 16.0,watchOS 9.0,macOS 13.0,iOS 16.0, *) {
+            if #available(iOS 16.0,watchOS 9.0,macOS 13.0,tvOS 16.0, *) {
             __content
-                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
-                .navigationSplitViewColumnWidth(min: min, ideal: ideal, max: max)
+                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
+                .navigationSplitViewColumnWidth(min: min?.resolve(on: element, in: context), ideal: ideal.resolve(on: element, in: context), max: max?.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2567,7 +2567,7 @@ struct _navigationSubtitleModifier<R: RootRegistry>: ViewModifier {
     enum Value {
         case _0(subtitle: TextReference)
         case _1(subtitleKey: SwiftUI.LocalizedStringKey)
-        case _2(subtitle: String)
+        case _2(subtitle: AttributeReference<String>)
     }
 
     let value: Value
@@ -2590,7 +2590,7 @@ struct _navigationSubtitleModifier<R: RootRegistry>: ViewModifier {
         self.value = ._1(subtitleKey: subtitleKey)
         
     }
-    init(_ subtitle: String) {
+    init(_ subtitle: AttributeReference<String>) {
         self.value = ._2(subtitle: subtitle)
         
     }
@@ -2615,7 +2615,7 @@ struct _navigationSubtitleModifier<R: RootRegistry>: ViewModifier {
             if #available(macOS 11.0,macCatalyst 14.0, *) {
             __content
                 #if os(macOS) || targetEnvironment(macCatalyst)
-                .navigationSubtitle(subtitle)
+                .navigationSubtitle(subtitle.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2628,7 +2628,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
     enum Value {
         case _0(title: TextReference)
         case _1(titleKey: SwiftUI.LocalizedStringKey)
-        case _2(title: String)
+        case _2(title: AttributeReference<String>)
         case _3(title: ViewReference=ViewReference(value: []))
         case _4
     }
@@ -2657,7 +2657,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
         self.value = ._1(titleKey: titleKey)
         
     }
-    init(_ title: String) {
+    init(_ title: AttributeReference<String>) {
         self.value = ._2(title: title)
         
     }
@@ -2673,37 +2673,37 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(title):
-            if #available(macOS 11.0,iOS 14.0,tvOS 14.0,watchOS 7.0, *) {
+            if #available(tvOS 14.0,macOS 11.0,iOS 14.0,watchOS 7.0, *) {
             __content
-                #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .navigationTitle(title.resolve(on: element, in: context))
                 #endif
             } else { __content }
         case let ._1(titleKey):
-            if #available(tvOS 14.0,iOS 14.0,macOS 11.0,watchOS 7.0, *) {
+            if #available(macOS 11.0,watchOS 7.0,tvOS 14.0,iOS 14.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
+                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
                 .navigationTitle(titleKey)
                 #endif
             } else { __content }
         case let ._2(title):
-            if #available(tvOS 14.0,iOS 14.0,macOS 11.0,watchOS 7.0, *) {
+            if #available(iOS 14.0,tvOS 14.0,watchOS 7.0,macOS 11.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
-                .navigationTitle(title)
+                #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
+                .navigationTitle(title.resolve(on: element, in: context))
                 #endif
             } else { __content }
         case let ._3(title):
-            if #available(tvOS 14.0,iOS 14.0,macOS 11.0,watchOS 7.0, *) {
+            if #available(iOS 14.0,tvOS 14.0,watchOS 7.0,macOS 11.0, *) {
             __content
                 #if os(watchOS)
                 .navigationTitle({ title.resolve(on: element, in: context) })
                 #endif
             } else { __content }
         case ._4:
-            if #available(macOS 13.0,watchOS 9.0,iOS 16.0,tvOS 16.0, *) {
+            if #available(iOS 16.0,macOS 13.0,tvOS 16.0,watchOS 9.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
                 .navigationTitle(__4_title.projectedValue)
                 #endif
             } else { __content }
@@ -2716,7 +2716,7 @@ struct _offsetModifier<R: RootRegistry>: ViewModifier {
 
     enum Value {
         case _0(offset: CoreFoundation.CGSize)
-        case _1(x: CoreFoundation.CGFloat = 0, y: CoreFoundation.CGFloat = 0)
+        case _1(x: AttributeReference<CoreFoundation.CGFloat>, y: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -2733,7 +2733,7 @@ struct _offsetModifier<R: RootRegistry>: ViewModifier {
         self.value = ._0(offset: offset)
         
     }
-    init(x: CoreFoundation.CGFloat = 0, y: CoreFoundation.CGFloat = 0) {
+    init(x: AttributeReference<CoreFoundation.CGFloat>, y: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._1(x: x, y: y)
         
     }
@@ -2741,17 +2741,17 @@ struct _offsetModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(offset):
-            if #available(tvOS 13.0,macOS 10.15,watchOS 6.0,iOS 13.0, *) {
+            if #available(macOS 10.15,tvOS 13.0,watchOS 6.0,iOS 13.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
+                #if os(macOS) || os(tvOS) || os(watchOS) || os(iOS)
                 .offset(offset)
                 #endif
             } else { __content }
         case let ._1(x, y):
-            if #available(tvOS 13.0,macOS 10.15,watchOS 6.0,iOS 13.0, *) {
+            if #available(macOS 10.15,tvOS 13.0,watchOS 6.0,iOS 13.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
-                .offset(x: x, y: y)
+                #if os(macOS) || os(tvOS) || os(watchOS) || os(iOS)
+                .offset(x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2781,9 +2781,9 @@ struct _onAppearModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(macOS 10.15,tvOS 13.0,watchOS 6.0,iOS 13.0, *) {
+            if #available(tvOS 13.0,watchOS 6.0,macOS 10.15,iOS 13.0, *) {
             __content
-                #if os(macOS) || os(tvOS) || os(watchOS) || os(iOS)
+                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
                 .onAppear(perform: { __0_action.wrappedValue() })
                 #endif
             } else { __content }
@@ -2847,9 +2847,9 @@ struct _onDisappearModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(macOS 10.15,watchOS 6.0,tvOS 13.0,iOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15,watchOS 6.0,iOS 13.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
                 .onDisappear(perform: { __0_action.wrappedValue() })
                 #endif
             } else { __content }
@@ -2880,9 +2880,9 @@ struct _onExitCommandModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15, *) {
             __content
-                #if os(macOS) || os(tvOS)
+                #if os(tvOS) || os(macOS)
                 .onExitCommand(perform: { __0_action.wrappedValue() })
                 #endif
             } else { __content }
@@ -2927,7 +2927,7 @@ struct _opacityModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "opacity" }
 
     enum Value {
-        case _0(opacity: Swift.Double)
+        case _0(opacity: AttributeReference<Swift.Double>)
     }
 
     let value: Value
@@ -2938,7 +2938,7 @@ struct _opacityModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ opacity: Swift.Double) {
+    init(_ opacity: AttributeReference<Swift.Double>) {
         self.value = ._0(opacity: opacity)
         
     }
@@ -2946,10 +2946,10 @@ struct _opacityModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(opacity):
-            if #available(tvOS 13.0,iOS 13.0,macOS 10.15,watchOS 6.0, *) {
+            if #available(macOS 10.15,watchOS 6.0,tvOS 13.0,iOS 13.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
-                .opacity(opacity)
+                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                .opacity(opacity.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -2993,23 +2993,23 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(alignment, content):
-            if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,iOS 15.0,watchOS 8.0,macOS 12.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
+                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
                 .overlay(alignment: alignment, content: { content.resolve(on: element, in: context) })
                 #endif
             } else { __content }
         case let ._1(style, edges):
-            if #available(tvOS 15.0,macOS 12.0,iOS 15.0,watchOS 8.0, *) {
+            if #available(iOS 15.0,macOS 12.0,watchOS 8.0,tvOS 15.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
+                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
                 .overlay(style, ignoresSafeAreaEdges: edges)
                 #endif
             } else { __content }
         case let ._2(style, shape, fillStyle):
-            if #available(iOS 15.0,macOS 12.0,watchOS 8.0,tvOS 15.0, *) {
+            if #available(watchOS 8.0,macOS 12.0,tvOS 15.0,iOS 15.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+                #if os(watchOS) || os(macOS) || os(tvOS) || os(iOS)
                 .overlay(style, in: shape, fillStyle: fillStyle)
                 #endif
             } else { __content }
@@ -3022,7 +3022,7 @@ struct _positionModifier<R: RootRegistry>: ViewModifier {
 
     enum Value {
         case _0(position: CoreFoundation.CGPoint)
-        case _1(x: CoreFoundation.CGFloat = 0, y: CoreFoundation.CGFloat = 0)
+        case _1(x: AttributeReference<CoreFoundation.CGFloat>, y: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -3039,7 +3039,7 @@ struct _positionModifier<R: RootRegistry>: ViewModifier {
         self.value = ._0(position: position)
         
     }
-    init(x: CoreFoundation.CGFloat = 0, y: CoreFoundation.CGFloat = 0) {
+    init(x: AttributeReference<CoreFoundation.CGFloat>, y: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._1(x: x, y: y)
         
     }
@@ -3047,17 +3047,17 @@ struct _positionModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(position):
-            if #available(iOS 13.0,tvOS 13.0,macOS 10.15,watchOS 6.0, *) {
+            if #available(watchOS 6.0,tvOS 13.0,macOS 10.15,iOS 13.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                #if os(watchOS) || os(tvOS) || os(macOS) || os(iOS)
                 .position(position)
                 #endif
             } else { __content }
         case let ._1(x, y):
-            if #available(tvOS 13.0,iOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(watchOS 6.0,tvOS 13.0,iOS 13.0,macOS 10.15, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
-                .position(x: x, y: y)
+                #if os(watchOS) || os(tvOS) || os(iOS) || os(macOS)
+                .position(x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3094,16 +3094,16 @@ struct _presentationBackgroundModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(style):
-            if #available(iOS 16.4,macOS 13.3,tvOS 16.4,watchOS 9.4, *) {
+            if #available(iOS 16.4,tvOS 16.4,macOS 13.3,watchOS 9.4, *) {
             __content
-                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
                 .presentationBackground(style)
                 #endif
             } else { __content }
         case let ._1(alignment, content):
-            if #available(iOS 16.4,macOS 13.3,tvOS 16.4,watchOS 9.4, *) {
+            if #available(iOS 16.4,tvOS 16.4,macOS 13.3,watchOS 9.4, *) {
             __content
-                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
+                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
                 .presentationBackground(alignment: alignment, content: { content.resolve(on: element, in: context) })
                 #endif
             } else { __content }
@@ -3115,7 +3115,7 @@ struct _presentationCornerRadiusModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "presentationCornerRadius" }
 
     enum Value {
-        case _0(cornerRadius: CoreFoundation.CGFloat?)
+        case _0(cornerRadius: AttributeReference<CoreFoundation.CGFloat?>?)
     }
 
     let value: Value
@@ -3126,7 +3126,7 @@ struct _presentationCornerRadiusModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ cornerRadius: CoreFoundation.CGFloat?) {
+    init(_ cornerRadius: AttributeReference<CoreFoundation.CGFloat?>?) {
         self.value = ._0(cornerRadius: cornerRadius)
         
     }
@@ -3134,10 +3134,10 @@ struct _presentationCornerRadiusModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(cornerRadius):
-            if #available(tvOS 16.4,iOS 16.4,macOS 13.3,watchOS 9.4, *) {
+            if #available(tvOS 16.4,macOS 13.3,iOS 16.4,watchOS 9.4, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
-                .presentationCornerRadius(cornerRadius)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
+                .presentationCornerRadius(cornerRadius?.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3148,7 +3148,7 @@ struct _previewDisplayNameModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "previewDisplayName" }
 
     enum Value {
-        case _0(value: Swift.String?)
+        case _0(value: AttributeReference<Swift.String?>?)
     }
 
     let value: Value
@@ -3159,7 +3159,7 @@ struct _previewDisplayNameModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ value: Swift.String?) {
+    init(_ value: AttributeReference<Swift.String?>?) {
         self.value = ._0(value: value)
         
     }
@@ -3167,10 +3167,10 @@ struct _previewDisplayNameModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(value):
-            if #available(tvOS 13.0,macOS 10.15,watchOS 6.0,iOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15,iOS 13.0,watchOS 6.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
-                .previewDisplayName(value)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
+                .previewDisplayName(value?.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3181,7 +3181,7 @@ struct _privacySensitiveModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "privacySensitive" }
 
     enum Value {
-        case _0(sensitive: Swift.Bool = true)
+        case _0(sensitive: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3192,7 +3192,7 @@ struct _privacySensitiveModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ sensitive: Swift.Bool = true) {
+    init(_ sensitive: AttributeReference<Swift.Bool>) {
         self.value = ._0(sensitive: sensitive)
         
     }
@@ -3200,10 +3200,10 @@ struct _privacySensitiveModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(sensitive):
-            if #available(watchOS 8.0,tvOS 15.0,iOS 15.0,macOS 12.0, *) {
+            if #available(watchOS 8.0,macOS 12.0,tvOS 15.0,iOS 15.0, *) {
             __content
-                #if os(watchOS) || os(tvOS) || os(iOS) || os(macOS)
-                .privacySensitive(sensitive)
+                #if os(watchOS) || os(macOS) || os(tvOS) || os(iOS)
+                .privacySensitive(sensitive.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3214,7 +3214,7 @@ struct _replaceDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "replaceDisabled" }
 
     enum Value {
-        case _0(isDisabled: Swift.Bool = true)
+        case _0(isDisabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3225,7 +3225,7 @@ struct _replaceDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isDisabled: Swift.Bool = true) {
+    init(_ isDisabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(isDisabled: isDisabled)
         
     }
@@ -3236,7 +3236,7 @@ struct _replaceDisabledModifier<R: RootRegistry>: ViewModifier {
             if #available(iOS 16.0, *) {
             __content
                 #if os(iOS)
-                .replaceDisabled(isDisabled)
+                .replaceDisabled(isDisabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3247,7 +3247,7 @@ struct _saturationModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "saturation" }
 
     enum Value {
-        case _0(amount: Swift.Double)
+        case _0(amount: AttributeReference<Swift.Double>)
     }
 
     let value: Value
@@ -3258,7 +3258,7 @@ struct _saturationModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ amount: Swift.Double) {
+    init(_ amount: AttributeReference<Swift.Double>) {
         self.value = ._0(amount: amount)
         
     }
@@ -3266,10 +3266,10 @@ struct _saturationModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(amount):
-            if #available(tvOS 13.0,macOS 10.15,watchOS 6.0,iOS 13.0, *) {
+            if #available(macOS 10.15,iOS 13.0,watchOS 6.0,tvOS 13.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
-                .saturation(amount)
+                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
+                .saturation(amount.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3281,8 +3281,8 @@ struct _scaleEffectModifier<R: RootRegistry>: ViewModifier {
 
     enum Value {
         case _0(scale: CoreFoundation.CGSize, anchor: SwiftUI.UnitPoint = .center)
-        case _1(s: CoreFoundation.CGFloat, anchor: SwiftUI.UnitPoint = .center)
-        case _2(x: CoreFoundation.CGFloat = 1.0, y: CoreFoundation.CGFloat = 1.0, anchor: SwiftUI.UnitPoint = .center)
+        case _1(s: AttributeReference<CoreFoundation.CGFloat>, anchor: SwiftUI.UnitPoint = .center)
+        case _2(x: AttributeReference<CoreFoundation.CGFloat>, y: AttributeReference<CoreFoundation.CGFloat>, anchor: SwiftUI.UnitPoint = .center)
     }
 
     let value: Value
@@ -3301,11 +3301,11 @@ struct _scaleEffectModifier<R: RootRegistry>: ViewModifier {
         self.value = ._0(scale: scale, anchor: anchor)
         
     }
-    init(_ s: CoreFoundation.CGFloat, anchor: SwiftUI.UnitPoint = .center) {
+    init(_ s: AttributeReference<CoreFoundation.CGFloat>, anchor: SwiftUI.UnitPoint = .center) {
         self.value = ._1(s: s, anchor: anchor)
         
     }
-    init(x: CoreFoundation.CGFloat = 1.0, y: CoreFoundation.CGFloat = 1.0, anchor: SwiftUI.UnitPoint = .center) {
+    init(x: AttributeReference<CoreFoundation.CGFloat>, y: AttributeReference<CoreFoundation.CGFloat>, anchor: SwiftUI.UnitPoint = .center) {
         self.value = ._2(x: x, y: y, anchor: anchor)
         
     }
@@ -3313,24 +3313,24 @@ struct _scaleEffectModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(scale, anchor):
-            if #available(tvOS 13.0,iOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(watchOS 6.0,iOS 13.0,macOS 10.15,tvOS 13.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
+                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
                 .scaleEffect(scale, anchor: anchor)
                 #endif
             } else { __content }
         case let ._1(s, anchor):
-            if #available(tvOS 13.0,iOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(watchOS 6.0,iOS 13.0,macOS 10.15,tvOS 13.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
-                .scaleEffect(s, anchor: anchor)
+                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
+                .scaleEffect(s.resolve(on: element, in: context), anchor: anchor)
                 #endif
             } else { __content }
         case let ._2(x, y, anchor):
             if #available(watchOS 6.0,iOS 13.0,macOS 10.15,tvOS 13.0, *) {
             __content
                 #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
-                .scaleEffect(x: x, y: y, anchor: anchor)
+                .scaleEffect(x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context), anchor: anchor)
                 #endif
             } else { __content }
         }
@@ -3360,9 +3360,9 @@ struct _scaledToFillModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(tvOS 13.0,iOS 13.0,macOS 10.15,watchOS 6.0, *) {
+            if #available(iOS 13.0,watchOS 6.0,macOS 10.15,tvOS 13.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(macOS) || os(watchOS)
+                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
                 .scaledToFill()
                 #endif
             } else { __content }
@@ -3393,9 +3393,9 @@ struct _scaledToFitModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(iOS 13.0,tvOS 13.0,watchOS 6.0,macOS 10.15, *) {
+            if #available(watchOS 6.0,tvOS 13.0,iOS 13.0,macOS 10.15, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
+                #if os(watchOS) || os(tvOS) || os(iOS) || os(macOS)
                 .scaledToFit()
                 #endif
             } else { __content }
@@ -3407,7 +3407,7 @@ struct _scrollClipDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "scrollClipDisabled" }
 
     enum Value {
-        case _0(disabled: Swift.Bool = true)
+        case _0(disabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3418,7 +3418,7 @@ struct _scrollClipDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ disabled: Swift.Bool = true) {
+    init(_ disabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(disabled: disabled)
         
     }
@@ -3426,10 +3426,10 @@ struct _scrollClipDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(disabled):
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(macOS 14.0,tvOS 17.0,watchOS 10.0,iOS 17.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
-                .scrollClipDisabled(disabled)
+                #if os(macOS) || os(tvOS) || os(watchOS) || os(iOS)
+                .scrollClipDisabled(disabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3440,7 +3440,7 @@ struct _scrollDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "scrollDisabled" }
 
     enum Value {
-        case _0(disabled: Swift.Bool)
+        case _0(disabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3451,7 +3451,7 @@ struct _scrollDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ disabled: Swift.Bool) {
+    init(_ disabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(disabled: disabled)
         
     }
@@ -3459,10 +3459,10 @@ struct _scrollDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(disabled):
-            if #available(tvOS 16.0,watchOS 9.0,macOS 13.0,iOS 16.0, *) {
+            if #available(macOS 13.0,iOS 16.0,tvOS 16.0,watchOS 9.0, *) {
             __content
-                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
-                .scrollDisabled(disabled)
+                #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+                .scrollDisabled(disabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3473,8 +3473,8 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "scrollIndicatorsFlash" }
 
     enum Value {
-        case _0(value: String)
-        case _1(onAppear: Swift.Bool)
+        case _0(value: AttributeReference<String>)
+        case _1(onAppear: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3487,11 +3487,11 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(trigger value: String) {
+    init(trigger value: AttributeReference<String>) {
         self.value = ._0(value: value)
         
     }
-    init(onAppear: Swift.Bool) {
+    init(onAppear: AttributeReference<Swift.Bool>) {
         self.value = ._1(onAppear: onAppear)
         
     }
@@ -3499,17 +3499,17 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(value):
-            if #available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *) {
+            if #available(macOS 14.0,tvOS 17.0,watchOS 10.0,iOS 17.0, *) {
             __content
-                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
-                .scrollIndicatorsFlash(trigger: value)
+                #if os(macOS) || os(tvOS) || os(watchOS) || os(iOS)
+                .scrollIndicatorsFlash(trigger: value.resolve(on: element, in: context))
                 #endif
             } else { __content }
         case let ._1(onAppear):
-            if #available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *) {
+            if #available(macOS 14.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *) {
             __content
-                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
-                .scrollIndicatorsFlash(onAppear: onAppear)
+                #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+                .scrollIndicatorsFlash(onAppear: onAppear.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3520,7 +3520,7 @@ struct _scrollTargetLayoutModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "scrollTargetLayout" }
 
     enum Value {
-        case _0(isEnabled: Swift.Bool = true)
+        case _0(isEnabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3531,7 +3531,7 @@ struct _scrollTargetLayoutModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(isEnabled: Swift.Bool = true) {
+    init(isEnabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(isEnabled: isEnabled)
         
     }
@@ -3539,10 +3539,10 @@ struct _scrollTargetLayoutModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isEnabled):
-            if #available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *) {
+            if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
             __content
-                #if os(tvOS) || os(watchOS) || os(macOS) || os(iOS)
-                .scrollTargetLayout(isEnabled: isEnabled)
+                #if os(macOS) || os(tvOS) || os(iOS) || os(watchOS)
+                .scrollTargetLayout(isEnabled: isEnabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3553,7 +3553,7 @@ struct _selectionDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "selectionDisabled" }
 
     enum Value {
-        case _0(isDisabled: Swift.Bool = true)
+        case _0(isDisabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3564,7 +3564,7 @@ struct _selectionDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isDisabled: Swift.Bool = true) {
+    init(_ isDisabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(isDisabled: isDisabled)
         
     }
@@ -3572,10 +3572,43 @@ struct _selectionDisabledModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isDisabled):
-            if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(watchOS 10.0,iOS 17.0,macOS 14.0,tvOS 17.0, *) {
+            __content
+                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
+                .selectionDisabled(isDisabled.resolve(on: element, in: context))
+                #endif
+            } else { __content }
+        }
+    }
+}
+@ParseableExpression
+struct _shadowModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "shadow" }
+
+    enum Value {
+        case _0(color: SwiftUI.Color = Color(.sRGBLinear, white: 0, opacity: 0.33), radius: AttributeReference<CoreFoundation.CGFloat>, x: AttributeReference<CoreFoundation.CGFloat>, y: AttributeReference<CoreFoundation.CGFloat>)
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    init(color: SwiftUI.Color = Color(.sRGBLinear, white: 0, opacity: 0.33), radius: AttributeReference<CoreFoundation.CGFloat>, x: AttributeReference<CoreFoundation.CGFloat>, y: AttributeReference<CoreFoundation.CGFloat>) {
+        self.value = ._0(color: color, radius: radius, x: x, y: y)
+        
+    }
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case let ._0(color, radius, x, y):
+            if #available(macOS 10.15,tvOS 13.0,iOS 13.0,watchOS 6.0, *) {
             __content
                 #if os(macOS) || os(tvOS) || os(iOS) || os(watchOS)
-                .selectionDisabled(isDisabled)
+                .shadow(color: color, radius: radius.resolve(on: element, in: context), x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3586,7 +3619,7 @@ struct _speechAdjustedPitchModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "speechAdjustedPitch" }
 
     enum Value {
-        case _0(value: Swift.Double)
+        case _0(value: AttributeReference<Swift.Double>)
     }
 
     let value: Value
@@ -3597,7 +3630,7 @@ struct _speechAdjustedPitchModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ value: Swift.Double) {
+    init(_ value: AttributeReference<Swift.Double>) {
         self.value = ._0(value: value)
         
     }
@@ -3605,10 +3638,10 @@ struct _speechAdjustedPitchModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(value):
-            if #available(tvOS 15.0,iOS 15.0,watchOS 8.0,macOS 12.0, *) {
+            if #available(watchOS 8.0,iOS 15.0,tvOS 15.0,macOS 12.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
-                .speechAdjustedPitch(value)
+                #if os(watchOS) || os(iOS) || os(tvOS) || os(macOS)
+                .speechAdjustedPitch(value.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3619,7 +3652,7 @@ struct _speechAlwaysIncludesPunctuationModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "speechAlwaysIncludesPunctuation" }
 
     enum Value {
-        case _0(value: Swift.Bool = true)
+        case _0(value: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3630,7 +3663,7 @@ struct _speechAlwaysIncludesPunctuationModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ value: Swift.Bool = true) {
+    init(_ value: AttributeReference<Swift.Bool>) {
         self.value = ._0(value: value)
         
     }
@@ -3638,10 +3671,10 @@ struct _speechAlwaysIncludesPunctuationModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(value):
-            if #available(tvOS 15.0,iOS 15.0,watchOS 8.0,macOS 12.0, *) {
+            if #available(watchOS 8.0,iOS 15.0,tvOS 15.0,macOS 12.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
-                .speechAlwaysIncludesPunctuation(value)
+                #if os(watchOS) || os(iOS) || os(tvOS) || os(macOS)
+                .speechAlwaysIncludesPunctuation(value.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3652,7 +3685,7 @@ struct _speechAnnouncementsQueuedModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "speechAnnouncementsQueued" }
 
     enum Value {
-        case _0(value: Swift.Bool = true)
+        case _0(value: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3663,7 +3696,7 @@ struct _speechAnnouncementsQueuedModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ value: Swift.Bool = true) {
+    init(_ value: AttributeReference<Swift.Bool>) {
         self.value = ._0(value: value)
         
     }
@@ -3671,10 +3704,10 @@ struct _speechAnnouncementsQueuedModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(value):
-            if #available(tvOS 15.0,iOS 15.0,watchOS 8.0,macOS 12.0, *) {
+            if #available(watchOS 8.0,iOS 15.0,tvOS 15.0,macOS 12.0, *) {
             __content
-                #if os(tvOS) || os(iOS) || os(watchOS) || os(macOS)
-                .speechAnnouncementsQueued(value)
+                #if os(watchOS) || os(iOS) || os(tvOS) || os(macOS)
+                .speechAnnouncementsQueued(value.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3685,7 +3718,7 @@ struct _speechSpellsOutCharactersModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "speechSpellsOutCharacters" }
 
     enum Value {
-        case _0(value: Swift.Bool = true)
+        case _0(value: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3696,7 +3729,7 @@ struct _speechSpellsOutCharactersModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ value: Swift.Bool = true) {
+    init(_ value: AttributeReference<Swift.Bool>) {
         self.value = ._0(value: value)
         
     }
@@ -3704,10 +3737,10 @@ struct _speechSpellsOutCharactersModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(value):
-            if #available(watchOS 8.0,tvOS 15.0,macOS 12.0,iOS 15.0, *) {
+            if #available(watchOS 8.0,iOS 15.0,tvOS 15.0,macOS 12.0, *) {
             __content
-                #if os(watchOS) || os(tvOS) || os(macOS) || os(iOS)
-                .speechSpellsOutCharacters(value)
+                #if os(watchOS) || os(iOS) || os(tvOS) || os(macOS)
+                .speechSpellsOutCharacters(value.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3718,7 +3751,7 @@ struct _statusBarHiddenModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "statusBarHidden" }
 
     enum Value {
-        case _0(hidden: Swift.Bool = true)
+        case _0(hidden: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3729,7 +3762,7 @@ struct _statusBarHiddenModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ hidden: Swift.Bool = true) {
+    init(_ hidden: AttributeReference<Swift.Bool>) {
         self.value = ._0(hidden: hidden)
         
     }
@@ -3740,7 +3773,7 @@ struct _statusBarHiddenModifier<R: RootRegistry>: ViewModifier {
             if #available(iOS 13.0, *) {
             __content
                 #if os(iOS)
-                .statusBarHidden(hidden)
+                .statusBarHidden(hidden.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3751,7 +3784,7 @@ struct _submitScopeModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "submitScope" }
 
     enum Value {
-        case _0(isBlocking: Swift.Bool = true)
+        case _0(isBlocking: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3762,7 +3795,7 @@ struct _submitScopeModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isBlocking: Swift.Bool = true) {
+    init(_ isBlocking: AttributeReference<Swift.Bool>) {
         self.value = ._0(isBlocking: isBlocking)
         
     }
@@ -3770,10 +3803,10 @@ struct _submitScopeModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isBlocking):
-            if #available(iOS 15.0,macOS 12.0,watchOS 8.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,macOS 12.0,iOS 15.0,watchOS 8.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
-                .submitScope(isBlocking)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
+                .submitScope(isBlocking.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3784,7 +3817,7 @@ struct _symbolEffectsRemovedModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "symbolEffectsRemoved" }
 
     enum Value {
-        case _0(isEnabled: Swift.Bool = true)
+        case _0(isEnabled: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3795,7 +3828,7 @@ struct _symbolEffectsRemovedModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ isEnabled: Swift.Bool = true) {
+    init(_ isEnabled: AttributeReference<Swift.Bool>) {
         self.value = ._0(isEnabled: isEnabled)
         
     }
@@ -3803,10 +3836,10 @@ struct _symbolEffectsRemovedModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(isEnabled):
-            if #available(iOS 17.0,macOS 14.0,tvOS 17.0,watchOS 10.0, *) {
+            if #available(watchOS 10.0,tvOS 17.0,macOS 14.0,iOS 17.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-                .symbolEffectsRemoved(isEnabled)
+                #if os(watchOS) || os(tvOS) || os(macOS) || os(iOS)
+                .symbolEffectsRemoved(isEnabled.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3836,9 +3869,9 @@ struct _tabItemModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(label):
-            if #available(tvOS 13.0,macOS 10.15,watchOS 7.0,iOS 13.0, *) {
+            if #available(macOS 10.15,iOS 13.0,tvOS 13.0,watchOS 7.0, *) {
             __content
-                #if os(tvOS) || os(macOS) || os(watchOS) || os(iOS)
+                #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
                 .tabItem({ label.resolve(on: element, in: context) })
                 #endif
             } else { __content }
@@ -3876,16 +3909,16 @@ struct _tintModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(tint):
-            if #available(iOS 16.0,watchOS 9.0,macOS 13.0,tvOS 16.0, *) {
+            if #available(tvOS 16.0,macOS 13.0,iOS 16.0,watchOS 9.0, *) {
             __content
-                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
+                #if os(tvOS) || os(macOS) || os(iOS) || os(watchOS)
                 .tint(tint)
                 #endif
             } else { __content }
         case let ._1(tint):
-            if #available(iOS 15.0,macOS 12.0,watchOS 8.0,tvOS 15.0, *) {
+            if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
             __content
-                #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS)
+                #if os(macOS) || os(watchOS) || os(iOS) || os(tvOS)
                 .tint(tint)
                 #endif
             } else { __content }
@@ -3916,9 +3949,9 @@ struct _toolbarTitleMenuModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(content):
-            if #available(iOS 16.0,tvOS 16.0,watchOS 9.0,macOS 13.0, *) {
+            if #available(iOS 16.0,watchOS 9.0,tvOS 16.0,macOS 13.0, *) {
             __content
-                #if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
+                #if os(iOS) || os(watchOS) || os(tvOS) || os(macOS)
                 .toolbarTitleMenu(content: { content.resolve(on: element, in: context) })
                 #endif
             } else { __content }
@@ -3963,7 +3996,7 @@ struct _touchBarItemPrincipalModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "touchBarItemPrincipal" }
 
     enum Value {
-        case _0(principal: Swift.Bool = true)
+        case _0(principal: AttributeReference<Swift.Bool>)
     }
 
     let value: Value
@@ -3974,7 +4007,7 @@ struct _touchBarItemPrincipalModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ principal: Swift.Bool = true) {
+    init(_ principal: AttributeReference<Swift.Bool>) {
         self.value = ._0(principal: principal)
         
     }
@@ -3985,7 +4018,7 @@ struct _touchBarItemPrincipalModifier<R: RootRegistry>: ViewModifier {
             if #available(macOS 10.15, *) {
             __content
                 #if os(macOS)
-                .touchBarItemPrincipal(principal)
+                .touchBarItemPrincipal(principal.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -3996,7 +4029,7 @@ struct _trackingModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "tracking" }
 
     enum Value {
-        case _0(tracking: CoreFoundation.CGFloat)
+        case _0(tracking: AttributeReference<CoreFoundation.CGFloat>)
     }
 
     let value: Value
@@ -4007,7 +4040,7 @@ struct _trackingModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ tracking: CoreFoundation.CGFloat) {
+    init(_ tracking: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(tracking: tracking)
         
     }
@@ -4015,10 +4048,10 @@ struct _trackingModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(tracking):
-            if #available(watchOS 9.0,macOS 13.0,tvOS 16.0,iOS 16.0, *) {
+            if #available(iOS 16.0,tvOS 16.0,macOS 13.0,watchOS 9.0, *) {
             __content
-                #if os(watchOS) || os(macOS) || os(tvOS) || os(iOS)
-                .tracking(tracking)
+                #if os(iOS) || os(tvOS) || os(macOS) || os(watchOS)
+                .tracking(tracking.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -4048,9 +4081,9 @@ struct _transitionModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(t):
-            if #available(watchOS 6.0,tvOS 13.0,iOS 13.0,macOS 10.15, *) {
+            if #available(watchOS 6.0,iOS 13.0,macOS 10.15,tvOS 13.0, *) {
             __content
-                #if os(watchOS) || os(tvOS) || os(iOS) || os(macOS)
+                #if os(watchOS) || os(iOS) || os(macOS) || os(tvOS)
                 .transition(t)
                 #endif
             } else { __content }
@@ -4081,9 +4114,9 @@ struct _unredactedModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case ._0:
-            if #available(macOS 11.0,watchOS 7.0,tvOS 14.0,iOS 14.0, *) {
+            if #available(iOS 14.0,watchOS 7.0,macOS 11.0,tvOS 14.0, *) {
             __content
-                #if os(macOS) || os(watchOS) || os(tvOS) || os(iOS)
+                #if os(iOS) || os(watchOS) || os(macOS) || os(tvOS)
                 .unredacted()
                 #endif
             } else { __content }
@@ -4095,7 +4128,7 @@ struct _zIndexModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "zIndex" }
 
     enum Value {
-        case _0(value: Swift.Double)
+        case _0(value: AttributeReference<Swift.Double>)
     }
 
     let value: Value
@@ -4106,7 +4139,7 @@ struct _zIndexModifier<R: RootRegistry>: ViewModifier {
 
 
 
-    init(_ value: Swift.Double) {
+    init(_ value: AttributeReference<Swift.Double>) {
         self.value = ._0(value: value)
         
     }
@@ -4114,10 +4147,10 @@ struct _zIndexModifier<R: RootRegistry>: ViewModifier {
     func body(content __content: Content) -> some View {
         switch value {
         case let ._0(value):
-            if #available(macOS 10.15,iOS 13.0,watchOS 6.0,tvOS 13.0, *) {
+            if #available(watchOS 6.0,tvOS 13.0,iOS 13.0,macOS 10.15, *) {
             __content
-                #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
-                .zIndex(value)
+                #if os(watchOS) || os(tvOS) || os(iOS) || os(macOS)
+                .zIndex(value.resolve(on: element, in: context))
                 #endif
             } else { __content }
         }
@@ -4221,6 +4254,7 @@ case scrollDisabled(_scrollDisabledModifier<R>)
 case scrollIndicatorsFlash(_scrollIndicatorsFlashModifier<R>)
 case scrollTargetLayout(_scrollTargetLayoutModifier<R>)
 case selectionDisabled(_selectionDisabledModifier<R>)
+case shadow(_shadowModifier<R>)
 case speechAdjustedPitch(_speechAdjustedPitchModifier<R>)
 case speechAlwaysIncludesPunctuation(_speechAlwaysIncludesPunctuationModifier<R>)
 case speechAnnouncementsQueued(_speechAnnouncementsQueuedModifier<R>)
@@ -4435,6 +4469,8 @@ case let .scrollTargetLayout(modifier):
     content.modifier(modifier)
 case let .selectionDisabled(modifier):
     content.modifier(modifier)
+case let .shadow(modifier):
+    content.modifier(modifier)
 case let .speechAdjustedPitch(modifier):
     content.modifier(modifier)
 case let .speechAlwaysIncludesPunctuation(modifier):
@@ -4566,6 +4602,7 @@ _scrollDisabledModifier<R>.parser(in: context).map({ Self.init(.scrollDisabled($
 _scrollIndicatorsFlashModifier<R>.parser(in: context).map({ Self.init(.scrollIndicatorsFlash($0)) })
 _scrollTargetLayoutModifier<R>.parser(in: context).map({ Self.init(.scrollTargetLayout($0)) })
 _selectionDisabledModifier<R>.parser(in: context).map({ Self.init(.selectionDisabled($0)) })
+_shadowModifier<R>.parser(in: context).map({ Self.init(.shadow($0)) })
 _speechAdjustedPitchModifier<R>.parser(in: context).map({ Self.init(.speechAdjustedPitch($0)) })
 _speechAlwaysIncludesPunctuationModifier<R>.parser(in: context).map({ Self.init(.speechAlwaysIncludesPunctuation($0)) })
 _speechAnnouncementsQueuedModifier<R>.parser(in: context).map({ Self.init(.speechAnnouncementsQueued($0)) })

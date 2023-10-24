@@ -233,3 +233,9 @@ extension SwiftUI.Color: AttributeDecodable {
         self = value
     }
 }
+
+extension CoreFoundation.CGFloat: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        self.init(try Double.init(from: attribute))
+    }
+}

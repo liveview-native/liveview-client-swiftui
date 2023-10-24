@@ -43,7 +43,7 @@ import LiveViewNativeCore
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-struct Color: View {
+struct ColorView: View {
     @ObservedElement private var element: ElementNode
     
     /// The alpha channel of the color, in the range `0` to `1`.
