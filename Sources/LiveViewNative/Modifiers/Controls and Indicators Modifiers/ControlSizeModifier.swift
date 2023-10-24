@@ -30,9 +30,10 @@ struct ControlSizeModifier: ViewModifier, Decodable {
     private let size: ControlSize
     
     func body(content: Content) -> some View {
-        #if !os(tvOS)
-        content.controlSize(size)
-        #endif
+        content
+            #if !os(tvOS)
+            .controlSize(size)
+            #endif
     }
     
     #if os(tvOS)
