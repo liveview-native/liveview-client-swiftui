@@ -150,13 +150,7 @@ public enum ShapeReference: Decodable {
                     default:
                         shape = Rectangle()
                     }
-                    if let modifiers = try? ShapeModifierStack(from: $0.attribute(named: "modifiers")) {
-                        return modifiers.stack.reduce(EitherAnyShape.insettable(shape)) { shape, modifier in
-                            modifier.apply(to: shape)
-                        }.eraseToAnyShape()
-                    } else {
-                        return .init(shape)
-                    }
+                    return .init(shape)
                 }.first ?? .init(Rectangle())
         }
     }
@@ -188,19 +182,7 @@ public enum ShapeReference: Decodable {
                     default:
                         shape = Rectangle()
                     }
-                    if let modifiers = try? ShapeModifierStack(from: $0.attribute(named: "modifiers")) {
-                        let modified = modifiers.stack.reduce(EitherAnyShape.insettable(shape)) { shape, modifier in
-                            modifier.apply(to: shape)
-                        }
-                        switch modified {
-                        case .shape:
-                            return .init(shape)
-                        case let .insettable(insettable):
-                            return .init(insettable)
-                        }
-                    } else {
-                        return .init(shape)
-                    }
+                    return .init(shape)
                 }.first ?? .init(Rectangle())
         }
     }

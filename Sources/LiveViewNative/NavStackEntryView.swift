@@ -67,8 +67,6 @@ struct NavStackEntryView<R: RootRegistry>: View {
                     }
                     .transition(coordinator.session.configuration.transition ?? .identity)
                 }
-            } else if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
-                SwiftUI.Text("").modifier(cachedNavigationTitle)
             }
         }
         .animation(coordinator.session.configuration.transition.map({ _ in .default }), value: { () -> Bool in
