@@ -35,6 +35,9 @@ struct ModifierGenerator: ParsableCommand {
         "navigationDocument",
         
         "previewContext",
+        "previewDevice",
+        "previewInterfaceOrientation",
+        "previewLayout",
         
         // fixme: missing types
         "accessibilityRotor",
@@ -95,9 +98,6 @@ struct ModifierGenerator: ParsableCommand {
         "presentationDetents",
         "presentedWindowStyle",
         "presentedWindowToolbarStyle",
-        "previewDevice",
-        "previewInterfaceOrientation",
-        "previewLayout",
         "progressViewStyle",
         "scrollPosition",
         "scrollTargetBehavior",
@@ -240,9 +240,6 @@ struct ModifierGenerator: ParsableCommand {
 
         // fixme: labelled argument ordering
         "mask",
-
-        // fixme: type collision
-        // "shadow",
     ]
 
     func run() throws {
