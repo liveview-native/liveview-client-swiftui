@@ -9,8 +9,8 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
     end
   end
 
-  def parse(rules) do
-    case Modifiers.modifiers(rules) do
+  def parse(rules, opts \\ []) do
+    case Modifiers.modifiers(rules, opts) do
       {:ok, [output], _unconsumed = "", _context, _current_line_and_offset, _} ->
         output
 

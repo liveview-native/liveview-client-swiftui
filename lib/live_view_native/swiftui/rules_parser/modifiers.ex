@@ -83,6 +83,23 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   )
 
   defparsec(
+    :event,
+    ignore(string("event"))
+    |> enclosed(
+      "(",
+      double_quoted_string()
+      |> optional(
+        ignore_whitespace()
+        |> ignore(string(","))
+        |> ignore_whitespace()
+        |> concat(parsec(:key_value_pairs))
+      ),
+      ")"
+    )
+    |> post_traverse({:event_to_ast, []})
+  )
+
+  defparsec(
     :nested_attribute,
     word()
     |> parsec(:brackets)
@@ -91,6 +108,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
 
   @bracket_child [
     literal(),
+    parsec(:event),
     parsec(:key_value_pairs),
     parsec(:attr),
     parsec(:ime),
