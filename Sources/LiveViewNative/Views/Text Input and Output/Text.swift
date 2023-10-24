@@ -219,13 +219,10 @@ struct Text<R: RootRegistry>: View {
     #endif
     @Attribute("date-style") private var dateStyle: SwiftUI.Text.DateStyle = .date
     
-    @Attribute("modifiers") private var modifiers: TextModifierStack?
-    
     init() {}
     
     init(element: ElementNode) {
         self._element = .init(element: element)
-        self._modifiers = .init(wrappedValue: nil, "modifiers", element: element)
         self._verbatim = .init(wrappedValue: nil, "verbatim", element: element)
         self._date = .init(
             wrappedValue: nil,
@@ -254,11 +251,7 @@ struct Text<R: RootRegistry>: View {
     }
     
     public var body: SwiftUI.Text {
-        var result = text
-        for modifier in modifiers?.stack ?? [] {
-            result = modifier.apply(to: result)
-        }
-        return result
+        return text
     }
     
     private static func formatDate(_ value: LiveViewNativeCore.Attribute?) throws -> Date? {
@@ -415,122 +408,6 @@ extension PersonNameComponents.FormatStyle.Style: AttributeDecodable {
             self = .abbreviated
         default:
             throw AttributeDecodingError.badValue(Self.self)
-        }
-    }
-}
-
-struct EmptyTextModifier: TextModifier {
-    func apply(to text: SwiftUI.Text) -> SwiftUI.Text {
-        text
-    }
-}
-
-enum TextModifierType: String, Decodable {
-    case font
-    case fontWeight = "font_weight"
-    case foregroundColor = "foreground_color"
-//    case bold
-    case italic
-    case strikethrough
-    case underline
-    case monospacedDigit = "monospaced_digit"
-    case kerning
-    case tracking
-    case baselineOffset = "baseline_offset"
-    @available(iOS 16.1, macOS 13.0, tvOS 16.1, watchOS 9.1, *)
-    case fontDesign = "font_design"
-    case fontWidth = "font_width"
-    #if swift(>=5.8)
-    @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
-    case monospaced
-    #endif
-    
-    func decode(from decoder: Decoder) throws -> any TextModifier {
-        switch self {
-        case .font:
-            return try FontModifier(from: decoder)
-        case .fontWeight:
-            return try FontWeightModifier(from: decoder)
-        case .foregroundColor:
-            return try ForegroundColorModifier(from: decoder)
-//        case .bold:
-//            return try BoldModifier(from: decoder)
-        case .italic:
-            return try ItalicModifier(from: decoder)
-        case .strikethrough:
-            return try StrikethroughModifier(from: decoder)
-        case .underline:
-            return try UnderlineModifier(from: decoder)
-        case .monospacedDigit:
-            return try MonospacedDigitModifier(from: decoder)
-        case .kerning:
-            return try KerningModifier(from: decoder)
-        case .tracking:
-            return try TrackingModifier(from: decoder)
-        case .baselineOffset:
-            return try BaselineOffsetModifier(from: decoder)
-        case .fontDesign:
-            if #available(iOS 16.1, macOS 13.0, tvOS 16.1, watchOS 9.1, *) {
-                return try FontDesignModifier(from: decoder)
-            } else {
-                return EmptyTextModifier()
-            }
-        case .fontWidth:
-            return try FontWidthModifier(from: decoder)
-        #if swift(>=5.8)
-        case .monospaced:
-            return try MonospacedModifier(from: decoder)
-        #endif
-        }
-    }
-}
-
-/// A modifier that applies to ``Text``.
-protocol TextModifier {
-    /// Modify the `Text` and return the new `Text` type.
-    func apply(to text: SwiftUI.Text) -> SwiftUI.Text
-}
-
-struct TextModifierStack: Decodable, AttributeDecodable {
-    var stack: [any TextModifier]
-    
-    init(_ stack: [any TextModifier]) {
-        self.stack = stack
-    }
-    
-    init(from attribute: LiveViewNativeCore.Attribute?) throws {
-        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
-        self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
-    }
-    
-    enum TextModifierContainer: Decodable {
-        case modifier(any TextModifier)
-        case end
-        
-        init(from decoder: Decoder) throws {
-            let type = try decoder.container(keyedBy: CodingKeys.self).decode(String.self, forKey: .type)
-            if let modifierType = TextModifierType(rawValue: type) {
-                self = .modifier(try modifierType.decode(from: decoder))
-            } else {
-                self = .end
-            }
-        }
-        
-        enum CodingKeys: CodingKey {
-            case type
-        }
-    }
-    
-    init(from decoder: Decoder) throws {
-        var container = try decoder.unkeyedContainer()
-        self.stack = []
-        while !container.isAtEnd {
-            switch try container.decode(TextModifierContainer.self) {
-            case let .modifier(modifier):
-                self.stack.append(modifier)
-            case .end:
-                return
-            }
         }
     }
 }
