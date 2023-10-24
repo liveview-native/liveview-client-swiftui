@@ -9,15 +9,34 @@ import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
+#warning("fixme: use __event__ helper function without implicit member")
 extension Event: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ASTNode("__event__") {
-            String.parser(in: context)
-        }
-        .map { (meta, value) in
-            return Self.init(AttributeName(rawValue: value)!, type: "click")
+        ParseableEvent.parser(in: context)
+        .map { value in
+            return Self.init(
+                event: value.event,
+                type: value.type,
+                debounce: value.debounce,
+                throttle: value.throttle
+            )
         }
     }
     
-//    {:__event__, [], ["<event name>", [throttle:debounce:]]}
+    @ParseableExpression
+    struct ParseableEvent {
+        static let name = "Event"
+        
+        let event: String
+        let type: String
+        let debounce: Double?
+        let throttle: Double?
+        
+        init(_ event: String, type: String = "click", debounce: Double?, throttle: Double?) {
+            self.event = event
+            self.type = type
+            self.debounce = debounce
+            self.throttle = throttle
+        }
+    }
 }
