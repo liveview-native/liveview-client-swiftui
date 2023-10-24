@@ -173,7 +173,15 @@ extension FunctionParameterSyntax {
             ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name
             ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self)?.name
             ?? self.type.as(IdentifierTypeSyntax.self)?.name)?.text,
-            ["String", "Bool", "Int", "Double", "CGFloat"].contains(typeName)
+            [
+                "String",
+                "Bool",
+                "Double",
+                "Int",
+                "Date",
+                "Color",
+                "CGFloat",
+            ].contains(typeName)
         {
             self = self
                 .with(\.type, TypeSyntax("AttributeReference<\(self.type.trimmed)>\(raw: self.type.is(OptionalTypeSyntax.self) ? "?" : "")"))
