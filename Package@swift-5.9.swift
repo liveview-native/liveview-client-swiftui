@@ -44,9 +44,6 @@ let package = Package(
                 "LiveViewNativeMacros",
                 "LiveViewNativeStylesheet"
             ],
-            swiftSettings: [
-                SwiftSetting.unsafeFlags(["-emit-extension-block-symbols"])
-            ],
             plugins: [
                 .plugin(name: "BuiltinRegistryGeneratorPlugin")
             ]

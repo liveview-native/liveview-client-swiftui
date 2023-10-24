@@ -15,7 +15,8 @@ defmodule LiveViewNative.SwiftUI.Platform do
       LiveViewNativePlatform.Env.define(:swiftui,
         custom_modifiers: struct.custom_modifiers,
         render_macro: :sigil_SWIFTUI,
-        otp_app: :live_view_native_swift_ui
+        otp_app: :live_view_native_swift_ui,
+        valid_targets: ~w(mac pad phone tv vision watch)a
       )
     end
   end

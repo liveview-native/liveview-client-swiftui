@@ -103,7 +103,7 @@ extension ContentTransition: Decodable {
     }
 }
 
-#if canImport(Symbols)
+#if canImport(Symbols) && swift(>=5.8)
 import Symbols
 
 /// A content transition applied to a system image.

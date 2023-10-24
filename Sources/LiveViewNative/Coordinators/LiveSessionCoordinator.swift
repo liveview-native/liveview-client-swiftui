@@ -219,7 +219,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let resp: URLResponse
         do {
             (data, resp) = try await configuration.urlSession.data(from: url.appending(queryItems: [
-                .init(name: "_platform", value: platform)
+                .init(name: "_lvn_platform", value: platform)
             ]))
         } catch {
             throw LiveConnectionError.initialFetchError(error)
@@ -409,14 +409,36 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 
 extension LiveSessionCoordinator {
     var platform: String { "swiftui" }
-    var platformMeta: Payload {
+    var platformParams: Payload {
         [
-            "os_name": getOSName(),
+            "app_version": getAppVersion(),
+            "app_build": getAppBuild(),
+            "bundle_id": getBundleID(),
+            "format": "swiftui",
+            "os": getOSName(),
             "os_version": getOSVersion(),
-            "user_interface_idiom": getUserInterfaceIdiom()
+            "target": getTarget()
         ]
     }
     
+    private func getAppVersion() -> String {
+        let dictionary = Bundle.main.infoDictionary!
+
+        return dictionary["CFBundleShortVersionString"] as! String
+    }
+    
+    private func getAppBuild() -> String {
+        let dictionary = Bundle.main.infoDictionary!
+
+        return dictionary["CFBundleVersion"] as! String
+    }
+    
+    private func getBundleID() -> String {
+        let dictionary = Bundle.main.infoDictionary!
+
+        return dictionary["CFBundleIdentifier"] as! String
+    }
+
     private func getOSName() -> String {
         #if os(macOS)
         return "macOS"
@@ -444,7 +466,7 @@ extension LiveSessionCoordinator {
         #endif
     }
 
-    private func getUserInterfaceIdiom() -> String {
+    private func getTarget() -> String {
         #if os(watchOS)
         return "watch"
         #elseif os(macOS)
