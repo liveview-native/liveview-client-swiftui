@@ -161,6 +161,15 @@ extension CoreFoundation.CGSize: ParseableModifierValue {
     }
 }
 
+extension Optional: ParseableModifierValue where Wrapped: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            Wrapped.parser(in: context).map(Self.some)
+            NilLiteral().map({ Self.none })
+        }
+    }
+}
+
 /// A `ViewModifier` that switches between two possible modifier types.
 public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier, ParseableExpressionProtocol
     where TrueModifier: ViewModifier & ParseableExpressionProtocol, FalseModifier: ViewModifier & ParseableExpressionProtocol
