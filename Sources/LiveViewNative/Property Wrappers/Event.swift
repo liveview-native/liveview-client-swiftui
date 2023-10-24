@@ -154,7 +154,7 @@ public struct Event: DynamicProperty, Decodable {
     /// @Event(event: "my_event_name", type: "click") private var click
     /// ```
     /// The event name is no longer defined by the client, but instead uses the value passed in here.
-    public init(event: String, type: String) {
+    public init(event: String, type: String, debounce: Double? = nil, throttle: Double? = nil) {
         self.event = event
         self.name = nil
         self.type = type

@@ -129,9 +129,21 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                             })
                     ) + (
                         labelledArguments.count == 1
-                            ? ["\(labelledArguments.first!.firstName.trimmed): labelled\(labelledArguments.first!.defaultValue.flatMap({ " ?? \($0.value)" }) ?? "!")"]
+                            ? [
+                                """
+                                \(labelledArguments.first!.firstName.trimmed): labelled\(
+                                    labelledArguments.first!.defaultValue.flatMap({ " ?? \($0.value)" })
+                                        ?? (labelledArguments.first!.type.is(OptionalTypeSyntax.self) ? "" : "!")
+                                )
+                                """
+                            ]
                             : labelledArguments.map({
-                                "\($0.firstName): labelled.\($0.firstName.trimmed)\($0.defaultValue.flatMap({ " ?? \($0.value)" }) ?? "!")"
+                                """
+                                \($0.firstName): labelled.\($0.firstName.trimmed)\(
+                                    $0.defaultValue.flatMap({ " ?? \($0.value)" })
+                                        ?? ($0.type.is(OptionalTypeSyntax.self) ? "" : "!")
+                                )
+                                """
                             })
                     )
                 ).joined(separator: ","))
