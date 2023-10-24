@@ -37,12 +37,9 @@ struct NavStackEntryView<R: RootRegistry>: View {
                 case .connected:
                     coordinator.builder.fromNodes(coordinator.document![coordinator.document!.root()].children(), coordinator: coordinator, url: coordinator.url)
                         .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: coordinator.document!))
-                        .onPreferenceChange(NavigationTitleModifierKey.self) { navigationTitle in
-                            self.liveViewModel.cachedNavigationTitle = navigationTitle
-                        }
                         .transition(coordinator.session.configuration.transition ?? .identity)
                 default:
-                    let content = SwiftUI.Group {
+                    SwiftUI.Group {
                         if R.LoadingView.self == Never.self {
                             switch coordinator.state {
                             case .connected:
@@ -63,14 +60,7 @@ struct NavStackEntryView<R: RootRegistry>: View {
                         }
                     }
                     .transition(coordinator.session.configuration.transition ?? .identity)
-                    if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
-                        content.modifier(cachedNavigationTitle)
-                    } else {
-                        content
-                    }
                 }
-            } else if let cachedNavigationTitle = liveViewModel.cachedNavigationTitle {
-                SwiftUI.Text("").modifier(cachedNavigationTitle)
             }
         }
         .animation(coordinator.session.configuration.transition.map({ _ in .default }), value: { () -> Bool in

@@ -37,24 +37,17 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
     #endif
     @Attribute("stroke-color") private var strokeColor: SwiftUI.Color? = nil
     
-    @Attribute("modifiers") private var modifiers: ShapeModifierStack = .init([])
-    
     init(shape: S) {
         self.shape = shape
     }
     
     var body: some View {
-        let shape = modifiers.stack.reduce(EitherAnyShape.insettable(shape)) { shape, modifier in
-            modifier.apply(to: shape)
-        }
-        if let final = modifiers.final {
-            final.apply(to: shape)
-        } else if let fillColor {
-            shape.eraseToAnyShape().fill(fillColor)
+        if let fillColor {
+            shape.fill(fillColor)
         } else if let strokeColor {
-            shape.eraseToAnyShape().stroke(strokeColor)
+            shape.stroke(strokeColor)
         } else {
-            shape.eraseToAnyShape()
+            shape
         }
     }
 }
@@ -140,73 +133,6 @@ extension RoundedCornerStyle: Decodable, AttributeDecodable {
             self = value
         } else {
             throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "Unknown RoundedCornerStyle `\(string)`"))
-        }
-    }
-}
-
-enum ShapeModifierType: String, Decodable {
-    case inset
-    case offset = "offset_shape"
-    case rotation
-    case size
-    case trim
-}
-
-enum FinalShapeModifierType: String, Decodable {
-    case fill
-    case stroke
-    case strokeBorder = "stroke_border"
-}
-
-struct ShapeModifierStack: Decodable, AttributeDecodable {
-    var stack: [ShapeModifier]
-    var final: ShapeModifierRegistry.AggregateFinalShapeModifier?
-    
-    init(_ stack: [ShapeModifier]) {
-        self.stack = stack
-    }
-    
-    init(from attribute: LiveViewNativeCore.Attribute?) throws {
-        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
-        self = try makeJSONDecoder().decode(Self.self, from: Data(value.utf8))
-    }
-    
-    enum ShapeModifierContainer: Decodable {
-        case modifier(ShapeModifier)
-        case final(ShapeModifierRegistry.AggregateFinalShapeModifier)
-        case end
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            let type = try container.decode(String.self, forKey: .type)
-            if let modifier = ShapeModifierType(rawValue: type) {
-                self = .modifier(try ShapeModifierRegistry.decodeShapeModifier(modifier, from: decoder))
-            } else if let modifier = FinalShapeModifierType(rawValue: type) {
-                self = .final(try ShapeModifierRegistry.decodeFinalShapeModifier(modifier, from: decoder))
-            } else {
-                self = .end
-            }
-        }
-        
-        enum CodingKeys: CodingKey {
-            case type
-        }
-    }
-    
-    init(from decoder: Decoder) throws {
-        var container = try decoder.unkeyedContainer()
-        self.stack = []
-        while !container.isAtEnd {
-            let modifier = try container.decode(ShapeModifierContainer.self)
-            switch modifier {
-            case let .modifier(modifier):
-                self.stack.append(modifier)
-            case let .final(final):
-                self.final = final
-                return
-            case .end:
-                return
-            }
         }
     }
 }

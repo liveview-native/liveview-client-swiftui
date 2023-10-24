@@ -15,7 +15,6 @@ import LiveViewNativeCore
 /// In a view in the LiveView tree, a model can be obtained using `@EnvironmentObject`.
 public class LiveViewModel: ObservableObject {
     private var forms = [String: FormModel]()
-    var cachedNavigationTitle: NavigationTitleModifier?
     
     init() {}
     
