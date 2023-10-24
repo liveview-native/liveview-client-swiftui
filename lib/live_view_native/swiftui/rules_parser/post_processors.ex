@@ -136,4 +136,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   def block_open_to_ast(rest, [key_value_pairs, class_name], context, _line, _offset) do
     {rest, [[class_name, key_value_pairs]], context}
   end
+
+  def event_to_ast(rest, [name], context, _line, _offset) do
+    {rest, [{:__event__, [], [name, []]}], context}
+  end
+
+  def event_to_ast(rest, [opts, name], context, _line, _offset) do
+    {rest, [{:__event__, [], [name, opts]}], context}
+  end
 end

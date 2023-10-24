@@ -1,6 +1,14 @@
 defmodule LiveViewNative.SwiftUI.RulesParserTest do
   use ExUnit.Case
-  import LiveViewNative.SwiftUI.RulesParser, only: [parse: 1]
+  alias LiveViewNative.SwiftUI.RulesParser
+
+  def parse(input) do
+    RulesParser.parse(input,
+      context: %{
+        annotations: false
+      }
+    )
+  end
 
   describe "parse/1" do
     test "parses modifier function definition" do
