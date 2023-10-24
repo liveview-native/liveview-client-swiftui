@@ -76,7 +76,12 @@ struct Signature {
                                 return $0.firstName.tokenKind == .wildcard ? "__\(offset)_\($0.secondName!.text).projectedValue" : "\($0.firstName.text): __\(offset)_\(($0.secondName ?? $0.firstName).text).projectedValue"
                             case "Event":
                                 return $0.firstName.tokenKind == .wildcard ? "{ __\(offset)_\($0.secondName!.text).wrappedValue() }" : "\($0.firstName.text): { __\(offset)_\(($0.secondName ?? $0.firstName).text).wrappedValue() }"
+                            case "AttributeReference":
+                                return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
                             default:
+                                if $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text == "AttributeReference" {
+                                    return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text)?.resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)?.resolve(on: element, in: context)"
+                                }
                                 return $0.firstName.tokenKind == .wildcard ? $0.secondName!.text : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)"
                             }
                         }).joined(separator: ", ")))
@@ -161,6 +166,18 @@ extension FunctionParameterSyntax {
             self = parameter.with(\.type, TypeSyntax("ChangeTracked\(raw: memberType.genericArgumentClause?.description ?? "")"))
         } else {
             self = parameter
+        }
+
+        // Types that support `attr` should be wrapped in an `AttributeReference`.
+        if let typeName = (self.type.as(MemberTypeSyntax.self)?.name
+            ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name
+            ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self)?.name
+            ?? self.type.as(IdentifierTypeSyntax.self)?.name)?.text,
+            ["String", "Bool", "Int", "Double", "CGFloat"].contains(typeName)
+        {
+            self = self
+                .with(\.type, TypeSyntax("AttributeReference<\(self.type.trimmed)>\(raw: self.type.is(OptionalTypeSyntax.self) ? "?" : "")"))
+                .with(\.defaultValue, self.defaultValue != nil ? InitializerClauseSyntax(ExprSyntax(".init(storage: .constant(\(self.defaultValue!)))")) : nil)
         }
     }
 }
