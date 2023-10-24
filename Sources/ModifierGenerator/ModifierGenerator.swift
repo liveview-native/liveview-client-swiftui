@@ -242,7 +242,7 @@ struct ModifierGenerator: ParsableCommand {
         "mask",
 
         // fixme: type collision
-        "shadow",
+        // "shadow",
     ]
 
     func run() throws {
