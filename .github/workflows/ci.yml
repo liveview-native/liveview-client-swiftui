@@ -13,7 +13,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  test:
+  test-ios:
     runs-on: [self-hosted, tartelet]
     steps:
       - uses: actions/checkout@v2
@@ -38,14 +38,23 @@ jobs:
           else
             printf "Code coverage $COVERAGE meets minimum requirement $MIN_COVERAGE"
           fi
+  build-macos:
+    runs-on: [self-hosted, tartelet]
+    steps:
       - name: Build for macOS
         shell: bash
         run: |
           xcodebuild -scheme LiveViewNative-Package -sdk macosx13.3 -destination "platform=macOS"
+  build-watchos:
+    runs-on: [self-hosted, tartelet]
+    steps:
       - name: Build for watchOS
         shell: bash
         run: |
           xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
+  build-tvos:
+    runs-on: [self-hosted, tartelet]
+    steps:
       - name: Build for tvOS
         shell: bash
         run: |
