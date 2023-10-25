@@ -41,6 +41,7 @@ jobs:
   build-macos:
     runs-on: [self-hosted, tartelet]
     steps:
+      - uses: actions/checkout@v2
       - name: Build for macOS
         shell: bash
         run: |
@@ -48,6 +49,7 @@ jobs:
   build-watchos:
     runs-on: [self-hosted, tartelet]
     steps:
+      - uses: actions/checkout@v2
       - name: Build for watchOS
         shell: bash
         run: |
@@ -55,6 +57,7 @@ jobs:
   build-tvos:
     runs-on: [self-hosted, tartelet]
     steps:
+      - uses: actions/checkout@v2
       - name: Build for tvOS
         shell: bash
         run: |
