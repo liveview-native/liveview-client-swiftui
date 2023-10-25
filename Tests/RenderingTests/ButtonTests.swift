@@ -48,10 +48,12 @@ final class ButtonTests: XCTestCase {
             Button("Click Me") {}
                 .buttonStyle(.borderedProminent)
         }
+        #if !os(tvOS)
         try assertMatch(#"<Button modifiers='[{"type": "button_style", "style": "borderless"}]'>Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.borderless)
         }
+        #endif
         try assertMatch(#"<Button modifiers='[{"type": "button_style", "style": "plain"}]'>Click Me</Button>"#) {
             Button("Click Me") {}
                 .buttonStyle(.plain)
