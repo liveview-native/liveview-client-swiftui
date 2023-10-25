@@ -38,7 +38,7 @@ struct Menu<R: RootRegistry>: View {
     @LiveContext<R> private var context
     
     public var body: some View {
-        #if !os(watchOS)
+        #if !os(watchOS) && (!os(tvOS) || swift(>=5.9))
         SwiftUI.Menu {
             context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
         } label: {

@@ -44,7 +44,7 @@ struct MenuStyleModifier: ViewModifier, Decodable {
     private let style: MenuStyle
     
     func body(content: Content) -> some View {
-#if !os(watchOS)
+#if !os(watchOS) && (!os(tvOS) || swift(>=5.9))
         switch style {
         case .automatic:
             content.menuStyle(.automatic)

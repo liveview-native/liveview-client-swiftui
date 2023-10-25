@@ -35,7 +35,10 @@ struct ButtonStyleModifier: ViewModifier, Decodable {
             content.buttonStyle(.borderedProminent)
         case .borderless:
             if #available(iOS 13.0, macOS 10.15, tvOS 17.0, watchOS 8.0, *) {
-                content.buttonStyle(.borderless)
+                content
+                    #if !os(tvOS) || swift(>=5.9)
+                    .buttonStyle(.borderless)
+                    #endif
             } else {
                 content
             }

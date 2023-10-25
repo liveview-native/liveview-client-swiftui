@@ -38,7 +38,7 @@ struct HoverEffectModifier: ViewModifier, Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        #if os(iOS) || os(tvOS)
+        #if os(iOS) || (os(tvOS) && swift(>=5.9))
         switch try container.decode(String.self, forKey: .effect) {
         case "automatic": self.effect = .automatic
         case "highlight": self.effect = .highlight
@@ -53,7 +53,7 @@ struct HoverEffectModifier: ViewModifier, Decodable {
     
     func body(content: Content) -> some View {
         content
-            #if os(iOS) || os(tvOS)
+            #if os(iOS) || (os(tvOS) && swift(>=5.9))
             .hoverEffect(effect)
             #endif
     }
@@ -65,7 +65,7 @@ struct HoverEffectModifier: ViewModifier, Decodable {
 
 @available(tvOS 17.0, *)
 extension HoverEffectModifier {
-    #if os(macOS) || os(watchOS)
+    #if os(macOS) || os(watchOS) || (os(tvOS) && swift(<5.9))
     typealias HoverEffect = Never
     #endif
 }

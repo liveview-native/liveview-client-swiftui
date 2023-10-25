@@ -39,7 +39,7 @@ struct MenuIndicatorVisibilityModifier: ViewModifier, Decodable {
     
     func body(content: Content) -> some View {
         content
-            #if !os(watchOS)
+            #if !os(watchOS) && (!os(tvOS) || swift(>=5.9))
             .menuIndicator(visibility)
             #endif
     }
