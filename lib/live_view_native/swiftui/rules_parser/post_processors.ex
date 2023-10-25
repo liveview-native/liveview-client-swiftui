@@ -103,7 +103,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
         _offset,
         _is_initial = true
       ) do
-    {rest, [{:., [], [nil, {Elixir, [], {:to_ime, [], [variable]}}]}], context}
+    {rest, [{:., [], [nil, {Elixir, [], {:to_atom, [], [variable]}}]}], context}
   end
 
   def to_ime_function_call_ast(
@@ -114,7 +114,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
         _offset,
         _is_initial = false
       ) do
-    {rest, [{Elixir, [], {:to_ime, [], [variable]}}], context}
+    {rest, [{Elixir, [], {:to_atom, [], [variable]}}], context}
   end
 
   def to_keyword_tuple_ast(rest, [arg1, arg2], context, _line, _offset) do

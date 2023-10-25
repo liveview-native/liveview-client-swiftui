@@ -5,6 +5,10 @@ defmodule MockSheet do
   "color-red" do
     color(.red)
   end
+
+  "button-" <> style do
+    buttonStyle(to_ime(style))
+  end
   """
 
   def class(_other, _), do: {:unmatched, ""}
