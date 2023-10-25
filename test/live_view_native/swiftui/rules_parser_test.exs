@@ -245,7 +245,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       input = "color(to_ime(color))"
 
       output =
-        {:color, [], [{:., [], [nil, {Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}]}]}
+        {:color, [], [{:., [], [nil, {Elixir, [], {:to_atom, [], [{:color, [], Elixir}]}}]}]}
 
       assert parse(input) == output
     end
@@ -255,7 +255,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       output =
         {:color, [],
-         [{:., [], [nil, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :foo]}]}]}
+         [{:., [], [nil, {:., [], [{Elixir, [], {:to_atom, [], [{:color, [], Elixir}]}}, :foo]}]}]}
 
       assert parse(input) == output
     end
@@ -263,7 +263,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     test "to_ime in the middle of a chain" do
       input = "color(Foo.to_ime(color).bar)"
 
-      output = {:color, [], [{:., [], [:Foo, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :bar]}]}]}
+      output = {:color, [], [{:., [], [:Foo, {:., [], [{Elixir, [], {:to_atom, [], [{:color, [], Elixir}]}}, :bar]}]}]}
 
       assert parse(input) == output
     end
@@ -292,6 +292,14 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert output == %{"color-red" => [
         {:color, [], [{:., [], [nil, :red]}]}
+      ]}
+    end
+
+    test "ensure to_ime doesn't double print ast node" do
+      output = MockSheet.compile_ast(["button-plain"], target: :all)
+
+      assert output == %{"button-plain" => [
+        {:buttonStyle, [], [{:., [], [nil, :plain]}]}
       ]}
     end
   end
