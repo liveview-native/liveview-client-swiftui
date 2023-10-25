@@ -21,6 +21,7 @@ import SwiftUI
 #endif
 @available(iOS 16.0, macOS 13.0, watchOS 9.0, *)
 struct ControlSizeModifier: ViewModifier, Decodable {
+    #if !os(tvOS)
     /// The size of controls.
     ///
     /// See ``LiveViewNative/SwiftUI/ControlSize`` for a list of possible values.
@@ -28,10 +29,12 @@ struct ControlSizeModifier: ViewModifier, Decodable {
     @_documentation(visibility: public)
     #endif
     private let size: ControlSize
+    #endif
     
     func body(content: Content) -> some View {
-        #if !os(tvOS)
-        content.controlSize(size)
-        #endif
+        content
+            #if !os(tvOS)
+            .controlSize(size)
+            #endif
     }
 }

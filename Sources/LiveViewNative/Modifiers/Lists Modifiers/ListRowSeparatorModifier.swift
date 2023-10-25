@@ -49,10 +49,10 @@ struct ListRowSeparatorModifier: ViewModifier, Decodable, Equatable {
     }
     
     func body(content: Content) -> some View {
-        #if !os(watchOS)
-        content.listRowSeparator(visibility, edges: edges)
-        #else
+        #if os(watchOS) || os(tvOS)
         content
+        #else
+        content.listRowSeparator(visibility, edges: edges)
         #endif
     }
     

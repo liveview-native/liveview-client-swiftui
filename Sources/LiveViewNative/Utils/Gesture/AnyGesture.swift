@@ -104,8 +104,10 @@ extension AnyGesture: Decodable {
     
     enum GestureType: String, Decodable {
         case tap
+        #if !os(tvOS)
         case spatialTap = "spatial_tap"
         case longPress = "long_press"
+        #endif
         case sequential
         case simultaneous
         case exclusive
@@ -122,6 +124,7 @@ extension AnyGesture: Decodable {
                 )
                 .map { _ in [String:String]() as! Value }
             )
+        #if !os(tvOS)
         case .spatialTap:
             let properties = try container.nestedContainer(keyedBy: CodingKeys.SpatialTap.self, forKey: .properties)
             self = .init(
@@ -140,6 +143,7 @@ extension AnyGesture: Decodable {
                 )
                 .map { $0 as! Value }
             )
+        #endif
         case .sequential:
             let properties = try container.nestedContainer(keyedBy: CodingKeys.Sequence.self, forKey: .properties)
             let sequence = try properties.decode([AnyGesture<Value>].self, forKey: .gestures)

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if !os(tvOS)
 /// The size classes that apply to controls.
 ///
 /// Possible values:
@@ -33,3 +34,4 @@ extension ControlSize: Decodable {
         }
     }
 }
+#endif

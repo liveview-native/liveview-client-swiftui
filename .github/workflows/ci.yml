@@ -46,3 +46,7 @@ jobs:
         shell: bash
         run: |
           xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
+      - name: Build for tvOS
+        shell: bash
+        run: |
+          xcodebuild -scheme LiveViewNative-Package -sdk appletvos16.4 -destination "name=Any tvOS Device"

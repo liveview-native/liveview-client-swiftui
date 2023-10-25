@@ -38,7 +38,7 @@ extension ContentShapeKinds: Decodable {
             case "context_menu_preview":
                 self = .contextMenuPreview
             #endif
-            #if !os(iOS)
+            #if !os(iOS) && !os(tvOS)
             case "focus_effect":
                 self = .focusEffect
             #endif

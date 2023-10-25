@@ -38,7 +38,9 @@ struct TextFieldStyleModifier: ViewModifier, Decodable {
         case .plain:
             content.textFieldStyle(.plain)
         case .roundedBorder:
-            #if !os(watchOS)
+            #if os(watchOS) || os(tvOS)
+            content
+            #else
             content.textFieldStyle(.roundedBorder)
             #endif
         case .squareBorder:

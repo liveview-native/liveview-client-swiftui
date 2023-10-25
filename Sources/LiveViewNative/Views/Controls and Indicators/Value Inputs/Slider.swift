@@ -62,6 +62,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 struct Slider<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -85,6 +86,7 @@ struct Slider<R: RootRegistry>: View {
     @Attribute("step") private var step: Double.Stride?
     
     public var body: some View {
+        #if !os(tvOS)
         if let step {
             SwiftUI.Slider(
                 value: $value,
@@ -109,5 +111,6 @@ struct Slider<R: RootRegistry>: View {
                 context.buildChildren(of: element, forTemplate: "maximum-value-label")
             }
         }
+        #endif
     }
 }

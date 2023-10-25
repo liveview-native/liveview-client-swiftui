@@ -33,7 +33,7 @@ import SwiftUI
 #if swift(>=5.8)
 @_documentation(visibility: public)
 #endif
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 17.0, *)
 struct MenuStyleModifier: ViewModifier, Decodable {
     /// The menu style to apply.
     ///
@@ -44,7 +44,7 @@ struct MenuStyleModifier: ViewModifier, Decodable {
     private let style: MenuStyle
     
     func body(content: Content) -> some View {
-#if !os(watchOS)
+#if !os(watchOS) && (!os(tvOS) || swift(>=5.9))
         switch style {
         case .automatic:
             content.menuStyle(.automatic)

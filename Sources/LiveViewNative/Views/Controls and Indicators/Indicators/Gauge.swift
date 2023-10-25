@@ -5,7 +5,6 @@
 //  Created by Carson Katri on 1/26/23.
 //
 
-#if !os(tvOS)
 import SwiftUI
 
 /// Displays a value within a range.
@@ -54,6 +53,7 @@ struct Gauge<R: RootRegistry>: View {
     @Attribute("upper-bound") private var upperBound: Double = 1
     
     public var body: some View {
+        #if !os(tvOS)
         SwiftUI.Group {
             if context.hasTemplate(of: element, withName: "current-value-label") ||
                context.hasTemplate(of: element, withName: "minimum-value-label") ||
@@ -80,10 +80,10 @@ struct Gauge<R: RootRegistry>: View {
                 }
             }
         }
+        #endif
     }
     
     private var label: some View {
         context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
     }
 }
-#endif

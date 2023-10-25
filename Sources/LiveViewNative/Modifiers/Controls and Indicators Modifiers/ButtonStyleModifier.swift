@@ -34,9 +34,21 @@ struct ButtonStyleModifier: ViewModifier, Decodable {
         case .borderedProminent:
             content.buttonStyle(.borderedProminent)
         case .borderless:
-            content.buttonStyle(.borderless)
+            if #available(iOS 13.0, macOS 10.15, tvOS 17.0, watchOS 8.0, *) {
+                content
+                    #if !os(tvOS) || swift(>=5.9)
+                    .buttonStyle(.borderless)
+                    #endif
+            } else {
+                content
+            }
         case .plain:
             content.buttonStyle(.plain)
+        case .card:
+            content
+                #if os(tvOS)
+                .buttonStyle(.card)
+                #endif
         }
     }
 }
@@ -67,4 +79,10 @@ private enum ButtonStyle: String, Decodable {
     @_documentation(visibility: public)
     #endif
     case plain
+    
+    #if swift(>=5.8)
+    @_documentation(visibility: public)
+    #endif
+    @available(tvOS 14.0, *)
+    case card
 }
