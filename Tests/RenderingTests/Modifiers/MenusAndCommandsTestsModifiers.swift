@@ -11,7 +11,7 @@ import LiveViewNative
 
 @MainActor
 final class MenusAndCommandsModifiersTests: XCTestCase {
-    #if !os(watchOS)
+    #if !os(watchOS) && !os(tvOS)
     func testMenuStyle() throws {
         try assertMatch(
             #"""
