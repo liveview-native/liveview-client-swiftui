@@ -47,8 +47,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> wrap(
       choice([
         ignore(string("()")),
-        lookahead(utf8_char(String.to_charlist(".)")))
+        # Exit the ime if it does not have arguments
+        lookahead_not(utf8_char(String.to_charlist("(")))
         |> concat(empty()),
+        # Otherwise, parse the arguments
         modifier_brackets.(nested: true)
       ])
     )
