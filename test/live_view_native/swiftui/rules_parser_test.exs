@@ -189,6 +189,91 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert parse(input) == output
     end
+
+    test "parses closed ranges" do
+      input = "foo(Foo.bar...Baz.qux)"
+      output = {:foo, [], [{:..., [], [{:., [], [:Foo, :bar]}, {:., [], [:Baz, :qux]}]}]}
+
+      assert parse(input) == output
+
+      input = "foo(1...10)"
+      output = {:foo, [], [{:..., [], [1, 10]}]}
+
+      assert parse(input) == output
+
+      input = "foo(\"a\"...\"z\")"
+      output = {:foo, [], [{:..., [], ["a", "z"]}]}
+
+      assert parse(input) == output
+    end
+
+    test "parses left-hand range" do
+      input = "foo(Foo.bar...)"
+      output = {:foo, [], [{:..., [], [{:., [], [:Foo, :bar]}, nil]}]}
+
+      assert parse(input) == output
+
+      input = "foo(1...)"
+      output = {:foo, [], [{:..., [], [1, nil]}]}
+
+      assert parse(input) == output
+
+      input = "foo(\"a\"...)"
+      output = {:foo, [], [{:..., [], ["a", nil]}]}
+
+      assert parse(input) == output
+    end
+
+    test "parses right-hand range" do
+      input = "foo(...Baz.qux)"
+      output = {:foo, [], [{:..., [], [nil, {:., [], [:Baz, :qux]}]}]}
+
+      assert parse(input) == output
+
+      input = "foo(...10)"
+      output = {:foo, [], [{:..., [], [nil, 10]}]}
+
+      assert parse(input) == output
+
+      input = "foo(...\"z\")"
+      output = {:foo, [], [{:..., [], [nil, "z"]}]}
+
+      assert parse(input) == output
+    end
+
+    test "parses half-open range" do
+      input = "foo(Foo.bar..<Baz.qux)"
+      output = {:foo, [], [{:"..<", [], [{:., [], [:Foo, :bar]}, {:., [], [:Baz, :qux]}]}]}
+
+      assert parse(input) == output
+
+      input = "foo(1..<10)"
+      output = {:foo, [], [{:"..<", [], [1, 10]}]}
+
+      assert parse(input) == output
+
+      input = "foo(\"a\"..<\"z\")"
+      output = {:foo, [], [{:"..<", [], ["a", "z"]}]}
+
+      assert parse(input) == output
+    end
+
+    test "parses half-open right-hand range" do
+      input = "foo(..<Baz.qux)"
+      output = {:foo, [], [{:"..<", [], [nil, {:., [], [:Baz, :qux]}]}]}
+
+      assert parse(input) == output
+
+      input = "foo(..<10)"
+      output = {:foo, [], [{:"..<", [], [nil, 10]}]}
+
+      assert parse(input) == output
+
+      input = "foo(..<\"z\")"
+      output = {:foo, [], [{:"..<", [], [nil, "z"]}]}
+
+      assert parse(input) == output
+    end
   end
 
   describe "helper functions" do
