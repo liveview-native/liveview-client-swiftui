@@ -83,7 +83,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     ])
     |> post_traverse({PostProcessors, :to_scoped_ime_ast, []})
 
-  defparsec(
+  defparsecp(
     :ime,
     start()
     |> choice([
@@ -110,35 +110,54 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
 
   defcombinator(
     :attr,
-    string("attr")
+    start()
+    |> string("attr")
     |> enclosed(
       "(",
       expected(
         double_quoted_string(),
-        error_message: "attr expects a string argument"
+        error_message: "attr expects a string argument",
+        error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
       ),
       ")",
-      []
+      allow_empty?: false
     )
     |> post_traverse({PostProcessors, :to_attr_ast, []})
   )
 
-  # TODO: Errors
-  defparsec(
+  event_arg_1 =
+    expected(
+      double_quoted_string(),
+      error_message: "event expects a string as the first argument",
+      error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
+    )
+
+  event_arg_2 =
+    ignore_whitespace()
+    |> ignore(string(","))
+    |> ignore_whitespace()
+    |> concat(
+      expected(
+        choice([
+          ignore(enclosed("[", ignore_whitespace(), "]", [])),
+          parsec(:key_value_list),
+          key_value_pairs(allow_empty?: false)
+        ]),
+        error_message: "event expects a keyword list as the second argument",
+        error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
+      )
+    )
+
+  maybe_event_arg_2 =
+    choice([
+      lookahead(ignore_whitespace(), string(")")),
+      event_arg_2
+    ])
+
+  defparsecp(
     :event,
     ignore(string("event"))
-    |> enclosed(
-      "(",
-      double_quoted_string()
-      |> optional(
-        ignore_whitespace()
-        |> ignore(string(","))
-        |> ignore_whitespace()
-        |> concat(key_value_pairs())
-      ),
-      ")",
-      []
-    )
+    |> enclosed("(", concat(event_arg_1, maybe_event_arg_2), ")", allow_empty?: false)
     |> post_traverse({PostProcessors, :event_to_ast, []})
   )
 
@@ -149,31 +168,31 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     },
     {
       parsec(:event),
-      ~s'event'
+      ~s'an event eg ‘event("search-event", throttle: 10_000)’'
     },
     {
       parsec(:attr),
-      ~s'attr'
+      ~s'an attribute eg attr("placeholder")’'
     },
-    {parsec(:ime), ~s'an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’'},
+    {
+      parsec(:ime),
+      ~s'an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’'
+    },
     {
       key_value_pairs(generate_error?: false, allow_empty?: false),
       ~s'a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’'
     },
     {
       parsec(:helper_function),
-      ~s'attr'
+      ~s'a helper function eg ‘to_float(variable)’'
     },
-    # {SwiftClass.HelperFunctions.helper_function(), "a helper function eg ‘to_float(number)"},
-
-    # {parsec(:nested_attribute), ~s'a modifier eg ‘foo(bar())’'},
     {
       frozen(parsec(:nested_modifier)),
       "a modifier eg ‘bold()’"
     },
     {
       variable(generate_error?: false),
-      ~s|a variable defined in the class header eg ‘color_name’|
+      ~s'a variable defined in the class header eg ‘color_name’'
     }
   ]
 
@@ -181,7 +200,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     :modifier_arguments,
     empty()
     |> comma_separated_list(
-      one_of(empty(), @modifier_arguments,
+      one_of(@modifier_arguments,
         error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
       ),
       allow_empty?: false,
@@ -195,7 +214,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     )
   )
 
-  defparsec(
+  defparsecp(
     :nested_modifier,
     ignore_whitespace()
     |> concat(modifier_name())

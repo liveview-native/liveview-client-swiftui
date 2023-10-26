@@ -15,7 +15,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser do
     |> Enum.join("\n")
   end
 
-  def one_of(combinator \\ empty(), named_choices, opts \\ []) do
+  def one_of(combinator \\ empty(), named_choices, opts) do
     if not match?([_, _ | _], named_choices) do
       raise ArgumentError, "one_of expects two or more choices"
     end
@@ -79,6 +79,22 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser do
 
   def put_error(error_parser, error_message, opts \\ []) do
     post_traverse(error_parser, {Error, :put_error, [error_message, opts]})
+  end
+
+  def reject_if_in(parser, exceptions, error_message_fn) do
+    post_traverse(parser, {__MODULE__, :__reject_if_in__, [exceptions, error_message_fn]})
+  end
+
+  def __reject_if_in__(rest, [arg], context, position, byte_offset, exceptions, error_message_fn) do
+    if arg in exceptions do
+      Error.put_error(rest, [arg], context, position, byte_offset, error_message_fn.(arg))
+    else
+      {rest, [arg], context}
+    end
+  end
+
+  def __reject_if_in__(rest, args, context, _, _, _, _) do
+    {rest, args, context}
   end
 
   @whitespace_chars [?\s, ?\t, ?\n, ?\r]

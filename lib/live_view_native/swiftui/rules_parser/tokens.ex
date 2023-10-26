@@ -49,12 +49,28 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     |> map({String, :to_float, []})
   end
 
+  def number() do
+    choice([float(), int()])
+  end
+
   def atom() do
     ignore(string(":"))
-    |> choice([
-      double_quoted_string(),
-      word()
-    ])
+    |> concat(
+      choice([
+        double_quoted_string(),
+        variable_name()
+      ])
+      |> expected(
+        error_message: "Expected an atom",
+        error_parser:
+          choice([
+            non_whitespace(also_ignore: String.to_charlist("[](),"), fail_if_empty: true),
+            non_whitespace(also_ignore: String.to_charlist("]),"), fail_if_empty: true),
+            non_whitespace()
+          ]),
+        show_incorrect_text?: true
+      )
+    )
     |> map({String, :to_atom, []})
   end
 
@@ -107,16 +123,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
 
   def literal(opts \\ []) do
     one_of(
-      empty(),
       [
-        {float(), "float"},
-        {int(), "int"},
-        {boolean(), "boolean"},
+        {number(), "number"},
+        {double_quoted_string(), "string"},
         {nil_(), "nil"},
-        {atom(), "atom"},
-        {double_quoted_string(), "string"}
+        {boolean(), "boolean"},
+        {atom(), "atom"}
       ],
-      Keyword.merge([show_incorrect_text?: true], opts)
+      Keyword.merge(opts, show_incorrect_text?: true)
     )
   end
 
@@ -124,24 +138,28 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 1)
   end
 
+  def variable_name() do
+    ascii_string([?a..?z, ?A..?Z, ?_], 1)
+    |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
+    |> reduce({Enum, :join, [""]})
+  end
+
   def variable(opts \\ []) do
-    expected(
-      ascii_string([?a..?z, ?A..?Z, ?_], 1)
-      |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
-      |> reduce({Enum, :join, [""]})
-      |> post_traverse({PostProcessors, :to_elixir_variable_ast, []}),
+    variable_name()
+    |> post_traverse({PostProcessors, :to_elixir_variable_ast, []})
+    |> expected(
       Keyword.merge(
-        [error_message: "expected a variable"],
-        opts
+        opts,
+        error_message: "expected a variable"
       )
     )
   end
 
   def modifier_name() do
-    expected(
-      ascii_string([?a..?z, ?A..?Z, ?_], 1)
-      |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
-      |> reduce({Enum, :join, [""]}),
+    ascii_string([?a..?z, ?A..?Z, ?_], 1)
+    |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
+    |> reduce({Enum, :join, [""]})
+    |> expected(
       error_message: "Expected a modifier name",
       error_parser:
         choice([
@@ -151,13 +169,21 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
         ]),
       show_incorrect_text?: true
     )
+    |> reject_if_in(
+      ["event", "attr"],
+      &__MODULE__.modifier_name_error/1
+    )
+  end
+
+  def modifier_name_error(matched) do
+    "‘#{matched}’ can only be used as an argument to a modifier"
   end
 
   def module_name() do
-    expected(
-      ascii_string([?A..?Z], 1)
-      |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
-      |> reduce({Enum, :join, [""]}),
+    ascii_string([?A..?Z], 1)
+    |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
+    |> reduce({Enum, :join, [""]})
+    |> expected(
       error_message: "Expected a module name",
       error_parser:
         choice([

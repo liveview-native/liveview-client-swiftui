@@ -309,16 +309,16 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       output = MockSheet.compile_ast(["color-red"], target: :all)
 
       assert output == %{"color-red" => [
-        {:color, [], [{:., [], [nil, :red]}]}
-      ]}
+                 {:color, [], [{:., [], [nil, :red]}]}
+               ]}
     end
 
     test "ensure to_ime doesn't double print ast node" do
       output = MockSheet.compile_ast(["button-plain"], target: :all)
 
       assert output == %{"button-plain" => [
-        {:buttonStyle, [], [{:., [], [nil, :plain]}]}
-      ]}
+                 {:buttonStyle, [], [{:., [], [nil, :plain]}]}
+               ]}
     end
   end
 
@@ -351,11 +351,11 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
         Expected ‘()’ or ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
          - a number, string, nil, boolean or :atom
-         - event
-         - attr
+         - an event eg ‘event(\"search-event\", throttle: 10_000)’
+         - an attribute eg attr(\"placeholder\")’
          - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
-         - attr
+         - a helper function eg ‘to_float(variable)’
          - a modifier eg ‘bold()’
          - a variable defined in the class header eg ‘color_name’
         """
@@ -451,11 +451,11 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
         Expected one of the following:
          - a number, string, nil, boolean or :atom
-         - event
-         - attr
+         - an event eg ‘event("search-event", throttle: 10_000)’
+         - an attribute eg attr("placeholder")’
          - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
-         - attr
+         - a helper function eg ‘to_float(variable)’
          - a modifier eg ‘bold()’
          - a variable defined in the class header eg ‘color_name’
         """
@@ -481,6 +481,29 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |
 
         expected ‘]’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid keyword pair: invalid value (2)" do
+      input = "abc(def: 11, b: [lineWidth: :1])"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | abc(def: 11, b: [lineWidth: :1])
+          |                              ^
+          |
+
+        Expected an atom, but got ‘1’
         """
         |> String.trim()
 
@@ -528,13 +551,105 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
         Expected one of the following:
          - a number, string, nil, boolean or :atom
-         - event
-         - attr
+         - an event eg ‘event("search-event", throttle: 10_000)’
+         - an attribute eg attr("placeholder")’
          - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
-         - attr
+         - a helper function eg ‘to_float(variable)’
          - a modifier eg ‘bold()’
          - a variable defined in the class header eg ‘color_name’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "event as modifier" do
+      input = "event(variable)"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | event(variable)
+          | ^^^^^
+          |
+
+        ‘event’ can only be used as an argument to a modifier
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "event with non-string as first argument" do
+      input = "foo(event(variable))"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | foo(event(variable))
+          |           ^^^^^^^^
+          |
+
+        event expects a string as the first argument
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "event with non-keyword as second arg" do
+      input = "foo(event(\"click\", 1))"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | foo(event("click", 1))
+          |                    ^
+          |
+
+        event expects a keyword list as the second argument
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "attr with non-string" do
+      input = "foo(attr(1))"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | foo(attr(1))
+          |          ^
+          |
+
+        attr expects a string argument
         """
         |> String.trim()
 
