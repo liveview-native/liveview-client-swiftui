@@ -320,6 +320,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         {:buttonStyle, [], [{:., [], [nil, :plain]}]}
       ]}
     end
+  end
 
   describe "error reporting" do
     setup do
