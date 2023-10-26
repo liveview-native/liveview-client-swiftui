@@ -309,17 +309,16 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       output = MockSheet.compile_ast(["color-red"], target: :all)
 
       assert output == %{"color-red" => [
-                 {:color, [], [{:., [], [nil, :red]}]}
-               ]}
+        {:color, [], [{:., [], [nil, :red]}]}
+      ]}
     end
 
     test "ensure to_ime doesn't double print ast node" do
       output = MockSheet.compile_ast(["button-plain"], target: :all)
 
       assert output == %{"button-plain" => [
-                 {:buttonStyle, [], [{:., [], [nil, :plain]}]}
-               ]}
-    end
+        {:buttonStyle, [], [{:., [], [nil, :plain]}]}
+      ]}    end
   end
 
   describe "error reporting" do
