@@ -76,7 +76,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   end
 
   scoped_ime =
-    module_name()
+    type_name()
     |> choice([
       ime_function.(false),
       dotted_ime.(false)

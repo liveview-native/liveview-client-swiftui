@@ -179,12 +179,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     "‘#{matched}’ can only be used as an argument to a modifier"
   end
 
-  def module_name() do
+  def type_name() do
     ascii_string([?A..?Z], 1)
     |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
     |> reduce({Enum, :join, [""]})
     |> expected(
-      error_message: "Expected a module name",
+      error_message: "Expected a type name",
       error_parser:
         choice([
           non_whitespace(also_ignore: String.to_charlist("[](),"), fail_if_empty: true),
