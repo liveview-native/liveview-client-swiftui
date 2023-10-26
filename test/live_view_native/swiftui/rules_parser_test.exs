@@ -318,7 +318,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert output == %{"button-plain" => [
         {:buttonStyle, [], [{:., [], [nil, :plain]}]}	                 {:buttonStyle, [], [{:., [], [nil, :plain]}]}
-      ]}  end
+      ]}
+    end
 
   describe "error reporting" do
     setup do
