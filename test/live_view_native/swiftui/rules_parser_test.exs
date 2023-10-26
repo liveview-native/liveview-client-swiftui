@@ -2,15 +2,33 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
   use ExUnit.Case
   alias LiveViewNative.SwiftUI.RulesParser
 
-  def parse(input) do
+  def parse(input, opts \\ []) do
     RulesParser.parse(input,
+      file: Keyword.get(opts, :file),
+      module: Keyword.get(opts, :module),
+      line: Keyword.get(opts, :line),
       context: %{
-        annotations: false
+        annotations: Keyword.get(opts, :annotations, false)
       }
     )
   end
 
   describe "parse/1" do
+    test "parses modifier function definition with annotation" do
+      {line, input} = {__ENV__.line, "\nbold(true)"}
+
+      # We add 1 because the modifier is on the second line of the input
+      output = {:bold, [file: __ENV__.file, line: line + 1, module: __ENV__.module], [true]}
+
+      assert parse(input,
+               file: __ENV__.file,
+               module: __ENV__.module,
+               line: line,
+               annotations: true
+             ) ==
+               output
+    end
+
     test "parses modifier function definition" do
       input = "bold(true)"
       output = {:bold, [], [true]}
@@ -280,7 +298,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "event" do
       input = ~s{searchable(change: event("search-event", throttle: 10_000))}
-      output = {:searchable, [], [[change: {:__event__, [], ["search-event", [throttle: 10_000]]}]]}
+output = {:searchable, [], [[change: {:__event__, [], ["search-event", [throttle: 10_000]]}]]}
 
       assert parse(input) == output
     end
@@ -291,8 +309,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       output = MockSheet.compile_ast(["color-red"], target: :all)
 
       assert output == %{"color-red" => [
-        {:color, [], [{:., [], [nil, :red]}]}
-      ]}
+                 {:color, [], [{:., [], [nil, :red]}]}
+               ]}
     end
 
     test "ensure to_ime doesn't double print ast node" do
@@ -301,6 +319,226 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert output == %{"button-plain" => [
         {:buttonStyle, [], [{:., [], [nil, :plain]}]}
       ]}
+    end
+  end
+
+  describe "error reporting" do
+    setup do
+      # Disable ANSI so we don't have to worry about colors
+      Application.put_env(:elixir, :ansi_enabled, false)
+      on_exit(fn -> Application.put_env(:elixir, :ansi_enabled, true) end)
+    end
+
+    test "ANSI is off" do
+      assert "message" == IO.iodata_to_binary(IO.ANSI.format([:blue, "message"]))
+    end
+
+    test "modifier without brackets" do
+      input = "blue"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | blue_
+          |
+          |
+
+        Expected ‘()’ or ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
+         - a number, string, nil, boolean or :atom
+         - event
+         - attr
+         - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
+         - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
+         - attr
+         - a modifier eg ‘bold()’
+         - a variable defined in the class header eg ‘color_name’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid modifier name" do
+      input = "1(.red)"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | 1(.red)
+          | ^
+          |
+
+        Expected a modifier name, but got ‘1’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid modifier argument" do
+      input = "font(Color.largeTitle.)"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | font(Color.largeTitle.)
+          |                      ^
+          |
+
+        expected ‘)’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid modifier argument2" do
+      input = "abc(11, 2a)"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | abc(11, 2a)
+          |          ^
+          |
+
+        expected ‘)’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid keyword pair: missing colon" do
+      input = "abc(def: 11, b: [lineWidth a, l: 2a]"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | abc(def: 11, b: [lineWidth a, l: 2a]
+          |                 ^^^^^^^^^^
+          |
+
+        Expected one of the following:
+         - a number, string, nil, boolean or :atom
+         - event
+         - attr
+         - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
+         - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
+         - attr
+         - a modifier eg ‘bold()’
+         - a variable defined in the class header eg ‘color_name’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid keyword pair: invalid value" do
+      input = "abc(def: 11, b: [lineWidth: 1lineWidth])"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | abc(def: 11, b: [lineWidth: 1lineWidth])
+          |                              ^^^^^^^^^
+          |
+
+        expected ‘]’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "unexpected trailing character" do
+      input = "font(.largeTitle) {"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | font(.largeTitle) {
+          |                   ^
+          |
+
+        Expected a modifier name, but got ‘{’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "unexpected bracket" do
+      input = "font(.)red)"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | font(.)red)
+          |      ^
+          |
+
+        Expected one of the following:
+         - a number, string, nil, boolean or :atom
+         - event
+         - attr
+         - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
+         - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
+         - attr
+         - a modifier eg ‘bold()’
+         - a variable defined in the class header eg ‘color_name’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
     end
   end
 end
