@@ -31,3 +31,14 @@ public struct ASTNode<Content: Parser>: Parser where Content.Input == Substring.
         }
     }
 }
+
+
+public extension ASTNode where Content == ListLiteral<Whitespace<PartialRangeFrom<Int>, Conversions.Identity<Substring.UTF8View>>> {
+    init(_ name: String) {
+        self.init(name) {
+            ListLiteral {
+                Whitespace()
+            }
+        }
+    }
+}
