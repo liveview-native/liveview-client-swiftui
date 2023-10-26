@@ -116,7 +116,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       "(",
       expected(
         double_quoted_string(),
-        error_message: "attr expects a string argument",
+        error_message: "‘attr’ expects a string argument",
         error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
       ),
       ")",
@@ -128,7 +128,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   event_arg_1 =
     expected(
       double_quoted_string(),
-      error_message: "event expects a string as the first argument",
+      error_message: "‘event’ expects a string as the first argument",
       error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
     )
 
@@ -143,7 +143,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
           parsec(:key_value_list),
           key_value_pairs(allow_empty?: false)
         ]),
-        error_message: "event expects a keyword list as the second argument",
+        error_message: "‘event’ expects a keyword list as the second argument",
         error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
       )
     )

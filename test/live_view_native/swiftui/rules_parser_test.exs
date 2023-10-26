@@ -603,7 +603,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |           ^^^^^^^^
           |
 
-        event expects a string as the first argument
+        ‘event’ expects a string as the first argument
         """
         |> String.trim()
 
@@ -626,7 +626,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |                    ^
           |
 
-        event expects a keyword list as the second argument
+        ‘event’ expects a keyword list as the second argument
         """
         |> String.trim()
 
@@ -649,7 +649,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |          ^
           |
 
-        attr expects a string argument
+        ‘attr’ expects a string argument
         """
         |> String.trim()
 
