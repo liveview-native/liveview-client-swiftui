@@ -77,6 +77,14 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
+    test "parses comma seperated IMEs" do
+      input = "font(.largeTitle, .bold)"
+
+      output = {:font, [], [{:., [], [nil, :largeTitle]}, {:., [], [nil, :bold]}]}
+
+      assert parse(input) == output
+    end
+
     test "parses chained IMEs" do
       input = "font(color: Color.red)"
 
@@ -100,6 +108,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert parse(input) == output
     end
+    
 
     test "parses multiple modifiers" do
       input = "font(.largeTitle) bold(true) italic(true)"
