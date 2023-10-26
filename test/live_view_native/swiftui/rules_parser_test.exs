@@ -182,6 +182,13 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
+    test "parses key/value pairs with helper calls" do
+      input = "foo(x: to_integer(value), y: 0)"
+      output = {:foo, [], [[{:x, {Elixir, [], {:to_integer, [], [{:value, [], Elixir}]}}}, {:y, 0}]]}
+
+      assert parse(input) == output
+    end
+
     test "parses bool and nil values" do
       input = "foo(true, false, nil)"
       output = {:foo, [], [true, false, nil]}
