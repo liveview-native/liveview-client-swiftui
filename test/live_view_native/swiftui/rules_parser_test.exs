@@ -298,7 +298,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
     test "event" do
       input = ~s{searchable(change: event("search-event", throttle: 10_000))}
-output = {:searchable, [], [[change: {:__event__, [], ["search-event", [throttle: 10_000]]}]]}
+      output = {:searchable, [], [[change: {:__event__, [], ["search-event", [throttle: 10_000]]}]]}
 
       assert parse(input) == output
     end
@@ -309,8 +309,8 @@ output = {:searchable, [], [[change: {:__event__, [], ["search-event", [throttle
       output = MockSheet.compile_ast(["color-red"], target: :all)
 
       assert output == %{"color-red" => [
-                 {:color, [], [{:., [], [nil, :red]}]}
-               ]}
+        {:color, [], [{:., [], [nil, :red]}]}
+      ]}
     end
 
     test "ensure to_ime doesn't double print ast node" do
