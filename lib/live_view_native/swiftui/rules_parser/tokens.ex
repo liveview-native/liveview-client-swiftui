@@ -1,29 +1,22 @@
 defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
   import NimbleParsec
+  import LiveViewNative.SwiftUI.RulesParser.Parser
+  alias LiveViewNative.SwiftUI.RulesParser.PostProcessors
 
   #
   # Literals
   #
 
-  def true_value() do
-    string("true")
-    |> replace(true)
-  end
-
-  def false_value() do
-    string("false")
-    |> replace(false)
-  end
-
   def boolean() do
-    choice([true_value(), false_value()])
+    choice([
+      replace(string("true"), true),
+      replace(string("false"), false)
+    ])
   end
 
-  def null(), do: replace(string("nil"), nil)
+  def nil_(), do: replace(string("nil"), nil)
 
   def minus(), do: string("-")
-
-  def plus(), do: string("+")
 
   def underscored_integer() do
     integer(min: 1)
@@ -56,12 +49,28 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     |> map({String, :to_float, []})
   end
 
+  def number() do
+    choice([float(), int()])
+  end
+
   def atom() do
     ignore(string(":"))
-    |> choice([
-      double_quoted_string(),
-      word()
-    ])
+    |> concat(
+      choice([
+        double_quoted_string(),
+        variable_name()
+      ])
+      |> expected(
+        error_message: "Expected an atom",
+        error_parser:
+          choice([
+            non_whitespace(also_ignore: String.to_charlist("[](),"), fail_if_empty: true),
+            non_whitespace(also_ignore: String.to_charlist("]),"), fail_if_empty: true),
+            non_whitespace()
+          ]),
+        show_incorrect_text?: true
+      )
+    )
     |> map({String, :to_atom, []})
   end
 
@@ -73,17 +82,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     )
     |> ignore(string(~s(")))
     |> reduce({List, :to_string, []})
-  end
-
-  def literal() do
-    choice([
-      float(),
-      int(),
-      boolean(),
-      null(),
-      atom(),
-      double_quoted_string()
-    ])
   end
 
   #
@@ -123,101 +121,85 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
   # AST
   #
 
-  def variable() do
-    ascii_string([?a..?z, ?A..?Z, ?_], 1)
-    |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 1)
-    |> reduce({Enum, :join, [""]})
-    |> post_traverse({:to_elixir_variable_ast, []})
+  def literal(opts \\ []) do
+    one_of(
+      [
+        {number(), "number"},
+        {double_quoted_string(), "string"},
+        {nil_(), "nil"},
+        {boolean(), "boolean"},
+        {atom(), "atom"}
+      ],
+      Keyword.merge(opts, show_incorrect_text?: true)
+    )
   end
 
   def word() do
     ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 1)
   end
 
-  def module_name() do
-    ascii_string([?A..?Z], 1)
+  def variable_name() do
+    ascii_string([?a..?z, ?A..?Z, ?_], 1)
     |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
     |> reduce({Enum, :join, [""]})
   end
 
-  def enclosed(start \\ empty(), open, combinator, close) do
-    start
-    |> ignore_whitespace()
-    |> ignore(string(open))
-    |> ignore_whitespace()
-    |> concat(combinator)
-    |> ignore_whitespace()
-    |> ignore(string(close))
-    |> ignore_whitespace()
-  end
-
-  #
-  # Collections
-  #
-
-  def comma_separated_list(combinator \\ empty(), elem_combinator) do
-    delimiter_separated_list(combinator, elem_combinator, ",", true)
-  end
-
-  def non_empty_comma_separated_list(combinator, elem_combinator) do
-    delimiter_separated_list(combinator, elem_combinator, ",", false)
-  end
-
-  def delimiter_separated_list(combinator, elem_combinator, delimiter, allow_empty \\ true) do
-    #  1+ elems
-    non_empty =
-      elem_combinator
-      |> repeat(
-        ignore_whitespace()
-        |> ignore(string(delimiter))
-        |> ignore_whitespace()
-        |> concat(elem_combinator)
+  def variable(opts \\ []) do
+    variable_name()
+    |> post_traverse({PostProcessors, :to_elixir_variable_ast, []})
+    |> expected(
+      Keyword.merge(
+        opts,
+        error_message: "expected a variable"
       )
-
-    empty_ = ignore_whitespace(empty())
-
-    if allow_empty do
-      combinator
-      |> choice([non_empty, empty_])
-    else
-      combinator
-      |> concat(non_empty)
-    end
-  end
-
-  def newline_separated_list(elem_combinator) do
-    #  1+ elems
-    ignore_whitespace()
-    |> concat(elem_combinator)
-    |> repeat(
-      choice([
-        ignore(optional(whitespace_except("\n", min: 1)))
-        |> ignore(string("\n"))
-        |> ignore(whitespace(min: 1))
-        |> concat(elem_combinator),
-        # Require at least one whitespace
-        ignore(whitespace(min: 1))
-      ])
     )
   end
 
-  def key_value_pair() do
-    ignore_whitespace()
-    |> concat(word())
-    |> concat(ignore(string(":")))
-    |> ignore_whitespace()
-    |> concat(
-      choice([
-        literal(),
-        parsec(:attr),
-        parsec(:event),
-        parsec(:ime),
-        parsec(:helper_function),
-        parsec(:nested_attribute),
-        parsec(:key_value_list),
-        variable()
-      ])
+  def modifier_name() do
+    ascii_string([?a..?z, ?A..?Z, ?_], 1)
+    |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
+    |> reduce({Enum, :join, [""]})
+    |> expected(
+      error_message: "Expected a modifier name",
+      error_parser:
+        choice([
+          non_whitespace(also_ignore: String.to_charlist("[](),"), fail_if_empty: true),
+          non_whitespace(also_ignore: String.to_charlist("]),"), fail_if_empty: true),
+          non_whitespace()
+        ]),
+      show_incorrect_text?: true
     )
-    |> post_traverse({:to_keyword_tuple_ast, []})
+    |> reject_if_in(
+      ["event", "attr"],
+      &__MODULE__.modifier_name_error/1
+    )
+  end
+
+  def modifier_name_error("event") do
+    ~s'‘event’ can only be used as an argument to a modifier eg ‘searchable(change: event("search-event", throttle: 10_000))’'
+  end
+
+  def modifier_name_error("attr") do
+    ~s'‘attr’ can only be used as an argument to a modifier eg ‘attr("placeholder")’'
+  end
+
+  def modifier_name_error(matched) do
+    ~s'‘#{matched}’ can only be used as an argument to a modifier'
+  end
+
+  def type_name() do
+    ascii_string([?A..?Z], 1)
+    |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
+    |> reduce({Enum, :join, [""]})
+    |> expected(
+      error_message: "Expected a type name",
+      error_parser:
+        choice([
+          non_whitespace(also_ignore: String.to_charlist("[](),"), fail_if_empty: true),
+          non_whitespace(also_ignore: String.to_charlist("]),"), fail_if_empty: true),
+          non_whitespace()
+        ]),
+      show_incorrect_text?: true
+    )
   end
 end
