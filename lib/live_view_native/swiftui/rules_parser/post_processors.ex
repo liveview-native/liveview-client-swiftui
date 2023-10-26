@@ -1,63 +1,90 @@
 defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
-  def to_attr_ast(rest, [[attr], "attr"], context, _line, _offset) when is_binary(attr) do
-    {rest, [{:__attr__, [], attr}], context}
+  import LiveViewNative.SwiftUI.RulesParser.Parser.Annotations
+
+  def to_attr_ast(rest, [attr, "attr"], context, {line, _}, _byte_offset) when is_binary(attr) do
+    {rest, [{:__attr__, context_to_annotation(context.context, line), attr}], context}
   end
 
-  def wrap_in_tuple(rest, args, context, _line, _offset) do
+  def wrap_in_tuple(rest, args, context, {_line, _}, _byte_offset) do
     {rest, [List.to_tuple(Enum.reverse(args))], context}
   end
 
-  def block_open_with_variable_to_ast(rest, [variable, string], context, _line, _offset) do
+  def block_open_with_variable_to_ast(rest, [variable, string], context, {line, _}, _byte_offset) do
     {rest,
      [
-       {:<>, [context: Elixir, imports: [{2, Kernel}]], [string, variable]}
+       {:<>,
+        context_to_annotation(context.context, line) ++ [context: Elixir, imports: [{2, Kernel}]],
+        [string, variable]}
      ], context}
   end
 
-  def tag_as_elixir_code(rest, [quotable], context, _line, _offset) do
-    {rest, [{Elixir, [], quotable}], context}
+  def tag_as_elixir_code(rest, [quotable], context, {line, _}, _byte_offset) do
+    {rest,
+     [
+       {Elixir, context_to_annotation(context.context, line), quotable}
+     ], context}
   end
 
-  def to_elixir_variable_ast(rest, [variable_name], context, _line, _offset) do
-    {rest, [{Elixir, [], {String.to_atom(variable_name), [], Elixir}}], context}
+  def to_elixir_variable_ast(rest, [variable_name], context, {line, _}, _byte_offset) do
+    {rest,
+     [
+       {Elixir, context_to_annotation(context.context, line),
+        {String.to_atom(variable_name), context_to_annotation(context.context, line), Elixir}}
+     ], context}
   end
 
-  def to_implicit_ime_ast(rest, [[], variable_name], context, _line, _offset, _is_initial = true) do
-    {rest, [{:., [], [nil, String.to_atom(variable_name)]}], context}
-  end
-
-  def to_implicit_ime_ast(
+  def to_dotted_ime_ast(
         rest,
-        [args, variable_name],
+        [[], variable_name],
         context,
-        _line,
+        {line, _},
         _offset,
         _is_initial = true
       ) do
-    {rest, [{:., [], [nil, {String.to_atom(variable_name), [], args}]}], context}
+    {rest,
+     [{:., context_to_annotation(context.context, line), [nil, String.to_atom(variable_name)]}],
+     context}
   end
 
-  def to_implicit_ime_ast(rest, [[], variable_name], context, _line, _offset, false) do
+  def to_dotted_ime_ast(
+        rest,
+        [args, variable_name],
+        context,
+        {line, _},
+        _offset,
+        _is_initial = true
+      ) do
+    {rest,
+     [
+       {:., context_to_annotation(context.context, line),
+        [nil, {String.to_atom(variable_name), context_to_annotation(context.context, line), args}]}
+     ], context}
+  end
+
+  def to_dotted_ime_ast(rest, [[], variable_name], context, {_line, _}, _offset, false) do
     {rest, [String.to_atom(variable_name)], context}
   end
 
-  def to_implicit_ime_ast(rest, [args, variable_name], context, _line, _offset, false) do
-    {rest, [{String.to_atom(variable_name), [], args}], context}
+  def to_dotted_ime_ast(rest, [args, variable_name], context, {line, _}, _offset, false) do
+    {rest, [{String.to_atom(variable_name), context_to_annotation(context.context, line), args}],
+     context}
   end
 
-  def to_scoped_ime_ast(rest, [[] = _args, variable_name, scope], context, _line, _offset) do
+  def to_scoped_ime_ast(rest, [[] = _args, variable_name, scope], context, _, _byte_offset) do
     {rest, [String.to_atom(variable_name), String.to_atom(scope)], context}
   end
 
-  def to_scoped_ime_ast(rest, [args, variable_name, scope], context, _line, _offset) do
-    {rest, [{String.to_atom(variable_name), [], args}, String.to_atom(scope)], context}
+  def to_scoped_ime_ast(rest, [args, variable_name, scope], context, {line, _}, _byte_offset) do
+    annotations = context_to_annotation(context.context, line)
+
+    {rest, [{String.to_atom(variable_name), annotations, args}, String.to_atom(scope)], context}
   end
 
-  def to_scoped_ime_ast(rest, [[nil, variable], scope], context, _line, _offset) do
+  def to_scoped_ime_ast(rest, [[nil, variable], scope], context, {_line, _}, _byte_offset) do
     {rest, [variable, String.to_atom(scope)], context}
   end
 
-  def to_scoped_ime_ast(rest, [variable, scope], context, _line, _offset) do
+  def to_scoped_ime_ast(rest, [variable, scope], context, {_line, _}, _byte_offset) do
     {rest, [variable, String.to_atom(scope)], context}
   end
 
@@ -66,8 +93,8 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
       {:., [], [outer, inner]}
     else
       case outer do
-        {:., [], [nil, part]} ->
-          {:., [], [nil, {:., [], [part, inner]}]}
+        {:., annotations, [nil, part]} ->
+          {:., annotations, [nil, {:., annotations, [part, inner]}]}
 
         _ ->
           {:., [], [outer, inner]}
@@ -75,73 +102,81 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
     end
   end
 
-  defp combine_chain_ast_parts({:., [], [nil, part]}, inner) do
-    {:., [], [nil, {:., [], [part, inner]}]}
+  defp combine_chain_ast_parts({:., annotations, [nil, part]}, inner) do
+    {:., annotations, [nil, {:., annotations, [part, inner]}]}
   end
 
   defp combine_chain_ast_parts(outer, inner) do
     {:., [], [outer, inner]}
   end
 
-  def chain_ast(rest, sections, context, _line, _offset) do
+  def chain_ast(rest, sections, context, {_line, _}, _byte_offset) do
     sections = Enum.reduce(sections, &combine_chain_ast_parts/2)
 
     {rest, [sections], context}
   end
 
-  def to_function_call_ast(rest, args, context, _line, _offset) do
+  def to_function_call_ast(rest, args, context, {line, _}, _byte_offset) do
     [ast_name | other_args] = Enum.reverse(args)
+    annotations = context_to_annotation(context.context, line)
 
-    {rest, [{String.to_atom(ast_name), [], other_args}], context}
+    {rest, [{String.to_atom(ast_name), annotations, other_args}], context}
   end
 
   def to_ime_function_call_ast(
         rest,
-        [{Elixir, [], variable}],
+        [{Elixir, variable_annotations, variable}],
         context,
-        _line,
+        {line, _},
         _offset,
         _is_initial = true
       ) do
-    {rest, [{:., [], [nil, {Elixir, [], {:to_atom, [], [variable]}}]}], context}
+    annotations = context_to_annotation(context.context, line)
+
+    {rest,
+     [
+       {:., annotations,
+        [nil, {Elixir, annotations, {:to_atom, variable_annotations, [variable]}}]}
+     ], context}
   end
 
   def to_ime_function_call_ast(
         rest,
-        [{Elixir, [], variable}],
+        [{Elixir, variable_annotations, variable}],
         context,
-        _line,
+        {line, _},
         _offset,
         _is_initial = false
       ) do
-    {rest, [{Elixir, [], {:to_atom, [], [variable]}}], context}
+    annotations = context_to_annotation(context.context, line)
+    {rest, [{Elixir, annotations, {:to_atom, variable_annotations, [variable]}}], context}
   end
 
-  def to_keyword_tuple_ast(rest, [arg1, arg2], context, _line, _offset) do
+  def to_keyword_tuple_ast(rest, [arg1, arg2], context, {_line, _}, _byte_offset) do
     {rest, [{String.to_atom(arg2), arg1}], context}
   end
 
-  def tag_as_content(rest, [content], context, _line, _offset) do
+  # Ignore error case
+  def to_keyword_tuple_ast(rest, _, context, {_line, _}, _byte_offset) do
+    {rest, [], context}
+  end
+
+  def tag_as_content(rest, [content], context, {_line, _}, _byte_offset) do
     {rest, [content: content], context}
   end
 
-  def tag_as_content(rest, content, context, _line, _offset) do
+  def tag_as_content(rest, content, context, {_line, _}, _byte_offset) do
     {rest, [content: Enum.reverse(content)], context}
   end
 
-  def block_open_to_ast(rest, [class_name], context, _line, _offset) do
-    {rest, [[class_name, {:_target, [], Elixir}]], context}
+  def event_to_ast(rest, [name], context, {line, _}, _byte_offset) do
+    annotations = context_to_annotation(context.context, line)
+
+    {rest, [{:__event__, annotations, [name, []]}], context}
   end
 
-  def block_open_to_ast(rest, [key_value_pairs, class_name], context, _line, _offset) do
-    {rest, [[class_name, key_value_pairs]], context}
-  end
-
-  def event_to_ast(rest, [name], context, _line, _offset) do
-    {rest, [{:__event__, [], [name, []]}], context}
-  end
-
-  def event_to_ast(rest, [opts, name], context, _line, _offset) do
-    {rest, [{:__event__, [], [name, opts]}], context}
+  def event_to_ast(rest, [opts, name], context, {line, _}, _byte_offset) do
+    annotations = context_to_annotation(context.context, line)
+    {rest, [{:__event__, annotations, [name, opts]}], context}
   end
 end
