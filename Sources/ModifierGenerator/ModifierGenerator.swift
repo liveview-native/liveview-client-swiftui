@@ -12,6 +12,9 @@ struct ModifierGenerator: ParsableCommand {
     )
     private var interface: URL
 
+    // missing View-specific: resizable, stroke
+    // missing: fullScreenCover
+
     static let denylist: Set<String> = [
         "environment",
         "environmentObject",
@@ -46,7 +49,7 @@ struct ModifierGenerator: ParsableCommand {
         "accessibilityFocused",
         "accessibilityQuickAction",
         "alert",
-        "buttonStyle",
+        // "buttonStyle",
         "containerRelativeFrame",
         "contextMenu",
         "controlGroupStyle",
@@ -58,7 +61,7 @@ struct ModifierGenerator: ParsableCommand {
         "disclosureGroupStyle",
         "draggable",
         "dropDestination",
-        "dynamicTypeSize",
+        // "dynamicTypeSize",
         "exportableToServices",
         "exportsItemProviders",
         "fileExporter",
@@ -109,7 +112,7 @@ struct ModifierGenerator: ParsableCommand {
         "tabViewStyle",
         "tableStyle",
         "textEditorStyle",
-        "textFieldStyle",
+        // "textFieldStyle",
         "textSelection",
         "toggleStyle",
         "transaction",
@@ -146,7 +149,7 @@ struct ModifierGenerator: ParsableCommand {
         "typesettingLanguage",
         "listRowBackground",
         "tag",
-        "font",
+        // "font",
         "fileDialogMessage",
         "typeSelectEquivalent",
         "fileExporterFilenameLabel",
@@ -166,10 +169,10 @@ struct ModifierGenerator: ParsableCommand {
         "listRowSeparatorTint",
         "listSectionSeparator",
         "id",
-        "textCase",
+        // "textCase",
         "blendMode",
         "menuOrder",
-        "padding",
+        // "padding",
         "fontWidth",
         "listRowInsets",
         "menuIndicator",
@@ -183,8 +186,8 @@ struct ModifierGenerator: ParsableCommand {
         "persistentSystemOverlays",
         "presentationDragIndicator",
         "fontDesign",
-        "fontWeight",
-        "imageScale",
+        // "fontWeight",
+        // "imageScale",
         "controlSize",
         "submitLabel",
         "toolbarRole",
@@ -193,10 +196,10 @@ struct ModifierGenerator: ParsableCommand {
         "preferredColorScheme",
         "focusScope",
         "hoverEffect",
-        "keyboardType",
+        // "keyboardType",
         "listItemTint",
         "keyboardShortcut",
-        "multilineTextAlignment",
+        // "multilineTextAlignment",
         "symbolVariant",
         "textContentType",
         "defaultAppStorage",
@@ -210,7 +213,7 @@ struct ModifierGenerator: ParsableCommand {
         "transformEffect",
         "scrollIndicators",
         "scrollDismissesKeyboard",
-        "textInputAutocapitalization",
+        // "textInputAutocapitalization",
         "renameAction",
         "matchedGeometryEffect",
         "accessibilityRotorEntry",
@@ -223,7 +226,7 @@ struct ModifierGenerator: ParsableCommand {
         "fileDialogConfirmationLabel",
         "searchSuggestions",
         "scenePadding",
-        "lineLimit",
+        // "lineLimit",
         "drawingGroup",
         "searchable",
         "underline",
@@ -324,19 +327,11 @@ struct ModifierGenerator: ParsableCommand {
         output.append(#"""
 
         extension BuiltinRegistry {
-            struct BuiltinModifier: ViewModifier, ParseableModifierValue {
-                enum Storage {
-                    \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
-                }
+            enum BuiltinModifier: ViewModifier, ParseableModifierValue {
+                \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
                 
-                let storage: Storage
-                
-                init(_ storage: Storage) {
-                    self.storage = storage
-                }
-                
-                public func body(content: Content) -> some View {
-                    switch storage {
+                func body(content: Content) -> some View {
+                    switch self {
                     \#(modifierList.map({
                         """
                         case let .\($0)(modifier):
@@ -346,9 +341,27 @@ struct ModifierGenerator: ParsableCommand {
                     }
                 }
                 
-                public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-                    OneOf {
-                        \#(modifierList.map({ "_\($0)Modifier<R>.parser(in: context).map({ Self.init(.\($0)($0)) })" }).joined(separator: "\n"))
+                static func parser(in context: ParseableModifierContext) -> _ParserType {
+                    .init(context: context)
+                }
+
+                struct _ParserType: Parser {
+                    typealias Input = Substring.UTF8View
+                    typealias Output = BuiltinModifier
+                    
+                    let context: ParseableModifierContext
+                    
+                    func parse(_ input: inout Substring.UTF8View) throws -> Output {
+                        let parsers = [
+                            \#(modifierList.map({ "_\($0)Modifier<R>.parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
+                        ]
+                        
+                        return try OneOf {
+                            for parser in parsers {
+                                parser
+                            }
+                        }
+                        .parse(&input)
                     }
                 }
             }
