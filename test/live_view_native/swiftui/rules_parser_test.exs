@@ -317,8 +317,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       output = MockSheet.compile_ast(["button-plain"], target: :all)
 
       assert output == %{"button-plain" => [
-        {:buttonStyle, [], [{:., [], [nil, :plain]}]}
-      ]}    end
+                 {:buttonStyle, [], [{:., [], [nil, :plain]}]}
+               ]}    end
   end
 
   describe "error reporting" do
