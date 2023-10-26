@@ -1,7 +1,7 @@
 import Parsing
 
-public struct ImplicitStaticMember<MemberParser: Parser>: Parser
-    where MemberParser.Input == Substring.UTF8View
+public struct ImplicitStaticMember<Output, MemberParser: Parser>: Parser
+    where MemberParser.Input == Substring.UTF8View, MemberParser.Output == Output
 {
     let member: MemberParser
     
@@ -15,5 +15,11 @@ public struct ImplicitStaticMember<MemberParser: Parser>: Parser
         } member: {
             member
         }.map(\.member)
+    }
+}
+
+extension ImplicitStaticMember where MemberParser == EnumParser<Output> {
+    public init(_ cases: [String:Output]) {
+        self.member = EnumParser(cases)
     }
 }

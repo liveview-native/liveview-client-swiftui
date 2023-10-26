@@ -59,13 +59,24 @@ public protocol ParseableModifierValue {
     static func parser(in context: ParseableModifierContext) -> _ParserType
 }
 
-extension ParseableModifierValue where Self: CaseIterable & RawRepresentable<String>, Self._ParserType == OneOf<Substring.UTF8View, Self, Parsers.OneOfMany<Parsers.MapConstant<ConstantAtomLiteral, Self>>> {
-    public static func parser(in context: ParseableModifierContext) -> _ParserType {
+public struct EnumParser<T>: Parser {
+    let allCases: [String:T]
+    
+    public init(_ allCases: [String:T]) {
+        self.allCases = allCases
+    }
+    
+    public var body: some Parser<Substring.UTF8View, T> {
         OneOf {
-            for `case` in Self.allCases {
-                ConstantAtomLiteral(`case`.rawValue).map({ `case` })
+            for (key, value) in allCases {
+                ConstantAtomLiteral(key).map { value }
             }
         }
+    }
+}
+extension ParseableModifierValue where Self: CaseIterable & RawRepresentable<String>, Self._ParserType == EnumParser<Self> {
+    public static func parser(in context: ParseableModifierContext) -> _ParserType {
+        EnumParser(.init(uniqueKeysWithValues: Self.allCases.map({ ($0.rawValue, $0) })))
     }
 }
 
@@ -83,7 +94,12 @@ extension Int: ParseableModifierValue {
 
 extension Double: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        Parsers.FloatParser()
+        OneOf {
+            Parsers.FloatParser()
+            ImplicitStaticMember([
+                "infinity": .infinity
+            ])
+        }
     }
 }
 
@@ -167,6 +183,14 @@ extension Optional: ParseableModifierValue where Wrapped: ParseableModifierValue
             Wrapped.parser(in: context).map(Self.some)
             NilLiteral().map({ Self.none })
         }
+    }
+}
+
+public enum NilConstant: ParseableModifierValue {
+    case none
+    
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        NilLiteral().map({ Self.none })
     }
 }
 

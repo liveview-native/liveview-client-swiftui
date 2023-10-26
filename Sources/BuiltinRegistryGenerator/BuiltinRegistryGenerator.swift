@@ -40,6 +40,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "Rectangle": "Shape(shape: Rectangle())",
         "RenameButton": "RenameButton()",
         "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
+        "compiled-lvn-stylesheet": "CompiledLVNStylesheet<R>()",
     ]
     
     var platformFamilyName: String? {

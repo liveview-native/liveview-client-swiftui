@@ -15,10 +15,21 @@ struct Signature {
                 $0.requirement.as(ConformanceRequirementSyntax.self)?.leftType.as(IdentifierTypeSyntax.self)?.name.text == generic.name.text
             })?.requirement.as(ConformanceRequirementSyntax.self)?.rightType
             else { return nil }
-            return (
-                generic.name.text,
-                rightType
-            )
+            if rightType.as(MemberTypeSyntax.self)?.name.text == "RangeExpression",
+                let bound = decl.genericWhereClause?.requirements.first(where: {
+                    $0.requirement.as(SameTypeRequirementSyntax.self)?.leftType.as(MemberTypeSyntax.self)?.name.text == "Bound"
+                })?.requirement.as(SameTypeRequirementSyntax.self)
+            {
+                return (
+                    generic.name.text,
+                    TypeSyntax("ParseableRangeExpression<\(bound.rightType)>")
+                )
+            } else {
+                return (
+                    generic.name.text,
+                    rightType
+                )
+            }
         } ?? [])
         self.parameters = decl.signature.parameterClause.parameters.map({ FunctionParameterSyntax($0, generics: generics) })
         let caseParameters = parameters
@@ -146,10 +157,16 @@ extension FunctionParameterSyntax {
         } else if let genericBaseType {
             // Some generic types are replaced with concrete types
             if ["StringProtocol", "Equatable"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
+                // use `String`
                 self = parameter.with(\.type, TypeSyntax("String"))
             } else if ["BinaryInteger"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
+                // use `Int`
                 self = parameter.with(\.type, TypeSyntax("\(parameter.type.leadingTrivia)Int\(parameter.type.trailingTrivia)"))
+            } else if ["ParseableRangeExpression"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
+                // use the unmodified type name
+                self = parameter.with(\.type, genericBaseType)
             } else {
+                // add `Any*` prefix to erase
                 self = parameter.with(\.type, TypeSyntax("\(parameter.type.leadingTrivia)Any\(genericBaseType)\(parameter.type.trailingTrivia)")) // erase the generic
             }
         } else if let memberType = parameter.type.as(MemberTypeSyntax.self),

@@ -153,10 +153,13 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
         return classNames.split(separator: " ")
     }) private var classNames: [Substring]
     
+    @Environment(\.stylesheets) private var stylesheets
+    
     var body: some View {
+        let sheet = stylesheets[ObjectIdentifier(R.self)]
         return parent.applyModifiers(
-            classNames.reduce(into: []) {
-                $0.append(contentsOf: context.coordinator.session.stylesheet.classes[String($1)] ?? [])
+            classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
+                $0.append(contentsOf: (sheet?.classModifiers(String($1)) ?? []) as! [BuiltinRegistry<R>.BuiltinModifier])
             }
         )
     }
