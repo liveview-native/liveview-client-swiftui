@@ -351,7 +351,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         Expected ‘()’ or ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
          - a number, string, nil, boolean or :atom
          - an event eg ‘event(\"search-event\", throttle: 10_000)’
-         - an attribute eg attr(\"placeholder\")’
+         - an attribute eg ‘attr(\"placeholder\")’
          - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
          - a helper function eg ‘to_float(variable)’
@@ -451,7 +451,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         Expected one of the following:
          - a number, string, nil, boolean or :atom
          - an event eg ‘event("search-event", throttle: 10_000)’
-         - an attribute eg attr("placeholder")’
+         - an attribute eg ‘attr("placeholder")’
          - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
          - a helper function eg ‘to_float(variable)’
@@ -551,7 +551,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         Expected one of the following:
          - a number, string, nil, boolean or :atom
          - an event eg ‘event("search-event", throttle: 10_000)’
-         - an attribute eg attr("placeholder")’
+         - an attribute eg ‘attr("placeholder")’
          - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
          - a helper function eg ‘to_float(variable)’
@@ -579,7 +579,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           | ^^^^^
           |
 
-        ‘event’ can only be used as an argument to a modifier
+        ‘event’ can only be used as an argument to a modifier eg ‘searchable(change: event(\"search-event\", throttle: 10_000))’
         """
         |> String.trim()
 

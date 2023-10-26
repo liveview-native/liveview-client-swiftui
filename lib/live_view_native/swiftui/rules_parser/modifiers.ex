@@ -172,7 +172,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     },
     {
       parsec(:attr),
-      ~s'an attribute eg attr("placeholder")’'
+      ~s'an attribute eg ‘attr("placeholder")’'
     },
     {
       parsec(:ime),

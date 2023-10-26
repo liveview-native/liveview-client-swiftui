@@ -175,8 +175,16 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     )
   end
 
+  def modifier_name_error("event") do
+    ~s'‘event’ can only be used as an argument to a modifier eg ‘searchable(change: event("search-event", throttle: 10_000))’'
+  end
+
+  def modifier_name_error("attr") do
+    ~s'‘attr’ can only be used as an argument to a modifier eg ‘attr("placeholder")’'
+  end
+
   def modifier_name_error(matched) do
-    "‘#{matched}’ can only be used as an argument to a modifier"
+    ~s'‘#{matched}’ can only be used as an argument to a modifier'
   end
 
   def type_name() do
