@@ -253,7 +253,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
 
       input = "foo(\"a\"..<\"z\")"
-      output = {:foo, [], [{:..., [], ["a", "z"]}]}
+      output = {:foo, [], [{:"..<", [], ["a", "z"]}]}
 
       assert parse(input) == output
     end
@@ -270,7 +270,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
 
       input = "foo(..<\"z\")"
-      output = {:foo, [], [{:..., [], [nil, "z"]}]}
+      output = {:foo, [], [{:"..<", [], [nil, "z"]}]}
 
       assert parse(input) == output
     end
