@@ -649,6 +649,29 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert String.trim(error.description) == error_prefix
     end
 
+    test "invalid keyword list: missing closing brace" do
+      input = "abc(def: 11, b: [lineWidth: 1)"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | abc(def: 11, b: [lineWidth: 1)
+          |                              ^
+          |
+
+        expected ‘]’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
     test "unexpected trailing character" do
       input = "font(.largeTitle) {"
 
