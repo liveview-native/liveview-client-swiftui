@@ -108,7 +108,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert parse(input) == output
     end
-    
+
 
     test "parses multiple modifiers" do
       input = "font(.largeTitle) bold(true) italic(true)"
@@ -446,8 +446,8 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         """
         Unsupported input:
           |
-        1 | blue_
-          |
+        1 | blue‎
+          |     ^
           |
 
         Expected ‘()’ or ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
@@ -527,7 +527,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |          ^
           |
 
-        expected ‘)’
+        Invalid suffix on number
         """
         |> String.trim()
 
@@ -535,7 +535,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "invalid keyword pair: missing colon" do
-      input = "abc(def: 11, b: [lineWidth a, l: 2a]"
+      input = "abc(def: 11, b: [lineWidth a, l: 2a])"
 
       error =
         assert_raise SyntaxError, fn ->
@@ -546,19 +546,34 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         """
         Unsupported input:
           |
-        1 | abc(def: 11, b: [lineWidth a, l: 2a]
-          |                 ^^^^^^^^^^
+        1 | abc(def: 11, b: [lineWidth‎ a, l: 2a])
+          |                           ^
           |
 
-        Expected one of the following:
-         - a number, string, nil, boolean or :atom
-         - an event eg ‘event("search-event", throttle: 10_000)’
-         - an attribute eg ‘attr("placeholder")’
-         - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
-         - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
-         - a helper function eg ‘to_float(variable)’
-         - a modifier eg ‘bold()’
-         - a variable defined in the class header eg ‘color_name’
+        expected ‘:’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid keyword pair: double nesting" do
+      input = "abc(def: 11, b: lineWidth: a, l: 2a]"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | abc(def: 11, b: lineWidth: a, l: 2a]
+          |                          ^
+          |
+
+        expected ‘)’
         """
         |> String.trim()
 
@@ -581,7 +596,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |                              ^^^^^^^^^
           |
 
-        expected ‘]’
+        Invalid suffix on number
         """
         |> String.trim()
 
@@ -605,6 +620,52 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |
 
         Expected an atom, but got ‘1’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid keyword pair: invalid value (3)" do
+      input = "abc(def: 11, b: :1)"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | abc(def: 11, b: :1)
+          |                  ^
+          |
+
+        Expected an atom, but got ‘1’
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "invalid keyword list: missing closing brace" do
+      input = "abc(def: 11, b: [lineWidth: 1)"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | abc(def: 11, b: [lineWidth: 1)
+          |                              ^
+          |
+
+        expected ‘]’
         """
         |> String.trim()
 

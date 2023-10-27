@@ -45,7 +45,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser do
     )
   end
 
-  def expected(combinator \\ empty(), combinator_2, opts) do
+  def expect(combinator \\ empty(), combinator_2, opts) do
     error_parser = Keyword.get(opts, :error_parser, non_whitespace())
     error_message = Keyword.get(opts, :error_message)
     generate_error? = Keyword.get(opts, :generate_error?, true)

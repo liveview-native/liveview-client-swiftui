@@ -82,21 +82,20 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
 
     before = String.slice(context.source, 0, max(0, byte_offset - error_text_length))
     middle = String.slice(context.source, byte_offset - error_text_length, error_text_length)
-    middle = if(middle == " ", do: "_", else: middle)
-    # middle = if(middle == "", do: "▮", else: middle)
+    invisible_char = "‎"
+
+    middle = if(middle == "", do: invisible_char, else: middle)
     after_ = String.slice(context.source, byte_offset..-1//1)
 
     source_lines =
       [
         before,
-        IO.ANSI.format([:red, middle]),
-        case {after_, middle} do
-          {"", ""} ->
-            IO.ANSI.format([:red, "_"])
-
-          _ ->
-            after_
-        end
+        if middle == invisible_char do
+          IO.ANSI.format([:red_background, middle])
+        else
+          IO.ANSI.format([:red, middle])
+        end,
+        after_
       ]
       |> IO.iodata_to_binary()
       |> String.split("\n")
@@ -106,7 +105,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
     error_lines =
       [
         String.replace(before, ~r/([^\n])/, " "),
-        IO.ANSI.format([:red, String.replace(middle, ~r/[^\n]/, "^")]),
+        middle
+        |> String.replace(invisible_char, "^")
+        |> String.replace(~r/[^\n]/, "^")
+        |> then(&IO.ANSI.format([:red, &1])),
         String.replace(after_, ~r/([^\n])/, " ")
       ]
       |> IO.iodata_to_binary()
