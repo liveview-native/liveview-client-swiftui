@@ -3,9 +3,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
   import LiveViewNative.SwiftUI.RulesParser.Parser
   alias LiveViewNative.SwiftUI.RulesParser.PostProcessors
 
-  #
-  # Literals
-  #
+  def comment() do
+    ignore_whitespace()
+    |> string("#")
+    |> concat(repeat_until(utf8_char([]), [?\n]))
+    |> ignore()
+  end
 
   def boolean() do
     choice([
