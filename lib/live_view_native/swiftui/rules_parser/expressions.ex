@@ -65,7 +65,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
 
   def key_value_pair(opts \\ []) do
     colon =
-      if opts[:generate_error?] || false do
+      if opts[:generate_error?] do
         # require that the colon be provided
         expect(ignore(string(":")), error_message: "expected ‘:’")
       else
