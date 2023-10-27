@@ -32,9 +32,9 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
   # Collections
   #
 
-  def comma_separated_list(start \\ empty(), elem_combinator, opts \\ []) do
+  def comma_separated_list(elem_combinator, opts \\ []) do
     delimiter_separated_list(
-      start,
+      empty(),
       elem_combinator,
       ",",
       Keyword.merge([allow_empty?: true], opts)
@@ -66,10 +66,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
   def key_value_pair(opts \\ []) do
     key =
       if opts[:generate_error?] || false do
+        # require that the colon be provided
         concat(
           word(),
-          ignore(string(":"))
-          |> expect(error_message: "expected ‘:’")
+          expect(ignore(string(":")), error_message: "expected ‘:’")
         )
       else
         concat(word(), ignore(string(":")))
@@ -85,8 +85,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
   end
 
   def key_value_pairs(opts \\ []) do
-    empty()
-    |> comma_separated_list(key_value_pair(opts), opts)
-    |> wrap()
+    wrap(comma_separated_list(key_value_pair(opts), opts))
   end
 end

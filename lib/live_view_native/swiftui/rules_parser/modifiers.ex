@@ -34,7 +34,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
         error_message:
           """
           Expected ‘()’ or ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
-          #{label_from_named_choices(@modifier_arguments.([]))}
+          #{label_from_named_choices(@modifier_arguments.(false))}
           """
           |> String.trim()
       )
@@ -163,8 +163,13 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> post_traverse({PostProcessors, :event_to_ast, []})
   )
 
-  @modifier_arguments fn opts ->
+  @modifier_arguments fn inside_key_value_pair? ->
     [
+      {
+        parsec(:key_value_list),
+        ~s'a keyword list eg ‘[style: :dashed]’, ‘[size: 12]’ or ‘[lineWidth: lineWidth]’',
+        inside_key_value_pair?
+      },
       {
         literal(error_parser: empty(), generate_error?: false),
         ~s'a number, string, nil, boolean or :atom'
@@ -184,7 +189,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       {
         key_value_pairs(generate_error?: false, allow_empty?: false),
         ~s'a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’',
-        not Keyword.get(opts, :exclude_key_value_pairs, false)
+        not inside_key_value_pair?
       },
       {
         parsec(:helper_function),
@@ -209,18 +214,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   defcombinator(
     :key_value_pairs_arguments,
     one_of(
-      [
-        {parsec(:key_value_list),
-         ~s'a keyword list eg ‘[style: :dashed]’, ‘[size: 12]’ or ‘[lineWidth: lineWidth]’'}
-        | @modifier_arguments.(exclude_key_value_pairs: true)
-      ],
+      @modifier_arguments.(true),
       error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
     )
   )
 
   defcombinator(
     :modifier_argument,
-    one_of(@modifier_arguments.([]),
+    one_of(@modifier_arguments.(false),
       error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
     )
   )
@@ -228,13 +229,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   defcombinator(
     :modifier_arguments,
     comma_separated_list(
-      empty(),
       parsec(:modifier_argument),
       allow_empty?: false,
       error_message:
         """
         Expected ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
-        #{label_from_named_choices(@modifier_arguments.([]))}
+        #{label_from_named_choices(@modifier_arguments.(false))}
         """
         |> String.trim(),
       error_parser: non_whitespace(also_ignore: String.to_charlist(")]"))

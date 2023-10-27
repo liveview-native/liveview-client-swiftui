@@ -53,11 +53,11 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     choice([float(), int()])
     |> expect(
       ignore_whitespace()
-      |> utf8_char(String.to_charlist(",)]"))
+      |> utf8_char(String.to_charlist(".,)]"))
       |> ignore()
       |> lookahead(),
       error_message: "Invalid suffix on number",
-      error_parser: non_whitespace(also_ignore: String.to_charlist(",)]"))
+      error_parser: non_whitespace(also_ignore: String.to_charlist(".,)]"))
     )
   end
 
