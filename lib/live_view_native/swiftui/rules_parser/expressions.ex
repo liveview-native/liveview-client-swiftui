@@ -64,17 +64,15 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
   end
 
   def key_value_pair(opts \\ []) do
-    key =
+    colon =
       if opts[:generate_error?] || false do
         # require that the colon be provided
-        concat(
-          word(),
-          expect(ignore(string(":")), error_message: "expected ‘:’")
-        )
+        expect(ignore(string(":")), error_message: "expected ‘:’")
       else
-        concat(word(), ignore(string(":")))
+        ignore(string(":"))
       end
 
+    key = concat(word(), colon)
     value = parsec(:key_value_pairs_arguments)
 
     ignore_whitespace()
