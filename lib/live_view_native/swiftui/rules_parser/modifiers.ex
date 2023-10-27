@@ -8,7 +8,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
 
   defcombinator(
     :key_value_list,
-    enclosed("[", key_value_pairs(generate_error?: false, allow_empty?: false), "]",
+    enclosed("[", key_value_pairs(generate_error?: true, allow_empty?: false), "]",
       allow_empty?: false,
       error_parser: non_whitespace(also_ignore: String.to_charlist(")],"))
     )
@@ -30,11 +30,11 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     if is_nested do
       combinator
     else
-      expected(combinator,
+      expect(combinator,
         error_message:
           """
           Expected ‘()’ or ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
-          #{label_from_named_choices(@modifier_arguments)}
+          #{label_from_named_choices(@modifier_arguments.(false))}
           """
           |> String.trim()
       )
@@ -116,7 +116,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> string("attr")
     |> enclosed(
       "(",
-      expected(
+      expect(
         double_quoted_string(),
         error_message: "‘attr’ expects a string argument",
         error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
@@ -128,7 +128,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   )
 
   event_arg_1 =
-    expected(
+    expect(
       double_quoted_string(),
       error_message: "‘event’ expects a string as the first argument",
       error_parser: optional(non_whitespace(also_ignore: String.to_charlist(")],")))
@@ -139,7 +139,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> ignore(string(","))
     |> ignore_whitespace()
     |> concat(
-      expected(
+      expect(
         choice([
           ignore(enclosed("[", ignore_whitespace(), "]", [])),
           parsec(:key_value_list),
@@ -163,53 +163,78 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> post_traverse({PostProcessors, :event_to_ast, []})
   )
 
-  @modifier_arguments [
-    {
-      literal(error_parser: empty(), generate_error?: false),
-      ~s'a number, string, nil, boolean or :atom'
-    },
-    {
-      parsec(:event),
-      ~s'an event eg ‘event("search-event", throttle: 10_000)’'
-    },
-    {
-      parsec(:attr),
-      ~s'an attribute eg ‘attr("placeholder")’'
-    },
-    {
-      parsec(:ime),
-      ~s'an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’'
-    },
-    {
-      key_value_pairs(generate_error?: false, allow_empty?: false),
-      ~s'a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’'
-    },
-    {
-      parsec(:helper_function),
-      ~s'a helper function eg ‘to_float(variable)’'
-    },
-    {
-      frozen(parsec(:nested_modifier)),
-      "a modifier eg ‘bold()’"
-    },
-    {
-      variable(generate_error?: false),
-      ~s'a variable defined in the class header eg ‘color_name’'
-    }
-  ]
+  @modifier_arguments fn inside_key_value_pair? ->
+    [
+      {
+        parsec(:key_value_list),
+        ~s'a keyword list eg ‘[style: :dashed]’, ‘[size: 12]’ or ‘[lineWidth: lineWidth]’',
+        inside_key_value_pair?
+      },
+      {
+        literal(error_parser: empty(), generate_error?: false),
+        ~s'a number, string, nil, boolean or :atom'
+      },
+      {
+        parsec(:event),
+        ~s'an event eg ‘event("search-event", throttle: 10_000)’'
+      },
+      {
+        parsec(:attr),
+        ~s'an attribute eg ‘attr("placeholder")’'
+      },
+      {
+        parsec(:ime),
+        ~s'an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’'
+      },
+      {
+        key_value_pairs(generate_error?: false, allow_empty?: false),
+        ~s'a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’',
+        not inside_key_value_pair?
+      },
+      {
+        parsec(:helper_function),
+        ~s'a helper function eg ‘to_float(variable)’'
+      },
+      {
+        frozen(parsec(:nested_modifier)),
+        "a modifier eg ‘bold()’"
+      },
+      {
+        variable(generate_error?: false),
+        ~s'a variable defined in the class header eg ‘color_name’'
+      }
+    ]
+    |> Enum.flat_map(fn
+      {combinator, description} -> [{combinator, description}]
+      {combinator, description, true} -> [{combinator, description}]
+      {_, _, false} -> []
+    end)
+  end
+
+  defcombinator(
+    :key_value_pairs_arguments,
+    one_of(
+      @modifier_arguments.(true),
+      error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
+    )
+  )
+
+  defcombinator(
+    :modifier_argument,
+    one_of(@modifier_arguments.(false),
+      error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
+    )
+  )
 
   defcombinator(
     :modifier_arguments,
-    empty()
-    |> comma_separated_list(
-      one_of(@modifier_arguments,
-        error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
-      ),
+    comma_separated_list(
+      parsec(:modifier_argument),
       allow_empty?: false,
       error_message:
         """
         Expected ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
-        #{label_from_named_choices(@modifier_arguments)}
+        #{label_from_named_choices(@modifier_arguments.(false))}
         """
         |> String.trim(),
       error_parser: non_whitespace(also_ignore: String.to_charlist(")]"))
