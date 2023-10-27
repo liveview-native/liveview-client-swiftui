@@ -8,7 +8,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
     allow_empty? = Keyword.get(opts, :allow_empty?, true)
 
     close =
-      expected(
+      expect(
         ignore(string(close)),
         error_message: "expected ‘#{close}’",
         error_parser: optional(non_whitespace(also_ignore: String.to_charlist(close)))
@@ -32,9 +32,9 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
   # Collections
   #
 
-  def comma_separated_list(start \\ empty(), elem_combinator, opts \\ []) do
+  def comma_separated_list(elem_combinator, opts \\ []) do
     delimiter_separated_list(
-      start,
+      empty(),
       elem_combinator,
       ",",
       Keyword.merge([allow_empty?: true], opts)
@@ -63,27 +63,17 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
     end
   end
 
-  def key_value_children(generate_error?) do
-    [
-      {literal(error_parser: empty(), generate_error?: generate_error?),
-       ~s'a number, string, nil, boolean or atom'},
-      {parsec(:key_value_list),
-       ~s'a keyword list eg ‘[style: :dashed]’, ‘[size: 12]’ or ‘[lineWidth: lineWidth]’'},
-      {parsec(:ime), ~s'an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’'},
-      {parsec(:modifier_arguments), ~s'a modifier eg ‘foo(bar())’'},
-      {variable(generate_error?: generate_error?),
-       ~s|a variable defined in the class header eg ‘color_name’|}
-    ]
-  end
+  def key_value_pair(opts \\ []) do
+    colon =
+      if opts[:generate_error?] do
+        # require that the colon be provided
+        expect(ignore(string(":")), error_message: "expected ‘:’")
+      else
+        ignore(string(":"))
+      end
 
-  def key_value_pair() do
-    key = concat(word(), ignore(string(":")))
-
-    value =
-      one_of(
-        key_value_children(false),
-        error_parser: non_whitespace(also_ignore: String.to_charlist(")],"))
-      )
+    key = concat(word(), colon)
+    value = parsec(:key_value_pairs_arguments)
 
     ignore_whitespace()
     |> concat(key)
@@ -93,9 +83,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
   end
 
   def key_value_pairs(opts \\ []) do
-    empty()
-    |> comma_separated_list(key_value_pair(), opts)
-    |> wrap()
+    wrap(comma_separated_list(key_value_pair(opts), opts))
   end
-
 end
