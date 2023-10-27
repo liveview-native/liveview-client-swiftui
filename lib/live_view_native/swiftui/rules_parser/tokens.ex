@@ -51,6 +51,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
 
   def number() do
     choice([float(), int()])
+    |> expect(
+      ignore_whitespace()
+      |> utf8_char(String.to_charlist(",)]"))
+      |> ignore()
+      |> lookahead(),
+      error_message: "Invalid suffix on number",
+      error_parser: non_whitespace(also_ignore: String.to_charlist(",)]"))
+    )
   end
 
   def atom() do
@@ -60,7 +68,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
         double_quoted_string(),
         variable_name()
       ])
-      |> expected(
+      |> expect(
         error_message: "Expected an atom",
         error_parser:
           choice([
@@ -147,7 +155,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
   def variable(opts \\ []) do
     variable_name()
     |> post_traverse({PostProcessors, :to_elixir_variable_ast, []})
-    |> expected(
+    |> expect(
       Keyword.merge(
         opts,
         error_message: "expected a variable"
@@ -159,7 +167,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     ascii_string([?a..?z, ?A..?Z, ?_], 1)
     |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
     |> reduce({Enum, :join, [""]})
-    |> expected(
+    |> expect(
       error_message: "Expected a modifier name",
       error_parser:
         choice([
@@ -191,7 +199,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     ascii_string([?A..?Z], 1)
     |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
     |> reduce({Enum, :join, [""]})
-    |> expected(
+    |> expect(
       error_message: "Expected a type name",
       error_parser:
         choice([

@@ -45,7 +45,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
       {:ok, output, _unconsumed = "", _context, _current_line_and_offset, _} ->
         output
 
-      {:error, message, _unconsumed, _context, {line, _}, _} ->
+      {:error, message, _unconsumed, _context, {line, column}, _} ->
         raise SyntaxError,
           description: message,
           file: file,
