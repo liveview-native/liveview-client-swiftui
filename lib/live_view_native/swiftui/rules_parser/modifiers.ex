@@ -236,7 +236,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   defparsec(
     :modifiers,
     start()
-    |> repeat(parsec(:modifier))
+    |> repeat(
+      choice([
+        comment(),
+        parsec(:modifier)
+      ])
+    )
     |> ignore_whitespace()
     |> eos(),
     export_combinator: true
