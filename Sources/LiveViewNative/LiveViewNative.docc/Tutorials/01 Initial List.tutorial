@@ -140,7 +140,7 @@
             }
             
             @Step {
-                Add a new Swift package dependency by selecting File -> Add Packages…, and in the search field, enter `https://github.com/liveviewnative/liveview-client-swiftui`, and click Add Package.
+                Add a new Swift package dependency by selecting File -> Add Packages…, and in the search field, enter `https://github.com/liveview-native/liveview-client-swiftui`, and click Add Package.
                 
                 Xcode may prompt you to sign in with GitHub. If so, follow its instructions to login and create an access token.
                 

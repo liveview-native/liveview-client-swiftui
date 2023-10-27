@@ -3,7 +3,7 @@
     {
       "identity" : "liveview-native-core-swift",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/liveviewnative/liveview-native-core-swift.git",
+      "location" : "https://github.com/liveview-native/liveview-native-core-swift.git",
       "state" : {
         "revision" : "b6a24652b35acd534fa437cb4cf4654fcb33828f",
         "version" : "0.1.0-7500ce9"

@@ -22,7 +22,7 @@ let package = Package(
         .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.3.2"),
         .package(url: "https://github.com/davidstump/SwiftPhoenixClient.git", .upToNextMinor(from: "5.0.0")),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "0.1.0"),
-        .package(url: "https://github.com/liveviewnative/liveview-native-core-swift.git", exact: "0.1.0-7500ce9"),
+        .package(url: "https://github.com/liveview-native/liveview-native-core-swift.git", exact: "0.1.0-7500ce9"),
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.2"),
         .package(url: "https://github.com/apple/swift-markdown.git", from: "0.2.0"),
