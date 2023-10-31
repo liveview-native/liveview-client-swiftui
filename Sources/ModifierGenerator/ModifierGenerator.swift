@@ -240,6 +240,7 @@ struct ModifierGenerator: ParsableCommand {
         "onCopyCommand",
         "accessibilityElement",
         "listSectionSeparatorTint",
+        "popover",
 
         // fixme: variadic enum cases
         "toolbarBackground",
@@ -332,8 +333,7 @@ struct ModifierGenerator: ParsableCommand {
 
         extension BuiltinRegistry {
             enum BuiltinModifier: ViewModifier, ParseableModifierValue {
-                \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
-                \#(Self.extraModifierTypes.map({ "case \($0)(\($0))" }).joined(separator: "\n"))
+                let storage: any ViewModifier
                 
                 func body(content: Content) -> some View {
                     switch self {
@@ -386,7 +386,9 @@ struct ModifierGenerator: ParsableCommand {
     func isValid(_ signature: FunctionDeclSyntax) -> Bool {
         for parameter in signature.signature.parameterClause.parameters {
             // ViewBuilder closures with arguments cannot be used.
-            if parameter.isViewBuilder && parameter.type.as(FunctionTypeSyntax.self)?.parameters.count != 0 {
+            if parameter.isViewBuilder
+                && (parameter.type.as(FunctionTypeSyntax.self) ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self))?.parameters.count != 0
+            {
                 return false
             }
         }

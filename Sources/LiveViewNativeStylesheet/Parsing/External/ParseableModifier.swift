@@ -68,7 +68,7 @@ public struct EnumParser<T>: Parser {
     
     public var body: some Parser<Substring.UTF8View, T> {
         OneOf {
-            for (key, value) in allCases {
+            for (key, value) in allCases.sorted(by: { $0.key.count > $1.key.count }) {
                 ConstantAtomLiteral(key).map { value }
             }
         }

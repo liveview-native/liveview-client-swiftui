@@ -74,22 +74,6 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                 return false
             }
         }
-           
-        // All labelled arguments must be optional.
-//        for labelledArgument in parameters where labelledArgument.firstName.tokenKind != .wildcard {
-//            guard labelledArgument.type.is(OptionalTypeSyntax.self) else {
-//                context.diagnose(Diagnostic(
-//                    node: Syntax(labelledArgument.type),
-//                    message: SignatureError.RequiredLabelledArgument(),
-//                    fixIt: .replace(
-//                        message: SignatureError.RequiredLabelledArgument.FixIt(),
-//                        oldNode: labelledArgument.type,
-//                        newNode: OptionalTypeSyntax(wrappedType: labelledArgument.type)
-//                    )
-//                ))
-//                return false
-//            }
-//        }
         return true
     }
     

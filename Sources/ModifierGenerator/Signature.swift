@@ -153,7 +153,9 @@ extension FunctionParameterSyntax {
                     && functionType.returnClause.type.as(MemberTypeSyntax.self)?.name.text == "Void"
         {
             // Closures are replaced with `Event`
-            self = parameter.with(\.type, TypeSyntax("Event")).with(\.defaultValue, nil)
+            self = parameter
+                .with(\.type, TypeSyntax("Event"))
+                .with(\.defaultValue, parameter.type.is(OptionalTypeSyntax.self) ? InitializerClauseSyntax(value: ExprSyntax("Event()")) : nil)
         } else if let genericBaseType {
             // Some generic types are replaced with concrete types
             if ["StringProtocol", "Equatable"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
