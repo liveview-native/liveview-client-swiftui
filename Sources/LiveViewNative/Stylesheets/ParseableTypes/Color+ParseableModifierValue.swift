@@ -24,7 +24,7 @@ extension SwiftUI.Color: ParseableModifierValue {
     
     @ParseableExpression
     struct NamedColor {
-        static let name = "init"
+        static let name = "Color"
         
         let name: String
         
@@ -35,24 +35,26 @@ extension SwiftUI.Color: ParseableModifierValue {
     
     static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
-            ConstantAtomLiteral("red").map({ .red })
-            ConstantAtomLiteral("orange").map({ .orange })
-            ConstantAtomLiteral("yellow").map({ .yellow })
-            ConstantAtomLiteral("green").map({ .green })
-            ConstantAtomLiteral("mint").map({ .mint })
-            ConstantAtomLiteral("teal").map({ .teal })
-            ConstantAtomLiteral("cyan").map({ .cyan })
-            ConstantAtomLiteral("blue").map({ .blue })
-            ConstantAtomLiteral("indigo").map({ .indigo })
-            ConstantAtomLiteral("purple").map({ .purple })
-            ConstantAtomLiteral("pink").map({ .pink })
-            ConstantAtomLiteral("brown").map({ .brown })
-            ConstantAtomLiteral("white").map({ .white })
-            ConstantAtomLiteral("gray").map({ .gray })
-            ConstantAtomLiteral("black").map({ .black })
-            ConstantAtomLiteral("clear").map({ .clear })
-            ConstantAtomLiteral("primary").map({ .primary })
-            ConstantAtomLiteral("secondary").map({ .secondary })
+            ImplicitStaticMember([
+                "red": .red,
+                "orange": .orange,
+                "yellow": .yellow,
+                "green": .green,
+                "mint": .mint,
+                "teal": .teal,
+                "cyan": .cyan,
+                "blue": .blue,
+                "indigo": .indigo,
+                "purple": .purple,
+                "pink": .pink,
+                "brown": .brown,
+                "white": .white,
+                "gray": .gray,
+                "black": .black,
+                "clear": .clear,
+                "primary": .primary,
+                "secondary": .secondary,
+            ])
             
             NamedColor.parser(in: context).map({ Self.init($0.name, bundle: nil) })
         }

@@ -11,13 +11,6 @@ import LiveViewNativeCore
 
 extension ChangeTracked: ParseableModifierValue where Value: AttributeDecodable {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ASTNode("__attr__") {
-            String.parser(in: context)
-        }
-        .map { (meta, value) in
-            return Self.init(attribute: AttributeName(rawValue: value)!)
-        }
+        AttributeName.parser(in: context).map({ Self.init(attribute: $0) })
     }
-    
-    // {:__attr__, [], \"test-value\"}
 }

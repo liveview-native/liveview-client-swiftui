@@ -11,7 +11,7 @@ import LiveViewNativeCore
 struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: ParseableModifierValue {
     enum Storage {
         case constant(Value)
-        case reference(String)
+        case reference(AttributeName)
     }
     
     let storage: Storage
@@ -19,10 +19,7 @@ struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: P
     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             Value.parser(in: context).map(Storage.constant)
-            ASTNode("__attr__") {
-                String.parser(in: context)
-            }
-            .map({ Storage.reference($1) })
+            AttributeName.parser(in: context).map(Storage.reference)
         }
         .map(Self.init)
     }
@@ -32,7 +29,16 @@ struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: P
         case .constant(let value):
             return value
         case .reference(let name):
-            return try! element.attributeValue(Value.self, for: AttributeName(rawValue: name)!)
+            return try! element.attributeValue(Value.self, for: name)
         }
+    }
+}
+
+extension AttributeName: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ASTNode("__attr__") {
+            String.parser(in: context)
+        }
+        .map({ Self.init(rawValue: $1)! })
     }
 }
