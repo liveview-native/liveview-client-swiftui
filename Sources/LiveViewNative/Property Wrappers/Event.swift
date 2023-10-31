@@ -164,6 +164,17 @@ public struct Event: DynamicProperty, Decodable {
         self.params = nil
     }
     
+    /// Create a `nil` event.
+    public init() {
+        self.event = nil
+        self.name = nil
+        self.type = "click"
+        self.target = nil
+        self.debounce = nil
+        self.throttle = nil
+        self.params = nil
+    }
+    
     /// Create an event reference as an argument to a modifier.
     ///
     /// For simple events, pass a string value.

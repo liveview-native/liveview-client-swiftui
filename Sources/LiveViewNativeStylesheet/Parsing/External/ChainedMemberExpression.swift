@@ -12,36 +12,39 @@ where BaseParser.Input == Substring.UTF8View, MemberParser.Input == Substring.UT
     }
     
     public var body: some Parser<Substring.UTF8View, (base: BaseParser.Output, members: [MemberParser.Output])> {
-        ASTNode(".") {
-            "[".utf8
-            Whitespace()
-            OneOf {
-                Parse {
-                    base
-                    Whitespace()
-                    ",".utf8
-                    Whitespace()
-                    OneOf {
-                        member.map({ [$0] })
-                        _MemberParser(member: member)
+        OneOf {
+            ASTNode(".") {
+                "[".utf8
+                Whitespace()
+                OneOf {
+                    Parse {
+                        base
+                        Whitespace()
+                        ",".utf8
+                        Whitespace()
+                        OneOf {
+                            member.map({ [$0] })
+                            _MemberParser(member: member)
+                        }
+                    }
+                    .map({ (base: $0.0, members: $0.1) })
+                    Parse {
+                        NilLiteral()
+                        Whitespace()
+                        ",".utf8
+                        Whitespace()
+                        OneOf {
+                            base.map({ (base: $0, members: [MemberParser.Output]()) })
+                            self
+                        }
                     }
                 }
-                .map({ (base: $0.0, members: $0.1) })
-                Parse {
-                    NilLiteral()
-                    Whitespace()
-                    ",".utf8
-                    Whitespace()
-                    OneOf {
-                        base.map({ (base: $0, members: [MemberParser.Output]()) })
-                        self
-                    }
-                }
+                Whitespace()
+                "]".utf8
             }
-            Whitespace()
-            "]".utf8
+            .map(\.value)
+            base.map({ (base: $0, members: []) })
         }
-        .map(\.value)
     }
     
     struct _MemberParser: Parser {
