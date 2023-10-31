@@ -37,12 +37,24 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
     #endif
     @Attribute("stroke-color") private var strokeColor: SwiftUI.Color? = nil
     
+    @Environment(\.shapeModifiers) private var shapeModifiers: [any ShapeModifier]
+    @Environment(\.shapeFinalizerModifier) private var shapeFinalizerModifier: (any ShapeFinalizerModifier)?
+    
     init(shape: S) {
         self.shape = shape
     }
     
     var body: some View {
-        if let fillColor {
+        let shape = shapeModifiers.reduce(into: shape as (any SwiftUI.Shape)) { result, modifier in
+            func _unbox(_ shape: some SwiftUI.Shape) -> any SwiftUI.Shape {
+                return modifier.apply(to: shape)
+            }
+            result = _unbox(result)
+        }.erasedToAnyShape()
+        
+        if let shapeFinalizerModifier {
+            AnyView(shapeFinalizerModifier.apply(to: shape))
+        } else if let fillColor {
             shape.fill(fillColor)
         } else if let strokeColor {
             shape.stroke(strokeColor)

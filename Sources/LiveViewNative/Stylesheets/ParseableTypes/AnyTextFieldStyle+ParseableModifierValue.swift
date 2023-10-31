@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 enum AnyTextFieldStyle: String, CaseIterable, ParseableModifierValue, TextFieldStyle {
-    typealias _ParserType = EnumParser<Self>
+    typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
     case automatic
     #if os(iOS) || os(macOS)

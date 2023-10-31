@@ -1,9 +1,14 @@
 import Parsing
 
-struct AtomLiteral: Parser {
-    var body: some Parser<Substring.UTF8View, String> {
+public struct AtomLiteral: Parser {
+    public init() {}
+    
+    public var body: some Parser<Substring.UTF8View, String> {
         ":".utf8
-        Identifier()
+        OneOf {
+            StringLiteral()
+            Identifier()
+        }
     }
 }
 
@@ -16,6 +21,13 @@ public struct ConstantAtomLiteral: Parser {
     
     public var body: some Parser<Substring.UTF8View, ()> {
         ":".utf8
-        value.utf8
+        OneOf {
+            value.utf8
+            Parse {
+                "\"".utf8
+                value.utf8
+                "\"".utf8
+            }
+        }
     }
 }

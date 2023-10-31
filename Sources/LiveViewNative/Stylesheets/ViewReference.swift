@@ -12,6 +12,9 @@ struct ViewReference: ParseableModifierValue {
 
     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
+            AtomLiteral().map({
+                Self.init(value: [$0])
+            })
             String.parser(in: context).map({ Self.init(value: [$0]) })
             Array<String>.parser(in: context).map(Self.init(value:))
         }

@@ -12,13 +12,11 @@ struct CompiledLVNStylesheet<R: RootRegistry>: View {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
-    @Attribute("body") private var stylesheet: String
+    @Attribute("body") private var stylesheet: Stylesheet<R>
     
     var body: some View {
         context.buildChildren(of: element)
             .transformEnvironment(\.stylesheets) { stylesheets in
-                print(stylesheet)
-                guard let stylesheet = try? Stylesheet<R>(from: stylesheet, in: .init()) else { return }
                 let id = ObjectIdentifier(R.self)
                 if let previousValue = stylesheets[id] {
                     stylesheets[id] = (previousValue as! Stylesheet<R>).merge(with: stylesheet)

@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 enum AnyPrimitiveButtonStyle: String, CaseIterable, ParseableModifierValue, PrimitiveButtonStyle {
-    typealias _ParserType = EnumParser<Self>
+    typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
     case automatic
     case borderless
@@ -35,7 +35,7 @@ enum AnyPrimitiveButtonStyle: String, CaseIterable, ParseableModifierValue, Prim
 }
 
 enum AnyButtonStyle: String, CaseIterable, ParseableModifierValue, ButtonStyle {
-    typealias _ParserType = EnumParser<Self>
+    typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
     case __never
     

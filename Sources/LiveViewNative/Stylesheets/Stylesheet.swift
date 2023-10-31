@@ -17,6 +17,8 @@ struct Stylesheet<R: RootRegistry> {
     }
     
     init(from data: String, in context: ParseableModifierContext) throws {
+        print("=== STYLESHEET ===")
+        print(data)
         self.classes = try StylesheetParser<BuiltinRegistry<R>.BuiltinModifier>(context: context).parse(data.utf8)
     }
 }

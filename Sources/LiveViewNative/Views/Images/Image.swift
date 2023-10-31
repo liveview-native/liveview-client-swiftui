@@ -107,6 +107,7 @@ struct Image<R: RootRegistry>: View {
                     return SwiftUI.Image(name, label: label)
                 } else {
                     return SwiftUI.Image(name)
+                        .resizable(resizingMode: .stretch)
                 }
             }
         } else {
