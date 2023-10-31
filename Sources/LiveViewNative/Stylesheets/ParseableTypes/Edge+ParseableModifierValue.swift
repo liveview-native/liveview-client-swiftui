@@ -10,14 +10,12 @@ import LiveViewNativeStylesheet
 
 extension Edge: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ImplicitStaticMember {
-            OneOf {
-                ConstantAtomLiteral("top").map({ Self.top })
-                ConstantAtomLiteral("bottom").map({ Self.bottom })
-                ConstantAtomLiteral("leading").map({ Self.leading })
-                ConstantAtomLiteral("trailing").map({ Self.trailing })
-            }
-        }
+        ImplicitStaticMember([
+            "top": .top,
+            "bottom": .bottom,
+            "leading": .leading,
+            "trailing": .trailing,
+        ])
     }
 }
 
@@ -26,15 +24,13 @@ extension Edge.Set: ParseableModifierValue {
         OneOf {
             Edge.parser(in: context).map({ Self.init($0) })
             Array<Edge>.parser(in: context).map({
-                $0.reduce(into: Edge.Set()) { $0.insert(.init($1)) }
+                $0.reduce(into: Self()) { $0.insert(.init($1)) }
             })
-            ImplicitStaticMember {
-                OneOf {
-                    ConstantAtomLiteral("all").map({ Self.all })
-                    ConstantAtomLiteral("horizontal").map({ Self.horizontal })
-                    ConstantAtomLiteral("vertical").map({ Self.vertical })
-                }
-            }
+            ImplicitStaticMember([
+                "all": .all,
+                "horizontal": .horizontal,
+                "vertical": .vertical,
+            ])
         }
     }
 }

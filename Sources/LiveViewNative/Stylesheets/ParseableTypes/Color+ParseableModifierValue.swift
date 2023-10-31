@@ -22,6 +22,17 @@ extension SwiftUI.Color: ParseableModifierValue {
         })
     }
     
+    @ParseableExpression
+    struct NamedColor {
+        static let name = "init"
+        
+        let name: String
+        
+        init(_ name: String) {
+            self.name = name
+        }
+    }
+    
     static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             ConstantAtomLiteral("red").map({ .red })
@@ -43,8 +54,7 @@ extension SwiftUI.Color: ParseableModifierValue {
             ConstantAtomLiteral("primary").map({ .primary })
             ConstantAtomLiteral("secondary").map({ .secondary })
             
-            
-            String.parser(in: context).map({ SwiftUI.Color($0) })
+            NamedColor.parser(in: context).map({ Self.init($0.name, bundle: nil) })
         }
     }
     

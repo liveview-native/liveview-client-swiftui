@@ -14,7 +14,9 @@ public struct ImplicitStaticMember<Output, MemberParser: Parser>: Parser
             NilLiteral()
         } member: {
             member
-        }.map(\.member)
+        }.map({
+            $0.member
+        })
     }
 }
 

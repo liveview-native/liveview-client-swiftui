@@ -12,8 +12,12 @@ struct ModifierGenerator: ParsableCommand {
     )
     private var interface: URL
 
-    // missing View-specific: resizable, stroke
+    // missing View-specific: resizable
     // missing: fullScreenCover
+
+    static let extraModifierTypes: Set<String> = [
+        "_StrokeModifier",
+    ]
 
     static let denylist: Set<String> = [
         "environment",
@@ -329,10 +333,17 @@ struct ModifierGenerator: ParsableCommand {
         extension BuiltinRegistry {
             enum BuiltinModifier: ViewModifier, ParseableModifierValue {
                 \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
+                \#(Self.extraModifierTypes.map({ "case \($0)(\($0))" }).joined(separator: "\n"))
                 
                 func body(content: Content) -> some View {
                     switch self {
                     \#(modifierList.map({
+                        """
+                        case let .\($0)(modifier):
+                            content.modifier(modifier)
+                        """
+                    }).joined(separator: "\n"))
+                    \#(Self.extraModifierTypes.map({
                         """
                         case let .\($0)(modifier):
                             content.modifier(modifier)
@@ -354,6 +365,7 @@ struct ModifierGenerator: ParsableCommand {
                     func parse(_ input: inout Substring.UTF8View) throws -> Output {
                         let parsers = [
                             \#(modifierList.map({ "_\($0)Modifier<R>.parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
+                            \#(Self.extraModifierTypes.map({ "LiveViewNative.\($0).parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
                         ]
                         
                         return try OneOf {

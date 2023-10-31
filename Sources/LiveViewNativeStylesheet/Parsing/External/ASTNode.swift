@@ -19,9 +19,7 @@ public struct ASTNode<Content: Parser>: Parser where Content.Input == Substring.
             Whitespace()
             ",".utf8
             Whitespace()
-            Parse({ _ in Metadata() }) {
-                "[]".utf8 // meta is currently unused
-            }
+            Metadata.parser()
             Whitespace()
             ",".utf8
             Whitespace()

@@ -74,9 +74,11 @@ public struct EnumParser<T>: Parser {
         }
     }
 }
-extension ParseableModifierValue where Self: CaseIterable & RawRepresentable<String>, Self._ParserType == EnumParser<Self> {
+extension ParseableModifierValue where Self: CaseIterable & RawRepresentable<String>, Self._ParserType == ImplicitStaticMember<Self, EnumParser<Self>> {
     public static func parser(in context: ParseableModifierContext) -> _ParserType {
-        EnumParser(.init(uniqueKeysWithValues: Self.allCases.map({ ($0.rawValue, $0) })))
+        ImplicitStaticMember {
+            EnumParser(.init(uniqueKeysWithValues: Self.allCases.map({ ($0.rawValue, $0) })))
+        }
     }
 }
 
@@ -132,7 +134,7 @@ extension Array: ParseableModifierValue where Element: ParseableModifierValue {
 
 extension CoreFoundation.CGFloat: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        Double.parser()
+        Double.parser(in: context)
             .map(Self.init(_:))
     }
 }
