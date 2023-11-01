@@ -178,6 +178,7 @@ public struct FormState<Value: FormValue> {
             if let formModel {
                 if let elementName = element.attributeValue(for: "name") {
                     data.setFormModel(formModel, elementName: elementName)
+                    formModel.setInitialValue(initialValue, forName: elementName)
                     data.mode = .form(formModel)
                 } else {
                     print("Warning: @FormState used on a name-less element inside of a <live-form>. This may not behave as expected.")
@@ -213,12 +214,6 @@ public struct FormState<Value: FormValue> {
 extension FormState: DynamicProperty {
     public func update() {
         resolveMode()
-        if let formModel,
-           let elementName = element.attributeValue(for: "name"),
-           !formModel.data.keys.contains(elementName)
-        {
-            formModel.setInitialValue(initialValue, forName: elementName)
-        }
     }
 }
 
