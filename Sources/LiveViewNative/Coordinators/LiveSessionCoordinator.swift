@@ -31,17 +31,13 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 /// - ``LiveConnectionError``
 @MainActor
 public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
-    @Published internal private(set) var internalState: LiveSessionState = .notConnected
     /// The current state of the live view connection.
-    public var state: LiveSessionState {
-        internalState
-    }
+    @Published public private(set) var state = LiveSessionState.notConnected
     
     /// The current URL this live view is connected to.
     public private(set) var url: URL
     
     @Published var navigationPath = [LiveNavigationEntry<R>]()
-    var rootCoordinator: LiveViewCoordinator<R>!
     
     internal let configuration: LiveSessionConfiguration
     
@@ -70,9 +66,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     public init(_ url: URL, config: LiveSessionConfiguration = .init(), customRegistryType _: R.Type = R.self) {
         self.url = url.appending(path: "").absoluteURL
         self.configuration = config
-        self.rootCoordinator = .init(session: self, url: self.url)
-        self.mergedEventSubjects = self.rootCoordinator.eventSubject.compactMap({
-            [weak self] value in self.map({ ($0.rootCoordinator, value) })
+        self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url))]
+        self.mergedEventSubjects = self.navigationPath.first!.coordinator.eventSubject.compactMap({ [weak self] value in
+            self.map({ ($0.navigationPath.first!.coordinator, value) })
         })
         .sink(receiveValue: { [weak self] value in
             self?.eventSubject.send(value)
@@ -80,11 +76,15 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
             if prev.count > next.count {
-                let last = next.last ?? .init(url: self.url, coordinator: self.rootCoordinator)
-                if last.coordinator.url != last.url {
-                    last.coordinator.url = last.url
+                let isDisconnected: Bool
+                if case .notConnected = next.last!.coordinator.state {
+                    isDisconnected = true
+                } else {
+                    isDisconnected = false
+                }
+                if next.last!.coordinator.url != next.last!.url || isDisconnected {
                     Task {
-                        try await last.coordinator.connect(domValues: self.domValues, redirect: true)
+                        try await next.last!.coordinator.connect(domValues: self.domValues, redirect: true)
                     }
                 }
             }
@@ -92,7 +92,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         // Receive events from all live views.
         $navigationPath.sink { [weak self] entries in
             if let self {
-                let allCoordinators = ([self.rootCoordinator] + entries.map(\.coordinator))
+                let allCoordinators = entries.map(\.coordinator)
                     .reduce(into: [LiveViewCoordinator<R>]()) { result, next in
                         guard !result.contains(where: { $0 === next }) else { return }
                         result.append(next)
@@ -122,19 +122,19 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// This is an async function which completes when the connection has been established or failed.
     public func connect() async {
-        guard case .notConnected = internalState else {
+        guard case .notConnected = state else {
             return
         }
         
         logger.debug("Connecting to \(self.url.absoluteString)")
         
-        internalState = .connecting
+        state = .connecting
         
         let html: String
         do {
             html = try await fetchDOM(url: self.url)
         } catch {
-            internalState = .connectionFailed(error)
+            state = .connectionFailed(error)
             return
         }
         
@@ -143,7 +143,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             let doc = try SwiftSoup.parse(html)
             domValues = try self.extractDOMValues(doc)
         } catch {
-            internalState = .connectionFailed(error)
+            state = .connectionFailed(error)
             return
         }
         
@@ -153,27 +153,26 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             do {
                 try await self.connectSocket(domValues)
             } catch {
-                internalState = .connectionFailed(error)
+                state = .connectionFailed(error)
                 return
             }
         }
         
         do {
-            try await rootCoordinator.connect(domValues: domValues, redirect: false)
+            try await navigationPath.first!.coordinator.connect(domValues: domValues, redirect: false)
         } catch {
-            self.internalState = .connectionFailed(error)
+            self.state = .connectionFailed(error)
         }
     }
     
     private func disconnect() async {
-        await rootCoordinator.disconnect()
         for entry in self.navigationPath {
             await entry.coordinator.disconnect()
         }
-        self.navigationPath.removeAll()
+        self.navigationPath = [self.navigationPath.first!]
         self.socket?.disconnect()
         self.socket = nil
-        self.internalState = .notConnected
+        self.state = .notConnected
     }
     
     /// Forces the session to disconnect then connect.
@@ -313,7 +312,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.socket?.onClose { logger.debug("[Socket] Closed") }
         self.socket?.logger = { message in logger.debug("[Socket] \(message)") }
         
-        self.internalState = .connected
+        self.state = .connected
         
         if domValues.liveReloadEnabled {
             await self.connectLiveReloadSocket(urlSessionConfiguration: configuration)
@@ -353,9 +352,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     func redirect(_ redirect: LiveRedirect) async throws {
         switch redirect.mode {
         case .replaceTop:
-            let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
-            coordinator.url = redirect.to
-            await coordinator.disconnect()
+            await navigationPath.last?.coordinator.disconnect()
+            let coordinator = LiveViewCoordinator(session: self, url: redirect.to)
             let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
             case .push:
@@ -376,22 +374,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 ))
             case .replace:
                 // If there is nothing to replace, change the root URL.
-                if navigationPath.isEmpty {
-                    rootCoordinator.url = redirect.to
-                    try await rootCoordinator.connect(domValues: self.domValues, redirect: true)
-                } else {
-                    navigationPath.removeLast()
-                    // If we are replacing the current path with the previous one, just pop the URL so the previous one is on top.
-                    guard (navigationPath.last?.coordinator.url ?? self.url) != redirect.to else { return }
-                    navigationPath.append(.init(
-                        url: redirect.to,
-                        coordinator: LiveViewCoordinator(session: self, url: redirect.to)
-                    ))
-                }
+                navigationPath.removeLast()
+                // If we are replacing the current path with the previous one, just pop the URL so the previous one is on top.
+                guard (navigationPath.last?.coordinator.url ?? self.url) != redirect.to else { return }
+                navigationPath.append(.init(
+                    url: redirect.to,
+                    coordinator: LiveViewCoordinator(session: self, url: redirect.to)
+                ))
             }
         case .patch:
             // patch is like `replaceTop`, but it does not disconnect.
-            let coordinator = (navigationPath.last?.coordinator ?? rootCoordinator)!
+            let coordinator = navigationPath.last!.coordinator
             coordinator.url = redirect.to
             let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
