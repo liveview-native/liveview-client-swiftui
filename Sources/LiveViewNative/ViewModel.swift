@@ -140,6 +140,13 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
     }
     
+    /// Sets the value in ``data`` if there is no value currently present.
+    func setInitialValue(_ value: any FormValue, forName name: String) {
+        guard !data.keys.contains(name)
+        else { return }
+        data[name] = value
+    }
+    
     /// Clears all data in this form.
     public func clear() {
         for field in data.keys {
