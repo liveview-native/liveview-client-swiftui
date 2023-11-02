@@ -83,6 +83,8 @@ struct Image<R: RootRegistry>: View {
     #endif
     @Attribute("variable-value") private var variableValue: Double?
     
+    @Environment(\.imageModifiers) private var modifiers
+    
     init() {}
     
     init(element: ElementNode) {
@@ -93,6 +95,14 @@ struct Image<R: RootRegistry>: View {
     }
     
     public var body: SwiftUI.Image? {
+        image.flatMap({
+            modifiers.reduce($0) { image, modifier in
+                modifier.apply(to: image)
+            }
+        })
+    }
+    
+    var image: SwiftUI.Image? {
         if let systemName {
             return SwiftUI.Image(systemName: systemName, variableValue: variableValue)
         } else if let name {
@@ -107,7 +117,6 @@ struct Image<R: RootRegistry>: View {
                     return SwiftUI.Image(name, label: label)
                 } else {
                     return SwiftUI.Image(name)
-                        .resizable(resizingMode: .stretch)
                 }
             }
         } else {

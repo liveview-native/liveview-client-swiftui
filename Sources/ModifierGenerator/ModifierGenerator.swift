@@ -17,6 +17,9 @@ struct ModifierGenerator: ParsableCommand {
 
     static let extraModifierTypes: Set<String> = [
         "_StrokeModifier",
+        "_ResizableModifier",
+        "_RenderingModeModifier",
+        "_SymbolRenderingModeModifier",
     ]
 
     static let denylist: Set<String> = [
@@ -301,6 +304,16 @@ struct ModifierGenerator: ParsableCommand {
                     }
                     result.append(next)
                 }
+            
+            let requiresContext = signatures.contains(where: {
+                $0.parameters.contains(where: {
+                    ["ViewReference", "TextReference", "AttributeReference"].contains(
+                        $0.type.as(IdentifierTypeSyntax.self)?.name.text
+                         ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
+                    )
+                })
+            })
+            
             output.append(#"""
             @ParseableExpression
             struct _\#(modifier)Modifier<R: RootRegistry>: ViewModifier {
@@ -312,8 +325,8 @@ struct ModifierGenerator: ParsableCommand {
 
                 let value: Value
 
-                @ObservedElement private var element
-                @LiveContext<R> private var context
+                \#(requiresContext ? "@ObservedElement private var element" : "")
+                \#(requiresContext ? "@LiveContext<R> private var context" : "")
             
             \#(signatures.compactMap(\.properties).joined(separator: "\n"))
 
@@ -333,7 +346,8 @@ struct ModifierGenerator: ParsableCommand {
 
         extension BuiltinRegistry {
             enum BuiltinModifier: ViewModifier, ParseableModifierValue {
-                let storage: any ViewModifier
+                \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
+                \#(Self.extraModifierTypes.map({ "case \($0)(LiveViewNative.\($0))" }).joined(separator: "\n"))
                 
                 func body(content: Content) -> some View {
                     switch self {
