@@ -36,7 +36,7 @@ body:
     id: swift_version
     attributes:
       label: Swift Version
-      description: What version of Swift are you using? (Xcode -> About Xcode to get the version)
+      description: What version of Swift are you using? (`swift --version`)
   - type: dropdown
     id: device_target
     attributes:
