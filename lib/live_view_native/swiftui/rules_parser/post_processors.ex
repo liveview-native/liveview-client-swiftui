@@ -179,4 +179,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
     annotations = context_to_annotation(context.context, line)
     {rest, [{:__event__, annotations, [name, opts]}], context}
   end
+
+  def to_scoped_atom(rest, [variable_name, scope], context, {line, _}, _byte_offset) do
+    annotations = context_to_annotation(context.context, line)
+    {rest, [{:., annotations, [String.to_atom(scope), String.to_atom(variable_name)]}], context}
+  end
+
+  def to_swift_range_ast(rest, [end_, range, start], context, {line, _}, _byte_offset) do
+    annotations = context_to_annotation(context.context, line)
+    {rest, [{String.to_atom(range), annotations, [start, end_]}], context}
+  end
 end
