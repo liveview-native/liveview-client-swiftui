@@ -28,6 +28,42 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
     |> concat(close)
   end
 
+  def seq(combinators) do
+    Enum.reduce(combinators, empty(), &concat(&2, &1))
+  end
+
+  defp swift_range(combinator) do
+    nil_ = replace(empty(), nil)
+
+    choice([
+      # foo(Foo.bar...Baz.qux)
+      seq([combinator, string("..."), combinator]),
+      # foo(Foo.bar...)
+      seq([combinator, string("..."), nil_]),
+      # foo(...Baz.qux)
+      seq([nil_, string("..."), combinator]),
+      # foo(Foo.bar..<Baz.qux)
+      seq([combinator, string("..<"), combinator]),
+      # foo(..<Baz.qux)
+      seq([nil_, string("..<"), combinator])
+    ])
+    |> post_traverse({PostProcessors, :to_swift_range_ast, []})
+  end
+
+  def swift_range() do
+    scoped_atom =
+      type_name(generate_error?: false)
+      |> ignore(string("."))
+      |> concat(word())
+      |> post_traverse({PostProcessors, :to_scoped_atom, []})
+
+    choice([
+      swift_range(scoped_atom),
+      swift_range(integer()),
+      swift_range(double_quoted_string())
+    ])
+  end
+
   #
   # Collections
   #
