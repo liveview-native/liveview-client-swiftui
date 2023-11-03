@@ -451,6 +451,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |
 
         Expected ‘()’ or ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
+         - a Swift range eg ‘1..<10’ or ‘foo(Foo.bar...Baz.qux)’
          - a number, string, nil, boolean or :atom
          - an event eg ‘event(\"search-event\", throttle: 10_000)’
          - an attribute eg ‘attr(\"placeholder\")’
@@ -712,6 +713,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |
 
         Expected one of the following:
+         - a Swift range eg ‘1..<10’ or ‘foo(Foo.bar...Baz.qux)’
          - a number, string, nil, boolean or :atom
          - an event eg ‘event("search-event", throttle: 10_000)’
          - an attribute eg ‘attr("placeholder")’
