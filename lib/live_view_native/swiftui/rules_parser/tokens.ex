@@ -34,7 +34,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     |> reduce({Enum, :join, [""]})
   end
 
-  def int() do
+  def integer() do
     optional(minus())
     |> concat(underscored_integer())
     |> reduce({Enum, :join, [""]})
@@ -46,14 +46,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
   end
 
   def float() do
-    int()
+    integer()
     |> concat(frac())
     |> reduce({Enum, :join, [""]})
     |> map({String, :to_float, []})
   end
 
   def number() do
-    choice([float(), int()])
+    choice([float(), integer()])
     |> expect(
       ignore_whitespace()
       |> utf8_char(String.to_charlist(".,)]"))
@@ -198,19 +198,21 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     ~s'‘#{matched}’ can only be used as an argument to a modifier'
   end
 
-  def type_name() do
+  def type_name(opts \\ []) do
     ascii_string([?A..?Z], 1)
     |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
     |> reduce({Enum, :join, [""]})
     |> expect(
-      error_message: "Expected a type name",
-      error_parser:
-        choice([
-          non_whitespace(also_ignore: String.to_charlist("[](),"), fail_if_empty: true),
-          non_whitespace(also_ignore: String.to_charlist("]),"), fail_if_empty: true),
-          non_whitespace()
-        ]),
-      show_incorrect_text?: true
+      Keyword.merge(opts,
+        error_message: "Expected a type name",
+        error_parser:
+          choice([
+            non_whitespace(also_ignore: String.to_charlist("[](),"), fail_if_empty: true),
+            non_whitespace(also_ignore: String.to_charlist("]),"), fail_if_empty: true),
+            non_whitespace()
+          ]),
+        show_incorrect_text?: true
+      )
     )
   end
 end

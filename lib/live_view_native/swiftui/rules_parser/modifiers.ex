@@ -171,6 +171,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
         inside_key_value_pair?
       },
       {
+        swift_range(),
+        ~s'a Swift range eg ‘1..<10’ or ‘foo(Foo.bar...Baz.qux)’'
+      },
+      {
         literal(error_parser: empty(), generate_error?: false),
         ~s'a number, string, nil, boolean or :atom'
       },
