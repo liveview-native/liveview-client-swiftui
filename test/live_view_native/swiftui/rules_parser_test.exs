@@ -224,6 +224,13 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
+    test "parses single character variables" do
+      input = "foo(c)"
+      output = {:foo, [], [{Elixir, [], {:c, [], Elixir}}]}
+
+      assert parse(input) == output
+    end
+
     test "parses closed ranges" do
       input = "foo(Foo.bar...Baz.qux)"
       output = {:foo, [], [{:..., [], [{:., [], [:Foo, :bar]}, {:., [], [:Baz, :qux]}]}]}
