@@ -14,6 +14,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
     file = Keyword.get(opts, :file) || ""
     module = Keyword.get(opts, :module) || ""
     line = Keyword.get(opts, :line) || 1
+    variable_context = Keyword.get(opts, :variable_context, Elixir)
 
     context =
       opts
@@ -25,6 +26,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
         :annotations,
         Application.get_env(:live_view_native_stylesheet, :annotations, true)
       )
+      |> Map.put_new(:variable_context, variable_context)
 
     opts =
       opts
@@ -33,7 +35,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
       |> Keyword.put(:module, module)
       |> Keyword.put(:line, line)
 
-    result =
+      result =
       rules
       |> Modifiers.modifiers(opts)
       |> Parser.error_from_result()
