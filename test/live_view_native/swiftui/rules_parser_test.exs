@@ -428,6 +428,14 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         {:buttonStyle, [], [{:., [], [nil, :plain]}]}
       ]}
     end
+
+    test "can compile custom classes using the RULES sigil" do
+      output = MockSheet.compile_ast(["color-blue"], target: :all)
+
+      assert output == %{"color-blue" => [
+        {:color, [], [{:., [], [nil, :blue]}]}
+      ]}
+    end
   end
 
   describe "error reporting" do

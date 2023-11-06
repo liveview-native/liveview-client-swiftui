@@ -14,5 +14,11 @@ defmodule MockSheet do
   end
   """
 
+  def class("color-" <> color_name, _target) do
+    ~RULES"""
+    color(to_ime(color_name))
+    """
+  end
+
   def class(_other, _), do: {:unmatched, ""}
 end

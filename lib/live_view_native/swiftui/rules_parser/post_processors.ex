@@ -29,7 +29,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
     {rest,
      [
        {Elixir, context_to_annotation(context.context, line),
-        {String.to_atom(variable_name), context_to_annotation(context.context, line), Elixir}}
+        {String.to_atom(variable_name), context_to_annotation(context.context, line), context.variable_context}}
      ], context}
   end
 
