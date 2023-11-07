@@ -19,7 +19,6 @@ struct ModifierGenerator: ParsableCommand {
         "_StrokeModifier",
         "_ResizableModifier",
         "_RenderingModeModifier",
-        "_SymbolRenderingModeModifier",
     ]
 
     static let denylist: Set<String> = [
@@ -364,16 +363,25 @@ struct ModifierGenerator: ParsableCommand {
                     
                     func parse(_ input: inout Substring.UTF8View) throws -> Output {
                         let parsers = [
-                            \#(modifierList.map({ "_\($0)Modifier<R>.parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
-                            \#(Self.extraModifierTypes.map({ "LiveViewNative.\($0).parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
+                            \#(modifierList.map({ "_\($0)Modifier<R>.name: _\($0)Modifier<R>.parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
+                            \#(Self.extraModifierTypes.map({ "LiveViewNative.\($0).name: LiveViewNative.\($0).parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
                         ]
                         
-                        return try OneOf {
-                            for parser in parsers {
-                                parser
-                            }
-                        }
-                        .parse(&input)
+                        var copy = input
+                        let (modifierName, metadata) = try Parse {
+                            "{".utf8
+                            Whitespace()
+                            AtomLiteral()
+                            Whitespace()
+                            ",".utf8
+                            Whitespace()
+                            Metadata.parser()
+                        }.parse(&copy)
+                        
+                        guard let parser = parsers[modifierName]
+                        else { throw ModifierParseError(error: .unknownModifier(modifierName), metadata: metadata) }
+                        
+                        return try parser.parse(&input)
                     }
                 }
             }

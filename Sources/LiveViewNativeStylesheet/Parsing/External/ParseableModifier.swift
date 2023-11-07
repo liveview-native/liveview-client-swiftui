@@ -44,13 +44,15 @@ public struct StandardExpressionParser<Output: ParseableExpressionProtocol>: Par
     let context: ParseableModifierContext
     
     public var body: some Parser<Substring.UTF8View, Output> {
-        ASTNode(Output.name) {
+        ASTNode(Output.name, in: context) {
             Output.arguments(in: context)
         }.map(\.value)
     }
 }
 
-public struct ParseableModifierContext {
+public class ParseableModifierContext {
+    public var metadata: Metadata = .init(file: "", line: 0, module: "unknown")
+    
     public init() {}
 }
 

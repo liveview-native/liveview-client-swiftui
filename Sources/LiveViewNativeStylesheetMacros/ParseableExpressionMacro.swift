@@ -102,8 +102,21 @@ public enum ParseableExpressionMacro: ExtensionMacro {
         }
         
         return ExprSyntax(#"""
-        Parse({ (wildcard: \#(wildcardType), labelled: \#(labelledType)) -> Self in
-            Self.init(
+        _ThrowingParse({ (wildcard: \#(wildcardType), labelled: \#(labelledType)) -> Self in
+            \#(raw: labelledArguments.filter({ !$0.type.is(OptionalTypeSyntax.self) && $0.defaultValue == nil }).map({
+                if labelledArguments.count == 1 {
+                    return """
+                    guard let labelled
+                    else { throw ModifierParseError(error: .missingRequiredArgument("\($0.firstName.trimmed)"), metadata: context.metadata) }
+                    """
+                } else {
+                    return """
+                    guard let `\($0.firstName.trimmed)` = labelled.\($0.firstName.trimmed)
+                    else { throw ModifierParseError(error: .missingRequiredArgument("\($0.firstName.trimmed)"), metadata: context.metadata) }
+                    """
+                }
+            }).joined(separator: "\n"))
+            return Self.init(
                 \#(raw: (
                     (
                         wildcardArguments.count == 1
@@ -114,20 +127,26 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                     ) + (
                         labelledArguments.count == 1
                             ? [
-                                """
-                                \(labelledArguments.first!.firstName.trimmed): labelled\(
-                                    labelledArguments.first!.defaultValue.flatMap({ " ?? \($0.value)" })
-                                        ?? (labelledArguments.first!.type.is(OptionalTypeSyntax.self) ? "" : "!")
-                                )
-                                """
+                                (!labelledArguments.first!.type.is(OptionalTypeSyntax.self) && labelledArguments.first!.defaultValue == nil)
+                                    ? "\(labelledArguments.first!.firstName.trimmed): labelled"
+                                    : """
+                                    \(labelledArguments.first!.firstName.trimmed): labelled\(
+                                        labelledArguments.first!.defaultValue.flatMap({ " ?? \($0.value)" }) ?? ""
+                                    )
+                                    """
                             ]
                             : labelledArguments.map({
-                                """
-                                \($0.firstName): labelled.\($0.firstName.trimmed)\(
-                                    $0.defaultValue.flatMap({ " ?? \($0.value)" })
-                                        ?? ($0.type.is(OptionalTypeSyntax.self) ? "" : "!")
-                                )
-                                """
+                                if !$0.type.is(OptionalTypeSyntax.self) && $0.defaultValue == nil {
+                                    return """
+                                    \($0.firstName): `\($0.firstName.trimmed)`
+                                    """
+                                } else {
+                                    return """
+                                    \($0.firstName): labelled.\($0.firstName.trimmed)\(
+                                        $0.defaultValue.flatMap({ " ?? \($0.value)" }) ?? ""
+                                    )
+                                    """
+                                }
                             })
                     )
                 ).joined(separator: ","))

@@ -23,21 +23,6 @@ struct _RenderingModeModifier: ImageModifier {
     }
 }
 
-@ParseableExpression
-struct _SymbolRenderingModeModifier: ImageModifier {
-    static let name = "symbolRenderingMode"
-    
-    let renderingMode: SwiftUI.SymbolRenderingMode?
-    
-    init(_ renderingMode: SwiftUI.SymbolRenderingMode?) {
-        self.renderingMode = renderingMode
-    }
-    
-    func apply(to image: SwiftUI.Image) -> SwiftUI.Image {
-        image.symbolRenderingMode(renderingMode)
-    }
-}
-
 extension SwiftUI.Image.TemplateRenderingMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
