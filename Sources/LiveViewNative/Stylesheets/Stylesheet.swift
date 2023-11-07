@@ -1,6 +1,9 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
+import OSLog
+
+private let logger = Logger(subsystem: "LiveViewNative", category: "Stylesheet")
 
 protocol StylesheetProtocol<R> {
     associatedtype R: RootRegistry
@@ -17,8 +20,6 @@ struct Stylesheet<R: RootRegistry> {
     }
     
     init(from data: String, in context: ParseableModifierContext) throws {
-        print("=== STYLESHEET ===")
-        print(data)
         self.classes = try StylesheetParser<BuiltinRegistry<R>.BuiltinModifier>(context: context).parse(data.utf8)
     }
 }
@@ -37,6 +38,22 @@ extension Stylesheet: AttributeDecodable {
     init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
-        try self.init(from: value, in: .init())
+        do {
+            try self.init(from: value, in: .init())
+        } catch {
+            // Log errors instead of propagating
+            logger.error(
+                """
+                Stylesheet parse error:
+                
+                \(error)
+                
+                in stylesheet:
+                
+                \(value)
+                """
+            )
+            self.init([:])
+        }
     }
 }

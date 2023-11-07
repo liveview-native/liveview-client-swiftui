@@ -36,7 +36,7 @@ struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: P
 
 extension AttributeName: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ASTNode("__attr__") {
+        ASTNode("__attr__", in: context) {
             String.parser(in: context)
         }
         .map({ Self.init(rawValue: $1)! })
