@@ -39,5 +39,5 @@
 ///
 /// - Note: Labelled arguments must be optional.
 /// Wildcard arguments can be ``Swift/Optional``, but will require `nil` to be passed explicitly.
-@attached(extension, conformances: ParseableExpressionProtocol, names: named(arguments), named(_ParserType))
+@attached(extension, conformances: ParseableExpressionProtocol, names: named(arguments), named(_ParserType), named(ExpressionArgumentsBody))
 public macro ParseableExpression() = #externalMacro(module: "LiveViewNativeStylesheetMacros", type: "ParseableExpressionMacro")

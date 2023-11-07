@@ -1,9 +1,9 @@
 import Parsing
 
 public struct Metadata {
-    let file: String
-    let line: Int
-    let module: String
+    public let file: String
+    public let line: Int
+    public let module: String
     
     public static func parser() -> some Parser<Substring.UTF8View, Self> {
         Parse { (file, line, module) in
