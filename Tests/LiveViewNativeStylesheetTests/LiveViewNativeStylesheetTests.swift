@@ -137,10 +137,6 @@ indirect enum TestColor: ParseableModifierValue, Equatable {
     }
 }
 
-// .red.opacity(0.5)
-
-
-
 extension ForegroundStyle: ParseableModifierValue {
     public static func parser() -> some Parser<Substring.UTF8View, Self> {
         ConstantAtomLiteral("foreground").map({ Self.init() })
