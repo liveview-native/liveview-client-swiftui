@@ -453,7 +453,8 @@ struct ModifierGenerator: ParsableCommand {
                             .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
                             .filter({ !unavailable.contains($0) })
                             .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
-                            .joined(separator: " || "))
+                            .joined(separator: " || ")
+                    )
                     """
                 )
                 \(availability.isEmpty ? "" : "@available(\(availability), *)")
@@ -462,17 +463,31 @@ struct ModifierGenerator: ParsableCommand {
                         ImplicitStaticMember {
                             OneOf {
                             \(cases.map({
-                                let (`case`, (availability, unavailable)) = $0
+                                let (`case`, (memberAvailability, memberUnavailable)) = $0
+                                let availability = (
+                                    (
+                                        memberAvailability
+                                            .compactMap({ $0.argument.as(PlatformVersionSyntax.self) })
+                                            .map({ "\($0.platform.text) \($0.version?.description ?? "")" })
+                                            .sorted() ==
+                                        availability
+                                            .compactMap({ $0.argument.as(PlatformVersionSyntax.self) })
+                                            .map({ "\($0.platform.text) \($0.version?.description ?? "")" })
+                                            .sorted()
+                                    )
+                                )
+                                    ? AvailabilityArgumentListSyntax([])
+                                    : memberAvailability
                                 return #"""
                                 ConstantAtomLiteral("\#(`case`)").map({ () -> Self in
                                 \#(
-                                    availability.isEmpty
+                                    memberAvailability.isEmpty
                                     ? ""
                                     : """
                                     #if \(
-                                        availability
+                                        memberAvailability
                                             .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
-                                            .filter({ !unavailable.contains($0) })
+                                            .filter({ !memberUnavailable.contains($0) })
                                             .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
                                             .joined(separator: " || "))
                                     """
@@ -480,9 +495,9 @@ struct ModifierGenerator: ParsableCommand {
                                 \#(availability.isEmpty ? "" : "if #available(\(availability), *) {")
                                     return Self.\#(`case`)
                                 \#(availability.isEmpty ? "" : #"} else { fatalError("'\#(`case`)' is not available in this OS version") }"#)
-                                \#(availability.isEmpty ? "" : "#else")
-                                \#(availability.isEmpty ? "" : #"fatalError("'\#(`case`)' is not available on this OS")"#)
-                                \#(availability.isEmpty ? "" : "#endif")
+                                \#(memberAvailability.isEmpty ? "" : "#else")
+                                \#(memberAvailability.isEmpty ? "" : #"fatalError("'\#(`case`)' is not available on this OS")"#)
+                                \#(memberAvailability.isEmpty ? "" : "#endif")
                                 })
                                 """#
                             }).joined(separator: "\n"))
