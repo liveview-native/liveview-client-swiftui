@@ -6,16 +6,16 @@ import SwiftParser
 final class ModifierVisitor: SyntaxVisitor {
     var modifiers = [String: [(FunctionDeclSyntax, availability: (AvailabilityArgumentListSyntax, Set<String>))]]()
 
-    func availability(_ base: ExtensionDeclSyntax, _ decl: FunctionDeclSyntax) -> (AvailabilityArgumentListSyntax, Set<String>) {
+    static func availability(_ base: AttributeListSyntax, _ decl: AttributeListSyntax) -> (AvailabilityArgumentListSyntax, Set<String>) {
         var availability = [String:PlatformVersionSyntax]()
         var unavailable = Set<String>()
 
-        for attribute in base.attributes.lazy.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }) {
+        for attribute in base.lazy.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }) {
             for argument in attribute.lazy.compactMap({ $0.argument.as(PlatformVersionSyntax.self) }) {
                 availability[argument.platform.text] = argument
             }
         }
-        for attribute in decl.attributes.lazy.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }) {
+        for attribute in decl.lazy.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }) {
             for argument in attribute {
                 if let platformVersion = argument.argument.as(PlatformVersionSyntax.self) {
                     availability[platformVersion.platform.text] = platformVersion
@@ -57,7 +57,7 @@ final class ModifierVisitor: SyntaxVisitor {
                     }) ?? false
                 })
             else { continue }
-            self.modifiers[decl.name.trimmed.text, default: []].append((decl, availability: availability(node, decl)))
+            self.modifiers[decl.name.trimmed.text, default: []].append((decl, availability: Self.availability(node.attributes, decl.attributes)))
         }
 
         return .skipChildren

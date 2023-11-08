@@ -21,6 +21,58 @@ struct ModifierGenerator: ParsableCommand {
         "_RenderingModeModifier",
     ]
 
+    static let requiredTypes: Set<String> = [
+        "BlendMode",
+        "Visibility",
+        "ControlSize",
+        "SubmitLabel",
+        "VerticalAlignment",
+        "ScrollIndicatorVisibility",
+        "KeyboardShortcut",
+        "ToolbarRole",
+        "EventModifiers",
+        "KeyPress.Phases",
+        "RedactionReasons",
+        "DialogSeverity",
+        "HorizontalEdge",
+        "ToolbarDefaultItemKind",
+        "ContainerBackgroundPlacement",
+        "Text.TruncationMode",
+        "ColorRenderingMode",
+        "DigitalCrownRotationalSensitivity",
+        "HorizontalAlignment",
+        "ScrollBounceBehavior",
+        "Prominence",
+        "SpringLoadingBehavior",
+        "PresentationAdaptation",
+        "ButtonRepeatBehavior",
+        "PresentationContentInteraction",
+        "GestureMask",
+        "BadgeProminence",
+        "AccessibilityLabeledPairRole",
+        "FocusInteractions",
+        "MenuOrder",
+        "DefaultFocusEvaluationPriority",
+        "ContentMarginPlacement",
+        "MenuActionDismissBehavior",
+        "VerticalEdge",
+        "HoverEffect",
+        "ContentShapeKinds",
+        "AlternatingRowBackgroundBehavior",
+        "SubmitTriggers",
+        "SafeAreaRegions",
+        "Text.LineStyle.Pattern",
+        "ScenePadding",
+        "Text.Scale",
+        "ColorScheme",
+        "MatchedGeometryProperties",
+        "AccessibilityChildBehavior",
+        "Image.DynamicRange",
+        "ScrollDismissesKeyboardMode",
+        "ToolbarTitleDisplayMode",
+        "FileDialogBrowserOptions",
+    ]
+
     static let denylist: Set<String> = [
         "environment",
         "environmentObject",
@@ -171,7 +223,6 @@ struct ModifierGenerator: ParsableCommand {
         "listRowSeparatorTint",
         "listSectionSeparator",
         "id",
-        "blendMode",
         "menuOrder",
         "fontWidth",
         "listRowInsets",
@@ -186,9 +237,6 @@ struct ModifierGenerator: ParsableCommand {
         "persistentSystemOverlays",
         "presentationDragIndicator",
         "fontDesign",
-        "controlSize",
-        "submitLabel",
-        "toolbarRole",
         "defaultHoverEffect",
         "listRowHoverEffect",
         "preferredColorScheme",
@@ -386,7 +434,82 @@ struct ModifierGenerator: ParsableCommand {
                 }
             }
         }
+
         """#)
+
+        let typeVisitor = EnumTypeVisitor(typeNames: Self.requiredTypes)
+        typeVisitor.walk(sourceFile)
+
+        for (type, cases) in typeVisitor.types.sorted(by: { $0.key < $1.key }) {
+            let (availability, unavailable) = typeVisitor.availability[type]!
+            output.append(
+                """
+                \(
+                    availability.isEmpty
+                    ? ""
+                    : """
+                    #if \(
+                        availability
+                            .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
+                            .filter({ !unavailable.contains($0) })
+                            .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
+                            .joined(separator: " || ")
+                    )
+                    """
+                )
+                \(availability.isEmpty ? "" : "@available(\(availability), *)")
+                extension \(type): ParseableModifierValue {
+                    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+                        ImplicitStaticMember {
+                            OneOf {
+                            \(cases.map({
+                                let (`case`, (memberAvailability, memberUnavailable)) = $0
+                                let availability = (
+                                    (
+                                        memberAvailability
+                                            .compactMap({ $0.argument.as(PlatformVersionSyntax.self) })
+                                            .map({ "\($0.platform.text) \($0.version?.description ?? "")" })
+                                            .sorted() ==
+                                        availability
+                                            .compactMap({ $0.argument.as(PlatformVersionSyntax.self) })
+                                            .map({ "\($0.platform.text) \($0.version?.description ?? "")" })
+                                            .sorted()
+                                    )
+                                )
+                                    ? AvailabilityArgumentListSyntax([])
+                                    : memberAvailability
+                                return #"""
+                                ConstantAtomLiteral("\#(`case`)").map({ () -> Self in
+                                \#(
+                                    memberAvailability.isEmpty
+                                    ? ""
+                                    : """
+                                    #if \(
+                                        memberAvailability
+                                            .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
+                                            .filter({ !memberUnavailable.contains($0) })
+                                            .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
+                                            .joined(separator: " || "))
+                                    """
+                                )
+                                \#(availability.isEmpty ? "" : "if #available(\(availability), *) {")
+                                    return Self.\#(`case`)
+                                \#(availability.isEmpty ? "" : #"} else { fatalError("'\#(`case`)' is not available in this OS version") }"#)
+                                \#(memberAvailability.isEmpty ? "" : "#else")
+                                \#(memberAvailability.isEmpty ? "" : #"fatalError("'\#(`case`)' is not available on this OS")"#)
+                                \#(memberAvailability.isEmpty ? "" : "#endif")
+                                })
+                                """#
+                            }).joined(separator: "\n"))
+                            }
+                        }
+                    }
+                }
+                \(availability.isEmpty ? "" : "#endif")
+
+                """
+            )
+        }
 
         FileHandle.standardOutput.write(Data(output.utf8))
     }
