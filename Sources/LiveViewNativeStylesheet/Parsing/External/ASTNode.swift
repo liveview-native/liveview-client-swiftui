@@ -20,7 +20,7 @@ public struct ASTNode<Content: Parser>: Parser where Content.Input == Substring.
         try ",".utf8.parse(&input)
         try Whitespace().parse(&input)
         
-        var parentMeta = context.metadata
+        let parentMeta = context.metadata
         let meta = try Metadata.parser().parse(&input)
         context.metadata = meta
         
