@@ -71,6 +71,7 @@ struct ModifierGenerator: ParsableCommand {
         "ScrollDismissesKeyboardMode",
         "ToolbarTitleDisplayMode",
         "FileDialogBrowserOptions",
+        "Axis",
     ]
 
     static let denylist: Set<String> = [
@@ -100,14 +101,13 @@ struct ModifierGenerator: ParsableCommand {
         "previewInterfaceOrientation",
         "previewLayout",
         
+        "onCommand",
+        
         // fixme: missing types
         "accessibilityRotor",
         "accessibilityChartDescriptor",
         "accessibilityFocused",
         "accessibilityQuickAction",
-        "alert",
-        "containerRelativeFrame",
-        "contextMenu",
         "controlGroupStyle",
         "copyable",
         "cuttable",
@@ -138,13 +138,11 @@ struct ModifierGenerator: ParsableCommand {
         "menuButtonStyle",
         "menuStyle",
         "navigationSplitViewStyle",
-        "onCommand",
         "onContinuousHover",
         "onContinueUserActivity",
         "onCopyCommand",
         "onDrag",
         "onDrop",
-        "onHover",
         "onKeyPress",
         "onOpenURL",
         "onPasteCommand",
@@ -344,7 +342,6 @@ struct ModifierGenerator: ParsableCommand {
                     else { return true }
                     return !$0.parameters.contains(where: { $0.type.as(IdentifierTypeSyntax.self)?.name.text == "ViewReference" })
                 })
-            
             let requiresContext = signatures.contains(where: {
                 $0.parameters.contains(where: {
                     ["ViewReference", "TextReference", "AttributeReference"].contains(
@@ -522,10 +519,20 @@ struct ModifierGenerator: ParsableCommand {
     }
 
     func isValid(_ signature: FunctionDeclSyntax) -> Bool {
+        let availability = signature.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })
+
         for parameter in signature.signature.parameterClause.parameters {
+            let functionType = (parameter.type.as(FunctionTypeSyntax.self) ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self))
             // ViewBuilder closures with arguments cannot be used.
             if (parameter.isViewBuilder || parameter.isToolbarContentBuilder)
-                && (parameter.type.as(FunctionTypeSyntax.self) ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self))?.parameters.count != 0
+                && functionType?.parameters.count != 0
+            {
+                return false
+            }
+            // closures with return values cannot be used.
+            if !parameter.isViewBuilder && !parameter.isToolbarContentBuilder,
+               let returnType = functionType?.returnClause.type,
+               returnType.as(MemberTypeSyntax.self)?.name.text != "Void" && returnType.as(TupleTypeSyntax.self)?.elements.count != 0
             {
                 return false
             }

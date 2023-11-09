@@ -167,7 +167,7 @@ extension ChangeTracked {
         }
         
         func bind(to changeTracked: ChangeTracked<Value>) {
-            fatalError("implement \(#function) in subclass")
+            // implement in subclass
         }
     }
 }

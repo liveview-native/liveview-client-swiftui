@@ -104,7 +104,17 @@ struct Signature {
                                 // These are registered on the View so they get proper DynamicProperty treatment.
                                 return $0.firstName.tokenKind == .wildcard ? "__\(offset)_\($0.secondName!.text).projectedValue" : "\($0.firstName.text): __\(offset)_\(($0.secondName ?? $0.firstName).text).projectedValue"
                             case "Event":
-                                return $0.firstName.tokenKind == .wildcard ? "{ __\(offset)_\($0.secondName!.text).wrappedValue() }" : "\($0.firstName.text): { __\(offset)_\(($0.secondName ?? $0.firstName).text).wrappedValue() }"
+                                // the parameter count is encoded in the `secondName`.
+                                let parameterCount = Int($0.secondName!.text.split(separator: "__").last ?? "0") ?? 0
+                                switch parameterCount {
+                                case 0:
+                                    return $0.firstName.tokenKind == .wildcard ? "{ __\(offset)_\($0.secondName!.text).wrappedValue() }" : "\($0.firstName.text): { __\(offset)_\(($0.secondName ?? $0.firstName).text).wrappedValue() }"
+                                case 1:
+                                    return $0.firstName.tokenKind == .wildcard ? "{ __\(offset)_\($0.secondName!.text).wrappedValue(value: $0) }" : "\($0.firstName.text): { __\(offset)_\(($0.secondName ?? $0.firstName).text).wrappedValue(value: $0) }"
+                                default:
+                                    let arguments = (0..<parameterCount).map({ "$\($0)" }).joined(separator: ", ")
+                                    return $0.firstName.tokenKind == .wildcard ? "{ __\(offset)_\($0.secondName!.text).wrappedValue(value: [\(arguments)]) }" : "\($0.firstName.text): { __\(offset)_\(($0.secondName ?? $0.firstName).text).wrappedValue(value: [\(arguments)]) }"
+                                }
                             case "AttributeReference":
                                 return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
                             default:
@@ -184,13 +194,14 @@ extension FunctionParameterSyntax {
         } else if let functionType = parameter.type.as(FunctionTypeSyntax.self)
                                             ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self)
                                             ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(TupleTypeSyntax.self)?.elements.first?.type.as(FunctionTypeSyntax.self),
-                  functionType.parameters.count == 0
-                    && functionType.returnClause.type.as(MemberTypeSyntax.self)?.name.text == "Void"
+                  functionType.returnClause.type.as(MemberTypeSyntax.self)?.name.text == "Void"
         {
             // Closures are replaced with `Event`
             self = parameter
                 .with(\.type, TypeSyntax("Event"))
                 .with(\.defaultValue, parameter.type.is(OptionalTypeSyntax.self) ? InitializerClauseSyntax(value: ExprSyntax("Event()")) : nil)
+                .with(\.firstName.trailingTrivia, .space)
+                .with(\.secondName, "\(raw: parameter.secondName?.text ?? parameter.firstName.text)__\(raw: String(functionType.parameters.count))") // encode the number of parameters into the `secondName`.
         } else if let genericBaseType {
             // Some generic types are replaced with concrete types
             if ["StringProtocol", "Equatable"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
