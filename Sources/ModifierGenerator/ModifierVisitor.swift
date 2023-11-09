@@ -63,8 +63,21 @@ final class ModifierVisitor: SyntaxVisitor {
         guard node.extendedType.trimmed.description == "SwiftUI.View" else { return .skipChildren }
         guard let extendedType = node.extendedType.as(MemberTypeSyntax.self),
               extendedType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
-              extendedType.name.tokenKind == .identifier("View")
+              extendedType.name.tokenKind == .identifier("View"),
+              node.genericWhereClause == nil
         else { return .skipChildren }
+
+        let nodeAvailabilityAttributes = node.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })
+
+        // if all platforms mark this symbol as deprecated, exclude it.
+        if !nodeAvailabilityAttributes.isEmpty && nodeAvailabilityAttributes.allSatisfy({
+            $0.contains(where: {
+                $0.argument.as(AvailabilityLabeledArgumentSyntax.self)?.label.tokenKind == .keyword(.deprecated)
+                || $0.argument.as(TokenSyntax.self)?.tokenKind == .keyword(.unavailable)
+            })
+        }) {
+            return .skipChildren
+        }
 
         for member in node.memberBlock.members {
             // find extensions on `SwiftUI.View`
