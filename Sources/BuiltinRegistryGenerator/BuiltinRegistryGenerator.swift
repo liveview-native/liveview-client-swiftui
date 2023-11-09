@@ -60,19 +60,6 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             .map(viewCase(path:))
             .joined(separator: "\n")
         
-       let modifiers = modifiers
-           .map(URL.init(fileURLWithPath:))
-           .filter(isAllowed(path:))
-        let modifierCases = try modifiers
-            .map(modifierCase(path:))
-            .joined(separator: "\n")
-        let modifierParsers = try modifiers
-            .map(modifierParser(path:))
-            .joined(separator: "\n")
-        let modifierSwitchCases = try modifiers
-            .map(modifierSwitchCase(path:))
-            .joined(separator: "\n")
-        
         let generated = """
         import SwiftUI
         import LiveViewNativeStylesheet
@@ -198,62 +185,6 @@ struct BuiltinRegistryGenerator: ParsableCommand {
                 case "\(name)":
                     \(initializer)
         """
-    }
-    
-    func modifierCase(path: URL) throws -> String {
-        let name = path.deletingPathExtension().lastPathComponent.firstMatch(of: Regex {
-            Capture {
-                OneOrMore(.any)
-            }
-            "Modifier"
-        }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
-        return """
-                case \(name.toCamelCase())(any ViewModifier)
-        """
-    }
-    
-    func modifierParser(path: URL) throws -> String {
-        let name = path.deletingPathExtension().lastPathComponent.firstMatch(of: Regex {
-            Capture {
-                OneOrMore(.any)
-            }
-            "Modifier"
-        }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
-        if let availability = try availability(path: path) {
-            return """
-                    if #available(\(availability)) {
-                        \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "").parser().map({ Self.init(.\(name.toCamelCase())($0)) })
-                    }
-            """
-        } else {
-            return """
-                    \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "").parser().map({ Self.init(.\(name.toCamelCase())($0)) })
-            """
-        }
-    }
-    
-    func modifierSwitchCase(path: URL) throws -> String {
-        let name = path.deletingPathExtension().lastPathComponent.firstMatch(of: Regex {
-            Capture {
-                OneOrMore(.any)
-            }
-            "Modifier"
-        }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
-        if let availability = try availability(path: path) {
-            return """
-                    case let .\(name.toCamelCase())(modifier):
-                        if #available(\(availability)) {
-                            content.modifier(modifier as! \(name)Modifier\(try isGeneric(path: path) ? "<R>" : ""))
-                        } else {
-                            content
-                        }
-            """
-        } else {
-            return """
-                    case let .\(name.toCamelCase())(modifier):
-                        content.modifier(modifier as! \(name)Modifier\(try isGeneric(path: path) ? "<R>" : ""))
-            """
-        }
     }
 }
 

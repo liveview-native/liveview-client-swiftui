@@ -19,6 +19,7 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
     public enum ErrorType {
         case unknownModifier(String)
         case missingRequiredArgument(String)
+        case noMatchingClause(String, [[String]])
         
         var localizedDescription: String {
             switch self {
@@ -26,6 +27,8 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
                 "Unknown modifier '\(name)'"
             case .missingRequiredArgument(let name):
                 "Missing required argument '\(name)'"
+            case .noMatchingClause(let name, let clauses):
+                "No matching clause found for modifier '\(name)'. Expected one of \(clauses.map({ "`\(name)(\($0.joined(separator: ":"))\($0.count > 0 ? ":" : ""))`" }).joined(separator: ", "))"
             }
         }
     }

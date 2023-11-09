@@ -45,6 +45,7 @@ struct Signature {
         // Construct signature
 
         self.`init` = #"""
+            \#(availability.isEmpty ? "" : "@available(\(availability), *)")
             init(\#(FunctionParameterListSyntax(parameters).description)) {
                 \#(boundParameters.isEmpty ? "self.value = ._\(offset)" : #"self.value = ._\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(boundParameters.map({ "\($0.firstName.trimmed): \($0.firstName.trimmed)" }).joined(separator: ", "))\#(caseParameters.isEmpty ? "" : ")")"#)
                 \#((changeTracked + events)
@@ -57,12 +58,29 @@ struct Signature {
         """#
 
         self.`case` = #"""
-                case _\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(FunctionParameterListSyntax(boundParameters).description)\#(boundParameters.isEmpty ? "" : ")")
+                case _\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(FunctionParameterListSyntax(boundParameters.map({
+                    if availability.isEmpty {
+                        return $0
+                    } else {
+                        return $0
+                            .with(\.type, $0.type.is(OptionalTypeSyntax.self) ? TypeSyntax("Any?") : TypeSyntax("Any"))
+                            .with(\.defaultValue, nil)
+                    }
+                })).description)\#(boundParameters.isEmpty ? "" : ")")
         """#
 
         self.content = #"""
                 \#(boundParameters.isEmpty ? "case ._\(offset)" : "case let ._\(offset)(\(boundParameters.map(\.firstName.trimmed.description).joined(separator: ", ")))"):
                     \#(availability.isEmpty ? "" : "if #available(\(availability), *) {")
+                    \#(
+                        availability.isEmpty
+                            ? ""
+                            : boundParameters
+                            .map({
+                                "let \($0.firstName.trimmed.description) = \($0.firstName.trimmed.description) as\($0.type.is(OptionalTypeSyntax.self) ? "?" : "!") \($0.type.as(OptionalTypeSyntax.self)?.wrappedType ?? $0.type)"
+                            })
+                            .joined(separator: "\n")
+                    )
                     __content
                         \#(
                             availability.isEmpty
@@ -78,7 +96,7 @@ struct Signature {
                         )
                         .\#(decl.name.trimmed.text)(\#(parameters.map({
                             switch $0.type.as(IdentifierTypeSyntax.self)?.name.text {
-                            case "ViewReference":
+                            case "ViewReference", "ToolbarContentReference", "CustomizableToolbarContentReference":
                                 return $0.firstName.tokenKind == .wildcard ? "{ \($0.secondName!.text).resolve(on: element, in: context) }" : "\($0.firstName.text): { \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context) }"
                             case "TextReference":
                                 return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
@@ -146,6 +164,23 @@ extension FunctionParameterSyntax {
                 .with(\.type, TypeSyntax("ViewReference"))
                 .with(\.attributes, AttributeListSyntax([]))
                 .with(\.defaultValue, InitializerClauseSyntax(value: ExprSyntax(#"ViewReference(value: [])"#)))
+        } else if parameter.isToolbarContentBuilder {
+            // nested ToolbarContent is replaced with a `ToolbarContentReference` or a `CustomizableToolbarContentReference`.
+            if let function = parameter.type.as(FunctionTypeSyntax.self),
+               let returnType = function.returnClause.type.as(IdentifierTypeSyntax.self)?.name.text,
+               let genericType = generics[returnType]?.as(MemberTypeSyntax.self)?.name.text,
+               genericType == "CustomizableToolbarContent"
+            {
+                self = parameter
+                    .with(\.type, TypeSyntax("CustomizableToolbarContentReference"))
+                    .with(\.attributes, AttributeListSyntax([]))
+                    .with(\.defaultValue, InitializerClauseSyntax(value: ExprSyntax(#"CustomizableToolbarContentReference(value: [])"#)))
+            } else {
+                self = parameter
+                    .with(\.type, TypeSyntax("ToolbarContentReference"))
+                    .with(\.attributes, AttributeListSyntax([]))
+                    .with(\.defaultValue, InitializerClauseSyntax(value: ExprSyntax(#"ToolbarContentReference(value: [])"#)))
+            }
         } else if let functionType = parameter.type.as(FunctionTypeSyntax.self)
                                             ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self)
                                             ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(TupleTypeSyntax.self)?.elements.first?.type.as(FunctionTypeSyntax.self),
@@ -183,6 +218,10 @@ extension FunctionParameterSyntax {
         {
             // SwiftUI Bindings are replaced with a `ChangeTracked` value
             self = parameter.with(\.type, TypeSyntax("ChangeTracked\(raw: memberType.genericArgumentClause?.description ?? "")"))
+        } else if parameter.ellipsis != nil {
+            // variadic parameters become a single parameter
+            self = parameter
+                .with(\.ellipsis, nil)
         } else {
             self = parameter
         }
