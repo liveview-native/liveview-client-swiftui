@@ -18,24 +18,50 @@ public enum ParseableExpressionMacro: ExtensionMacro {
             || $0.name.tokenKind == .keyword(.internal)
         }).flatMap({ [$0] }) ?? []
         let signatures = declaration.memberBlock.members
-            .compactMap({ member -> FunctionParameterListSyntax? in
+            .compactMap({ member -> (FunctionParameterListSyntax, availability: AvailabilityArgumentListSyntax?)? in
                 guard let decl: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self),
                       diagnoseParameters(decl.signature.parameterClause.parameters, in: context)
                 else { return nil }
-                return decl.signature.parameterClause.parameters
+                return (decl.signature.parameterClause.parameters, availability: decl.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }).first)
             })
         return [
             try ExtensionDeclSyntax.init("extension \(type.trimmed): ParseableExpressionProtocol") {
                 try TypeAliasDeclSyntax("\(accessLevel) typealias _ParserType = StandardExpressionParser<Self>")
-                try FunctionDeclSyntax("\(accessLevel) static func arguments(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self>") {
-                    #""[".utf8"#
-                    FunctionCallExprSyntax(calledExpression: DeclReferenceExprSyntax(baseName: .identifier("OneOf")), trailingClosure: ClosureExprSyntax(statementsBuilder: {
+                try StructDeclSyntax("\(accessLevel) struct ExpressionArgumentsBody: Parser") {
+                    VariableDeclSyntax(.let, name: "context", type: TypeAnnotationSyntax(type: TypeSyntax("ParseableModifierContext")))
+                    try FunctionDeclSyntax("func parse(_ input: inout Substring.UTF8View) throws -> \(type.trimmed)") {
+                        #"try "[".utf8.parse(&input)"#
+                        "let copy = input"
                         for signature in signatures {
-                            signatureParser(signature)
+                            if let availability = signature.availability {
+                                "if #available(\(availability)) {"
+                            }
+                            "do {"
+                            "   return try"
+                            signatureParser(signature.0)
+                            "   .parse(&input)"
+                            "} catch {"
+                            "   input = copy"
+                            "}"
+                            if signature.availability != nil {
+                                "}"
+                            }
                         }
-                    })) {
-                        
+                        """
+                        throw ModifierParseError(error: .noMatchingClause(Output.name, \(ArrayExprSyntax(elementsBuilder: {
+                            for signature in signatures {
+                                ArrayElementSyntax(expression: ArrayExprSyntax(elementsBuilder: {
+                                    for argument in signature.0 {
+                                        ArrayElementSyntax(expression: StringLiteralExprSyntax(content: argument.firstName.text))
+                                    }
+                                }))
+                            }
+                        }))), metadata: context.metadata)
+                        """
                     }
+                }
+                try FunctionDeclSyntax("\(accessLevel) static func arguments(in context: ParseableModifierContext) -> ExpressionArgumentsBody") {
+                    "ExpressionArgumentsBody(context: context)"
                 }
             }
         ]
@@ -102,7 +128,7 @@ public enum ParseableExpressionMacro: ExtensionMacro {
         }
         
         return ExprSyntax(#"""
-        _ThrowingParse({ (wildcard: \#(wildcardType), labelled: \#(labelledType)) -> Self in
+        _ThrowingParse({ (wildcard: \#(wildcardType), labelled: \#(labelledType)) -> Output in
             \#(raw: labelledArguments.filter({ !$0.type.is(OptionalTypeSyntax.self) && $0.defaultValue == nil }).map({
                 if labelledArguments.count == 1 {
                     return """
@@ -116,7 +142,7 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                     """
                 }
             }).joined(separator: "\n"))
-            return Self.init(
+            return Output.init(
                 \#(raw: (
                     (
                         wildcardArguments.count == 1

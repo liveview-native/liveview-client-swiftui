@@ -102,7 +102,6 @@ struct ModifierGenerator: ParsableCommand {
         
         // fixme: missing types
         "accessibilityRotor",
-        "toolbar",
         "accessibilityChartDescriptor",
         "accessibilityFocused",
         "accessibilityQuickAction",
@@ -321,6 +320,7 @@ struct ModifierGenerator: ParsableCommand {
                 // remove duplicates
                 .reduce(into: [Signature]()) { result, next in
                     func isDuplicate(_ lhs: Signature, _ rhs: Signature) -> Bool {
+
                         guard lhs.parameters.count == rhs.parameters.count
                         else { return false }
                         for (a, b) in zip(lhs.parameters, rhs.parameters) {
@@ -337,6 +337,13 @@ struct ModifierGenerator: ParsableCommand {
                     }
                     result.append(next)
                 }
+                // `toolbar` modifier should only support `ToolbarContent` builders, not `ViewBuilder` content.
+                // This avoids ambiguity between the two builder types. `ViewBuilder` would always have precedence otherwise.
+                .filter({
+                    guard modifier == "toolbar"
+                    else { return true }
+                    return !$0.parameters.contains(where: { $0.type.as(IdentifierTypeSyntax.self)?.name.text == "ViewReference" })
+                })
             
             let requiresContext = signatures.contains(where: {
                 $0.parameters.contains(where: {
@@ -517,7 +524,7 @@ struct ModifierGenerator: ParsableCommand {
     func isValid(_ signature: FunctionDeclSyntax) -> Bool {
         for parameter in signature.signature.parameterClause.parameters {
             // ViewBuilder closures with arguments cannot be used.
-            if parameter.isViewBuilder
+            if (parameter.isViewBuilder || parameter.isToolbarContentBuilder)
                 && (parameter.type.as(FunctionTypeSyntax.self) ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self))?.parameters.count != 0
             {
                 return false

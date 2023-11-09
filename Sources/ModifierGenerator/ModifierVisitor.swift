@@ -6,6 +6,14 @@ import SwiftParser
 final class ModifierVisitor: SyntaxVisitor {
     var modifiers = [String: [(FunctionDeclSyntax, availability: (AvailabilityArgumentListSyntax, Set<String>))]]()
 
+    static let minimumAvailability = [
+        "iOS": VersionTupleSyntax(major: .integerLiteral("16"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "macOS":  VersionTupleSyntax(major: .integerLiteral("13"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "watchOS":  VersionTupleSyntax(major: .integerLiteral("9"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "tvOS":  VersionTupleSyntax(major: .integerLiteral("16"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "xrOS":  VersionTupleSyntax(major: .integerLiteral("1"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+    ]
+
     static func availability(_ base: AttributeListSyntax, _ decl: AttributeListSyntax) -> (AvailabilityArgumentListSyntax, Set<String>) {
         var availability = [String:PlatformVersionSyntax]()
         var unavailable = Set<String>()
@@ -24,6 +32,21 @@ final class ModifierVisitor: SyntaxVisitor {
                     unavailable.insert(platform)
                 }
             }
+        }
+
+        if unavailable.isEmpty && availability.values.allSatisfy({
+            if let version = $0.version {
+                guard let minimum = Self.minimumAvailability[$0.platform.text]
+                else { return false }
+                return version <= minimum
+            } else {
+                return true
+            }
+        }) && Set(["iOS", "macOS", "watchOS", "tvOS"]).isSubset(of: Set(availability.values.map(\.platform.text))) {
+            return (
+                AvailabilityArgumentListSyntax([]),
+                unavailable
+            )
         }
         
         return (
