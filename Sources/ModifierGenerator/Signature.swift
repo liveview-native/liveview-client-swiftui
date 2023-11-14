@@ -44,7 +44,19 @@ struct Signature {
 
         // Construct signature
 
+        let platformAvailability = availability.isEmpty
+            ? ""
+            : """
+            #if \(
+                availability
+                    .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
+                    .filter({ !unavailable.contains($0) })
+                    .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
+                    .joined(separator: " || "))
+            """
+
         self.`init` = #"""
+            \#(platformAvailability)
             \#(availability.isEmpty ? "" : "@available(\(availability), *)")
             init(\#(FunctionParameterListSyntax(parameters).description)) {
                 \#(boundParameters.isEmpty ? "self.value = ._\(offset)" : #"self.value = ._\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(boundParameters.map({ "\($0.firstName.trimmed): \($0.firstName.trimmed)" }).joined(separator: ", "))\#(caseParameters.isEmpty ? "" : ")")"#)
@@ -55,9 +67,11 @@ struct Signature {
                     .joined(separator: "\n")
                 )
             }
+            \#(platformAvailability.isEmpty ? "" : "#endif")
         """#
 
         self.`case` = #"""
+                \#(platformAvailability)
                 case _\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(FunctionParameterListSyntax(boundParameters.map({
                     if availability.isEmpty {
                         return $0
@@ -67,9 +81,11 @@ struct Signature {
                             .with(\.defaultValue, nil)
                     }
                 })).description)\#(boundParameters.isEmpty ? "" : ")")
+                \#(platformAvailability.isEmpty ? "" : "#endif")
         """#
 
         self.content = #"""
+                \#(platformAvailability)
                 \#(boundParameters.isEmpty ? "case ._\(offset)" : "case let ._\(offset)(\(boundParameters.map(\.firstName.trimmed.description).joined(separator: ", ")))"):
                     \#(availability.isEmpty ? "" : "if #available(\(availability), *) {")
                     \#(
@@ -82,18 +98,6 @@ struct Signature {
                             .joined(separator: "\n")
                     )
                     __content
-                        \#(
-                            availability.isEmpty
-                            ? ""
-                            : """
-                            #if \(
-                                availability
-                                    .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
-                                    .filter({ !unavailable.contains($0) })
-                                    .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
-                                    .joined(separator: " || "))
-                            """
-                        )
                         .\#(decl.name.trimmed.text)(\#(parameters.map({
                             switch $0.type.as(IdentifierTypeSyntax.self)?.name.text {
                             case "ViewReference", "ToolbarContentReference", "CustomizableToolbarContentReference":
@@ -124,8 +128,8 @@ struct Signature {
                                 return $0.firstName.tokenKind == .wildcard ? $0.secondName!.text : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)"
                             }
                         }).joined(separator: ", ")))
-                        \#(availability.isEmpty ? "" : "#endif")
                     \#(availability.isEmpty ? "" : "} else { __content }")
+                \#(platformAvailability.isEmpty ? "" : "#endif")
         """#
 
         self.properties = #"""

@@ -23,7 +23,11 @@ enum AnyPrimitiveButtonStyle: String, CaseIterable, ParseableModifierValue, Prim
         case .automatic:
             button.buttonStyle(.automatic)
         case .borderless:
-            button.buttonStyle(.borderless)
+            if #available(iOS 13, macOS 10.15, tvOS 17, watchOS 8, *) {
+                button.buttonStyle(.borderless)
+            } else {
+                button
+            }
         case .plain:
             button.buttonStyle(.plain)
         case .bordered:
