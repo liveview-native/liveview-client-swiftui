@@ -18,12 +18,19 @@ public enum ParseableExpressionMacro: ExtensionMacro {
             || $0.name.tokenKind == .keyword(.internal)
         }).flatMap({ [$0] }) ?? []
         let signatures = declaration.memberBlock.members
-            .compactMap({ member -> (FunctionParameterListSyntax, availability: AvailabilityArgumentListSyntax?)? in
-                guard let decl: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self),
+            .compactMap({ member -> (FunctionParameterListSyntax, availability: AvailabilityArgumentListSyntax?, ifConfig: ExprSyntax?)? in
+                let ifConfig: IfConfigClauseSyntax? = member.decl.as(IfConfigDeclSyntax.self)?.clauses.first?.as(IfConfigClauseSyntax.self)
+                guard let decl: InitializerDeclSyntax = member.decl.as(InitializerDeclSyntax.self)
+                        ?? ifConfig?.elements?.as(MemberBlockItemListSyntax.self)?.first?.decl.as(InitializerDeclSyntax.self),
                       diagnoseParameters(decl.signature.parameterClause.parameters, in: context)
                 else { return nil }
-                return (decl.signature.parameterClause.parameters, availability: decl.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }).first)
+                return (
+                    decl.signature.parameterClause.parameters,
+                    availability: decl.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }).first,
+                    ifConfig: ifConfig?.condition
+                )
             })
+        print(declaration.memberBlock.members)
         return [
             try ExtensionDeclSyntax.init("extension \(type.trimmed): ParseableExpressionProtocol") {
                 try TypeAliasDeclSyntax("\(accessLevel) typealias _ParserType = StandardExpressionParser<Self>")
@@ -33,6 +40,9 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                         #"try "[".utf8.parse(&input)"#
                         "let copy = input"
                         for signature in signatures {
+                            if let ifConfig = signature.ifConfig {
+                                "#if \(ifConfig)"
+                            }
                             if let availability = signature.availability {
                                 "if #available(\(availability)) {"
                             }
@@ -44,7 +54,10 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                             "   input = copy"
                             "}"
                             if signature.availability != nil {
-                                "}"
+                                "\n}"
+                            }
+                            if signature.ifConfig != nil {
+                                "\n#endif"
                             }
                         }
                         """

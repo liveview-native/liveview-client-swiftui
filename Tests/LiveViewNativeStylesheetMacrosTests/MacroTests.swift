@@ -18,10 +18,12 @@ final class MacroTests: XCTestCase {
             
                 static let name = "test"
             
+                #if os(iOS) || os(macOS)
                 init(_ width: Double?, height: Double?) {
                     self.width = width
                     self.height = height
                 }
+                #endif
             }
             """,
             expandedSource: """
