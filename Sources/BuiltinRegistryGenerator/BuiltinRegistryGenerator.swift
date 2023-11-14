@@ -23,6 +23,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "ToolbarItem",
         "ToolbarItemGroup",
         "ToolbarTitleMenu",
+        "ColorView",
     ]
     
     static let additionalViews = [
@@ -40,6 +41,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "Rectangle": "Shape(shape: Rectangle())",
         "RenameButton": "RenameButton()",
         "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
+        "Color": "ColorView()",
         "compiled-lvn-stylesheet": "CompiledLVNStylesheet<R>()",
     ]
     

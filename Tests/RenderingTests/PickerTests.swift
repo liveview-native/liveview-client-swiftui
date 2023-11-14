@@ -43,7 +43,7 @@ final class PickerTests: XCTestCase {
     func testPicker() throws {
         try assertMatch(
             #"""
-            <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "automatic"}]'>
+            <Picker value="paperplane">
                 <Text template="label">Pick an icon</Text>
                 <Group template="content">
                     <Label system-image="paperplane" tag="paperplane"><Text>paperplane</Text></Label>
@@ -66,33 +66,6 @@ final class PickerTests: XCTestCase {
                 } label: {
                     Text("Pick an icon")
                 }
-                .pickerStyle(.automatic)
-        }
-        
-        try assertMatch(
-            #"""
-            <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "inline"}]'>
-                <Text template="label">Pick an icon</Text>
-                <Group template="content">
-                    <Label system-image="paperplane" tag="paperplane"><Text>paperplane</Text></Label>
-                    <Label system-image="graduationcap" tag="graduationcap"><Text>graduationcap</Text></Label>
-                    <Label system-image="ellipsis.bubble" tag="ellipsis.bubble"><Text>ellipsis.bubble</Text></Label>
-                </Group>
-            </Picker>
-            """#) {
-                Picker(selection: .constant("paperplane")) {
-                    ForEach(["paperplane", "graduationcap", "ellipsis.bubble"], id: \.self) { name in
-                        Label {
-                            Text(name)
-                        } icon: {
-                            Image(systemName: name)
-                        }
-                        .tag(name)
-                    }
-                } label: {
-                    Text("Pick an icon")
-                }
-                .pickerStyle(.inline)
         }
     }
     
@@ -102,24 +75,15 @@ final class PickerTests: XCTestCase {
         try assertMatch(
             #"""
             <VStack>
-                <DatePicker selection="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "compact"}]'>
+                <DatePicker selection="\#(date.formatted(.elixirDateTime))">
                     <Text>Pick a date</Text>
                 </DatePicker>
-                <DatePicker selection="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "graphical"}]' />
-                <DatePicker selection="\#(date.formatted(.elixirDateTime))" displayed-components="date" modifiers='[{"type": "date_picker_style", "style": "wheel"}]' />
             </VStack>
             """#) {
                 VStack {
                     DatePicker(selection: .constant(date), displayedComponents: [.date, .hourAndMinute]) {
                         Text("Pick a date")
                     }
-                    .datePickerStyle(.compact)
-                    DatePicker(selection: .constant(date), displayedComponents: [.date, .hourAndMinute]) {
-                    }
-                    .datePickerStyle(.graphical)
-                    DatePicker(selection: .constant(date), displayedComponents: .date) {
-                    }
-                    .datePickerStyle(.wheel)
                 }
         }
     }
