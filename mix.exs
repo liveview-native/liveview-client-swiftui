@@ -17,6 +17,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
         extras: [
           "guides/introduction/about.md",
           "guides/architecture/architecture.md",
+          "guides/architecture/modifiers.md",
           "guides/architecture/navigation.md",
           "guides/architecture/updates.md",
         ],
