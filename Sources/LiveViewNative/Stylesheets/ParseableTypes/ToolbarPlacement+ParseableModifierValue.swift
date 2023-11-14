@@ -16,14 +16,18 @@ extension ToolbarPlacement: ParseableModifierValue {
                 #if os(macOS)
                 AccessoryBar.parser(in: context).map({ Self.accessoryBar(id: $0.id) })
                 #endif
-                #if !os(tvOS)
-                ConstantAtomLiteral("bottomBar").map({ Self.bottomBar })
+                #if !os(tvOS) && !os(macOS)
+                if #available(watchOS 10, *) {
+                    ConstantAtomLiteral("bottomBar").map({ Self.bottomBar })
+                }
                 #endif
                 #if os(xrOS)
                 ConstantAtomLiteral("bottomOrnament").map({ Self.bottomOrnament })
                 #endif
+                #if !os(macOS)
                 ConstantAtomLiteral("navigationBar").map({ Self.navigationBar })
-                #if !os(watchOS)
+                #endif
+                #if !os(watchOS) && !os(macOS)
                 ConstantAtomLiteral("tabBar").map({ Self.tabBar })
                 #endif
                 #if os(macOS)

@@ -108,13 +108,10 @@ struct ModifierGenerator: ParsableCommand {
         "accessibilityChartDescriptor",
         "accessibilityFocused",
         "accessibilityQuickAction",
-        "controlGroupStyle",
         "copyable",
         "cuttable",
-        "datePickerStyle",
         "defaultFocus",
         "digitalCrownRotation",
-        "disclosureGroupStyle",
         "draggable",
         "dropDestination",
         "exportableToServices",
@@ -123,21 +120,11 @@ struct ModifierGenerator: ParsableCommand {
         "fileImporter",
         "fileMover",
         "focused",
-        "formStyle",
-        "gaugeStyle",
         "gesture",
-        "groupBoxStyle",
         "highPriorityGesture",
         "importableFromServices",
         "importsItemProviders",
-        "indexViewStyle",
         "itemProvider",
-        "labelStyle",
-        "labeledContentStyle",
-        "listStyle",
-        "menuButtonStyle",
-        "menuStyle",
-        "navigationSplitViewStyle",
         "onContinuousHover",
         "onContinueUserActivity",
         "onCopyCommand",
@@ -150,11 +137,7 @@ struct ModifierGenerator: ParsableCommand {
         "onTapGesture",
         "pageCommand",
         "pasteDestination",
-        "pickerStyle",
         "presentationDetents",
-        "presentedWindowStyle",
-        "presentedWindowToolbarStyle",
-        "progressViewStyle",
         "scrollPosition",
         "scrollTargetBehavior",
         "searchCompletion",
@@ -162,11 +145,7 @@ struct ModifierGenerator: ParsableCommand {
         "sensoryFeedback",
         "simultaneousGesture",
         "symbolEffect",
-        "tabViewStyle",
-        "tableStyle",
-        "textEditorStyle",
         "textSelection",
-        "toggleStyle",
         "transaction",
         "userActivity",
         "allowedDynamicRange",
@@ -236,7 +215,6 @@ struct ModifierGenerator: ParsableCommand {
         "fontDesign",
         "defaultHoverEffect",
         "listRowHoverEffect",
-        "preferredColorScheme",
         "focusScope",
         "hoverEffect",
         "listItemTint",
@@ -274,10 +252,8 @@ struct ModifierGenerator: ParsableCommand {
         "accessibilityElement",
         "listSectionSeparatorTint",
         "popover",
-
-        // fixme: variadic enum cases
-        "toolbarBackground",
-        "toolbarColorScheme",
+        "presentedWindowStyle",
+        "presentedWindowToolbarStyle",
 
         // fixme: labelled argument ordering
         "mask",
@@ -357,6 +333,7 @@ struct ModifierGenerator: ParsableCommand {
                 static var name: String { "\#(modifier)" }
 
                 enum Value {
+                    case _never
             \#(signatures.map(\.case).joined(separator: "\n"))
                 }
 
@@ -371,6 +348,8 @@ struct ModifierGenerator: ParsableCommand {
 
                 func body(content __content: Content) -> some View {
                     switch value {
+                    case ._never:
+                        fatalError("unreachable")
             \#(signatures.map(\.content).joined(separator: "\n"))
                     }
                 }
@@ -519,8 +498,6 @@ struct ModifierGenerator: ParsableCommand {
     }
 
     func isValid(_ signature: FunctionDeclSyntax) -> Bool {
-        let availability = signature.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })
-
         for parameter in signature.signature.parameterClause.parameters {
             let functionType = (parameter.type.as(FunctionTypeSyntax.self) ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self))
             // ViewBuilder closures with arguments cannot be used.

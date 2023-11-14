@@ -67,7 +67,9 @@ extension HierarchicalShapeStyle: ParseableModifierValue {
             ConstantAtomLiteral("secondary").map({ .secondary })
             ConstantAtomLiteral("tertiary").map({ .tertiary })
             ConstantAtomLiteral("quaternary").map({ .quaternary })
-            ConstantAtomLiteral("quinary").map({ .quinary })
+            if #available(tvOS 17, watchOS 10, *) {
+                ConstantAtomLiteral("quinary").map({ .quinary })
+            }
         }
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+#if os(iOS) || os(tvOS) || os(xrOS)
 extension UIKeyboardType: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -26,3 +27,4 @@ extension UIKeyboardType: ParseableModifierValue {
         ])
     }
 }
+#endif
