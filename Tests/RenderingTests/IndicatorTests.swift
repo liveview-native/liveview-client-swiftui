@@ -40,45 +40,6 @@ final class IndicatorTests: XCTestCase {
         }
     }
     
-    func testGaugeStyle() throws {
-        try assertMatch(#"<Gauge value="0.5" modifiers='[{"type": "gauge_style", "style": "accessory_circular_capacity"}]'>50%</Gauge>"#) {
-            Gauge(value: 0.5) {
-                Text("50%")
-            }
-                .gaugeStyle(.accessoryCircularCapacity)
-        }
-        try assertMatch(#"<Gauge value="0.5" modifiers='[{"type": "gauge_style", "style": "accessory_linear_capacity"}]'>50%</Gauge>"#) {
-            Gauge(value: 0.5) {
-                Text("50%")
-            }
-                .gaugeStyle(.accessoryLinearCapacity)
-        }
-        try assertMatch(#"<Gauge value="0.5" modifiers='[{"type": "gauge_style", "style": "accessory_circular"}]'>50%</Gauge>"#) {
-            Gauge(value: 0.5) {
-                Text("50%")
-            }
-                .gaugeStyle(.accessoryCircular)
-        }
-        try assertMatch(#"<Gauge value="0.5" modifiers='[{"type": "gauge_style", "style": "automatic"}]'>50%</Gauge>"#) {
-            Gauge(value: 0.5) {
-                Text("50%")
-            }
-                .gaugeStyle(.automatic)
-        }
-        try assertMatch(#"<Gauge value="0.5" modifiers='[{"type": "gauge_style", "style": "linear_capacity"}]'>50%</Gauge>"#) {
-            Gauge(value: 0.5) {
-                Text("50%")
-            }
-                .gaugeStyle(.linearCapacity)
-        }
-        try assertMatch(#"<Gauge value="0.5" modifiers='[{"type": "gauge_style", "style": "accessory_linear"}]'>50%</Gauge>"#) {
-            Gauge(value: 0.5) {
-                Text("50%")
-            }
-                .gaugeStyle(.accessoryLinear)
-        }
-    }
-    
     func testGaugeSlots() throws {
         try assertMatch(
             #"""

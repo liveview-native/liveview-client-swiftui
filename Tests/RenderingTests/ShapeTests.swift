@@ -19,16 +19,16 @@ final class ShapeTests: XCTestCase {
     
     func testRoundedRectangle() throws {
         try assertMatch(#"<RoundedRectangle corner-radius="5" />"#, size: .init(width: 100, height: 50)) {
-            RoundedRectangle(cornerRadius: 5)
+            RoundedRectangle(cornerRadius: 5, style: .circular)
         }
         try assertMatch(#"<RoundedRectangle corner-width="5" corner-height="10" />"#, size: .init(width: 100, height: 50)) {
-            RoundedRectangle(cornerSize: .init(width: 5, height: 10))
+            RoundedRectangle(cornerSize: .init(width: 5, height: 10), style: .circular)
         }
         try assertMatch(#"<RoundedRectangle corner-width="5" corner-radius="15" />"#, size: .init(width: 100, height: 50)) {
-            RoundedRectangle(cornerSize: .init(width: 5, height: 15))
+            RoundedRectangle(cornerSize: .init(width: 5, height: 15), style: .circular)
         }
         try assertMatch(#"<RoundedRectangle corner-height="5" corner-radius="15" />"#, size: .init(width: 100, height: 50)) {
-            RoundedRectangle(cornerSize: .init(width: 15, height: 5))
+            RoundedRectangle(cornerSize: .init(width: 15, height: 5), style: .circular)
         }
         try assertMatch(#"<RoundedRectangle corner-radius="10" style="continuous" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -49,10 +49,10 @@ final class ShapeTests: XCTestCase {
     
     func testCapsule() throws {
         try assertMatch(#"<Capsule />"#, size: .init(width: 100, height: 50)) {
-            Capsule()
+            Capsule(style: .circular)
         }
         try assertMatch(#"<Capsule />"#, size: .init(width: 50, height: 100)) {
-            Capsule()
+            Capsule(style: .circular)
         }
         try assertMatch(#"<Capsule style="continuous" />"#, size: .init(width: 100, height: 50)) {
             Capsule(style: .continuous)

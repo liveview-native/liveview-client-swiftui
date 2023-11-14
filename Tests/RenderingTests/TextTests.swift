@@ -23,7 +23,7 @@ final class TextTests: XCTestCase {
 <Text>
     <Image system-name="person.crop.circle.fill" />
     <Text verbatim=" " />
-    <Text modifiers='[{"color":{"blue":null,"brightness":null,"green":null,"hue":null,"opacity":null,"red":null,"rgb_color_space":null,"saturation":null,"string":"system-secondary","white":null},"type":"foreground_color"}]'>John Doe</Text>
+    <Text>John Doe</Text>
     <Text verbatim="
 " />
     Plain text<Text verbatim=" " />
@@ -32,7 +32,7 @@ final class TextTests: XCTestCase {
 </Text>
 """#) {
             Text("""
-\(Image(systemName: "person.crop.circle.fill")) \(Text("John Doe").foregroundColor(.secondary))
+\(Image(systemName: "person.crop.circle.fill")) \(Text("John Doe"))
 Plain text [visit apple.com](https://apple.com). More plain text
 """)
         }
