@@ -20,7 +20,6 @@ jobs:
       - name: Run tests on iOS Simulator
         shell: bash
         run: |
-          sudo xcode-select --switch /Applications/Xcode.app
           xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
           xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator17.0 -destination "OS=17.0,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath TestResults
       - uses: kishikawakatsumi/xcresulttool@v1
