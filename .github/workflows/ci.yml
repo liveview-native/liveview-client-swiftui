@@ -22,7 +22,7 @@ jobs:
         run: |
           sudo xcode-select --switch /Applications/Xcode.app
           xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
-          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath TestResults
+          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator17.0 -destination "OS=17.0,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath TestResults
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: TestResults.xcresult
@@ -41,12 +41,12 @@ jobs:
       - name: Build for macOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk macosx13.3 -destination "platform=macOS"
+          xcodebuild -scheme LiveViewNative-Package -sdk macosx13.6 -destination "platform=macOS"
       - name: Build for watchOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
+          xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator10.0 -destination "OS=10.0,name=Apple Watch Series 8 (45mm)"
       - name: Build for tvOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk appletvos16.4 -destination "name=Any tvOS Device"
+          xcodebuild -scheme LiveViewNative-Package -sdk appletvos17.0 -destination "name=Any tvOS Device"
