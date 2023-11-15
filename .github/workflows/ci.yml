@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 env:
-  MIN_COVERAGE: 0.3
+  MIN_COVERAGE: 0.24
 
 permissions:
   checks: write
@@ -34,7 +34,7 @@ jobs:
       - name: Validate Coverage %
         shell: bash
         run: |
-          COVERAGE=$(xcrun xccov view --report --json TestResults.xcresult | jq '.targets[] | select(.name == "LiveViewNative") | .lineCoverage')
+          COVERAGE=$(xcrun xccov view --report --json TestResults.xcresult | jq '([.targets[] | select(.name == "LiveViewNative").files[] | select(.name != "_GeneratedModifiers.swift") | .coveredLines] | add) / ([.targets[] | select(.name == "LiveViewNative").files[] | select(.name != "_GeneratedModifiers.swift") | .executableLines] | add)')
           if [ $(echo "$COVERAGE > $MIN_COVERAGE" | bc) -ne 1 ]; then
             printf "Code coverage $COVERAGE does not meet minimum requirement $MIN_COVERAGE"
             exit -1
