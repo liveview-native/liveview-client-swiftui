@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
-          xcodebuild test -scheme LiveViewNative-Package -destination "OS=17.0,name=iPhone 15 Pro" -enableCodeCoverage YES -resultBundlePath TestResults -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild test -scheme LiveViewNative-Package -destination "platform=iOS Simulator,OS=17.0,name=iPhone 15 Pro" -enableCodeCoverage YES -resultBundlePath TestResults -skipMacroValidation -skipPackagePluginValidation
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: TestResults.xcresult
@@ -44,8 +44,8 @@ jobs:
       - name: Build for watchOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "OS=10.0,name=Apple Watch Series 9 (45mm)" -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=watchOS Simulator,OS=10.0,name=Apple Watch Series 9 (45mm)" -skipMacroValidation -skipPackagePluginValidation
       - name: Build for tvOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=tvOS Simulator,name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation
