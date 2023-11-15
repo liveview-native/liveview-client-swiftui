@@ -25,7 +25,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
-      {:live_view_native_platform, "0.2.0-beta.0"},
+      {:live_view_native_platform, "0.2.0-beta.1"},
       {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet"},
       {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"}
