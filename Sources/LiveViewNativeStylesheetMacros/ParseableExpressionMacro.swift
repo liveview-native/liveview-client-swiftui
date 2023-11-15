@@ -30,7 +30,6 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                     ifConfig: ifConfig?.condition
                 )
             })
-        print(declaration.memberBlock.members)
         return [
             try ExtensionDeclSyntax.init("extension \(type.trimmed): ParseableExpressionProtocol") {
                 try TypeAliasDeclSyntax("\(accessLevel) typealias _ParserType = StandardExpressionParser<Self>")
