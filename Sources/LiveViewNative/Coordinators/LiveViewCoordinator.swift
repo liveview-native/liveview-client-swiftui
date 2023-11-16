@@ -138,11 +138,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         if let diffPayload = replyPayload["diff"] as? Payload {
             try self.handleDiff(payload: diffPayload, baseURL: self.url)
-        } else if session.configuration.navigationMode.permitsRedirects,
-                  let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
+        } else if let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
             try await session.redirect(redirect)
-        } else if session.configuration.navigationMode.permitsRedirects,
-                  let redirect = (replyPayload["redirect"] as? Payload),
+        } else if let redirect = (replyPayload["redirect"] as? Payload),
                   let destination = (redirect["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
         {
             try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
@@ -378,8 +376,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         
                         await self.disconnect()
                         
-                        if self.session.configuration.navigationMode.permitsRedirects,
-                           let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
+                        if let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
                             continuation.yield(.redirect(redirect))
                         } else {
                             continuation.finish(throwing: LiveConnectionError.joinError(message))

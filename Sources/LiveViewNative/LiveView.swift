@@ -43,13 +43,11 @@ public macro LiveView<Host: LiveViewHost>(
 /// ### See Also
 /// - ``LiveViewModel``
 public struct LiveView<R: RootRegistry>: View {
-    @State private var hasAppeared = false
-    
-    @StateObject var storage: LiveSessionCoordinatorStorage
-    
-    @State private var hasSetupNavigationControllerDelegate = false
+    @StateObject var session: LiveSessionCoordinator<R>
     
     @ObservedObject private var rootCoordinator: LiveViewCoordinator<R>
+    
+    @StateObject private var liveViewModel = LiveViewModel()
     
     @Environment(\.scenePhase) private var scenePhase
     
@@ -57,7 +55,7 @@ public struct LiveView<R: RootRegistry>: View {
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
     public init(session: LiveSessionCoordinator<R>) {
-        self._storage = .init(wrappedValue: .init(session: session))
+        self._session = .init(wrappedValue: session)
         self.rootCoordinator = session.navigationPath.first!.coordinator
     }
     
@@ -68,28 +66,22 @@ public struct LiveView<R: RootRegistry>: View {
     public init(url: URL, configuration: LiveSessionConfiguration = .init()) {
         self.init(session: .init(url, config: configuration))
     }
-    
-    final class LiveSessionCoordinatorStorage: ObservableObject {
-        var session: LiveSessionCoordinator<R>
-        
-        var cancellable: AnyCancellable?
-        
-        init(session: LiveSessionCoordinator<R>) {
-            self.session = session
-            self.cancellable = session.objectWillChange.sink { [weak self] _ in
-                self?.objectWillChange.send()
-            }
-        }
-    }
 
     public var body: some View {
-        SwiftUI.VStack {
-            switch storage.session.state {
+        SwiftUI.Group {
+            switch session.state {
             case .connected:
-                rootNavEntry
+                if let rootLayout = session.rootLayout {
+                    self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
+                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
+                } else {
+                    PhxMain<R>()
+                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
+                        .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: session.url))
+                }
             default:
                 if R.LoadingView.self == Never.self {
-                    switch storage.session.state {
+                    switch session.state {
                     case .connected:
                         fatalError()
                     case .notConnected:
@@ -136,104 +128,32 @@ public struct LiveView<R: RootRegistry>: View {
                         }
                     }
                 } else {
-                    R.loadingView(for: storage.session.url, state: storage.session.state)
+                    R.loadingView(for: session.url, state: session.state)
                 }
             }
         }
-            .task {
-                await storage.session.connect()
-            }
-            .onChange(of: scenePhase) { newValue in
-                guard case .active = newValue,
-                      storage.session.socket?.isConnected == false
-                else { return }
-                Task {
-                    await storage.session.connect()
-                }
-            }
-    }
-        
-    @ViewBuilder
-    private var rootNavEntry: some View {
-        switch storage.session.configuration.navigationMode {
-        case .enabled:
-            navigationStack
-        case .splitView:
-            navigationSplitView
-        case let .tabView(tabs):
-            tabView(tabs)
-        default:
-            navigationRoot
+        .environmentObject(session)
+        .environmentObject(liveViewModel)
+        .task {
+            await session.connect()
         }
-    }
-    
-    @ViewBuilder
-    private var navigationStack: some View {
-        NavigationStack(path: Binding {
-            storage.session.navigationPath.dropFirst()
-        } set: { value in
-            storage.session.navigationPath[1...] = value
-        }) {
-            navigationRoot
-                .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
-                    NavStackEntryView(entry)
-                }
-        }
-    }
-    @ViewBuilder
-    private var navigationSplitView: some View {
-        NavigationSplitView {
-            navigationRoot
-        } detail: {
-            NavigationStack(path: Binding<[LiveNavigationEntry<R>]> {
-                Array(storage.session.navigationPath.dropFirst())
-            } set: { value in
-                var result = value
-                if let first = storage.session.navigationPath.first {
-                    result.insert(first, at: 0)
-                }
-                storage.session.navigationPath = result
-            }) {
-                SwiftUI.Group {
-                    if let entry = storage.session.navigationPath.first {
-                        NavStackEntryView(entry)
-                    }
-                }
-                .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
-                    NavStackEntryView(entry)
-                }
-            }
-        }
-    }
-    
-    @State private var selectedTab: URL?
-    @ViewBuilder
-    private func tabView(_ tabs: [LiveSessionConfiguration.NavigationMode.Tab]) -> some View {
-        SwiftUI.TabView(selection: $selectedTab) {
-            ForEach(tabs) { tab in
-                NavigationStack(path: $storage.session.navigationPath) {
-                    NavStackEntryView(.init(url: selectedTab ?? storage.session.url, coordinator: rootCoordinator))
-                        .navigationDestination(for: LiveNavigationEntry<R>.self) { entry in
-                            NavStackEntryView(entry)
-                        }
-                }
-                    .tabItem {
-                        tab.label
-                    }
-                    .tag(URL?.some(tab.url))
-            }
-        }
-        .onChange(of: selectedTab) { newValue in
-            guard let newValue else { return }
+        .onChange(of: scenePhase) { newValue in
+            guard case .active = newValue,
+                  session.socket?.isConnected == false
+            else { return }
             Task {
-                storage.session.navigationPath.first!.coordinator.url = newValue
-                await storage.session.reconnect()
+                await session.connect()
             }
         }
     }
+}
+
+struct PhxMain<R: RootRegistry>: View {
+    @LiveContext<R> private var context
+    @EnvironmentObject private var session: LiveSessionCoordinator<R>
     
-    private var navigationRoot: some View {
-        NavStackEntryView(.init(url: storage.session.url, coordinator: rootCoordinator))
+    var body: some View {
+        NavStackEntryView(.init(url: session.url, coordinator: context.coordinator))
     }
 }
 

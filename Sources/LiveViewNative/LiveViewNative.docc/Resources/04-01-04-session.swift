@@ -6,7 +6,7 @@ struct ContentView: View {
     var body: some View {
         LiveView<MyRegistry>(
             .localhost(path: "cats"),
-            configuration: LiveSessionConfiguration(navigationMode: .enabled)
+            configuration: LiveSessionConfiguration()
         )
     }
 }
