@@ -53,24 +53,21 @@ import Combine
 public struct ObservedElement {
     @Environment(\.element.nodeRef) private var nodeRef: NodeRef?
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
-    @StateObject private var observer: Observer
+    @EnvironmentObject private var observer: Observer
     
     private let overrideElement: ElementNode?
     
     /// Creates an `ObservedElement` that observes changes to the view's element.
     public init(observeChildren: Bool = false) {
         self.overrideElement = nil
-        self._observer = .init(wrappedValue: .init(observeChildren: observeChildren))
     }
     
     public init(element: ElementNode, observeChildren: Bool = false) {
         self.overrideElement = element
-        self._observer = .init(wrappedValue: .init(observeChildren: observeChildren))
     }
     
     public init() {
         self.overrideElement = nil
-        self._observer = .init(wrappedValue: .init(observeChildren: false))
     }
     
     /// The observed element in the document, with all current data.
@@ -97,45 +94,33 @@ public struct ObservedElement {
 
 extension ObservedElement: DynamicProperty {
     public func update() {
-        guard let nodeRef,
-              let coordinator else {
+        guard let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
         self.observer.update(
-            ref: nodeRef,
-            children: self.observer.observeChildren ? coordinator.document[nodeRef].children().map(\.id) : nil,
-            elementChanged: coordinator.elementChanged
+            coordinator
         )
     }
 }
 
 extension ObservedElement {
-    private class Observer: ObservableObject {
+    final class Observer: ObservableObject {
         private var cancellable: AnyCancellable?
-        fileprivate var observeChildren = false
         
-        let objectWillChange = ObjectWillChangePublisher()
+        let id: NodeRef
         
-        init(observeChildren: Bool) {
-            self.observeChildren = observeChildren
+        var objectWillChange = ObjectWillChangePublisher()
+        
+        init(_ id: NodeRef) {
+            self.id = id
         }
         
-        fileprivate func update(ref: NodeRef, children: [NodeRef]?, elementChanged: AnyPublisher<NodeRef, Never>) {
-            if cancellable == nil {
-                cancellable = elementChanged
-                    .filter { [weak self] in
-                        if $0 == ref {
-                            return true
-                        } else if self?.observeChildren == true {
-                            return children?.contains($0) ?? false
-                        } else {
-                            return false
-                        }
-                    }
-                    .sink { [unowned self] _ in
-                        self.objectWillChange.send()
-                    }
-            }
+        fileprivate func update(_ context: CoordinatorEnvironment) {
+            guard cancellable == nil else { return }
+            cancellable = context.elementChanged(id)
+                .sink { [weak self] _ in
+                    self?.objectWillChange.send()
+                }
         }
     }
 }

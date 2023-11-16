@@ -51,14 +51,14 @@ private struct LiveContextStorageKey: EnvironmentKey {
 /// This exists to type-erase the coordinator, since environment properties can't be generic.
 struct CoordinatorEnvironment {
     let pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void
-    let elementChanged: AnyPublisher<NodeRef, Never>
+    let elementChanged: (NodeRef) -> ObservableObjectPublisher
     let document: Document
     
     @MainActor
     init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>, document: Document) {
         self.pushEvent = coordinator.pushEvent
         self.document = document
-        self.elementChanged = coordinator.elementChanged.eraseToAnyPublisher()
+        self.elementChanged = coordinator.elementChanged(_:)
     }
     
     fileprivate struct Key: EnvironmentKey {

@@ -38,7 +38,15 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private var channel: Channel?
     
     @Published var document: LiveViewNativeCore.Document?
-    let elementChanged = PassthroughSubject<NodeRef, Never>()
+    private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
+    func elementChanged(_ ref: NodeRef) -> ObjectWillChangePublisher {
+        guard let subject = elementChangedSubjects[ref] else {
+            let newSubject = ObjectWillChangePublisher()
+            elementChangedSubjects[ref] = newSubject
+            return newSubject
+        }
+        return subject
+    }
     private var rendered: Root!
     internal let builder = ViewTreeBuilder<R>()
     
@@ -399,13 +407,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             case .leaf:
                 // text nodes don't have their own views, changes to them need to be handled by the parent Text view
                 if let parent = doc.getParent(nodeRef) {
-                    self.elementChanged.send(parent)
+                    self.elementChanged(nodeRef).send()
                 } else {
-                    self.elementChanged.send(nodeRef)
+                    self.elementChanged(nodeRef).send()
                 }
             case .element:
                 // when a single element changes, send an update only to that element.
-                self.elementChanged.send(nodeRef)
+                self.elementChanged(nodeRef).send()
             }
         }
         self.handleEvents(payload: renderedPayload)
