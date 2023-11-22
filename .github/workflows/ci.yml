@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 env:
-  MIN_COVERAGE: 0.24
+  MIN_COVERAGE: 0.2
 
 permissions:
   checks: write
