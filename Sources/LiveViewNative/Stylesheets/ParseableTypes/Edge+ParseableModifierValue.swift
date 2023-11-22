@@ -55,3 +55,29 @@ extension EdgeInsets: ParseableModifierValue {
         }
     }
 }
+
+extension HorizontalEdge.Set: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            ImplicitStaticMember([
+                "leading": .leading,
+                "trailing": .trailing,
+                "all": .all,
+            ])
+            Array<Self>.parser(in: context).map({ Self.init($0) })
+        }
+    }
+}
+
+extension VerticalEdge.Set: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            ImplicitStaticMember([
+                "top": top,
+                "bottom": bottom,
+                "all": all,
+            ])
+            Array<Self>.parser(in: context).map({ Self.init($0) })
+        }
+    }
+}
