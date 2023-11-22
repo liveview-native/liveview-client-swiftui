@@ -30,19 +30,19 @@ struct AnyCoordinateSpaceProtocol: ParseableModifierValue {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return ImplicitStaticMember {
                 OneOf {
-                    "scrollView".utf8.map({ Self.init(.scrollView) })
+                    ConstantAtomLiteral("scrollView").map({ Self.init(.scrollView) })
                     ScrollView.parser(in: context).map({ Self.init(.scrollView(axis: $0.axis)) })
                     Named.parser(in: context).map({ Self.init(.named($0.name)) })
-                    "local".utf8.map({ Self.init(.local) })
-                    "global".utf8.map({ Self.init(.global) })
+                    ConstantAtomLiteral("local").map({ Self.init(.local) })
+                    ConstantAtomLiteral("global").map({ Self.init(.global) })
                 }
             }.eraseToAnyParser()
         } else {
             return ImplicitStaticMember {
                 OneOf {
                     Named.parser(in: context).map({ Self.init(coordinateSpace: .named(AnyHashable($0.name))) })
-                    "local".utf8.map({ Self.init(coordinateSpace: .local) })
-                    "global".utf8.map({ Self.init(coordinateSpace: .global) })
+                    ConstantAtomLiteral("local").map({ Self.init(coordinateSpace: .local) })
+                    ConstantAtomLiteral("global").map({ Self.init(coordinateSpace: .global) })
                 }
             }.eraseToAnyParser()
         }

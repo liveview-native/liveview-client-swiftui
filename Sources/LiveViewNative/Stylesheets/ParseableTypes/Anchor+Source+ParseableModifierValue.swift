@@ -12,7 +12,7 @@ extension Anchor<CGRect>.Source: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
-                "bounds".utf8.map({ Self.bounds })
+                ConstantAtomLiteral("bounds").map({ Self.bounds })
                 Rect.parser(in: context).map({ Self.rect($0.r) })
             }
         }

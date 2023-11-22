@@ -12,14 +12,13 @@ extension ButtonBorderShape: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
-//                automatic, capsule, circle, roundedRectangle, roundedRectangle(radius:CGFloat)
-                "automatic".utf8.map({ Self.automatic })
-                "capsule".utf8.map({ Self.capsule })
+                ConstantAtomLiteral("automatic").map({ Self.automatic })
+                ConstantAtomLiteral("capsule").map({ Self.capsule })
                 if #available(iOS 17.0, macOS 14.0, tvOS 16.4, watchOS 10.0, *) {
-                    "circle".utf8.map({ Self.circle })
+                    ConstantAtomLiteral("circle").map({ Self.circle })
                 }
                 RoundedRectangle.parser(in: context).map({ Self.roundedRectangle(radius: $0.radius) })
-                "roundedRectangle".utf8.map({ Self.roundedRectangle })
+                ConstantAtomLiteral("roundedRectangle").map({ Self.roundedRectangle })
             }
         }
     }

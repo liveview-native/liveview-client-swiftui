@@ -12,10 +12,10 @@ extension SearchFieldPlacement: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
-                "automatic".utf8.map({ Self.automatic })
-                "toolbar".utf8.map({ Self.toolbar })
-                "sidebar".utf8.map({ Self.sidebar })
-                "navigationBarDrawer".utf8.map({ Self.navigationBarDrawer })
+                ConstantAtomLiteral("automatic").map({ Self.automatic })
+                ConstantAtomLiteral("toolbar").map({ Self.toolbar })
+                ConstantAtomLiteral("sidebar").map({ Self.sidebar })
+                ConstantAtomLiteral("navigationBarDrawer").map({ Self.navigationBarDrawer })
                 NavigationBarDrawer.parser(in: context).map({ Self.navigationBarDrawer(displayMode: $0.displayMode) })
             }
         }

@@ -12,7 +12,7 @@ extension ListItemTint: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
-                "monochrome".utf8.map({ Self.monochrome })
+                ConstantAtomLiteral("monochrome").map({ Self.monochrome })
                 Fixed.parser(in: context).map({ Self.fixed($0.tint) })
                 Preferred.parser(in: context).map({ Self.preferred($0.tint) })
             }

@@ -12,8 +12,8 @@ extension PresentationDetent: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
-                "large".utf8.map({ Self.large })
-                "medium".utf8.map({ Self.medium })
+                ConstantAtomLiteral("large").map({ Self.large })
+                ConstantAtomLiteral("medium").map({ Self.medium })
                 Fraction.parser(in: context).map({ Self.fraction($0.fraction) })
                 Height.parser(in: context).map({ Self.height($0.height) })
             }

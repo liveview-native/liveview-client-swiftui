@@ -13,13 +13,13 @@ extension ContentTransition: ParseableModifierValue {
 //        identity, interpolate, numericText(countsDown:), numericText(value:), opacity, symbolEffect, symbolEffect(_:options:)
         ImplicitStaticMember {
             OneOf {
-                "identity".utf8.map({ Self.identity })
-                "interpolate".utf8.map({ Self.interpolate })
-                "opacity".utf8.map({ Self.opacity })
-                "opacity".utf8.map({ Self.opacity })
+                ConstantAtomLiteral("identity").map({ Self.identity })
+                ConstantAtomLiteral("interpolate").map({ Self.interpolate })
+                ConstantAtomLiteral("opacity").map({ Self.opacity })
+                ConstantAtomLiteral("opacity").map({ Self.opacity })
                 NumericText.parser(in: context).map(\.value)
                 if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-                    "symbolEffect".utf8.map({ Self.symbolEffect })
+                    ConstantAtomLiteral("symbolEffect").map({ Self.symbolEffect })
                 }
             }
         }

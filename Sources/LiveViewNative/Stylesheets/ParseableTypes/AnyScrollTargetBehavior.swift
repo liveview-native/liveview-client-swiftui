@@ -23,8 +23,8 @@ struct AnyScrollTargetBehavior: ParseableModifierValue, ScrollTargetBehavior {
     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
-                "paging".utf8.map({ Self.init(.paging) })
-                "viewAligned".utf8.map({ Self.init(.viewAligned) })
+                ConstantAtomLiteral("paging").map({ Self.init(.paging) })
+                ConstantAtomLiteral("viewAligned").map({ Self.init(.viewAligned) })
                 ViewAligned.parser(in: context).map({ Self.init(.viewAligned(limitBehavior: $0.limitBehavior)) })
             }
         }

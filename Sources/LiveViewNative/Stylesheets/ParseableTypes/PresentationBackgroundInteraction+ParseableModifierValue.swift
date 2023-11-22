@@ -13,10 +13,10 @@ extension PresentationBackgroundInteraction: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
-                "automatic".utf8.map({ Self.automatic })
-                "enabled".utf8.map({ Self.enabled })
+                ConstantAtomLiteral("automatic").map({ Self.automatic })
+                ConstantAtomLiteral("enabled").map({ Self.enabled })
                 Enabled.parser(in: context).map({ Self.enabled(upThrough: $0.detent) })
-                "disabled".utf8.map({ Self.disabled })
+                ConstantAtomLiteral("disabled").map({ Self.disabled })
             }
         }
     }

@@ -16,10 +16,24 @@ struct ModifierGenerator: ParsableCommand {
     // missing: fullScreenCover
 
     static let extraModifierTypes: Set<String> = [
-        "_StrokeModifier",
+        // Image modifiers
         "_ResizableModifier",
         "_RenderingModeModifier",
+
+        // Shape modifiers
+        "_FillModifier",
+        "_RotationModifier",
+        "_ScaleModifier<R>",
+        "_StrokeModifier",
+        "_TransformModifier",
+        "_IntersectionModifier",
+        "_UnionModifier",
+        "_SubtractingModifier",
+        "_SymmetricDifferenceModifier",
+        "_LineIntersectionModifier",
+        "_LineSubtractionModifier",
         
+        // Override modifiers
         "_SearchScopesModifier<R>",
         "_SearchCompletionModifier",
         "_OnSubmitModifier",
@@ -78,6 +92,7 @@ struct ModifierGenerator: ParsableCommand {
         "Axis",
         "SearchScopeActivation",
         "SearchSuggestionsPlacement",
+        "RoundedCornerStyle",
     ]
 
     static let denylist: Set<String> = [

@@ -10,10 +10,80 @@ import LiveViewNativeStylesheet
 
 extension AnyShape: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            ConstantAtomLiteral("rectangle").map({ Self(Rectangle()) })
-            ConstantAtomLiteral("circle").map({ Self(Circle()) })
-            ConstantAtomLiteral("capsule").map({ Self(Capsule()) })
+        ImplicitStaticMember {
+            OneOf {
+                ConstantAtomLiteral("rect").map({ Self(.rect) })
+                Rect.parser(in: context).map(\.value)
+                ConstantAtomLiteral("capsule").map({ Self(.capsule) })
+                Capsule.parser(in: context).map(\.value)
+                ConstantAtomLiteral("ellipse").map({ Self(.capsule) })
+                ConstantAtomLiteral("circle").map({ Self(.circle) })
+                ConstantAtomLiteral("containerRelative").map({ Self(.containerRelative) })
+            }
+        }
+    }
+    
+    @ParseableExpression
+    struct Rect {
+        static let name = "rect"
+        
+        let value: AnyShape
+        
+        init(cornerSize: CGSize, style: RoundedCornerStyle = .continuous) {
+            self.value = .init(.rect(cornerSize: cornerSize, style: style))
+        }
+        
+        init(cornerRadius: CGFloat, style: RoundedCornerStyle = .continuous) {
+            self.value = .init(.rect(cornerRadius: cornerRadius, style: style))
+        }
+        
+        init(cornerRadii: RectangleCornerRadii, style: RoundedCornerStyle = .continuous) {
+            self.value = .init(.rect(cornerRadii: cornerRadii, style: style))
+        }
+        
+        init(topLeadingRadius: CGFloat = 0, bottomLeadingRadius: CGFloat = 0, bottomTrailingRadius: CGFloat = 0, topTrailingRadius: CGFloat = 0, style: RoundedCornerStyle = .continuous) {
+            self.value = .init(.rect(topLeadingRadius: topLeadingRadius, bottomLeadingRadius: bottomLeadingRadius, bottomTrailingRadius: bottomTrailingRadius, topTrailingRadius: topTrailingRadius, style: style))
+        }
+    }
+    
+    @ParseableExpression
+    struct Capsule {
+        static let name = "capsule"
+        
+        let value: AnyShape
+        
+        init(style: RoundedCornerStyle = .continuous) {
+            self.value = .init(.capsule(style: style))
+        }
+    }
+}
+
+extension RectangleCornerRadii: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ParseableRectangleCornerRadii.parser(in: context).map({
+            Self.init(
+                topLeading: $0.topLeading,
+                bottomLeading: $0.bottomLeading,
+                bottomTrailing: $0.bottomTrailing,
+                topTrailing: $0.topTrailing
+            )
+        })
+    }
+    
+    @ParseableExpression
+    struct ParseableRectangleCornerRadii {
+        static let name = "RectangleCornerRadii"
+        
+        let topLeading: CGFloat
+        let bottomLeading: CGFloat
+        let bottomTrailing: CGFloat
+        let topTrailing: CGFloat
+        
+        init(topLeading: CGFloat = 0, bottomLeading: CGFloat = 0, bottomTrailing: CGFloat = 0, topTrailing: CGFloat = 0) {
+            self.topLeading = topLeading
+            self.bottomLeading = bottomLeading
+            self.bottomTrailing = bottomTrailing
+            self.topTrailing = topTrailing
         }
     }
 }
