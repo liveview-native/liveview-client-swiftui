@@ -8,6 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+#if os(iOS) || os(watchOS)
 @available(iOS 17.0, watchOS 10.0, *)
 extension ListSectionSpacing: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
@@ -31,3 +32,4 @@ extension ListSectionSpacing: ParseableModifierValue {
         }
     }
 }
+#endif

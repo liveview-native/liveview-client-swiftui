@@ -8,6 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+#if os(iOS) || os(xrOS)
 @available(iOS 17, *)
 extension TextInputDictationBehavior: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
@@ -45,3 +46,4 @@ extension TextInputDictationActivation: ParseableModifierValue {
         ])
     }
 }
+#endif

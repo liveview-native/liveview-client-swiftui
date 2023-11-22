@@ -13,11 +13,15 @@ extension ButtonBorderShape: ParseableModifierValue {
         ImplicitStaticMember {
             OneOf {
                 ConstantAtomLiteral("automatic").map({ Self.automatic })
-                ConstantAtomLiteral("capsule").map({ Self.capsule })
+                if #available(macOS 14.0, tvOS 17.0, *) {
+                    ConstantAtomLiteral("capsule").map({ Self.capsule })
+                }
                 if #available(iOS 17.0, macOS 14.0, tvOS 16.4, watchOS 10.0, *) {
                     ConstantAtomLiteral("circle").map({ Self.circle })
                 }
-                RoundedRectangle.parser(in: context).map({ Self.roundedRectangle(radius: $0.radius) })
+                if #available(macOS 14.0, tvOS 17.0, *) {
+                    RoundedRectangle.parser(in: context).map({ Self.roundedRectangle(radius: $0.radius) })
+                }
                 ConstantAtomLiteral("roundedRectangle").map({ Self.roundedRectangle })
             }
         }

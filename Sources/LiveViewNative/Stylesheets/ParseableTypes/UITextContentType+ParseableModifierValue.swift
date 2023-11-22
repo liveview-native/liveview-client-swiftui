@@ -8,6 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+#if os(iOS) || os(tvOS)
 @available(iOS 13.0, tvOS 13.0, *)
 extension UITextContentType: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
@@ -42,3 +43,4 @@ extension UITextContentType: ParseableModifierValue {
         ])
     }
 }
+#endif

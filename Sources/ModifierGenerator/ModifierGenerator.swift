@@ -41,6 +41,8 @@ struct ModifierGenerator: ParsableCommand {
         "_MatchedGeometryEffectModifier",
         "_Rotation3DEffectModifier",
         "_PresentationDetentsModifier",
+        "_FocusScopeModifier",
+        "_PrefersDefaultFocusModifier<R>",
     ]
 
     static let requiredTypes: Set<String> = [
@@ -135,6 +137,8 @@ struct ModifierGenerator: ParsableCommand {
         "matchedGeometryEffect",
         "rotation3DEffect",
         "presentationDetents",
+        "focusScope",
+        "prefersDefaultFocus",
         
         // fixme: missing types
         "accessibilityRotor",
