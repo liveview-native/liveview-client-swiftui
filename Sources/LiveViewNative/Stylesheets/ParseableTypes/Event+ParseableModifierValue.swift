@@ -9,7 +9,6 @@ import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
-#warning("fixme: use __event__ helper function without implicit member")
 extension Event: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableEvent.parser(in: context)
@@ -25,7 +24,7 @@ extension Event: ParseableModifierValue {
     
     @ParseableExpression
     struct ParseableEvent {
-        static let name = "Event"
+        static let name = "__event__"
         
         let event: String
         let type: String

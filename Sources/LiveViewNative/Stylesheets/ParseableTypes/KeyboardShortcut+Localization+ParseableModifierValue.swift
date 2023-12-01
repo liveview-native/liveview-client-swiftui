@@ -8,6 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+#if os(iOS) || os(macOS) || os(xrOS)
 extension KeyboardShortcut.Localization: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -17,3 +18,4 @@ extension KeyboardShortcut.Localization: ParseableModifierValue {
         ])
     }
 }
+#endif

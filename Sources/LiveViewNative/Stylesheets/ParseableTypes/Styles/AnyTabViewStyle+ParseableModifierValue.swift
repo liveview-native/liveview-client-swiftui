@@ -28,6 +28,8 @@ enum AnyTabViewStyle: ParseableModifierValue {
                 #if os(watchOS)
                 if #available(watchOS 10.0, *) {
                     ConstantAtomLiteral("verticalPage").map({ Self.verticalPage(transitionStyle: nil) })
+                }
+                if #available(watchOS 10.0, *) {
                     VerticalPage.parser(in: context).map({ Self.verticalPage(transitionStyle: $0.transitionStyle) })
                 }
                 #endif

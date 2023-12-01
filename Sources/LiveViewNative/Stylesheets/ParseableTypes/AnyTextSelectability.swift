@@ -16,6 +16,7 @@ enum AnyTextSelectability: String, CaseIterable, ParseableModifierValue {
 }
 
 extension View {
+#if os(iOS) || os(macOS) || os(xrOS)
     @_disfavoredOverload
     @ViewBuilder
     func textSelection(_ selectability: AnyTextSelectability) -> some View {
@@ -26,4 +27,5 @@ extension View {
             self.textSelection(DisabledTextSelectability.disabled)
         }
     }
+#endif
 }

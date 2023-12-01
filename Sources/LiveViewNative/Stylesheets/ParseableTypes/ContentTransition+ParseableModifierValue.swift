@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Symbols
 import LiveViewNativeStylesheet
 
 extension ContentTransition: ParseableModifierValue {

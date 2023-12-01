@@ -22,7 +22,8 @@ struct _SearchScopesModifier<R: RootRegistry>: ViewModifier {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
-    @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(xrOS)
+    @available(iOS 16.4, macOS 13.3, tvOS 16.4, *)
     init(_ scope: ChangeTracked<String>, activation: SearchScopeActivation, scopes: ViewReference) {
         self._scope = scope
         self.activation = activation
@@ -34,9 +35,11 @@ struct _SearchScopesModifier<R: RootRegistry>: ViewModifier {
         self.activation = nil
         self.scopes = scopes
     }
+    #endif
     
     func body(content: Content) -> some View {
-        if #available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *) {
+        #if os(iOS) || os(macOS) || os(tvOS) || os(xrOS)
+        if #available(iOS 16.4, macOS 13.3, tvOS 16.4, *) {
             if let activation = activation as? SearchScopeActivation {
                 content.searchScopes($scope, activation: activation, { scopes.resolve(on: element, in: context) })
             } else {
@@ -45,5 +48,8 @@ struct _SearchScopesModifier<R: RootRegistry>: ViewModifier {
         } else {
             content.searchScopes($scope, scopes: { scopes.resolve(on: element, in: context) })
         }
+        #else
+        content
+        #endif
     }
 }
