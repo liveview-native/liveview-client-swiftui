@@ -3,7 +3,7 @@ import Parsing
 public struct ListLiteral<Content: Parser>: Parser where Content.Input == Substring.UTF8View {
     let content: Content
     
-    init(@ParserBuilder<Input> _ content: () -> Content) {
+    public init(@ParserBuilder<Input> _ content: () -> Content) {
         self.content = content()
     }
     
