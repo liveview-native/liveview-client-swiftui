@@ -133,9 +133,15 @@ extension AnyGesture: ParseableModifierValue where Value == Any {
         static let name = "LongPressGesture"
         let value: LongPressGesture
         
+        #if os(tvOS)
+        init(minimumDuration: Double = 0.5) {
+            self.value = .init(minimumDuration: minimumDuration)
+        }
+        #else
         init(minimumDuration: Double = 0.5, maximumDistance: CGFloat = 10) {
             self.value = .init(minimumDuration: minimumDuration, maximumDistance: maximumDistance)
         }
+        #endif
     }
     
     #if os(iOS) || os(macOS) || os(xrOS)

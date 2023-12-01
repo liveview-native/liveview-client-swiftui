@@ -45,8 +45,10 @@ struct _SearchScopesModifier<R: RootRegistry>: ViewModifier {
             } else {
                 content.searchScopes($scope, scopes: { scopes.resolve(on: element, in: context) })
             }
-        } else {
+        } else if #available(iOS 16.0, macOS 13.0, tvOS 16.4, *) {
             content.searchScopes($scope, scopes: { scopes.resolve(on: element, in: context) })
+        } else {
+            content
         }
         #else
         content

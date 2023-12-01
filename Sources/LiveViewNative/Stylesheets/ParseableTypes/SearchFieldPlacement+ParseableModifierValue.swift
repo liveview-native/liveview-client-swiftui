@@ -13,8 +13,10 @@ extension SearchFieldPlacement: ParseableModifierValue {
         ImplicitStaticMember {
             OneOf {
                 ConstantAtomLiteral("automatic").map({ Self.automatic })
+                #if os(iOS) || os(macOS) || os(watchOS) || os(xrOS)
                 ConstantAtomLiteral("toolbar").map({ Self.toolbar })
-                #if !os(watchOS)
+                #endif
+                #if os(iOS) || os(macOS) || os(xrOS)
                 ConstantAtomLiteral("sidebar").map({ Self.sidebar })
                 #endif
                 #if os(iOS) || os(xrOS)
