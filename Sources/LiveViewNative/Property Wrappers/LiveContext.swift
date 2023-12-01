@@ -80,12 +80,27 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         }
     }
     
+    private static func hasTemplateAttribute(_ child: NodeChildrenSequence.Element) -> Bool {
+        if case let .element(element) = child.data,
+           element.attributes.contains(where: { $0.name == "template" })
+        {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     /// Checks whether the element has any children with the given tag.
     public func hasTemplate(
         of element: ElementNode,
         withName name: String
     ) -> Bool {
         element.children().contains(where: Self.isTemplateElement(name))
+    }
+    
+    /// Checks whether the element has any children without a `template` attribute.
+    public func hasDefaultSlot(of element: ElementNode) -> Bool {
+        element.children().contains(where: { !Self.hasTemplateAttribute($0) })
     }
     
     /// Builds a view representing only the children of the element which have the given template attribute.

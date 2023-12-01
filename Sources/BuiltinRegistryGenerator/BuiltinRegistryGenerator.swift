@@ -43,6 +43,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
         "Color": "ColorView()",
         "compiled-lvn-stylesheet": "CompiledLVNStylesheet<R>()",
+        "phx-main": "PhxMain<R>()",
     ]
     
     var platformFamilyName: String? {

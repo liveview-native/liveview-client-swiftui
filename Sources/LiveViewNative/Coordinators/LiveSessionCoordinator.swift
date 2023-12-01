@@ -42,6 +42,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     
     internal let configuration: LiveSessionConfiguration
     
+    @Published private(set) var rootLayout: LiveViewNativeCore.Document?
+    
     // Socket connection
     var socket: Socket?
     
@@ -141,8 +143,12 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         
         let domValues: DOMValues
         do {
-            let doc = try SwiftSoup.parse(html)
+            let doc = try SwiftSoup.parse(html, self.url.absoluteString, SwiftSoup.Parser.xmlParser().settings(.init(true, true)))
             domValues = try self.extractDOMValues(doc)
+            // extract the root layout, removing anything within the `<div data-phx-main>`.
+            let mainDiv = try doc.select("div[data-phx-main]")[0]
+            try mainDiv.replaceWith(doc.createElement("phx-main"))
+            self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
         } catch {
             state = .connectionFailed(error)
             return
@@ -248,8 +254,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> DOMValues {
-        let metaRes = try doc.select("meta[name=\"csrf-token\"]")
-        guard !metaRes.isEmpty() else {
+        let csrfToken = try doc.select("csrf-token")
+        guard !csrfToken.isEmpty() else {
             throw LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken)
         }
         
@@ -259,7 +265,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
         let mainDiv = mainDivRes[0]
         return .init(
-            phxCSRFToken: try metaRes[0].attr("content"),
+            phxCSRFToken: try csrfToken[0].attr("value"),
             phxSession: try mainDiv.attr("data-phx-session"),
             phxStatic: try mainDiv.attr("data-phx-static"),
             phxView: try mainDiv.attr("data-phx-view"),

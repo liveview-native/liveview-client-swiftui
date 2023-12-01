@@ -9,8 +9,6 @@ import SwiftUI
 
 /// Container that presents content on separate pages.
 ///
-/// - Note: To create a tab view that supports navigation, use the ``LiveSessionConfiguration/NavigationMode-swift.enum/tabView(tabs:)`` configuration option.
-///
 /// Each child element will become its own tab.
 ///
 /// ```html

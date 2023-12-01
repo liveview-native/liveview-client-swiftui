@@ -27,7 +27,7 @@ struct TextReference: ParseableModifierValue {
 
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         context.children(of: element, forTemplate: value).first?.asElement().flatMap({ Text<R>(element: $0).body })
-            ?? SwiftUI.Text("")
+            ?? SwiftUI.Text(value)
     }
 
     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
