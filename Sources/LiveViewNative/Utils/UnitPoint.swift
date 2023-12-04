@@ -24,7 +24,7 @@ import RegexBuilder
 /// - `top-trailing`
 /// - `bottom-leading`
 /// - `bottom-trailing`
-extension UnitPoint: Decodable, AttributeDecodable {
+extension UnitPoint: AttributeDecodable {
     public init(from value: String) throws {
         switch value {
         case "zero":
@@ -83,23 +83,5 @@ extension UnitPoint: Decodable, AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         try self.init(from: value)
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let named = try container.decodeIfPresent(String.self, forKey: .named) {
-            try self.init(from: named)
-        } else {
-            self.init(
-                x: try container.decode(Double.self, forKey: .x),
-                y: try container.decode(Double.self, forKey: .y)
-            )
-        }
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case x
-        case y
-        case named
     }
 }

@@ -8,9 +8,23 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#warning("todo")
 extension FillStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        "__unhandled__".utf8.map({ Self.init() })
+        ParseableFillStyle.parser(in: context).map({
+            Self.init(eoFill: $0.eoFill, antialiased: $0.antialiased)
+        })
+    }
+    
+    @ParseableExpression
+    struct ParseableFillStyle {
+        static let name = "FillStyle"
+        
+        let eoFill: Bool
+        let antialiased: Bool
+        
+        init(eoFill: Bool = false, antialiased: Bool = true) {
+            self.eoFill = eoFill
+            self.antialiased = antialiased
+        }
     }
 }
