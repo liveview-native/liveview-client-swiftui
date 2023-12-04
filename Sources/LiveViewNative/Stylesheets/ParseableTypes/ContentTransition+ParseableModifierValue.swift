@@ -11,12 +11,10 @@ import LiveViewNativeStylesheet
 
 extension ContentTransition: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-//        identity, interpolate, numericText(countsDown:), numericText(value:), opacity, symbolEffect, symbolEffect(_:options:)
         ImplicitStaticMember {
             OneOf {
                 ConstantAtomLiteral("identity").map({ Self.identity })
                 ConstantAtomLiteral("interpolate").map({ Self.interpolate })
-                ConstantAtomLiteral("opacity").map({ Self.opacity })
                 ConstantAtomLiteral("opacity").map({ Self.opacity })
                 NumericText.parser(in: context).map(\.value)
                 if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {

@@ -17,7 +17,7 @@ extension TextInputDictationBehavior: ParseableModifierValue {
                 ConstantAtomLiteral("automatic").map({ Self.automatic })
                 Inline.parser(in: context).map({ Self.inline(activation: $0.activation) })
                 #if os(visionOS)
-                if #available(visionOS 1.0, *) {
+                if #available(xrOS 1.0, *) {
                     ConstantAtomLiteral("preventDictation").map({ Self.preventDictation })
                 }
                 #endif

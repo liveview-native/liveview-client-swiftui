@@ -16,7 +16,7 @@ extension UITextContentType: ParseableModifierValue {
             "name": .name,
             "namePrefix": .namePrefix,
             "givenName": .givenName,
-            "MmddleName": .middleName,
+            "middleName": .middleName,
             "familyName": .familyName,
             "nameSuffix": .nameSuffix,
             "nickname": .nickname,
