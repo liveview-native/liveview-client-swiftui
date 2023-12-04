@@ -60,12 +60,12 @@ enum AnyTabViewStyle: ParseableModifierValue {
     
     #if os(watchOS)
     @ParseableExpression
-    @available(watchOS 10.0, *)
     struct VerticalPage {
         static let name = "verticalPage"
         
-        let transitionStyle: VerticalPageTabViewStyle.TransitionStyle
+        let transitionStyle: Any
         
+        @available(watchOS 10.0, *)
         init(transitionStyle: VerticalPageTabViewStyle.TransitionStyle) {
             self.transitionStyle = transitionStyle
         }
