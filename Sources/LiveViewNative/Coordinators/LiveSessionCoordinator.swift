@@ -225,7 +225,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let resp: URLResponse
         do {
             (data, resp) = try await configuration.urlSession.data(from: url.appending(queryItems: [
-                .init(name: "_lvn_platform", value: platform)
+                .init(name: "_lvn[format]", value: "swiftui")
             ]))
         } catch {
             throw LiveConnectionError.initialFetchError(error)
