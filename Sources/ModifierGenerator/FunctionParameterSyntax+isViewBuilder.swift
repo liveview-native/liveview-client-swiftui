@@ -20,4 +20,22 @@ extension FunctionParameterSyntax {
             return true
         })
     }
+
+    var functionType: FunctionTypeSyntax? {
+        if let type = self.type.as(FunctionTypeSyntax.self) {
+            return type
+        } else if let type = self.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self) {
+            return type
+        } else if let type = self.type.as(AttributedTypeSyntax.self)?.baseType.as(TupleTypeSyntax.self)?.elements.first?.type.as(FunctionTypeSyntax.self) {
+            return type
+        } else if let type = self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(TupleTypeSyntax.self)?.elements.first?.type.as(FunctionTypeSyntax.self) {
+            return type
+        } else {
+            return nil
+        }
+    }
+
+    var isFocusState: Bool {
+        self.type.as(MemberTypeSyntax.self)?.baseType.as(MemberTypeSyntax.self)?.name.text == "FocusState"
+    }
 }

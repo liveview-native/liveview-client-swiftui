@@ -126,11 +126,29 @@ extension LocalizedStringKey: ParseableModifierValue {
     }
 }
 
+/// A string that can only be parsed from an atom.
+public struct AtomString: ParseableModifierValue {
+    public let value: String
+    
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        AtomLiteral().map(Self.init(value:))
+    }
+}
+
 extension Array: ParseableModifierValue where Element: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ListLiteral {
             Element.parser(in: context)
         }
+    }
+}
+
+extension Set: ParseableModifierValue where Element: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ListLiteral {
+            Element.parser(in: context)
+        }
+        .map(Self.init(_:))
     }
 }
 
@@ -177,6 +195,31 @@ extension CoreFoundation.CGSize: ParseableModifierValue {
         init(width: CoreFoundation.CGFloat, height: CoreFoundation.CGFloat) {
             self.width = width
             self.height = height
+        }
+    }
+}
+
+extension CoreFoundation.CGRect: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ParseableCGRect.parser(in: context)
+            .map({ Self.init(origin: $0.origin, size: $0.size) })
+    }
+    
+    @ParseableExpression
+    struct ParseableCGRect {
+        static let name = "CGRect"
+        
+        let origin: CoreFoundation.CGPoint
+        let size: CoreFoundation.CGSize
+        
+        init(origin: CoreFoundation.CGPoint, size: CoreFoundation.CGSize) {
+            self.origin = origin
+            self.size = size
+        }
+        
+        init(x: CoreFoundation.CGFloat, y: CoreFoundation.CGFloat, width: CoreFoundation.CGFloat, height: CoreFoundation.CGFloat) {
+            self.origin = .init(x: x, y: y)
+            self.size = .init(width: width, height: height)
         }
     }
 }

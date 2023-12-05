@@ -42,13 +42,7 @@ import LiveViewNativeCore
 ///     </LazyHGrid>
 /// </ScrollView>
 /// ```
-extension PinnedScrollableViews: Decodable, AttributeDecodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        self = Self(string: string)
-    }
-    
+extension PinnedScrollableViews: AttributeDecodable {
     init(string: String) {
         switch string {
         case "section-headers":

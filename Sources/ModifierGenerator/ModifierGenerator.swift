@@ -16,9 +16,33 @@ struct ModifierGenerator: ParsableCommand {
     // missing: fullScreenCover
 
     static let extraModifierTypes: Set<String> = [
-        "_StrokeModifier",
+        // Image modifiers
         "_ResizableModifier",
         "_RenderingModeModifier",
+
+        // Shape modifiers
+        "_FillModifier",
+        "_RotationModifier",
+        "_ScaleModifier<R>",
+        "_StrokeModifier",
+        "_TransformModifier",
+        "_IntersectionModifier",
+        "_UnionModifier",
+        "_SubtractingModifier",
+        "_SymmetricDifferenceModifier",
+        "_LineIntersectionModifier",
+        "_LineSubtractionModifier",
+        
+        // Override modifiers
+        "_SearchScopesModifier<R>",
+        "_SearchCompletionModifier",
+        "_OnSubmitModifier",
+        "_MaskModifier<R>",
+        "_MatchedGeometryEffectModifier",
+        "_Rotation3DEffectModifier",
+        "_PresentationDetentsModifier",
+        "_FocusScopeModifier",
+        "_PrefersDefaultFocusModifier<R>",
     ]
 
     static let requiredTypes: Set<String> = [
@@ -37,7 +61,6 @@ struct ModifierGenerator: ParsableCommand {
         "HorizontalEdge",
         "ToolbarDefaultItemKind",
         "ContainerBackgroundPlacement",
-        "Text.TruncationMode",
         "ColorRenderingMode",
         "DigitalCrownRotationalSensitivity",
         "HorizontalAlignment",
@@ -54,16 +77,13 @@ struct ModifierGenerator: ParsableCommand {
         "MenuOrder",
         "DefaultFocusEvaluationPriority",
         "ContentMarginPlacement",
-        "MenuActionDismissBehavior",
         "VerticalEdge",
         "HoverEffect",
         "ContentShapeKinds",
         "AlternatingRowBackgroundBehavior",
         "SubmitTriggers",
         "SafeAreaRegions",
-        "Text.LineStyle.Pattern",
         "ScenePadding",
-        "Text.Scale",
         "ColorScheme",
         "MatchedGeometryProperties",
         "AccessibilityChildBehavior",
@@ -72,6 +92,9 @@ struct ModifierGenerator: ParsableCommand {
         "ToolbarTitleDisplayMode",
         "FileDialogBrowserOptions",
         "Axis",
+        "SearchScopeActivation",
+        "SearchSuggestionsPlacement",
+        "RoundedCornerStyle",
     ]
 
     static let denylist: Set<String> = [
@@ -103,6 +126,20 @@ struct ModifierGenerator: ParsableCommand {
         
         "onCommand",
         
+        "tag",
+        "id",
+
+        // manually implemented due to argument order edge cases
+        "searchScopes",
+        "searchCompletion",
+        "onSubmit",
+        "mask",
+        "matchedGeometryEffect",
+        "rotation3DEffect",
+        "presentationDetents",
+        "focusScope",
+        "prefersDefaultFocus",
+        
         // fixme: missing types
         "accessibilityRotor",
         "accessibilityChartDescriptor",
@@ -112,16 +149,12 @@ struct ModifierGenerator: ParsableCommand {
         "cuttable",
         "defaultFocus",
         "digitalCrownRotation",
-        "draggable",
-        "dropDestination",
         "exportableToServices",
         "exportsItemProviders",
         "fileExporter",
         "fileImporter",
         "fileMover",
         "focused",
-        "gesture",
-        "highPriorityGesture",
         "importableFromServices",
         "importsItemProviders",
         "itemProvider",
@@ -130,22 +163,12 @@ struct ModifierGenerator: ParsableCommand {
         "onCopyCommand",
         "onDrag",
         "onDrop",
-        "onKeyPress",
         "onOpenURL",
         "onPasteCommand",
-        "onSubmit",
-        "onTapGesture",
         "pageCommand",
         "pasteDestination",
-        "presentationDetents",
-        "scrollPosition",
-        "scrollTargetBehavior",
-        "searchCompletion",
-        "searchScopes",
         "sensoryFeedback",
-        "simultaneousGesture",
         "symbolEffect",
-        "textSelection",
         "transaction",
         "userActivity",
         "allowedDynamicRange",
@@ -155,108 +178,38 @@ struct ModifierGenerator: ParsableCommand {
         "colorEffect",
         "containerBackground",
         "contentMargins",
-        "coordinateSpace",
         "dialogSeverity",
         "distortionEffect",
         "fileDialogBrowserOptions",
-        "focusable",
         "layerEffect",
         "layoutDirectionBehavior",
-        "listSectionSpacing",
         "menuActionDismissBehavior",
-        "onMoveCommand",
         "ornament",
         "paletteSelectionEffect",
-        "presentationBackgroundInteraction",
-        "presentationCompactAdaptation",
-        "presentationContentInteraction",
-        "scrollBounceBehavior",
-        "searchDictationBehavior",
         "springLoadingBehavior",
-        "textScale",
-        "toolbarTitleDisplayMode",
         "touchBar",
         "touchBarItemPresence",
         "typesettingLanguage",
-        "listRowBackground",
-        "tag",
         "fileDialogMessage",
         "typeSelectEquivalent",
         "fileExporterFilenameLabel",
         "dialogIcon",
-        "hueRotation",
-        "rotationEffect",
-        "rotation3DEffect",
         "fileDialogDefaultDirectory",
-        "gridCellUnsizedAxes",
-        "redacted",
         "onCutCommand",
-        "confirmationDialog",
-        "onLongPressGesture",
-        "onLongTouchGesture",
-        "prefersDefaultFocus",
         "accessibilityElementModifier",
-        "listRowSeparatorTint",
-        "listSectionSeparator",
-        "id",
-        "menuOrder",
-        "fontWidth",
-        "listRowInsets",
-        "menuIndicator",
         "safeAreaPadding",
-        "headerProminence",
-        "listRowSeparator",
         "tableColumnHeaders",
-        "listSectionSeparator",
-        "digitalCrownAccessory",
-        "scrollContentBackground",
-        "persistentSystemOverlays",
-        "presentationDragIndicator",
-        "fontDesign",
         "defaultHoverEffect",
-        "listRowHoverEffect",
-        "focusScope",
-        "hoverEffect",
-        "listItemTint",
-        "keyboardShortcut",
-        "symbolVariant",
-        "textContentType",
         "defaultAppStorage",
-        "ignoresSafeArea",
-        "buttonBorderShape",
-        "contentTransition",
-        "truncationMode",
-        "projectionEffect",
-        "gridColumnAlignment",
-        "transformEffect",
-        "scrollIndicators",
-        "scrollDismissesKeyboard",
-        "renameAction",
-        "matchedGeometryEffect",
         "accessibilityRotorEntry",
         "accessibilityLinkedGroup",
         "handlesExternalEvents",
-        "safeAreaInset",
-        "swipeActions",
         "accessibilityLabeledPair",
-        "badge",
         "fileDialogConfirmationLabel",
-        "searchSuggestions",
-        "scenePadding",
-        "drawingGroup",
-        "searchable",
-        "underline",
-        "strikethrough",
-        "contentShape",
         "onCopyCommand",
         "accessibilityElement",
-        "listSectionSeparatorTint",
-        "popover",
         "presentedWindowStyle",
         "presentedWindowToolbarStyle",
-
-        // fixme: labelled argument ordering
-        "mask",
     ]
 
     func run() throws {
@@ -266,18 +219,21 @@ struct ModifierGenerator: ParsableCommand {
         let visitor = ModifierVisitor(viewMode: SyntaxTreeViewMode.all)
         visitor.walk(sourceFile)
 
-        var output = #"""
-        // File generated with `swift run ModifierGenerator "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
-        
-        import SwiftUI
-        import LiveViewNativeStylesheet
+        FileHandle.standardOutput.write(Data(
+            #"""
+            // File generated with `swift run ModifierGenerator "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
+            
+            import SwiftUI
+            import LiveViewNativeStylesheet
 
 
-        """#
+            """#.utf8
+        ))
 
         var modifierList = [String]()
 
         for (modifier, signatures) in visitor.modifiers.sorted(by: { $0.key < $1.key }) {
+            // guard modifier == "scrollPosition" else { continue }
             guard !modifier.starts(with: "_"),
                   !Self.denylist.contains(modifier),
                   !signatures.allSatisfy({ !isValid($0.0) })
@@ -320,50 +276,52 @@ struct ModifierGenerator: ParsableCommand {
                 })
             let requiresContext = signatures.contains(where: {
                 $0.parameters.contains(where: {
-                    ["ViewReference", "TextReference", "AttributeReference"].contains(
+                    ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference"].contains(
                         $0.type.as(IdentifierTypeSyntax.self)?.name.text
                          ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
                     )
                 })
             })
             
-            output.append(#"""
-            @ParseableExpression
-            struct _\#(modifier)Modifier<R: RootRegistry>: ViewModifier {
-                static var name: String { "\#(modifier)" }
+            FileHandle.standardOutput.write(Data(
+                #"""
+                @ParseableExpression
+                struct _\#(modifier)Modifier<R: RootRegistry>: ViewModifier {
+                    static var name: String { "\#(modifier)" }
 
-                enum Value {
-                    case _never
-            \#(signatures.map(\.case).joined(separator: "\n"))
-                }
+                    enum Value {
+                        case _never
+                \#(signatures.map(\.case).joined(separator: "\n"))
+                    }
 
-                let value: Value
+                    let value: Value
 
-                \#(requiresContext ? "@ObservedElement private var element" : "")
-                \#(requiresContext ? "@LiveContext<R> private var context" : "")
-            
-            \#(signatures.compactMap(\.properties).joined(separator: "\n"))
+                    \#(requiresContext ? "@ObservedElement private var element" : "")
+                    \#(requiresContext ? "@LiveContext<R> private var context" : "")
+                
+                \#(signatures.compactMap(\.properties).joined(separator: "\n"))
 
-            \#(signatures.map(\.`init`).joined(separator: "\n"))
+                \#(signatures.map(\.`init`).joined(separator: "\n"))
 
-                func body(content __content: Content) -> some View {
-                    switch value {
-                    case ._never:
-                        fatalError("unreachable")
-            \#(signatures.map(\.content).joined(separator: "\n"))
+                    func body(content __content: Content) -> some View {
+                        switch value {
+                        case ._never:
+                            fatalError("unreachable")
+                \#(signatures.map(\.content).joined(separator: "\n"))
+                        }
                     }
                 }
-            }
 
-            """#)
+                """#.utf8
+            ))
         }
 
-        output.append(#"""
+        FileHandle.standardOutput.write(Data(#"""
 
         extension BuiltinRegistry {
             enum BuiltinModifier: ViewModifier, ParseableModifierValue {
                 \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
-                \#(Self.extraModifierTypes.map({ "case \($0)(LiveViewNative.\($0))" }).joined(separator: "\n"))
+                \#(Self.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
                 
                 func body(content: Content) -> some View {
                     switch self {
@@ -375,7 +333,7 @@ struct ModifierGenerator: ParsableCommand {
                     }).joined(separator: "\n"))
                     \#(Self.extraModifierTypes.map({
                         """
-                        case let .\($0)(modifier):
+                        case let .\($0.split(separator: "<").first!)(modifier):
                             content.modifier(modifier)
                         """
                     }).joined(separator: "\n"))
@@ -395,7 +353,7 @@ struct ModifierGenerator: ParsableCommand {
                     func parse(_ input: inout Substring.UTF8View) throws -> Output {
                         let parsers = [
                             \#(modifierList.map({ "_\($0)Modifier<R>.name: _\($0)Modifier<R>.parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
-                            \#(Self.extraModifierTypes.map({ "LiveViewNative.\($0).name: LiveViewNative.\($0).parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
+                            \#(Self.extraModifierTypes.map({ "LiveViewNative.\($0).name: LiveViewNative.\($0).parser(in: context).map(Output.\($0.split(separator: "<").first!)).eraseToAnyParser()," }).joined(separator: "\n"))
                         ]
                         
                         var copy = input
@@ -418,14 +376,14 @@ struct ModifierGenerator: ParsableCommand {
             }
         }
 
-        """#)
+        """#.utf8))
 
         let typeVisitor = EnumTypeVisitor(typeNames: Self.requiredTypes)
         typeVisitor.walk(sourceFile)
 
         for (type, cases) in typeVisitor.types.sorted(by: { $0.key < $1.key }) {
             let (availability, unavailable) = typeVisitor.availability[type]!
-            output.append(
+            FileHandle.standardOutput.write(Data(
                 """
                 \(
                     availability.isEmpty
@@ -490,11 +448,9 @@ struct ModifierGenerator: ParsableCommand {
                 }
                 \(availability.isEmpty ? "" : "#endif")
 
-                """
-            )
+                """.utf8
+            ))
         }
-
-        FileHandle.standardOutput.write(Data(output.utf8))
     }
 
     func isValid(_ signature: FunctionDeclSyntax) -> Bool {
@@ -511,6 +467,11 @@ struct ModifierGenerator: ParsableCommand {
                let returnType = functionType?.returnClause.type,
                returnType.as(MemberTypeSyntax.self)?.name.text != "Void" && returnType.as(TupleTypeSyntax.self)?.elements.count != 0
             {
+                return false
+            }
+
+            // FocusState cannot be used
+            if parameter.isFocusState {
                 return false
             }
         }

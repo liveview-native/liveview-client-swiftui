@@ -22,6 +22,9 @@ struct ViewReference: ParseableModifierValue {
     }
 }
 
+/// A type reference that is resolved inline (an argument that accepts `some View`, not `() -> some View`)
+typealias InlineViewReference = ViewReference
+
 struct TextReference: ParseableModifierValue {
     let value: String
 

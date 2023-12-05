@@ -13,7 +13,7 @@ import LiveViewNativeCore
 /// Possible values:
 /// * `light`
 /// * `dark`
-extension ColorScheme: Decodable, AttributeDecodable {
+extension ColorScheme: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let value = Self(from: attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
@@ -26,12 +26,5 @@ extension ColorScheme: Decodable, AttributeDecodable {
         case "dark": self = .dark
         default: return nil
         }
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        guard let value = Self(from: try container.decode(String.self))
-        else { throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for ColorScheme")) }
-        self = value
     }
 }

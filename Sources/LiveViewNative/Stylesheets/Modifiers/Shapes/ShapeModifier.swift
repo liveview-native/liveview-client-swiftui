@@ -10,7 +10,7 @@ import SwiftUI
 protocol ShapeModifier: ViewModifier where Body == ShapeModifierBody<Self.Content> {
     associatedtype ModifiedShape: SwiftUI.Shape
     
-    func apply(to shape: some SwiftUI.Shape) -> ModifiedShape
+    func apply(to shape: AnyShape) -> ModifiedShape
 }
 
 protocol ShapeFinalizerModifier: ViewModifier where Body == ShapeFinalizerModifierBody<Self.Content> {

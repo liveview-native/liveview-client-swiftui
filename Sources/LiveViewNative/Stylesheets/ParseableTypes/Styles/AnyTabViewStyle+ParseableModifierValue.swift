@@ -26,10 +26,20 @@ enum AnyTabViewStyle: ParseableModifierValue {
                 Page.parser(in: context).map({ Self.page(indexDisplayMode: $0.indexDisplayMode) })
                 #endif
                 #if os(watchOS)
-                if #available(watchOS 10.0, *) {
-                    ConstantAtomLiteral("verticalPage").map({ Self.verticalPage(transitionStyle: nil) })
-                    VerticalPage.parser(in: context).map({ Self.verticalPage(transitionStyle: $0.transitionStyle) })
-                }
+                ConstantAtomLiteral("verticalPage").map({
+                    if #available(watchOS 10.0, *) {
+                        return Self.verticalPage(transitionStyle: nil)
+                    } else {
+                        return Self.automatic
+                    }
+                })
+                VerticalPage.parser(in: context).map({
+                    if #available(watchOS 10.0, *) {
+                        return Self.verticalPage(transitionStyle: $0.transitionStyle)
+                    } else {
+                        return Self.automatic
+                    }
+                })
                 #endif
             }
         }
@@ -50,12 +60,12 @@ enum AnyTabViewStyle: ParseableModifierValue {
     
     #if os(watchOS)
     @ParseableExpression
-    @available(watchOS 10.0, *)
     struct VerticalPage {
         static let name = "verticalPage"
         
-        let transitionStyle: VerticalPageTabViewStyle.TransitionStyle
+        let transitionStyle: Any
         
+        @available(watchOS 10.0, *)
         init(transitionStyle: VerticalPageTabViewStyle.TransitionStyle) {
             self.transitionStyle = transitionStyle
         }

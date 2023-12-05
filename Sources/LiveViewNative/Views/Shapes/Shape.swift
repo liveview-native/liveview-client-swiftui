@@ -47,7 +47,7 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
     var body: some View {
         let shape = shapeModifiers.reduce(into: shape as (any SwiftUI.Shape)) { result, modifier in
             func _unbox(_ shape: some SwiftUI.Shape) -> any SwiftUI.Shape {
-                return modifier.apply(to: shape)
+                return modifier.apply(to: AnyShape(shape))
             }
             result = _unbox(result)
         }.erasedToAnyShape()

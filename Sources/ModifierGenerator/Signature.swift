@@ -102,6 +102,8 @@ struct Signature {
                             switch $0.type.as(IdentifierTypeSyntax.self)?.name.text {
                             case "ViewReference", "ToolbarContentReference", "CustomizableToolbarContentReference":
                                 return $0.firstName.tokenKind == .wildcard ? "{ \($0.secondName!.text).resolve(on: element, in: context) }" : "\($0.firstName.text): { \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context) }"
+                            case "InlineViewReference":
+                                return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
                             case "TextReference":
                                 return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
                             case "ChangeTracked":
@@ -122,8 +124,15 @@ struct Signature {
                             case "AttributeReference":
                                 return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
                             default:
-                                if $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text == "AttributeReference" {
-                                    return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text)?.resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)?.resolve(on: element, in: context)"
+                                if let optionalType = $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text {
+                                    switch optionalType {
+                                    case "AttributeReference":
+                                        return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text)?.resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)?.resolve(on: element, in: context)"
+                                    case "TextReference":
+                                        return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text)?.resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)?.resolve(on: element, in: context)"
+                                    default:
+                                        break
+                                    }
                                 }
                                 return $0.firstName.tokenKind == .wildcard ? $0.secondName!.text : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)"
                             }
@@ -149,6 +158,32 @@ struct Signature {
     }
 }
 
+extension TypeSyntax {
+    func resolveGenericType() -> TypeSyntax {
+        // Some generic types are replaced with concrete types
+        if ["StringProtocol", "Equatable", "Hashable", "Identifiable"].contains(
+            self.as(IdentifierTypeSyntax.self)?.name.text
+                ?? self.as(MemberTypeSyntax.self)?.name.text
+        ) {
+            // use `String`
+            return TypeSyntax("String")
+        } else if ["BinaryInteger"].contains(self.as(IdentifierTypeSyntax.self)?.name.text) {
+            // use `Int`
+            return TypeSyntax("Int")
+        } else if ["ParseableRangeExpression"].contains(self.as(IdentifierTypeSyntax.self)?.name.text) {
+            // use the unmodified type name
+            return self
+        } else if self.as(IdentifierTypeSyntax.self)?.name.text == "Gesture" {
+            return TypeSyntax("AnyGesture<Any>")
+        } else if self.as(IdentifierTypeSyntax.self)?.name.text == "View" {
+            return TypeSyntax("InlineViewReference")
+        } else {
+            // add `Any*` prefix to erase
+            return TypeSyntax("Any\(self)")
+        }
+    }
+}
+
 extension FunctionParameterSyntax {
     /// Validate/convert the types of a parameter to be compatible with the parser.
     init(_ parameter: FunctionParameterSyntax, generics: [String:TypeSyntax]) {
@@ -162,7 +197,9 @@ extension FunctionParameterSyntax {
             } else {
                 genericBaseType = baseType
             }
-        } else if let someType = parameter.type.as(SomeOrAnyTypeSyntax.self)?.constraint {
+        } else if let someType = parameter.type.as(SomeOrAnyTypeSyntax.self)?.constraint
+                                    ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(TupleTypeSyntax.self)?.elements.first?.type.as(SomeOrAnyTypeSyntax.self)?.constraint
+        {
             if let member = someType.as(MemberTypeSyntax.self) {
                 genericBaseType = TypeSyntax("\(raw: member.name.text)")
             } else {
@@ -195,9 +232,7 @@ extension FunctionParameterSyntax {
                     .with(\.attributes, AttributeListSyntax([]))
                     .with(\.defaultValue, InitializerClauseSyntax(value: ExprSyntax(#"ToolbarContentReference(value: [])"#)))
             }
-        } else if let functionType = parameter.type.as(FunctionTypeSyntax.self)
-                                            ?? parameter.type.as(AttributedTypeSyntax.self)?.baseType.as(FunctionTypeSyntax.self)
-                                            ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(TupleTypeSyntax.self)?.elements.first?.type.as(FunctionTypeSyntax.self),
+        } else if let functionType = parameter.functionType,
                   functionType.returnClause.type.as(MemberTypeSyntax.self)?.name.text == "Void"
         {
             // Closures are replaced with `Event`
@@ -207,32 +242,28 @@ extension FunctionParameterSyntax {
                 .with(\.firstName.trailingTrivia, .space)
                 .with(\.secondName, "\(raw: parameter.secondName?.text ?? parameter.firstName.text)__\(raw: String(functionType.parameters.count))") // encode the number of parameters into the `secondName`.
         } else if let genericBaseType {
-            // Some generic types are replaced with concrete types
-            if ["StringProtocol", "Equatable"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
-                // use `String`
-                self = parameter.with(\.type, TypeSyntax("String"))
-            } else if ["BinaryInteger"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
-                // use `Int`
-                self = parameter.with(\.type, TypeSyntax("\(parameter.type.leadingTrivia)Int\(parameter.type.trailingTrivia)"))
-            } else if ["ParseableRangeExpression"].contains(genericBaseType.as(IdentifierTypeSyntax.self)?.name.text) {
-                // use the unmodified type name
-                self = parameter.with(\.type, genericBaseType)
-            } else {
-                // add `Any*` prefix to erase
-                self = parameter.with(\.type, TypeSyntax("\(parameter.type.leadingTrivia)Any\(genericBaseType)\(parameter.type.trailingTrivia)")) // erase the generic
-            }
-        } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
+            self = parameter.with(\.type, genericBaseType.resolveGenericType())
+        } else if let memberType = parameter.type.as(MemberTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self),
                   memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
                     && memberType.name.text == "Text"
         {
             // nested Text is replaced with a `TextReference`
-            self = parameter.with(\.type, TypeSyntax("TextReference"))
+            self = parameter.with(\.type, TypeSyntax("TextReference\(raw: parameter.type.is(OptionalTypeSyntax.self) ? "? " : "")"))
         } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
                   memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
                     && memberType.name.text == "Binding"
         {
-            // SwiftUI Bindings are replaced with a `ChangeTracked` value
-            self = parameter.with(\.type, TypeSyntax("ChangeTracked\(raw: memberType.genericArgumentClause?.description ?? "")"))
+            let bindingConstraint = memberType.genericArgumentClause?.arguments.first?.argument
+            if let someType = bindingConstraint?.as(OptionalTypeSyntax.self)?.wrappedType.as(TupleTypeSyntax.self)?.elements.first?.type.as(SomeOrAnyTypeSyntax.self)?.constraint {
+                self = parameter.with(\.type, TypeSyntax("ChangeTracked<\(raw: someType.resolveGenericType())?>"))
+            } else if let bindingConstraint,
+                      let genericWrappedType = generics[bindingConstraint.description]
+            {
+                self = parameter.with(\.type, TypeSyntax("ChangeTracked<\(raw: genericWrappedType.resolveGenericType())>"))
+            } else {
+                // SwiftUI Bindings are replaced with a `ChangeTracked` value
+                self = parameter.with(\.type, TypeSyntax("ChangeTracked\(raw: memberType.genericArgumentClause?.description ?? "")"))
+            }
         } else if parameter.ellipsis != nil {
             // variadic parameters become a single parameter
             self = parameter
@@ -260,5 +291,9 @@ extension FunctionParameterSyntax {
                 .with(\.type, TypeSyntax("AttributeReference<\(self.type.trimmed)>\(raw: self.type.is(OptionalTypeSyntax.self) ? "?" : "")"))
                 .with(\.defaultValue, self.defaultValue != nil ? InitializerClauseSyntax(ExprSyntax(".init(storage: .constant(\(self.defaultValue!)))")) : nil)
         }
+
+        self = self
+            .with(\.leadingTrivia, parameter.type.leadingTrivia)
+            .with(\.trailingTrivia, parameter.type.trailingTrivia)
     }
 }

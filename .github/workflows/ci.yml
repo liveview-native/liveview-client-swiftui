@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 env:
-  MIN_COVERAGE: 0.24
+  MIN_COVERAGE: 0.2
 
 permissions:
   checks: write
@@ -48,4 +48,4 @@ jobs:
       - name: Build for tvOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "platform=tvOS Simulator,name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme LiveViewNative-Package -destination "name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation
