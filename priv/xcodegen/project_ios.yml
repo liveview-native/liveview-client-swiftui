@@ -1,0 +1,10 @@
+targets:
+  iOS:
+    type: application
+    platform: iOS
+    sources:
+      - Sources/${LVN_APP_NAME}
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: ${LVN_BUNDLE_IDENTIFIER}
+    dependencies:
+      - package: LiveViewNative
