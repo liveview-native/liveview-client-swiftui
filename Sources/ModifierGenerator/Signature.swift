@@ -289,7 +289,7 @@ extension FunctionParameterSyntax {
         {
             self = self
                 .with(\.type, TypeSyntax("AttributeReference<\(self.type.trimmed)>\(raw: self.type.is(OptionalTypeSyntax.self) ? "?" : "")"))
-                .with(\.defaultValue, self.defaultValue != nil ? InitializerClauseSyntax(ExprSyntax(".init(storage: .constant(\(self.defaultValue!)))")) : nil)
+                .with(\.defaultValue, self.defaultValue?.as(InitializerClauseSyntax.self).flatMap({ InitializerClauseSyntax.init(equal: .equalToken(leadingTrivia: .space, trailingTrivia: .space), value: ExprSyntax(".init(storage: .constant(\($0.value)))")) }))
         }
 
         self = self

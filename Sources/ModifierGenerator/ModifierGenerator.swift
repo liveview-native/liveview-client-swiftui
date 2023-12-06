@@ -12,9 +12,6 @@ struct ModifierGenerator: ParsableCommand {
     )
     private var interface: URL
 
-    // missing View-specific: resizable
-    // missing: fullScreenCover
-
     static let extraModifierTypes: Set<String> = [
         // Image modifiers
         "_ResizableModifier",
@@ -38,7 +35,7 @@ struct ModifierGenerator: ParsableCommand {
         "_SearchCompletionModifier",
         "_OnSubmitModifier",
         "_MaskModifier<R>",
-        "_MatchedGeometryEffectModifier",
+        "_MatchedGeometryEffectModifier<R>",
         "_Rotation3DEffectModifier",
         "_PresentationDetentsModifier",
         "_FocusScopeModifier",
@@ -233,7 +230,6 @@ struct ModifierGenerator: ParsableCommand {
         var modifierList = [String]()
 
         for (modifier, signatures) in visitor.modifiers.sorted(by: { $0.key < $1.key }) {
-            // guard modifier == "scrollPosition" else { continue }
             guard !modifier.starts(with: "_"),
                   !Self.denylist.contains(modifier),
                   !signatures.allSatisfy({ !isValid($0.0) })

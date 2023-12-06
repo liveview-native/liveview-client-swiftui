@@ -11,18 +11,21 @@ import LiveViewNativeStylesheet
 // manual implementation
 // `Namespace.ID` is a special case, and needs to be accessed from the environment.
 @ParseableExpression
-struct _MatchedGeometryEffectModifier: ViewModifier {
-    static let name = "matchedGeometryEffect"
+struct _MatchedGeometryEffectModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "matchedGeometryEffect" }
     
     @Environment(\.namespaces) private var namespaces
     
-    let id: String
-    let namespace: String
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+    
+    let id: AttributeReference<String>
+    let namespace: AttributeReference<String>
     let properties: MatchedGeometryProperties
     let anchor: UnitPoint
-    let isSource: Bool
+    let isSource: AttributeReference<Bool>
     
-    init(id: String, in namespace: String, properties: MatchedGeometryProperties = .frame, anchor: UnitPoint = .center, isSource: Bool = true) {
+    init(id: AttributeReference<String>, in namespace: AttributeReference<String>, properties: MatchedGeometryProperties = .frame, anchor: UnitPoint = .center, isSource: AttributeReference<Bool> = .init(storage: .constant(true))) {
         self.id = id
         self.namespace = namespace
         self.properties = properties
@@ -32,11 +35,11 @@ struct _MatchedGeometryEffectModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content.matchedGeometryEffect(
-            id: id,
-            in: namespaces[namespace]!,
+            id: id.resolve(on: element, in: context),
+            in: namespaces[namespace.resolve(on: element, in: context)]!,
             properties: properties,
             anchor: anchor,
-            isSource: isSource
+            isSource: isSource.resolve(on: element, in: context)
         )
     }
 }

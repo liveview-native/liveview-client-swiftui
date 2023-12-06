@@ -35,7 +35,7 @@ struct AnySymbolEffect: SymbolEffect, ContentTransitionSymbolEffect, ParseableMo
 extension AppearSymbolEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
-            "appear".utf8.map({ Self.appear })
+            ConstantAtomLiteral("appear").map({ Self.appear })
         } member: {
             Member.parser(in: context)
         }
@@ -62,7 +62,7 @@ extension AppearSymbolEffect: ParseableModifierValue {
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
                 for `case` in Self.allCases {
-                    `case`.rawValue.utf8.map({ `case` })
+                    ConstantAtomLiteral(`case`.rawValue).map({ `case` })
                 }
             }
         }
@@ -72,7 +72,7 @@ extension AppearSymbolEffect: ParseableModifierValue {
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension AutomaticSymbolEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        "automatic".utf8.map({ Self.automatic })
+        ImplicitStaticMember(["automatic": Self.automatic])
     }
 }
 
@@ -80,7 +80,7 @@ extension AutomaticSymbolEffect: ParseableModifierValue {
 extension BounceSymbolEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
-            "bounce".utf8.map({ Self.bounce })
+            ConstantAtomLiteral("bounce").map({ Self.bounce })
         } member: {
             Member.parser(in: context)
         }
@@ -107,7 +107,7 @@ extension BounceSymbolEffect: ParseableModifierValue {
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
                 for `case` in Self.allCases {
-                    `case`.rawValue.utf8.map({ `case` })
+                    ConstantAtomLiteral(`case`.rawValue).map({ `case` })
                 }
             }
         }
@@ -118,7 +118,7 @@ extension BounceSymbolEffect: ParseableModifierValue {
 extension DisappearSymbolEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
-            "disappear".utf8.map({ Self.disappear })
+            ConstantAtomLiteral("disappear").map({ Self.disappear })
         } member: {
             Member.parser(in: context)
         }
@@ -145,7 +145,7 @@ extension DisappearSymbolEffect: ParseableModifierValue {
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
                 for `case` in Self.allCases {
-                    `case`.rawValue.utf8.map({ `case` })
+                    ConstantAtomLiteral(`case`.rawValue).map({ `case` })
                 }
             }
         }
@@ -156,7 +156,7 @@ extension DisappearSymbolEffect: ParseableModifierValue {
 extension PulseSymbolEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
-            "pulse".utf8.map({ Self.pulse })
+            ConstantAtomLiteral("pulse").map({ Self.pulse })
         } member: {
             Member.parser(in: context)
         }
@@ -179,7 +179,7 @@ extension PulseSymbolEffect: ParseableModifierValue {
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
                 for `case` in Self.allCases {
-                    `case`.rawValue.utf8.map({ `case` })
+                    ConstantAtomLiteral(`case`.rawValue).map({ `case` })
                 }
             }
         }
@@ -190,7 +190,7 @@ extension PulseSymbolEffect: ParseableModifierValue {
 extension ReplaceSymbolEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
-            "replace".utf8.map({ Self.replace })
+            ConstantAtomLiteral("replace").map({ Self.replace })
         } member: {
             Member.parser(in: context)
         }
@@ -219,7 +219,7 @@ extension ReplaceSymbolEffect: ParseableModifierValue {
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
                 for `case` in Self.allCases {
-                    `case`.rawValue.utf8.map({ `case` })
+                    ConstantAtomLiteral(`case`.rawValue).map({ `case` })
                 }
             }
         }
@@ -230,7 +230,7 @@ extension ReplaceSymbolEffect: ParseableModifierValue {
 extension ScaleSymbolEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
-            "scale".utf8.map({ Self.scale })
+            ConstantAtomLiteral("scale").map({ Self.scale })
         } member: {
             Member.parser(in: context)
         }
@@ -257,7 +257,7 @@ extension ScaleSymbolEffect: ParseableModifierValue {
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
                 for `case` in Self.allCases {
-                    `case`.rawValue.utf8.map({ `case` })
+                    ConstantAtomLiteral(`case`.rawValue).map({ `case` })
                 }
             }
         }
@@ -268,7 +268,7 @@ extension ScaleSymbolEffect: ParseableModifierValue {
 extension VariableColorSymbolEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
-            "variableColor".utf8.map({ Self.variableColor })
+            ConstantAtomLiteral("variableColor").map({ Self.variableColor })
         } member: {
             Member.parser(in: context)
         }
@@ -294,7 +294,7 @@ extension VariableColorSymbolEffect: ParseableModifierValue {
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
                 for `case` in Self.allCases {
-                    `case`.rawValue.utf8.map({ `case` })
+                    ConstantAtomLiteral(`case`.rawValue).map({ `case` })
                 }
             }
         }
@@ -306,16 +306,16 @@ extension SymbolEffectOptions: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
             OneOf {
-                "default".utf8.map({ Self.default })
-                "repeating".utf8.map({ Self.repeating })
-                "nonRepeating".utf8.map({ Self.nonRepeating })
+                ConstantAtomLiteral("default").map({ Self.default })
+                ConstantAtomLiteral("repeating").map({ Self.repeating })
+                ConstantAtomLiteral("nonRepeating").map({ Self.nonRepeating })
                 Speed.parser(in: context).map({ Self.speed($0.speed) })
                 Repeat.parser(in: context).map({ Self.repeat($0.count) })
             }
         } member: {
             OneOf {
-                "repeating".utf8.map({ Member.repeating })
-                "nonRepeating".utf8.map({ Member.nonRepeating })
+                ConstantAtomLiteral("repeating").map({ Member.repeating })
+                ConstantAtomLiteral("nonRepeating").map({ Member.nonRepeating })
                 Speed.parser(in: context).map(Member.speed)
                 Repeat.parser(in: context).map(Member.repeat)
             }
