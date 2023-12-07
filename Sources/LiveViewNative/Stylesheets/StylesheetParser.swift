@@ -72,7 +72,7 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
                     let (modifierName, _) = try AnyNode(context: context).parse(&input)
                     logger.error(
                         """
-                        Stylesheet parsing failed for modifier `\(modifierName)`:
+                        Stylesheet parsing failed for modifier `\(modifierName)` in class `\(className)`:
                         
                         \(modifierError)
                         
@@ -120,13 +120,11 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
                     OneOf {
                         AnyNode(context: context).map({ _ in () })
                         NilLiteral()
-                        String.parser(in: context).map({ _ in () })
                         AtomLiteral().map({ _ in () })
+                        String.parser(in: context).map({ _ in () })
                         Double.parser().map({ _ in () })
                         Int.parser().map({ _ in () })
                         Bool.parser().map({ _ in () })
-                        AttributeReference<String>.parser(in: context).map({ _ in () })
-                        Event.parser(in: context).map({ _ in () })
                         ListLiteral {
                             AnyArgument(context: context)
                         }
