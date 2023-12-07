@@ -23,7 +23,11 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
             try "=>".utf8.parse(&input)
             try Whitespace().parse(&input)
             do {
-                classes[name] = try Array<M>.parser(in: context).parse(&input)
+                classes[name] = try ListLiteral {
+                    RecoverableModifier(className: name, fullStylesheet: String(fullStylesheet), context: context)
+                }
+                .parse(&input)
+                .compactMap({ $0 })
             } catch {
                 // Log errors instead of propagating, returning the classes that successfully parsed.
                 logger.error(
@@ -51,5 +55,85 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
         }
         try "}".utf8.parse(&input)
         return classes
+    }
+    
+    struct RecoverableModifier: Parser {
+        let className: String
+        let fullStylesheet: String?
+        let context: ParseableModifierContext
+        
+        func parse(_ input: inout Substring.UTF8View) throws -> M? {
+            let copy = input
+            do {
+                return try M.parser(in: context).parse(&input)
+            } catch let modifierError {
+                input = copy
+                do {
+                    let (modifierName, _) = try AnyNode(context: context).parse(&input)
+                    logger.error(
+                        """
+                        Stylesheet parsing failed for modifier `\(modifierName)`:
+                        
+                        \(modifierError)
+                        
+                        in stylesheet:
+                        
+                        \(fullStylesheet ?? "")
+                        """
+                    )
+                    return nil
+                } catch {
+                    throw modifierError
+                }
+            }
+        }
+        
+        struct AnyNode: Parser {
+            let context: ParseableModifierContext
+            
+            var body: some Parser<Substring.UTF8View, (String, Metadata)> {
+                "{".utf8
+                Whitespace()
+                OneOf {
+                    ConstantAtomLiteral(".").map({ _ in "." })
+                    AtomLiteral()
+                }
+                Whitespace()
+                ",".utf8
+                Whitespace()
+                Metadata.parser()
+                Whitespace()
+                ",".utf8
+                Whitespace()
+                ListLiteral {
+                    AnyArgument(context: context)
+                }
+                .map({ _ in () })
+                Whitespace()
+                "}".utf8
+            }
+            
+            struct AnyArgument: Parser {
+                let context: ParseableModifierContext
+                
+                var body: some Parser<Substring.UTF8View, ()> {
+                    OneOf {
+                        AnyNode(context: context).map({ _ in () })
+                        NilLiteral()
+                        String.parser(in: context).map({ _ in () })
+                        AtomLiteral().map({ _ in () })
+                        Double.parser().map({ _ in () })
+                        Int.parser().map({ _ in () })
+                        Bool.parser().map({ _ in () })
+                        AttributeReference<String>.parser(in: context).map({ _ in () })
+                        Event.parser(in: context).map({ _ in () })
+                        ListLiteral {
+                            AnyArgument(context: context)
+                        }
+                        .map({ _ in () })
+                    }
+                }
+            }
+        }
     }
 }
