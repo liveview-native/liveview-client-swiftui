@@ -8,9 +8,6 @@ import LiveViewNative
 
 struct ContentView: View {
     var body: some View {
-        LiveView(
-            .automatic(development: .localhost, production: .custom(URL(string: "example.com")!)),
-            configuration: .init(connectParams: { _ in ["apns_token": "tokenValue"] })
-        )
+        LiveView(.automatic(URL(string: "https://%LVN_PREFERRED_PROD_URL%%LVN_PREFERRED_ROUTE%")!))
     }
 }

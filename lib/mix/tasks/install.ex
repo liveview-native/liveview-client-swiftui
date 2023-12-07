@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
 
     make_native_project_dir(host_project_config)
     copy_xcodegen_files(host_project_config)
-    replace_app_name_in_sources(host_project_config)
+    prepare_source_files(host_project_config)
     rename_sources_directory(host_project_config)
     run_xcodegen(host_project_config, task_settings)
     remove_xcodegen_files(host_project_config)
@@ -54,16 +54,16 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
 
   defp install_xcodegen do
     cond do
-      # Install with Homebrew
-      System.find_executable("brew") ->
-        status_message("running", "brew install xcodegen")
-        System.cmd("brew", ["install", "xcodegen"])
-        true
-
       # Install with Mint
       System.find_executable("mint") ->
         status_message("running", "mint install yonaskolb/xcodegen")
         System.cmd("mint", ["install", "yonaskolb/xcodegen"])
+        true
+
+      # Install with Homebrew
+      System.find_executable("brew") ->
+        status_message("running", "brew install xcodegen")
+        System.cmd("brew", ["install", "xcodegen"])
         true
 
       # Clone from GitHub (fallback)
@@ -89,7 +89,7 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
     File.cp_r(xcodegen_path, native_project_dir)
   end
 
-  defp replace_app_name_in_sources(%{app_namespace: app_namespace, native_path: native_path}) do
+  defp prepare_source_files(%{app_namespace: app_namespace, native_path: native_path} = host_project_config) do
     sources_path = Path.join(native_path, "swiftui/Sources/TemplateApp")
 
     sources_path
@@ -97,14 +97,16 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
     |> Enum.map(&(Path.join(sources_path, &1)))
     |> Enum.filter(&(not File.dir?(&1)))
     |> Enum.map(&maybe_rename_file(&1, app_namespace))
-    |> Enum.map(&replace_app_name_in_source(&1, app_namespace))
+    |> Enum.map(&prepare_source_file(&1, host_project_config))
   end
 
-  defp replace_app_name_in_source(source_file, app_namespace) do
+  defp prepare_source_file(source_file, %{} = task_settings) do
     body =
       source_file
       |> File.read!()
-      |> String.replace("TemplateApp", app_namespace)
+      |> String.replace("TemplateApp", task_settings.app_namespace)
+      |> String.replace("%LVN_PREFERRED_ROUTE%", task_settings.preferred_route)
+      |> String.replace("%LVN_PREFERRED_PROD_URL%", task_settings.preferred_prod_url)
 
     File.write!(source_file, body)
   end
