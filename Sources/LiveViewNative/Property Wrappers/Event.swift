@@ -47,7 +47,7 @@ import AsyncAlgorithms
 public struct Event: DynamicProperty, Decodable {
     @ObservedElement private var element: ElementNode
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
-    @StateObject private var handler = Handler()
+    @StateObject var handler = Handler()
     /// The name of the event to send.
     #if swift(>=5.8)
     @_documentation(visibility: public)
@@ -97,6 +97,8 @@ public struct Event: DynamicProperty, Decodable {
         private var debounce: Double?
         var throttle: Double?
         
+        let didSendSubject = PassthroughSubject<Void, Never>()
+        
         init() {}
         
         func update(coordinator: CoordinatorEnvironment?, debounce: Double?, throttle: Double?) {
@@ -106,21 +108,24 @@ public struct Event: DynamicProperty, Decodable {
             self.debounce = debounce
             self.throttle = throttle
             if let debounce = debounce {
-                handlerTask = Task {
+                handlerTask = Task { [weak didSendSubject] in
                     for await event in channel.debounce(for: .milliseconds(debounce)) {
                         try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        didSendSubject?.send()
                     }
                 }
             } else if let throttle = throttle {
-                handlerTask = Task {
+                handlerTask = Task { [weak didSendSubject] in
                     for await event in channel.throttle(for: .milliseconds(throttle)) {
                         try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        didSendSubject?.send()
                     }
                 }
             } else {
-                handlerTask = Task {
+                handlerTask = Task { [weak didSendSubject] in
                     for await event in channel {
                         try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        didSendSubject?.send()
                     }
                 }
             }

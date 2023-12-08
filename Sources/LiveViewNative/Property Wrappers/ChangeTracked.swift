@@ -102,9 +102,12 @@ extension ChangeTracked where Value: FormValue {
     
     final class FormLocalValue: LocalValue {
         var cancellable: AnyCancellable?
+        var didSendCancellable: AnyCancellable?
         
         let attribute: AttributeName
         let sendChangeEvent: Bool
+        
+        private var previousValue: Value?
         
         init(value: Value, attribute: AttributeName, sendChangeEvent: Bool) {
             self.attribute = attribute
@@ -126,9 +129,10 @@ extension ChangeTracked where Value: FormValue {
             to changeTracked: ChangeTracked<Value>
         ) {
             if let value = attributeValue(on: changeTracked.element),
-               value != self.value
+               value != self.previousValue
             {
                 self.value = value
+                self.previousValue = value
             }
             
             cancellable = localValueChanged
@@ -141,9 +145,22 @@ extension ChangeTracked where Value: FormValue {
                         guard let self,
                               self.sendChangeEvent
                         else { return }
-                        try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed))
+                        // LiveView expects all values to be strings.
+                        let encodedValue = try String(data: JSONEncoder().encode(localValue), encoding: .utf8) ?? ""
+                        try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: encodedValue]), options: .fragmentsAllowed))
                     }
                 })
+            
+            // set current value to previousValue and trigger update to sync with attribute value
+            // (may be delayed from localValueChanged due to debounce/throttle)
+            didSendCancellable = changeTracked.event.owner.handler.didSendSubject
+                .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
+                .sink { [weak self] _ in
+                    guard let self
+                    else { return }
+                    self.previousValue = self.value
+                    self.objectWillChange.send()
+                }
         }
     }
 }
@@ -166,6 +183,7 @@ extension ChangeTracked {
             self.value = value
         }
         
+        @MainActor
         func bind(to changeTracked: ChangeTracked<Value>) {
             // implement in subclass
         }
