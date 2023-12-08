@@ -13,18 +13,18 @@ extension UnitCurve: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
             OneOf {
-                "easeInOut".utf8.map({ Self.easeInOut })
-                "easeIn".utf8.map({ Self.easeIn })
-                "easeOut".utf8.map({ Self.easeOut })
-                "circularEaseIn".utf8.map({ Self.circularEaseIn })
-                "circularEaseOut".utf8.map({ Self.circularEaseOut })
-                "circularEaseInOut".utf8.map({ Self.circularEaseInOut })
-                "linear".utf8.map({ Self.linear })
+                ConstantAtomLiteral("easeInOut").map({ Self.easeInOut })
+                ConstantAtomLiteral("easeIn").map({ Self.easeIn })
+                ConstantAtomLiteral("easeOut").map({ Self.easeOut })
+                ConstantAtomLiteral("circularEaseIn").map({ Self.circularEaseIn })
+                ConstantAtomLiteral("circularEaseOut").map({ Self.circularEaseOut })
+                ConstantAtomLiteral("circularEaseInOut").map({ Self.circularEaseInOut })
+                ConstantAtomLiteral("linear").map({ Self.linear })
                 Bezier.parser(in: context).map(\.value)
             }
         } member: {
             OneOf {
-                "inverse".utf8.map({ Modifier.inverse })
+                ConstantAtomLiteral("inverse").map({ Modifier.inverse })
             }
         }
         .map { (base, members) in

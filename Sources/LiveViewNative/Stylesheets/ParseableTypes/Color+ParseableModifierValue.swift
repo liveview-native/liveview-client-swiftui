@@ -10,26 +10,39 @@ import LiveViewNativeStylesheet
 
 extension SwiftUI.Color: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ChainedMemberExpression {
-            baseParser(in: context)
-        } member: {
-            modifierParser(in: context)
-        }
-        .map({ base, modifiers in
-            modifiers.reduce(into: base) {
-                $0 = $1.apply(to: $0)
+        OneOf {
+            CustomColor.parser(in: context).map(\.value)
+            ChainedMemberExpression {
+                baseParser(in: context)
+            } member: {
+                modifierParser(in: context)
             }
-        })
+            .map({ base, modifiers in
+                modifiers.reduce(into: base) {
+                    $0 = $1.apply(to: $0)
+                }
+            })
+        }
     }
     
     @ParseableExpression
-    struct NamedColor {
+    struct CustomColor {
         static let name = "Color"
         
-        let name: String
+        let value: Color
         
         init(_ name: String) {
-            self.name = name
+            self.value = .init(name, bundle: nil)
+        }
+        
+        public init(_ colorSpace: Color.RGBColorSpace = .sRGB, red: Double, green: Double, blue: Double, opacity: Double = 1) {
+            self.value = .init(colorSpace, red: red, green: green, blue: blue, opacity: opacity)
+        }
+        public init(_ colorSpace: Color.RGBColorSpace = .sRGB, white: Double, opacity: Double = 1) {
+            self.value = .init(colorSpace, white: white, opacity: opacity)
+        }
+        public init(hue: Double, saturation: Double, brightness: Double, opacity: Double = 1) {
+            self.value = .init(hue: hue, saturation: saturation, brightness: brightness, opacity: opacity)
         }
     }
     
@@ -56,7 +69,7 @@ extension SwiftUI.Color: ParseableModifierValue {
                 "secondary": .secondary,
             ])
             
-            NamedColor.parser(in: context).map({ Self.init($0.name, bundle: nil) })
+            CustomColor.parser(in: context).map(\.value)
         }
     }
     
@@ -86,5 +99,15 @@ private enum ColorModifier {
         case let .opacity(opacity):
             return color.opacity(opacity.value)
         }
+    }
+}
+
+extension SwiftUI.Color.RGBColorSpace: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ImplicitStaticMember([
+            "sRGB": .sRGB,
+            "sRGBLinear": .sRGBLinear,
+            "displayP3": .displayP3,
+        ])
     }
 }

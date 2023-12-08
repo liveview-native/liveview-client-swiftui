@@ -12,14 +12,14 @@ extension Animation: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
             OneOf {
-                "default".utf8.map({ Base.default })
+                ConstantAtomLiteral("default").map({ Base.default })
                 Base.EaseIn.parser(in: context).map(Base.easeIn)
                 Base.EaseOut.parser(in: context).map(Base.easeOut)
                 Base.EaseInOut.parser(in: context).map(Base.easeInOut)
                 Base.Linear.parser(in: context).map(Base.linear)
-                "spring".utf8.map({ Base.spring })
-                "interactiveSpring".utf8.map({ Base.interactiveSpring })
-                "interpolatingSpring".utf8.map({ Base.interpolatingSpring })
+                ConstantAtomLiteral("spring").map({ Base.spring })
+                ConstantAtomLiteral("interactiveSpring").map({ Base.interactiveSpring })
+                ConstantAtomLiteral("interpolatingSpring").map({ Base.interpolatingSpring })
                 Base.TimingCurve.parser(in: context).map(Base.timingCurve)
             }
         } member: {

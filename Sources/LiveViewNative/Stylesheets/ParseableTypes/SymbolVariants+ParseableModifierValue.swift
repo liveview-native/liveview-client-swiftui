@@ -12,20 +12,20 @@ extension SymbolVariants: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
             OneOf {
-                "none".utf8.map({ Self.none })
-                "circle".utf8.map({ Self.circle })
-                "square".utf8.map({ Self.square })
-                "rectangle".utf8.map({ Self.rectangle })
-                "fill".utf8.map({ Self.fill })
-                "slash".utf8.map({ Self.slash })
+                ConstantAtomLiteral("none").map({ Self.none })
+                ConstantAtomLiteral("circle").map({ Self.circle })
+                ConstantAtomLiteral("square").map({ Self.square })
+                ConstantAtomLiteral("rectangle").map({ Self.rectangle })
+                ConstantAtomLiteral("fill").map({ Self.fill })
+                ConstantAtomLiteral("slash").map({ Self.slash })
             }
         } member: {
             OneOf {
-                "circle".utf8.map({ Member.circle })
-                "square".utf8.map({ Member.square })
-                "rectangle".utf8.map({ Member.rectangle })
-                "fill".utf8.map({ Member.fill })
-                "slash".utf8.map({ Member.slash })
+                ConstantAtomLiteral("circle").map({ Member.circle })
+                ConstantAtomLiteral("square").map({ Member.square })
+                ConstantAtomLiteral("rectangle").map({ Member.rectangle })
+                ConstantAtomLiteral("fill").map({ Member.fill })
+                ConstantAtomLiteral("slash").map({ Member.slash })
             }
         }.map { base, members in
             return members.reduce(into: base) { result, member in
