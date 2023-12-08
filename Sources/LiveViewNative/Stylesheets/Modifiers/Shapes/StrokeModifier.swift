@@ -9,21 +9,24 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 @ParseableExpression
-struct _StrokeModifier: ShapeFinalizerModifier {
-    static let name = "stroke"
+struct _StrokeModifier<R: RootRegistry>: ShapeFinalizerModifier {
+    static var name: String { "stroke" }
     
     enum Storage {
-        case _0(content: AnyShapeStyle, style: StrokeStyle, antialiased: Bool)
-        case _1(content: AnyShapeStyle, lineWidth: CGFloat, antialiased: Bool)
+        case _0(content: AnyShapeStyle, style: StrokeStyle, antialiased: AttributeReference<Bool>)
+        case _1(content: AnyShapeStyle, lineWidth: AttributeReference<CGFloat>, antialiased: AttributeReference<Bool>)
     }
     
     let storage: Storage
     
-    init(_ content: AnyShapeStyle, style: StrokeStyle, antialiased: Bool = true) {
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+    
+    init(_ content: AnyShapeStyle, style: StrokeStyle, antialiased: AttributeReference<Bool> = .init(storage: .constant(true))) {
         self.storage = ._0(content: content, style: style, antialiased: antialiased)
     }
     
-    init(_ content: AnyShapeStyle, lineWidth: CGFloat = 1, antialiased: Bool = true) {
+    init(_ content: AnyShapeStyle, lineWidth: AttributeReference<CGFloat> = .init(storage: .constant(1)), antialiased: AttributeReference<Bool> = .init(storage: .constant(true))) {
         self.storage = ._1(content: content, lineWidth: lineWidth, antialiased: antialiased)
     }
     
@@ -32,15 +35,15 @@ struct _StrokeModifier: ShapeFinalizerModifier {
         switch storage {
         case ._0(let content, let style, let antialiased):
             if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-                shape.stroke(content, style: style, antialiased: antialiased)
+                shape.stroke(content, style: style, antialiased: antialiased.resolve(on: element, in: context))
             } else {
                 shape.stroke(content, style: style)
             }
         case ._1(let content, let lineWidth, let antialiased):
             if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-                shape.stroke(content, lineWidth: lineWidth, antialiased: antialiased)
+                shape.stroke(content, lineWidth: lineWidth.resolve(on: element, in: context), antialiased: antialiased.resolve(on: element, in: context))
             } else {
-                shape.stroke(content, lineWidth: lineWidth)
+                shape.stroke(content, lineWidth: lineWidth.resolve(on: element, in: context))
             }
         }
     }

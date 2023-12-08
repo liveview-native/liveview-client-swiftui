@@ -21,7 +21,7 @@ struct ModifierGenerator: ParsableCommand {
         "_FillModifier",
         "_RotationModifier",
         "_ScaleModifier<R>",
-        "_StrokeModifier",
+        "_StrokeModifier<R>",
         "_TransformModifier",
         "_IntersectionModifier",
         "_UnionModifier",
@@ -32,13 +32,13 @@ struct ModifierGenerator: ParsableCommand {
         
         // Override modifiers
         "_SearchScopesModifier<R>",
-        "_SearchCompletionModifier",
+        "_SearchCompletionModifier<R>",
         "_OnSubmitModifier",
         "_MaskModifier<R>",
         "_MatchedGeometryEffectModifier<R>",
-        "_Rotation3DEffectModifier",
+        "_Rotation3DEffectModifier<R>",
         "_PresentationDetentsModifier",
-        "_FocusScopeModifier",
+        "_FocusScopeModifier<R>",
         "_PrefersDefaultFocusModifier<R>",
     ]
 
