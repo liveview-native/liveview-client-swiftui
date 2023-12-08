@@ -16,8 +16,10 @@ struct ViewReference: ParseableModifierValue {
             AtomLiteral().map({
                 Self.init(value: [$0])
             })
-            String.parser(in: context).map({ Self.init(value: [$0]) })
-            Array<String>.parser(in: context).map(Self.init(value:))
+            ListLiteral {
+                AtomLiteral()
+            }
+            .map(Self.init(value:))
         }
     }
 }
@@ -34,7 +36,7 @@ struct TextReference: ParseableModifierValue {
     }
 
     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        String.parser(in: context).map({ Self.init(value: $0) })
+        AtomLiteral().map({ Self.init(value: $0) })
     }
 }
 
@@ -55,8 +57,10 @@ struct ToolbarContentReference: ParseableModifierValue {
             AtomLiteral().map({
                 Self.init(value: [$0])
             })
-            String.parser(in: context).map({ Self.init(value: [$0]) })
-            Array<String>.parser(in: context).map(Self.init(value:))
+            ListLiteral {
+                AtomLiteral()
+            }
+            .map(Self.init(value:))
         }
     }
 }
@@ -78,8 +82,10 @@ struct CustomizableToolbarContentReference: ParseableModifierValue {
             AtomLiteral().map({
                 Self.init(value: [$0])
             })
-            String.parser(in: context).map({ Self.init(value: [$0]) })
-            Array<String>.parser(in: context).map(Self.init(value:))
+            ListLiteral {
+                AtomLiteral()
+            }
+            .map(Self.init(value:))
         }
     }
 }
