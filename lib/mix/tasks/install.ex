@@ -82,7 +82,7 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
   end
 
   defp copy_xcodegen_files(%{native_path: native_path}) do
-    priv_dir = :code.priv_dir(:live_view_native_swift_ui)
+    priv_dir = :code.priv_dir(:live_view_native_swiftui)
     native_project_dir = Path.join(native_path, "swiftui")
     xcodegen_path = Path.join(priv_dir, "xcodegen")
 

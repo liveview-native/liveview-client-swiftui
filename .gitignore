@@ -34,7 +34,7 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-live_view_native_swift_ui-*.tar
+live_view_native_swiftui-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
