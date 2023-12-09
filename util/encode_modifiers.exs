@@ -1,5 +1,5 @@
 Mix.install([
-  {:live_view_native_swift_ui, path: "."},
+  {:live_view_native_swiftui, path: "."},
   {:live_view_native, git: "https://github.com/liveview-native/live_view_native", branch: "main"},
   {:html_entities, "~> 0.5"}
 ])

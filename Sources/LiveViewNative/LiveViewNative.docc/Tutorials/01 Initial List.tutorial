@@ -41,7 +41,7 @@
            }
                
            @Step {
-               Next, add the `live_view_native` and `live_view_native_swift_ui` libraries as dependencies. 
+               Next, add the `live_view_native` and `live_view_native_swiftui` libraries as dependencies. 
                
                These packages provide supporting functions for applying SwiftUI modifiers to elements from within HEEx templates.
                
