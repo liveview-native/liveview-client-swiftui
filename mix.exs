@@ -1,10 +1,12 @@
 defmodule LiveViewNative.SwiftUI.MixProject do
   use Mix.Project
 
+  @version "0.2.0-beta.1"
+
   def project do
     [
       app: :live_view_native_swiftui,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.15",
       description: "LiveView Native platform for SwiftUI",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -69,7 +71,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       {:makeup_swift, "~> 0.0.1"},
       {:makeup_json, "~> 0.1.0"},
       {:live_view_native_platform, "0.2.0-beta.2"},
-      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet"},
+      {:live_view_native_stylesheet, "0.2.0-beta.1"},
       {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"},
     ]
