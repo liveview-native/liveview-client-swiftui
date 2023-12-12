@@ -1,7 +1,7 @@
 import Parsing
 
-struct StringLiteral: Parser {
-    var body: some Parser<Substring.UTF8View, String> {
+public struct StringLiteral: Parser {
+    public var body: some Parser<Substring.UTF8View, String> {
         "\"".utf8
         Many(into: "") { string, fragment in
             string.append(contentsOf: fragment)
