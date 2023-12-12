@@ -20,13 +20,13 @@ enum AnyListStyle: String, CaseIterable, ParseableModifierValue {
     #if os(macOS)
     case bordered
     #endif
-    #if os(iOS) || os(tvOS) || os(xrOS)
+    #if os(iOS) || os(tvOS) || os(visionOS)
     case grouped
     #endif
-    #if os(iOS) || os(xrOS)
+    #if os(iOS) || os(visionOS)
     case insetGrouped
     #endif
-    #if os(iOS) || os(macOS) || os(xrOS)
+    #if os(iOS) || os(macOS) || os(visionOS)
     case inset
     case sidebar
     #endif
@@ -51,15 +51,15 @@ extension View {
         case .bordered:
             self.listStyle(.bordered)
         #endif
-        #if os(iOS) || os(tvOS) || os(xrOS)
+        #if os(iOS) || os(tvOS) || os(visionOS)
         case .grouped:
             self.listStyle(.grouped)
         #endif
-        #if os(iOS) || os(xrOS)
+        #if os(iOS) || os(visionOS)
         case .insetGrouped:
             self.listStyle(.insetGrouped)
         #endif
-        #if os(iOS) || os(macOS) || os(xrOS)
+        #if os(iOS) || os(macOS) || os(visionOS)
         case .inset:
             self.listStyle(.inset)
         case .sidebar:

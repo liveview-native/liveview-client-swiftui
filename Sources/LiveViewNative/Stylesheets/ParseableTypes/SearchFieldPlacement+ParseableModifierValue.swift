@@ -13,13 +13,13 @@ extension SearchFieldPlacement: ParseableModifierValue {
         ImplicitStaticMember {
             OneOf {
                 ConstantAtomLiteral("automatic").map({ Self.automatic })
-                #if os(iOS) || os(macOS) || os(watchOS) || os(xrOS)
+                #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
                 ConstantAtomLiteral("toolbar").map({ Self.toolbar })
                 #endif
-                #if os(iOS) || os(macOS) || os(xrOS)
+                #if os(iOS) || os(macOS) || os(visionOS)
                 ConstantAtomLiteral("sidebar").map({ Self.sidebar })
                 #endif
-                #if os(iOS) || os(xrOS)
+                #if os(iOS) || os(visionOS)
                 ConstantAtomLiteral("navigationBarDrawer").map({ Self.navigationBarDrawer })
                 NavigationBarDrawer.parser(in: context).map({ Self.navigationBarDrawer(displayMode: $0.displayMode) })
                 #endif
@@ -27,7 +27,7 @@ extension SearchFieldPlacement: ParseableModifierValue {
         }
     }
     
-    #if os(iOS) || os(xrOS)
+    #if os(iOS) || os(visionOS)
     @ParseableExpression
     struct NavigationBarDrawer {
         static let name = "navigationBarDrawer"
@@ -41,7 +41,7 @@ extension SearchFieldPlacement: ParseableModifierValue {
     #endif
 }
 
-#if os(iOS) || os(xrOS)
+#if os(iOS) || os(visionOS)
 extension SearchFieldPlacement.NavigationBarDrawerDisplayMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

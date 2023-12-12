@@ -21,7 +21,7 @@ extension ToolbarPlacement: ParseableModifierValue {
                     ConstantAtomLiteral("bottomBar").map({ Self.bottomBar })
                 }
                 #endif
-                #if os(xrOS)
+                #if os(visionOS)
                 ConstantAtomLiteral("bottomOrnament").map({ Self.bottomOrnament })
                 #endif
                 #if !os(macOS)

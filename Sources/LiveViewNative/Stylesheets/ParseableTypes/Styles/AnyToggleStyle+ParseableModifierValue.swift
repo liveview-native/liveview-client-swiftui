@@ -12,7 +12,7 @@ enum AnyToggleStyle: String, CaseIterable, ParseableModifierValue, ToggleStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
     case automatic
-    #if os(iOS) || os(macOS) || os(watchOS) || os(xrOS)
+    #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
     case button
     case `switch`
     #endif
@@ -25,7 +25,7 @@ enum AnyToggleStyle: String, CaseIterable, ParseableModifierValue, ToggleStyle {
         switch self {
         case .automatic:
             toggle.toggleStyle(.automatic)
-        #if os(iOS) || os(macOS) || os(watchOS) || os(xrOS)
+        #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
         case .button:
             toggle.toggleStyle(.button)
         case .`switch`:

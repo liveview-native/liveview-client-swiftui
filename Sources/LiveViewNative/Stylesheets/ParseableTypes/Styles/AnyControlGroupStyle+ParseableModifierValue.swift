@@ -13,12 +13,12 @@ enum AnyControlGroupStyle: String, CaseIterable, ParseableModifierValue, Control
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
     case automatic
-    #if os(iOS) || os(macOS) || os(xrOS)
+    #if os(iOS) || os(macOS) || os(visionOS)
     case compactMenu
     case navigation
     case palette
     #endif
-    #if os(iOS) || os(macOS) || os(tvOS) || os(xrOS)
+    #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
     case menu
     #endif
     
@@ -28,7 +28,7 @@ enum AnyControlGroupStyle: String, CaseIterable, ParseableModifierValue, Control
             switch self {
             case .automatic:
                 controlGroup.controlGroupStyle(.automatic)
-            #if os(iOS) || os(macOS) || os(xrOS)
+            #if os(iOS) || os(macOS) || os(visionOS)
             case .compactMenu:
                 if #available(iOS 16.4, macOS 13.3, *) {
                     controlGroup.controlGroupStyle(.compactMenu)
@@ -44,7 +44,7 @@ enum AnyControlGroupStyle: String, CaseIterable, ParseableModifierValue, Control
                     controlGroup
                 }
             #endif
-            #if os(iOS) || os(macOS) || os(tvOS) || os(xrOS)
+            #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
             case .menu:
                 if #available(iOS 16.4, macOS 13.3, *) {
                     controlGroup.controlGroupStyle(.menu)

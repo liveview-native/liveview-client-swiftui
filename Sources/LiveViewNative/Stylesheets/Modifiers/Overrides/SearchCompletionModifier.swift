@@ -16,13 +16,13 @@ struct _SearchCompletionModifier: ViewModifier {
     
     enum Completion {
         case completion(String)
-        #if os(iOS) || os(macOS) || os(xrOS)
+        #if os(iOS) || os(macOS) || os(visionOS)
         case token(Token)
         #endif
     }
     let completion: Completion
     
-    #if os(iOS) || os(macOS) || os(xrOS)
+    #if os(iOS) || os(macOS) || os(visionOS)
     init(_ token: AtomString) {
         self.completion = .token(.init(id: token.value))
     }
@@ -36,7 +36,7 @@ struct _SearchCompletionModifier: ViewModifier {
         switch completion {
         case .completion(let string):
             content.searchCompletion(string)
-        #if os(iOS) || os(macOS) || os(xrOS)
+        #if os(iOS) || os(macOS) || os(visionOS)
         case .token(let token):
             content.searchCompletion(token)
         #endif

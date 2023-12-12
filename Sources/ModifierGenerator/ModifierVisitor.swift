@@ -11,7 +11,7 @@ final class ModifierVisitor: SyntaxVisitor {
         "macOS":  VersionTupleSyntax(major: .integerLiteral("13"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
         "watchOS":  VersionTupleSyntax(major: .integerLiteral("9"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
         "tvOS":  VersionTupleSyntax(major: .integerLiteral("16"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
-        "xrOS":  VersionTupleSyntax(major: .integerLiteral("1"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "visionOS":  VersionTupleSyntax(major: .integerLiteral("1"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
     ]
 
     static func availability(_ base: AttributeListSyntax, _ decl: AttributeListSyntax) -> (AvailabilityArgumentListSyntax, Set<String>) {

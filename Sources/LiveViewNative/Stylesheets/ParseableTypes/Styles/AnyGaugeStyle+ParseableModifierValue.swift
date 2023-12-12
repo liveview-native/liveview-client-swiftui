@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if os(iOS) || os(macOS) || os(watchOS) || os(xrOS)
+#if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
 enum AnyGaugeStyle: String, CaseIterable, ParseableModifierValue, GaugeStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
