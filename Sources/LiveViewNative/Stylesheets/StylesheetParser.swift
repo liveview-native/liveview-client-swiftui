@@ -9,7 +9,6 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
     let context: ParseableModifierContext
 
     func parse(_ input: inout Substring.UTF8View) throws -> Dictionary<String, Array<M>> {
-        let fullStylesheet = input
         try "%{".utf8.parse(&input)
         // early exit
         if (try? "}".utf8.parse(&input)) != nil {
@@ -24,7 +23,7 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
             try Whitespace().parse(&input)
             do {
                 classes[name] = try ListLiteral {
-                    RecoverableModifier(className: name, fullStylesheet: String(fullStylesheet), context: context)
+                    RecoverableModifier(className: name, context: context)
                 }
                 .parse(&input)
                 .compactMap({ $0 })
@@ -35,10 +34,6 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
                     Stylesheet parsing failed for class `\(name)`:
                     
                     \(error)
-                    
-                    in stylesheet:
-                    
-                    \(String(fullStylesheet) ?? "")
                     """
                 )
                 // consume the rest
@@ -59,7 +54,6 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
     
     struct RecoverableModifier: Parser {
         let className: String
-        let fullStylesheet: String?
         let context: ParseableModifierContext
         
         func parse(_ input: inout Substring.UTF8View) throws -> M? {
@@ -75,10 +69,6 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
                         Stylesheet parsing failed for modifier `\(modifierName)` in class `\(className)`:
                         
                         \(modifierError)
-                        
-                        in stylesheet:
-                        
-                        \(fullStylesheet ?? "")
                         """
                     )
                     return nil

@@ -51,7 +51,7 @@ public struct StandardExpressionParser<Output: ParseableExpressionProtocol>: Par
 }
 
 public class ParseableModifierContext {
-    public var metadata: Metadata = .init(file: "", line: 0, module: "unknown")
+    public var metadata: Metadata = .init(file: "", line: 0, module: "unknown", source: "<unknown>")
     
     public init() {}
 }

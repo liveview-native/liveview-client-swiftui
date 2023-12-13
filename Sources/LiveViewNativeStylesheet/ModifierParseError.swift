@@ -24,11 +24,17 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
         var localizedDescription: String {
             switch self {
             case .unknownModifier(let name):
-                "Unknown modifier '\(name)'"
+                return "Unknown modifier `\(name)`"
             case .missingRequiredArgument(let name):
-                "Missing required argument '\(name)'"
+                return "Missing required argument `\(name)`"
             case .noMatchingClause(let name, let clauses):
-                "No matching clause found for modifier '\(name)'. Expected one of \(clauses.map({ "`\(name)(\($0.joined(separator: ":"))\($0.count > 0 ? ":" : ""))`" }).joined(separator: ", "))"
+                if clauses.count == 1,
+                   let clause = clauses.first
+                {
+                    return "No matching clause found for modifier `\(name)`. Expected `\(name)(\(clause.joined(separator: ":"))\(clause.count > 0 ? ":" : ""))`"
+                } else {
+                    return "No matching clause found for modifier `\(name)`. Expected one of \(clauses.map({ "`\(name)(\($0.joined(separator: ":"))\($0.count > 0 ? ":" : ""))`" }).joined(separator: ", "))"
+                }
             }
         }
     }
@@ -38,8 +44,13 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
     }
     
     public var localizedDescription: String {
-        """
-        \(metadata.file):\(metadata.module):\(metadata.line): \(error.localizedDescription)
+        let indentation = String(repeating: " ", count: String(metadata.line).count)
+        return """
+        \(indentation) |
+        \(metadata.line) | \(metadata.source)
+        \(indentation) | ^ \(error.localizedDescription)
+        
+        in \(metadata.module) (\(metadata.file):\(metadata.line))
         """
     }
 }
