@@ -4,6 +4,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Context do
     :annotations,
     :module,
     source: "",
+    source_lines: [],
     errors: [],
     highlight_error: true,
     # Where in the code does the input start?
@@ -18,6 +19,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Context do
      context
      |> Map.put_new(:context, %__MODULE__{
        source: rest,
+       source_lines: String.split(rest, "\n"),
        file: context[:file] || "",
        module: context[:module] || nil,
        source_line: context[:source_line] || 1,

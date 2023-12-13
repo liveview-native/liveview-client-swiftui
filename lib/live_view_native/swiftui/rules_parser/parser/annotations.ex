@@ -3,7 +3,8 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Annotations do
   # Helpers
 
   def context_to_annotation(%Context{annotations: true} = context, line) do
-    [file: context.file, line: line, module: context.module]
+    source = Enum.at(context.source_lines, line - context.source_line, "")
+    [file: context.file, line: line, module: context.module, source: String.trim(source)]
   end
 
   def context_to_annotation(_, _) do
