@@ -18,4 +18,15 @@ public enum LiveSessionState {
     // todo: disconnected state?
     /// The coordinator failed to connect and produced the given error.
     case connectionFailed(Error)
+    
+    /// Either `notConnected` or `connecting`
+    var isPending: Bool {
+        switch self {
+        case .notConnected,
+             .connecting:
+            return true
+        default:
+            return false
+        }
+    }
 }
