@@ -11,16 +11,25 @@ import LiveViewNativeStylesheet
 // manual implementation
 // `axis` is a tuple type, which cannot conform to `ParseableModifierValue`.
 @ParseableExpression
-struct _Rotation3DEffectModifier: ViewModifier {
-    static let name = "rotation3DEffect"
+struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "rotation3DEffect" }
     
     let angle: Angle
     let axis: _3DAxis
     let anchor: UnitPoint
-    let anchorZ: CGFloat
-    let perspective: CGFloat
+    let anchorZ: AttributeReference<CGFloat>
+    let perspective: AttributeReference<CGFloat>
     
-    init(_ angle: Angle, axis: _3DAxis, anchor: UnitPoint = .center, anchorZ: CGFloat = 0, perspective: CGFloat = 1) {
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+    
+    init(
+        _ angle: Angle,
+        axis: _3DAxis,
+        anchor: UnitPoint = .center,
+        anchorZ: AttributeReference<CGFloat> = .init(storage: .constant(0)),
+        perspective: AttributeReference<CGFloat> = .init(storage: .constant(1))
+    ) {
         self.angle = angle
         self.axis = axis
         self.anchor = anchor
@@ -33,8 +42,8 @@ struct _Rotation3DEffectModifier: ViewModifier {
             angle,
             axis: (x: axis.x, y: axis.y, z: axis.z),
             anchor: anchor,
-            anchorZ: anchorZ,
-            perspective: perspective
+            anchorZ: anchorZ.resolve(on: element, in: context),
+            perspective: perspective.resolve(on: element, in: context)
         )
     }
     

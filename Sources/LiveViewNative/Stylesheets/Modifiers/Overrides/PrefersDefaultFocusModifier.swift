@@ -13,14 +13,14 @@ struct _PrefersDefaultFocusModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "prefersDefaultFocus" }
 
     let prefersDefaultFocus: AttributeReference<Bool>
-    let namespace: String
+    let namespace: AttributeReference<String>
 
     @ObservedElement private var element
     @LiveContext<R> private var context
     @Environment(\.namespaces) private var namespaces
 
     @available(tvOS 14.0,macOS 12.0,watchOS 7.0, *)
-    init(_ prefersDefaultFocus: AttributeReference<Swift.Bool>, in namespace: String) {
+    init(_ prefersDefaultFocus: AttributeReference<Bool>, in namespace: AttributeReference<String>) {
         self.prefersDefaultFocus = prefersDefaultFocus
         self.namespace = namespace
     }
@@ -28,7 +28,10 @@ struct _PrefersDefaultFocusModifier<R: RootRegistry>: ViewModifier {
     func body(content: Content) -> some View {
         #if os(tvOS) || os(macOS) || os(watchOS)
         content
-            .prefersDefaultFocus(prefersDefaultFocus.resolve(on: element, in: context), in: namespaces[namespace]!)
+            .prefersDefaultFocus(
+                prefersDefaultFocus.resolve(on: element, in: context),
+                in: namespaces[namespace.resolve(on: element, in: context)]!
+            )
         #else
         content
         #endif
