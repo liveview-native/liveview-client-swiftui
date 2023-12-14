@@ -278,13 +278,23 @@ extension FunctionParameterSyntax {
             ?? self.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self)?.name
             ?? self.type.as(IdentifierTypeSyntax.self)?.name)?.text,
             [
+                // Primitives
                 "String",
                 "Bool",
                 "Double",
                 "Int",
                 "Date",
-                "Color",
                 "CGFloat",
+                // SwiftUI types
+                "Alignment",
+                "Angle",
+                "Color",
+                "ColorScheme",
+                "HorizontalAlignment",
+                "RoundedCornerStyle",
+                "UnitPoint",
+                "VerticalAlignment",
+                "Visibility",
             ].contains(typeName)
         {
             self = self
