@@ -115,16 +115,6 @@ let package = Package(
                 .product(name: "Markdown", package: "swift-markdown"),
             ]
         ),
-        // .plugin(
-        //     name: "TutorialRepoGeneratorPlugin",
-        //     capability: .command(
-        //         intent: .custom(verb: "generate-tutorial-repo", description: ""),
-        //         permissions: [
-        //             .writeToPackageDirectory(reason: "This command generates a repo for the tutorial that has a commit for each step")
-        //         ]
-        //     ),
-        //     dependencies: [.target(name: "TutorialRepoGenerator")]
-        // )
         
         .macro(
             name: "LiveViewNativeMacros",

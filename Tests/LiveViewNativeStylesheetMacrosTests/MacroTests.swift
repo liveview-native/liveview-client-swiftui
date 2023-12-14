@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
@@ -123,3 +124,4 @@ final class MacroTests: XCTestCase {
         )
     }
 }
+#endif
