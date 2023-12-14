@@ -96,10 +96,13 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     @MainActor
     private func pushFormEvent(_ event: String) async throws {
+        let encoder = JSONEncoder()
         let data = data.mapValues { value in
-            let encoder = FragmentEncoder()
-            try! value.encode(to: encoder)
-            return encoder.unwrap() as Any
+            if let value = value as? String {
+                return value
+            } else {
+                return try! String(data: encoder.encode(value), encoding: .utf8)!
+            }
         }
 
         // the `form` event type signals to LiveView on the backend that the payload is url encoded (e.g., `a=b&c=d`), so we use a different type
