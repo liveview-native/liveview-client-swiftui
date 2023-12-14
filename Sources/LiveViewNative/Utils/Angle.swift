@@ -2,7 +2,7 @@
 //  Angle.swift
 //
 //
-//  Created by Carso .Katri on 12/14/23.
+//  Created by Carson Katri on 12/14/23.
 //
 
 import SwiftUI
