@@ -119,6 +119,15 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
                             AnyArgument(context: context)
                         }
                         .map({ _ in () })
+                        // keyword list
+                        ListLiteral {
+                            Identifier()
+                            Whitespace()
+                            ":".utf8
+                            Whitespace()
+                            AnyArgument(context: context)
+                        }
+                        .map({ _ in () })
                     }
                 }
             }
