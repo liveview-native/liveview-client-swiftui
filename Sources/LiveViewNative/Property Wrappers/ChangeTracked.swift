@@ -146,7 +146,12 @@ extension ChangeTracked where Value: FormValue {
                               self.sendChangeEvent
                         else { return }
                         // LiveView expects all values to be strings.
-                        let encodedValue = try String(data: JSONEncoder().encode(localValue), encoding: .utf8) ?? ""
+                        let encodedValue: String
+                        if let localValue = localValue as? String {
+                            encodedValue = localValue
+                        } else {
+                            encodedValue = try String(data: JSONEncoder().encode(localValue), encoding: .utf8) ?? ""
+                        }
                         try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: encodedValue]), options: .fragmentsAllowed))
                     }
                 })

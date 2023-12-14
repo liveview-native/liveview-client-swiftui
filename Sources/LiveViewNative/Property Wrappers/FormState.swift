@@ -200,9 +200,13 @@ public struct FormState<Value: FormValue> {
                 return
             }
             let name = element.attributeValue(for: "name") ?? "value"
-            let encoder = FragmentEncoder()
-            try! wrappedValue.encode(to: encoder)
-            let value = encoder.unwrap() as Any
+            let value: String
+            if let wrappedValue = wrappedValue as? String {
+                value = wrappedValue
+            } else {
+                let encoder = JSONEncoder()
+                value = try! String(data: encoder.encode(wrappedValue), encoding: .utf8)!
+            }
             Task {
                 try? await coordinator!.pushEvent("native-form", changeEvent, [name: value], nil)
             }
