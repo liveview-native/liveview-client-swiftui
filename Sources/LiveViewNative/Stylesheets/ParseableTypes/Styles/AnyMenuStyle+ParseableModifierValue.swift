@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if os(iOS) || os(macOS) || os(tvOS) || os(xrOS)
+#if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
 enum AnyMenuStyle: String, CaseIterable, ParseableModifierValue, MenuStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

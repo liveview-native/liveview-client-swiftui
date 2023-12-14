@@ -15,7 +15,16 @@ extension Axis.Set: ParseableModifierValue {
                 "horizontal": Axis.Set.horizontal,
                 "vertical": Axis.Set.vertical,
             ])
-            Array<Self>.parser(in: context).map(Self.init(_:))
+            Array<Axis>.parser(in: context).map({
+                Self.init($0.map({
+                    switch $0 {
+                    case .horizontal:
+                        return .horizontal
+                    case .vertical:
+                        return .vertical
+                    }
+                }))
+            })
         }
     }
 }

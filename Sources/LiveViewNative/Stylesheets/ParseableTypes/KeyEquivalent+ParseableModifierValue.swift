@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if os(iOS) || os(macOS) || os(xrOS)
+#if os(iOS) || os(macOS) || os(visionOS)
 extension KeyEquivalent: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {

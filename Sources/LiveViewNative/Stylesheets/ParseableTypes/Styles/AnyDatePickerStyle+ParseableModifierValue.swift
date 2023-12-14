@@ -8,12 +8,12 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if os(iOS) || os(macOS) || os(watchOS) || os(xrOS)
+#if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
 enum AnyDatePickerStyle: String, CaseIterable, ParseableModifierValue, DatePickerStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
     case automatic
-    #if os(iOS) || os(macOS) || os(xrOS)
+    #if os(iOS) || os(macOS) || os(visionOS)
     case compact
     case graphical
     #endif
@@ -21,7 +21,7 @@ enum AnyDatePickerStyle: String, CaseIterable, ParseableModifierValue, DatePicke
     case field
     case stepperField
     #endif
-    #if os(iOS) || os(watchOS) || os(xrOS)
+    #if os(iOS) || os(watchOS) || os(visionOS)
     case wheel
     #endif
     
@@ -31,7 +31,7 @@ enum AnyDatePickerStyle: String, CaseIterable, ParseableModifierValue, DatePicke
             if #available(watchOS 10, *) {
                 DefaultDatePickerStyle().makeBody(configuration: configuration)
             }
-        #if os(iOS) || os(macOS) || os(xrOS)
+        #if os(iOS) || os(macOS) || os(visionOS)
         case .compact:
             CompactDatePickerStyle().makeBody(configuration: configuration)
         case .graphical:
@@ -43,7 +43,7 @@ enum AnyDatePickerStyle: String, CaseIterable, ParseableModifierValue, DatePicke
         case .stepperField:
             StepperFieldDatePickerStyle().makeBody(configuration: configuration)
         #endif
-        #if os(iOS) || os(watchOS) || os(xrOS)
+        #if os(iOS) || os(watchOS) || os(visionOS)
         case .wheel:
             if #available(watchOS 10, *) {
                 WheelDatePickerStyle().makeBody(configuration: configuration)

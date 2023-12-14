@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if os(iOS) || os(macOS) || os(xrOS)
+#if os(iOS) || os(macOS) || os(visionOS)
 enum AnyTableStyle: String, CaseIterable, ParseableModifierValue, TableStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

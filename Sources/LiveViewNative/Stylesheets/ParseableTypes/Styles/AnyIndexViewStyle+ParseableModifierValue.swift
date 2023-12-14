@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if os(iOS) || os(tvOS) || os(watchOS) || os(xrOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 enum AnyIndexViewStyle: ParseableModifierValue {
     case page(backgroundDisplayMode: PageIndexViewStyle.BackgroundDisplayMode?)
     

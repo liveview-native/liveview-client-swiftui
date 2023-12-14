@@ -64,7 +64,7 @@ extension HorizontalEdge.Set: ParseableModifierValue {
                 "trailing": .trailing,
                 "all": .all,
             ])
-            Array<Self>.parser(in: context).map({ Self.init($0) })
+            Array<HorizontalEdge>.parser(in: context).map({ Self.init($0.map(Self.init)) })
         }
     }
 }
@@ -77,7 +77,7 @@ extension VerticalEdge.Set: ParseableModifierValue {
                 "bottom": bottom,
                 "all": all,
             ])
-            Array<Self>.parser(in: context).map({ Self.init($0) })
+            Array<VerticalEdge>.parser(in: context).map({ Self.init($0.map(Self.init)) })
         }
     }
 }

@@ -15,7 +15,18 @@ extension SearchSuggestionsPlacement.Set: ParseableModifierValue {
                 "menu": .menu,
                 "content": .content,
             ])
-            Array<Self>.parser(in: context).map({ Self.init($0) })
+            Array<SearchSuggestionsPlacement>.parser(in: context).map({
+                Self.init($0.map {
+                    switch $0 {
+                    case .content:
+                        return .content
+                    case .menu:
+                        return .menu
+                    default:
+                        return .init()
+                    }
+                })
+            })
         }
     }
 }

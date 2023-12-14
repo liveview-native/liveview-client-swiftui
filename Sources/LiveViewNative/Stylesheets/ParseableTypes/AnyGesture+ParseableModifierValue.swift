@@ -144,7 +144,7 @@ extension AnyGesture: ParseableModifierValue where Value == Any {
         #endif
     }
     
-    #if os(iOS) || os(macOS) || os(xrOS)
+    #if os(iOS) || os(macOS) || os(visionOS)
     @ParseableExpression
     struct Magnify {
         static let name = "MagnifyGesture"

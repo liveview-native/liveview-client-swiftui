@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 
 enum AnyTabViewStyle: ParseableModifierValue {
     case automatic
-    #if os(iOS) || os(tvOS) || os(watchOS) || os(xrOS)
+    #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
     case page(indexDisplayMode: PageTabViewStyle.IndexDisplayMode?)
     #endif
     #if os(watchOS)
@@ -21,7 +21,7 @@ enum AnyTabViewStyle: ParseableModifierValue {
         ImplicitStaticMember {
             OneOf {
                 ConstantAtomLiteral("automatic").map({ Self.automatic })
-                #if os(iOS) || os(tvOS) || os(watchOS) || os(xrOS)
+                #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
                 ConstantAtomLiteral("page").map({ Self.page(indexDisplayMode: nil) })
                 Page.parser(in: context).map({ Self.page(indexDisplayMode: $0.indexDisplayMode) })
                 #endif
@@ -45,7 +45,7 @@ enum AnyTabViewStyle: ParseableModifierValue {
         }
     }
     
-    #if os(iOS) || os(tvOS) || os(watchOS) || os(xrOS)
+    #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
     @ParseableExpression
     struct Page {
         static let name = "page"
@@ -80,7 +80,7 @@ extension View {
         switch style {
         case .automatic:
             self.tabViewStyle(.automatic)
-        #if os(iOS) || os(tvOS) || os(watchOS) || os(xrOS)
+        #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
         case .page(indexDisplayMode: .none):
             self.tabViewStyle(.page)
         case let .page(.some(indexDisplayMode)):
@@ -104,7 +104,7 @@ extension View {
     }
 }
 
-#if os(iOS) || os(tvOS) || os(watchOS) || os(xrOS)
+#if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 extension PageTabViewStyle.IndexDisplayMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

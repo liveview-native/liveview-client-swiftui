@@ -8,13 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if os(iOS) || os(macOS) || os(xrOS)
+#if os(iOS) || os(macOS) || os(visionOS)
 enum AnyTextEditorStyle: String, CaseIterable, ParseableModifierValue, TextEditorStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
     case automatic
     case plain
-    #if os(xrOS)
+    #if os(visionOS)
     case roundedBorder
     #endif
     
@@ -28,7 +28,7 @@ enum AnyTextEditorStyle: String, CaseIterable, ParseableModifierValue, TextEdito
             if #available(iOS 17.0, macOS 14.0, *) {
                 PlainTextEditorStyle().makeBody(configuration: configuration)
             }
-        #if os(xrOS)
+        #if os(visionOS)
         case .roundedBorder:
             RoundedBorderTextEditorStyle().makeBody(configuration: configuration)
         #endif

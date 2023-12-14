@@ -1,7 +1,8 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+import CompilerPluginSupport
 
 let package = Package(
     name: "LiveViewNative",
@@ -26,6 +27,10 @@ let package = Package(
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.2"),
         .package(url: "https://github.com/apple/swift-markdown.git", from: "0.2.0"),
+        
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.2"),
+        
+        .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.13.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -36,7 +41,9 @@ let package = Package(
                 "SwiftSoup",
                 "SwiftPhoenixClient",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift")
+                .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
+                "LiveViewNativeMacros",
+                "LiveViewNativeStylesheet"
             ],
             plugins: [
                 .plugin(name: "BuiltinRegistryGeneratorPlugin")
@@ -51,6 +58,16 @@ let package = Package(
             dependencies: ["LiveViewNative"]
         ),
         
+        .executableTarget(
+            name: "ModifierGenerator",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+            ]
+        ),
+
         .executableTarget(
             name: "BuiltinRegistryGenerator",
             dependencies: [
@@ -98,15 +115,47 @@ let package = Package(
                 .product(name: "Markdown", package: "swift-markdown"),
             ]
         ),
-        // .plugin(
-        //     name: "TutorialRepoGeneratorPlugin",
-        //     capability: .command(
-        //         intent: .custom(verb: "generate-tutorial-repo", description: ""),
-        //         permissions: [
-        //             .writeToPackageDirectory(reason: "This command generates a repo for the tutorial that has a commit for each step")
-        //         ]
-        //     ),
-        //     dependencies: [.target(name: "TutorialRepoGenerator")]
-        // )
+        
+        .macro(
+            name: "LiveViewNativeMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
+        .testTarget(
+            name: "LiveViewNativeMacrosTests",
+            dependencies: [
+                "LiveViewNativeMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
+        
+        .macro(
+            name: "LiveViewNativeStylesheetMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
+        .target(
+            name: "LiveViewNativeStylesheet",
+            dependencies: [
+                "LiveViewNativeStylesheetMacros",
+                .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
+                .product(name: "Parsing", package: "swift-parsing"),
+            ]
+        ),
+        .testTarget(
+            name: "LiveViewNativeStylesheetTests",
+            dependencies: ["LiveViewNativeStylesheet"]
+        ),
+        .testTarget(
+            name: "LiveViewNativeStylesheetMacrosTests",
+            dependencies: [
+                "LiveViewNativeStylesheetMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
     ]
 )
