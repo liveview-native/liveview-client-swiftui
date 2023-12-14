@@ -20,9 +20,7 @@ struct NavigationStack<R: RootRegistry>: View {
             session.navigationPath[1...] = value
         }) {
             SwiftUI.VStack {
-                if session.navigationPath.count == 1 {
-                    context.buildChildren(of: element)
-                }
+                context.buildChildren(of: element)
             }
             .navigationDestination(for: LiveNavigationEntry<R>.self) { destination in
                 NavStackEntryView(destination)

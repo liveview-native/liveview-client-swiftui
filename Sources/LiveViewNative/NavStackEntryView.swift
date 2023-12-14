@@ -40,10 +40,10 @@ struct NavStackEntryView<R: RootRegistry>: View {
                         .transition(coordinator.session.configuration.transition ?? .identity)
                 default:
                     SwiftUI.Group {
-                        if case .notConnected = coordinator.state,
+                        if coordinator.state.isPending,
                            let document = coordinator.document
                         {
-                           coordinator.builder.fromNodes(document[document.root()].children(), coordinator: coordinator, url: coordinator.url)
+                            coordinator.builder.fromNodes(document[document.root()].children(), coordinator: coordinator, url: coordinator.url)
                                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: document))
                                .disabled(true)
                        } else if R.LoadingView.self == Never.self {
