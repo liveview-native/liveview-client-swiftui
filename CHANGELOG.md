@@ -1,5 +1,12 @@
 ## v0.2
 
+### Fixes
+* Fix cached page rendering when nested in `<NavigationStac>`
+* include original source in annotation
+* Add `AttributeReference` to missing areas
+* Stringify values from LiveForm
+* Removed `Array<Self>` from parsers
+
 ### Breaking
 
 * removed modifiers and types
