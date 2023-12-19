@@ -43,7 +43,7 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
       targets: %{
         type: :multiselect,
         label: "Select any number of deployment targets for your app.",
-        options: ["iOS", "macOS", "watchOS"],
+        options: ["iOS", "macOS", "watchOS", "tvOS (Experimental)"],
         default: ["iOS"],
         default_label: "1"
       }
@@ -136,14 +136,16 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
   end
 
   defp run_xcodegen(%{app_namespace: app_namespace, native_path: native_path}, %{targets: targets}) do
-    lvn_ios_include_path = if "iOS" in targets, do: "project_ios.yml", else: "skip_spec.yml"
-    lvn_macos_include_path = if "macOS" in targets, do: "project_macos.yml", else: "skip_spec.yml"
+    lvn_ios = if "iOS" in targets, do: "iOS", else: ""
+    lvn_macos = if "macOS" in targets, do: "macOS", else: ""
+    lvn_tvos = if "tvOS (Experimental)" in targets, do: "tvOS", else: ""
     lvn_watchos_include_path = if "watchOS" in targets, do: "project_watchos.yml", else: "skip_spec.yml"
     xcodegen_env = [
       {"LVN_APP_NAME", app_namespace},
-      {"LVN_BUNDLE_IDENTIFIER", "com.myorg.#{app_namespace}"},
-      {"LVN_IOS_INCLUDE_PATH", lvn_ios_include_path},
-      {"LVN_MACOS_INCLUDE_PATH", lvn_macos_include_path},
+      {"LVN_BUNDLE_IDENTIFIER", "com.example.#{app_namespace}"},
+      {"LVN_IOS", lvn_ios},
+      {"LVN_MACOS", lvn_macos},
+      {"LVN_TVOS", lvn_tvos},
       {"LVN_WATCHOS_INCLUDE_PATH", lvn_watchos_include_path}
     ]
     native_project_path = Path.join(native_path, "swiftui")
@@ -160,7 +162,7 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
   defp remove_xcodegen_files(%{native_path: native_path}) do
     client_path = Path.join(native_path, "swiftui")
 
-    ["base_spec.yml", "project_ios.yml", "project_macos.yml", "project_watchos.yml", "project.yml", "skip_spec.yml"]
+    ["base_spec.yml", "project_watchos.yml", "project.yml", "skip_spec.yml"]
     |> Enum.map(&(Path.join(client_path, &1)))
     |> Enum.map(&File.rm/1)
   end

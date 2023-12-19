@@ -2,9 +2,18 @@ name: ${LVN_APP_NAME}
 include:
   - path: base_spec.yml
     relativePaths: false
-  - path: ${LVN_IOS_INCLUDE_PATH}
-    relativePaths: false
-  - path: ${LVN_MACOS_INCLUDE_PATH}
-    relativePaths: false
   - path: ${LVN_WATCHOS_INCLUDE_PATH}
     relativePaths: false
+targets:
+  ${LVN_APP_NAME}:
+    type: application
+    supportedDestinations:
+      - ${LVN_IOS}
+      - ${LVN_MACOS}
+      - ${LVN_TVOS}
+    sources:
+      - Sources/${LVN_APP_NAME}
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: ${LVN_BUNDLE_IDENTIFIER}
+    dependencies:
+      - package: LiveViewNative
