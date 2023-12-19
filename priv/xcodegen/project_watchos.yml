@@ -1,5 +1,5 @@
 targets:
-  watchOS:
+  "${LVN_APP_NAME} Watch App":
     type: application
     platform: watchOS
     sources:
