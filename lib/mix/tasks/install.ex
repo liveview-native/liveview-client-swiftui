@@ -162,7 +162,7 @@ defmodule Mix.Tasks.Lvn.SwiftUI.Install do
   defp remove_xcodegen_files(%{native_path: native_path}) do
     client_path = Path.join(native_path, "swiftui")
 
-    ["base_spec.yml", "project_ios.yml", "project_macos.yml", "project_watchos.yml", "project.yml", "skip_spec.yml"]
+    ["base_spec.yml", "project_watchos.yml", "project.yml", "skip_spec.yml"]
     |> Enum.map(&(Path.join(client_path, &1)))
     |> Enum.map(&File.rm/1)
   end
