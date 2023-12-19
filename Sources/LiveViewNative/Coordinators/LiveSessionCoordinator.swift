@@ -364,18 +364,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     func redirect(_ redirect: LiveRedirect) async throws {
         switch redirect.mode {
         case .replaceTop:
+            let coordinator = LiveViewCoordinator(session: self, url: redirect.to)
+            let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
             switch redirect.kind {
             case .push:
-                let coordinator = LiveViewCoordinator(session: self, url: redirect.to)
-                let entry = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
                 navigationPath.append(entry)
             case .replace:
                 // If there is nothing to replace, change the root URL.
                 if !navigationPath.isEmpty {
                     await navigationPath.last?.coordinator.disconnect()
-                    let coordinator = LiveViewCoordinator(session: self, url: redirect.to)
-                    coordinator.url = redirect.to
-                    navigationPath[navigationPath.count - 1] = LiveNavigationEntry(url: redirect.to, coordinator: coordinator)
+                    navigationPath[navigationPath.count - 1] = entry
                     try await coordinator.connect(domValues: self.domValues, redirect: true)
                 }
             }
