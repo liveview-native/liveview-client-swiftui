@@ -31,22 +31,22 @@ extension LiveViewMacro: ExpressionMacro {
         case 1:
             registries = "typealias Registries = \(addons.first!)"
         default:
-            func multiRegistry(_ addons: some RandomAccessCollection<SimpleTypeIdentifierSyntax>) -> SimpleTypeIdentifierSyntax {
+            func multiRegistry(_ addons: some RandomAccessCollection<IdentifierTypeSyntax>) -> IdentifierTypeSyntax {
                 switch addons.count {
                 case 2:
-                    return SimpleTypeIdentifierSyntax(
+                    return IdentifierTypeSyntax(
                         name: "_MultiRegistry",
                         genericArgumentClause: .init(arguments: .init([
-                            .init(argumentType: addons.first!, trailingComma: .commaToken()),
-                            .init(argumentType: addons.last!)
+                            .init(argument: addons.first!, trailingComma: .commaToken()),
+                            .init(argument: addons.last!)
                         ]))
                     )
                 default:
-                    return SimpleTypeIdentifierSyntax(
+                    return IdentifierTypeSyntax(
                         name: "_MultiRegistry",
                         genericArgumentClause: .init(arguments: .init([
-                            .init(argumentType: addons.first!, trailingComma: .commaToken()),
-                            .init(argumentType: multiRegistry(addons.dropFirst()))
+                            .init(argument: addons.first!, trailingComma: .commaToken()),
+                            .init(argument: multiRegistry(addons.dropFirst()))
                         ]))
                     )
                 }
@@ -54,9 +54,14 @@ extension LiveViewMacro: ExpressionMacro {
             registries = "typealias Registries = \(multiRegistry(addons))"
         }
         
-        let liveViewArguments = node.argumentList
-            .removingLast()
-            .replacing(childAt: node.argumentList.count - 2, with: node.argumentList.removingLast().last!.with(\.trailingComma, nil))
+        var liveViewArguments = LabeledExprListSyntax(
+            node.argumentList
+                .dropLast()
+        )
+        liveViewArguments = liveViewArguments.with(
+            \.[liveViewArguments.index(liveViewArguments.startIndex, offsetBy: node.argumentList.count - 2)],
+            node.argumentList.dropLast().last!.with(\.trailingComma, nil)
+        )
         
         return """
         { () -> AnyView in
@@ -69,13 +74,13 @@ extension LiveViewMacro: ExpressionMacro {
         """
     }
     
-    private static func transformAddon(_ element: ArrayElementSyntax) throws -> SimpleTypeIdentifierSyntax {
-        guard let registry = element.expression.as(MemberAccessExprSyntax.self)?.base?.as(SpecializeExprSyntax.self),
-              let name = registry.expression.as(IdentifierExprSyntax.self)
+    private static func transformAddon(_ element: ArrayElementSyntax) throws -> IdentifierTypeSyntax {
+        guard let registry = element.expression.as(MemberAccessExprSyntax.self)?.base?.as(GenericSpecializationExprSyntax.self),
+              let name = registry.expression.as(DeclReferenceExprSyntax.self)
         else { throw LiveViewMacroError.invalidAddonElement }
-        return SimpleTypeIdentifierSyntax(
-            name: name.identifier,
-            genericArgumentClause: .init(.init(arguments: .init([.init(argumentType: SimpleTypeIdentifierSyntax(name: .identifier("Self")))])))
+        return IdentifierTypeSyntax(
+            name: name.baseName,
+            genericArgumentClause: .init(.init(arguments: .init([.init(argument: IdentifierTypeSyntax(name: .identifier("Self")))])))
         )
     }
 }
