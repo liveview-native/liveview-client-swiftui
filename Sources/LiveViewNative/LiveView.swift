@@ -45,8 +45,6 @@ public macro LiveView<Host: LiveViewHost>(
 public struct LiveView<R: RootRegistry>: View {
     @StateObject var session: LiveSessionCoordinator<R>
     
-    @ObservedObject private var rootCoordinator: LiveViewCoordinator<R>
-    
     @StateObject private var liveViewModel = LiveViewModel()
     
     @Environment(\.scenePhase) private var scenePhase
@@ -54,9 +52,8 @@ public struct LiveView<R: RootRegistry>: View {
     /// Creates a new LiveView attached to the given coordinator.
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
-    public init(session: LiveSessionCoordinator<R>) {
-        self._session = .init(wrappedValue: session)
-        self.rootCoordinator = session.navigationPath.first!.coordinator
+    public init(session: @autoclosure @escaping () -> LiveSessionCoordinator<R>) {
+        self._session = .init(wrappedValue: session())
     }
     
     public init(_ host: some LiveViewHost, configuration: LiveSessionConfiguration = .init()) {
@@ -65,6 +62,10 @@ public struct LiveView<R: RootRegistry>: View {
     
     public init(url: URL, configuration: LiveSessionConfiguration = .init()) {
         self.init(session: .init(url, config: configuration))
+    }
+    
+    private var rootCoordinator: LiveViewCoordinator<R> {
+        session.navigationPath.first!.coordinator
     }
 
     public var body: some View {
@@ -77,7 +78,7 @@ public struct LiveView<R: RootRegistry>: View {
                 } else {
                     PhxMain<R>()
                         .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
-                        .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: session.url))
+                        .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
                 }
             default:
                 if R.LoadingView.self == Never.self {
@@ -153,7 +154,7 @@ struct PhxMain<R: RootRegistry>: View {
     @EnvironmentObject private var session: LiveSessionCoordinator<R>
     
     var body: some View {
-        NavStackEntryView(.init(url: session.url, coordinator: context.coordinator))
+        NavStackEntryView(.init(url: context.coordinator.url, coordinator: context.coordinator))
     }
 }
 
