@@ -78,16 +78,21 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         })
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
-            if prev.count > next.count {
-                let isDisconnected: Bool
-                if case .notConnected = next.last!.coordinator.state {
-                    isDisconnected = true
-                } else {
-                    isDisconnected = false
-                }
-                if next.last!.coordinator.url != next.last!.url || isDisconnected {
-                    Task {
+            let isDisconnected: Bool
+            if case .notConnected = next.last!.coordinator.state {
+                isDisconnected = true
+            } else {
+                isDisconnected = false
+            }
+            if next.last!.coordinator.url != next.last!.url || isDisconnected {
+                Task {
+                    if prev.count > next.count {
+                        // back navigation
                         try await next.last!.coordinator.connect(domValues: self.domValues, redirect: true)
+                    } else if next.count > prev.count && prev.count > 0 {
+                        // forward navigation without using `redirect` (like from a `<NavigationLink>`)
+                        await prev.last?.coordinator.disconnect()
+                        try await next.last?.coordinator.connect(domValues: self.domValues, redirect: true)
                     }
                 }
             }
@@ -372,23 +377,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
             try await coordinator.connect(domValues: self.domValues, redirect: true)
-        case .multiplex:
-            switch redirect.kind {
-            case .push:
-                navigationPath.append(.init(
-                    url: redirect.to,
-                    coordinator: LiveViewCoordinator(session: self, url: redirect.to)
-                ))
-            case .replace:
-                // If there is nothing to replace, change the root URL.
-                navigationPath.removeLast()
-                // If we are replacing the current path with the previous one, just pop the URL so the previous one is on top.
-                guard (navigationPath.last?.coordinator.url ?? self.url) != redirect.to else { return }
-                navigationPath.append(.init(
-                    url: redirect.to,
-                    coordinator: LiveViewCoordinator(session: self, url: redirect.to)
-                ))
-            }
         case .patch:
             // patch is like `replaceTop`, but it does not disconnect.
             let coordinator = navigationPath.last!.coordinator

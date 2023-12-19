@@ -40,12 +40,16 @@ struct NavigationLink<R: RootRegistry>: View {
     #endif
     @Attribute("disabled") private var disabled: Bool
     
+    var url: URL {
+        URL(string: destination, relativeTo: context.coordinator.url)!.appending(path: "").absoluteURL
+    }
+    
     @ViewBuilder
     public var body: some View {
         SwiftUI.NavigationLink(
             value: LiveNavigationEntry(
-                url: URL(string: destination, relativeTo: context.coordinator.url)!.appending(path: "").absoluteURL,
-                coordinator: context.coordinator
+                url: url,
+                coordinator: LiveViewCoordinator(session: context.coordinator.session, url: url)
             )
         ) {
             context.buildChildren(of: element)

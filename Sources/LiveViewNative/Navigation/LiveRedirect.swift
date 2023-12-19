@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LiveRedirect {
+struct LiveRedirect: Hashable {
     let kind: Kind
     let to: URL
     let mode: Mode
@@ -31,31 +31,6 @@ struct LiveRedirect {
         /// When the ``LiveNavigationEntry`` is popped (via back button or programmatically),
         /// the top-most ``LiveViewCoordinator/url`` is changed to the new top-most destination.
         case replaceTop
-        
-        /// Connects to a separate Phoenix channel with a fresh ``LiveViewCoordinator`` over the same WebSocket.
-        ///
-        /// This works with `NavigationSplitView`. It can also be used with `NavigationStack` to keep the previous pages loaded in the background.
-        ///
-        /// You must send the `native_redirect` event to use this mode:
-        /// ```ex
-        /// push_event(
-        ///   socket,
-        ///   "native_redirect",
-        ///   %{
-        ///     to: "destination",
-        ///     kind: :push,
-        ///     mode: :multiplex
-        ///   }
-        /// )
-        /// ```
-        ///
-        /// When a redirect is received with this mode, the following takes place:
-        ///
-        /// 1. If the kind is ``LiveRedirect/Kind/push``, a new ``LiveViewCoordinator`` is created for the redirect destination.
-        /// A separate Phoenix channel is connected for each coordinator.
-        /// 2. If the kind is ``LiveRedirect/Kind/redirect`` and the destination is the same as the previous path, the current entry is popped and no new ``LiveViewCoordinator`` is connected.
-        /// Otherwise a new ``LiveViewCoordinator`` is created in place of the top-most entry.
-        case multiplex
         
         /// A `live_patch` style redirect.
         ///
