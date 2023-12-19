@@ -90,7 +90,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         // back navigation
                         try await next.last!.coordinator.connect(domValues: self.domValues, redirect: true)
                     } else if next.count > prev.count && prev.count > 0 {
-                        // forward navigation without using `redirect` (like from a `<NavigationLink>`)
+                        // forward navigation (from `redirect` or `<NavigationLink>`)
                         await prev.last?.coordinator.disconnect()
                         try await next.last?.coordinator.connect(domValues: self.domValues, redirect: true)
                     }
