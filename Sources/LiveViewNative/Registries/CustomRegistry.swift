@@ -108,6 +108,11 @@ public protocol CustomRegistry<Root> {
     /// - Parameter error: The error of the view is reporting.
     @ViewBuilder
     static func errorView(for error: Error) -> ErrorView
+    
+    static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> CustomModifier
 }
 
 extension CustomRegistry where LoadingView == Never {
@@ -124,6 +129,15 @@ extension CustomRegistry where ErrorView == Never {
     }
 }
 
+extension CustomRegistry {
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> CustomModifier {
+        try Self.CustomModifier.parser(in: context).parse(&input)
+    }
+}
+
 /// The empty registry is the default ``CustomRegistry`` implementation that does not provide any views or modifiers.
 public struct EmptyRegistry {
 }
@@ -137,9 +151,6 @@ extension EmptyRegistry: RootRegistry {
             return nil
         }
     }
-    
-    public typealias TagName = None
-    public typealias ModifierType = None
 }
 extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Never {
     /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/TagName`` type alias, this implementation will be used.

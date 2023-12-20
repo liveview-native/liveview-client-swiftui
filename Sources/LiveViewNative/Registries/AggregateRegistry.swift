@@ -95,6 +95,13 @@ public protocol AggregateRegistry: RootRegistry {
 }
 
 extension AggregateRegistry {
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> some (ViewModifier & ParseableModifierValue) {
+        return try Registries.parseModifier(&input, in: context)
+    }
+    
     public static func lookup(_ name: Registries.TagName, element: ElementNode) -> some View {
         return Registries.lookup(name, element: element)
     }
@@ -133,11 +140,34 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
     }
 }
 
+public enum _EitherCustomModifier<First: ViewModifier & ParseableModifierValue, Second: ViewModifier & ParseableModifierValue>: ViewModifier & ParseableModifierValue {
+    case first(First)
+    case second(Second)
+    
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            First.parser(in: context).map(Self.first)
+            Second.parser(in: context).map(Self.second)
+        }
+    }
+    
+    public func body(content: Content) -> some View {
+        switch self {
+        case .first(let first):
+            content.modifier(first)
+        case .second(let second):
+            content.modifier(second)
+        }
+    }
+}
+
 /// A registry implementation that combines two registries. Use the `Registry2`/etc. typealiases rather than using this type directly.
-@frozen public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: CustomRegistry where First.Root == Second.Root {
+public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: CustomRegistry where First.Root == Second.Root {
     public typealias Root = First.Root
     
     public typealias TagName = _EitherRawString<First.TagName, Second.TagName>
+    
+    public typealias CustomModifier = _EitherCustomModifier<First.CustomModifier, Second.CustomModifier>
 
     public static func lookup(_ name: TagName, element: ElementNode) -> some View {
         switch name {

@@ -13,13 +13,16 @@ protocol StylesheetProtocol<R> {
 }
 
 struct Stylesheet<R: RootRegistry> {
+    let content: [String]
     let classes: [String:[BuiltinRegistry<R>.BuiltinModifier]]
     
-    init(_ classes: [String:[BuiltinRegistry<R>.BuiltinModifier]]) {
+    init(content: [String], classes: [String:[BuiltinRegistry<R>.BuiltinModifier]]) {
+        self.content = content
         self.classes = classes
     }
     
     init(from data: String, in context: ParseableModifierContext) throws {
+        self.content = [data]
         self.classes = try StylesheetParser<BuiltinRegistry<R>.BuiltinModifier>(context: context).parse(data.utf8)
     }
 }
@@ -30,7 +33,7 @@ extension Stylesheet: StylesheetProtocol {
     }
     
     func merge(with other: Stylesheet<R>) -> Stylesheet<R> {
-        .init(classes.merging(other.classes, uniquingKeysWith: { $1 }))
+        .init(content: self.content + other.content, classes: classes.merging(other.classes, uniquingKeysWith: { $1 }))
     }
 }
 
@@ -53,7 +56,7 @@ extension Stylesheet: AttributeDecodable {
                 \(value)
                 """
             )
-            self.init([:])
+            self.init(content: ["%{}"], classes: [:])
         }
     }
 }

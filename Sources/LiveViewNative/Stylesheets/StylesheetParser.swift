@@ -95,10 +95,7 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
                 Whitespace()
                 ",".utf8
                 Whitespace()
-                ListLiteral {
-                    AnyArgument(context: context)
-                }
-                .map({ _ in () })
+                AnyArgument(context: context)
                 Whitespace()
                 "}".utf8
             }

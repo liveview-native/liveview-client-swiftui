@@ -5,8 +5,9 @@
 //  Created by Carson Katri on 6/15/23.
 //
 
-import LiveViewNativeCore
 import SwiftUI
+import LiveViewNativeCore
+import LiveViewNativeStylesheet
 
 /// A protocol add-on libraries conform to support custom DSLs.
 ///
@@ -187,11 +188,6 @@ public protocol ContentBuilder {
     /// An enum with the supported element names.
     associatedtype TagName: RawRepresentable<String>
     
-    /// A `Decodable` enum with the supported modifier names.
-    ///
-    /// The raw values for a modifier should be in `snake_case`.
-    associatedtype ModifierType: RawRepresentable<String>, Decodable
-    
     /// The type of content this builder produces.
     ///
     /// A protocol cannot be used as the content type.
@@ -233,6 +229,8 @@ public protocol ContentBuilder {
     /// ```
     associatedtype Content
     
+    associatedtype ModifierType: ContentModifier = EmptyContentModifier<Self> where ModifierType.Builder == Self
+    
     /// Switch over the ``tag`` and provide the appropriate ``Content``.
     ///
     /// The ``ObservedElement`` and ``LiveContext`` property wrappers cannot be used outside of `View`.
@@ -251,15 +249,6 @@ public protocol ContentBuilder {
         accumulated: Content,
         next: Content
     ) -> Content
-    
-    /// Switch over the ``type`` and provide the appropriate ``ContentModifier``.
-    ///
-    /// The `RootRegistry` type is included so modifiers can build nested content.
-    static func decodeModifier<R: RootRegistry>(
-        _ type: ModifierType,
-        from decoder: Decoder,
-        registry _: R.Type
-    ) throws -> any ContentModifier<Self>
 }
 
 public extension ContentBuilder {
@@ -293,19 +282,54 @@ public extension ContentBuilder {
 public struct ContentBuilderContext<R: RootRegistry>: DynamicProperty {
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @LiveContext<R> private var context
+    @Environment(\.stylesheets) private var stylesheets
     
     public init() {}
     
     public var wrappedValue: Value {
         Value(
             coordinatorEnvironment: coordinatorEnvironment,
-            context: context.storage
+            context: context.storage,
+            stylesheet: stylesheets[ObjectIdentifier(R.self)] as? Stylesheet<R>,
+            resolvedStylesheet: nil
         )
     }
     
     public struct Value {
         let coordinatorEnvironment: CoordinatorEnvironment?
         let context: LiveContextStorage<R>
+        let stylesheet: Stylesheet<R>?
+        
+        let resolvedStylesheet: [String:[Any]]?
+        
+        func resolve<Builder: ContentBuilder>(for _: Builder.Type = Builder.self) throws -> Self {
+            return .init(
+                coordinatorEnvironment: self.coordinatorEnvironment,
+                context: self.context,
+                stylesheet: self.stylesheet,
+                resolvedStylesheet: try self.resolvedStylesheet ?? self.stylesheet.map({
+                    try $0.content.reduce(into: [:], {
+                        $0.merge(try StylesheetParser<BuilderModifierContainer<Builder>>(context: .init()).parse($1.utf8), uniquingKeysWith: { $1 })
+                    })
+                })
+            )
+        }
+    }
+}
+
+private enum BuilderModifierContainer<Builder: ContentBuilder>: ViewModifier, ParseableModifierValue {
+    case unsupported
+    case modifier(Builder.ModifierType)
+    
+    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            Builder.ModifierType.parser(in: context).map(Self.modifier)
+            StylesheetParser<EmptyModifier>.RecoverableModifier.AnyNode(context: context).map({ _ in Self.unsupported })
+        }
+    }
+    
+    func body(content: Content) -> some View {
+        content
     }
 }
 
@@ -328,6 +352,8 @@ public extension ContentBuilder {
         _ nodes: some Sequence<Node>,
         in context: Context<R>
     ) throws -> Content {
+        let context = try context.resolve(for: Self.self)
+        
         let elements = nodes.compactMap({ $0.asElement() })
         if let first = elements.first {
             var result = try build(first, in: context)
@@ -360,18 +386,25 @@ public extension ContentBuilder {
         _ element: ElementNode,
         in context: Context<R>
     ) throws -> Content {
+        let context = try context.resolve(for: Self.self)
+        
         guard let tag = TagName(rawValue: element.tag)
         else { throw ContentBuilderError.unknownTag(element.tag) }
-        var result = lookup(tag, element: element, context: context)
-        let modifiers = try element.attributeValue(for: "modifiers")
-            .flatMap({
-                try makeJSONDecoder()
-                    .decode([AnyContentBuilderModifier<R, Self>].self, from: Data($0.utf8))
-            })
-        for modifier in (modifiers ?? []) {
-            result = applyModifier(modifier.modifier, to: result, on: element, in: context)
+        
+        let result = lookup(tag, element: element, context: context)
+        
+        let classNames = try element.attributeValue(for: "class")?.split(separator: " ") ?? []
+        
+        return classNames.reduce(result) {
+            ((context.resolvedStylesheet?[String($1)] as? [BuilderModifierContainer<Self>]) ?? []).reduce($0) {
+                switch $1 {
+                case .unsupported:
+                    return $0
+                case let .modifier(modifier):
+                    return Self.applyModifier(modifier, to: $0, on: element, in: context)
+                }
+            }
         }
-        return result
     }
     
     /// Unbox `any ContentModifier<Self>` and apply to ``content``.
@@ -398,6 +431,8 @@ public extension ContentBuilder {
         forTemplate template: String? = nil,
         in context: Context<R>
     ) throws -> Content {
+        let context = try context.resolve(for: Self.self)
+        
         if let template {
             return try build(
                 element
@@ -503,7 +538,7 @@ public extension ContentBuilder {
 /// Modifiers must be decoded from the ``ContentBuilder/decodeModifier(_:from:registry:)``.
 ///
 /// - Note: Keys are automatically converted from `camelCase` to `snake_case` in the decoder.
-public protocol ContentModifier<Builder>: Decodable {
+public protocol ContentModifier<Builder>: ParseableModifierValue {
     associatedtype Builder: ContentBuilder
     func apply<R: RootRegistry>(
         to content: Builder.Content,
@@ -522,21 +557,9 @@ public struct EmptyContentModifier<Builder: ContentBuilder>: ContentModifier {
     ) -> Builder.Content where R : RootRegistry {
         return content
     }
-}
-
-/// A type-erased ``ContentModifier`` in a stack.
-private struct AnyContentBuilderModifier<R: RootRegistry, Builder: ContentBuilder>: Decodable {
-    let modifier: any ContentModifier<Builder>
     
-    init(from decoder: Decoder) throws {
-        let type = try decoder
-            .container(keyedBy: CodingKeys.self)
-            .decode(Builder.ModifierType.self, forKey: .type)
-        modifier = try Builder.decodeModifier(type, from: decoder, registry: R.self)
-    }
-    
-    enum CodingKeys: CodingKey {
-        case type
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        Parse {}.map({ Self() })
     }
 }
 

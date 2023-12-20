@@ -56,11 +56,10 @@ public struct _AnyViewModifier: ViewModifier {
 }
 
 /// A `ViewModifier` that switches between two possible modifier types.
-@frozen public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier
+public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier
     where TrueModifier: ViewModifier, FalseModifier: ViewModifier
 {
     @usableFromInline
-    @frozen
     internal enum Storage {
         case trueModifier(TrueModifier)
         case falseModifier(FalseModifier)
