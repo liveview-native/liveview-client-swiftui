@@ -256,7 +256,7 @@ public extension ContentBuilder {
     ///
     /// This is used to support the building of nested `View` elements from within any builder
     /// with the ``buildView(_:in:)`` function.
-    typealias Context<R: RootRegistry> = ContentBuilderContext<R>.Value
+    typealias Context<R: RootRegistry> = ContentBuilderContext<R, Self>.Value
 }
 
 /// Access the context for a ``ContentBuilder`` from within a `View`.
@@ -279,10 +279,17 @@ public extension ContentBuilder {
 /// }
 /// ```
 @propertyWrapper
-public struct ContentBuilderContext<R: RootRegistry>: DynamicProperty {
+public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: DynamicProperty {
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @LiveContext<R> private var context
     @Environment(\.stylesheets) private var stylesheets
+    
+    @StateObject private var stylesheetResolver = StylesheetResolver()
+    
+    final class StylesheetResolver: ObservableObject {
+        var previousStylesheetContent: [String] = []
+        var resolvedStylesheet: [String:[BuilderModifierContainer<Builder>]] = [:]
+    }
     
     public init() {}
     
@@ -291,7 +298,7 @@ public struct ContentBuilderContext<R: RootRegistry>: DynamicProperty {
             coordinatorEnvironment: coordinatorEnvironment,
             context: context.storage,
             stylesheet: stylesheets[ObjectIdentifier(R.self)] as? Stylesheet<R>,
-            resolvedStylesheet: nil
+            resolvedStylesheet: stylesheetResolver.resolvedStylesheet
         )
     }
     
@@ -300,24 +307,38 @@ public struct ContentBuilderContext<R: RootRegistry>: DynamicProperty {
         let context: LiveContextStorage<R>
         let stylesheet: Stylesheet<R>?
         
-        let resolvedStylesheet: [String:[Any]]?
+        let resolvedStylesheet: [String:[BuilderModifierContainer<Builder>]]
         
-        func resolve<Builder: ContentBuilder>(for _: Builder.Type = Builder.self) throws -> Self {
+        func value<OtherBuilder: ContentBuilder>(for _: OtherBuilder.Type = OtherBuilder.self) -> ContentBuilderContext<R, OtherBuilder>.Value {
             return .init(
-                coordinatorEnvironment: self.coordinatorEnvironment,
-                context: self.context,
-                stylesheet: self.stylesheet,
-                resolvedStylesheet: try self.resolvedStylesheet ?? self.stylesheet.map({
-                    try $0.content.reduce(into: [:], {
-                        $0.merge(try StylesheetParser<BuilderModifierContainer<Builder>>(context: .init()).parse($1.utf8), uniquingKeysWith: { $1 })
-                    })
-                })
+                coordinatorEnvironment: coordinatorEnvironment,
+                context: context,
+                stylesheet: stylesheet,
+                resolvedStylesheet: stylesheet.flatMap({
+                    try? ContentBuilderContext<R, OtherBuilder>.resolveStylesheet($0)
+                }) ?? [:]
             )
         }
     }
+    
+    public func update() {
+        let stylesheet = stylesheets[ObjectIdentifier(R.self)] as? Stylesheet<R>
+        guard stylesheet?.content != stylesheetResolver.previousStylesheetContent
+        else { return }
+        stylesheetResolver.previousStylesheetContent = stylesheet?.content ?? []
+        stylesheetResolver.resolvedStylesheet = stylesheet.flatMap({ try? Self.resolveStylesheet($0) }) ?? [:]
+    }
+    
+    static func resolveStylesheet(
+        _ stylesheet: Stylesheet<R>
+    ) throws -> [String:[BuilderModifierContainer<Builder>]] {
+        return try stylesheet.content.reduce(into: [:], {
+            $0.merge(try StylesheetParser<BuilderModifierContainer<Builder>>(context: .init()).parse($1.utf8), uniquingKeysWith: { $1 })
+        })
+    }
 }
 
-private enum BuilderModifierContainer<Builder: ContentBuilder>: ViewModifier, ParseableModifierValue {
+enum BuilderModifierContainer<Builder: ContentBuilder>: ViewModifier, ParseableModifierValue {
     case unsupported
     case modifier(Builder.ModifierType)
     
@@ -352,8 +373,6 @@ public extension ContentBuilder {
         _ nodes: some Sequence<Node>,
         in context: Context<R>
     ) throws -> Content {
-        let context = try context.resolve(for: Self.self)
-        
         let elements = nodes.compactMap({ $0.asElement() })
         if let first = elements.first {
             var result = try build(first, in: context)
@@ -386,8 +405,6 @@ public extension ContentBuilder {
         _ element: ElementNode,
         in context: Context<R>
     ) throws -> Content {
-        let context = try context.resolve(for: Self.self)
-        
         guard let tag = TagName(rawValue: element.tag)
         else { throw ContentBuilderError.unknownTag(element.tag) }
         
@@ -396,7 +413,7 @@ public extension ContentBuilder {
         let classNames = try element.attributeValue(for: "class")?.split(separator: " ") ?? []
         
         return classNames.reduce(result) {
-            ((context.resolvedStylesheet?[String($1)] as? [BuilderModifierContainer<Self>]) ?? []).reduce($0) {
+            (context.resolvedStylesheet[String($1)] ?? []).reduce($0) {
                 switch $1 {
                 case .unsupported:
                     return $0
@@ -431,8 +448,6 @@ public extension ContentBuilder {
         forTemplate template: String? = nil,
         in context: Context<R>
     ) throws -> Content {
-        let context = try context.resolve(for: Self.self)
-        
         if let template {
             return try build(
                 element
@@ -526,7 +541,7 @@ public extension ContentBuilder {
     ) throws -> Builder.Content {
         try Builder.build(
             nodes,
-            in: context
+            in: context.value(for: Builder.self)
         )
     }
 }
