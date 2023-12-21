@@ -35,7 +35,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       bold(true)
       italic(true)
       """}
-      
+
       output = [
         {:font, [file: __ENV__.file, line: line, module: __ENV__.module, source: "font(.largeTitle)"], [{:., [file: __ENV__.file, line: line, module: __ENV__.module, source: "font(.largeTitle)"], [nil, :largeTitle]}]},
         {:bold, [file: __ENV__.file, line: line + 1, module: __ENV__.module, source: "bold(true)"], [true]},
@@ -389,7 +389,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "to_ime" do
-      input = "color(to_ime(color))"
+      input = "color(.{color})"
 
       output =
         {:color, [], [{:., [], [nil, {Elixir, [], {:to_atom, [], [{:color, [], Elixir}]}}]}]}
@@ -398,7 +398,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "to_ime with chaining" do
-      input = "color(to_ime(color).foo)"
+      input = "color(.{color}.foo)"
 
       output =
         {:color, [],
@@ -408,7 +408,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     end
 
     test "to_ime in the middle of a chain" do
-      input = "color(Foo.to_ime(color).bar)"
+      input = "color(Foo.{color}.bar)"
 
       output = {:color, [], [{:., [], [:Foo, {:., [], [{Elixir, [], {:to_atom, [], [{:color, [], Elixir}]}}, :bar]}]}]}
 
@@ -418,7 +418,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
     @tag :skip
     test "to_ime as a function call" do
       # for now I'm not sure how to implement the AST for this.
-      # input "color(foo.to_ime(color)(1).bar)"
+      # input "color(foo.{color}(1).bar)"
 
       # output = {:color, [], [{:., [], [:foo, {:., [], [{Elixir, [], {:to_ime, [], [{:color, [], Elixir}]}}, :bar]}]}]}
 
@@ -491,7 +491,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
          - a number, string, nil, boolean or :atom
          - an event eg ‘event(\"search-event\", throttle: 10_000)’
          - an attribute eg ‘attr(\"placeholder\")’
-         - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
+         - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘.{variable}’ or ‘Color.{variable}’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
          - a helper function eg ‘to_float(variable)’
          - a modifier eg ‘bold()’
@@ -753,7 +753,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
          - a number, string, nil, boolean or :atom
          - an event eg ‘event("search-event", throttle: 10_000)’
          - an attribute eg ‘attr("placeholder")’
-         - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’
+         - an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘.{variable}’ or ‘Color.{variable}’
          - a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’
          - a helper function eg ‘to_float(variable)’
          - a modifier eg ‘bold()’
@@ -850,6 +850,29 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |
 
         ‘attr’ expects a string argument
+        """
+        |> String.trim()
+
+      assert String.trim(error.description) == error_prefix
+    end
+
+    test "non-variable in ime syntax (.{variable})" do
+      input = "foo(.{1})"
+
+      error =
+        assert_raise SyntaxError, fn ->
+          parse(input)
+        end
+
+      error_prefix =
+        """
+        Unsupported input:
+          |
+        1 | foo(.{1})
+          |       ^
+          |
+
+        expected a variable
         """
         |> String.trim()
 
