@@ -95,13 +95,6 @@ public protocol AggregateRegistry: RootRegistry {
 }
 
 extension AggregateRegistry {
-    public static func parseModifier(
-        _ input: inout Substring.UTF8View,
-        in context: ParseableModifierContext
-    ) throws -> some (ViewModifier & ParseableModifierValue) {
-        return try Registries.parseModifier(&input, in: context)
-    }
-    
     public static func lookup(_ name: Registries.TagName, element: ElementNode) -> some View {
         return Registries.lookup(name, element: element)
     }
@@ -112,6 +105,13 @@ extension AggregateRegistry {
     
     public static func errorView(for error: Error) -> some View {
         return Registries.errorView(for: error)
+    }
+    
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> some (ViewModifier & ParseableModifierValue) {
+        return try Registries.parseModifier(&input, in: context)
     }
 }
 
@@ -140,14 +140,60 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
     }
 }
 
-public enum _EitherCustomModifier<First: ViewModifier & ParseableModifierValue, Second: ViewModifier & ParseableModifierValue>: ViewModifier & ParseableModifierValue {
-    case first(First)
-    case second(Second)
+public enum _EitherCustomModifier<First: CustomRegistry, Second: CustomRegistry>: ViewModifier & ParseableModifierValue {
+    case first(First.CustomModifier)
+    case second(Second.CustomModifier)
     
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            First.parser(in: context).map(Self.first)
-            Second.parser(in: context).map(Self.second)
+    public static func parser(in context: ParseableModifierContext) -> _ParserType {
+        _ParserType(context: context)
+    }
+    
+    public struct _ParserType: Parser {
+        let context: ParseableModifierContext
+        
+        public func parse(_ input: inout Substring.UTF8View) throws -> _EitherCustomModifier<First, Second> {
+            let copy = input
+            let firstError: ModifierParseError?
+            do {
+                return .first(try First.parseModifier(&input, in: context))
+            } catch let error as ModifierParseError {
+                firstError = error
+            } catch {
+                firstError = nil
+            }
+            
+            // backtrack and try second
+            input = copy
+            do {
+                return .second(try Second.parseModifier(&input, in: context))
+            } catch let error as ModifierParseError {
+                if let firstError {
+                    let firstFailures = if case let .multiRegistryFailure(failures) = firstError.error {
+                        failures
+                    } else {
+                        [(First.self, firstError.error)]
+                    }
+                    let secondFailures = if case let .multiRegistryFailure(failures) = error.error {
+                        failures
+                    } else {
+                        [(Second.self, error.error)]
+                    }
+                    throw ModifierParseError(
+                        error: .multiRegistryFailure(
+                            firstFailures + secondFailures
+                        ),
+                        metadata: error.metadata
+                    )
+                } else {
+                    throw error
+                }
+            } catch {
+                if let firstError {
+                    throw firstError
+                } else {
+                    throw error
+                }
+            }
         }
     }
     
@@ -166,8 +212,6 @@ public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: Cus
     public typealias Root = First.Root
     
     public typealias TagName = _EitherRawString<First.TagName, Second.TagName>
-    
-    public typealias CustomModifier = _EitherCustomModifier<First.CustomModifier, Second.CustomModifier>
 
     public static func lookup(_ name: TagName, element: ElementNode) -> some View {
         switch name {
@@ -184,6 +228,13 @@ public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: Cus
     
     public static func errorView(for error: Error) -> some View {
         return First.errorView(for: error)
+    }
+    
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> _EitherCustomModifier<First, Second> {
+        return try _EitherCustomModifier<First, Second>.parser(in: context).parse(&input)
     }
 }
 

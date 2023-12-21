@@ -674,7 +674,8 @@ public struct EmptyContentModifier<Builder: ContentBuilder>: ContentModifier {
     }
     
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        Parse {}.map({ Self() })
+        ASTNode("__never__", in: context) {}
+            .map({ _ in fatalError() })
     }
 }
 

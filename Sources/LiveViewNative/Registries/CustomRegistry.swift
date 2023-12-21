@@ -166,3 +166,75 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
 /// A root registry is a ``CustomRegistry`` type that can be used directly as the registry for a ``LiveSessionCoordinator``.
 public protocol RootRegistry: CustomRegistry where Root == Self {
 }
+
+public struct CustomModifierGroupParser<Output, P: Parser>: Parser where P.Input == Substring.UTF8View, P.Output == Output {
+    public let parser: P
+    
+    @inlinable
+    public init(
+        output outputType: Output.Type = Output.self,
+        @CustomModifierGroupParserBuilder<Substring.UTF8View, Output> _ build: () -> P
+    ) {
+        self.parser = build()
+    }
+    
+    public func parse(_ input: inout Substring.UTF8View) throws -> P.Output {
+        var copy = input
+        let (modifierName, metadata) = try Parse {
+            "{".utf8
+            Whitespace()
+            AtomLiteral()
+            Whitespace()
+            ",".utf8
+            Whitespace()
+            Metadata.parser()
+        }.parse(&copy)
+        
+        do {
+            return try parser.parse(&input)
+        } catch let error as ModifierParseError {
+            throw error
+        } catch {
+            throw ModifierParseError(error: .unknownModifier(modifierName), metadata: metadata)
+        }
+    }
+}
+
+@resultBuilder
+public struct CustomModifierGroupParserBuilder<Input, Output> {
+    public static func buildPartialBlock(first: some Parser<Input, Output>) -> some Parser<Input, Output> {
+        first
+    }
+    public static func buildPartialBlock(accumulated: some Parser<Input, Output>, next: some Parser<Input, Output>) -> some Parser<Input, Output> {
+        Accumulator(accumulated: accumulated, next: next)
+    }
+    
+    struct Accumulator<A: Parser, B: Parser>: Parser where A.Input == Input, B.Input == Input, A.Output == Output, B.Output == Output {
+        let accumulated: A
+        let next: B
+        
+        func parse(_ input: inout Input) throws -> Output {
+            let copy = input
+            let firstError: ModifierParseError?
+            do {
+                return try accumulated.parse(&input)
+            } catch let error as ModifierParseError {
+                firstError = error
+            } catch {
+                firstError = nil
+            }
+            input = copy
+            do {
+                return try next.parse(&input)
+            } catch let error as ModifierParseError {
+                throw error
+            } catch {
+                if let firstError {
+                    throw firstError
+                } else {
+                    throw error
+                }
+            }
+        }
+    }
+}

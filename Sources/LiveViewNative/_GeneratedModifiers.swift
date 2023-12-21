@@ -12182,20 +12182,27 @@ LiveViewNative._FocusScopeModifier<R>.name: LiveViewNative._FocusScopeModifier<R
                     Metadata.parser()
                 }.parse(&copy)
                 
+                copy = input
+                
                 // attempt to parse the built-in modifiers first.
-                if let parser = parsers[modifierName] {
-                    return try parser.parse(&input)
-                } else {
-                    // if the modifier name is not a known built-in, try to parse as a custom modifier
+                do {
+                    if let parser = parsers[modifierName] {
+                        return try parser.parse(&input)
+                    } else {
+                        throw ModifierParseError(
+                            error: .unknownModifier(modifierName),
+                            metadata: metadata
+                        )
+                    }
+                } catch let builtinError {
+                    // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
+                    input = copy
                     do {
                         return try ._customRegistryModifier(R.parseModifier(&input, in: context))
                     } catch let error as ModifierParseError {
                         throw error
                     } catch {
-                        throw ModifierParseError(
-                            error: .unknownModifier(modifierName),
-                            metadata: metadata
-                        )
+                        throw builtinError
                     }
                 }
             }

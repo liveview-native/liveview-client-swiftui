@@ -299,16 +299,9 @@ public struct _ConditionalModifier<TrueModifier, FalseModifier>: ViewModifier, P
     }
 }
 
-extension EmptyModifier: ParseableExpressionProtocol {
-    public static var name: String { "" }
-    public static func arguments(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        Always(Self.identity)
-    }
-    public init(_ arguments: ()) {
-        fatalError()
-    }
-    
+extension EmptyModifier: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        Parse({ Self.identity }) {}
+        ASTNode("__never__", in: context) {}
+            .map({ _ in Self.identity })
     }
 }

@@ -67,7 +67,6 @@ extension LiveViewMacro: ExpressionMacro {
         { () -> AnyView in
             enum \(registryName): AggregateRegistry {
                 \(registries)
-                typealias CustomModifier = Registries.CustomModifier
             }
         
             return AnyView(LiveView<\(registryName)>(\(liveViewArguments)))
