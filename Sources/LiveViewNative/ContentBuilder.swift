@@ -85,12 +85,26 @@ import LiveViewNativeStylesheet
 /// Custom modifiers can be created with the ``ContentModifier`` protocol.
 /// Set the ``ContentModifier/Builder`` associated type to the ``ContentBuilder`` it is compatible with.
 ///
-/// If a modifier has nested content, use ``buildChildren(of:forTemplate:in:)`` with a template name.
+/// Depend on `LiveViewNativeStylesheet` to create a parser for a custom modifier.
+/// Add the ``LiveViewNativeStylesheet/ParseableExpression`` macro to have a parser generated from the `init` clauses on the type.
+/// Add a static `name` property to be used by the macro.
+///
+/// - Note: Use `ViewReference` to support nested content in a modifier.
 ///
 /// ```swift
-/// struct SymbolModifier<R: RootRegistry>: ContentModifier {
+/// import LiveViewNativeStylesheet
+///
+/// @ParseableExpression
+/// struct SymbolModifier: ContentModifier {
 ///     typealias Builder = ChartContentBuilder
-///     let content: String
+///
+///     static let name = "symbol"
+///
+///     let content: ViewReference
+///
+///     init(content: ViewReference) {
+///         self.content = content
+///     }
 ///
 ///     func apply<R: RootRegistry>(
 ///         to content: Builder.Content,
@@ -105,28 +119,45 @@ import LiveViewNativeStylesheet
 /// }
 /// ```
 ///
-/// ``ContentModifier/apply(to:on:in:)`` will be called on each modifier passed to the `modifiers` attribute when elements are built.
+/// Given the initializer `init(content:)`, the `@ParseableExpression` macro will allow the following syntax:
 ///
-/// - Note: You must declare the modifier schema in an associated Elixir library.
+/// ```swift
+/// symbol(content: :my_content)
+/// symbol(content: [:a, :b])
+/// ```
+///
+/// ``ContentModifier/apply(to:on:in:)`` will be called on each modifier referenced by the `class` attribute when elements are built.
 ///
 /// Add a ``ModifierType`` type to enumerate the available modifiers.
-/// Switch over this type in ``decodeModifier(_:from:)`` to create the erased modifier type.
+/// This type should conform to `ContentModifier`. Use the `OneOf` parser to support multiple modifiers.
+/// Switch over the possible modifiers in `apply` and forward the call to the correct type.
 ///
 /// ```swift
 /// struct ChartContentBuilder: ContentBuilder {
 ///     ...
-///     enum ModifierType: String, Decodable {
-///         case symbol
-///     }
+///     enum ModifierType: ChartContent {
+///         typealias Content = ChartContentBuilder
 ///
-///     static func decodeModifier<R: RootRegistry>(
-///         _ type: ModifierType,
-///         from decoder: Decoder,
-///         registry _: R.Type
-///     ) throws -> any ContentModifier<Self> {
-///         switch type {
-///         case .symbol:
-///             return try SymbolModifier<R>(from: decoder)
+///         case symbol(SymbolModifier)
+///         // ...
+///
+///         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+///             OneOf {
+///                 SymbolModifier.parser(in: context).map(Self.symbol)
+///                 // ...
+///             }
+///         }
+///
+///         func apply<R: RootRegistry>(
+///             to content: Builder.Content,
+///             on element: ElementNode,
+///             in context: Builder.Context<R>
+///         ) -> Builder.Content {
+///             switch self {
+///             case let .symbol(modifier):
+///                 return modifier.apply(to: content, on: element, in: context)
+///             // ...
+///             }
 ///         }
 ///     }
 /// }
@@ -464,6 +495,19 @@ public extension ContentBuilder {
             )
         }
     }
+    
+    static func buildChildren<R: RootRegistry>(
+        of element: ElementNode,
+        forTemplate template: ViewReference,
+        in context: Context<R>
+    ) throws -> Content {
+        return try build(
+            element
+                .children()
+                .filter({ $0.attributes.contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) }),
+            in: context
+        )
+    }
 }
 
 public extension ContentBuilder {
@@ -477,10 +521,10 @@ public extension ContentBuilder {
     ///   in: context
     /// )
     /// ```
-    static func buildView<R: RootRegistry>(
-        _ nodes: NodeChildrenSequence,
+    static func buildView<R: RootRegistry, C: RandomAccessCollection>(
+        _ nodes: C,
         in context: Context<R>
-    ) -> some View {
+    ) -> some View where C.Element == Node, C.Index == Int {
         ViewTreeBuilder().fromNodes(
             nodes,
             context: context.context
@@ -523,6 +567,34 @@ public extension ContentBuilder {
         }
     }
     
+    @ViewBuilder
+    static func buildChildViews<R: RootRegistry>(
+        of element: ElementNode,
+        forTemplate template: ViewReference,
+        in context: Context<R>
+    ) -> some View {
+        ViewTreeBuilder().fromNodes(
+            element.children()
+                .filter({ $0.attributes.contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) }),
+            context: context.context
+        )
+            .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
+            .environment(\.anyLiveContextStorage, context.context)
+    }
+    
+    @ViewBuilder
+    static func buildChildText<R: RootRegistry>(
+        of element: ElementNode,
+        forTemplate template: TextReference,
+        in context: Context<R>
+    ) -> SwiftUI.Text {
+        element.children()
+            .lazy
+            .filter({ $0.attributes.contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) })
+            .first?.asElement().flatMap({ Text<R>(element: $0).body })
+                ?? SwiftUI.Text("")
+    }
+    
     /// Builds nested content with a ``ContentBuilder`` other than `Self`.
     ///
     /// Use this to include elements from another DSL that are used within this DSL.
@@ -534,13 +606,41 @@ public extension ContentBuilder {
     ///   in: context
     /// )
     /// ```
-    static func build<Builder: ContentBuilder, R: RootRegistry>(
-        _ nodes: NodeChildrenSequence,
+    static func build<Builder: ContentBuilder, R: RootRegistry, C: Sequence>(
+        _ nodes: C,
+        with _: Builder.Type = Builder.self,
+        in context: Context<R>
+    ) throws -> Builder.Content where C.Element == Node {
+        try Builder.build(
+            nodes,
+            in: context.value(for: Builder.self)
+        )
+    }
+    
+    /// Builds nested content with a ``ContentBuilder`` other than `Self`.
+    static func buildChildren<Builder: ContentBuilder, R: RootRegistry>(
+        of element: ElementNode,
+        forTemplate template: String? = nil,
         with _: Builder.Type = Builder.self,
         in context: Context<R>
     ) throws -> Builder.Content {
-        try Builder.build(
-            nodes,
+        try Builder.buildChildren(
+            of: element,
+            forTemplate: template,
+            in: context.value(for: Builder.self)
+        )
+    }
+    
+    /// Builds nested content with a ``ContentBuilder`` other than `Self`.
+    static func buildChildren<Builder: ContentBuilder, R: RootRegistry>(
+        of element: ElementNode,
+        forTemplate template: ViewReference,
+        with _: Builder.Type = Builder.self,
+        in context: Context<R>
+    ) throws -> Builder.Content {
+        try Builder.buildChildren(
+            of: element,
+            forTemplate: template,
             in: context.value(for: Builder.self)
         )
     }

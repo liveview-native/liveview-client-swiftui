@@ -2,16 +2,19 @@ import SwiftUI
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
-struct ViewReference: ParseableModifierValue {
+/// A reference to nested content from a stylesheet.
+///
+/// Parses an atom or list of atoms.
+public struct ViewReference: ParseableModifierValue {
     let value: [String]
 
-    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some View {
+    public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some View {
         ForEach(value, id: \.self) {
             context.buildChildren(of: element, forTemplate: $0)
         }
     }
 
-    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             AtomLiteral().map({
                 Self.init(value: [$0])
@@ -27,15 +30,16 @@ struct ViewReference: ParseableModifierValue {
 /// A type reference that is resolved inline (an argument that accepts `some View`, not `() -> some View`)
 typealias InlineViewReference = ViewReference
 
-struct TextReference: ParseableModifierValue {
+/// A `ViewReference` that only resolves to `SwiftUI.Text`.
+public struct TextReference: ParseableModifierValue {
     let value: String
 
-    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
+    public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         context.children(of: element, forTemplate: value).first?.asElement().flatMap({ Text<R>(element: $0).body })
-            ?? SwiftUI.Text(value)
+            ?? SwiftUI.Text("")
     }
 
-    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         AtomLiteral().map({ Self.init(value: $0) })
     }
 }

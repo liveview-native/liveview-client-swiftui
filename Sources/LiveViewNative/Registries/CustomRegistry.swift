@@ -28,9 +28,8 @@ import LiveViewNativeStylesheet
 /// - ``lookup(_:element:context:)-5bvqg``
 /// - ``CustomView``
 /// ### Custom View Modifiers
-/// - ``ModifierType``
-/// - ``decodeModifier(_:from:context:)-4cqvs``
 /// - ``CustomModifier``
+/// - ``parseModifier(_:in:)-tj5n``
 /// ### Customizing the Loading View
 /// - ``loadingView(for:state:)-6jd3b``
 /// - ``LoadingView``
@@ -69,9 +68,9 @@ public protocol CustomRegistry<Root> {
     ///
     /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-5bvqg`` implementations and this will be inferred automatically.
     associatedtype CustomView: View = Never
-    /// The type of view modifier this registry returns from the `decodeModifiers` method.
+    /// The type of view modifier this registry can parse.
     ///
-    /// Generally, implementors will use an opaque return type on their ``decodeModifier(_:from:context:)-4cqvs`` implementations and this will be inferred automatically.
+    /// Use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser for a modifier from its `init` clauses.
     associatedtype CustomModifier: ViewModifier & ParseableModifierValue = EmptyModifier
     /// The type of view this registry produces for loading views.
     ///
@@ -109,6 +108,11 @@ public protocol CustomRegistry<Root> {
     @ViewBuilder
     static func errorView(for error: Error) -> ErrorView
     
+    /// Parse the ``CustomModifier`` from ``input``.
+    ///
+    /// It is recommended to use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser.
+    /// This parser can then be called inside this function.
+    /// A default implementation is provided that automatically uses ``CustomModifier/parser(in:)``.
     static func parseModifier(
         _ input: inout Substring.UTF8View,
         in context: ParseableModifierContext

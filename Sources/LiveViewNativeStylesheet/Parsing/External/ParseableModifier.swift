@@ -135,6 +135,23 @@ public struct AtomString: ParseableModifierValue {
     }
 }
 
+extension Date: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ParseableDate.parser(in: context).map(\.value)
+    }
+    
+    @ParseableExpression
+    struct ParseableDate {
+        static let name = "Date"
+        
+        let value: Date
+        
+        init(timeIntervalSince1970: Double) {
+            self.value = .init(timeIntervalSince1970: timeIntervalSince1970)
+        }
+    }
+}
+
 extension Array: ParseableModifierValue where Element: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ListLiteral {
