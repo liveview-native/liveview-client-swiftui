@@ -1,8 +1,8 @@
 defmodule LiveViewNative.SwiftUI do
-  use LiveViewNativePlatform
+  def format, do: :swiftui
+  def template_engine, do: LiveViewNative.Engine
 
-  def platforms,
-    do: [
-      LiveViewNative.SwiftUI.Platform
-    ]
+  def tag_handler(_target) do
+    LiveViewNative.TagEngine
+  end
 end
