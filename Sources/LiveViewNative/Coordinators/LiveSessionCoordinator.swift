@@ -180,6 +180,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private func disconnect() async {
         for entry in self.navigationPath {
             await entry.coordinator.disconnect()
+            entry.coordinator.document = nil
         }
         self.navigationPath = [self.navigationPath.first!]
         self.socket?.disconnect()
