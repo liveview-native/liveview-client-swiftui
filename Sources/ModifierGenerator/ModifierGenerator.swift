@@ -12,7 +12,9 @@ struct ModifierGenerator: ParsableCommand {
     )
     private var interface: URL
     
-    @Flag private var schema = false
+    @Flag(
+        help: "Produce a JSON format read by the LiveView Native VS Code extension."
+    ) private var schema = false
 
     static let extraModifierTypes: Set<String> = [
         // Image modifiers
