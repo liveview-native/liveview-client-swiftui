@@ -8,10 +8,10 @@ final class ModifierVisitor: SyntaxVisitor {
 
     static let minimumAvailability = [
         "iOS": VersionTupleSyntax(major: .integerLiteral("16"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
-        "macOS":  VersionTupleSyntax(major: .integerLiteral("13"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
-        "watchOS":  VersionTupleSyntax(major: .integerLiteral("9"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
-        "tvOS":  VersionTupleSyntax(major: .integerLiteral("16"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
-        "visionOS":  VersionTupleSyntax(major: .integerLiteral("1"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "macOS": VersionTupleSyntax(major: .integerLiteral("13"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "watchOS": VersionTupleSyntax(major: .integerLiteral("9"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "tvOS": VersionTupleSyntax(major: .integerLiteral("16"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
+        "visionOS": VersionTupleSyntax(major: .integerLiteral("1"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
     ]
 
     static func availability(_ base: AttributeListSyntax, _ decl: AttributeListSyntax) -> (AvailabilityArgumentListSyntax, Set<String>) {
@@ -79,7 +79,12 @@ final class ModifierVisitor: SyntaxVisitor {
             return .skipChildren
         }
 
-        for member in node.memberBlock.members {
+        let ifConfigMembers = node.memberBlock.members.reduce(into: [], { prev, next in
+            prev.append(contentsOf: next.decl.as(IfConfigDeclSyntax.self)?.clauses.reduce(into: [], { prev, next in
+                prev.append(contentsOf: next.elements?.as(MemberBlockItemListSyntax.self).flatMap(Array.init) ?? [])
+            }) ?? [])
+        })
+        for member in Array(node.memberBlock.members) + ifConfigMembers {
             // find extensions on `SwiftUI.View`
             guard let decl = member.decl.as(FunctionDeclSyntax.self),
                   decl.modifiers.contains(where: { $0.name.tokenKind == .keyword(.public) }),

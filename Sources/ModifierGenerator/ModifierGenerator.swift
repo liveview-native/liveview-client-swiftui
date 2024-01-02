@@ -125,6 +125,10 @@ struct ModifierGenerator: ParsableCommand {
         
         "tag",
         "id",
+        
+        "task",
+        
+        "fileDialogURLEnabled",
 
         // manually implemented due to argument order edge cases
         "searchScopes",
