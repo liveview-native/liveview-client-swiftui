@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 2/21/23.
 //
 
+import Foundation
 import LiveViewNativeCore
 
 /// Selection of either a single value or set of values.
@@ -59,10 +60,14 @@ enum Selection: Codable, AttributeDecodable, Equatable {
     init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
-        if value.isEmpty {
-            self = .single(nil)
-        } else {
-            self = .single(value)
+        do {
+            self = try JSONDecoder().decode(Self.self, from: Data(value.utf8))
+        } catch {
+            if value.isEmpty {
+                self = .none
+            } else {
+                self = .single(value)
+            }
         }
     }
 }
