@@ -64,7 +64,7 @@ enum Selection: Codable, AttributeDecodable, Equatable {
             self = try JSONDecoder().decode(Self.self, from: Data(value.utf8))
         } catch {
             if value.isEmpty {
-                self = .none
+                self = .single(nil)
             } else {
                 self = .single(value)
             }
