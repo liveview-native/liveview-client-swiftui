@@ -8,7 +8,8 @@
 import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
-struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: ParseableModifierValue {
+/// An `attr("...")` reference in a stylesheet, or a concrete value.
+public struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: ParseableModifierValue {
     enum Storage {
         case constant(Value)
         case reference(AttributeName)
@@ -16,7 +17,7 @@ struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: P
     
     let storage: Storage
     
-    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             Value.parser(in: context).map(Storage.constant)
             AttributeName.parser(in: context).map(Storage.reference)
@@ -24,7 +25,11 @@ struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: P
         .map(Self.init)
     }
     
-    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Value {
+    public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> Value {
+        resolve(on: element)
+    }
+    
+    public func resolve(on element: ElementNode) -> Value {
         switch storage {
         case .constant(let value):
             return value

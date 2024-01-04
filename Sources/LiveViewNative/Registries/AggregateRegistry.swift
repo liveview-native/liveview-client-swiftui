@@ -106,6 +106,13 @@ extension AggregateRegistry {
     public static func errorView(for error: Error) -> some View {
         return Registries.errorView(for: error)
     }
+    
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> some (ViewModifier & ParseableModifierValue) {
+        return try Registries.parseModifier(&input, in: context)
+    }
 }
 
 /// A helper type that represents either one of two `RawRepresentable<String>` types.
@@ -133,8 +140,75 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
     }
 }
 
+public enum _EitherCustomModifier<First: CustomRegistry, Second: CustomRegistry>: ViewModifier & ParseableModifierValue {
+    case first(First.CustomModifier)
+    case second(Second.CustomModifier)
+    
+    public static func parser(in context: ParseableModifierContext) -> _ParserType {
+        _ParserType(context: context)
+    }
+    
+    public struct _ParserType: Parser {
+        let context: ParseableModifierContext
+        
+        public func parse(_ input: inout Substring.UTF8View) throws -> _EitherCustomModifier<First, Second> {
+            let copy = input
+            let firstError: ModifierParseError?
+            do {
+                return .first(try First.parseModifier(&input, in: context))
+            } catch let error as ModifierParseError {
+                firstError = error
+            } catch {
+                firstError = nil
+            }
+            
+            // backtrack and try second
+            input = copy
+            do {
+                return .second(try Second.parseModifier(&input, in: context))
+            } catch let error as ModifierParseError {
+                if let firstError {
+                    let firstFailures = if case let .multiRegistryFailure(failures) = firstError.error {
+                        failures
+                    } else {
+                        [(First.self, firstError.error)]
+                    }
+                    let secondFailures = if case let .multiRegistryFailure(failures) = error.error {
+                        failures
+                    } else {
+                        [(Second.self, error.error)]
+                    }
+                    throw ModifierParseError(
+                        error: .multiRegistryFailure(
+                            firstFailures + secondFailures
+                        ),
+                        metadata: error.metadata
+                    )
+                } else {
+                    throw error
+                }
+            } catch {
+                if let firstError {
+                    throw firstError
+                } else {
+                    throw error
+                }
+            }
+        }
+    }
+    
+    public func body(content: Content) -> some View {
+        switch self {
+        case .first(let first):
+            content.modifier(first)
+        case .second(let second):
+            content.modifier(second)
+        }
+    }
+}
+
 /// A registry implementation that combines two registries. Use the `Registry2`/etc. typealiases rather than using this type directly.
-@frozen public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: CustomRegistry where First.Root == Second.Root {
+public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: CustomRegistry where First.Root == Second.Root {
     public typealias Root = First.Root
     
     public typealias TagName = _EitherRawString<First.TagName, Second.TagName>
@@ -154,6 +228,13 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
     
     public static func errorView(for error: Error) -> some View {
         return First.errorView(for: error)
+    }
+    
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> _EitherCustomModifier<First, Second> {
+        return try _EitherCustomModifier<First, Second>.parser(in: context).parse(&input)
     }
 }
 

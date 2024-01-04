@@ -60,9 +60,12 @@ extension ChangeTracked where Value: AttributeDecodable {
     
     final class ElementLocalValue: LocalValue {
         var cancellable: AnyCancellable?
+        var didSendCancellable: AnyCancellable?
         
         let attribute: AttributeName
         let sendChangeEvent: Bool
+        
+        private var previousValue: Value?
         
         init(wrappedValue: Value? = nil, attribute: AttributeName, sendChangeEvent: Bool) {
             self.attribute = attribute
@@ -74,9 +77,10 @@ extension ChangeTracked where Value: AttributeDecodable {
             to changeTracked: ChangeTracked<Value>
         ) {
             if let value = try? changeTracked.element.attributeValue(Value.self, for: self.attribute),
-               value != self.value
+               value != self.previousValue
             {
                 self.value = value
+                self.previousValue = value
             }
             cancellable = localValueChanged
                 .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
@@ -91,6 +95,17 @@ extension ChangeTracked where Value: AttributeDecodable {
                         try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: localValue]), options: .fragmentsAllowed))
                     }
                 })
+            
+            // set current value to previousValue and trigger update to sync with attribute value
+            // (may be delayed from localValueChanged due to debounce/throttle)
+            didSendCancellable = changeTracked.event.owner.handler.didSendSubject
+                .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
+                .sink { [weak self] _ in
+                    guard let self
+                    else { return }
+                    self.previousValue = self.value
+                    self.objectWillChange.send()
+                }
         }
     }
 }

@@ -322,6 +322,7 @@ struct ModifierGenerator: ParsableCommand {
             enum BuiltinModifier: ViewModifier, ParseableModifierValue {
                 \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
                 \#(Self.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
+                case _customRegistryModifier(R.CustomModifier)
                 
                 func body(content: Content) -> some View {
                     switch self {
@@ -337,6 +338,8 @@ struct ModifierGenerator: ParsableCommand {
                             content.modifier(modifier)
                         """
                     }).joined(separator: "\n"))
+                    case let ._customRegistryModifier(modifier):
+                        content.modifier(modifier)
                     }
                 }
                 
@@ -367,10 +370,29 @@ struct ModifierGenerator: ParsableCommand {
                             Metadata.parser()
                         }.parse(&copy)
                         
-                        guard let parser = parsers[modifierName]
-                        else { throw ModifierParseError(error: .unknownModifier(modifierName), metadata: metadata) }
+                        copy = input
                         
-                        return try parser.parse(&input)
+                        // attempt to parse the built-in modifiers first.
+                        do {
+                            if let parser = parsers[modifierName] {
+                                return try parser.parse(&input)
+                            } else {
+                                throw ModifierParseError(
+                                    error: .unknownModifier(modifierName),
+                                    metadata: metadata
+                                )
+                            }
+                        } catch let builtinError {
+                            // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
+                            input = copy
+                            do {
+                                return try ._customRegistryModifier(R.parseModifier(&input, in: context))
+                            } catch let error as ModifierParseError {
+                                throw error
+                            } catch {
+                                throw builtinError
+                            }
+                        }
                     }
                 }
             }

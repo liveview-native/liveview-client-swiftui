@@ -17,6 +17,9 @@ let package = Package(
         .library(
             name: "LiveViewNative",
             targets: ["LiveViewNative"]),
+        .library(
+            name: "LiveViewNativeStylesheet",
+            targets: ["LiveViewNativeStylesheet"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.

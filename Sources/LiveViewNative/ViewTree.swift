@@ -114,34 +114,6 @@ extension CodingUserInfoKey {
     static var modifierAnimationScale: Self { .init(rawValue: "modifierAnimationScale")! }
 }
 
-enum ModifierContainer<R: RootRegistry>: ParseableModifierValue {
-    case builtin(BuiltinRegistry<R>.BuiltinModifier)
-    case custom(R.CustomModifier)
-    case error(ErrorModifier<R>)
-    case inert
-    
-    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            R.CustomModifier.parser(in: context).map({ .custom($0) })
-            BuiltinRegistry.BuiltinModifier.parser(in: context).map({ .builtin($0) })
-        }
-    }
-    
-    @ViewModifierBuilder
-    var modifier: some ViewModifier {
-        switch self {
-        case let .builtin(modifier):
-            modifier
-        case let .custom(modifier):
-            modifier
-        case let .error(modifier):
-            modifier
-        case .inert:
-            EmptyModifier()
-        }
-    }
-}
-
 private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     @ObservedElement private var element

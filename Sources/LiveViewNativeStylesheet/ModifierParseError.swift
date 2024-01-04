@@ -16,10 +16,11 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
         self.metadata = metadata
     }
     
-    public enum ErrorType {
+    public indirect enum ErrorType {
         case unknownModifier(String)
         case missingRequiredArgument(String)
         case noMatchingClause(String, [[String]])
+        case multiRegistryFailure([(Any.Type, ErrorType)])
         
         var localizedDescription: String {
             switch self {
@@ -35,6 +36,30 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
                 } else {
                     return "No matching clause found for modifier `\(name)`. Expected one of \(clauses.map({ "`\(name)(\($0.joined(separator: ":"))\($0.count > 0 ? ":" : ""))`" }).joined(separator: ", "))"
                 }
+            case .multiRegistryFailure(let attempts):
+                let allUnknown = attempts.allSatisfy({
+                    if case .unknownModifier = $0.1 {
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+                if allUnknown {
+                    return attempts.first!.1.localizedDescription
+                } else {
+                    return attempts
+                        .filter {
+                            if case .unknownModifier = $0.1 {
+                                return false
+                            } else {
+                                return true
+                            }
+                        }
+                        .map {
+                            return "Attempt in \($0.0) failed: \($0.1.localizedDescription)"
+                        }
+                        .joined(separator: "\n")
+                }
             }
         }
     }
@@ -48,7 +73,7 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
         return """
         \(indentation) |
         \(metadata.line) | \(metadata.source)
-        \(indentation) | ^ \(error.localizedDescription)
+        \(indentation) | ^ \(error.localizedDescription.split(separator: "\n").joined(separator: "\n\(indentation) |   "))
         
         in \(metadata.module) (\(metadata.file):\(metadata.line))
         """

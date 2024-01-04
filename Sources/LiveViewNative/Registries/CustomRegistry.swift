@@ -28,9 +28,8 @@ import LiveViewNativeStylesheet
 /// - ``lookup(_:element:context:)-5bvqg``
 /// - ``CustomView``
 /// ### Custom View Modifiers
-/// - ``ModifierType``
-/// - ``decodeModifier(_:from:context:)-4cqvs``
 /// - ``CustomModifier``
+/// - ``parseModifier(_:in:)-tj5n``
 /// ### Customizing the Loading View
 /// - ``loadingView(for:state:)-6jd3b``
 /// - ``LoadingView``
@@ -69,9 +68,9 @@ public protocol CustomRegistry<Root> {
     ///
     /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-5bvqg`` implementations and this will be inferred automatically.
     associatedtype CustomView: View = Never
-    /// The type of view modifier this registry returns from the `decodeModifiers` method.
+    /// The type of view modifier this registry can parse.
     ///
-    /// Generally, implementors will use an opaque return type on their ``decodeModifier(_:from:context:)-4cqvs`` implementations and this will be inferred automatically.
+    /// Use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser for a modifier from its `init` clauses.
     associatedtype CustomModifier: ViewModifier & ParseableModifierValue = EmptyModifier
     /// The type of view this registry produces for loading views.
     ///
@@ -108,6 +107,16 @@ public protocol CustomRegistry<Root> {
     /// - Parameter error: The error of the view is reporting.
     @ViewBuilder
     static func errorView(for error: Error) -> ErrorView
+    
+    /// Parse the ``CustomModifier`` from ``input``.
+    ///
+    /// It is recommended to use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser.
+    /// This parser can then be called inside this function.
+    /// A default implementation is provided that automatically uses ``CustomModifier/parser(in:)``.
+    static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> CustomModifier
 }
 
 extension CustomRegistry where LoadingView == Never {
@@ -124,6 +133,15 @@ extension CustomRegistry where ErrorView == Never {
     }
 }
 
+extension CustomRegistry {
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> CustomModifier {
+        try Self.CustomModifier.parser(in: context).parse(&input)
+    }
+}
+
 /// The empty registry is the default ``CustomRegistry`` implementation that does not provide any views or modifiers.
 public struct EmptyRegistry {
 }
@@ -137,9 +155,6 @@ extension EmptyRegistry: RootRegistry {
             return nil
         }
     }
-    
-    public typealias TagName = None
-    public typealias ModifierType = None
 }
 extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Never {
     /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/TagName`` type alias, this implementation will be used.
@@ -150,4 +165,76 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
 
 /// A root registry is a ``CustomRegistry`` type that can be used directly as the registry for a ``LiveSessionCoordinator``.
 public protocol RootRegistry: CustomRegistry where Root == Self {
+}
+
+public struct CustomModifierGroupParser<Output, P: Parser>: Parser where P.Input == Substring.UTF8View, P.Output == Output {
+    public let parser: P
+    
+    @inlinable
+    public init(
+        output outputType: Output.Type = Output.self,
+        @CustomModifierGroupParserBuilder<Substring.UTF8View, Output> _ build: () -> P
+    ) {
+        self.parser = build()
+    }
+    
+    public func parse(_ input: inout Substring.UTF8View) throws -> P.Output {
+        var copy = input
+        let (modifierName, metadata) = try Parse {
+            "{".utf8
+            Whitespace()
+            AtomLiteral()
+            Whitespace()
+            ",".utf8
+            Whitespace()
+            Metadata.parser()
+        }.parse(&copy)
+        
+        do {
+            return try parser.parse(&input)
+        } catch let error as ModifierParseError {
+            throw error
+        } catch {
+            throw ModifierParseError(error: .unknownModifier(modifierName), metadata: metadata)
+        }
+    }
+}
+
+@resultBuilder
+public struct CustomModifierGroupParserBuilder<Input, Output> {
+    public static func buildPartialBlock(first: some Parser<Input, Output>) -> some Parser<Input, Output> {
+        first
+    }
+    public static func buildPartialBlock(accumulated: some Parser<Input, Output>, next: some Parser<Input, Output>) -> some Parser<Input, Output> {
+        Accumulator(accumulated: accumulated, next: next)
+    }
+    
+    struct Accumulator<A: Parser, B: Parser>: Parser where A.Input == Input, B.Input == Input, A.Output == Output, B.Output == Output {
+        let accumulated: A
+        let next: B
+        
+        func parse(_ input: inout Input) throws -> Output {
+            let copy = input
+            let firstError: ModifierParseError?
+            do {
+                return try accumulated.parse(&input)
+            } catch let error as ModifierParseError {
+                firstError = error
+            } catch {
+                firstError = nil
+            }
+            input = copy
+            do {
+                return try next.parse(&input)
+            } catch let error as ModifierParseError {
+                throw error
+            } catch {
+                if let firstError {
+                    throw firstError
+                } else {
+                    throw error
+                }
+            }
+        }
+    }
 }
