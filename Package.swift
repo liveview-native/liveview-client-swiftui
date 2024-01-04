@@ -151,7 +151,7 @@ let package = Package(
         ),
         .testTarget(
             name: "LiveViewNativeStylesheetTests",
-            dependencies: ["LiveViewNativeStylesheet"]
+            dependencies: ["LiveViewNativeStylesheet", "LiveViewNative"]
         ),
         .testTarget(
             name: "LiveViewNativeStylesheetMacrosTests",
