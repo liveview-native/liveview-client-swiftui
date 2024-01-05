@@ -60,7 +60,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :live_view_native_platform]
+      extra_applications: [:logger]
     ]
   end
 
@@ -70,8 +70,8 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:makeup_swift, "~> 0.0.1"},
       {:makeup_json, "~> 0.1.0"},
-      {:live_view_native_platform, "0.2.0-rc.1"},
-      {:live_view_native_stylesheet, "0.2.0-rc.1"},
+      {:live_view_native, path: "../live_view_native"},
+      {:live_view_native_stylesheet, "0.2.0-beta.1"},
       {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"},
     ]
