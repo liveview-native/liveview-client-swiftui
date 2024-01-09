@@ -22,9 +22,7 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``axes``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct ViewThatFits<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -32,9 +30,7 @@ struct ViewThatFits<R: RootRegistry>: View {
     /// The axes to check each child's size along. Defaults to `all`.
     ///
     /// See ``LiveViewNative/SwiftUI/Axis/Set``
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("axes") private var axes: Axis.Set = [.horizontal, .vertical]
     
     public var body: some View {

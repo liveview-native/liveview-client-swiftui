@@ -57,9 +57,7 @@ import SwiftUI
 /// * ``systemName``
 /// * ``name``
 /// * ``variableValue``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct Image<R: RootRegistry>: View {
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -67,20 +65,14 @@ struct Image<R: RootRegistry>: View {
     /// The name of the system image (SF Symbol) to display.
     ///
     /// See [Apple's documentation](https://developer.apple.com/sf-symbols/) for more information.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("system-name") private var systemName: String?
     /// The name of an image in the app's asset catalog.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("name") private var name: String?
     
     /// The value represented by this image, in the range `0.0` to `1.0`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("variable-value") private var variableValue: Double?
     
     @Environment(\.imageModifiers) private var modifiers

@@ -22,14 +22,10 @@ import SwiftUI
 ///
 /// ## Attributes
 /// - ``minLength``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct Spacer: View {
     /// The minimum size of the spacer. If not provided, the minimum length is the system spacing.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("min-length") private var minLength: Double?
     
     public var body: some View {

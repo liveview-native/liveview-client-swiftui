@@ -29,9 +29,7 @@ import SwiftUI
 /// ## Children
 /// * `label` - Describes the content of the menu.
 /// * `content` - Elements displayed when expanded.
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, tvOS 17.0, *)
 struct Menu<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode

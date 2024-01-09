@@ -83,9 +83,7 @@ import SwiftUI
 /// ## Events
 /// * ``delete``
 /// * ``move``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct List<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -110,9 +108,7 @@ struct List<R: RootRegistry>: View {
     ///     end
     /// end
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-delete", type: "click") private var delete
     /// Event sent when a row is moved.
     ///
@@ -133,9 +129,7 @@ struct List<R: RootRegistry>: View {
     ///     end
     /// end
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-move", type: "click") private var move
     
     /// Synchronizes the selected rows with the server.
@@ -145,9 +139,7 @@ struct List<R: RootRegistry>: View {
     ///
     /// To only allow a single selection, use the `String` type for the value.
     /// Use `nil` as the default value to start with no selection.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @ChangeTracked(attribute: "selection") private var selection = Selection.none
     
     public var body: some View {

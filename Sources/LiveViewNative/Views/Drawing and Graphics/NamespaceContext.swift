@@ -14,17 +14,13 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``id``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct NamespaceContext<R: RootRegistry>: View {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
     /// The unique identifier for this namespace.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("id") private var id: String
     
     @Namespace private var namespace

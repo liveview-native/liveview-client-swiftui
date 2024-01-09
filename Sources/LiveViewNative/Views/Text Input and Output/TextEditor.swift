@@ -16,9 +16,7 @@ import SwiftUI
 /// ## Events
 /// - ``focusEvent``
 /// - ``blurEvent``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
 struct TextEditor: TextFieldProtocol {
     @ObservedElement var element: ElementNode
@@ -26,14 +24,10 @@ struct TextEditor: TextFieldProtocol {
     @FocusState private var isFocused: Bool
     
     /// An event that fires when the text editor is focused.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-focus", type: "focus") var focusEvent
     /// An event that fires when the text editor is unfocused.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-blur", type: "blur") var blurEvent
     
     var body: some View {

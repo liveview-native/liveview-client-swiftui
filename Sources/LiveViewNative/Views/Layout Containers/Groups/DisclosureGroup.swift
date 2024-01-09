@@ -40,18 +40,14 @@ import SwiftUI
 /// ## Topics
 /// ### Supporting Types
 /// - ``DisclosureGroupStyle``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
 struct DisclosureGroup<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// Synchronizes the expansion state with the server.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @ChangeTracked(attribute: "is-expanded") private var isExpanded = false
 
     public var body: some View {

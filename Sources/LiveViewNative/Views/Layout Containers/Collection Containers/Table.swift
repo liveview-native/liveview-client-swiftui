@@ -88,9 +88,7 @@ import LiveViewNativeCore
 ///
 /// ### Selecting Rows
 /// * ``selection``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
 struct Table<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
@@ -104,9 +102,7 @@ struct Table<R: RootRegistry>: View {
     ///
     /// To only allow a single selection, use the `String` type for the value.
     /// Use `nil` as the default value to start with no selection.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @ChangeTracked(attribute: "selection") private var selection = Selection.none
     /// Synchronizes the columns to sort by with the server.
     ///
@@ -124,9 +120,7 @@ struct Table<R: RootRegistry>: View {
     ///
     /// The value of `id` matches the `id` attribute of the `<TableColumn>`, or its index if there is no `id` attribute.
     /// The value of `order` matches [`Foundation.SortOrder`](https://developer.apple.com/documentation/Foundation/SortOrder).
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @ChangeTracked(attribute: "sort-order") private var sortOrder = TableColumnSortContainer(value: [])
     
     public var body: some View {

@@ -25,9 +25,7 @@ import LiveViewNativeCore
 ///
 /// ## Bindings
 /// * ``selection``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
 struct ColorPicker<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
@@ -36,14 +34,11 @@ struct ColorPicker<R: RootRegistry>: View {
     /// The currently selected color value.
     ///
     /// The color is stored as a map with the keys `r`, `g`, `b`, and optionally `a`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @ChangeTracked(attribute: "selection") private var selection = CodableColor(r: 0, g: 0, b: 0, a: 1)
+    
     /// Enables the selection of transparent colors.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("supports-opacity") private var supportsOpacity: Bool
     
     struct CodableColor: AttributeDecodable, Codable, Equatable {

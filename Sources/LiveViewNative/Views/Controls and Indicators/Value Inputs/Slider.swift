@@ -59,9 +59,7 @@ import SwiftUI
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
 struct Slider<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
@@ -70,19 +68,15 @@ struct Slider<R: RootRegistry>: View {
     @FormState("value", default: 0) var value: Double
     
     /// The lowest allowed value.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("lower-bound") private var lowerBound: Double = 0
+    
     /// The highest allowed value.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("upper-bound") private var upperBound: Double = 1
+    
     /// The distance between allowed values.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("step") private var step: Double.Stride?
     
     public var body: some View {

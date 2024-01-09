@@ -52,17 +52,13 @@ import SwiftUI
 /// * `content` - The main body of the section.
 /// * `header` - Describes the content of the section.
 /// * `footer` - Elements displayed at the end of the section.
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct Section<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// Enables this section to be collapsed in sidebar lists on macOS.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("collapsible") private var collapsible: Bool
     
     public var body: some View {

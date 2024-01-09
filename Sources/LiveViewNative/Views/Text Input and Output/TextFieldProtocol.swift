@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 protocol TextFieldProtocol: View {
     var element: ElementNode { get }
     var text: String? { get nonmutating set }
@@ -23,9 +21,7 @@ protocol TextFieldProtocol: View {
 /// ## Topics
 /// ### Supporting Types
 /// - ``TextFieldStyle``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 extension TextFieldProtocol {
     func valueBinding<S: ParseableFormatStyle>(format: S) -> Binding<S.FormatInput?> where S.FormatOutput == String {
         .init {
@@ -48,9 +44,7 @@ extension TextFieldProtocol {
     /// Possible values:
     /// * `horizontal`
     /// * `vertical`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     var axis: Axis {
         switch element.attributeValue(for: "axis") {
         case "horizontal":
@@ -63,9 +57,7 @@ extension TextFieldProtocol {
     }
     
     /// Additional text with guidance on what to enter.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     var prompt: SwiftUI.Text? {
         element.attributeValue(for: "prompt").map(SwiftUI.Text.init)
     }

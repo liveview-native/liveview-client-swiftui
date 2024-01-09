@@ -25,23 +25,20 @@ import SwiftUI
 /// - ``selection``
 /// - ``start``
 /// - ``end``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, *)
 struct MultiDatePicker<R: RootRegistry>: View {
     @LiveContext<R> private var context
     @ObservedElement private var element
+    
     /// The start date (inclusive) of the picker's range.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("start") private var start: Date?
+    
     /// The end date (**exclusive**) of the picker's range.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("end") private var end: Date?
+    
     @FormState("selection", default: []) private var selection: Set<SelectedDate>
     
     private var dateComponents: Binding<Set<DateComponents>> {

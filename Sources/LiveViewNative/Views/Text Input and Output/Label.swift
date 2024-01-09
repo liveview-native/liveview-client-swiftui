@@ -28,9 +28,7 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``systemImage``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct Label<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -40,9 +38,7 @@ struct Label<R: RootRegistry>: View {
     /// This attribute takes precedence over the `icon` child.
     ///
     /// This is equivalent to the `system-name` attribute on ``Image``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("system-image") private var systemImage: String?
     
     public var body: some View {

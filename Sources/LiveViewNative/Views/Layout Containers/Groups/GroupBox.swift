@@ -43,9 +43,7 @@ import SwiftUI
 /// ## Topics
 /// ### Supporting Types
 /// - ``GroupBoxStyle``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct GroupBox<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -53,9 +51,7 @@ struct GroupBox<R: RootRegistry>: View {
     /// The title to use.
     ///
     /// Takes precedence over a `label` child.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("title") private var title: String?
 
     public var body: some View {

@@ -24,9 +24,7 @@ import SwiftUI
 ///
 /// ## Events
 /// * ``click``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
 struct PasteButton<R: RootRegistry>: View {
     @ObservedElement private var element
@@ -45,9 +43,7 @@ struct PasteButton<R: RootRegistry>: View {
     ///     ]
     /// }
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-click", type: "click") private var click
     
     var body: some View {

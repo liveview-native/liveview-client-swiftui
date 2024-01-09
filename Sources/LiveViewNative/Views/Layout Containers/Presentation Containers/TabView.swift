@@ -23,9 +23,7 @@ import SwiftUI
 ///
 /// ## Bindings
 /// * ``selection``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct TabView<R: RootRegistry>: View {
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -33,9 +31,7 @@ struct TabView<R: RootRegistry>: View {
     /// Synchronizes the selected tab with the server.
     ///
     /// Use the ``TagModifier`` modifier to set the selection value for a given tab.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @ChangeTracked(attribute: "selection") private var selection: String? = nil
     
     var body: some View {

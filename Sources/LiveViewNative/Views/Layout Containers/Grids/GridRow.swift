@@ -30,17 +30,13 @@ import SwiftUI
 /// ## See Also
 /// ### Creating Grids
 /// * ``Grid``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct GridRow<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// The positioning of elements within the row.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("alignment") private var alignment: VerticalAlignment?
 
     public var body: some View {
