@@ -18,6 +18,7 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
     
     public indirect enum ErrorType {
         case unknownModifier(String)
+        case deprecatedModifier(String, message: String)
         case missingRequiredArgument(String)
         case noMatchingClause(String, [[String]])
         case multiRegistryFailure([(Any.Type, ErrorType)])
@@ -26,6 +27,8 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
             switch self {
             case .unknownModifier(let name):
                 return "Unknown modifier `\(name)`"
+            case .deprecatedModifier(let name, let message):
+                return "`\(name)` is deprecated: \(message)"
             case .missingRequiredArgument(let name):
                 return "Missing required argument `\(name)`"
             case .noMatchingClause(let name, let clauses):

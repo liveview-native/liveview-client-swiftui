@@ -378,6 +378,15 @@ struct ModifierGenerator: ParsableCommand {
                                 \#(modifierList.map({ "_\($0)Modifier<R>.name: _\($0)Modifier<R>.parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
                                 \#(Self.extraModifierTypes.map({ "LiveViewNative.\($0).name: LiveViewNative.\($0).parser(in: context).map(Output.\($0.split(separator: "<").first!)).eraseToAnyParser()," }).joined(separator: "\n"))
                             ]
+            
+                            let deprecations = [
+                                \#(visitor.deprecations
+                                    .sorted(by: { $0.key < $1.key })
+                                    .filter({ !$0.key.starts(with: "_") })
+                                    .map({ #""\#($0.key)": \#($0.value)"# })
+                                    .joined(separator: ",\n")
+                                )
+                            ]
                             
                             var copy = input
                             let (modifierName, metadata) = try Parse {
@@ -397,10 +406,17 @@ struct ModifierGenerator: ParsableCommand {
                                 if let parser = parsers[modifierName] {
                                     return try parser.parse(&input)
                                 } else {
-                                    throw ModifierParseError(
-                                        error: .unknownModifier(modifierName),
-                                        metadata: metadata
-                                    )
+                                    if let deprecation = deprecations[modifierName] {
+                                        throw ModifierParseError(
+                                            error: .deprecatedModifier(modifierName, message: deprecation),
+                                            metadata: metadata
+                                        )
+                                    } else {
+                                        throw ModifierParseError(
+                                            error: .unknownModifier(modifierName),
+                                            metadata: metadata
+                                        )
+                                    }
                                 }
                             } catch let builtinError {
                                 // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
@@ -408,7 +424,14 @@ struct ModifierGenerator: ParsableCommand {
                                 do {
                                     return try ._customRegistryModifier(R.parseModifier(&input, in: context))
                                 } catch let error as ModifierParseError {
-                                    throw error
+                                    if let deprecation = deprecations[modifierName] {
+                                        throw ModifierParseError(
+                                            error: .deprecatedModifier(modifierName, message: deprecation),
+                                            metadata: metadata
+                                        )
+                                    } else {
+                                        throw error
+                                    }
                                 } catch {
                                     throw builtinError
                                 }
