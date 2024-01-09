@@ -47,7 +47,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
         return subject
     }
-    private var rendered: Root!
+    internal var rendered: Root!
     internal let builder = ViewTreeBuilder<R>()
     
     private var currentConnectionToken: ConnectionAttemptToken?
@@ -56,23 +56,23 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-    init(session: LiveSessionCoordinator<R>, url: URL, from other: LiveViewCoordinator<R>? = nil) {
+    init(session: LiveSessionCoordinator<R>, url: URL) {
         self.session = session
         self.url = url
-        if let other {
-            self.channel = other.channel
-            if let rendered = other.rendered {
-                // create a new document that won't be merged into.
-                // should core have a "clone document" ability?
-                self.document = try! Document.parse(rendered.buildString())
-            }
-            self.rendered = other.rendered
-            self.currentConnectionToken = other.currentConnectionToken
-            self.currentConnectionTask = other.currentConnectionTask
-            self.eventSubject = other.eventSubject
-            self.eventHandlers = other.eventHandlers
-            self.internalState = other.internalState
-        }
+//        if let other {
+//            self.channel = other.channel
+//            if let rendered = other.rendered {
+//                // create a new document that won't be merged into.
+//                // should core have a "clone document" ability?
+//                self.document = try! Document.parse(rendered.buildString())
+//            }
+//            self.rendered = other.rendered
+//            self.currentConnectionToken = other.currentConnectionToken
+//            self.currentConnectionTask = other.currentConnectionTask
+//            self.eventSubject = other.eventSubject
+//            self.eventHandlers = other.eventHandlers
+//            self.internalState = other.internalState
+//        }
         
         self.handleEvent("native_redirect") { [weak self] payload in
             guard let self,
@@ -302,17 +302,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 switch joinResult {
                 case .rendered(let payload):
                     await MainActor.run {
-                        self.internalState = .connecting
-                    }
-                    await MainActor.run {
                         self.handleJoinPayload(renderedPayload: payload)
+                        self.internalState = .connected
                     }
                 case .redirect(let liveRedirect):
                     self.url = liveRedirect.to
                     try await self.connect(domValues: domValues, redirect: true)
                 }
-                
-                self.internalState = .connected
             }
         }
         
