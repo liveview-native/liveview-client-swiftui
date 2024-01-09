@@ -5,6 +5,7 @@ import SwiftParser
 
 final class ModifierVisitor: SyntaxVisitor {
     var modifiers = [String: [(FunctionDeclSyntax, availability: (AvailabilityArgumentListSyntax, Set<String>))]]()
+    var deprecations = [String: String]()
 
     static let minimumAvailability = [
         "iOS": VersionTupleSyntax(major: .integerLiteral("16"), components: VersionComponentListSyntax([VersionComponentSyntax(number: .integerLiteral("0"))])),
@@ -70,14 +71,12 @@ final class ModifierVisitor: SyntaxVisitor {
         let nodeAvailabilityAttributes = node.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })
 
         // if all platforms mark this symbol as deprecated, exclude it.
-        if !nodeAvailabilityAttributes.isEmpty && nodeAvailabilityAttributes.allSatisfy({
+        let isDeprecated = !nodeAvailabilityAttributes.isEmpty && nodeAvailabilityAttributes.allSatisfy({
             $0.contains(where: {
                 $0.argument.as(AvailabilityLabeledArgumentSyntax.self)?.label.tokenKind == .keyword(.deprecated)
                 || $0.argument.as(TokenSyntax.self)?.tokenKind == .keyword(.unavailable)
             })
-        }) {
-            return .skipChildren
-        }
+        })
 
         let ifConfigMembers = node.memberBlock.members.reduce(into: [], { prev, next in
             prev.append(contentsOf: next.decl.as(IfConfigDeclSyntax.self)?.clauses.reduce(into: [], { prev, next in
@@ -90,15 +89,39 @@ final class ModifierVisitor: SyntaxVisitor {
                   decl.modifiers.contains(where: { $0.name.tokenKind == .keyword(.public) }),
                   let returnType = decl.signature.returnClause?.type.as(SomeOrAnyTypeSyntax.self)?.constraint.as(MemberTypeSyntax.self),
                   returnType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
-                  returnType.name.tokenKind == .identifier("View"),
-                  // exclude deprecated modifiers
-                  !decl.attributes.contains(where: {
-                    $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self)?.contains(where: {
-                        $0.argument.as(AvailabilityLabeledArgumentSyntax.self)?.label.tokenKind == .keyword(.deprecated)
-                    }) ?? false
-                })
+                  returnType.name.tokenKind == .identifier("View")
             else { continue }
-            self.modifiers[decl.name.trimmed.text, default: []].append((decl, availability: Self.availability(node.attributes, decl.attributes)))
+            let memberAvailabilityAttributes = decl.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })
+            let isMemberDeprecated = memberAvailabilityAttributes.contains(where: {
+                $0.contains(where: {
+                    $0.argument.as(AvailabilityLabeledArgumentSyntax.self)?.label.tokenKind == .keyword(.deprecated)
+                })
+            })
+            if isMemberDeprecated || isDeprecated {
+                // extract the deprecation message.
+                self.deprecations[decl.name.trimmed.text] = (isMemberDeprecated ? memberAvailabilityAttributes : nodeAvailabilityAttributes)
+                    .lazy
+                    .compactMap({ (attribute) -> String? in
+                        guard attribute.contains(where: {
+                            $0.argument.as(AvailabilityLabeledArgumentSyntax.self)?.label.tokenKind == .keyword(.deprecated)
+                        })
+                        else { return nil }
+                        return attribute.lazy.compactMap({ (argument) -> String? in
+                            guard let argument = argument.argument.as(AvailabilityLabeledArgumentSyntax.self),
+                                  argument.label.tokenKind == .keyword(.message) || argument.label.tokenKind == .keyword(.renamed)
+                            else { return nil }
+                            if argument.label.tokenKind == .keyword(.renamed),
+                               let value = argument.value.as(SimpleStringLiteralExprSyntax.self)
+                            {
+                                return #""renamed to `\#(value.segments.description)`""#
+                            } else {
+                                return argument.value.description
+                            }
+                        }).first
+                    }).first ?? #""This symbol is unavailable and will have no effect""#
+            } else {
+                self.modifiers[decl.name.trimmed.text, default: []].append((decl, availability: Self.availability(node.attributes, decl.attributes)))
+            }
         }
 
         return .skipChildren
