@@ -60,17 +60,13 @@ import SwiftUI
 /// ## See Also
 /// ### Toolbars Modifiers
 /// * ``ToolbarModifier`` 
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct ToolbarItem<R: RootRegistry>: ToolbarContent {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
     /// The position of this item in the toolbar.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("placement", transform: { _ in fatalError() }) private var placement: SwiftUI.ToolbarItemPlacement
     
     init(element: ElementNode) {
@@ -88,9 +84,7 @@ struct ToolbarItem<R: RootRegistry>: ToolbarContent {
 }
 
 /// See ``ToolbarItem``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -100,9 +94,7 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     }
     
     /// The unique ID for this customizable item.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("id") private var id: String
     
     /// The visibility of the item when the toolbar is not customized.
@@ -112,15 +104,11 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     /// * `hidden`
     ///
     /// When set to `hidden`, the item must be added to the toolbar by the user to be visible.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("default-visibility", transform: { _ in fatalError() }) private var defaultVisibility: Visibility
     
     /// Ensures the item is available in the overflow menu if removed from the toolbar.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("always-available") private var alwaysAvailable: Bool = false
     
     /// Changes the level of customization for this item.
@@ -129,9 +117,7 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     /// * `default`
     /// * `disabled` - The item is not customizable.
     /// * `reorderable` - The item can be reordered, but not removed.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("customization-behavior", transform: { _ in fatalError() }) private var customizationBehavior: ToolbarCustomizationBehavior
     
     init(element: ElementNode) {
@@ -164,54 +150,32 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
 }
 
 /// The positioning of a toolbar item.
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 enum ToolbarItemPlacement: String, AttributeDecodable {
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case automatic
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case principal
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case navigation
     /// `primary-action`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case primaryAction = "primary-action"
     /// `secondary-action`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case secondaryAction = "secondary-action"
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case status
     /// `confirmation-action`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case confirmationAction = "confirmation-action"
     /// `cancellation-action`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case cancellationAction = "cancellation-action"
     /// `destructive-action`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case destructiveAction = "destructive-action"
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     case keyboard
     
     var placement: SwiftUI.ToolbarItemPlacement {

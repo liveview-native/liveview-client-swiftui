@@ -22,9 +22,7 @@ import LiveViewNativeCore
 /// * `footnote`
 /// * `caption`
 /// * `caption2`
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 extension Font.TextStyle: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let value = attribute?.value

@@ -49,41 +49,29 @@ public struct Event: DynamicProperty, Decodable {
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @StateObject var handler = Handler()
     /// The name of the event to send.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let event: String?
     private let name: AttributeName?
     /// The type of event, such as `click` or `focus`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let type: String
     /// The target `LiveView` or `LiveComponent`.
     ///
     /// Pass `@myself` in a component to send the event to the component instead of its parent `LiveView`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let target: Int?
     /// A duration in milliseconds for the debounce interval.
     ///
     /// - Note: ``debounce`` takes precedence over ``throttle``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let debounce: Double?
     /// A duration in milliseconds for the throttle interval.
     ///
     /// - Note: ``debounce`` takes precedence over ``throttle``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let throttle: Double?
     /// Custom values to send with the event.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let params: Any?
     
     @Attribute("phx-debounce") private var debounceAttribute: Double?

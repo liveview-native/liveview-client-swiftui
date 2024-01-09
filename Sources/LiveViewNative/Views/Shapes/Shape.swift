@@ -15,9 +15,7 @@ import LiveViewNativeCore
 /// ## Attributes
 /// - ``fillColor``
 /// - ``strokeColor``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct Shape<S: SwiftUI.InsettableShape>: View {
     @ObservedElement private var element: ElementNode
     private let shape: S
@@ -25,16 +23,12 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
     /// The ``LiveViewNative/SwiftUI/Color`` the shape is filled with.
     ///
     /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("fill-color") private var fillColor: SwiftUI.Color? = nil
     /// The ``LiveViewNative/SwiftUI/Color`` the shape stroke is drawn with.
     ///
     /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("stroke-color") private var strokeColor: SwiftUI.Color? = nil
     
     @Environment(\.shapeModifiers) private var shapeModifiers: [any ShapeModifier]
@@ -77,9 +71,7 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
 /// - `style`: Whether the corners are rounded with the quarter-circle style or continuously. Possible values:
 ///     - `circular`
 ///     - `continuous`
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 extension RoundedRectangle {
     init(from element: ElementNode) {
         let radius = element.attributeValue(for: "corner-radius").flatMap(Double.init) ?? 0
@@ -99,9 +91,7 @@ extension RoundedRectangle {
 /// - `style`: Whether the corners are rounded with the quarter-circle style or continuously. Possible values:
 ///     - `circular`
 ///     - `continuous`
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 extension Capsule {
     init(from element: ElementNode) {
         self.init(
@@ -115,9 +105,7 @@ extension Capsule {
 /// Possible values:
 /// * `circular`
 /// * `continuous`
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 extension RoundedCornerStyle: Decodable, AttributeDecodable {
     init?(string: String) {
         switch string {

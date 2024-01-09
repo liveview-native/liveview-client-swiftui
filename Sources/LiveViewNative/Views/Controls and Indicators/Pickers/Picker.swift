@@ -30,9 +30,7 @@ import SwiftUI
 /// ## Children
 /// - `content`
 /// - `label`
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct Picker<R: RootRegistry>: View {
     @LiveContext<R> private var context
     @ObservedElement private var element

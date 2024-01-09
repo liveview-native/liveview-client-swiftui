@@ -26,9 +26,7 @@ import SwiftUI
 /// 
 /// ## Events
 /// * ``click``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @_spi(LiveForm)
 public struct Button<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
@@ -37,15 +35,11 @@ public struct Button<R: RootRegistry>: View {
     private let action: (() -> Void)?
     
     /// Event triggered when tapped.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-click", type: "click") private var click
     
     /// Boolean attribute that indicates whether the button is tappable.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("disabled") private var disabled: Bool
     
     @_spi(LiveForm) public init(action: (() -> Void)? = nil) {

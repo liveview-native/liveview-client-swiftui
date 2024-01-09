@@ -21,23 +21,17 @@ import Combine
 /// ## Attributes
 /// - ``destination``
 /// - ``disabled``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, *)
 struct NavigationLink<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// The URL of the destination live view, relative to the current live view's URL.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("destination") private var destination: String
     /// Whether the link is disabled.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("disabled") private var disabled: Bool
     
     var url: URL {

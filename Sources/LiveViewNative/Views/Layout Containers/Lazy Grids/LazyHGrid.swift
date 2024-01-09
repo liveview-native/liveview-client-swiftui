@@ -37,9 +37,7 @@ import SwiftUI
 /// * ``alignment``
 /// * ``spacing``
 /// * ``pinnedViews``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct LazyHGrid<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -47,9 +45,7 @@ struct LazyHGrid<R: RootRegistry>: View {
     /// Configured rows to fill with the child elements.
     ///
     /// - Precondition: The value of the attribute must be JSON encoded.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute(
         "rows",
         transform: {
@@ -58,21 +54,15 @@ struct LazyHGrid<R: RootRegistry>: View {
         }
     ) private var rows: [GridItem]
     /// The alignment between rows.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("alignment") private var alignment: VerticalAlignment = .center
     /// The spacing between rows.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("spacing") private var spacing: Double?
     /// Pins section headers/footers.
     ///
     /// See ``LiveViewNative/SwiftUI/PinnedScrollableViews``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("pinned-views") private var pinnedViews: PinnedScrollableViews = []
 
     public var body: some View {

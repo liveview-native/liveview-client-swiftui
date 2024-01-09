@@ -29,4 +29,13 @@ public enum LiveSessionState {
             return false
         }
     }
+    
+    /// Is the enum in the `connected` state.
+    var isConnected: Bool {
+        if case .connected = self {
+            return true
+        } else {
+            return false
+        }
+    }
 }

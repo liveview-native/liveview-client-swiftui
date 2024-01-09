@@ -138,42 +138,27 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         
         state = .connecting
         
-        let html: String
         do {
-            html = try await fetchDOM(url: self.url)
-        } catch {
-            state = .connectionFailed(error)
-            return
-        }
-        
-        let domValues: DOMValues
-        do {
+            let html = try await fetchDOM(url: self.url)
+            
             let doc = try SwiftSoup.parse(html, self.url.absoluteString, SwiftSoup.Parser.xmlParser().settings(.init(true, true)))
-            domValues = try self.extractDOMValues(doc)
+            let domValues = try self.extractDOMValues(doc)
             // extract the root layout, removing anything within the `<div data-phx-main>`.
             let mainDiv = try doc.select("div[data-phx-main]")[0]
             try mainDiv.replaceWith(doc.createElement("phx-main"))
             self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
-        } catch {
-            state = .connectionFailed(error)
-            return
-        }
-        
-        self.domValues = domValues
-        
-        if socket == nil {
-            do {
+            
+            self.domValues = domValues
+            
+            if socket == nil {
                 try await self.connectSocket(domValues)
-            } catch {
-                state = .connectionFailed(error)
-                return
             }
-        }
-        
-        do {
+            
             try await navigationPath.first!.coordinator.connect(domValues: domValues, redirect: false)
         } catch {
             self.state = .connectionFailed(error)
+            logger.log(level: .error, "\(error.localizedDescription)")
+            return
         }
     }
     
@@ -371,8 +356,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             case .push:
                 navigationPath.append(entry)
             case .replace:
-                // If there is nothing to replace, change the root URL.
                 if !navigationPath.isEmpty {
+                    coordinator.document = navigationPath.last!.coordinator.document
                     await navigationPath.last?.coordinator.disconnect()
                     navigationPath[navigationPath.count - 1] = entry
                     try await coordinator.connect(domValues: self.domValues, redirect: true)
@@ -387,7 +372,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             case .push:
                 navigationPath.append(entry)
             case .replace:
-                // If there is nothing to replace, change the root URL.
                 if !navigationPath.isEmpty {
                     navigationPath[navigationPath.count - 1] = entry
                 }

@@ -38,27 +38,19 @@ import SwiftUI
 /// * ``GridCellColumnsModifier``
 /// * ``GridCellUnsizedAxesModifier``
 /// * ``GridColumnAlignmentModifier``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct Grid<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
     
     /// The positioning of elements within the grid.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("alignment") private var alignment: Alignment = .center
     /// The spacing between elements in a ``GridRow``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("horizontal-spacing") private var horizontalSpacing: Double?
     /// The spacing between ``GridRow`` elements.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("vertical-spacing") private var verticalSpacing: Double?
     
     public var body: some View {

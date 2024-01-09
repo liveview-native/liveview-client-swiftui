@@ -27,17 +27,13 @@ import SwiftUI
 /// ## See Also
 /// ### Toolbars Modifiers
 /// * ``ToolbarModifier``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct ToolbarItemGroup<R: RootRegistry>: ToolbarContent {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
     /// The position of this group in the toolbar.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("placement", transform: { _ in fatalError() }) private var placement: SwiftUI.ToolbarItemPlacement
     
     init(element: ElementNode) {

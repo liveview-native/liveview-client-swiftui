@@ -104,9 +104,7 @@ import LiveViewNativeCore
 /// * ``currencyCode``
 /// * ``nameStyle``
 /// * ``dateStyle``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct Text<R: RootRegistry>: View {
     @LiveContext<R> private var context
     
@@ -121,9 +119,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text verbatim=" Hello, world! " />
     /// <Text verbatim={"\n"} />
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("verbatim") private var verbatim: String?
     
     /// The value of this attribute is parsed as markdown.
@@ -133,9 +129,7 @@ struct Text<R: RootRegistry>: View {
     /// ```html
     /// <Text markdown="Hello, *world*!" />
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("markdown") private var markdown: String?
     
     /// Render an Elixir date.
@@ -147,9 +141,7 @@ struct Text<R: RootRegistry>: View {
     /// ```html
     /// <Text date={DateTime.utc_now()} date-style="date" />
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("date", transform: Self.formatDate(_:)) private var date: Date?
     /// The lower bound of a date range.
     ///
@@ -160,9 +152,7 @@ struct Text<R: RootRegistry>: View {
     /// ```html
     /// <Text date-start={DateTime.utc_now()} date-end={DateTime.add(DateTime.utc_now(), 3, :day)} />
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("date-start", transform: Self.formatDate(_:)) private var dateStart: Date?
     /// The upper bound of a date range.
     ///
@@ -173,17 +163,13 @@ struct Text<R: RootRegistry>: View {
     /// ```html
     /// <Text date-start={DateTime.utc_now()} date-end={DateTime.add(DateTime.utc_now(), 3, :day)} />
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("date-end", transform: Self.formatDate(_:)) private var dateEnd: Date?
     
     /// A value to format.
     ///
     /// Use the ``format`` attribute to choose how this value should be formatted.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("value") private var value: String?
     /// The format of ``value``.
     ///
@@ -195,28 +181,20 @@ struct Text<R: RootRegistry>: View {
     /// - `percent`: The value is a `Double`.
     /// - `currency`: The value is a `Double` and is shown as a localized currency value using the currency specified in the ``currencyCode`` attribute.
     /// - `name`: The value is a string interpreted as a person's name. The ``nameStyle`` attribute determines the format of the name and may be `short`, `medium` (default), `long`, or `abbreviated`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("format") private var format: String?
     /// The currency code to use with the `currency` format.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("currency-code") private var currencyCode: String?
     /// The style for a `name` format.
     ///
     /// See ``LiveViewNative/Foundation/PersonNameComponents/FormatStyle/Style`` for a list of possible values.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("name-style") private var nameStyle: PersonNameComponents.FormatStyle.Style = .medium
     /// The style for a ``date`` value.
     ///
     /// See ``LiveViewNative/SwiftUI/Text/DateStyle`` for a list of possible values.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("date-style") private var dateStyle: SwiftUI.Text.DateStyle = .date
     
     init() {}
@@ -357,9 +335,7 @@ struct Text<R: RootRegistry>: View {
 /// * `relative`
 /// * `offset`
 /// * `timer`
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 extension SwiftUI.Text.DateStyle: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let value = attribute?.value else {
@@ -389,9 +365,7 @@ extension SwiftUI.Text.DateStyle: AttributeDecodable {
 /// * `medium`
 /// * `long`
 /// * `abbreviated`
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 extension PersonNameComponents.FormatStyle.Style: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?) throws {
         guard let value = attribute?.value else {

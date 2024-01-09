@@ -40,16 +40,12 @@ import LiveViewNativeCore
 /// * ``name``
 /// * ``opacity``
 /// * ``colorSpace``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct ColorView: View {
     @ObservedElement private var element: ElementNode
     
     /// The alpha channel of the color, in the range `0` to `1`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("opacity") private var opacity: Double = 1
     
     /// A named color in the project's asset catalog, system color, or CSS hex color.
@@ -57,25 +53,17 @@ struct ColorView: View {
     /// ## See Also
     /// ### Color
     /// - ``LiveViewNative/SwiftUI/Color/init(fromNamedOrCSSHex:)``
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("name") private var name: String?
     
     /// The red channel of the color, in the range `0` to `1`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("red") private var red: Double?
     /// The green channel of the color, in the range `0` to `1`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("green") private var green: Double?
     /// The blue channel of the color, in the range `0` to `1`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("blue") private var blue: Double?
     
     /// The color space this color is in.
@@ -84,9 +72,7 @@ struct ColorView: View {
     /// * `srgb`
     /// * `srgb-linear`
     /// * `display-p3`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("color-space") private var colorSpace: SwiftUI.Color.RGBColorSpace = .sRGB
     
     var body: some View {

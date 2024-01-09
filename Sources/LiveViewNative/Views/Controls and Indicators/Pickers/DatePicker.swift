@@ -28,32 +28,27 @@ import LiveViewNativeCore
 /// - ``start``
 /// - ``end``
 /// - ``components``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
 struct DatePicker<R: RootRegistry>: View {
     @LiveContext<R> private var context
     @ObservedElement private var element
     @FormState("selection", default: CodableDate()) private var selection: CodableDate
+    
     ///The start date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("start") private var start: Date?
+    
     ///The end date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("end") private var end: Date?
+    
     ///Which components of the date to display in the picker. Defaults to all.
     ///
     ///Possible values:
     ///- `hour-and-minute`
     ///- `date`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute(
         "displayed-components",
         transform: {

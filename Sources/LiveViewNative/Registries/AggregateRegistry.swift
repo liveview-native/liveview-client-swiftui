@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if swift(>=5.9)
 /// A macro that combines multiple registries together.
 ///
 /// ```swift
@@ -23,7 +22,6 @@ import LiveViewNativeStylesheet
 /// ```
 @freestanding(declaration, names: named(Registries))
 public macro Registries() = #externalMacro(module: "LiveViewNativeMacros", type: "RegistriesMacro")
-#endif
 
 /// An aggregate registry combines multiple other registries together, allowing you to use tags/modifiers declared by any of them.
 ///

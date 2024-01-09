@@ -33,20 +33,17 @@ struct NavStackEntryView<R: RootRegistry>: View {
     private var elementTree: some View {
         SwiftUI.Group {
             if coordinator.url == entry.url {
-                switch coordinator.state {
-                case .connected:
-                    coordinator.builder.fromNodes(coordinator.document![coordinator.document!.root()].children(), coordinator: coordinator, url: coordinator.url)
-                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: coordinator.document!))
+                if coordinator.state.isConnected || coordinator.state.isPending,
+                   let document = coordinator.document
+                {
+                    coordinator.builder.fromNodes(document[document.root()].children(), coordinator: coordinator, url: coordinator.url)
+                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: document))
+                        .disabled(coordinator.state.isPending)
                         .transition(coordinator.session.configuration.transition ?? .identity)
-                default:
+                        .id(ObjectIdentifier(document))
+                } else {
                     SwiftUI.Group {
-                        if coordinator.state.isPending,
-                           let document = coordinator.document
-                        {
-                            coordinator.builder.fromNodes(document[document.root()].children(), coordinator: coordinator, url: coordinator.url)
-                               .environment(\.coordinatorEnvironment, CoordinatorEnvironment(coordinator, document: document))
-                               .disabled(true)
-                       } else if R.LoadingView.self == Never.self {
+                        if R.LoadingView.self == Never.self {
                             switch coordinator.state {
                             case .connected:
                                 fatalError()
@@ -69,12 +66,6 @@ struct NavStackEntryView<R: RootRegistry>: View {
                 }
             }
         }
-        .animation(coordinator.session.configuration.transition.map({ _ in .default }), value: { () -> Bool in
-            if case .connected = coordinator.state {
-                return true
-            } else {
-                return false
-            }
-        }())
+        .animation(coordinator.session.configuration.transition.map({ _ in .default }), value: coordinator.state.isConnected)
     }
 }

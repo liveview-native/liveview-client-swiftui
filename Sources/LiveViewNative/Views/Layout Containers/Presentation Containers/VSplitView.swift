@@ -19,9 +19,7 @@ import SwiftUI
 ///     <Rectangle fill-color="system-blue" />
 /// </VSplitView>
 /// ```
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(macOS 13.0, *)
 struct VSplitView<R: RootRegistry>: View {
     @ObservedElement private var element

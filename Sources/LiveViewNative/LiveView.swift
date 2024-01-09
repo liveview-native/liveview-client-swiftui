@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-#if swift(>=5.9)
 /// Create a ``LiveView`` with a list of addons.
 ///
 /// Use this macro to automatically register any addons.
@@ -27,7 +26,6 @@ public macro LiveView<Host: LiveViewHost>(
     configuration: LiveSessionConfiguration = .init(),
     addons: [any CustomRegistry<EmptyRegistry>.Type]
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
-#endif
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
@@ -87,15 +85,11 @@ public struct LiveView<R: RootRegistry>: View {
                         fatalError()
                     case .notConnected:
                         if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-                            #if swift(>=5.9)
                             SwiftUI.ContentUnavailableView {
                                 SwiftUI.Label("No Connection", systemImage: "network.slash")
                             } description: {
                                 SwiftUI.Text("The app will reconnect when network connection is regained.")
                             }
-                            #else
-                            SwiftUI.Text("Not Connected")
-                            #endif
                         }
                     case .connecting:
                         SwiftUI.ProgressView("Connecting")
@@ -106,22 +100,19 @@ public struct LiveView<R: RootRegistry>: View {
                             ErrorView<R>(html: trace)
                         } else {
                             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-                                #if swift(>=5.9)
                                 SwiftUI.ContentUnavailableView {
                                     SwiftUI.Label("No Connection", systemImage: "network.slash")
                                 } description: {
-                                    SwiftUI.Text("The app will reconnect when network connection is regained.")
-                                }
-                                #else
-                                SwiftUI.VStack {
-                                    SwiftUI.Text("Connection Failed")
-                                        .font(.subheadline)
+                                    #if DEBUG
                                     SwiftUI.Text(error.localizedDescription)
+                                        .monospaced()
+                                    #else
+                                    SwiftUI.Text("The app will reconnect when network connection is regained.")
+                                    #endif
                                 }
-                                #endif
                             } else {
                                 SwiftUI.VStack {
-                                    SwiftUI.Text("Connection Failed")
+                                    SwiftUI.Text("No Connection")
                                         .font(.subheadline)
                                     SwiftUI.Text(error.localizedDescription)
                                 }

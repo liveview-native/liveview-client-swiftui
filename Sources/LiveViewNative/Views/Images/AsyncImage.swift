@@ -19,9 +19,7 @@ import SwiftUI
 /// - ``url``
 /// - ``scale``
 /// - ``contentMode``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 struct AsyncImage<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
     @LiveContext<R> private var context
@@ -29,26 +27,20 @@ struct AsyncImage<R: RootRegistry>: View {
     /// The URL from which to load the image (relative to the current Live View's URL).
     ///
     /// If no URL is provided, the view will remain in the loading state.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("url") private var url: String?
     /// The display scale of the image (defaults to 1).
     ///
     /// This corresponds to the `@2x`, `@3x` suffixes you would use for images shipped with the app.
     /// A scale of 1 indicates that 1 pixel in the image corresponds to 1 point, a scale of 2 indicates that there are 2 image pixels per point, etc.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("scale") private var scale: Double = 1
     /// How the image should be displayed if its native aspect ratio does not match that of the view.
     ///
     /// Possible values:
     /// - `fill`: The image fills the view (meaning the edges may be croppped).
     /// - `fit` (deafult): The image is displayed at its native aspect ratio centered in the view.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Attribute("content-mode", transform: { $0?.value == "fill" ? .fill : .fit }) private var contentMode: ContentMode
     
     public var body: some View {
