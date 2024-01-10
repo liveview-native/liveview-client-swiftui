@@ -1,7 +1,7 @@
 defmodule LiveViewNative.SwiftUI.MixProject do
   use Mix.Project
 
-  @version "0.2.0-rc.1"
+  @version "0.2.0"
 
   def project do
     [
@@ -70,8 +70,8 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:makeup_swift, "~> 0.0.1"},
       {:makeup_json, "~> 0.1.0"},
-      {:live_view_native_platform, "0.2.0-rc.1"},
-      {:live_view_native_stylesheet, "0.2.0-rc.1"},
+      {:live_view_native_platform, "0.2.0"},
+      {:live_view_native_stylesheet, "0.2.0"},
       {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"},
     ]
