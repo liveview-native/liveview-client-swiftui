@@ -1,18 +1,9 @@
 defmodule LiveViewNative.SwiftUI do
-  @behaviour LiveViewNative
-
-  @impl true
-  def format, do: :swiftui
-
-  @impl true
-  def module_suffix, do: :SwiftUI
-
-  @impl true
-  def template_engine, do: LiveViewNative.Engine
-
-  @impl true
-  def tag_handler(_target), do: LiveViewNative.TagEngine
-
-  @impl true
-  def component, do: LiveViewNative.SwiftUI.Component
+  use LiveViewNative,
+    format: :swiftui,
+    component: LiveViewNative.SwiftUI.Component,
+    module_suffix: :SwiftUI,
+    tag_handler: LiveViewNative.TagEngine,
+    template_engine: LiveViewNative.Engine,
+    stylesheet_rules_parser: LiveViewNative.SwiftUI.RulesParser
 end
