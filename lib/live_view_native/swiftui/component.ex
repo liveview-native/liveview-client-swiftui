@@ -1,12 +1,8 @@
 defmodule LiveViewNative.SwiftUI.Component do
   defmacro __using__(_) do
-    modifiers = [~c(watchos), ~c(tvos), ~c(ios), ~c(ipados), ~c(macos), ~c(visionpro)]
-    plugin = LiveViewNative.SwiftUI
-
     quote do
-      import unquote(__MODULE__), only: [sigil_SWIFTUI: 2]
-
-      LiveViewNative.Component.embed_sigil(unquote(modifiers), unquote(plugin))
+      import LiveViewNative.Component, only: [sigil_LVN: 2]
+      import LiveViewNative.SwiftUI.Component, only: [sigil_SWIFTUI: 2]
     end
   end
 
