@@ -226,6 +226,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         var connectParams = session.configuration.connectParams?(self.url) ?? [:]
         connectParams["_mounts"] = 0
+        connectParams["_format"] = "swiftui"
         connectParams["_csrf_token"] = domValues.phxCSRFToken
         connectParams["_lvn"] = session.platformParams
 

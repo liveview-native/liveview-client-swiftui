@@ -216,7 +216,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let resp: URLResponse
         do {
             (data, resp) = try await configuration.urlSession.data(from: url.appending(queryItems: [
-                .init(name: "_lvn[format]", value: "swiftui")
+                .init(name: "_format", value: "swiftui")
             ]))
         } catch {
             throw LiveConnectionError.initialFetchError(error)
@@ -281,7 +281,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             var wsEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
             wsEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
             wsEndpoint.path = "/live/websocket"
-            let socket = Socket(endPoint: wsEndpoint.string!, transport: { URLSessionTransport(url: $0, configuration: configuration) }, paramsClosure: {["_csrf_token": domValues.phxCSRFToken]})
+            let socket = Socket(
+                endPoint: wsEndpoint.string!,
+                transport: { URLSessionTransport(url: $0, configuration: configuration) },
+                paramsClosure: {
+                    [
+                        "_csrf_token": domValues.phxCSRFToken,
+                        "_format": "swiftui"
+                    ]
+                }
+            )
             
             var refs = [String]()
             
