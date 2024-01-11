@@ -32,12 +32,15 @@ public struct Metadata {
                 
                 "module:".utf8
                 Whitespace()
-                Many {
-                    Identifier()
-                } separator: {
-                    ".".utf8
+                OneOf {
+                    StringLiteral()
+                    Many {
+                        Identifier()
+                    } separator: {
+                        ".".utf8
+                    }
+                    .map({ $0.joined(separator: ".") })
                 }
-                .map({ $0.joined(separator: ".") })
                 Whitespace()
                 ",".utf8
                 

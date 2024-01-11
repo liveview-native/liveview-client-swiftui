@@ -124,6 +124,11 @@ public struct LiveView<R: RootRegistry>: View {
                 }
             }
         }
+        .transformEnvironment(\.stylesheets) { stylesheets in
+            guard let stylesheet = session.stylesheet
+            else { return }
+            stylesheets[ObjectIdentifier(R.self)] = stylesheet
+        }
         .environmentObject(session)
         .environmentObject(liveViewModel)
         .task {

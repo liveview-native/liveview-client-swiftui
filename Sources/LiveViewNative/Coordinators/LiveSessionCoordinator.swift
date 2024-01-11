@@ -43,6 +43,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     internal let configuration: LiveSessionConfiguration
     
     @Published private(set) var rootLayout: LiveViewNativeCore.Document?
+    @Published private(set) var stylesheet: Stylesheet<R>?
     
     // Socket connection
     var socket: Socket?
@@ -146,6 +147,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             // extract the root layout, removing anything within the `<div data-phx-main>`.
             let mainDiv = try doc.select("div[data-phx-main]")[0]
             try mainDiv.replaceWith(doc.createElement("phx-main"))
+            self.stylesheet = try? doc.select("Style").reduce(Stylesheet<R>(content: [], classes: [:])) {
+                (try? Stylesheet<R>(from: $1.text(), in: .init()).merge(with: $0)) ?? $0
+            }
             self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
             
             self.domValues = domValues

@@ -136,6 +136,19 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     }
 }
 
+extension EnvironmentValues {
+    private enum StylesheetsKey: EnvironmentKey {
+        static var defaultValue: [ObjectIdentifier:any StylesheetProtocol] {
+            [:]
+        }
+    }
+    
+    var stylesheets: [ObjectIdentifier:any StylesheetProtocol] {
+        get { self[StylesheetsKey.self] }
+        set { self[StylesheetsKey.self] = newValue }
+    }
+}
+
 private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     let bindings: ArraySlice<LiveViewNativeCore.Attribute>
