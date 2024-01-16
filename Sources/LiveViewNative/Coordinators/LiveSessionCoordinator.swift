@@ -219,6 +219,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let data: Data
         let resp: URLResponse
         do {
+            HTTPCookieStorage.shared.removeCookies(since: .distantPast)
+            configuration.urlSession.configuration.httpCookieStorage = HTTPCookieStorage.shared
             (data, resp) = try await configuration.urlSession.data(from: url.appending(queryItems: [
                 .init(name: "_format", value: "swiftui")
             ]))
@@ -270,13 +272,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     private func connectSocket(_ domValues: DOMValues) async throws {
-        let cookies = HTTPCookieStorage.shared.cookies(for: self.url)
+        configuration.urlSession.configuration.httpCookieStorage = HTTPCookieStorage.shared
         
-        let configuration = configuration.urlSession.configuration
-        for cookie in cookies! {
-            configuration.httpCookieStorage!.setCookie(cookie)
-        }
-    
         self.socket = try await withCheckedThrowingContinuation { [weak self] continuation in
             guard let self else {
                 return continuation.resume(throwing: LiveConnectionError.sessionCoordinatorReleased)
@@ -287,7 +284,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             wsEndpoint.path = "/live/websocket"
             let socket = Socket(
                 endPoint: wsEndpoint.string!,
-                transport: { URLSessionTransport(url: $0, configuration: configuration) },
+                transport: { URLSessionTransport(url: $0, configuration: self.configuration.urlSession.configuration) },
                 paramsClosure: {
                     [
                         "_csrf_token": domValues.phxCSRFToken,
@@ -326,7 +323,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.state = .connected
         
         if domValues.liveReloadEnabled {
-            await self.connectLiveReloadSocket(urlSessionConfiguration: configuration)
+            await self.connectLiveReloadSocket(urlSessionConfiguration: configuration.urlSession.configuration)
         }
     }
     

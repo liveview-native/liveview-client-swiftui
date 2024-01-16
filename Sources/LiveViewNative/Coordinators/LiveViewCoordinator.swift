@@ -356,9 +356,14 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                             continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
                             return
                         }
-                        
-                        await self.disconnect()
-                        
+
+                        switch message.payload["reason"] as? String {
+                        case "unauthorized", "stale":
+                            await self.session.reconnect()
+                        default:
+                            break
+                        }
+
                         if let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
                             continuation.yield(.redirect(redirect))
                         } else {
