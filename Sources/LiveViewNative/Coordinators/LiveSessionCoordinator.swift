@@ -284,7 +284,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             wsEndpoint.path = "/live/websocket"
             let socket = Socket(
                 endPoint: wsEndpoint.string!,
-                transport: { URLSessionTransport(url: $0, configuration: self.configuration.urlSession.configuration) },
+                transport: { [unowned self] in URLSessionTransport(url: $0, configuration: self.configuration.urlSession.configuration) },
                 paramsClosure: {
                     [
                         "_csrf_token": domValues.phxCSRFToken,
