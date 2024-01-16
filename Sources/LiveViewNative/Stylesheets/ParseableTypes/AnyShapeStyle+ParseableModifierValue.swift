@@ -10,10 +10,21 @@ import LiveViewNativeStylesheet
 
 extension AnyShapeStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        ChainedMemberExpression {
-            baseParser(in: context)
-        } member: {
-            StyleModifier.parser(in: context)
+        OneOf {
+            ChainedMemberExpression {
+                baseParser(in: context)
+            } member: {
+                StyleModifier.parser(in: context)
+            }
+            .map({ (base: any ShapeStyle, members: [StyleModifier]) in
+                (base: base, members: members)
+            })
+            _ColorParser(context: context) {
+                StyleModifier.parser(in: context)
+            }
+            .map({ (base: SwiftUI.Color, members: [StyleModifier]) in
+                (base: base as any ShapeStyle, members: members)
+            })
         }
         .map({ (base: any ShapeStyle, modifiers: [StyleModifier]) in
             var result = base
@@ -27,7 +38,7 @@ extension AnyShapeStyle: ParseableModifierValue {
     static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, any ShapeStyle> {
         OneOf {
             HierarchicalShapeStyle.parser(in: context).map({ $0 as any ShapeStyle })
-            SwiftUI.Color.baseParser(in: context).map({ $0 as any ShapeStyle })
+            AnyGradient.parser(in: context).map({ $0 as any ShapeStyle })
         }
     }
     
