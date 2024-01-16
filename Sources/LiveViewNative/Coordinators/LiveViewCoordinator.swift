@@ -371,7 +371,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         }
                     }
                 }
-            channel?.onClose { message in
+            channel?.onClose { _ in
                 continuation.finish()
             }
             continuation.onTermination = { [weak channel] termination in
