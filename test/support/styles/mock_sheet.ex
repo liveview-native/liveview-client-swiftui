@@ -19,6 +19,4 @@ defmodule MockSheet do
     color(to_ime(color_name))
     """
   end
-
-  def class(_other, _), do: {:unmatched, ""}
 end

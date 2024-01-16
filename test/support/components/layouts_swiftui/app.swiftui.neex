@@ -1,0 +1,1 @@
+<AppContainer><%= @inner_content %></AppContainer>
