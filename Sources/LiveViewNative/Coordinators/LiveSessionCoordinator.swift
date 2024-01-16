@@ -219,7 +219,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let data: Data
         let resp: URLResponse
         do {
-            HTTPCookieStorage.shared.removeCookies(since: .distantPast)
             configuration.urlSession.configuration.httpCookieStorage = HTTPCookieStorage.shared
             (data, resp) = try await configuration.urlSession.data(from: url.appending(queryItems: [
                 .init(name: "_format", value: "swiftui")
