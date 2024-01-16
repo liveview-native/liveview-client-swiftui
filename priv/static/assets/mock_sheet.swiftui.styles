@@ -1,1 +1,0 @@
-%{"button-plain" => [{:buttonStyle, [], [{:., [], [nil, :plain]}]}], "color-blue" => [{:color, [], [{:., [], [nil, :blue]}]}], "color-red" => [{:color, [], [{:., [], [nil, :red]}]}]}

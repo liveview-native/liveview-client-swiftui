@@ -9,7 +9,7 @@ docc_build/
 docs/
 tutorial/
 swift-docc-render/
-
+priv/static/
 # Elixir
 
 # The directory Mix will write compiled artifacts to.
