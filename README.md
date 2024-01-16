@@ -1,5 +1,13 @@
 # LiveViewNative
 
+> #### Client Spec {: .info}
+>
+> format: `:swiftui`
+>
+> module_suffix: `SwiftUI`
+>
+> template_sigil: `~LVN`
+
 The LiveViewNative Swift package lets you use Phoenix LiveView to build native iOS apps with SwiftUI.
 
 ## Installation
@@ -26,8 +34,6 @@ Now when you start up your app, the LiveView will automatically connect and serv
 
 ## Elixir Library
 
-This library is **experimental** in the current implementation. As we continue to develop the LiveView Native ecosystem this library will likely see rapid evolution and changes.
-
 ### Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
@@ -36,10 +42,51 @@ by adding `live_view_native_swiftui` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:live_view_native_swiftui, "~> 0.1.0"}
+    {:live_view_native_swiftui, "~> 0.3.0"}
   ]
 end
 ```
+
+Then add the `SwiftUI` plugin to your list of LiveView Native plugins:
+
+```elixir
+config :live_view_native, plugins: [
+  LiveViewNative.SwiftUI
+]
+```
+
+## Usage
+
+This plugin provides the SwiftUI rendering behavior of a Phoenix LiveView. Start by adding this plugin to a LiveView. We do this with `LiveViewNative.LiveView`:
+
+```elixir
+defmodule MyAppWeb.HomeLive do
+  use MyAppWeb :live_view
+  use LiveViewNative.LiveView,
+    formats: [:swiftui],
+    layouts: [
+      swiftui: {MyAppWeb.Layouts.SwiftUI, :app}
+    ]
+
+end
+```
+
+then just like all format LiveView Native rendering components you will create a new module namespaced under the calling module with the `module_suffix` appended:
+
+```elixir
+defmodule MyAppWeb.HomeLive.SwiftUI do
+  use LiveViewNative.Component,
+    format: :swiftui
+
+  def render(assigns, _interface) do
+    ~LVN"""
+    <Text>Hello, SwiftUI!</Text>
+    """
+  end
+end
+```
+
+Further details on additional options and an explanation of template rendering vs using `render/2` are in the LiveView Native docs.
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
