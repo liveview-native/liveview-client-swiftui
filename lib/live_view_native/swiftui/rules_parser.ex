@@ -24,7 +24,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
       |> Map.put_new(:module, module)
       |> Map.put_new(
         :annotations,
-        Application.get_env(:live_view_native_stylesheet, :annotations, true)
+        Application.get_env(:live_view_native_stylesheet, :annotations, false)
       )
       |> Map.put_new(:variable_context, variable_context)
 

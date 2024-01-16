@@ -24,7 +24,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Context do
        module: context[:module] || nil,
        source_line: context[:source_line] || 1,
        highlight_error: Map.get(context, :highlight_error, true),
-       annotations: Map.get(context, :annotations, true)
+       annotations: Map.get(context, :annotations, false)
      })
      |> Map.drop([
        :file,
