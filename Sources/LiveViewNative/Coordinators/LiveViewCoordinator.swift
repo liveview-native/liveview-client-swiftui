@@ -361,7 +361,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         case "unauthorized", "stale":
                             await self.session.reconnect()
                         default:
-                            break
+                            await self.disconnect()
                         }
 
                         if let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
@@ -371,7 +371,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         }
                     }
                 }
-            channel?.onClose { _ in
+            channel?.onClose { message in
                 continuation.finish()
             }
             continuation.onTermination = { [weak channel] termination in

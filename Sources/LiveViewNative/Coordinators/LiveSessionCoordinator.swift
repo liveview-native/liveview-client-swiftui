@@ -367,6 +367,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 navigationPath.append(entry)
             case .replace:
                 if !navigationPath.isEmpty {
+                    if navigationPath.count == 1 {
+                        self.url = redirect.to
+                    }
                     coordinator.document = navigationPath.last!.coordinator.document
                     await navigationPath.last?.coordinator.disconnect()
                     navigationPath[navigationPath.count - 1] = entry
