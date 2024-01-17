@@ -13,16 +13,18 @@ extension UnitPoint: ParseableModifierValue {
         OneOf {
             ParseableUnitPoint.parser(in: context).map({ Self.init(x: $0.x, y: $0.y) })
             
-            ConstantAtomLiteral("zero").map({ Self.zero })
-            ConstantAtomLiteral("center").map({ Self.center })
-            ConstantAtomLiteral("leading").map({ Self.leading })
-            ConstantAtomLiteral("trailing").map({ Self.trailing })
-            ConstantAtomLiteral("top").map({ Self.top })
-            ConstantAtomLiteral("bottom").map({ Self.bottom })
-            ConstantAtomLiteral("topLeading").map({ Self.topLeading })
-            ConstantAtomLiteral("topTrailing").map({ Self.topTrailing })
-            ConstantAtomLiteral("bottomLeading").map({ Self.bottomLeading })
-            ConstantAtomLiteral("bottomTrailing").map({ Self.bottomTrailing })
+            ImplicitStaticMember([
+                "zero": Self.zero,
+                "center": Self.center,
+                "leading": Self.leading,
+                "trailing": Self.trailing,
+                "top": Self.top,
+                "bottom": Self.bottom,
+                "topLeading": Self.topLeading,
+                "topTrailing": Self.topTrailing,
+                "bottomLeading": Self.bottomLeading,
+                "bottomTrailing": Self.bottomTrailing,
+            ])
         }
     }
     

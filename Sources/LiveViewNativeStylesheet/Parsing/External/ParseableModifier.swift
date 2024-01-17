@@ -160,6 +160,21 @@ extension Array: ParseableModifierValue where Element: ParseableModifierValue {
     }
 }
 
+extension Dictionary: ParseableModifierValue where Key: ParseableModifierValue, Value: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        ListLiteral {
+            Key.parser(in: context)
+            Whitespace()
+            ":".utf8
+            Whitespace()
+            Value.parser(in: context)
+        }
+        .map({ pairs in
+            Self.init(uniqueKeysWithValues: pairs)
+        })
+    }
+}
+
 extension Set: ParseableModifierValue where Element: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ListLiteral {
