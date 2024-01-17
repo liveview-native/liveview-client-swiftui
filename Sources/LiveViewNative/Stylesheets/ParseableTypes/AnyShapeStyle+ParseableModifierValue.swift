@@ -39,16 +39,22 @@ extension AnyShapeStyle: ParseableModifierValue {
         OneOf {
             HierarchicalShapeStyle.parser(in: context).map({ $0 as any ShapeStyle })
             
-            // gradient
+            Material.parser(in: context).map({ $0 as any ShapeStyle })
+            
+            // gradients
             Gradient.parser(in: context).map({ $0 as any ShapeStyle })
             AnyGradient.parser(in: context).map({ $0 as any ShapeStyle })
+            
             AngularGradient.parser(in: context).map({ $0 as any ShapeStyle })
             _angularGradient.parser(in: context).map(\.value)
             _conicGradient.parser(in: context).map(\.value)
+            
             EllipticalGradient.parser(in: context).map({ $0 as any ShapeStyle })
             _ellipticalGradient.parser(in: context).map(\.value)
+            
             LinearGradient.parser(in: context).map({ $0 as any ShapeStyle })
             _linearGradient.parser(in: context).map(\.value)
+            
             RadialGradient.parser(in: context).map({ $0 as any ShapeStyle })
             _radialGradient.parser(in: context).map(\.value)
         }
@@ -171,10 +177,12 @@ extension AnyShapeStyle: ParseableModifierValue {
     
     enum StyleModifier: ParseableModifierValue {
         case opacity(Opacity)
+        case hierarchical(HierarchicalLevel)
         
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
                 Opacity.parser(in: context).map(Self.opacity)
+                HierarchicalLevel.parser(in: context).map(Self.hierarchical)
             }
         }
         
@@ -189,10 +197,38 @@ extension AnyShapeStyle: ParseableModifierValue {
             }
         }
         
+        enum HierarchicalLevel: String, CaseIterable, ParseableModifierValue {
+            typealias _ParserType = EnumParser<Self>
+            
+            static func parser(in context: ParseableModifierContext) -> EnumParser<Self> {
+                .init(Dictionary(uniqueKeysWithValues: Self.allCases.map({ ($0.rawValue, $0) })))
+            }
+            
+            case secondary
+            case tertiary
+            case quaternary
+            case quinary
+        }
+        
         func apply(to style: some ShapeStyle) -> any ShapeStyle {
             switch self {
             case let .opacity(opacity):
-                style.opacity(opacity.value)
+                return style.opacity(opacity.value)
+            case let .hierarchical(level):
+                if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
+                    switch level {
+                    case .secondary:
+                        return style.secondary
+                    case .tertiary:
+                        return style.tertiary
+                    case .quaternary:
+                        return style.quaternary
+                    case .quinary:
+                        return style.quinary
+                    }
+                } else {
+                    return style
+                }
             }
         }
     }
@@ -201,12 +237,27 @@ extension AnyShapeStyle: ParseableModifierValue {
 extension HierarchicalShapeStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
-            ConstantAtomLiteral("primary").map({ .primary })
-            ConstantAtomLiteral("secondary").map({ .secondary })
-            ConstantAtomLiteral("tertiary").map({ .tertiary })
-            ConstantAtomLiteral("quaternary").map({ .quaternary })
+            ConstantAtomLiteral("primary").map({ Self.primary })
+            ConstantAtomLiteral("secondary").map({ Self.secondary })
+            ConstantAtomLiteral("tertiary").map({ Self.tertiary })
+            ConstantAtomLiteral("quaternary").map({ Self.quaternary })
             if #available(tvOS 17, watchOS 10, *) {
-                ConstantAtomLiteral("quinary").map({ .quinary })
+                ConstantAtomLiteral("quinary").map({ Self.quinary })
+            }
+        }
+    }
+}
+
+extension Material: ParseableModifierValue {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            ConstantAtomLiteral("ultraThinMaterial").map({ Self.ultraThinMaterial })
+            ConstantAtomLiteral("thinMaterial").map({ Self.thinMaterial })
+            ConstantAtomLiteral("regularMaterial").map({ Self.regularMaterial })
+            ConstantAtomLiteral("thickMaterial").map({ Self.thickMaterial })
+            ConstantAtomLiteral("ultraThickMaterial").map({ Self.ultraThickMaterial })
+            if #available(iOS 15, macOS 12, visionOS 1.0, *) {
+                ConstantAtomLiteral("bar").map({ Self.bar })
             }
         }
     }

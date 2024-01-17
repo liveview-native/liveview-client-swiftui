@@ -150,4 +150,28 @@ final class ShapeStyleTests: XCTestCase {
             RadialGradient(gradient: Gradient(stops: [Gradient.Stop(color: .red, location: 0.5), Gradient.Stop(color: .blue, location: 1)]), center: .center, startRadius: 0.5, endRadius: 1)
         )
     }
+    
+    func testHierarchical() {
+        testParserShapeStyle(
+            #"{:., [], [nil, :tertiary]}"#,
+            HierarchicalShapeStyle.tertiary
+        )
+        if #available(macOS 14.0, *) {
+            testParserShapeStyle(
+                #"{:., [], [:Color, {:., [], [:red, :quaternary]}]}"#,
+                AnyShapeStyle(Color.red.quaternary)
+            )
+        }
+    }
+    
+    func testMaterial() {
+        testParserShapeStyle(
+            #"{:., [], [nil, :regularMaterial]}"#,
+            AnyShapeStyle(Material.regularMaterial)
+        )
+        testParserShapeStyle(
+            #"{:., [], [nil, :ultraThickMaterial]}"#,
+            AnyShapeStyle(Material.ultraThickMaterial)
+        )
+    }
 }
