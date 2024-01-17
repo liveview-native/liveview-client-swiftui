@@ -35,7 +35,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       bold(true)
       italic(true)
       """}
-      
+
       output = [
         {:font, [file: __ENV__.file, line: line, module: __ENV__.module, source: "font(.largeTitle)"], [{:., [file: __ENV__.file, line: line, module: __ENV__.module, source: "font(.largeTitle)"], [nil, :largeTitle]}]},
         {:bold, [file: __ENV__.file, line: line + 1, module: __ENV__.module, source: "bold(true)"], [true]},
@@ -118,6 +118,13 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       output =
         {:font, [],
          [[color: {:., [], [:Color, {:., [], [:red, {:shadow, [], [{:., [], [nil, :thick]}]}]}]}]]}
+
+      assert parse(input) == output
+
+      input = "foregroundStyle(Color(.displayP3, red: 0.4627, green: 0.8392, blue: 1.0).opacity(0.25))"
+
+      output =
+        {:foregroundStyle, [], [{:., [], [{:Color, [], [{:., [], [nil, :displayP3]}, [red: 0.4627, green: 0.8392, blue: 1.0]]}, {:opacity, [], [0.25]}]}]}
 
       assert parse(input) == output
     end
