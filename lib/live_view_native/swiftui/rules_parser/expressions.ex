@@ -6,11 +6,13 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
 
   def enclosed(start \\ empty(), open, combinator, close, opts) do
     allow_empty? = Keyword.get(opts, :allow_empty?, true)
+    generate_error? = Keyword.get(opts, :generate_error?, true)
 
     close =
       expect(
         ignore(string(close)),
         error_message: "expected ‘#{close}’",
+        generate_error?: generate_error?,
         error_parser: optional(non_whitespace(also_ignore: String.to_charlist(close)))
       )
 

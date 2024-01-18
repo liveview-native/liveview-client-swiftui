@@ -1,6 +1,30 @@
 defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   import LiveViewNative.SwiftUI.RulesParser.Parser.Annotations
 
+  if Mix.env() == :test do
+    @doc """
+    You can view the input/output of any compinator by doing
+
+      empty()
+      |> PostProcessors.inspect()
+      |> combinator
+      |> PostProcessors.inspect()
+
+    This function is extremely useful for debugging, do not remove
+    """
+    def inspect(combinator) do
+      NimbleParsec.pre_traverse(
+        combinator,
+        {LiveViewNative.SwiftUI.RulesParser.PostProcessors, :do_inspect, []}
+      )
+    end
+
+    def do_inspect(rest, args, context, position, _byte_offset) do
+      IO.inspect({rest, args, context, position})
+      {rest, args, context}
+    end
+  end
+
   def to_attr_ast(rest, [attr, "attr"], context, {line, _}, _byte_offset) when is_binary(attr) do
     {rest, [{:__attr__, context_to_annotation(context.context, line), attr}], context}
   end
