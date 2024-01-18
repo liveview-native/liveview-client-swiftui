@@ -64,7 +64,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
 
   def to_scoped_ime_ast(rest, [[nil, variable], scope], context, {_line, _}, _byte_offset) do
     {rest, [variable, String.to_atom(scope)], context}
-    # |> IO.inspect()
   end
 
   def to_scoped_ime_ast(rest, [variable, scope], context, {_line, _}, _byte_offset) do
