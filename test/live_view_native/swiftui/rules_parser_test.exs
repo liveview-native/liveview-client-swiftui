@@ -137,6 +137,27 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
+    test "parses non-key-value lists" do
+      input = ~s/Gradient([0, 1, 2])/
+      output = {:Gradient, [], [[0, 1, 2]]}
+      assert parse(input) == output
+
+      input = ~s/Gradient([0, 1, 2], 3)/
+      output = {:Gradient, [], [[0, 1, 2], 3]}
+      assert parse(input) == output
+
+      input = ~s/Gradient(colors: [0, 1, 2])/
+      output = {:Gradient, [], [[colors: [0, 1, 2]]]}
+      assert parse(input) == output
+
+      input = ~s/Gradient(colors: [Color.red, Color.blue])/
+      output = {:Gradient, [], [[colors: [{:., [], [:Color, :red]}, {:., [], [:Color, :blue]}]]]}
+      assert parse(input) == output
+
+      input = ~s/Gradient(colors: ["red", "blue"])/
+      output = {:Gradient, [], [[colors: ["red", "blue"]]]}
+      assert parse(input) == output
+    end
 
     test "parses multiple modifiers" do
       input = "font(.largeTitle) bold(true) italic(true)"
@@ -494,6 +515,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |
 
         Expected ‘()’ or ‘(<modifier_arguments>)’ where <modifier_arguments> are a comma separated list of:
+         - a list of values eg ‘[1, 2, 3]’, ‘["red", "blue"]’ or ‘[Color.red, Color.blue]’
          - a Swift range eg ‘1..<10’ or ‘foo(Foo.bar...Baz.qux)’
          - a number, string, nil, boolean or :atom
          - an event eg ‘event(\"search-event\", throttle: 10_000)’
@@ -756,6 +778,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
           |
 
         Expected one of the following:
+         - a list of values eg ‘[1, 2, 3]’, ‘["red", "blue"]’ or ‘[Color.red, Color.blue]’
          - a Swift range eg ‘1..<10’ or ‘foo(Foo.bar...Baz.qux)’
          - a number, string, nil, boolean or :atom
          - an event eg ‘event("search-event", throttle: 10_000)’

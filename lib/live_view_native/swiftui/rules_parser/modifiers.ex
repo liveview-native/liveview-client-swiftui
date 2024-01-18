@@ -190,6 +190,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   @modifier_arguments fn inside_key_value_pair? ->
     [
       {
+        parsec(:non_kv_list),
+        ~s'a list of values eg ‘[1, 2, 3]’, ‘["red", "blue"]’ or ‘[Color.red, Color.blue]’'
+      },
+      {
         parsec(:key_value_list),
         ~s'a keyword list eg ‘[style: :dashed]’, ‘[size: 12]’ or ‘[lineWidth: lineWidth]’',
         inside_key_value_pair?
@@ -245,6 +249,26 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       @modifier_arguments.(true),
       error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
     )
+  )
+
+  defcombinator(
+    :non_kv_list,
+    enclosed(
+      "[",
+      comma_separated_list(
+        one_of(
+          @modifier_arguments.(true),
+          error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
+        ),
+        generate_error?: false,
+        allow_empty?: true
+      ),
+      "]",
+      allow_empty?: true,
+      generate_error?: false,
+      error_parser: non_whitespace(also_ignore: String.to_charlist(")],"))
+    )
+    |> wrap()
   )
 
   defcombinator(
