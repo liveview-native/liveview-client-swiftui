@@ -24,7 +24,10 @@ import Combine
 public macro LiveView<Host: LiveViewHost>(
     _ host: Host,
     configuration: LiveSessionConfiguration = .init(),
-    addons: [any CustomRegistry<EmptyRegistry>.Type]
+    addons: [any CustomRegistry<EmptyRegistry>.Type] = [],
+    @ViewBuilder connecting: () -> any View = { EmptyView() },
+    @ViewBuilder disconnected: () -> any View = { EmptyView() },
+    @ViewBuilder error: @escaping (Error) -> any View = { _ in EmptyView() }
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
 
 /// The SwiftUI root view for a Phoenix LiveView.

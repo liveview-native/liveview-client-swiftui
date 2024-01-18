@@ -248,3 +248,5 @@ public typealias Registry3<T0: CustomRegistry, T1: CustomRegistry, T2: CustomReg
 public typealias Registry4<T0: CustomRegistry, T1: CustomRegistry, T2: CustomRegistry, T3: CustomRegistry>
     = _MultiRegistry<_MultiRegistry<T0, T1>, _MultiRegistry<T2, T3>>
     where T0.Root == T1.Root, T0.Root == T2.Root, T0.Root == T3.Root
+
+public struct _SpecializedEmptyRegistry<Root: RootRegistry>: CustomRegistry {}
