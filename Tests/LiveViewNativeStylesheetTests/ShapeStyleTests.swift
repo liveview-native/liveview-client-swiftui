@@ -228,4 +228,32 @@ final class ShapeStyleTests: XCTestCase {
             )
         }
     }
+    
+    func testStyleModifiers() {
+        testParserShapeStyle(
+            #"{:., [], [nil, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}"#,
+            AnyShapeStyle(.blendMode(.multiply))
+        )
+        testParserShapeStyle(
+            #"{:., [], [nil, {:opacity, [], [0.5]}]}"#,
+            AnyShapeStyle(.opacity(0.5))
+        )
+        testParserShapeStyle(
+            #"{:., [], [nil, {:shadow, [], [{:., [], [nil, {:drop, [], [[color: {:Color, [], [{:., [], [nil, :sRGBLinear]}, [white: 0, opacity: 0.33]]}, radius: 5, x: 0, y: 0]]}]}]}]}"#,
+            AnyShapeStyle(.shadow(.drop(color: Color(.sRGBLinear, white: 0, opacity: 0.33), radius: 5, x: 0, y: 0)))
+        )
+        
+        testParserShapeStyle(
+            #"{:., [], [nil, {:., [], [:foreground, {:blendMode, [], [{:., [], [nil, :multiply]}]}]}]}"#,
+            AnyShapeStyle(.foreground.blendMode(.multiply))
+        )
+        testParserShapeStyle(
+            #"{:., [], [nil, {:., [], [:foreground, {:opacity, [], [0.5]}]}]}"#,
+            AnyShapeStyle(.foreground.opacity(0.5))
+        )
+        testParserShapeStyle(
+            #"{:., [], [nil, {:shadow, [], [{:., [], [nil, {:drop, [], [[color: {:Color, [], [{:., [], [nil, :sRGBLinear]}, [white: 0, opacity: 0.33]]}, radius: 5, x: 0, y: 0]]}]}]}]}"#,
+            AnyShapeStyle(.foreground.shadow(.inner(color: Color(.sRGBLinear, white: 0, opacity: 0.55), radius: 5, x: 0, y: 0)))
+        )
+    }
 }

@@ -73,6 +73,8 @@ extension AnyShapeStyle: ParseableModifierValue {
             
             RadialGradient.parser(in: context).map({ $0 as any ShapeStyle })
             _radialGradient.parser(in: context).map(\.value)
+            
+            StyleModifier.parser(in: context).map(\.value)
         }
     }
     
@@ -203,23 +205,49 @@ extension AnyShapeStyle: ParseableModifierValue {
     }
     
     enum StyleModifier: ParseableModifierValue {
-        case opacity(Opacity)
+        case blendMode(_blendMode)
+        case opacity(_opacity)
+        case shadow(_shadow)
         case hierarchical(HierarchicalLevel)
         
         static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
-                Opacity.parser(in: context).map(Self.opacity)
+                _blendMode.parser(in: context).map(Self.blendMode)
+                _opacity.parser(in: context).map(Self.opacity)
+                _shadow.parser(in: context).map(Self.shadow)
                 HierarchicalLevel.parser(in: context).map(Self.hierarchical)
             }
         }
         
         @ParseableExpression
-        struct Opacity {
+        struct _blendMode {
+            static let name = "blendMode"
+            
+            let value: BlendMode
+            
+            init(_ value: BlendMode) {
+                self.value = value
+            }
+        }
+        
+        @ParseableExpression
+        struct _opacity {
             static let name = "opacity"
             
             let value: Double
             
             init(_ value: Double) {
+                self.value = value
+            }
+        }
+        
+        @ParseableExpression
+        struct _shadow {
+            static let name = "shadow"
+            
+            let value: ShadowStyle
+            
+            init(_ value: ShadowStyle) {
                 self.value = value
             }
         }
@@ -237,10 +265,15 @@ extension AnyShapeStyle: ParseableModifierValue {
             case quinary
         }
         
+        /// Apply this modifier to an existing `ShapeStyle`.
         func apply(to style: some ShapeStyle) -> any ShapeStyle {
             switch self {
+            case let .blendMode(blendMode):
+                return style.blendMode(blendMode.value)
             case let .opacity(opacity):
                 return style.opacity(opacity.value)
+            case let .shadow(shadow):
+                return style.shadow(shadow.value)
             case let .hierarchical(level):
                 if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
                     switch level {
@@ -255,6 +288,29 @@ extension AnyShapeStyle: ParseableModifierValue {
                     }
                 } else {
                     return style
+                }
+            }
+        }
+        
+        /// Use this modifier itself as a `ShapeStyle`. SwiftUI will apply it to the foreground style.
+        var value: any ShapeStyle {
+            switch self {
+            case let .blendMode(blendMode):
+                return AnyShapeStyle(.blendMode(blendMode.value))
+            case let .opacity(opacity):
+                return AnyShapeStyle(.opacity(opacity.value))
+            case let .shadow(shadow):
+                return AnyShapeStyle(.shadow(shadow.value))
+            case let .hierarchical(level):
+                switch level {
+                case .secondary:
+                    return AnyShapeStyle(.secondary)
+                case .tertiary:
+                    return AnyShapeStyle(.tertiary)
+                case .quaternary:
+                    return AnyShapeStyle(.quaternary)
+                case .quinary:
+                    return AnyShapeStyle(.quinary)
                 }
             }
         }
