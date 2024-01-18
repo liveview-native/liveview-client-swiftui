@@ -43,7 +43,9 @@ extension AnyShapeStyle: ParseableModifierValue {
             
             ConstantAtomLiteral("foreground").map({ ForegroundStyle() as any ShapeStyle })
             ConstantAtomLiteral("background").map({ BackgroundStyle() as any ShapeStyle })
+            #if !os(watchOS)
             ConstantAtomLiteral("selection").map({ SelectionShapeStyle() as any ShapeStyle })
+            #endif
             ConstantAtomLiteral("tint").map({ TintShapeStyle() as any ShapeStyle })
             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
                 ConstantAtomLiteral("separator").map({ SeparatorShapeStyle() as any ShapeStyle })
@@ -310,7 +312,11 @@ extension AnyShapeStyle: ParseableModifierValue {
                 case .quaternary:
                     return AnyShapeStyle(.quaternary)
                 case .quinary:
-                    return AnyShapeStyle(.quinary)
+                    if #available(iOS 16, macOS 12, tvOS 17, watchOS 10, visionOS 1, *) {
+                        return AnyShapeStyle(.quinary)
+                    } else {
+                        return AnyShapeStyle(.quaternary)
+                    }
                 }
             }
         }
@@ -334,14 +340,18 @@ extension HierarchicalShapeStyle: ParseableModifierValue {
 extension Material: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
-            ConstantAtomLiteral("ultraThinMaterial").map({ Self.ultraThinMaterial })
-            ConstantAtomLiteral("thinMaterial").map({ Self.thinMaterial })
-            ConstantAtomLiteral("regularMaterial").map({ Self.regularMaterial })
-            ConstantAtomLiteral("thickMaterial").map({ Self.thickMaterial })
-            ConstantAtomLiteral("ultraThickMaterial").map({ Self.ultraThickMaterial })
+            if #available(iOS 15, macOS 12, tvOS 15, watchOS 10, *) {
+                ConstantAtomLiteral("ultraThinMaterial").map({ Self.ultraThinMaterial })
+                ConstantAtomLiteral("thinMaterial").map({ Self.thinMaterial })
+                ConstantAtomLiteral("regularMaterial").map({ Self.regularMaterial })
+                ConstantAtomLiteral("thickMaterial").map({ Self.thickMaterial })
+                ConstantAtomLiteral("ultraThickMaterial").map({ Self.ultraThickMaterial })
+            }
+            #if !os(watchOS)
             if #available(iOS 15, macOS 12, visionOS 1.0, *) {
                 ConstantAtomLiteral("bar").map({ Self.bar })
             }
+            #endif
         }
     }
 }

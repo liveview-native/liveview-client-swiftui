@@ -165,14 +165,16 @@ final class ShapeStyleTests: XCTestCase {
     }
     
     func testMaterial() {
-        testParserShapeStyle(
-            #"{:., [], [nil, :regularMaterial]}"#,
-            AnyShapeStyle(Material.regularMaterial)
-        )
-        testParserShapeStyle(
-            #"{:., [], [nil, :ultraThickMaterial]}"#,
-            AnyShapeStyle(Material.ultraThickMaterial)
-        )
+        if #available(iOS 15, macOS 12, tvOS 15, watchOS 10, visionOS 1, *) {
+            testParserShapeStyle(
+                #"{:., [], [nil, :regularMaterial]}"#,
+                AnyShapeStyle(Material.regularMaterial)
+            )
+            testParserShapeStyle(
+                #"{:., [], [nil, :ultraThickMaterial]}"#,
+                AnyShapeStyle(Material.ultraThickMaterial)
+            )
+        }
     }
     
     func testImagePaint() {
@@ -195,10 +197,12 @@ final class ShapeStyleTests: XCTestCase {
             #"{:., [], [nil, :background]}"#,
             AnyShapeStyle(.background)
         )
+        #if !os(watchOS)
         testParserShapeStyle(
             #"{:., [], [nil, :selection]}"#,
             AnyShapeStyle(.selection)
         )
+        #endif
         testParserShapeStyle(
             #"{:., [], [nil, :tint]}"#,
             AnyShapeStyle(.tint)
