@@ -42,7 +42,8 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "RenameButton": "RenameButton()",
         "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
         "Color": "ColorView()",
-        "phx-main": "PhxMain<R>()",
+        "Image": "ImageView<R>()",
+        "phx-main": "PhxMain<R>()"
     ]
     
     var platformFamilyName: String? {

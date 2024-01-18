@@ -41,7 +41,9 @@ extension AnyShapeStyle: ParseableModifierValue {
             
             Material.parser(in: context).map({ $0 as any ShapeStyle })
             
-            // gradients
+            ImagePaint.parser(in: context).map({ $0 as any ShapeStyle })
+            _image.parser(in: context).map(\.value)
+            
             Gradient.parser(in: context).map({ $0 as any ShapeStyle })
             AnyGradient.parser(in: context).map({ $0 as any ShapeStyle })
             
@@ -172,6 +174,17 @@ extension AnyShapeStyle: ParseableModifierValue {
         
         init(_ gradient: AnyGradient, center: UnitPoint = .center, startRadius: CGFloat = 0, endRadius: CGFloat) {
             self.value = RadialGradient.radialGradient(gradient, center: center, startRadius: startRadius, endRadius: endRadius)
+        }
+    }
+    
+    @ParseableExpression
+    struct _image {
+        static let name = "image"
+        
+        let value: any ShapeStyle
+        
+        init(_ image: Image, sourceRect: CGRect = .init(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) {
+            self.value = ImagePaint.image(image, sourceRect: sourceRect, scale: scale)
         }
     }
     

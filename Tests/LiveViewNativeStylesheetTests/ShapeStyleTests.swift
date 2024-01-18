@@ -156,7 +156,7 @@ final class ShapeStyleTests: XCTestCase {
             #"{:., [], [nil, :tertiary]}"#,
             HierarchicalShapeStyle.tertiary
         )
-        if #available(macOS 14.0, *) {
+        if #available(macOS 14.0, iOS 17, watchOS 10, tvOS 17, visionOS 1, *) {
             testParserShapeStyle(
                 #"{:., [], [:Color, {:., [], [:red, :quaternary]}]}"#,
                 AnyShapeStyle(Color.red.quaternary)
@@ -172,6 +172,17 @@ final class ShapeStyleTests: XCTestCase {
         testParserShapeStyle(
             #"{:., [], [nil, :ultraThickMaterial]}"#,
             AnyShapeStyle(Material.ultraThickMaterial)
+        )
+    }
+    
+    func testImagePaint() {
+        testParserShapeStyle(
+            #"{:., [], [nil, {:image, [], [{:Image, [], ["test"]}, [sourceRect: {:CGRect, [], [[x: 0, y: 0, width: 1, height: 1]]}, scale: 1]]}]}"#,
+            AnyShapeStyle(.image(Image("test"), sourceRect: CGRect(x: 0, y: 0, width: 1, height: 1), scale: 1))
+        )
+        testParserShapeStyle(
+            #"{:ImagePaint, [], [[image: {:Image, [], ["test"]}, sourceRect: {:CGRect, [], [[x: 0, y: 0, width: 1, height: 1]]}, scale: 1]]}"#,
+            ImagePaint(image: Image("test"), sourceRect: CGRect(x: 0, y: 0, width: 1, height: 1), scale: 1)
         )
     }
 }

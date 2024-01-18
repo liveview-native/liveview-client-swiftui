@@ -58,7 +58,7 @@ import SwiftUI
 /// * ``name``
 /// * ``variableValue``
 @_documentation(visibility: public)
-struct Image<R: RootRegistry>: View {
+struct ImageView<R: RootRegistry>: View {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
@@ -132,7 +132,7 @@ struct Image<R: RootRegistry>: View {
     }
 }
 
-extension Image {
+extension ImageView {
     enum Mode {
         case symbol(String)
         case asset(String)
