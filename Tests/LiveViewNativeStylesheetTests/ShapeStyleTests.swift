@@ -185,4 +185,47 @@ final class ShapeStyleTests: XCTestCase {
             ImagePaint(image: Image("test"), sourceRect: CGRect(x: 0, y: 0, width: 1, height: 1), scale: 1)
         )
     }
+    
+    func testSemanticStyles() {
+        testParserShapeStyle(
+            #"{:., [], [nil, :foreground]}"#,
+            AnyShapeStyle(.foreground)
+        )
+        testParserShapeStyle(
+            #"{:., [], [nil, :background]}"#,
+            AnyShapeStyle(.background)
+        )
+        testParserShapeStyle(
+            #"{:., [], [nil, :selection]}"#,
+            AnyShapeStyle(.selection)
+        )
+        testParserShapeStyle(
+            #"{:., [], [nil, :tint]}"#,
+            AnyShapeStyle(.tint)
+        )
+        if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
+            testParserShapeStyle(
+                #"{:., [], [nil, :separator]}"#,
+                AnyShapeStyle(.separator)
+            )
+            testParserShapeStyle(
+                #"{:., [], [nil, :placeholder]}"#,
+                AnyShapeStyle(.placeholder)
+            )
+            testParserShapeStyle(
+                #"{:., [], [nil, :link]}"#,
+                AnyShapeStyle(.link)
+            )
+            testParserShapeStyle(
+                #"{:., [], [nil, :fill]}"#,
+                AnyShapeStyle(.fill)
+            )
+        }
+        if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+            testParserShapeStyle(
+                #"{:., [], [nil, :windowBackground]}"#,
+                AnyShapeStyle(.windowBackground)
+            )
+        }
+    }
 }

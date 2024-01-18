@@ -41,6 +41,20 @@ extension AnyShapeStyle: ParseableModifierValue {
             
             Material.parser(in: context).map({ $0 as any ShapeStyle })
             
+            ConstantAtomLiteral("foreground").map({ ForegroundStyle() as any ShapeStyle })
+            ConstantAtomLiteral("background").map({ BackgroundStyle() as any ShapeStyle })
+            ConstantAtomLiteral("selection").map({ SelectionShapeStyle() as any ShapeStyle })
+            ConstantAtomLiteral("tint").map({ TintShapeStyle() as any ShapeStyle })
+            if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
+                ConstantAtomLiteral("separator").map({ SeparatorShapeStyle() as any ShapeStyle })
+                ConstantAtomLiteral("placeholder").map({ PlaceholderTextShapeStyle() as any ShapeStyle })
+                ConstantAtomLiteral("link").map({ LinkShapeStyle() as any ShapeStyle })
+                ConstantAtomLiteral("fill").map({ FillShapeStyle() as any ShapeStyle })
+            }
+            if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+                ConstantAtomLiteral("windowBackground").map({ WindowBackgroundShapeStyle() as any ShapeStyle })
+            }
+            
             ImagePaint.parser(in: context).map({ $0 as any ShapeStyle })
             _image.parser(in: context).map(\.value)
             
