@@ -86,7 +86,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> post_traverse({PostProcessors, :to_scoped_ime_ast, []})
 
   defparsecp(
-    :ime,
+    :ime1,
     start()
     |> choice([
       # Scoped
@@ -108,6 +108,30 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       ])
     )
     |> post_traverse({PostProcessors, :chain_ast, []})
+  )
+
+  defparsecp(
+    :ime2,
+    # Color(.displayP3, red: 0.4627, green: 0.8392, blue: 1.0)
+    parsec(:nested_modifier)
+    |> times(
+      choice([
+        # <other_ime>.#{color}
+        ime_function.(false),
+        # <other_ime>.red
+        dotted_ime.(false)
+      ]),
+      min: 1
+    )
+    |> post_traverse({PostProcessors, :chain_ast, []})
+  )
+
+  defparsecp(
+    :ime,
+    choice([
+      parsec(:ime1),
+      parsec(:ime2)
+    ])
   )
 
   defcombinator(

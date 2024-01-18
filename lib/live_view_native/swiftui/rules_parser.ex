@@ -35,7 +35,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
       |> Keyword.put(:module, module)
       |> Keyword.put(:line, line)
 
-      result =
+    result =
       rules
       |> Modifiers.modifiers(opts)
       |> Parser.error_from_result()

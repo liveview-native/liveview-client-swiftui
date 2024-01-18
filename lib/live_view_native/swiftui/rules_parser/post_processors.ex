@@ -29,45 +29,27 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
     {rest,
      [
        {Elixir, context_to_annotation(context.context, line),
-        {String.to_atom(variable_name), context_to_annotation(context.context, line), context.variable_context}}
+        {String.to_atom(variable_name), context_to_annotation(context.context, line),
+         context.variable_context}}
      ], context}
   end
 
-  def to_dotted_ime_ast(
-        rest,
-        [[], variable_name],
-        context,
-        {line, _},
-        _offset,
-        _is_initial = true
-      ) do
-    {rest,
-     [{:., context_to_annotation(context.context, line), [nil, String.to_atom(variable_name)]}],
-     context}
-  end
+  def to_dotted_ime_ast(rest, [args, variable_name], context, {line, _}, _offset, is_initial) do
+    ime =
+      if args == [] do
+        String.to_atom(variable_name)
+      else
+        {String.to_atom(variable_name), context_to_annotation(context.context, line), args}
+      end
 
-  def to_dotted_ime_ast(
-        rest,
-        [args, variable_name],
-        context,
-        {line, _},
-        _offset,
-        _is_initial = true
-      ) do
-    {rest,
-     [
-       {:., context_to_annotation(context.context, line),
-        [nil, {String.to_atom(variable_name), context_to_annotation(context.context, line), args}]}
-     ], context}
-  end
+    wrapped_ime =
+      if is_initial do
+        [{:., context_to_annotation(context.context, line), [nil, ime]}]
+      else
+        [ime]
+      end
 
-  def to_dotted_ime_ast(rest, [[], variable_name], context, {_line, _}, _offset, false) do
-    {rest, [String.to_atom(variable_name)], context}
-  end
-
-  def to_dotted_ime_ast(rest, [args, variable_name], context, {line, _}, _offset, false) do
-    {rest, [{String.to_atom(variable_name), context_to_annotation(context.context, line), args}],
-     context}
+    {rest, wrapped_ime, context}
   end
 
   def to_scoped_ime_ast(rest, [[] = _args, variable_name, scope], context, _, _byte_offset) do
