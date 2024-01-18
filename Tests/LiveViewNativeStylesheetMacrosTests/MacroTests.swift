@@ -123,5 +123,20 @@ final class MacroTests: XCTestCase {
             macros: testMacros
         )
     }
+    
+    func testDefaultArguments() {
+        assertMacroExpansion(
+            #"""
+            @ParseableExpression
+            struct Padding {
+                init(_ edges: Edge.Set = .all, _ length: AttributeReference<CGFloat?>? = .init(storage: .constant(nil))) {
+                    // ...
+                }
+            }
+            """#,
+            expandedSource: "",
+            macros: testMacros
+        )
+    }
 }
 #endif
