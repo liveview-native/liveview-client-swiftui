@@ -4,7 +4,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
   import LiveViewNative.SwiftUI.RulesParser.Expressions
   import LiveViewNative.SwiftUI.RulesParser.Parser
   alias LiveViewNative.SwiftUI.RulesParser.PostProcessors
-  import LiveViewNative.SwiftUI.RulesHelpers
 
   defcombinator(
     :key_value_list,
@@ -216,16 +215,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       },
       {
         parsec(:ime),
-        ~s'an IME eg ‘Color.red’ or ‘.largeTitle’ or ‘Color.to_ime(variable)’'
+        ~s'an IME eg ‘Color.red’ or ‘.largeTitle’’'
       },
       {
         key_value_pairs(generate_error?: false, allow_empty?: false),
         ~s'a list of keyword pairs eg ‘style: :dashed’, ‘size: 12’ or  ‘style: [lineWidth: 1]’',
         not inside_key_value_pair?
-      },
-      {
-        parsec(:helper_function),
-        ~s'a helper function eg ‘to_float(variable)’'
       },
       {
         frozen(parsec(:nested_modifier)),
