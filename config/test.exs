@@ -37,6 +37,9 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :live_view_native_stylesheet,
   content: [
-    "test/**/*.*"
+    swiftui: [
+      "test/**/*.*"
+      
+    ]
   ],
   output: "priv/static/assets"
