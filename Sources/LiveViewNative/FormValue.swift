@@ -27,9 +27,9 @@ extension FormValue {
         return self == other
     }
     
-    static func fromAttribute(_ attribute: LiveViewNativeCore.Attribute) -> Self? {
+    static func fromAttribute(_ attribute: LiveViewNativeCore.Attribute, on element: ElementNode) -> Self? {
         if let self = Self.self as? AttributeDecodable.Type {
-            return try? (self.init(from: attribute) as! Self)
+            return try? (self.init(from: attribute, on: element) as! Self)
         } else {
             return nil
         }

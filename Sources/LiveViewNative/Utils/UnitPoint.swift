@@ -80,7 +80,7 @@ extension UnitPoint: AttributeDecodable {
         }
     }
     
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         try self.init(from: value)
     }

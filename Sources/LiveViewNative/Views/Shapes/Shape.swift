@@ -80,7 +80,7 @@ extension RoundedRectangle {
                 width: element.attributeValue(for: "corner-width").flatMap(Double.init) ?? radius,
                 height: element.attributeValue(for: "corner-height").flatMap(Double.init) ?? radius
             ),
-            style: (try? RoundedCornerStyle(from: element.attribute(named: "style"))) ?? .circular
+            style: (try? RoundedCornerStyle(from: element.attribute(named: "style"), on: element)) ?? .circular
         )
     }
 }
@@ -95,7 +95,7 @@ extension RoundedRectangle {
 extension Capsule {
     init(from element: ElementNode) {
         self.init(
-            style: (try? RoundedCornerStyle(from: element.attribute(named: "style"))) ?? .circular
+            style: (try? RoundedCornerStyle(from: element.attribute(named: "style"), on: element)) ?? .circular
         )
     }
 }
@@ -118,7 +118,7 @@ extension RoundedCornerStyle: Decodable, AttributeDecodable {
         }
     }
     
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let string = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let value = Self(string: string)

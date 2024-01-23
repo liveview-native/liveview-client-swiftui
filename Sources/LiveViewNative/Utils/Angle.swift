@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeCore
 
 extension Angle: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
-        self.init(degrees: try Double.init(from: attribute))
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        self.init(degrees: try Double.init(from: attribute, on: element))
     }
 }

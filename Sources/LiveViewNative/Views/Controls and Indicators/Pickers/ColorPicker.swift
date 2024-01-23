@@ -42,7 +42,7 @@ struct ColorPicker<R: RootRegistry>: View {
     @Attribute("supports-opacity") private var supportsOpacity: Bool
     
     struct CodableColor: AttributeDecodable, Codable, Equatable {
-        init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
             guard let value = attribute?.value
             else { throw AttributeDecodingError.missingAttribute(Self.self) }
             self = try JSONDecoder().decode(Self.self, from: Data(value.utf8))

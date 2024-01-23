@@ -337,7 +337,7 @@ struct Text<R: RootRegistry>: View {
 /// * `timer`
 @_documentation(visibility: public)
 extension SwiftUI.Text.DateStyle: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else {
             throw AttributeDecodingError.missingAttribute(Self.self)
         }
@@ -367,7 +367,7 @@ extension SwiftUI.Text.DateStyle: AttributeDecodable {
 /// * `abbreviated`
 @_documentation(visibility: public)
 extension PersonNameComponents.FormatStyle.Style: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else {
             throw AttributeDecodingError.missingAttribute(Self.self)
         }

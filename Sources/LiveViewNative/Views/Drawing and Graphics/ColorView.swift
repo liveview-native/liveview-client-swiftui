@@ -105,7 +105,7 @@ extension SwiftUI.Color.RGBColorSpace: AttributeDecodable, Decodable {
         }
     }
 
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         if let string = attribute?.value, let rgbColorSpace = Self(string: string) {
             self = rgbColorSpace
         } else {

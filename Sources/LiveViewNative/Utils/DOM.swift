@@ -69,7 +69,7 @@ public struct ElementNode {
     ///
     /// The attribute is decoded to the type ``T``, which must conform to the ``AttributeDecodable`` protocol.
     public func attributeValue<T: AttributeDecodable>(_: T.Type, for name: AttributeName) throws -> T {
-        try T.init(from: attribute(named: name))
+        try T.init(from: attribute(named: name), on: self)
     }
     
     /// Checks for a [boolean attribute](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes).
