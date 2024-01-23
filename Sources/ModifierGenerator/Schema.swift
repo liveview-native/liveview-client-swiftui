@@ -11,11 +11,7 @@ import Foundation
 /// This structure is used by the LiveView Native VS Code extension to provide completions for modifiers.
 struct Schema: Encodable {
     var modifiers: [String:[Signature]] = [:]
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(modifiers)
-    }
+    var enums: [String:[String]] = [:]
     
     struct Signature: Encodable {
         let parameters: [Parameter]
