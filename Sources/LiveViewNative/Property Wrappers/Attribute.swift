@@ -46,25 +46,34 @@ public struct Attribute<T>: DynamicProperty {
     @ObservedElement private var element
     private let name: AttributeName
     private let defaultValue: T?
-    private let transform: (LiveViewNativeCore.Attribute?) throws -> T
+    private let transform: (LiveViewNativeCore.Attribute?, ElementNode) throws -> T
     
     @StateObject private var storage: Storage = .init()
 
     /// Create an `Attribute` with an ``AttributeDecodable`` type.
     public init(wrappedValue: T? = nil, _ name: AttributeName) where T: AttributeDecodable {
-        self.init(wrappedValue: wrappedValue, name, transform: { try T(from: $0) }, element: nil)
+        self.init(wrappedValue: wrappedValue, name, transform: { try T(from: $0, on: $1) }, element: nil)
+    }
+    
+    /// Create an `Attribute` with a `transform` function that converts the attribute into the desired type.
+    public init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?, ElementNode) throws -> T) {
+        self.init(wrappedValue: wrappedValue, name, transform: transform, element: nil)
     }
     
     /// Create an `Attribute` with a `transform` function that converts the attribute into the desired type.
     public init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?) throws -> T) {
-        self.init(wrappedValue: wrappedValue, name, transform: transform, element: nil)
+        self.init(wrappedValue: wrappedValue, name, transform: { attribute, _ in try transform(attribute) }, element: nil)
     }
     
     init(wrappedValue: T? = nil, _ name: AttributeName, element: ElementNode) where T: AttributeDecodable {
-        self.init(wrappedValue: wrappedValue, name, transform: { try T(from: $0) }, element: element)
+        self.init(wrappedValue: wrappedValue, name, transform: { try T(from: $0, on: $1) }, element: element)
     }
     
     init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?) throws -> T, element: ElementNode?) {
+        self.init(wrappedValue: wrappedValue, name, transform: { attribute, _ in try transform(attribute) }, element: element)
+    }
+    
+    init(wrappedValue: T? = nil, _ name: AttributeName, transform: @escaping (LiveViewNativeCore.Attribute?, ElementNode) throws -> T, element: ElementNode?) {
         self.name = name
         self.defaultValue = wrappedValue
         self.transform = transform
@@ -110,7 +119,7 @@ public struct Attribute<T>: DynamicProperty {
     /// Decodes the attribute if possible.
     private func decode() -> T {
         do {
-            return try transform(element.attribute(named: name))
+            return try transform(element.attribute(named: name), element)
         } catch {
             guard let defaultValue else { fatalError(error.localizedDescription) }
             return defaultValue
@@ -136,7 +145,7 @@ public struct Attribute<T>: DynamicProperty {
 /// ### Supporting Types
 /// - ``AttributeDecodingError``
 public protocol AttributeDecodable {
-    init(from attribute: LiveViewNativeCore.Attribute?) throws
+    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws
 }
 
 /// An error encountered when converting a value from an attribute.
@@ -160,13 +169,13 @@ public enum AttributeDecodingError: LocalizedError {
 ///
 /// If the attribute is not provided, or the wrapped type could not be initialized from it, the result is `nil`.
 extension Optional: AttributeDecodable where Wrapped: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let attribute else {
             self = .none
             return
         }
         do {
-            self = .some(try .init(from: attribute))
+            self = .some(try .init(from: attribute, on: element))
         } catch {
             guard attribute.value == nil else { throw error }
             self = .none
@@ -176,7 +185,7 @@ extension Optional: AttributeDecodable where Wrapped: AttributeDecodable {
 
 /// Decodes a string from an attribute, if the attribute is present.
 extension String: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         self = attributeValue
     }
@@ -185,14 +194,14 @@ extension String: AttributeDecodable {
 /// Decodes a boolean from an attribute.
 /// The value is `true` if the attribute is present (regardless of value) and `false` otherwise.
 extension Bool: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         self = attribute != nil
     }
 }
 
 /// Decodes a double from an attribute, if it is present.
 extension Double: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
         self = result
@@ -201,7 +210,7 @@ extension Double: AttributeDecodable {
 
 /// Decodes an integer from an attribute, if it is present.
 extension Int: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
         self = result
@@ -211,7 +220,7 @@ extension Int: AttributeDecodable {
 /// Decodes a date from an attribute, if it is present.
 /// The value is interpreted as an Elixir-style ISO 8601 date with an optional time component.
 extension Date: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         self = try Self(attributeValue, strategy: .elixirDateTimeOrDate)
     }
@@ -219,7 +228,7 @@ extension Date: AttributeDecodable {
 
 /// Decodes any `String` raw representable type from an attribute, if it is present.
 extension AttributeDecodable where Self: RawRepresentable, RawValue == String {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let value = Self(rawValue: attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
         self = value
@@ -227,7 +236,7 @@ extension AttributeDecodable where Self: RawRepresentable, RawValue == String {
 }
 
 extension SwiftUI.Color: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let value = SwiftUI.Color(fromNamedOrCSSHex: attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
         self = value
@@ -235,7 +244,7 @@ extension SwiftUI.Color: AttributeDecodable {
 }
 
 extension CoreFoundation.CGFloat: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
-        self.init(try Double.init(from: attribute))
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        self.init(try Double.init(from: attribute, on: element))
     }
 }

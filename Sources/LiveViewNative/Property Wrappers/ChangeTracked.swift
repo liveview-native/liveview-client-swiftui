@@ -134,7 +134,7 @@ extension ChangeTracked where Value: FormValue {
             if Value.self == Bool.self {
                 return element.attributeBoolean(for: self.attribute) as? Value
             } else if let attribute = element.attribute(named: self.attribute) {
-                return Value.fromAttribute(attribute)
+                return Value.fromAttribute(attribute, on: element)
             } else {
                 return nil
             }

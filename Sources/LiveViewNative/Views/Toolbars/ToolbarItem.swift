@@ -72,7 +72,7 @@ struct ToolbarItem<R: RootRegistry>: ToolbarContent {
     init(element: ElementNode) {
         self._element = .init(element: element)
         self._placement = .init("placement", transform: {
-            (try? ToolbarItemPlacement(from: $0))?.placement ?? .automatic
+            (try? ToolbarItemPlacement(from: $0, on: $1))?.placement ?? .automatic
         }, element: element)
     }
     
@@ -90,7 +90,7 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     @LiveContext<R> private var context
     
     private var placement: SwiftUI.ToolbarItemPlacement {
-        (try? ToolbarItemPlacement(from: element.attribute(named: "placement")))?.placement ?? .automatic
+        (try? ToolbarItemPlacement(from: element.attribute(named: "placement"), on: element))?.placement ?? .automatic
     }
     
     /// The unique ID for this customizable item.

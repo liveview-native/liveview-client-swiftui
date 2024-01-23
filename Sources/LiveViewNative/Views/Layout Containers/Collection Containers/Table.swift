@@ -299,7 +299,7 @@ fileprivate struct TableColumnSortContainer: Codable, Equatable, AttributeDecoda
         self.value = value
     }
     
-    init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
         self.value = try JSONDecoder().decode([TableColumnSort].self, from: Data(value.utf8))

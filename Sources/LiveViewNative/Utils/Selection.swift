@@ -56,7 +56,7 @@ enum Selection: Codable, AttributeDecodable, Equatable {
         }
     }
     
-    init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
         if value.isEmpty {

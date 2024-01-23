@@ -101,7 +101,7 @@ private struct CodableDate: FormValue, AttributeDecodable {
         self.date = Date()
     }
     
-    init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else {
             throw AttributeDecodingError.missingAttribute(CodableDate.self)
         }

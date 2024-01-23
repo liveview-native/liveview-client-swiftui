@@ -170,7 +170,7 @@ public struct FormState<Value: FormValue> {
     
     // the initial value converts the element's `value` attribute if possible, otherwise uses the default value
     private var initialValue: Value {
-        return element.attribute(named: valueAttribute).flatMap(Value.fromAttribute(_:)) ?? defaultValue
+        return element.attribute(named: valueAttribute).flatMap({ Value.fromAttribute($0, on: element) }) ?? defaultValue
     }
     
     private func resolveMode() {
