@@ -12,6 +12,7 @@ extension Angle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
+                ConstantAtomLiteral("zero").map({ Self.zero })
                 Radians.parser(in: context).map({ Self.radians($0.radians) })
                 Degrees.parser(in: context).map({ Self.degrees($0.degrees) })
             }

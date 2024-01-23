@@ -366,7 +366,7 @@ struct ModifierGenerator: ParsableCommand {
                     static func parser(in context: ParseableModifierContext) -> _ParserType {
                         .init(context: context)
                     }
-
+            
                     struct _ParserType: Parser {
                         typealias Input = Substring.UTF8View
                         typealias Output = BuiltinModifier
@@ -442,12 +442,16 @@ struct ModifierGenerator: ParsableCommand {
             }
             
             """#.utf8))
+        }
             
-            let typeVisitor = EnumTypeVisitor(typeNames: Self.requiredTypes)
-            typeVisitor.walk(sourceFile)
-            
-            for (type, cases) in typeVisitor.types.sorted(by: { $0.key < $1.key }) {
-                let (availability, unavailable) = typeVisitor.availability[type]!
+        let typeVisitor = EnumTypeVisitor(typeNames: Self.requiredTypes)
+        typeVisitor.walk(sourceFile)
+        
+        for (type, cases) in typeVisitor.types.sorted(by: { $0.key < $1.key }) {
+            let (availability, unavailable) = typeVisitor.availability[type]!
+            if schema {
+                generatedSchema.enums[type] = cases.map({ $0.0 })
+            } else {
                 FileHandle.standardOutput.write(Data(
                     """
                     \(

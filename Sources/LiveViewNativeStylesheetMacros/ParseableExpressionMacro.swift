@@ -201,14 +201,27 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                             }).joined(separator: ",")
                     ))
                 }) {
-                    \#(wildcardArguments.enumerated().map({ (i, parameter) in
+                    \#(wildcardArguments.enumerated().map({ (i, parameter) -> String in
+                        let wildcardParser = """
+                        Whitespace()
+                        \(i > 0 ? #"",".utf8"# : "")
+                        Whitespace()
+                        \(parameter.type).parser(in: context)
+                        Whitespace()
                         """
-                        Whitespace()
-                        \(parameter.type.as(OptionalTypeSyntax.self)?.wrappedType ?? parameter.type).parser(in: context)
-                        Whitespace()
-                        \(i == wildcardArguments.count - 1 ? "" : #"",".utf8"#)
-                        Whitespace()
-                        """
+                        // allow argument to be omitted if default is available.
+                        if let defaultValue = parameter.defaultValue {
+                            return """
+                            OneOf {
+                                Parse {
+                                    \(wildcardParser)
+                                }
+                                Always(\(defaultValue.value))
+                            }
+                            """
+                        } else {
+                            return wildcardParser
+                        }
                     }).joined(separator: "\n"))
                 }
                 """#

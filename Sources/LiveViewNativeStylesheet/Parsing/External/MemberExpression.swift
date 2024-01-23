@@ -6,7 +6,7 @@ public struct MemberExpression<BaseParser: Parser, MemberParser: Parser>: Parser
     let base: BaseParser
     let member: MemberParser
     
-    init(@ParserBuilder<Input> base: () -> BaseParser, @ParserBuilder<Input> member: () -> MemberParser) {
+    public init(@ParserBuilder<Input> base: () -> BaseParser, @ParserBuilder<Input> member: () -> MemberParser) {
         self.base = base()
         self.member = member()
     }
