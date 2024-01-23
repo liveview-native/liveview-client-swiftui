@@ -145,7 +145,18 @@ public struct Attribute<T>: DynamicProperty {
 /// ### Supporting Types
 /// - ``AttributeDecodingError``
 public protocol AttributeDecodable {
+    init(from attribute: LiveViewNativeCore.Attribute?) throws
     init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws
+}
+
+public extension AttributeDecodable {
+    init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        fatalError("\(Self.self) cannot be decoded without an `element`")
+    }
+    
+    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        try self.init(from: attribute)
+    }
 }
 
 /// An error encountered when converting a value from an attribute.
