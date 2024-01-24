@@ -10,7 +10,7 @@ options:
 packages:
   LiveViewNative:
     url: https://github.com/liveview-native/liveview-client-swiftui
-    version: 0.3.0-alpha.2
+    version: 0.3.0-alpha.3
 settings:
   CURRENT_PROJECT_VERSION: 1.0
   INFOPLIST_KEY_CFBundleDisplayName: ${LVN_APP_NAME}
