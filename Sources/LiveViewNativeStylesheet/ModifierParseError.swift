@@ -21,6 +21,8 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
         case deprecatedModifier(String, message: String)
         case missingRequiredArgument(String)
         case noMatchingClause(String, [[String]])
+        case incorrectArgumentValue(String, value: Any, expectedType: Any.Type)
+        case multipleClauseErrors(String, [([String], ErrorType)])
         case multiRegistryFailure([(Any.Type, ErrorType)])
         
         var localizedDescription: String {
@@ -39,6 +41,14 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
                 } else {
                     return "No matching clause found for modifier `\(name)`. Expected one of \(clauses.map({ "`\(name)(\($0.joined(separator: ":"))\($0.count > 0 ? ":" : ""))`" }).joined(separator: ", "))"
                 }
+            case .incorrectArgumentValue(let name, let value, let expectedType):
+                return "Incorrect value passed to argument `\(name)`. Expected `\(expectedType)` but got `\(value)`"
+            case .multipleClauseErrors(let name, let signatureErrors):
+                return signatureErrors
+                    .map {
+                        return "Clause `\(name)(\($0.0.joined(separator: ":"))\($0.0.count > 0 ? ":" : ""))` failed with: \($0.1.localizedDescription)"
+                    }
+                    .joined(separator: "\n")
             case .multiRegistryFailure(let attempts):
                 let allUnknown = attempts.allSatisfy({
                     if case .unknownModifier = $0.1 {
