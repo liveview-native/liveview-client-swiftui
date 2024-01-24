@@ -37,7 +37,10 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                     VariableDeclSyntax(.let, name: "context", type: TypeAnnotationSyntax(type: TypeSyntax("ParseableModifierContext")))
                     try FunctionDeclSyntax("func parse(_ input: inout Substring.UTF8View) throws -> \(type.trimmed)") {
                         #"try "[".utf8.parse(&input)"#
+                        #"try Whitespace().parse(&input)"#
                         "let copy = input"
+                        "var errors: [([String], ModifierParseError.ErrorType)]"
+                        "errors = []"
                         for signature in signatures {
                             if let ifConfig = signature.ifConfig {
                                 "#if \(ifConfig)"
@@ -60,15 +63,21 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                             }
                         }
                         """
-                        throw ModifierParseError(error: .noMatchingClause(Output.name, \(ArrayExprSyntax(elementsBuilder: {
-                            for signature in signatures {
-                                ArrayElementSyntax(expression: ArrayExprSyntax(elementsBuilder: {
-                                    for argument in signature.0 {
-                                        ArrayElementSyntax(expression: StringLiteralExprSyntax(content: argument.firstName.text))
-                                    }
-                                }))
-                            }
-                        }))), metadata: context.metadata)
+                        if errors.count > 1 {
+                            throw ModifierParseError(error: .multipleClauseErrors(Output.name, errors), metadata: context.metadata)
+                        } else if let error = errors.first {
+                            throw ModifierParseError(error: error.1, metadata: context.metadata)
+                        } else {
+                            throw ModifierParseError(error: .noMatchingClause(Output.name, \(ArrayExprSyntax(elementsBuilder: {
+                                for signature in signatures {
+                                    ArrayElementSyntax(expression: ArrayExprSyntax(elementsBuilder: {
+                                        for argument in signature.0 {
+                                            ArrayElementSyntax(expression: StringLiteralExprSyntax(content: argument.firstName.text))
+                                        }
+                                    }))
+                                }
+                            }))), metadata: context.metadata)
+                        }
                         """
                     }
                 }
@@ -274,7 +283,22 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                                     }) {
                                         "\(parameter.firstName.trimmed):".utf8
                                         Whitespace()
-                                        \(parameter.type.as(OptionalTypeSyntax.self)?.wrappedType ?? parameter.type).parser(in: context)
+                                        OneOf(input: Substring.UTF8View.self, output: \(parameter.type.unwrapped.trimmed)?.self) {
+                                            \(parameter.type.unwrapped.trimmed)?.parser(in: context)
+                                            _AnyNodeParser.AnyArgument(context: context).map { value in
+                                                errors.append(
+                                                    (
+                                                        \(ArrayElementSyntax(expression: ArrayExprSyntax(elementsBuilder: {
+                                                            for argument in signature {
+                                                                ArrayElementSyntax(expression: StringLiteralExprSyntax(content: argument.firstName.text))
+                                                            }
+                                                        }))),
+                                                        .incorrectArgumentValue("\(parameter.firstName.trimmed)", value: value, expectedType: \(parameter.type.unwrapped.trimmed).self, replacement: \(valueReplacement(for: parameter.type)))
+                                                    )
+                                                )
+                                                return nil
+                                            }
+                                        }
                                     }
                                     """
                                 }).joined(separator: "\n"))
@@ -296,10 +320,25 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                             : labelledArguments.map({ "\($0.firstName.trimmed): \($0.type.unwrapped.trimmed)?.none" }).joined(separator: ","))))
                 }
                 """#
-            )                
+            )
+            Whitespace()
             "]".utf8
         }
         """#)
+    }
+    
+    /// Suggest a replacement for a given argument type.
+    static func valueReplacement(for type: TypeSyntax) -> ExprSyntax {
+        switch type.unwrapped.as(IdentifierTypeSyntax.self)?.name.trimmedDescription ?? type.unwrapped.trimmedDescription {
+        case "ViewReference", "InlineViewReference", "TextReference", "ToolbarContentReference":
+            return ".viewReference"
+        case "ChangeTracked":
+            return ".changeTracked"
+        case "Event":
+            return ".event"
+        default:
+            return "nil"
+        }
     }
     
     enum SignatureError {

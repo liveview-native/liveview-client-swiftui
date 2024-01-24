@@ -63,7 +63,7 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
             } catch let modifierError {
                 input = copy
                 do {
-                    let (modifierName, _) = try AnyNode(context: context).parse(&input)
+                    let (modifierName, _, _) = try _AnyNodeParser(context: context).parse(&input)
                     logger.error(
                         """
                         Stylesheet parsing failed for modifier `\(modifierName)` in class `\(className)`:
@@ -74,58 +74,6 @@ struct StylesheetParser<M: ViewModifier & ParseableModifierValue>: Parser {
                     return nil
                 } catch {
                     throw modifierError
-                }
-            }
-        }
-        
-        struct AnyNode: Parser {
-            let context: ParseableModifierContext
-            
-            var body: some Parser<Substring.UTF8View, (String, Metadata)> {
-                "{".utf8
-                Whitespace()
-                OneOf {
-                    ConstantAtomLiteral(".").map({ _ in "." })
-                    AtomLiteral()
-                }
-                Whitespace()
-                ",".utf8
-                Whitespace()
-                Metadata.parser()
-                Whitespace()
-                ",".utf8
-                Whitespace()
-                AnyArgument(context: context)
-                Whitespace()
-                "}".utf8
-            }
-            
-            struct AnyArgument: Parser {
-                let context: ParseableModifierContext
-                
-                var body: some Parser<Substring.UTF8View, ()> {
-                    OneOf {
-                        AnyNode(context: context).map({ _ in () })
-                        NilLiteral()
-                        AtomLiteral().map({ _ in () })
-                        String.parser(in: context).map({ _ in () })
-                        Double.parser().map({ _ in () })
-                        Int.parser().map({ _ in () })
-                        Bool.parser().map({ _ in () })
-                        ListLiteral {
-                            AnyArgument(context: context)
-                        }
-                        .map({ _ in () })
-                        // keyword list
-                        ListLiteral {
-                            Identifier()
-                            Whitespace()
-                            ":".utf8
-                            Whitespace()
-                            AnyArgument(context: context)
-                        }
-                        .map({ _ in () })
-                    }
                 }
             }
         }

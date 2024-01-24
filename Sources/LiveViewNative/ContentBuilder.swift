@@ -376,7 +376,7 @@ enum BuilderModifierContainer<Builder: ContentBuilder>: ViewModifier, ParseableM
     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             Builder.ModifierType.parser(in: context).map(Self.modifier)
-            StylesheetParser<EmptyModifier>.RecoverableModifier.AnyNode(context: context).map({ _ in Self.unsupported })
+            _AnyNodeParser(context: context).map({ _ in Self.unsupported })
         }
     }
     

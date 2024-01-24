@@ -21,7 +21,29 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
         case deprecatedModifier(String, message: String)
         case missingRequiredArgument(String)
         case noMatchingClause(String, [[String]])
+        case incorrectArgumentValue(String, value: Any, expectedType: Any.Type, replacement: ArgumentReplacement?)
+        case multipleClauseErrors(String, [([String], ErrorType)])
         case multiRegistryFailure([(Any.Type, ErrorType)])
+        
+        public enum ArgumentReplacement {
+            case viewReference
+            case changeTracked
+            case event
+            case custom(String)
+            
+            var message: String {
+                switch self {
+                case .viewReference:
+                    return "Pass an atom type to reference nested content."
+                case .changeTracked:
+                    return #"Use `attr("...")` to link this argument with an attribute."#
+                case .event:
+                    return #"Use `event("...")` to reference an event."#
+                case let .custom(custom):
+                    return custom
+                }
+            }
+        }
         
         var localizedDescription: String {
             switch self {
@@ -39,6 +61,18 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
                 } else {
                     return "No matching clause found for modifier `\(name)`. Expected one of \(clauses.map({ "`\(name)(\($0.joined(separator: ":"))\($0.count > 0 ? ":" : ""))`" }).joined(separator: ", "))"
                 }
+            case .incorrectArgumentValue(let name, let value, let expectedType, let replacement):
+                return "Incorrect value passed to argument `\(name)`. Expected `\(expectedType)` but got `\(value)`. \(replacement?.message ?? "")"
+            case .multipleClauseErrors(let name, let signatureErrors):
+                return signatureErrors
+                    .reduce(into: [String:[ErrorType]]()) { result, next in
+                        let clause = "\(name)(\(next.0.joined(separator: ":"))\(next.0.count > 0 ? ":" : ""))"
+                        result[clause, default: []].append(next.1)
+                    }
+                    .map {
+                        return "Clause `\($0.key)` failed:\n  - \($0.value.map(\.localizedDescription).joined(separator: "\n  - "))"
+                    }
+                    .joined(separator: "\n")
             case .multiRegistryFailure(let attempts):
                 let allUnknown = attempts.allSatisfy({
                     if case .unknownModifier = $0.1 {
