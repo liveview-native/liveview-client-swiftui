@@ -37,6 +37,7 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                     VariableDeclSyntax(.let, name: "context", type: TypeAnnotationSyntax(type: TypeSyntax("ParseableModifierContext")))
                     try FunctionDeclSyntax("func parse(_ input: inout Substring.UTF8View) throws -> \(type.trimmed)") {
                         #"try "[".utf8.parse(&input)"#
+                        #"try Whitespace().parse(&input)"#
                         "let copy = input"
                         "var errors: [([String], ModifierParseError.ErrorType)]"
                         "errors = []"
@@ -292,7 +293,7 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                                                                 ArrayElementSyntax(expression: StringLiteralExprSyntax(content: argument.firstName.text))
                                                             }
                                                         }))),
-                                                        .incorrectArgumentValue("\(parameter.firstName.trimmed)", value: value, expectedType: \(labelledType.trimmed).self)
+                                                        .incorrectArgumentValue("\(parameter.firstName.trimmed)", value: value, expectedType: \(parameter.type.unwrapped.trimmed).self, replacement: \(valueReplacement(for: parameter.type)))
                                                     )
                                                 )
                                                 return nil
@@ -319,10 +320,25 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                             : labelledArguments.map({ "\($0.firstName.trimmed): \($0.type.unwrapped.trimmed)?.none" }).joined(separator: ","))))
                 }
                 """#
-            )                
+            )
+            Whitespace()
             "]".utf8
         }
         """#)
+    }
+    
+    /// Suggest a replacement for a given argument type.
+    static func valueReplacement(for type: TypeSyntax) -> ExprSyntax {
+        switch type.unwrapped.as(IdentifierTypeSyntax.self)?.name.trimmedDescription ?? type.unwrapped.trimmedDescription {
+        case "ViewReference", "InlineViewReference", "TextReference", "ToolbarContentReference":
+            return ".viewReference"
+        case "ChangeTracked":
+            return ".changeTracked"
+        case "Event":
+            return ".event"
+        default:
+            return "nil"
+        }
     }
     
     enum SignatureError {
