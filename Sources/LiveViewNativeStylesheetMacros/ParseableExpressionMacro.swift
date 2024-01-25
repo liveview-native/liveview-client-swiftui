@@ -171,20 +171,23 @@ public enum ParseableExpressionMacro: ExtensionMacro {
         
         // labelled arguments
         if !labelledArguments.isEmpty {
-            // comma separate from wildcard if present
-            if !wildcardArguments.isEmpty {
-                "try Whitespace().parse(&input)"
-                #"try ",".utf8.parse(&input)"#
-                "try Whitespace().parse(&input)"
-            }
-            
-            #"try "[".utf8.parse(&input)"#
-            
             // collect errors and values
             "var failures = [ModifierParseError.ErrorType]()"
             for argument in labelledArguments {
                 "var \(argument.secondName ?? argument.firstName): \(argument.type.unwrapped.trimmed)?"
             }
+            
+            // comma separate from wildcard if present
+            if !wildcardArguments.isEmpty {
+                "try Whitespace().parse(&input)"
+                #"if input.first == ",".utf8.first {"# // labelled arguments if open
+                #"try ",".utf8.parse(&input)"#
+                "try Whitespace().parse(&input)"
+            } else {
+                #"if input.first == "[".utf8.first {"# // labelled arguments if open
+            }
+            
+            #"try "[".utf8.parse(&input)"#
             
             try WhileStmtSyntax("while !input.isEmpty {") {
                 // switch over the argument name to parse the correct type
@@ -231,6 +234,8 @@ public enum ParseableExpressionMacro: ExtensionMacro {
             try GuardStmtSyntax("guard failures.isEmpty else {") {
                 "throw ModifierParseError(error: .multipleErrors(failures), metadata: context.metadata)"
             }
+            
+            "}" // labelled argument if close.
         }
         
         #"try Whitespace().parse(&input)"#
