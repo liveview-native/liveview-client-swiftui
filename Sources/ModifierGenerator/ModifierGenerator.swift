@@ -15,6 +15,11 @@ struct ModifierGenerator: ParsableCommand {
     @Flag(
         help: "Produce a JSON format read by the LiveView Native VS Code extension."
     ) private var schema = false
+    
+    @Option(
+        help: "The number of modifiers included in each chunk. Chunks are used to reduce the size of switch statements in SwiftUI."
+    )
+    private var chunkSize: Int = 10
 
     static let extraModifierTypes: Set<String> = [
         // Image modifiers
@@ -336,20 +341,46 @@ struct ModifierGenerator: ParsableCommand {
         }
 
         if !schema {
+            let chunks: [[String]] = stride(from: 0, to: modifierList.count, by: chunkSize).map {
+                Array(modifierList[$0..<min($0 + chunkSize, modifierList.count)])
+            }
+            
+            for (i, chunk) in chunks.enumerated() {
+                FileHandle.standardOutput.write(Data(#"""
+                
+                extension BuiltinRegistry {
+                    enum _BuiltinModifierChunk\#(i): ViewModifier {
+                        \#(chunk.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
+                        
+                        func body(content: Content) -> some View {
+                            switch self {
+                            \#(chunk.map({
+                                """
+                                case let .\($0)(modifier):
+                                    content.modifier(modifier)
+                                """
+                            }).joined(separator: "\n"))
+                            }
+                        }
+                    }
+                }
+                """#.utf8))
+            }
+            
             FileHandle.standardOutput.write(Data(#"""
             
             extension BuiltinRegistry {
                 enum BuiltinModifier: ViewModifier, ParseableModifierValue {
-                    \#(modifierList.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
+                    \#((0..<chunks.count).map({ i in "case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
                     \#(Self.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
                     case _customRegistryModifier(R.CustomModifier)
                     
                     func body(content: Content) -> some View {
                         switch self {
-                        \#(modifierList.map({
+                        \#((0..<chunks.count).map({
                             """
-                            case let .\($0)(modifier):
-                                content.modifier(modifier)
+                            case let .chunk\($0)(chunk):
+                                content.modifier(chunk)
                             """
                         }).joined(separator: "\n"))
                         \#(Self.extraModifierTypes.map({
@@ -375,7 +406,15 @@ struct ModifierGenerator: ParsableCommand {
                         
                         func parse(_ input: inout Substring.UTF8View) throws -> Output {
                             let parsers = [
-                                \#(modifierList.map({ "_\($0)Modifier<R>.name: _\($0)Modifier<R>.parser(in: context).map(Output.\($0)).eraseToAnyParser()," }).joined(separator: "\n"))
+                                \#(chunks
+                                    .enumerated()
+                                    .reduce([String]()) { (result, chunk) in
+                                        result + chunk.element.map({ modifier in
+                                            "_\(modifier)Modifier<R>.name: _\(modifier)Modifier<R>.parser(in: context).map({ Output.chunk\(chunk.offset)(.\(modifier)($0)) }).eraseToAnyParser(),"
+                                        })
+                                    }
+                                    .joined(separator: "\n")
+                                )
                                 \#(Self.extraModifierTypes.map({ "LiveViewNative.\($0).name: LiveViewNative.\($0).parser(in: context).map(Output.\($0.split(separator: "<").first!)).eraseToAnyParser()," }).joined(separator: "\n"))
                             ]
             
