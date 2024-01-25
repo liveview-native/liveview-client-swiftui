@@ -97,11 +97,11 @@ final class ShapeStyleTests: XCTestCase {
         )
         // Gradient
         testParserShapeStyle(
-            #"{:Gradient, [], [[colors: ["0": {:., [], [nil, :red]}, "1": {:., [], [nil, :blue]}]]]}"#,
+            #"{:Gradient, [], [[colors: [{:., [], [nil, :red]}, {:., [], [nil, :blue]}]]]}"#,
             Gradient(colors: [.red, .blue])
         )
         testParserShapeStyle(
-            #"{:Gradient, [], [[stops: ["0": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, "1": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}"#,
+            #"{:Gradient, [], [[stops: [{:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}"#,
             Gradient(stops: [Gradient.Stop(color: .red, location: 0.5), Gradient.Stop(color: .blue, location: 1)])
         )
         // angularGradient
@@ -110,7 +110,7 @@ final class ShapeStyleTests: XCTestCase {
             AnyShapeStyle(AngularGradient.angularGradient(Color.red.gradient, startAngle: .zero, endAngle: .degrees(270)))
         )
         testParserShapeStyle(
-            #"{:AngularGradient, [], [[gradient: {:Gradient, [], [[stops: ["0": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, "1": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, center: {:., [], [nil, :center]}, startAngle: {:., [], [nil, :zero]}, endAngle: {:., [], [nil, {:degrees, [], [270]}]}]]}"#,
+            #"{:AngularGradient, [], [[gradient: {:Gradient, [], [[stops: [{:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, center: {:., [], [nil, :center]}, startAngle: {:., [], [nil, :zero]}, endAngle: {:., [], [nil, {:degrees, [], [270]}]}]]}"#,
             AngularGradient(gradient: Gradient(stops: [Gradient.Stop(color: .red, location: 0.5), Gradient.Stop(color: .blue, location: 1)]), center: .center, startAngle: .zero, endAngle: .degrees(270))
         )
         // conicGradient
@@ -119,7 +119,7 @@ final class ShapeStyleTests: XCTestCase {
             AnyShapeStyle(AngularGradient.conicGradient(Color.red.gradient, center: .center, angle: .degrees(270)))
         )
         testParserShapeStyle(
-            #"{:AngularGradient, [], [[gradient: {:Gradient, [], [[stops: ["0": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, "1": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, center: {:., [], [nil, :center]}, angle: {:., [], [nil, {:degrees, [], [270]}]}]]}"#,
+            #"{:AngularGradient, [], [[gradient: {:Gradient, [], [[stops: [{:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, center: {:., [], [nil, :center]}, angle: {:., [], [nil, {:degrees, [], [270]}]}]]}"#,
             AngularGradient(gradient: Gradient(stops: [Gradient.Stop(color: .red, location: 0.5), Gradient.Stop(color: .blue, location: 1)]), center: .center, angle: .degrees(270))
         )
         // ellipticalGradient
@@ -128,7 +128,7 @@ final class ShapeStyleTests: XCTestCase {
             AnyShapeStyle(EllipticalGradient.ellipticalGradient(Color.red.gradient, center: .center, startRadiusFraction: 0, endRadiusFraction: 1))
         )
         testParserShapeStyle(
-            #"{:EllipticalGradient, [], [[gradient: {:Gradient, [], [[stops: ["0": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, "1": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, center: {:., [], [nil, :center]}, startRadiusFraction: 0, endRadiusFraction: 1]]}"#,
+            #"{:EllipticalGradient, [], [[gradient: {:Gradient, [], [[stops: [{:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, center: {:., [], [nil, :center]}, startRadiusFraction: 0, endRadiusFraction: 1]]}"#,
             EllipticalGradient(gradient: Gradient(stops: [Gradient.Stop(color: .red, location: 0.5), Gradient.Stop(color: .blue, location: 1)]), center: .center, startRadiusFraction: 0, endRadiusFraction: 1)
         )
         // linearGradient
@@ -137,7 +137,7 @@ final class ShapeStyleTests: XCTestCase {
             AnyShapeStyle(LinearGradient.linearGradient(Color.red.gradient, startPoint: .leading, endPoint: .trailing))
         )
         testParserShapeStyle(
-            #"{:LinearGradient, [], [[gradient: {:Gradient, [], [[stops: ["0": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, "1": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, startPoint: {:., [], [nil, :leading]}, endPoint: {:., [], [nil, :trailing]}]]}"#,
+            #"{:LinearGradient, [], [[gradient: {:Gradient, [], [[stops: [{:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, startPoint: {:., [], [nil, :leading]}, endPoint: {:., [], [nil, :trailing]}]]}"#,
             LinearGradient(gradient: Gradient(stops: [Gradient.Stop(color: .red, location: 0.5), Gradient.Stop(color: .blue, location: 1)]), startPoint: .leading, endPoint: .trailing)
         )
         // radialGradient
@@ -146,7 +146,7 @@ final class ShapeStyleTests: XCTestCase {
             AnyShapeStyle(RadialGradient.radialGradient(Color.red.gradient, center: .center, startRadius: 0.5, endRadius: 1))
         )
         testParserShapeStyle(
-            #"{:RadialGradient, [], [[gradient: {:Gradient, [], [[stops: ["0": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, "1": {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, center: {:., [], [nil, :center]}, startRadius: 0.5, endRadius: 1]]}"#,
+            #"{:RadialGradient, [], [[gradient: {:Gradient, [], [[stops: [{:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :red]}, location: 0.5]]}]}, {:., [], [:Gradient, {:Stop, [], [[color: {:., [], [nil, :blue]}, location: 1]]}]}]]]}, center: {:., [], [nil, :center]}, startRadius: 0.5, endRadius: 1]]}"#,
             RadialGradient(gradient: Gradient(stops: [Gradient.Stop(color: .red, location: 0.5), Gradient.Stop(color: .blue, location: 1)]), center: .center, startRadius: 0.5, endRadius: 1)
         )
     }

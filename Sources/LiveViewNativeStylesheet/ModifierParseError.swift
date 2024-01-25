@@ -20,8 +20,10 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
         case unknownModifier(String)
         case deprecatedModifier(String, message: String)
         case missingRequiredArgument(String)
+        case unknownArgument(String)
         case noMatchingClause(String, [[String]])
         case incorrectArgumentValue(String, value: Any, expectedType: Any.Type, replacement: ArgumentReplacement?)
+        case multipleErrors([ErrorType])
         case multipleClauseErrors(String, [([String], ErrorType)])
         case multiRegistryFailure([(Any.Type, ErrorType)])
         
@@ -45,6 +47,10 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
             }
         }
         
+        private func clauseDescription(_ name: String, arguments: [String]) -> String {
+            return "\(name)(\(arguments.joined(separator: ":"))\(arguments.count > 0 ? ":" : ""))"
+        }
+        
         var localizedDescription: String {
             switch self {
             case .unknownModifier(let name):
@@ -53,24 +59,24 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
                 return "`\(name)` is deprecated: \(message)"
             case .missingRequiredArgument(let name):
                 return "Missing required argument `\(name)`"
+            case .unknownArgument(let name):
+                return "Unknown labelled argument `\(name)`"
             case .noMatchingClause(let name, let clauses):
                 if clauses.count == 1,
                    let clause = clauses.first
                 {
-                    return "No matching clause found for modifier `\(name)`. Expected `\(name)(\(clause.joined(separator: ":"))\(clause.count > 0 ? ":" : ""))`"
+                    return "No matching clause found for modifier `\(name)`. Expected `\(clauseDescription(name, arguments: clause))`"
                 } else {
-                    return "No matching clause found for modifier `\(name)`. Expected one of \(clauses.map({ "`\(name)(\($0.joined(separator: ":"))\($0.count > 0 ? ":" : ""))`" }).joined(separator: ", "))"
+                    return "No matching clause found for modifier `\(name)`. Expected one of \(clauses.map({ "`\(clauseDescription(name, arguments: $0))`" }).joined(separator: ", "))"
                 }
             case .incorrectArgumentValue(let name, let value, let expectedType, let replacement):
                 return "Incorrect value passed to argument `\(name)`. Expected `\(expectedType)` but got `\(value)`. \(replacement?.message ?? "")"
+            case .multipleErrors(let errors):
+                return "- \(errors.map(\.localizedDescription).joined(separator: "\n- "))"
             case .multipleClauseErrors(let name, let signatureErrors):
                 return signatureErrors
-                    .reduce(into: [String:[ErrorType]]()) { result, next in
-                        let clause = "\(name)(\(next.0.joined(separator: ":"))\(next.0.count > 0 ? ":" : ""))"
-                        result[clause, default: []].append(next.1)
-                    }
                     .map {
-                        return "Clause `\($0.key)` failed:\n  - \($0.value.map(\.localizedDescription).joined(separator: "\n  - "))"
+                        return "Clause `\(clauseDescription(name, arguments: $0.0))` failed:\n\($0.1.localizedDescription.split(separator: "\n").joined(separator: "\n  "))"
                     }
                     .joined(separator: "\n")
             case .multiRegistryFailure(let attempts):

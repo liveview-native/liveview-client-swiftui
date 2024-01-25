@@ -48,71 +48,71 @@ final class MacroTests: XCTestCase {
                     let context: ParseableModifierContext
                     func parse(_ input: inout Substring.UTF8View) throws -> TestModifier {
                         try "[" .utf8.parse(&input)
+                        try Whitespace().parse(&input)
                         let copy = input
+                        var clauseFailures = [([String], ModifierParseError.ErrorType)] ()
                         #if os(iOS) || os(macOS)
                         do {
-                           return try
-                        _ThrowingParse({ (wildcard: Double?, labelled: Double?) -> Output in
-
-                            return Output.init(
-                                wildcard, height: labelled
-                            )
-                            }) {
-                            // Parse the wildcard arguments
-                            Parse({ width -> Double? in
-                            (width)
-                                }) {
-                            Whitespace()
-                            Double.parser(in: context)
+                        let width: Double? = try Parse(input: Substring.UTF8View.self) {
                             Whitespace()
 
                             Whitespace()
-                            }
-
-                            // Parse the labelled arguments
-                            OneOf {
-                            Parse {
-                                Whitespace()
-                                "," .utf8
-                                Whitespace()
-                                "[" .utf8
-                                Many(
-                                    into: (Double?.none)
-                                ) { (result: inout Double?, argument: Double?) in
-                                    result = (
-                                        result ?? argument
-                                    )
-                                } element: {
-                                    Whitespace()
-                                    OneOf {
-                                        Parse({ value -> Double? in
-                            (value)
-                                            }) {
-                            "height:" .utf8
+                            Double?.parser(in: context)
                             Whitespace()
-                            Double.parser(in: context)
-                                        }
-                                        _ErrorParse {
-                                            Identifier().map(ArgumentParseError.unknownArgument)
-                                            ":" .utf8
-                                            Whitespace()
-                                        }
-                                    }
-                                    Whitespace()
-                                } separator: {
-                                    "," .utf8
-                                } terminator: {
-                                    "]" .utf8
-                                }
-                            }
-                            Always((Double?.none))
-                            }
-                            "]" .utf8
                         }
-                           .parse(&input)} catch {
+                        .parse(&input)
+                        try Whitespace().parse(&input)
+                        try "," .utf8.parse(&input)
+                        try Whitespace().parse(&input)
+                        try "[" .utf8.parse(&input)
+                        var failures = [ModifierParseError.ErrorType] ()
+                        var height: Double?
+                        while !input.isEmpty {
+                            try Whitespace().parse(&input)
+                            let name = try Identifier().parse(&input)
+                            try ":" .utf8.parse(&input)
+                            try Whitespace().parse(&input)
+                            switch name {
+                            case "height":
+                                let labelledArgumentCopy = input
+            do {
+                height = try Double?.parser(in: context).parse(&input)
+            } catch {
+                input = labelledArgumentCopy
+                let value = try _AnyNodeParser.AnyArgument(context: context).parse(&input)
+                failures.append(
+                    .incorrectArgumentValue("height", value: value, expectedType: Double.self, replacement: nil)
+                )
+            }
+                            default:
+                                _ = try _AnyNodeParser.AnyArgument(context: context).parse(&input)
+            failures.append(.unknownArgument(name))
+                            }
+                            try Whitespace().parse(&input)
+                            guard input.first == "," .utf8.first else {
+                                break
+                            }
+                            try "," .utf8.parse(&input)
+                        }
+                        try "]" .utf8.parse(&input)
+                        guard failures.isEmpty else {
+                            throw ModifierParseError(error: .multipleErrors(failures), metadata: context.metadata)
+                        }
+                        try Whitespace().parse(&input)
+                        try "]" .utf8.parse(&input)
+                        return Output(width, height: height)} catch let error as ModifierParseError {
+                            clauseFailures.append((
+                                ["_", "height"],
+                                error.error
+                            ))
+                           input = copy} catch {
                            input = copy}
             #endif
-                        throw ModifierParseError(error: .noMatchingClause(Output.name, [["_", "height"]]), metadata: context.metadata)
+                        if clauseFailures.isEmpty {
+                            throw ModifierParseError(error: .noMatchingClause(Output.name, [["_", "height"]]), metadata: context.metadata)
+                        } else {
+                            throw ModifierParseError(error: .multipleClauseErrors(Output.name, clauseFailures), metadata: context.metadata)
+                        }
                     }
                 }
              static func arguments(in context: ParseableModifierContext) -> ExpressionArgumentsBody {
@@ -134,7 +134,64 @@ final class MacroTests: XCTestCase {
                 }
             }
             """#,
-            expandedSource: "",
+            expandedSource: #"""
+            struct Padding {
+                init(_ edges: Edge.Set = .all, _ length: AttributeReference<CGFloat?>? = .init(storage: .constant(nil))) {
+                    // ...
+                }
+            }
+
+            extension Padding: ParseableExpressionProtocol {
+             typealias _ParserType = StandardExpressionParser<Self>
+             struct ExpressionArgumentsBody: Parser {
+                    let context: ParseableModifierContext
+                    func parse(_ input: inout Substring.UTF8View) throws -> Padding {
+                        try "[" .utf8.parse(&input)
+                        try Whitespace().parse(&input)
+                        let copy = input
+                        var clauseFailures = [([String], ModifierParseError.ErrorType)] ()
+                        do {
+                        let edges: Edge.Set  = try OneOf(input: Substring.UTF8View.self, output: Edge.Set.self) {
+                            Parse {
+                                Whitespace()
+
+                                Whitespace()
+                                Edge.Set .parser(in: context)
+                                Whitespace()
+                            }
+                            Always(.all)
+                        } .parse(&input)
+                        let length: AttributeReference<CGFloat?>?  = try OneOf(input: Substring.UTF8View.self, output: AttributeReference<CGFloat?>?.self) {
+                            Parse {
+                                Whitespace()
+                                "," .utf8
+                                Whitespace()
+                                AttributeReference<CGFloat?>? .parser(in: context)
+                                Whitespace()
+                            }
+                            Always(.init(storage: .constant(nil)))
+                        } .parse(&input)
+                        try Whitespace().parse(&input)
+                        try "]" .utf8.parse(&input)
+                        return Output(edges, length)} catch let error as ModifierParseError {
+                            clauseFailures.append((
+                                ["_", "_"],
+                                error.error
+                            ))
+                           input = copy} catch {
+                           input = copy}
+                        if clauseFailures.isEmpty {
+                            throw ModifierParseError(error: .noMatchingClause(Output.name, [["_", "_"]]), metadata: context.metadata)
+                        } else {
+                            throw ModifierParseError(error: .multipleClauseErrors(Output.name, clauseFailures), metadata: context.metadata)
+                        }
+                    }
+                }
+             static func arguments(in context: ParseableModifierContext) -> ExpressionArgumentsBody {
+                    ExpressionArgumentsBody(context: context)
+                }
+            }
+            """#,
             macros: testMacros
         )
     }

@@ -29,8 +29,10 @@ extension Font.TextStyle: AttributeDecodable {
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
         try self.init(from: value)
     }
-    
-    public init(from string: String) throws {
+}
+
+extension Font.TextStyle {
+    init(from string: String) throws {
         switch string {
         case "large_title", "large-title": self = .largeTitle
         case "title": self = .title
