@@ -371,13 +371,13 @@ struct ModifierGenerator: ParsableCommand {
             
             extension BuiltinRegistry {
                 enum BuiltinModifier: ViewModifier, ParseableModifierValue {
-                    \#((0..<chunks.count).map({ i in "case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
+                    \#(chunks.indices.map({ i in "case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
                     \#(Self.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
                     case _customRegistryModifier(R.CustomModifier)
                     
                     func body(content: Content) -> some View {
                         switch self {
-                        \#((0..<chunks.count).map({
+                        \#(chunks.indices.map({
                             """
                             case let .chunk\($0)(chunk):
                                 content.modifier(chunk)
@@ -502,6 +502,7 @@ struct ModifierGenerator: ParsableCommand {
                                 .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
                                 .filter({ !unavailable.contains($0) })
                                 .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
+                                .sorted()
                                 .joined(separator: " || ")
                         )
                         """
@@ -538,6 +539,7 @@ struct ModifierGenerator: ParsableCommand {
                                                 .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
                                                 .filter({ !memberUnavailable.contains($0) })
                                                 .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
+                                                .sorted()
                                                 .joined(separator: " || "))
                                         """
                                     )
