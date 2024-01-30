@@ -242,21 +242,24 @@ public struct LiveView<
         session.navigationPath.first!.coordinator
     }
     
+    @ViewBuilder
+    var connectedContent: some View {
+        if let rootLayout = session.rootLayout {
+            self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
+                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
+        } else {
+            PhxMain<R>()
+                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
+                .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
+        }
+    }
+    
     public var body: some View {
         SwiftUI.Group {
             switch session.state {
             case .connected, .reconnecting:
                 if ReconnectingView.self == Never.self {
-                    SwiftUI.Group {
-                        if let rootLayout = session.rootLayout {
-                            self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
-                                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
-                        } else {
-                            PhxMain<R>()
-                                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
-                                .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
-                        }
-                    }
+                    connectedContent
                         .safeAreaInset(edge: .top) {
                             if session.state.isReconnecting {
                                 SwiftUI.VStack {
@@ -287,16 +290,7 @@ public struct LiveView<
                 } else {
                     reconnectingView(
                         AnyView(
-                            SwiftUI.Group {
-                                if let rootLayout = session.rootLayout {
-                                    self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
-                                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
-                                } else {
-                                    PhxMain<R>()
-                                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
-                                        .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
-                                }
-                            }
+                            connectedContent
                         ),
                         session.state.isReconnecting
                     )
