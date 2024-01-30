@@ -221,7 +221,7 @@ struct Table<R: RootRegistry>: View {
                 columns[9]
             }
         default:
-            ErrorView<R>(TableError.badColumnCount(columns.count))
+            AnyErrorView<R>(TableError.badColumnCount(columns.count))
         }
     }
     

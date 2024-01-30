@@ -55,27 +55,11 @@ extension LiveViewMacro: ExpressionMacro {
             registries = "typealias Registries = \(multiRegistry(addons))"
         }
         
-        // View configurations
-        let connectingView = node.trailingClosure
-            ?? node.argumentList.first(where: { $0.label?.text == "connecting" })?.expression.as(ClosureExprSyntax.self)
-        let disconnectedView = node.additionalTrailingClosures.first(where: { $0.label.text == "disconnected" })?.closure
-            ?? node.argumentList.first(where: { $0.label?.text == "disconnected" })?.expression.as(ClosureExprSyntax.self)
-        let reconnectingView = node.additionalTrailingClosures.first(where: { $0.label.text == "reconnecting" })?.closure
-            ?? node.argumentList.first(where: { $0.label?.text == "reconnecting" })?.expression.as(ClosureExprSyntax.self)
-        let errorView = node.additionalTrailingClosures.first(where: { $0.label.text == "error" })?.closure
-            ?? node.argumentList.first(where: { $0.label?.text == "error" })?.expression.as(ClosureExprSyntax.self)
-        let fallbackView = CodeBlockItemListSyntax {
-            "Registries.loadingView(for: url, state: state)"
-        }
-        let errorParameter = errorView?.signature?.parameterClause?.as(ClosureParameterClauseSyntax.self)?.parameters.first?.secondName
-            ?? errorView?.signature?.parameterClause?.as(ClosureParameterClauseSyntax.self)?.parameters.first?.firstName
-            ?? errorView?.signature?.parameterClause?.as(ClosureShorthandParameterListSyntax.self)?.first?.name
-        
         // Other arguments
         var liveViewArguments = node.argumentList
         liveViewArguments = liveViewArguments.filter({
             switch $0.label?.text {
-            case "addons", "connecting", "disconnected", "reconnecting", "error":
+            case "addons":
                 return false
             default:
                 return true
@@ -87,37 +71,9 @@ extension LiveViewMacro: ExpressionMacro {
         { () -> AnyView in
             enum \(registryName): AggregateRegistry {
                 \(registries)
-        
-                @ViewBuilder
-                static func connecting() -> some View {
-                    \(connectingView?.statements.trimmed ?? fallbackView)
-                }
-        
-                @ViewBuilder
-                static func disconnected() -> some View {
-                    \(disconnectedView?.statements.trimmed ?? fallbackView)
-                }
-        
-                @ViewBuilder
-                static func error(_ \(errorParameter?.trimmed ?? "error"): Error) -> some View {
-                    \(errorView?.statements.trimmed ?? fallbackView)
-                }
-        
-                static func loadingView(for url: URL, state: LiveSessionState) -> some View {
-                    switch state {
-                    case .connecting:
-                        Self.connecting()
-                    case .notConnected:
-                        Self.disconnected()
-                    case let .connectionFailed(error):
-                        Self.error(error)
-                    case .connected:
-                        Registries.loadingView(for: url, state: state)
-                    }
-                }
             }
         
-            return AnyView(LiveView<\(registryName)>(\(liveViewArguments)))
+            return AnyView(LiveView(registry: \(registryName).self, \(liveViewArguments))\(raw: node.trailingClosure?.description ?? "")\(node.additionalTrailingClosures))
         }()
         """
     }

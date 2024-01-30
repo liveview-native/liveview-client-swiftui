@@ -11,7 +11,7 @@ import LiveViewNativeStylesheet
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///
-/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-6jd3b`` method.
+/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method.
 ///
 /// To use a single registry, implement the ``RootRegistry`` protocol and implement the inherited `CustomRegistry` requirements. If you want to combine multiple registries, see ``AggregateRegistry``.
 /// To use your registry, provide it as the generic parameter for the ``LiveSessionCoordinator`` you construct:
@@ -30,9 +30,6 @@ import LiveViewNativeStylesheet
 /// ### Custom View Modifiers
 /// - ``CustomModifier``
 /// - ``parseModifier(_:in:)-tj5n``
-/// ### Customizing the Loading View
-/// - ``loadingView(for:state:)-6jd3b``
-/// - ``LoadingView``
 /// ### Composing Registries
 /// - ``AggregateRegistry``
 /// - ``RootRegistry``
@@ -72,10 +69,6 @@ public protocol CustomRegistry<Root> {
     ///
     /// Use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser for a modifier from its `init` clauses.
     associatedtype CustomModifier: ViewModifier & ParseableModifierValue = EmptyModifier
-    /// The type of view this registry produces for loading views.
-    ///
-    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-6jd3b`` implementations and this will be inferred automatically.
-    associatedtype LoadingView: View = Never
     /// The type of view this registry produces for error views.
     ///
     /// Generally, implementors will use an opaque return type on their ``errorView(for:)`` implementations and this will be inferred automatically.
@@ -90,15 +83,6 @@ public protocol CustomRegistry<Root> {
     /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
     static func lookup(_ name: TagName, element: ElementNode) -> CustomView
-    
-    /// This method is called when it needs a view to display while connecting to the live view.
-    ///
-    /// If you do not implement this method, the framework provides a loading view which displays a simple text representation of the state.
-    ///
-    /// - Parameter url: The URL of the view being connected to.
-    /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveSessionState/connected``.
-    @ViewBuilder
-    static func loadingView(for url: URL, state: LiveSessionState) -> LoadingView
     
     /// This method is called when it needs a view to display when an error occurs in the View hierarchy.
     ///
@@ -117,13 +101,6 @@ public protocol CustomRegistry<Root> {
         _ input: inout Substring.UTF8View,
         in context: ParseableModifierContext
     ) throws -> CustomModifier
-}
-
-extension CustomRegistry where LoadingView == Never {
-    /// A default  implementation that falls back to the default framework loading view.
-    public static func loadingView(for url: URL, state: LiveSessionState) -> Never {
-        fatalError()
-    }
 }
 
 extension CustomRegistry where ErrorView == Never {

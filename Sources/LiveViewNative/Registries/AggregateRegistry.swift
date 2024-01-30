@@ -71,13 +71,6 @@ public macro Registries() = #externalMacro(module: "LiveViewNativeMacros", type:
 /// }
 /// ```
 ///
-/// ### Loading Views
-/// Whereas tags and modifiers can be composed from multiple registry types without conflict, only one loading view implementation can be used.
-/// The aggregate registry will use the loading view from the first concrete registry type that is provided.
-/// In the above example, `AppRegistries` would use `MyRegistry`'s loading view by default.
-///
-/// If you don't want this behavior, you can override ``CustomRegistry/loadingView(for:state:)-6jd3b`` on your aggregate registry and provide another view.
-///
 /// ## Topics
 /// ### Protocol Requirements
 /// - ``Registries``
@@ -95,10 +88,6 @@ public protocol AggregateRegistry: RootRegistry {
 extension AggregateRegistry {
     public static func lookup(_ name: Registries.TagName, element: ElementNode) -> some View {
         return Registries.lookup(name, element: element)
-    }
-
-    public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
-        return Registries.loadingView(for: url, state: state)
     }
     
     public static func errorView(for error: Error) -> some View {
@@ -218,10 +207,6 @@ public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: Cus
         case .second(let name):
             Second.lookup(name, element: element)
         }
-    }
-
-    public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
-        return First.loadingView(for: url, state: state)
     }
     
     public static func errorView(for error: Error) -> some View {

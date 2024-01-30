@@ -43,23 +43,19 @@ struct NavStackEntryView<R: RootRegistry>: View {
                         .id(ObjectIdentifier(document))
                 } else {
                     SwiftUI.Group {
-                        if R.LoadingView.self == Never.self {
-                            switch coordinator.state {
-                            case .connected:
-                                fatalError()
-                            case .notConnected:
-                                SwiftUI.Text("Not Connected")
-                            case .connecting:
-                                SwiftUI.ProgressView("Connecting")
-                            case .connectionFailed(let error):
-                                SwiftUI.VStack {
-                                    SwiftUI.Text("Connection Failed")
-                                        .font(.subheadline)
-                                    SwiftUI.Text(error.localizedDescription)
-                                }
+                        switch coordinator.state {
+                        case .connected:
+                            fatalError()
+                        case .notConnected:
+                            SwiftUI.Text("Not Connected")
+                        case .connecting:
+                            SwiftUI.ProgressView("Connecting")
+                        case .connectionFailed(let error):
+                            SwiftUI.VStack {
+                                SwiftUI.Text("Connection Failed")
+                                    .font(.subheadline)
+                                SwiftUI.Text(error.localizedDescription)
                             }
-                        } else {
-                            R.loadingView(for: coordinator.url, state: coordinator.state)
                         }
                     }
                     .transition(coordinator.session.configuration.transition ?? .identity)

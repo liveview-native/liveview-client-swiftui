@@ -21,20 +21,29 @@ import Combine
 /// - Note: This macro erases the underlying ``LiveView`` to `AnyView`.
 /// This may incur a minor performance hit when updating the `View` containing the ``LiveView``.
 @freestanding(expression)
-public macro LiveView<Host: LiveViewHost>(
+public macro LiveView<
+    Host: LiveViewHost,
+    ConnectingView: View,
+    DisconnectedView: View,
+    ReconnectingView: View,
+    ErrorView: View
+>(
     _ host: Host,
     configuration: LiveSessionConfiguration = .init(),
     addons: [any CustomRegistry<EmptyRegistry>.Type] = [],
-    @ViewBuilder connecting: () -> any View = { EmptyView() },
-    @ViewBuilder disconnected: () -> any View = { EmptyView() },
-    @ViewBuilder error: @escaping (Error) -> any View = { _ in EmptyView() }
+    @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+    @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+    @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingView = { (_: AnyView) -> Never in fatalError() },
+    @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
+
+public typealias ViewBuilderClosure<T> = () -> T
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
 /// The `LiveView` attempts to connect immediately when it appears.
 ///
-/// While in states other than ``LiveSessionState/connected``, this view only provides a basic text description of the state. The loading view can be customized with a custom registry and the ``CustomRegistry/loadingView(for:state:)-6jd3b`` method.
+/// While in states other than ``LiveSessionState/connected``, this view only provides a basic text description of the state.
 ///
 /// ## Topics
 /// ### Creating a LiveView
@@ -43,26 +52,78 @@ public macro LiveView<Host: LiveViewHost>(
 /// - ``body``
 /// ### See Also
 /// - ``LiveViewModel``
-public struct LiveView<R: RootRegistry>: View {
+public struct LiveView<
+    R: RootRegistry,
+    ConnectingView: View,
+    DisconnectedView: View,
+    ReconnectingView: View,
+    ErrorView: View
+>: View {
     @StateObject var session: LiveSessionCoordinator<R>
     
     @StateObject private var liveViewModel = LiveViewModel()
     
     @Environment(\.scenePhase) private var scenePhase
     
+    let connectingView: () -> ConnectingView
+    let disconnectedView: () -> DisconnectedView
+    let reconnectingView: (AnyView) -> ReconnectingView
+    let errorView: (Error) -> ErrorView
+    
     /// Creates a new LiveView attached to the given coordinator.
     ///
     /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
-    public init(session: @autoclosure @escaping () -> LiveSessionCoordinator<R>) {
+    public init(
+        registry _: R.Type = EmptyRegistry.self,
+        session: @autoclosure @escaping () -> LiveSessionCoordinator<R>,
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingView = { (_: AnyView) -> Never in fatalError() },
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) {
         self._session = .init(wrappedValue: session())
+        self.connectingView = connecting
+        self.disconnectedView = disconnected
+        self.reconnectingView = reconnecting
+        self.errorView = error
     }
     
-    public init(_ host: some LiveViewHost, configuration: LiveSessionConfiguration = .init()) {
-        self.init(session: .init(host.url, config: configuration))
+    public init(
+        registry: R.Type = EmptyRegistry.self,
+        _ host: some LiveViewHost,
+        configuration: LiveSessionConfiguration = .init(),
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingView = { (_: AnyView) -> Never in fatalError() },
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) {
+        self.init(
+            registry: registry,
+            session: .init(host.url, config: configuration),
+            connecting: connecting,
+            disconnected: disconnected,
+            reconnecting: reconnecting,
+            error: error
+        )
     }
     
-    public init(url: URL, configuration: LiveSessionConfiguration = .init()) {
-        self.init(session: .init(url, config: configuration))
+    public init(
+        registry: R.Type = EmptyRegistry.self,
+        url: URL,
+        configuration: LiveSessionConfiguration = .init(),
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingView = { (_: AnyView) -> Never in fatalError() },
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) {
+        self.init(
+            registry: registry,
+            session: .init(url, config: configuration),
+            connecting: connecting,
+            disconnected: disconnected,
+            reconnecting: reconnecting,
+            error: error
+        )
     }
     
     private var rootCoordinator: LiveViewCoordinator<R> {
@@ -82,25 +143,35 @@ public struct LiveView<R: RootRegistry>: View {
                         .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
                 }
             default:
-                if R.LoadingView.self == Never.self {
-                    switch session.state {
-                    case .connected:
-                        fatalError()
-                    case .notConnected:
+                switch session.state {
+                case .connected:
+                    fatalError()
+                case .notConnected:
+                    if DisconnectedView.self == Never.self {
                         if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
                             SwiftUI.ContentUnavailableView {
                                 SwiftUI.Label("No Connection", systemImage: "network.slash")
                             } description: {
                                 SwiftUI.Text("The app will reconnect when network connection is regained.")
                             }
+                        } else {
+                            SwiftUI.Text("No Connection")
                         }
-                    case .connecting:
+                    } else {
+                        disconnectedView()
+                    }
+                case .connecting:
+                    if ConnectingView.self == Never.self {
                         SwiftUI.ProgressView("Connecting")
-                    case .connectionFailed(let error):
+                    } else {
+                        connectingView()
+                    }
+                case .connectionFailed(let error):
+                    if ErrorView.self == Never.self {
                         if let error = error as? LiveConnectionError,
                            case let .initialFetchUnexpectedResponse(_, trace?) = error
                         {
-                            ErrorView<R>(html: trace)
+                            AnyErrorView<R>(html: trace)
                         } else {
                             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
                                 SwiftUI.ContentUnavailableView {
@@ -121,9 +192,9 @@ public struct LiveView<R: RootRegistry>: View {
                                 }
                             }
                         }
+                    } else {
+                        errorView(error)
                     }
-                } else {
-                    R.loadingView(for: session.url, state: session.state)
                 }
             }
         }
@@ -154,15 +225,5 @@ struct PhxMain<R: RootRegistry>: View {
     
     var body: some View {
         NavStackEntryView(.init(url: context.coordinator.url, coordinator: context.coordinator))
-    }
-}
-
-extension LiveView where R == EmptyRegistry {
-    public init(_ host: some LiveViewHost, configuration: LiveSessionConfiguration = .init()) {
-        self.init(session: .init(host.url, config: configuration))
-    }
-    
-    public init(url: URL, configuration: LiveSessionConfiguration = .init()) {
-        self.init(session: .init(url, config: configuration))
     }
 }
