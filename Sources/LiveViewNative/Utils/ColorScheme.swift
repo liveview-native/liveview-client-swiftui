@@ -19,7 +19,9 @@ extension ColorScheme: AttributeDecodable {
         guard let value = Self(from: attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
         self = value
     }
-    
+}
+
+extension ColorScheme {
     init?(from string: String) {
         switch string {
         case "light": self = .light

@@ -34,13 +34,12 @@ extension Gradient: ParseableModifierValue {
         
         let value: Gradient
         
-        init(colors: [String:Color]) {
-            #warning("fixme: use normal list for colors/stops")
-            self.value = .init(colors: Array(colors.sorted(by: { Int($0.key)! < Int($1.key)! }).map(\.value)))
+        init(colors: [Color]) {
+            self.value = .init(colors: colors)
         }
         
-        init(stops: [String:Gradient.Stop]) {
-            self.value = .init(stops: Array(stops.sorted(by: { Int($0.key)! < Int($1.key)! }).map(\.value)))
+        init(stops: [Gradient.Stop]) {
+            self.value = .init(stops: stops)
         }
     }
 }

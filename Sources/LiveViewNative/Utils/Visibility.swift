@@ -20,7 +20,9 @@ extension Visibility: AttributeDecodable {
         guard let value = Self(from: attributeValue) else { throw AttributeDecodingError.badValue(Self.self) }
         self = value
     }
-    
+}
+
+extension Visibility {
     init?(from string: String) {
         switch string {
         case "visible": self = .visible

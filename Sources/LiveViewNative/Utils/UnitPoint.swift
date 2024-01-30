@@ -25,7 +25,14 @@ import RegexBuilder
 /// - `bottom-leading`
 /// - `bottom-trailing`
 extension UnitPoint: AttributeDecodable {
-    public init(from value: String) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        try self.init(from: value)
+    }
+}
+
+extension UnitPoint {
+    init(from value: String) throws {
         switch value {
         case "zero":
             self = .zero
@@ -78,10 +85,5 @@ extension UnitPoint: AttributeDecodable {
             else { throw AttributeDecodingError.badValue(Self.self) }
             self = .init(x: x, y: y)
         }
-    }
-    
-    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
-        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
-        try self.init(from: value)
     }
 }
