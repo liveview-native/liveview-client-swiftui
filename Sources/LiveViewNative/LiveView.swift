@@ -33,11 +33,23 @@ public macro LiveView<
     addons: [any CustomRegistry<EmptyRegistry>.Type] = [],
     @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
     @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-    @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingView = { (_: AnyView) -> Never in fatalError() },
+    @ViewBuilder reconnecting: @escaping (AnyView, Bool) -> ReconnectingView = { (_: AnyView, _: Bool) -> Never in fatalError() },
     @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
 
-public typealias ViewBuilderClosure<T> = () -> T
+public struct _StatelessReconnectingView<Content: View>: View {
+    let content: AnyView
+    let isReconnecting: Bool
+    let reconnectingView: (AnyView) -> Content
+    
+    public var body: some View {
+        if isReconnecting {
+            reconnectingView(content)
+        } else {
+            content
+        }
+    }
+}
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
@@ -67,7 +79,7 @@ public struct LiveView<
     
     let connectingView: () -> ConnectingView
     let disconnectedView: () -> DisconnectedView
-    let reconnectingView: (AnyView) -> ReconnectingView
+    let reconnectingView: (AnyView, Bool) -> ReconnectingView
     let errorView: (Error) -> ErrorView
     
     /// Creates a new LiveView attached to the given coordinator.
@@ -78,7 +90,7 @@ public struct LiveView<
         session: @autoclosure @escaping () -> LiveSessionCoordinator<R>,
         @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
         @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingView = { (_: AnyView) -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView, Bool) -> ReconnectingView = { (_: AnyView, _: Bool) -> Never in fatalError() },
         @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
     ) {
         self._session = .init(wrappedValue: session())
@@ -94,7 +106,7 @@ public struct LiveView<
         configuration: LiveSessionConfiguration = .init(),
         @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
         @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingView = { (_: AnyView) -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView, Bool) -> ReconnectingView = { (_: AnyView, _: Bool) -> Never in fatalError() },
         @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
     ) {
         self.init(
@@ -113,9 +125,67 @@ public struct LiveView<
         configuration: LiveSessionConfiguration = .init(),
         @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
         @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingView = { (_: AnyView) -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView, Bool) -> ReconnectingView = { (_: AnyView, _: Bool) -> Never in fatalError() },
         @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
     ) {
+        self.init(
+            registry: registry,
+            session: .init(url, config: configuration),
+            connecting: connecting,
+            disconnected: disconnected,
+            reconnecting: reconnecting,
+            error: error
+        )
+    }
+    
+    public init<ReconnectingContent>(
+        registry: R.Type = EmptyRegistry.self,
+        session: @autoclosure @escaping () -> LiveSessionCoordinator<R>,
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingContent,
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) where ReconnectingView == _StatelessReconnectingView<ReconnectingContent>, ReconnectingContent: View {
+        self.init(
+            registry: registry,
+            session: session(),
+            connecting: connecting,
+            disconnected: disconnected,
+            reconnecting: { content, isReconnecting in
+                _StatelessReconnectingView<ReconnectingContent>(content: content, isReconnecting: isReconnecting, reconnectingView: reconnecting)
+            },
+            error: error
+        )
+    }
+    
+    public init<ReconnectingContent>(
+        registry: R.Type = EmptyRegistry.self,
+        _ host: some LiveViewHost,
+        configuration: LiveSessionConfiguration = .init(),
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingContent,
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) where ReconnectingView == _StatelessReconnectingView<ReconnectingContent>, ReconnectingContent: View {
+        self.init(
+            registry: registry,
+            session: .init(host.url, config: configuration),
+            connecting: connecting,
+            disconnected: disconnected,
+            reconnecting: reconnecting,
+            error: error
+        )
+    }
+    
+    public init<ReconnectingContent>(
+        registry: R.Type = EmptyRegistry.self,
+        url: URL,
+        configuration: LiveSessionConfiguration = .init(),
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingContent,
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) where ReconnectingView == _StatelessReconnectingView<ReconnectingContent>, ReconnectingContent: View {
         self.init(
             registry: registry,
             session: .init(url, config: configuration),
@@ -130,34 +200,55 @@ public struct LiveView<
         session.navigationPath.first!.coordinator
     }
     
-    struct ReconnectingModifier: ViewModifier {
-        let state: LiveSessionState
-        let reconnectingView: (AnyView) -> ReconnectingView
-        
-        func body(content: Content) -> some View {
-            if case .reconnecting = state {
-                reconnectingView(AnyView(content))
-            } else {
-                content
-            }
-        }
-    }
-    
     public var body: some View {
         SwiftUI.Group {
             switch session.state {
             case .connected, .reconnecting:
-                SwiftUI.Group {
-                    if let rootLayout = session.rootLayout {
-                        self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
-                            .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
-                    } else {
-                        PhxMain<R>()
-                            .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
-                            .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
+                if ReconnectingView.self == Never.self {
+                    SwiftUI.Group {
+                        if let rootLayout = session.rootLayout {
+                            self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
+                                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
+                        } else {
+                            PhxMain<R>()
+                                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
+                                .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
+                        }
                     }
+                        .safeAreaInset(edge: .top) {
+                            if session.state.isReconnecting {
+                                SwiftUI.VStack {
+                                    SwiftUI.Label("No Connection", systemImage: "wifi.slash")
+                                        .bold()
+                                    SwiftUI.Text("Reconnecting")
+                                        .foregroundStyle(.secondary)
+                                        .tint(.secondary)
+                                }
+                                    .font(.caption)
+                                    .padding(8)
+                                    .frame(maxWidth: .infinity)
+                                    .background(.regularMaterial)
+                                    .transition(.move(edge: .top).combined(with: .opacity))
+                            }
+                        }
+                        .animation(.default, value: session.state.isReconnecting)
+                } else {
+                    reconnectingView(
+                        AnyView(
+                            SwiftUI.Group {
+                                if let rootLayout = session.rootLayout {
+                                    self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
+                                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
+                                } else {
+                                    PhxMain<R>()
+                                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
+                                        .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
+                                }
+                            }
+                        ),
+                        session.state.isReconnecting
+                    )
                 }
-                .modifier(ReconnectingModifier(state: session.state, reconnectingView: reconnectingView))
             default:
                 switch session.state {
                 case .connected, .reconnecting:

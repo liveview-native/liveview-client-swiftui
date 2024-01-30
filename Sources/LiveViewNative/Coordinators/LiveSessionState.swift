@@ -41,4 +41,13 @@ public enum LiveSessionState {
             return false
         }
     }
+    
+    /// Is the enum in the `reconnecting` state.
+    var isReconnecting: Bool {
+        if case .reconnecting = self {
+            return true
+        } else {
+            return false
+        }
+    }
 }
