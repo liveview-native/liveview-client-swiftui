@@ -227,7 +227,17 @@ public struct LiveView<
                                     .font(.caption)
                                     .padding(8)
                                     .frame(maxWidth: .infinity)
+                                    #if os(watchOS)
+                                    .background({ () -> AnyShapeStyle in
+                                        if #available(watchOS 10.0, *) {
+                                            return AnyShapeStyle(Material.regular)
+                                        } else {
+                                            return AnyShapeStyle(.background)
+                                        }
+                                    }())
+                                    #else
                                     .background(.regularMaterial)
+                                    #endif
                                     .transition(.move(edge: .top).combined(with: .opacity))
                             }
                         }
