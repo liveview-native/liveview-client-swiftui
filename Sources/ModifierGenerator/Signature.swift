@@ -52,6 +52,7 @@ struct Signature {
                     .compactMap({ $0.argument.as(PlatformVersionSyntax.self)?.platform.text })
                     .filter({ !unavailable.contains($0) })
                     .map({ $0 == "macCatalyst" ? "targetEnvironment(macCatalyst)" : "os(\($0))" })
+                    .sorted()
                     .joined(separator: " || "))
             """
 
