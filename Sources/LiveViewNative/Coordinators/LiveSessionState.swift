@@ -13,6 +13,8 @@ public enum LiveSessionState {
     case notConnected
     /// The coordinator is attempting to connect.
     case connecting
+    /// The coordinator is attempting to reconnect.
+    case reconnecting
     /// The coordinator has connected and the view tree can be rendered.
     case connected
     // todo: disconnected state?
@@ -23,7 +25,8 @@ public enum LiveSessionState {
     var isPending: Bool {
         switch self {
         case .notConnected,
-             .connecting:
+             .connecting,
+             .reconnecting:
             return true
         default:
             return false

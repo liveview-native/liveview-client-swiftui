@@ -129,22 +129,38 @@ public struct LiveView<
     private var rootCoordinator: LiveViewCoordinator<R> {
         session.navigationPath.first!.coordinator
     }
-
+    
+    struct ReconnectingModifier: ViewModifier {
+        let state: LiveSessionState
+        let reconnectingView: (AnyView) -> ReconnectingView
+        
+        func body(content: Content) -> some View {
+            if case .reconnecting = state {
+                reconnectingView(AnyView(content))
+            } else {
+                content
+            }
+        }
+    }
+    
     public var body: some View {
         SwiftUI.Group {
             switch session.state {
-            case .connected:
-                if let rootLayout = session.rootLayout {
-                    self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
-                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
-                } else {
-                    PhxMain<R>()
-                        .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
-                        .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
+            case .connected, .reconnecting:
+                SwiftUI.Group {
+                    if let rootLayout = session.rootLayout {
+                        self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
+                            .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
+                    } else {
+                        PhxMain<R>()
+                            .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
+                            .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
+                    }
                 }
+                .modifier(ReconnectingModifier(state: session.state, reconnectingView: reconnectingView))
             default:
                 switch session.state {
-                case .connected:
+                case .connected, .reconnecting:
                     fatalError()
                 case .notConnected:
                     if DisconnectedView.self == Never.self {

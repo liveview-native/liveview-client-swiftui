@@ -44,7 +44,7 @@ struct NavStackEntryView<R: RootRegistry>: View {
                 } else {
                     SwiftUI.Group {
                         switch coordinator.state {
-                        case .connected:
+                        case .connected, .reconnecting:
                             fatalError()
                         case .notConnected:
                             SwiftUI.Text("Not Connected")
