@@ -55,7 +55,49 @@ public struct _StatelessReconnectingView<Content: View>: View {
 ///
 /// The `LiveView` attempts to connect immediately when it appears.
 ///
-/// While in states other than ``LiveSessionState/connected``, this view only provides a basic text description of the state.
+/// ## State Views
+/// When in states other than ``LiveSessionState/connected``, this View will use a default indicator.
+/// Provide the `connecting`, `disconnected`, `reconnected`, and `error` arguments to customize the presentation of the state.
+///
+/// ```swift
+/// LiveView(.localhost) {
+///     ProgressView("Loading")
+/// } disconnected: {
+///     Text("No connection")
+/// }
+/// ```
+///
+/// The `reconnecting` closure is provided the contents of the LiveView before it lost connection.
+/// Use the `content` parameter to add an overlay to the previously rendered LiveView content.
+///
+/// ```swift
+/// LiveView(.localhost) {
+///     ProgressView("Loading")
+/// } reconnecting: { content in
+///     content.overlay(alignment: .bottom) {
+///         Text("Reconnecting")
+///     }
+/// }
+/// ```
+///
+/// The `reconnecting` closure can also take a second argument: a `Bool` indicating whether the View is reconnecting or connected.
+/// If you provide a closure with both arguments, any modifiers will always be applied. It is up to you to conditionally render the reconnecting state.
+/// This form can be useful when animating the reconnection indicator.
+///
+/// ```swift
+/// LiveView(.localhost) {
+///     ProgressView("Loading")
+/// } reconnecting: { content, isReconnecting in
+///     content
+///         .overlay(alignment: .bottom) {
+///             if isReconnecting {
+///                 Text("Reconnecting")
+///                     .transition(.move(edge: .bottom))
+///             }
+///         }
+///         .animation(.default, value: isReconnecting)
+/// }
+/// ```
 ///
 /// ## Topics
 /// ### Creating a LiveView
