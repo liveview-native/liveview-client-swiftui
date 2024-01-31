@@ -282,6 +282,12 @@ public struct LiveView<
                 }
             }
         }
+        .environment(\.liveViewStateViews, LiveViewStateViews(
+            connecting: connectingView,
+            disconnected: disconnectedView,
+            reconnecting: reconnectingView,
+            error: errorView
+        ))
         .transformEnvironment(\.stylesheets) { stylesheets in
             guard let stylesheet = session.stylesheet
             else { return }
@@ -309,5 +315,59 @@ struct PhxMain<R: RootRegistry>: View {
     
     var body: some View {
         NavStackEntryView(.init(url: context.coordinator.url, coordinator: context.coordinator))
+    }
+}
+
+/// Type-erased collection of state views, passed through the `Environment` for use in `NavStackEntryView`.
+struct LiveViewStateViews {
+    let connectingView: () -> AnyView
+    let disconnectedView: () -> AnyView
+    let reconnectingView: (AnyView, Bool) -> AnyView
+    let errorView: (Error) -> AnyView
+    
+    init<ConnectingView: View, DisconnectedView: View, ReconnectingView: View, ErrorView: View>(
+        connecting: @escaping () -> ConnectingView,
+        disconnected: @escaping () -> DisconnectedView,
+        reconnecting: @escaping (AnyView, Bool) -> ReconnectingView,
+        error errorView: @escaping (Error) -> ErrorView
+    ) {
+        self.connectingView = {
+            if ConnectingView.self != Never.self {
+                AnyView(connecting())
+            } else {
+                AnyView(EmptyView())
+            }
+        }
+        self.disconnectedView = {
+            if DisconnectedView.self != Never.self {
+                AnyView(connecting())
+            } else {
+                AnyView(EmptyView())
+            }
+        }
+        self.reconnectingView = { content, isReconnecting in
+            if ReconnectingView.self != Never.self {
+                AnyView(reconnecting(content, isReconnecting))
+            } else {
+                AnyView(content)
+            }
+        }
+        self.errorView = { error in
+            if ErrorView.self != Never.self {
+                AnyView(errorView(error))
+            } else {
+                AnyView(EmptyView())
+            }
+        }
+    }
+}
+extension EnvironmentValues {
+    enum LiveViewStateViewsKey: EnvironmentKey {
+        static let defaultValue = LiveViewStateViews(connecting: { fatalError() }, disconnected: { fatalError() }, reconnecting: { _, _ in fatalError() }, error: { _ in fatalError() })
+    }
+    
+    var liveViewStateViews: LiveViewStateViews {
+        get { self[LiveViewStateViewsKey.self] }
+        set { self[LiveViewStateViewsKey.self] = newValue }
     }
 }

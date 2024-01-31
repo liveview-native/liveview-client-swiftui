@@ -12,6 +12,7 @@ struct NavStackEntryView<R: RootRegistry>: View {
     private let entry: LiveNavigationEntry<R>
     @ObservedObject private var coordinator: LiveViewCoordinator<R>
     @StateObject private var liveViewModel = LiveViewModel()
+    @Environment(\.liveViewStateViews) private var liveViewStateViews
     
     init(_ entry: LiveNavigationEntry<R>) {
         self.entry = entry
@@ -47,15 +48,11 @@ struct NavStackEntryView<R: RootRegistry>: View {
                         case .connected, .reconnecting:
                             fatalError()
                         case .notConnected:
-                            SwiftUI.Text("Not Connected")
+                            liveViewStateViews.disconnectedView()
                         case .connecting:
-                            SwiftUI.ProgressView("Connecting")
+                            liveViewStateViews.connectingView()
                         case .connectionFailed(let error):
-                            SwiftUI.VStack {
-                                SwiftUI.Text("Connection Failed")
-                                    .font(.subheadline)
-                                SwiftUI.Text(error.localizedDescription)
-                            }
+                            liveViewStateViews.errorView(error)
                         }
                     }
                     .transition(coordinator.session.configuration.transition ?? .identity)
