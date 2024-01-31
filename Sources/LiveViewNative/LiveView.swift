@@ -68,8 +68,7 @@ public struct LiveView<R: RootRegistry>: View {
 
     public var body: some View {
         SwiftUI.Group {
-            switch session.state {
-            case .connected:
+            if session.state.isConnected || (session.navigationPath.first?.coordinator.document != nil && session.state.isPending) {
                 if let rootLayout = session.rootLayout {
                     self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
                         .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
@@ -78,50 +77,48 @@ public struct LiveView<R: RootRegistry>: View {
                         .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
                         .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
                 }
-            default:
-                if R.LoadingView.self == Never.self {
-                    switch session.state {
-                    case .connected:
-                        fatalError()
-                    case .notConnected:
+            } else if R.LoadingView.self == Never.self {
+                switch session.state {
+                case .connected:
+                    fatalError()
+                case .notConnected:
+                    if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+                        SwiftUI.ContentUnavailableView {
+                            SwiftUI.Label("No Connection", systemImage: "network.slash")
+                        } description: {
+                            SwiftUI.Text("The app will reconnect when network connection is regained.")
+                        }
+                    }
+                case .connecting:
+                    SwiftUI.ProgressView("Connecting")
+                case .connectionFailed(let error):
+                    if let error = error as? LiveConnectionError,
+                       case let .initialFetchUnexpectedResponse(_, trace?) = error
+                    {
+                        ErrorView<R>(html: trace)
+                    } else {
                         if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
                             SwiftUI.ContentUnavailableView {
                                 SwiftUI.Label("No Connection", systemImage: "network.slash")
                             } description: {
+                                #if DEBUG
+                                SwiftUI.Text(error.localizedDescription)
+                                    .monospaced()
+                                #else
                                 SwiftUI.Text("The app will reconnect when network connection is regained.")
+                                #endif
                             }
-                        }
-                    case .connecting:
-                        SwiftUI.ProgressView("Connecting")
-                    case .connectionFailed(let error):
-                        if let error = error as? LiveConnectionError,
-                           case let .initialFetchUnexpectedResponse(_, trace?) = error
-                        {
-                            ErrorView<R>(html: trace)
                         } else {
-                            if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-                                SwiftUI.ContentUnavailableView {
-                                    SwiftUI.Label("No Connection", systemImage: "network.slash")
-                                } description: {
-                                    #if DEBUG
-                                    SwiftUI.Text(error.localizedDescription)
-                                        .monospaced()
-                                    #else
-                                    SwiftUI.Text("The app will reconnect when network connection is regained.")
-                                    #endif
-                                }
-                            } else {
-                                SwiftUI.VStack {
-                                    SwiftUI.Text("No Connection")
-                                        .font(.subheadline)
-                                    SwiftUI.Text(error.localizedDescription)
-                                }
+                            SwiftUI.VStack {
+                                SwiftUI.Text("No Connection")
+                                    .font(.subheadline)
+                                SwiftUI.Text(error.localizedDescription)
                             }
                         }
                     }
-                } else {
-                    R.loadingView(for: session.url, state: session.state)
                 }
+            } else {
+                R.loadingView(for: session.url, state: session.state)
             }
         }
         .transformEnvironment(\.stylesheets) { stylesheets in

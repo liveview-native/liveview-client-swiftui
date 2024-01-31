@@ -154,6 +154,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             self.domValues = domValues
             
+            navigationPath.first!.coordinator.document = try LiveViewNativeCore.Document.parse(mainDiv.html())
+            
             if socket == nil {
                 try await self.connectSocket(domValues)
             }
