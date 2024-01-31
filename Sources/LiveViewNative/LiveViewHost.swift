@@ -114,3 +114,9 @@ public extension LiveViewHost where Self == AutomaticLiveViewHost {
         .init(development: .localhost, production: .custom(url))
     }
 }
+
+extension URL: LiveViewHost {
+    public var url: URL {
+        self
+    }
+}

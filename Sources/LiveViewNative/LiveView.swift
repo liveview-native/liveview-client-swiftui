@@ -260,33 +260,6 @@ public struct LiveView<
             case .connected, .reconnecting:
                 if ReconnectingView.self == Never.self {
                     connectedContent
-                        .safeAreaInset(edge: .top) {
-                            if session.state.isReconnecting {
-                                SwiftUI.VStack {
-                                    SwiftUI.Label("No Connection", systemImage: "wifi.slash")
-                                        .bold()
-                                    SwiftUI.Text("Reconnecting")
-                                        .foregroundStyle(.secondary)
-                                        .tint(.secondary)
-                                }
-                                    .font(.caption)
-                                    .padding(8)
-                                    .frame(maxWidth: .infinity)
-                                    #if os(watchOS)
-                                    .background({ () -> AnyShapeStyle in
-                                        if #available(watchOS 10.0, *) {
-                                            return AnyShapeStyle(Material.regular)
-                                        } else {
-                                            return AnyShapeStyle(.background)
-                                        }
-                                    }())
-                                    #else
-                                    .background(.regularMaterial)
-                                    #endif
-                                    .transition(.move(edge: .top).combined(with: .opacity))
-                            }
-                        }
-                        .animation(.default, value: session.state.isReconnecting)
                 } else {
                     reconnectingView(
                         AnyView(
@@ -295,59 +268,17 @@ public struct LiveView<
                         session.state.isReconnecting
                     )
                 }
-            default:
-                switch session.state {
-                case .connected, .reconnecting:
-                    fatalError()
-                case .notConnected:
-                    if DisconnectedView.self == Never.self {
-                        if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-                            SwiftUI.ContentUnavailableView {
-                                SwiftUI.Label("No Connection", systemImage: "network.slash")
-                            } description: {
-                                SwiftUI.Text("The app will reconnect when network connection is regained.")
-                            }
-                        } else {
-                            SwiftUI.Text("No Connection")
-                        }
-                    } else {
-                        disconnectedView()
-                    }
-                case .connecting:
-                    if ConnectingView.self == Never.self {
-                        SwiftUI.ProgressView("Connecting")
-                    } else {
-                        connectingView()
-                    }
-                case .connectionFailed(let error):
-                    if ErrorView.self == Never.self {
-                        if let error = error as? LiveConnectionError,
-                           case let .initialFetchUnexpectedResponse(_, trace?) = error
-                        {
-                            AnyErrorView<R>(html: trace)
-                        } else {
-                            if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-                                SwiftUI.ContentUnavailableView {
-                                    SwiftUI.Label("No Connection", systemImage: "network.slash")
-                                } description: {
-                                    #if DEBUG
-                                    SwiftUI.Text(error.localizedDescription)
-                                        .monospaced()
-                                    #else
-                                    SwiftUI.Text("The app will reconnect when network connection is regained.")
-                                    #endif
-                                }
-                            } else {
-                                SwiftUI.VStack {
-                                    SwiftUI.Text("No Connection")
-                                        .font(.subheadline)
-                                    SwiftUI.Text(error.localizedDescription)
-                                }
-                            }
-                        }
-                    } else {
-                        errorView(error)
-                    }
+            case .notConnected:
+                if DisconnectedView.self != Never.self {
+                    disconnectedView()
+                }
+            case .connecting:
+                if ConnectingView.self != Never.self {
+                    connectingView()
+                }
+            case .connectionFailed(let error):
+                if ErrorView.self != Never.self {
+                    errorView(error)
                 }
             }
         }
