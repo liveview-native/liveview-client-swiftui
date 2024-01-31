@@ -9,6 +9,8 @@ import SwiftUI
 
 /// A View that renders a ``LiveConnectionError``, or a fallback View.
 /// This can be used to display the stack trace HTML returned by Phoenix when debugging.
+///
+/// When the app is built in release configuration, the `fallback` will always be used.
 public struct LiveErrorView<Fallback: View>: View {
     let error: Error
     let fallback: Fallback
@@ -19,6 +21,7 @@ public struct LiveErrorView<Fallback: View>: View {
     }
     
     public var body: some View {
+        #if DEBUG
         if let error = error as? LiveConnectionError,
            case let .initialFetchUnexpectedResponse(_, trace?) = error
         {
@@ -26,5 +29,8 @@ public struct LiveErrorView<Fallback: View>: View {
         } else {
             fallback
         }
+        #else
+        fallback
+        #endif
     }
 }

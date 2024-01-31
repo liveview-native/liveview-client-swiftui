@@ -258,30 +258,43 @@ public struct LiveView<
         SwiftUI.Group {
             switch session.state {
             case .connected, .reconnecting:
-                if ReconnectingView.self == Never.self {
-                    connectedContent
-                } else {
-                    reconnectingView(
-                        AnyView(
-                            connectedContent
-                        ),
-                        session.state.isReconnecting
-                    )
+                SwiftUI.Group {
+                    if ReconnectingView.self == Never.self {
+                        connectedContent
+                    } else {
+                        reconnectingView(
+                            AnyView(
+                                connectedContent
+                            ),
+                            session.state.isReconnecting
+                        )
+                    }
                 }
+                .transition(session.configuration.transition ?? .identity)
             case .notConnected:
-                if DisconnectedView.self != Never.self {
-                    disconnectedView()
+                SwiftUI.Group {
+                    if DisconnectedView.self != Never.self {
+                        disconnectedView()
+                    }
                 }
+                .transition(session.configuration.transition ?? .identity)
             case .connecting:
-                if ConnectingView.self != Never.self {
-                    connectingView()
+                SwiftUI.Group {
+                    if ConnectingView.self != Never.self {
+                        connectingView()
+                    }
                 }
+                .transition(session.configuration.transition ?? .identity)
             case .connectionFailed(let error):
-                if ErrorView.self != Never.self {
-                    errorView(error)
+                SwiftUI.Group {
+                    if ErrorView.self != Never.self {
+                        errorView(error)
+                    }
                 }
+                .transition(session.configuration.transition ?? .identity)
             }
         }
+        .animation(session.configuration.transition.map({ _ in .default }), value: session.state.isConnected)
         .environment(\.liveViewStateViews, LiveViewStateViews(
             connecting: connectingView,
             disconnected: disconnectedView,
