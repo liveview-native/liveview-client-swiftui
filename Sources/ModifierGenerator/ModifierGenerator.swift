@@ -46,6 +46,60 @@ struct ModifierGenerator: ParsableCommand {
         "_FocusScopeModifier<R>",
         "_PrefersDefaultFocusModifier<R>",
     ]
+    
+    static let extraModifierSchemas: [String:[Schema.Signature]] = [
+        // Image modifiers
+        "resizable": [.init(parameters: [.init(firstName: "capInsets", secondName: nil, type: "EdgeInsets"), .init(firstName: "resizingMode", secondName: nil, type: "SwiftUI.Image.ResizingMode")])],
+        "renderingMode": [.init(parameters: [.init(firstName: "_", secondName: "renderingMode", type: "SwiftUI.Image.TemplateRenderingMode?")])],
+        
+        // Shape modifiers
+        "fill": [.init(parameters: [.init(firstName: "_", secondName: "content", type: "AnyShapeStyle"), .init(firstName: "style", secondName: nil, type: "FillStyle")])],
+        "rotation": [.init(parameters: [.init(firstName: "_", secondName: "angle", type: "Angle"), .init(firstName: "anchor", secondName: nil, type: "UnitPoint")])],
+        "scale": [
+            .init(parameters: [.init(firstName: "x", secondName: nil, type: "AttributeReference<CGFloat>"), .init(firstName: "y", secondName: nil, type: "AttributeReference<CGFloat>"), .init(firstName: "anchor", secondName: nil, type: "UnitPoint")]),
+            .init(parameters: [.init(firstName: "_", secondName: "Scale", type: "CGFloat"), .init(firstName: "anchor", secondName: nil, type: "UnitPoint")])
+        ],
+        "stroke": [
+            .init(parameters: [.init(firstName: "_", secondName: "content", type: "AttributeReference<CGFloat>"), .init(firstName: "style", secondName: nil, type: "StrokeStyle"), .init(firstName: "antialiased", secondName: nil, type: "AttributeReference<Bool>")]),
+            .init(parameters: [.init(firstName: "_", secondName: "content", type: "AttributeReference<CGFloat>"), .init(firstName: "lineWidth", secondName: nil, type: "AttributeReference<CGFloat>"), .init(firstName: "antialiased", secondName: nil, type: "AttributeReference<Bool>")])
+        ],
+        "transform": [.init(parameters: [.init(firstName: "_", secondName: "transform", type: "CGAffineTransform")])],
+        "intersection": [.init(parameters: [.init(firstName: "_", secondName: "other", type: "AnyShape"), .init(firstName: "eoFill", secondName: nil, type: "Bool")])],
+        "union": [.init(parameters: [.init(firstName: "_", secondName: "other", type: "AnyShape"), .init(firstName: "eoFill", secondName: nil, type: "Bool")])],
+        "subtracting": [.init(parameters: [.init(firstName: "_", secondName: "other", type: "AnyShape"), .init(firstName: "eoFill", secondName: nil, type: "Bool")])],
+        "symmetricDifference": [.init(parameters: [.init(firstName: "_", secondName: "other", type: "AnyShape"), .init(firstName: "eoFill", secondName: nil, type: "Bool")])],
+        "lineIntersection": [.init(parameters: [.init(firstName: "_", secondName: "other", type: "AnyShape"), .init(firstName: "eoFill", secondName: nil, type: "Bool")])],
+        "lineSubtraction": [.init(parameters: [.init(firstName: "_", secondName: "other", type: "AnyShape"), .init(firstName: "eoFill", secondName: nil, type: "Bool")])],
+        
+        // Override modifiers
+        "searchScopes": [
+            .init(parameters: [.init(firstName: "_", secondName: "scope", type: "ChangeTracked<String>"), .init(firstName: "activation", secondName: nil, type: "SearchScopeActivation"), .init(firstName: "scopes", secondName: nil, type: "ViewReference")]),
+            .init(parameters: [.init(firstName: "_", secondName: "scope", type: "ChangeTracked<String>"), .init(firstName: "scopes", secondName: nil, type: "ViewReference")]),
+        ],
+        "searchCompletion": [
+            .init(parameters: [.init(firstName: "_", secondName: "token", type: "AtomString")]),
+            .init(parameters: [.init(firstName: "_", secondName: "completion", type: "AttributeReference<String>")]),
+        ],
+        "onSubmit": [.init(parameters: [.init(firstName: "of", secondName: "triggers", type: "SubmitTriggers"), .init(firstName: "action", secondName: nil, type: "Event")])],
+        "mask": [.init(parameters: [.init(firstName: "alignment", secondName: nil, type: "Alignment"), .init(firstName: "mask", secondName: nil, type: "ViewReference")])],
+        "matchedGeometryEffect": [.init(parameters: [
+            .init(firstName: "id", secondName: nil, type: "AttributeReference<String>"),
+            .init(firstName: "in", secondName: "namespace", type: "AttributeReference<String>"),
+            .init(firstName: "properties", secondName: nil, type: "MatchedGeometryProperties"),
+            .init(firstName: "anchor", secondName: nil, type: "UnitPoint"),
+            .init(firstName: "isSource", secondName: nil, type: "AttributeReference<Bool>"),
+        ])],
+        "rotation3DEffect": [.init(parameters: [
+            .init(firstName: "_", secondName: "angle", type: "Angle"),
+            .init(firstName: "axis", secondName: nil, type: "_3DAxis"),
+            .init(firstName: "anchor", secondName: nil, type: "UnitPoint"),
+            .init(firstName: "anchorZ", secondName: nil, type: "AttributeReference<CGFloat>"),
+            .init(firstName: "perspective", secondName: nil, type: "AttributeReference<CGFloat>"),
+        ])],
+        "presentationDetents": [.init(parameters: [.init(firstName: "_", secondName: "detents", type: "Set<PresentationDetent>")])],
+        "focusScope": [.init(parameters: [.init(firstName: "_", secondName: "namespace", type: "AttributeReference<String>")])],
+        "prefersDefaultFocus": [.init(parameters: [.init(firstName: "_", secondName: "prefersDefaultFocus", type: "AttributeReference<Bool>"), .init(firstName: "in", secondName: "namespace", type: "AttributeReference<String>")])]
+    ]
 
     static let requiredTypes: Set<String> = [
         "BlendMode",
@@ -254,9 +308,27 @@ struct ModifierGenerator: ParsableCommand {
                 """#.utf8
             ))
         }
-
+        
         var modifierList = [String]()
-        var generatedSchema = Schema()
+        var generatedSchema = Schema(
+            modifiers: Self.extraModifierSchemas
+        )
+        
+        // find extra enum types in project
+        if schema,
+           let enumerator = FileManager.default.enumerator(at: URL(fileURLWithPath: "Sources/LiveViewNative/Stylesheets/ParseableTypes"), includingPropertiesForKeys: [.isRegularFileKey])
+        {
+            for case let file as URL in enumerator where file.pathExtension == "swift" {
+                let source = try String(contentsOf: file, encoding: .utf8)
+                let sourceFile = Parser.parse(source: source)
+                let visitor = ParseableEnumVisitor(viewMode: SyntaxTreeViewMode.all)
+                visitor.walk(sourceFile)
+                for (key, value) in visitor.enums {
+                    generatedSchema.enums[key] = value
+                }
+                generatedSchema.types.formUnion(visitor.types)
+            }
+        }
 
         for (modifier, signatures) in visitor.modifiers.sorted(by: { $0.key < $1.key }) {
             guard !modifier.starts(with: "_"),

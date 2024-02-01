@@ -12,6 +12,7 @@ import Foundation
 struct Schema: Encodable {
     var modifiers: [String:[Signature]] = [:]
     var enums: [String:[String]] = [:]
+    var types: Set<String> = []
     
     struct Signature: Encodable {
         let parameters: [Parameter]
