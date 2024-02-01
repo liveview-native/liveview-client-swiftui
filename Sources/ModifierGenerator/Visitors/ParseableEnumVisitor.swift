@@ -12,7 +12,7 @@ final class ParseableEnumVisitor: SyntaxVisitor {
             // find extensions with conformance to `ParseableModifierValue`
             node.inheritanceClause?.inheritedTypes
                 .contains(where: {
-                    $0.type.trimmed.description == "ParseableModifierValue"
+                    $0.type.trimmedDescription == "ParseableModifierValue"
                 }) == true,
             // find `parser` implementation
             let parser = node.memberBlock.members.lazy
@@ -21,7 +21,7 @@ final class ParseableEnumVisitor: SyntaxVisitor {
                 .first
         else { return .skipChildren }
         
-        let name = node.extendedType.trimmed.description
+        let name = node.extendedType.trimmedDescription
         
         // get all cases
         let caseVisitor = ConstantAtomLiteralVisitor(viewMode: SyntaxTreeViewMode.all)
@@ -40,7 +40,7 @@ final class ParseableEnumVisitor: SyntaxVisitor {
         // find enums with conformance to `ParseableModifierValue`
         guard node.inheritanceClause?.inheritedTypes
             .contains(where: {
-                $0.type.trimmed.description == "ParseableModifierValue"
+                $0.type.trimmedDescription == "ParseableModifierValue"
             }) == true
         else { return .skipChildren }
         

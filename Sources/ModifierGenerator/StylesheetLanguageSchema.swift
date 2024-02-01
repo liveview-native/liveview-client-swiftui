@@ -1,5 +1,5 @@
 //
-//  Schema.swift
+//  StylesheetLanguageSchema.swift
 //
 //
 //  Created by Carson Katri on 1/2/24.
@@ -9,7 +9,8 @@ import Foundation
 
 /// A JSON representation of the available modifiers.
 /// This structure is used by the LiveView Native VS Code extension to provide completions for modifiers.
-struct Schema: Encodable {
+struct StylesheetLanguageSchema: Encodable {
+    let format = "swiftui"
     var modifiers: [String:[Signature]] = [:]
     var enums: [String:[String]] = [:]
     var types: Set<String> = []
