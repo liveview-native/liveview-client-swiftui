@@ -8,13 +8,14 @@ import LiveViewNative
 
 struct ContentView: View {
     var body: some View {
-        LiveView(
+        #LiveView(
             .automatic(
                 development: .localhost(path: "%LVN_PREFERRED_ROUTE%"),
                 production: URL(string: "https://%LVN_PREFERRED_PROD_URL%%LVN_PREFERRED_ROUTE%")!
-            )
+            ),
+            addons: []
         ) {
-            ProgressView("Connecting")
+            ProgressView()
         } disconnected: {
             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
                 ContentUnavailableView {
@@ -23,7 +24,12 @@ struct ContentView: View {
                     Text("The app will reconnect when network connection is regained.")
                 }
             } else {
-                Text("No Connection")
+                VStack {
+                    Label("No Connection", systemImage: "network.slash")
+                        .font(.headline)
+                    Text("The app will reconnect when network connection is regained.")
+                        .foregroundStyle(.secondary)
+                }
             }
         } reconnecting: { content, isReconnecting in
             content
@@ -39,13 +45,7 @@ struct ContentView: View {
                             .padding(8)
                             .frame(maxWidth: .infinity)
                             #if os(watchOS)
-                            .background(
-                                if #available(watchOS 10.0, *) {
-                                    AnyShapeStyle(.regularMaterial)
-                                } else {
-                                    AnyShapeStyle(.background)
-                                }
-                            )
+                            .background(.background)
                             #else
                             .background(.regularMaterial)
                             #endif
@@ -55,27 +55,35 @@ struct ContentView: View {
                 .animation(.default, value: isReconnecting)
         } error: { error in
             LiveErrorView(error: error) {
+                let description = Group {
+                    #if DEBUG
+                    ScrollView {
+                        Text(error.localizedDescription)
+                            .font(.caption.monospaced())
+                            .multilineTextAlignment(.leading)
+                    }
+                    #else
+                    Text("The app will reconnect when network connection is regained.")
+                    #endif
+                }
                 if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
                     ContentUnavailableView {
                         Label("Connection Failed", systemImage: "network.slash")
                     } description: {
-                        #if DEBUG
-                        Text(error.localizedDescription)
-                            .monospaced()
-                        #else
-                        Text("The app will reconnect when network connection is regained.")
-                        #endif
+                        description
+                    } actions: {
+                        Button {
+                            UIPasteboard.general.string = error.localizedDescription
+                        } label: {
+                            Label("Copy Error", systemImage: "doc.on.doc")
+                        }
                     }
                 } else {
                     VStack {
                         Label("Connection Failed", systemImage: "network.slash")
-                            .font(.subheadline)
-                        #if DEBUG
-                        Text(error.localizedDescription)
-                            .monospaced()
-                        #else
-                        Text("The app will reconnect when network connection is regained.")
-                        #endif
+                            .font(.headline)
+                        description
+                            .foregroundStyle(.secondary)
                     }
                 }
             }
