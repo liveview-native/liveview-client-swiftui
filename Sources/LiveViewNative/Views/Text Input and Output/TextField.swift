@@ -86,7 +86,7 @@ import SwiftUI
 struct TextField<R: RootRegistry>: TextFieldProtocol {
     @ObservedElement var element: ElementNode
     @LiveContext<R> var context
-    @FormState("text") var text: String?
+    @FormState("text", default: "") var text: String?
     @FocusState private var isFocused: Bool
     
     @_documentation(visibility: public)
