@@ -10,10 +10,12 @@ import Foundation
 /// A JSON representation of the available modifiers.
 /// This structure is used by the LiveView Native VS Code extension to provide completions for modifiers.
 struct StylesheetLanguageSchema: Encodable {
-    let format = "swiftui"
-    var modifiers: [String:[Signature]] = [:]
-    var enums: [String:[String]] = [:]
-    var types: Set<String> = []
+    let format: String
+    let framework: String
+    var modifiers = [String:[Signature]]()
+    var enums = [String:[String]]()
+    var types = Set<String>()
+    var deprecations = [String:String]()
     
     struct Signature: Encodable {
         let parameters: [Parameter]
