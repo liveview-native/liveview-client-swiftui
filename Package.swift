@@ -20,6 +20,7 @@ let package = Package(
         .library(
             name: "LiveViewNativeStylesheet",
             targets: ["LiveViewNativeStylesheet"]),
+        .executable(name: "ModifierGenerator", targets: ["ModifierGenerator"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
