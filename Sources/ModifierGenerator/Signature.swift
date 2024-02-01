@@ -63,7 +63,7 @@ struct Signature {
                 \#(boundParameters.isEmpty ? "self.value = ._\(offset)" : #"self.value = ._\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(boundParameters.map({ "\($0.firstName.trimmed): \($0.firstName.trimmed)" }).joined(separator: ", "))\#(caseParameters.isEmpty ? "" : ")")"#)
                 \#((changeTracked + events)
                     .map({
-                        #"self.__\#(offset)_\#(($0.secondName ?? $0.firstName).trimmed.description) = \#($0.secondName ?? $0.firstName)"#
+                        #"self.__\#(offset)_\#(($0.secondName ?? $0.firstName).trimmedDescription) = \#($0.secondName ?? $0.firstName)"#
                     })
                     .joined(separator: "\n")
                 )
@@ -87,14 +87,14 @@ struct Signature {
 
         self.content = #"""
                 \#(platformAvailability)
-                \#(boundParameters.isEmpty ? "case ._\(offset)" : "case let ._\(offset)(\(boundParameters.map(\.firstName.trimmed.description).joined(separator: ", ")))"):
+                \#(boundParameters.isEmpty ? "case ._\(offset)" : "case let ._\(offset)(\(boundParameters.map(\.firstName.trimmedDescription).joined(separator: ", ")))"):
                     \#(availability.isEmpty ? "" : "if #available(\(availability), *) {")
                     \#(
                         availability.isEmpty
                             ? ""
                             : boundParameters
                             .map({
-                                "let \($0.firstName.trimmed.description) = \($0.firstName.trimmed.description) as\($0.type.is(OptionalTypeSyntax.self) ? "?" : "!") \($0.type.as(OptionalTypeSyntax.self)?.wrappedType ?? $0.type)"
+                                "let \($0.firstName.trimmedDescription) = \($0.firstName.trimmedDescription) as\($0.type.is(OptionalTypeSyntax.self) ? "?" : "!") \($0.type.as(OptionalTypeSyntax.self)?.wrappedType ?? $0.type)"
                             })
                             .joined(separator: "\n")
                     )
@@ -145,13 +145,13 @@ struct Signature {
         self.properties = #"""
         \#(changeTracked
             .map({
-                #"@ChangeTracked private var _\#(offset)_\#(($0.secondName ?? $0.firstName).trimmed.description): \#($0.type.as(IdentifierTypeSyntax.self)!.genericArgumentClause!.arguments.description)"#
+                #"@ChangeTracked private var _\#(offset)_\#(($0.secondName ?? $0.firstName).trimmedDescription): \#($0.type.as(IdentifierTypeSyntax.self)!.genericArgumentClause!.arguments.description)"#
             })
             .joined(separator: "\n")
         )
         \#(events
             .map({
-                #"@Event private var _\#(offset)_\#(($0.secondName ?? $0.firstName).trimmed.description): Event.EventHandler"#
+                #"@Event private var _\#(offset)_\#(($0.secondName ?? $0.firstName).trimmedDescription): Event.EventHandler"#
             })
             .joined(separator: "\n")
         )
