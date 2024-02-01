@@ -71,13 +71,6 @@ public macro Registries() = #externalMacro(module: "LiveViewNativeMacros", type:
 /// }
 /// ```
 ///
-/// ### Loading Views
-/// Whereas tags and modifiers can be composed from multiple registry types without conflict, only one loading view implementation can be used.
-/// The aggregate registry will use the loading view from the first concrete registry type that is provided.
-/// In the above example, `AppRegistries` would use `MyRegistry`'s loading view by default.
-///
-/// If you don't want this behavior, you can override ``CustomRegistry/loadingView(for:state:)-6jd3b`` on your aggregate registry and provide another view.
-///
 /// ## Topics
 /// ### Protocol Requirements
 /// - ``Registries``
@@ -95,10 +88,6 @@ public protocol AggregateRegistry: RootRegistry {
 extension AggregateRegistry {
     public static func lookup(_ name: Registries.TagName, element: ElementNode) -> some View {
         return Registries.lookup(name, element: element)
-    }
-
-    public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
-        return Registries.loadingView(for: url, state: state)
     }
     
     public static func errorView(for error: Error) -> some View {
@@ -219,10 +208,6 @@ public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: Cus
             Second.lookup(name, element: element)
         }
     }
-
-    public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
-        return First.loadingView(for: url, state: state)
-    }
     
     public static func errorView(for error: Error) -> some View {
         return First.errorView(for: error)
@@ -248,3 +233,5 @@ public typealias Registry3<T0: CustomRegistry, T1: CustomRegistry, T2: CustomReg
 public typealias Registry4<T0: CustomRegistry, T1: CustomRegistry, T2: CustomRegistry, T3: CustomRegistry>
     = _MultiRegistry<_MultiRegistry<T0, T1>, _MultiRegistry<T2, T3>>
     where T0.Root == T1.Root, T0.Root == T2.Root, T0.Root == T3.Root
+
+public struct _SpecializedEmptyRegistry<Root: RootRegistry>: CustomRegistry {}

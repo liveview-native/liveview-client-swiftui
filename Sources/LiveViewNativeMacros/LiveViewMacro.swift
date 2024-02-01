@@ -19,15 +19,16 @@ extension LiveViewMacro: ExpressionMacro {
     ) throws -> ExprSyntax where Node : FreestandingMacroExpansionSyntax, Context : MacroExpansionContext {
         let registryName = context.makeUniqueName("Registry")
         
-        guard let addons = try node.argumentList.last?
+        // CustomRegistries
+        let addons = try node.argumentList.first(where: { $0.label?.text == "addons" })?
             .expression.as(ArrayExprSyntax.self)?
             .elements.map(transformAddon(_:))
-        else { throw LiveViewMacroError.invalidAddonsSyntax }
+        ?? []
         
         let registries: DeclSyntax
         switch addons.count {
         case 0:
-            throw LiveViewMacroError.missingAddons
+            registries = "typealias Registries = _SpecializedEmptyRegistry<Self>"
         case 1:
             registries = "typealias Registries = \(addons.first!)"
         default:
@@ -54,14 +55,17 @@ extension LiveViewMacro: ExpressionMacro {
             registries = "typealias Registries = \(multiRegistry(addons))"
         }
         
-        var liveViewArguments = LabeledExprListSyntax(
-            node.argumentList
-                .dropLast()
-        )
-        liveViewArguments = liveViewArguments.with(
-            \.[liveViewArguments.index(liveViewArguments.startIndex, offsetBy: node.argumentList.count - 2)],
-            node.argumentList.dropLast().last!.with(\.trailingComma, nil)
-        )
+        // Other arguments
+        var liveViewArguments = node.argumentList
+        liveViewArguments = liveViewArguments.filter({
+            switch $0.label?.text {
+            case "addons":
+                return false
+            default:
+                return true
+            }
+        })
+        liveViewArguments = liveViewArguments.with(\.[liveViewArguments.index(before: liveViewArguments.endIndex)].trailingComma, nil)
         
         return """
         { () -> AnyView in
@@ -69,7 +73,7 @@ extension LiveViewMacro: ExpressionMacro {
                 \(registries)
             }
         
-            return AnyView(LiveView<\(registryName)>(\(liveViewArguments)))
+            return AnyView(LiveView(registry: \(registryName).self, \(liveViewArguments))\(raw: node.trailingClosure?.description ?? "")\(node.additionalTrailingClosures))
         }()
         """
     }
@@ -88,7 +92,6 @@ extension LiveViewMacro: ExpressionMacro {
 enum LiveViewMacroError: Error, CustomStringConvertible {
     case invalidAddonsSyntax
     case invalidAddonElement
-    case missingAddons
     
     var description: String {
         switch self {
@@ -96,8 +99,6 @@ enum LiveViewMacroError: Error, CustomStringConvertible {
             return "Invalid value specified for 'addons'. Expected a static array literal."
         case .invalidAddonElement:
             return "Invalid addon provided. Expected a specialized registry type, such as 'AddonRegistry<Self>.self'"
-        case .missingAddons:
-            return "'addons' must not be empty."
         }
     }
 }

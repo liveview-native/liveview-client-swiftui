@@ -147,7 +147,7 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
             }
         case let .e(error):
             SwiftUI.ToolbarItem {
-                ErrorView<R>(error)
+                AnyErrorView<R>(error)
             }
         }
     }
@@ -163,7 +163,7 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
             ToolbarTitleMenu<R>(element: node)
         default:
             SwiftUI.ToolbarItem {
-                ErrorView<R>(ToolbarError.unknownTag(node.tag))
+                AnyErrorView<R>(ToolbarError.unknownTag(node.tag))
             }
         }
     }
@@ -217,7 +217,7 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
             }
         case let .e(error):
             SwiftUI.ToolbarItem(id: error.localizedDescription) {
-                ErrorView<R>(error)
+                AnyErrorView<R>(error)
             }
         }
     }
@@ -231,7 +231,7 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
             ToolbarTitleMenu<R>(element: node)
         default:
             SwiftUI.ToolbarItem(id: node.tag) {
-                ErrorView<R>(ToolbarError.unknownTag(node.tag))
+                AnyErrorView<R>(ToolbarError.unknownTag(node.tag))
             }
         }
     }

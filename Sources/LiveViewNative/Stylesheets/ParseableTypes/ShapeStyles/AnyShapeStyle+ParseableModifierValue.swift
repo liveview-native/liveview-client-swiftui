@@ -43,7 +43,7 @@ extension AnyShapeStyle: ParseableModifierValue {
             
             ConstantAtomLiteral("foreground").map({ ForegroundStyle() as any ShapeStyle })
             ConstantAtomLiteral("background").map({ BackgroundStyle() as any ShapeStyle })
-            #if !os(watchOS)
+            #if !os(watchOS) && !os(tvOS)
             ConstantAtomLiteral("selection").map({ SelectionShapeStyle() as any ShapeStyle })
             #endif
             ConstantAtomLiteral("tint").map({ TintShapeStyle() as any ShapeStyle })
@@ -347,7 +347,7 @@ extension Material: ParseableModifierValue {
                 ConstantAtomLiteral("thickMaterial").map({ Self.thickMaterial })
                 ConstantAtomLiteral("ultraThickMaterial").map({ Self.ultraThickMaterial })
             }
-            #if !os(watchOS)
+            #if !os(watchOS) && !os(tvOS)
             if #available(iOS 15, macOS 12, visionOS 1.0, *) {
                 ConstantAtomLiteral("bar").map({ Self.bar })
             }

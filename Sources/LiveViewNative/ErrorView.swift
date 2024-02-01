@@ -12,7 +12,7 @@ enum ErrorSource {
     case error(Error)
 }
 
-struct ErrorView<R: RootRegistry>: View {
+struct AnyErrorView<R: RootRegistry>: View {
     let source: ErrorSource
     
     init(html: String) {

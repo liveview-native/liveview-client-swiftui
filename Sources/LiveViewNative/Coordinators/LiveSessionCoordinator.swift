@@ -292,6 +292,24 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             )
             
+            // set to `reconnecting` when the socket asks for the delay duration.
+            socket.reconnectAfter = { [weak self] tries in
+                Task {
+                    await MainActor.run {
+                        self?.state = .reconnecting
+                    }
+                }
+                return Defaults.reconnectSteppedBackOff(tries)
+            }
+            socket.onOpen { [weak self] in
+                guard case .reconnecting = self?.state else { return }
+                Task {
+                    await MainActor.run {
+                        self?.state = .connected
+                    }
+                }
+            }
+            
             var refs = [String]()
             
             refs.append(socket.onOpen { [weak self, weak socket] in
