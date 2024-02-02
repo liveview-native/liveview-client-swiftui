@@ -14,7 +14,7 @@ defmodule MockSheet do
   end
   """
 
-  def class("color-" <> color_name, _target) do
+  def class("color-" <> color_name) do
     ~RULES"""
     color(.<%= color_name %>)
     """
