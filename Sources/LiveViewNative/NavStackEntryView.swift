@@ -30,6 +30,11 @@ struct NavStackEntryView<R: RootRegistry>: View {
             }
     }
     
+    var stateViews: LiveViewStateViews<R> {
+        (liveViewStateViews[ObjectIdentifier(R.self)] as? LiveViewStateViews<R>)
+            ?? LiveViewStateViews<R>(connecting: { fatalError() }, disconnected: { fatalError() }, reconnecting: { _, _ in fatalError() }, error: { _ in fatalError() })
+    }
+    
     @ViewBuilder
     private var elementTree: some View {
         SwiftUI.Group {
@@ -48,11 +53,11 @@ struct NavStackEntryView<R: RootRegistry>: View {
                         case .connected, .reconnecting:
                             fatalError()
                         case .notConnected:
-                            liveViewStateViews.disconnectedView()
+                            stateViews.disconnectedView()
                         case .connecting:
-                            liveViewStateViews.connectingView()
+                            stateViews.connectingView()
                         case .connectionFailed(let error):
-                            liveViewStateViews.errorView(error)
+                            stateViews.errorView(error)
                         }
                     }
                     .transition(coordinator.session.configuration.transition ?? .identity)
