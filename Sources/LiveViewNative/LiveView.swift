@@ -108,7 +108,6 @@ public struct LiveView<
     let connectingView: () -> ConnectingView
     let disconnectedView: () -> DisconnectedView
     let reconnectingView: (_ConnectedContent<R>, Bool) -> ReconnectingView
-    let isReconnectingViewStateless: Bool
     let errorView: (Error) -> ErrorView
     
     /// Creates a new LiveView attached to the given coordinator.
@@ -126,7 +125,6 @@ public struct LiveView<
         self.connectingView = connecting
         self.disconnectedView = disconnected
         self.reconnectingView = reconnecting
-        self.isReconnectingViewStateless = false
         self.errorView = error
     }
     
@@ -156,60 +154,6 @@ public struct LiveView<
         @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
         @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
         @ViewBuilder reconnecting: @escaping (_ConnectedContent<R>, Bool) -> ReconnectingView = { (_: _ConnectedContent<R>, _: Bool) -> Never in fatalError() },
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) {
-        self.init(
-            registry: registry,
-            session: .init(url, config: configuration),
-            connecting: connecting,
-            disconnected: disconnected,
-            reconnecting: reconnecting,
-            error: error
-        )
-    }
-    
-    public init(
-        registry: R.Type = EmptyRegistry.self,
-        session: @autoclosure @escaping () -> LiveSessionCoordinator<R>,
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (_ConnectedContent<R>) -> ReconnectingView = { (_: _ConnectedContent<R>) -> Never in fatalError() },
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) {
-        self._session = .init(wrappedValue: session())
-        self.connectingView = connecting
-        self.disconnectedView = disconnected
-        self.reconnectingView = { content, _ in reconnecting(content) }
-        self.isReconnectingViewStateless = true
-        self.errorView = error
-    }
-    
-    public init(
-        registry: R.Type = EmptyRegistry.self,
-        _ host: some LiveViewHost,
-        configuration: LiveSessionConfiguration = .init(),
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (_ConnectedContent<R>) -> ReconnectingView = { (_: _ConnectedContent<R>) -> Never in fatalError() },
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) {
-        self.init(
-            registry: registry,
-            session: .init(host.url, config: configuration),
-            connecting: connecting,
-            disconnected: disconnected,
-            reconnecting: reconnecting,
-            error: error
-        )
-    }
-    
-    public init(
-        registry: R.Type = EmptyRegistry.self,
-        url: URL,
-        configuration: LiveSessionConfiguration = .init(),
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (_ConnectedContent<R>) -> ReconnectingView = { (_: _ConnectedContent<R>) -> Never in fatalError() },
         @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
     ) {
         self.init(
