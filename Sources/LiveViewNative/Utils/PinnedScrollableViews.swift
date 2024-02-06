@@ -11,8 +11,8 @@ import LiveViewNativeCore
 /// Configuration used to pin section headers/footers in lazy containers.
 ///
 /// Possible values:
-/// * `section-headers`
-/// * `section-footers`
+/// * `sectionHeaders`
+/// * `sectionFooters`
 /// * `all`
 ///
 /// In this example, the current section header will always be visible on the leading edge of the screen, up until the next section is scrolled past the left edge.
@@ -21,7 +21,7 @@ import LiveViewNativeCore
 /// <ScrollView axes="horizontal">
 ///     <LazyHGrid
 ///         rows={...}
-///         pinned-views="section-headers"
+///         pinnedViews="sectionHeaders"
 ///     >
 ///         <Section>
 ///             <Section:header>1-50</Section:header>
@@ -45,9 +45,9 @@ import LiveViewNativeCore
 extension PinnedScrollableViews: AttributeDecodable {
     init(string: String) {
         switch string {
-        case "section-headers":
+        case "sectionHeaders":
             self = .sectionHeaders
-        case "section-footers":
+        case "sectionFooters":
             self = .sectionFooters
         case "all":
             self = [.sectionHeaders, .sectionFooters]

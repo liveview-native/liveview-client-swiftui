@@ -20,10 +20,10 @@ import RegexBuilder
 /// - `trailing`
 /// - `top`
 /// - `bottom`
-/// - `top-leading`
-/// - `top-trailing`
-/// - `bottom-leading`
-/// - `bottom-trailing`
+/// - `topLeading`
+/// - `topTrailing`
+/// - `bottomLeading`
+/// - `bottomTrailing`
 extension UnitPoint: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
@@ -46,13 +46,13 @@ extension UnitPoint {
             self = .top
         case "bottom":
             self = .bottom
-        case "top-leading", "top_leading":
+        case "topLeading":
             self = .topLeading
-        case "top-trailing", "top_trailing":
+        case "topTrailing":
             self = .topTrailing
-        case "bottom-leading", "bottom_leading":
+        case "bottomLeading":
             self = .bottomLeading
-        case "bottom-trailing", "bottom_trailing":
+        case "bottomTrailing":
             self = .bottomTrailing
         default:
             let doublePattern = Regex {
