@@ -15,12 +15,14 @@ struct ContentView: View {
             ),
             addons: []
         ) {
-          // connecting
+            // connecting
             ProgressView()
         } disconnected: {
             DisconnectedView()
         } reconnecting: { content, isReconnecting in
-            ReconnectingView(content: content, isReconnecting: isReconnecting)
+            ReconnectingView(isReconnecting: isReconnecting) {
+                content
+            }
         } error: { error in
             ErrorView(error: error)
         }
