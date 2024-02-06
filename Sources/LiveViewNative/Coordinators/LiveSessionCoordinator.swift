@@ -233,6 +233,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         } else {
             if let html = String(data: data, encoding: .utf8)
             {
+                if try extractLiveReloadFrame(SwiftSoup.parse(html)) {
+                    await connectLiveReloadSocket(urlSessionConfiguration: configuration.urlSession.configuration)
+                }
                 throw LiveConnectionError.initialFetchUnexpectedResponse(resp, html)
             } else {
                 throw LiveConnectionError.initialFetchUnexpectedResponse(resp)
@@ -247,6 +250,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let phxView: String
         let phxID: String
         let liveReloadEnabled: Bool
+    }
+    
+    private func extractLiveReloadFrame(_ doc: SwiftSoup.Document) throws -> Bool {
+        !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
     }
     
     private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> DOMValues {
@@ -266,7 +273,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             phxStatic: try mainDiv.attr("data-phx-static"),
             phxView: try mainDiv.attr("data-phx-view"),
             phxID: try mainDiv.attr("id"),
-            liveReloadEnabled: !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
+            liveReloadEnabled: try extractLiveReloadFrame(doc)
         )
     }
 
