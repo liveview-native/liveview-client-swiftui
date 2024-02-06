@@ -50,7 +50,7 @@ import SwiftUI
 ///     <TextField
 ///         text="amount"
 ///         format="currency"
-///         currency-code="usd"
+///         currencyCode="usd"
 ///         modifier={keyboard_type(:decimal_pad)}
 ///     >
 ///         Enter Amount
@@ -110,7 +110,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     ///
     /// Example currency codes include `USD`, `EUR`, and `JPY`.
     @_documentation(visibility: public)
-    @Attribute("currency-code") private var currencyCode: String?
+    @Attribute("currencyCode") private var currencyCode: String?
     
     /// A type used to format a person’s name with a style appropriate for the given locale.
     /// 
@@ -121,7 +121,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     /// * `abbreviated`
     @_documentation(visibility: public)
     @Attribute(
-        "name-style",
+        "nameStyle",
         transform: {
             switch $0?.value {
             case "short":
@@ -149,7 +149,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     private var field: some View {
         if let format {
             switch format {
-            case "date-time":
+            case "dateTime":
                 SwiftUI.TextField(
                     value: valueBinding(format: .dateTime),
                     format: .dateTime,

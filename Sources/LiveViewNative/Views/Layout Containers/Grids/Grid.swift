@@ -48,10 +48,10 @@ struct Grid<R: RootRegistry>: View {
     @Attribute("alignment") private var alignment: Alignment = .center
     /// The spacing between elements in a ``GridRow``.
     @_documentation(visibility: public)
-    @Attribute("horizontal-spacing") private var horizontalSpacing: Double?
+    @Attribute("horizontalSpacing") private var horizontalSpacing: Double?
     /// The spacing between ``GridRow`` elements.
     @_documentation(visibility: public)
-    @Attribute("vertical-spacing") private var verticalSpacing: Double?
+    @Attribute("verticalSpacing") private var verticalSpacing: Double?
     
     public var body: some View {
         SwiftUI.Grid(

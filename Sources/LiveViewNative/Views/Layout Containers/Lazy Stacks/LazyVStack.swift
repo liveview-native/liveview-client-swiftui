@@ -48,7 +48,7 @@ struct LazyVStack<R: RootRegistry>: View {
     ///
     /// See ``LiveViewNative/SwiftUI/PinnedScrollableViews``.
     @_documentation(visibility: public)
-    @Attribute("pinned-views") private var pinnedViews: PinnedScrollableViews = []
+    @Attribute("pinnedViews") private var pinnedViews: PinnedScrollableViews = []
     
     public var body: some View {
         SwiftUI.LazyVStack(

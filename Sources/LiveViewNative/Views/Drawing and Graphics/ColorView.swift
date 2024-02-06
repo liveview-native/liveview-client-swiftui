@@ -73,7 +73,7 @@ struct ColorView: View {
     /// * `srgb-linear`
     /// * `display-p3`
     @_documentation(visibility: public)
-    @Attribute("color-space") private var colorSpace: SwiftUI.Color.RGBColorSpace = .sRGB
+    @Attribute("colorSpace") private var colorSpace: SwiftUI.Color.RGBColorSpace = .sRGB
     
     var body: some View {
         if let named = name.flatMap(SwiftUI.Color.init(fromNamedOrCSSHex:)) {

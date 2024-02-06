@@ -24,8 +24,8 @@ import SwiftUI
 /// ```html
 /// <Stepper
 ///     value="attendees"
-///     lower-bound={0}
-///     upper-bound={16}
+///     lowerBound={0}
+///     upperBound={16}
 ///     step={2}
 /// >
 ///     Attendees
@@ -54,11 +54,11 @@ struct Stepper<R: RootRegistry>: View {
     
     /// The lowest allowed value.
     @_documentation(visibility: public)
-    @Attribute("lower-bound") private var lowerBound: Double?
+    @Attribute("lowerBound") private var lowerBound: Double?
     
     /// The highest allowed value.
     @_documentation(visibility: public)
-    @Attribute("upper-bound") private var upperBound: Double?
+    @Attribute("upperBound") private var upperBound: Double?
     
     public var body: some View {
         #if !os(tvOS)

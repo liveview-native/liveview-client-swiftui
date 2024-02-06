@@ -21,7 +21,7 @@ import SwiftUI
 /// <ProgressView value={0.5} />
 /// <ProgressView value={0.5} total={2}>
 ///     <Text template={:label}>Completed Percentage</Text>
-///     <Text template={:current-value-label}>25%</Text>
+///     <Text template="currentValueLabel">25%</Text>
 /// </ProgressView>
 /// ```
 ///
@@ -30,8 +30,8 @@ import SwiftUI
 /// ```html
 /// <ProgressView
 ///     counts-down
-///     timer-interval-start={DateTime.utc_now()}
-///     timer-interval-end={DateTime.utc_now() |> DateTime.add(5, :minute)}
+///     timerInterval:start={DateTime.utc_now()}
+///     timerInterval:end={DateTime.utc_now() |> DateTime.add(5, :minute)}
 /// />
 /// ```
 ///
@@ -44,7 +44,7 @@ import SwiftUI
 ///
 /// ## Children
 /// * `label` - Describes the purpose of the element.
-/// * `current-value-label` - Describes the current value.
+/// * `currentValueLabel` - Describes the current value.
 ///
 /// ## Topics
 /// ### Displaying Specific Values
@@ -66,19 +66,19 @@ struct ProgressView<R: RootRegistry>: View {
     ///
     /// This attribute has no effect without ``timerIntervalEnd``.
     @_documentation(visibility: public)
-    @Attribute("timer-interval-start") private var timerIntervalStart: Date?
+    @Attribute("timerInterval:start") private var timerIntervalStart: Date?
     /// The end date for a timer.
     ///
     /// Expected to be in the ISO8601 format produced by Elixir's `DateTime`.
     ///
     /// This attribute has no effect without ``timerIntervalStart``.
     @_documentation(visibility: public)
-    @Attribute("timer-interval-end") private var timerIntervalEnd: Date?
+    @Attribute("timerInterval:end") private var timerIntervalEnd: Date?
     /// Reverses the direction of a timer progress view.
     ///
     /// This attribute has no effect without ``timerIntervalStart`` and ``timerIntervalEnd``.
     @_documentation(visibility: public)
-    @Attribute("counts-down") private var countsDown: Bool
+    @Attribute("countsDown") private var countsDown: Bool
     
     /// Completed amount, out of ``total``.
     @_documentation(visibility: public)
@@ -94,14 +94,14 @@ struct ProgressView<R: RootRegistry>: View {
             {
                 // SwiftUI's default `currentValueLabel` is not present unless the argument is not included in the initializer.
                 // Check if we have it first otherwise use the default.
-                if context.hasTemplate(of: element, withName: "current-value-label") {
+                if context.hasTemplate(of: element, withName: "currentValueLabel") {
                     SwiftUI.ProgressView(
                         timerInterval: timerIntervalStart...timerIntervalEnd,
                         countsDown: countsDown
                     ) {
                         context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
                     } currentValueLabel: {
-                        context.buildChildren(of: element, forTemplate: "current-value-label")
+                        context.buildChildren(of: element, forTemplate: "currentValueLabel")
                     }
                 } else {
                     SwiftUI.ProgressView(
@@ -118,7 +118,7 @@ struct ProgressView<R: RootRegistry>: View {
                 ) {
                     context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
                 } currentValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "current-value-label")
+                    context.buildChildren(of: element, forTemplate: "currentValueLabel")
                 }
             } else {
                 SwiftUI.ProgressView {
