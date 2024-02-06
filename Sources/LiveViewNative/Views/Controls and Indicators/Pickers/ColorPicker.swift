@@ -13,7 +13,7 @@ import LiveViewNativeCore
 /// The color is stored as a map with the keys `r`, `g`, `b`, and optionally `a`.
 ///
 /// ```html
-/// <ColorPicker selection={@favorite_color} phx-change="color-changed" supports-opacity>
+/// <ColorPicker selection={@favorite_color} phx-change="color-changed" supportsOpacity>
 ///     Favorite Color
 /// </ColorPicker>
 /// ```
@@ -39,7 +39,7 @@ struct ColorPicker<R: RootRegistry>: View {
     
     /// Enables the selection of transparent colors.
     @_documentation(visibility: public)
-    @Attribute("supports-opacity") private var supportsOpacity: Bool
+    @Attribute("supportsOpacity") private var supportsOpacity: Bool
     
     struct CodableColor: AttributeDecodable, Codable, Equatable {
         init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {

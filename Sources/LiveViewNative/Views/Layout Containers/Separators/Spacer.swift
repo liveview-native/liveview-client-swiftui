@@ -12,7 +12,7 @@ import SwiftUI
 /// ```html
 /// <VStack>
 ///     <Text>First</Text>
-///     <Spacer min-length="50" />
+///     <Spacer minLength="50" />
 ///     <Text>Second</Text>
 /// </VStack>
 /// ```
@@ -26,7 +26,7 @@ import SwiftUI
 struct Spacer: View {
     /// The minimum size of the spacer. If not provided, the minimum length is the system spacing.
     @_documentation(visibility: public)
-    @Attribute("min-length") private var minLength: Double?
+    @Attribute("minLength") private var minLength: Double?
     
     public var body: some View {
         SwiftUI.Spacer(minLength: minLength.flatMap(CGFloat.init))

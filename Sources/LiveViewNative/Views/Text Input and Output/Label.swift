@@ -14,14 +14,14 @@ import SwiftUI
 /// ```html
 /// <Label>
 ///     <Text template={:title}>John Doe</Text>
-///     <Image template={:icon} system-name="person.crop.circle.fill" />
+///     <Image template={:icon} systemName="person.crop.circle.fill" />
 /// </Label>
 /// ```
 ///
 /// When using a symbol as the icon, use the ``systemImage`` attribute.
 ///
 /// ```html
-/// <Label system-image="person.crop.circle.fill">
+/// <Label systemImage="person.crop.circle.fill">
 ///     <Text>John Doe</Text>
 /// </Label>
 /// ```
@@ -37,9 +37,9 @@ struct Label<R: RootRegistry>: View {
     ///
     /// This attribute takes precedence over the `icon` child.
     ///
-    /// This is equivalent to the `system-name` attribute on ``Image``.
+    /// This is equivalent to the `systemName` attribute on ``Image``.
     @_documentation(visibility: public)
-    @Attribute("system-image") private var systemImage: String?
+    @Attribute("systemImage") private var systemImage: String?
     
     public var body: some View {
         SwiftUI.Label {

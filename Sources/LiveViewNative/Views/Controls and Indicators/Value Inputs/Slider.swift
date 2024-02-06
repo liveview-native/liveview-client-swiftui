@@ -20,8 +20,8 @@ import SwiftUI
 /// ```html
 /// <Slider
 ///     value="progress"
-///     lower-bound={-1}
-///     upper-bound={2}
+///     lowerBound={-1}
+///     upperBound={2}
 /// />
 /// ```
 ///
@@ -30,8 +30,8 @@ import SwiftUI
 /// ```html
 /// <Slider
 ///     value="progress"
-///     lower-bound={0}
-///     upper-bound={10}
+///     lowerBound={0}
+///     upperBound={10}
 ///     step={1}
 /// />
 /// ```
@@ -40,9 +40,9 @@ import SwiftUI
 ///
 /// ```html
 /// <Slider value="value">
-///     <Text template={:label}>Percent Completed</Text>
-///     <Text template={:"minimum-value-label"}>0%</Text>
-///     <Text template={:"maximum-value-label"}>100%</Text>
+///     <Text template="label">Percent Completed</Text>
+///     <Text template="minimumValueLabel">0%</Text>
+///     <Text template="maximumValueLabel">100%</Text>
 /// </Slider>
 /// ```
 ///
@@ -54,8 +54,8 @@ import SwiftUI
 ///
 /// ## Children
 /// * `label`
-/// * `minimum-value-label`
-/// * `maximum-value-label`
+/// * `minimumValueLabel`
+/// * `maximumValueLabel`
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
@@ -69,11 +69,11 @@ struct Slider<R: RootRegistry>: View {
     
     /// The lowest allowed value.
     @_documentation(visibility: public)
-    @Attribute("lower-bound") private var lowerBound: Double = 0
+    @Attribute("lowerBound") private var lowerBound: Double = 0
     
     /// The highest allowed value.
     @_documentation(visibility: public)
-    @Attribute("upper-bound") private var upperBound: Double = 1
+    @Attribute("upperBound") private var upperBound: Double = 1
     
     /// The distance between allowed values.
     @_documentation(visibility: public)
@@ -89,9 +89,9 @@ struct Slider<R: RootRegistry>: View {
             ) {
                 context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
             } minimumValueLabel: {
-                context.buildChildren(of: element, forTemplate: "minimum-value-label")
+                context.buildChildren(of: element, forTemplate: "minimumValueLabel")
             } maximumValueLabel: {
-                context.buildChildren(of: element, forTemplate: "maximum-value-label")
+                context.buildChildren(of: element, forTemplate: "maximumValueLabel")
             }
         } else {
             SwiftUI.Slider(
@@ -100,9 +100,9 @@ struct Slider<R: RootRegistry>: View {
             ) {
                 context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
             } minimumValueLabel: {
-                context.buildChildren(of: element, forTemplate: "minimum-value-label")
+                context.buildChildren(of: element, forTemplate: "minimumValueLabel")
             } maximumValueLabel: {
-                context.buildChildren(of: element, forTemplate: "maximum-value-label")
+                context.buildChildren(of: element, forTemplate: "maximumValueLabel")
             }
         }
         #endif

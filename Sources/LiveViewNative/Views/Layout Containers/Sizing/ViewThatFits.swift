@@ -14,7 +14,7 @@ import SwiftUI
 /// ```html
 /// <ViewThatFits>
 ///     <Text>Long text content ... </Text>
-///     <Image system-name="doc.text" />
+///     <Image systemName="doc.text" />
 /// </ViewThatFits>
 /// ```
 ///

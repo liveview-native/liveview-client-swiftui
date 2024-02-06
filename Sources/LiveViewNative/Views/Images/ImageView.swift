@@ -12,7 +12,7 @@ import SwiftUI
 /// There are two possible sources for images: system-provided images (SF Symbols) or the app's asset catalog.
 ///
 /// ### SF Symbols
-/// The platform provides a wide variety of symbol images which are specified with the `system-name` attribute.
+/// The platform provides a wide variety of symbol images which are specified with the ``systemName`` attribute.
 /// See [Apple's documentation](https://developer.apple.com/sf-symbols/) for more information.
 ///
 /// ### Asset Catalog
@@ -25,9 +25,9 @@ import SwiftUI
 /// Some symbols and asset images support a value input. Use the ``variableValue`` attribute to set this value.
 ///
 /// ```html
-/// <Image system-name="chart.bar.fill" variable-value={0.3} />
-/// <Image system-name="chart.bar.fill" variable-value={0.6} />
-/// <Image system-name="chart.bar.fill" variable-value={1.0} />
+/// <Image systemName="chart.bar.fill" variableValue={0.3} />
+/// <Image systemName="chart.bar.fill" variableValue={0.6} />
+/// <Image systemName="chart.bar.fill" variableValue={1.0} />
 /// ```
 ///
 /// ### Image Labels
@@ -43,7 +43,7 @@ import SwiftUI
 /// Use image modifiers to customize the appearance of an image.
 ///
 /// ```html
-/// <Image system-name="heart.fill" modifiers={resizable([]) |> symbol_rendering_mode(mode: :multicolor)} />
+/// <Image systemName="heart.fill" modifiers={resizable([]) |> symbol_rendering_mode(mode: :multicolor)} />
 /// ```
 ///
 /// These modifiers can be used on ``Image`` elements:
@@ -66,14 +66,14 @@ struct ImageView<R: RootRegistry>: View {
     ///
     /// See [Apple's documentation](https://developer.apple.com/sf-symbols/) for more information.
     @_documentation(visibility: public)
-    @Attribute("system-name") private var systemName: String?
+    @Attribute("systemName") private var systemName: String?
     /// The name of an image in the app's asset catalog.
     @_documentation(visibility: public)
     @Attribute("name") private var name: String?
     
     /// The value represented by this image, in the range `0.0` to `1.0`.
     @_documentation(visibility: public)
-    @Attribute("variable-value") private var variableValue: Double?
+    @Attribute("variableValue") private var variableValue: Double?
     
     @Environment(\.imageModifiers) private var modifiers
     

@@ -33,7 +33,7 @@ final class IndicatorTests: XCTestCase {
     }
     
     func testGaugeBounds() throws {
-        try assertMatch(#"<Gauge value="0.25" lower-bound="0.1" upper-bound="2">0.25</Gauge>"#, size: .init(width: 100, height: 50), lifetime: .keepAlways) {
+        try assertMatch(#"<Gauge value="0.25" lowerBound="0.1" upperBound="2">0.25</Gauge>"#, size: .init(width: 100, height: 50), lifetime: .keepAlways) {
             Gauge(value: 0.25, in: 0.1...2) {
                 Text("0.25")
             }
@@ -45,9 +45,9 @@ final class IndicatorTests: XCTestCase {
             #"""
             <Gauge value="0.5">
                 <Text template="label">50%</Text>
-                <Text template="current-value-label">0.5</Text>
-                <Text template="minimum-value-label">0</Text>
-                <Text template="maximum-value-label">1</Text>
+                <Text template="currentValueLabel">0.5</Text>
+                <Text template="minimumValueLabel">0</Text>
+                <Text template="maximumValueLabel">1</Text>
             </Gauge>
             """#
         ) {
@@ -66,9 +66,9 @@ final class IndicatorTests: XCTestCase {
             #"""
             <Gauge value="0.5">
                 50%
-                <Text template="current-value-label">0.5</Text>
-                <Text template="minimum-value-label">0</GText>
-                <Text template="maximum-value-label">1</GText>
+                <Text template="currentValueLabel">0.5</Text>
+                <Text template="minimumValueLabel">0</GText>
+                <Text template="maximumValueLabel">1</GText>
             </Gauge>
             """#
         ) {

@@ -24,8 +24,8 @@ final class ValueInputTests: XCTestCase {
         try assertMatch(#"""
 <Slider>
     <Text template="label">Label</Text>
-    <Text template="minimum-value-label">Min</Text>
-    <Text template="maximum-value-label">Max</Text>
+    <Text template="minimumValueLabel">Min</Text>
+    <Text template="maximumValueLabel">Max</Text>
 </Slider>
 """#, size: .init(width: 300, height: 100)) {
             Slider(value: .constant(0)) {

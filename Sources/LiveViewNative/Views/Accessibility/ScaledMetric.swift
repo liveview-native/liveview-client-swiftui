@@ -12,8 +12,8 @@ import SwiftUI
 /// Use this element to scale a value with the accessibility dynamic type size.
 ///
 /// ```html
-/// <ScaledMetric phx-change="scaled-value-changed" value={100} relative-to="large-title">
-///   <Image system-name="heart" resizable modifiers={frame(width: @scaled_value, height: @scaled_value)}>
+/// <ScaledMetric phx-change="scaled-value-changed" value={100} relativeTo="large-title">
+///   <Image systemName="heart" resizable modifiers={frame(width: @scaled_value, height: @scaled_value)}>
 /// </ScaledMetric>
 /// ```
 ///
@@ -52,7 +52,7 @@ struct ScaledMetric<R: RootRegistry>: View {
     /// The ``LiveViewNative/SwiftUI/Font/TextStyle`` to scale with.
     /// Defaults to `body`.
     @_documentation(visibility: public)
-    @Attribute("relative-to") private var relativeStyle: Font.TextStyle = .body
+    @Attribute("relativeTo") private var relativeStyle: Font.TextStyle = .body
     
     var body: some View {
         ScaledMetricObserver(

@@ -13,8 +13,8 @@ import SwiftUI
 ///
 /// ```html
 /// <LabeledContent>
-///     <Text template={:label}>Price</Text>
-///     <Text template={:content}>$100.00</Text>
+///     <Text template="label">Price</Text>
+///     <Text template="content">$100.00</Text>
 /// </LabeledContent>
 /// ```
 ///
@@ -25,14 +25,13 @@ import SwiftUI
 /// For more details on formatting options, see ``Text``.
 ///
 /// ```html
-/// <LabeledContent value={100} format="currency" currency-code="usd">
+/// <LabeledContent value={100} format="currency" currencyCode="usd">
 ///     Price
 /// </LabeledContent>
 /// ```
 ///
 /// ## Attributes
 /// * ``format``
-/// * ``style``
 ///
 /// ## Children
 /// * `content` - The element to label.
@@ -41,10 +40,6 @@ import SwiftUI
 /// ## See Also
 /// ### Formatting Values
 /// * ``Text``
-///
-/// ## Topics
-/// ### Supporting Types
-/// - ``LabeledContentStyle``
 @_documentation(visibility: public)
 struct LabeledContent<R: RootRegistry>: View {
     @ObservedElement private var element
@@ -55,9 +50,6 @@ struct LabeledContent<R: RootRegistry>: View {
     /// For more details on formatting options, see ``Text``.
     @_documentation(visibility: public)
     @Attribute("format") private var format: String?
-    /// The style to use for this labeled content.
-    @_documentation(visibility: public)
-    @Attribute("labeled-content-style") private var style: LabeledContentStyle = .automatic
     
     var body: some View {
         SwiftUI.Group {
@@ -74,22 +66,6 @@ struct LabeledContent<R: RootRegistry>: View {
                     context.buildChildren(of: element, forTemplate: "label")
                 }
             }
-        }
-        .applyLabeledContentStyle(style)
-    }
-}
-
-@_documentation(visibility: public)
-private enum LabeledContentStyle: String, AttributeDecodable {
-    @_documentation(visibility: public)
-    case automatic
-}
-
-private extension View {
-    @ViewBuilder
-    func applyLabeledContentStyle(_ style: LabeledContentStyle) -> some View {
-        switch style {
-        case .automatic: self.labeledContentStyle(.automatic)
         }
     }
 }

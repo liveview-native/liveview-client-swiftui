@@ -46,9 +46,9 @@ final class PickerTests: XCTestCase {
             <Picker value="paperplane">
                 <Text template="label">Pick an icon</Text>
                 <Group template="content">
-                    <Label system-image="paperplane" tag="paperplane"><Text>paperplane</Text></Label>
-                    <Label system-image="graduationcap" tag="graduationcap"><Text>graduationcap</Text></Label>
-                    <Label system-image="ellipsis.bubble" tag="ellipsis.bubble"><Text>ellipsis.bubble</Text></Label>
+                    <Label systemImage="paperplane" tag="paperplane"><Text>paperplane</Text></Label>
+                    <Label systemImage="graduationcap" tag="graduationcap"><Text>graduationcap</Text></Label>
+                    <Label systemImage="ellipsis.bubble" tag="ellipsis.bubble"><Text>ellipsis.bubble</Text></Label>
                 </Group>
             </Picker>
             """#) {

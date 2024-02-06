@@ -10,7 +10,7 @@ import SwiftUI
 /// Displays an image asynchronously loaded from a URL.
 ///
 /// ```html
-/// <AsyncImage url="http://localhost:4000/example.jpg" content-mode="fit" />
+/// <AsyncImage url="http://localhost:4000/example.jpg" contentMode="fit" />
 /// ```
 ///
 /// While the image is loading, a circular progress view is shown. If the image fails to load, text containing the error message is shown.
@@ -41,7 +41,7 @@ struct AsyncImage<R: RootRegistry>: View {
     /// - `fill`: The image fills the view (meaning the edges may be croppped).
     /// - `fit` (deafult): The image is displayed at its native aspect ratio centered in the view.
     @_documentation(visibility: public)
-    @Attribute("content-mode", transform: { $0?.value == "fill" ? .fill : .fit }) private var contentMode: ContentMode
+    @Attribute("contentMode", transform: { $0?.value == "fill" ? .fill : .fit }) private var contentMode: ContentMode
     
     public var body: some View {
         // todo: do we want to customize the loading state for this

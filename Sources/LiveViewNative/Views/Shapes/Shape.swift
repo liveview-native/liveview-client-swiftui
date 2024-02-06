@@ -24,12 +24,12 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
     ///
     /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
     @_documentation(visibility: public)
-    @Attribute("fill-color") private var fillColor: SwiftUI.Color? = nil
+    @Attribute("fillColor") private var fillColor: SwiftUI.Color? = nil
     /// The ``LiveViewNative/SwiftUI/Color`` the shape stroke is drawn with.
     ///
     /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
     @_documentation(visibility: public)
-    @Attribute("stroke-color") private var strokeColor: SwiftUI.Color? = nil
+    @Attribute("strokeColor") private var strokeColor: SwiftUI.Color? = nil
     
     @Environment(\.shapeModifiers) private var shapeModifiers: [any ShapeModifier]
     @Environment(\.shapeFinalizerModifier) private var shapeFinalizerModifier: (any ShapeFinalizerModifier)?
@@ -61,24 +61,24 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
 /// A rounded rectangle shape.
 ///
 /// ```html
-/// <RoundedRectangle corner-radius="8" style="continuous" fill-color="#0000ff" />
+/// <RoundedRectangle cornerRadius="8" style="continuous" fillColor="#0000ff" />
 /// ```
 ///
 /// Attributes:
-/// - `corner-radius` (double): The radius of the shape's corners.
-/// - `corner-width` (double): The width of the shape's corners (has precedence over `corner-radius`).
-/// - `corner-height` (double): The height of the shape's corners (has precedence over `corner-radius`).
+/// - `cornerRadius` (double): The radius of the shape's corners.
+/// - `cornerWidth` (double): The width of the shape's corners (has precedence over `corner-radius`).
+/// - `cornerHeight` (double): The height of the shape's corners (has precedence over `corner-radius`).
 /// - `style`: Whether the corners are rounded with the quarter-circle style or continuously. Possible values:
 ///     - `circular`
 ///     - `continuous`
 @_documentation(visibility: public)
 extension RoundedRectangle {
     init(from element: ElementNode) {
-        let radius = element.attributeValue(for: "corner-radius").flatMap(Double.init) ?? 0
+        let radius = element.attributeValue(for: "cornerRadius").flatMap(Double.init) ?? 0
         self.init(
             cornerSize: .init(
-                width: element.attributeValue(for: "corner-width").flatMap(Double.init) ?? radius,
-                height: element.attributeValue(for: "corner-height").flatMap(Double.init) ?? radius
+                width: element.attributeValue(for: "cornerWidth").flatMap(Double.init) ?? radius,
+                height: element.attributeValue(for: "cornerHeight").flatMap(Double.init) ?? radius
             ),
             style: (try? RoundedCornerStyle(from: element.attribute(named: "style"), on: element)) ?? .circular
         )

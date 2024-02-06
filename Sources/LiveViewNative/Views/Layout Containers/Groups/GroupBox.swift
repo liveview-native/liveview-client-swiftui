@@ -34,15 +34,10 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``title``
-/// * ``style``
 ///
 /// ## Children
 /// * `label` - Describes the content of the group box.
 /// * `content` - The elements to group together.
-///
-/// ## Topics
-/// ### Supporting Types
-/// - ``GroupBoxStyle``
 @_documentation(visibility: public)
 struct GroupBox<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode

@@ -23,12 +23,12 @@ import LiveViewNativeCore
 /// Valid date styles are `date` (default), `time`, `relative`, `offset`, and `timer`.
 /// The displayed date is formatted with the user's locale.
 /// ```html
-/// <Text date="2023-03-14T15:19:00.000Z" date-style="date"/>
+/// <Text date="2023-03-14T15:19:00.000Z" dateStyle="date"/>
 /// ```
 /// ### Date Ranges
 /// Displays a localized date range between the given ISO 8601-formatted ``dateStart`` and ``dateEnd``.
 /// ```html
-/// <Text date-start="2023-01-01" date-end="2024-01-01"/>
+/// <Text date:start="2023-01-01" date:end="2024-01-01"/>
 /// ```
 /// ### Markdown
 /// The value of the ``markdown`` attribute is parsed as Markdown and displayed. Only inline Markdown formatting is shown.
@@ -39,17 +39,17 @@ import LiveViewNativeCore
 ///
 /// ### Formatted Values
 /// A value should provided in the `value` attribute, or in the inner text of the element. The value is formatted according to the `format` attribute:
-/// - `date-time`: The `value` is an ISO 8601 date (with optional time).
+/// - `dateTime`: The `value` is an ISO 8601 date (with optional time).
 /// - `url`: The value is a URL.
 /// - `iso8601`: The `value` is an ISO 8601 date (with optional time).
 /// - `number`: The value is a `Double`. Shown in a localized number format.
 /// - `percent`: The value is a `Double`.
-/// - `currency`: The value is a `Double` and is shown as a localized currency value using the currency specified in the `currency-code` attribute.
-/// - `name`: The value is a string interpreted as a person's name. The `name-style` attribute determines the format of the name and may be `short`, `medium` (default), `long`, or `abbreviated`.
+/// - `currency`: The value is a `Double` and is shown as a localized currency value using the currency specified in the `currencyCode` attribute.
+/// - `name`: The value is a string interpreted as a person's name. The `nameStyle` attribute determines the format of the name and may be `short`, `medium` (default), `long`, or `abbreviated`.
 ///
 /// ```html
-/// <Text value={15.99} format="currency" currency-code="usd" />
-/// <Text value="Doe John" format="name" name-style="short" />
+/// <Text value={15.99} format="currency" currencyCode="usd" />
+/// <Text value="Doe John" format="name" nameStyle="short" />
 /// ```
 ///
 /// ## Formatting Text
@@ -87,7 +87,7 @@ import LiveViewNativeCore
 ///
 /// ```html
 /// <Text>
-///     <Image system-name="person.crop.circle.fill" /><Text value="Doe John" format="name" modifiers={foreground_color(:blue) |> bold()} />
+///     <Image systemName="person.crop.circle.fill" /><Text value="Doe John" format="name" modifiers={foreground_color(:blue) |> bold()} />
 ///     <Text verbatim={"\n"} />
 ///     Check out this thing I made: <Link destination="mysite.com">mysite.com</Link>
 /// </Text>
@@ -150,10 +150,10 @@ struct Text<R: RootRegistry>: View {
     /// - Note: The value is expected to be in ISO 8601 format (with optional time)
     ///
     /// ```html
-    /// <Text date-start={DateTime.utc_now()} date-end={DateTime.add(DateTime.utc_now(), 3, :day)} />
+    /// <Text date:start={DateTime.utc_now()} date:end={DateTime.add(DateTime.utc_now(), 3, :day)} />
     /// ```
     @_documentation(visibility: public)
-    @Attribute("date-start", transform: Self.formatDate(_:)) private var dateStart: Date?
+    @Attribute("date:start", transform: Self.formatDate(_:)) private var dateStart: Date?
     /// The upper bound of a date range.
     ///
     /// Use this attribute with the ``dateStart`` attribute to display a date range.
@@ -161,10 +161,10 @@ struct Text<R: RootRegistry>: View {
     /// - Note: The value is expected to be in ISO 8601 format (with optional time)
     ///
     /// ```html
-    /// <Text date-start={DateTime.utc_now()} date-end={DateTime.add(DateTime.utc_now(), 3, :day)} />
+    /// <Text date:start={DateTime.utc_now()} date:end={DateTime.add(DateTime.utc_now(), 3, :day)} />
     /// ```
     @_documentation(visibility: public)
-    @Attribute("date-end", transform: Self.formatDate(_:)) private var dateEnd: Date?
+    @Attribute("date:end", transform: Self.formatDate(_:)) private var dateEnd: Date?
     
     /// A value to format.
     ///
@@ -185,17 +185,17 @@ struct Text<R: RootRegistry>: View {
     @Attribute("format") private var format: String?
     /// The currency code to use with the `currency` format.
     @_documentation(visibility: public)
-    @Attribute("currency-code") private var currencyCode: String?
+    @Attribute("currencyCode") private var currencyCode: String?
     /// The style for a `name` format.
     ///
     /// See ``LiveViewNative/Foundation/PersonNameComponents/FormatStyle/Style`` for a list of possible values.
     @_documentation(visibility: public)
-    @Attribute("name-style") private var nameStyle: PersonNameComponents.FormatStyle.Style = .medium
+    @Attribute("nameStyle") private var nameStyle: PersonNameComponents.FormatStyle.Style = .medium
     /// The style for a ``date`` value.
     ///
     /// See ``LiveViewNative/SwiftUI/Text/DateStyle`` for a list of possible values.
     @_documentation(visibility: public)
-    @Attribute("date-style") private var dateStyle: SwiftUI.Text.DateStyle = .date
+    @Attribute("dateStyle") private var dateStyle: SwiftUI.Text.DateStyle = .date
     
     init() {}
     
@@ -210,22 +210,22 @@ struct Text<R: RootRegistry>: View {
         )
         self._dateStart = .init(
             wrappedValue: nil,
-            "date-start",
+            "date:start",
             transform: Self.formatDate(_:),
             element: element
         )
         self._dateEnd = .init(
             wrappedValue: nil,
-            "date-end",
+            "date:end",
             transform: Self.formatDate(_:),
             element: element
         )
         self._markdown = .init(wrappedValue: nil, "markdown", element: element)
         self._format = .init(wrappedValue: nil, "format", element: element)
         self._value = .init(wrappedValue: nil, "value", element: element)
-        self._currencyCode = .init(wrappedValue: nil, "currency-code", element: element)
-        self._nameStyle = .init(wrappedValue: .medium, "name-style", element: element)
-        self._dateStyle = .init(wrappedValue: .date, "date-style", element: element)
+        self._currencyCode = .init(wrappedValue: nil, "currencyCode", element: element)
+        self._nameStyle = .init(wrappedValue: .medium, "nameStyle", element: element)
+        self._dateStyle = .init(wrappedValue: .date, "dateStyle", element: element)
     }
     
     public var body: SwiftUI.Text {
@@ -254,7 +254,7 @@ struct Text<R: RootRegistry>: View {
         } else if let format {
             let innerText = value ?? element.innerText()
             switch format {
-            case "date-time":
+            case "dateTime":
                 if let date = try? Self.formatDate(innerText) {
                     return SwiftUI.Text(date, format: .dateTime)
                 } else {

@@ -11,7 +11,7 @@ import LiveViewNativeCore
 /// A system text style.
 ///
 /// Possible values:
-/// * `large_title`
+/// * `largeTitle`
 /// * `title`
 /// * `title2`
 /// * `title3`
@@ -34,7 +34,7 @@ extension Font.TextStyle: AttributeDecodable {
 extension Font.TextStyle {
     init(from string: String) throws {
         switch string {
-        case "large_title", "large-title": self = .largeTitle
+        case "largeTitle": self = .largeTitle
         case "title": self = .title
         case "title2": self = .title2
         case "title3": self = .title3

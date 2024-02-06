@@ -13,10 +13,10 @@ import SwiftUI
 ///
 /// ```html
 /// <Gauge value="0.5">
-///     <Text template={:label}>50%</Text>
-///     <Text template={:"current-value-label"}>0.5</Text>
-///     <Text template={:"minimum-value-label"}>0</Text>
-///     <Text template={:"maximum-value-label"}>1</Text>
+///     <Text template="label">50%</Text>
+///     <Text template="currentValueLabel">0.5</Text>
+///     <Text template="minimumValueLabel">0</Text>
+///     <Text template="maximumValueLabel">1</Text>
 /// </Gauge>
 /// ```
 ///
@@ -26,9 +26,9 @@ import SwiftUI
 /// * ``upperBound``
 ///
 /// ## Children
-/// * `current-value-label` - Describes the current value.
-/// * `minimum-value-label` - Describes the lowest possible value.
-/// * `maximum-value-label` - Describes the highest possible value.
+/// * `currentValueLabel` - Describes the current value.
+/// * `minimumValueLabel` - Describes the lowest possible value.
+/// * `maximumValueLabel` - Describes the highest possible value.
 @_documentation(visibility: public)
 struct Gauge<R: RootRegistry>: View {
     @ObservedElement private var element: ElementNode
@@ -39,17 +39,17 @@ struct Gauge<R: RootRegistry>: View {
     @Attribute("value") private var value: Double = 0
     /// The lowest possible value of the gauge.
     @_documentation(visibility: public)
-    @Attribute("lower-bound") private var lowerBound: Double = 0
+    @Attribute("lowerBound") private var lowerBound: Double = 0
     /// The highest possible value of the gauge.
     @_documentation(visibility: public)
-    @Attribute("upper-bound") private var upperBound: Double = 1
+    @Attribute("upperBound") private var upperBound: Double = 1
     
     public var body: some View {
         #if !os(tvOS)
         SwiftUI.Group {
-            if context.hasTemplate(of: element, withName: "current-value-label") ||
-               context.hasTemplate(of: element, withName: "minimum-value-label") ||
-               context.hasTemplate(of: element, withName: "maximum-value-label")
+            if context.hasTemplate(of: element, withName: "currentValueLabel") ||
+               context.hasTemplate(of: element, withName: "minimumValueLabel") ||
+               context.hasTemplate(of: element, withName: "maximumValueLabel")
             {
                 SwiftUI.Gauge(
                     value: self.value,
@@ -57,11 +57,11 @@ struct Gauge<R: RootRegistry>: View {
                 ) {
                     label
                 } currentValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "current-value-label")
+                    context.buildChildren(of: element, forTemplate: "currentValueLabel")
                 } minimumValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "minimum-value-label")
+                    context.buildChildren(of: element, forTemplate: "minimumValueLabel")
                 } maximumValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "maximum-value-label")
+                    context.buildChildren(of: element, forTemplate: "maximumValueLabel")
                 }
             } else {
                 SwiftUI.Gauge(
