@@ -90,7 +90,9 @@ public struct Attribute<T>: DynamicProperty {
     /// If no default value was provided, the app will crash.
     public var wrappedValue: T {
         // Use the cached value if possible. Otherwise, decode on demand.
-        guard let value = storage.value else {
+        guard !_element.isConstant,
+              let value = storage.value
+        else {
             return decode()
         }
         return value

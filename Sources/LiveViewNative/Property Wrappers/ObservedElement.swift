@@ -56,6 +56,11 @@ public struct ObservedElement {
     @EnvironmentObject private var observer: Observer
     
     private let overrideElement: ElementNode?
+    /// Indicates whether the element value was overridden.
+    /// When true, assume this element is not mounted in the View tree, and is instead being processed as a nested element.
+    var isConstant: Bool {
+        overrideElement != nil
+    }
     
     /// Creates an `ObservedElement` that observes changes to the view's element.
     public init(observeChildren: Bool = false) {
