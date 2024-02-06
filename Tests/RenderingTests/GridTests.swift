@@ -17,20 +17,20 @@ final class GridTests: XCTestCase {
             <Grid>
                 <GridRow alignment="top">
                     <Text>Row 1</Text>
-                    <Rectangle fill-color="system-red" />
+                    <Rectangle fillColor="system-red" />
                 </GridRow>
                 <Divider />
                 <GridRow>
                     <Text>Row 2</Text>
-                    <Rectangle fill-color="system-green" />
-                    <Rectangle fill-color="system-green" />
+                    <Rectangle fillColor="system-green" />
+                    <Rectangle fillColor="system-green" />
                 </GridRow>
                 <Divider />
                 <GridRow alignment="bottom">
                     <Text>Row 3</Text>
-                    <Rectangle fill-color="system-blue" />
-                    <Rectangle fill-color="system-blue" />
-                    <Rectangle fill-color="system-blue" />
+                    <Rectangle fillColor="system-blue" />
+                    <Rectangle fillColor="system-blue" />
+                    <Rectangle fillColor="system-blue" />
                 </GridRow>
             </Grid>
             """#,

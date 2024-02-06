@@ -210,13 +210,13 @@ struct Text<R: RootRegistry>: View {
         )
         self._dateStart = .init(
             wrappedValue: nil,
-            "date-start",
+            "date:start",
             transform: Self.formatDate(_:),
             element: element
         )
         self._dateEnd = .init(
             wrappedValue: nil,
-            "date-end",
+            "date:end",
             transform: Self.formatDate(_:),
             element: element
         )
@@ -254,7 +254,7 @@ struct Text<R: RootRegistry>: View {
         } else if let format {
             let innerText = value ?? element.innerText()
             switch format {
-            case "date-time":
+            case "dateTime":
                 if let date = try? Self.formatDate(innerText) {
                     return SwiftUI.Text(date, format: .dateTime)
                 } else {

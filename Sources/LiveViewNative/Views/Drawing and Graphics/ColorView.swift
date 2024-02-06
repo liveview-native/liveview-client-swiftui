@@ -115,9 +115,9 @@ extension SwiftUI.Color.RGBColorSpace: AttributeDecodable, Decodable {
 
     init?(string: String) {
         switch string {
-        case "srgb": self = .sRGB
-        case "srgb-linear": self = .sRGBLinear
-        case "display-p3": self = .displayP3
+        case "sRGB": self = .sRGB
+        case "sRGBLinear": self = .sRGBLinear
+        case "displayP3": self = .displayP3
         default: return nil
         }
     }

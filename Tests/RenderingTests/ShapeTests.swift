@@ -18,19 +18,19 @@ final class ShapeTests: XCTestCase {
     }
     
     func testRoundedRectangle() throws {
-        try assertMatch(#"<RoundedRectangle corner-radius="5" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<RoundedRectangle cornerRadius="5" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerRadius: 5, style: .circular)
         }
-        try assertMatch(#"<RoundedRectangle corner-width="5" corner-height="10" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<RoundedRectangle cornerWidth="5" cornerHeight="10" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerSize: .init(width: 5, height: 10), style: .circular)
         }
-        try assertMatch(#"<RoundedRectangle corner-width="5" corner-radius="15" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<RoundedRectangle cornerWidth="5" cornerRadius="15" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerSize: .init(width: 5, height: 15), style: .circular)
         }
-        try assertMatch(#"<RoundedRectangle corner-height="5" corner-radius="15" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<RoundedRectangle cornerHeight="5" cornerRadius="15" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerSize: .init(width: 15, height: 5), style: .circular)
         }
-        try assertMatch(#"<RoundedRectangle corner-radius="10" style="continuous" />"#, size: .init(width: 100, height: 50)) {
+        try assertMatch(#"<RoundedRectangle cornerRadius="10" style="continuous" />"#, size: .init(width: 100, height: 50)) {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
         }
     }
@@ -80,13 +80,13 @@ final class ShapeTests: XCTestCase {
     }
     
     func testRGBColorSpace() throws {
-        try assertMatch(#"<Color red="1" green="0.5" blue="0.25" color-space="srgb" />"#, size: .init(width: 50, height: 50)) {
+        try assertMatch(#"<Color red="1" green="0.5" blue="0.25" colorSpace="sRGB" />"#, size: .init(width: 50, height: 50)) {
             Color(.sRGB, red: 1, green: 0.5, blue: 0.25)
         }
-        try assertMatch(#"<Color red="1" green="0.5" blue="0.25" color-space="srgb-linear" />"#, size: .init(width: 50, height: 50)) {
+        try assertMatch(#"<Color red="1" green="0.5" blue="0.25" colorSpace="sRGBLinear" />"#, size: .init(width: 50, height: 50)) {
             Color(.sRGBLinear, red: 1, green: 0.5, blue: 0.25)
         }
-        try assertMatch(#"<Color red="1" green="0.5" blue="0.25" color-space="display-p3" />"#, size: .init(width: 50, height: 50)) {
+        try assertMatch(#"<Color red="1" green="0.5" blue="0.25" colorSpace="displayP3" />"#, size: .init(width: 50, height: 50)) {
             Color(.displayP3, red: 1, green: 0.5, blue: 0.25)
         }
     }

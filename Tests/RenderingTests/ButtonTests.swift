@@ -21,7 +21,7 @@ final class ButtonTests: XCTestCase {
             #"""
             <Button>
                 <HStack>
-                    <Image system-name="circle.fill" />
+                    <Image systemName="circle.fill" />
                     <Text>Tap Here</Text>
                 </HStack>
             </Button>
