@@ -119,9 +119,13 @@ struct ClassModifiers<R: RootRegistry>: DynamicProperty {
     @Attribute("class", transform: { attribute in
         guard let classNames = attribute?.value else { return [] }
         return classNames.split(separator: " ")
-    }) private var classNames: [Substring]
+    }) var classNames: [Substring]
     @Environment(\.stylesheets) private var stylesheets
     let overrideStylesheet: (any StylesheetProtocol)?
+    
+    init(overrideStylesheet: (any StylesheetProtocol)?) {
+        self.overrideStylesheet = overrideStylesheet
+    }
     
     init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
         self._classNames = .init(

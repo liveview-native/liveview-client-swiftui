@@ -43,11 +43,11 @@ struct AsyncImage<R: RootRegistry>: View {
     public var body: some View {
         if image {
             if case let .success(image) = phase {
-                ImageView<R>(element: element, overrideStylesheet: context.coordinator.session.stylesheet, overrideImage: image)
+                ImageView<R>(image: image)
             }
         } else if error {
             if case let .failure(error) = phase {
-                Text<R>(element: element, overrideStylesheet: context.coordinator.session.stylesheet, overrideText: SwiftUI.Text(verbatim: error.localizedDescription))
+                Text<R>(text: SwiftUI.Text(verbatim: error.localizedDescription))
             }
         } else {
             asyncImage

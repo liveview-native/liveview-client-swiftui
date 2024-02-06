@@ -82,6 +82,10 @@ struct ImageView<R: RootRegistry>: View {
         self.overrideImage = nil
     }
     
+    init(image: SwiftUI.Image? = nil) {
+        self.overrideImage = image
+    }
+    
     init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?, overrideImage: SwiftUI.Image? = nil) {
         self._element = .init(element: element)
         self._systemName = .init("systemName", element: element)
@@ -94,7 +98,6 @@ struct ImageView<R: RootRegistry>: View {
     public var body: SwiftUI.Image? {
         image.flatMap({ (image: SwiftUI.Image) -> SwiftUI.Image in
             return modifiers.reduce(image) { result, modifier in
-                print(modifier)
                 if case let ._anyImageModifier(imageModifier) = modifier {
                     return imageModifier.apply(to: result, on: element)
                 } else {
