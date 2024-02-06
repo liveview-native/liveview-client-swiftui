@@ -29,9 +29,13 @@ struct Link<R: RootRegistry>: View {
     @Attribute("destination", transform: { $0?.value.flatMap(URL.init(string:)) }) private var destination: URL?
     
     public var body: some View {
-        SwiftUI.Link(
-            destination: destination!
-        ) {
+        if let destination {
+            SwiftUI.Link(
+                destination: destination
+            ) {
+                context.buildChildren(of: element)
+            }
+        } else {
             context.buildChildren(of: element)
         }
     }

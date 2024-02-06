@@ -34,20 +34,20 @@ struct NavigationLink<R: RootRegistry>: View {
     @_documentation(visibility: public)
     @Attribute("disabled") private var disabled: Bool
     
-    var url: URL {
-        URL(string: destination, relativeTo: context.coordinator.url)!.appending(path: "").absoluteURL
-    }
-    
     @ViewBuilder
     public var body: some View {
-        SwiftUI.NavigationLink(
-            value: LiveNavigationEntry(
-                url: url,
-                coordinator: LiveViewCoordinator(session: context.coordinator.session, url: url)
-            )
-        ) {
+        if let url = URL(string: destination, relativeTo: context.coordinator.url)?.appending(path: "").absoluteURL {
+            SwiftUI.NavigationLink(
+                value: LiveNavigationEntry(
+                    url: url,
+                    coordinator: LiveViewCoordinator(session: context.coordinator.session, url: url)
+                )
+            ) {
+                context.buildChildren(of: element)
+            }
+            .disabled(disabled)
+        } else {
             context.buildChildren(of: element)
         }
-        .disabled(disabled)
     }
 }
