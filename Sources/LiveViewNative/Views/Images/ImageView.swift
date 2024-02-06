@@ -87,8 +87,10 @@ struct ImageView<R: RootRegistry>: View {
     }
     
     public var body: SwiftUI.Image? {
-        image.flatMap({
-            modifiers.reduce($0) { image, modifier in
+        image.flatMap({ (image: SwiftUI.Image) -> SwiftUI.Image in
+            guard !_element.isConstant
+            else { return image }
+            return modifiers.reduce(image) { image, modifier in
                 modifier.apply(to: image)
             }
         })
