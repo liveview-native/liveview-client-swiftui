@@ -22,10 +22,6 @@ struct ModifierGenerator: ParsableCommand {
     private var chunkSize: Int = 10
 
     static let extraModifierTypes: Set<String> = [
-        // Image modifiers
-        "_ResizableModifier",
-        "_RenderingModeModifier",
-
         // Shape modifiers
         "_FillModifier",
         "_RotationModifier",
@@ -392,6 +388,7 @@ struct ModifierGenerator: ParsableCommand {
                     \#(Self.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
                     case _customRegistryModifier(R.CustomModifier)
                     case _anyTextModifier(_AnyTextModifier<R>)
+                    case _anyImageModifier(_AnyImageModifier<R>)
                     
                     func body(content: Content) -> some View {
                         switch self {
@@ -410,6 +407,8 @@ struct ModifierGenerator: ParsableCommand {
                         case let ._customRegistryModifier(modifier):
                             content.modifier(modifier)
                         case let ._anyTextModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyImageModifier(modifier):
                             content.modifier(modifier)
                         }
                     }
@@ -481,6 +480,8 @@ struct ModifierGenerator: ParsableCommand {
                                 input = copy
                                 if let textModifier = try? _AnyTextModifier<R>.parser(in: context).parse(&input) {
                                     return ._anyTextModifier(textModifier)
+                                } else if let imageModifier = try? _AnyImageModifier<R>.parser(in: context).parse(&input) {
+                                    return ._anyImageModifier(imageModifier)
                                 } else {
                                     // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
                                     input = copy

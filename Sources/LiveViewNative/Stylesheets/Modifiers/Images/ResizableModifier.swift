@@ -20,11 +20,15 @@ struct _ResizableModifier: ImageModifier {
         self.resizingMode = resizingMode
     }
     
-    func apply(to image: SwiftUI.Image) -> SwiftUI.Image {
+    func apply(to image: SwiftUI.Image, on element: ElementNode) -> SwiftUI.Image {
         image.resizable(
             capInsets: capInsets,
             resizingMode: resizingMode
         )
+    }
+    
+    func body(content: Content) -> some View {
+        content
     }
 }
 
