@@ -37,6 +37,17 @@ public macro LiveView<
     @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
 
+@freestanding(expression)
+public macro LiveView<
+    Host: LiveViewHost,
+    PhaseView: View
+>(
+    _ host: Host,
+    configuration: LiveSessionConfiguration = .init(),
+    addons: [any CustomRegistry<EmptyRegistry>.Type] = [],
+    @ViewBuilder content: @escaping (LiveViewPhase<EmptyRegistry>) -> PhaseView = { (_: LiveViewPhase<EmptyRegistry>) -> Never in fatalError() }
+) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
+
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
 /// The `LiveView` attempts to connect immediately when it appears.
