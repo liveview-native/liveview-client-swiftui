@@ -7,6 +7,9 @@
 
 import SwiftUI
 import Combine
+import OSLog
+
+private let logger = Logger(subsystem: "LiveViewNative", category: "NavigationLink")
 
 /// A control users can tap to navigate to another live view.
 ///
@@ -29,14 +32,14 @@ struct NavigationLink<R: RootRegistry>: View {
     
     /// The URL of the destination live view, relative to the current live view's URL.
     @_documentation(visibility: public)
-    @Attribute("destination") private var destination: String
+    @Attribute("destination") private var destination: String?
     /// Whether the link is disabled.
     @_documentation(visibility: public)
     @Attribute("disabled") private var disabled: Bool
     
     @ViewBuilder
     public var body: some View {
-        if let url = URL(string: destination, relativeTo: context.coordinator.url)?.appending(path: "").absoluteURL {
+        if let url = destination.flatMap({ URL(string: $0, relativeTo: context.coordinator.url) })?.appending(path: "").absoluteURL {
             SwiftUI.NavigationLink(
                 value: LiveNavigationEntry(
                     url: url,
@@ -48,6 +51,9 @@ struct NavigationLink<R: RootRegistry>: View {
             .disabled(disabled)
         } else {
             context.buildChildren(of: element)
+                .task {
+                    logger.error("Missing or invalid `destination` on `<NavigationLink>\(element.innerText())</NavigationLink>`")
+                }
         }
     }
 }

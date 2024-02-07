@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import OSLog
+
+private let logger = Logger(subsystem: "LiveViewNative", category: "Link")
 
 /// Opens a URL when tapped.
 ///
@@ -26,10 +29,10 @@ struct Link<R: RootRegistry>: View {
     
     /// A valid URL to open when tapped.
     @_documentation(visibility: public)
-    @Attribute("destination", transform: { $0?.value.flatMap(URL.init(string:)) }) private var destination: URL?
+    @Attribute("destination") private var destination: String?
     
     public var body: some View {
-        if let destination {
+        if let destination = destination.flatMap({ URL(string: $0, relativeTo: context.coordinator.url) })?.appending(path: "").absoluteURL {
             SwiftUI.Link(
                 destination: destination
             ) {
@@ -37,6 +40,9 @@ struct Link<R: RootRegistry>: View {
             }
         } else {
             context.buildChildren(of: element)
+                .task {
+                    logger.error("Missing or invalid `destination` on `<Link>\(element.innerText())</Link>`")
+                }
         }
     }
 }
