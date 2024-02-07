@@ -30,9 +30,21 @@ struct NavStackEntryView<R: RootRegistry>: View {
             }
     }
     
-    var stateViews: LiveViewStateViews<R> {
-        (liveViewStateViews[ObjectIdentifier(R.self)] as? LiveViewStateViews<R>)
-            ?? LiveViewStateViews<R>(connecting: { fatalError() }, disconnected: { fatalError() }, reconnecting: { _, _ in fatalError() }, error: { _ in fatalError() })
+    private func buildPhaseView(_ phase: LiveViewPhase<R>) -> some View {
+        liveViewStateViews[ObjectIdentifier(R.self)]?(phase)
+    }
+    
+    private var phase: LiveViewPhase<R> {
+        switch coordinator.state {
+        case .notConnected:
+            return .disconnected
+        case .connecting:
+            return .connecting
+        case .connectionFailed(let error):
+            return .error(error)
+        case .reconnecting, .connected: // these phases should always be handled internally
+            fatalError()
+        }
     }
     
     @ViewBuilder
@@ -48,18 +60,7 @@ struct NavStackEntryView<R: RootRegistry>: View {
                         .transition(coordinator.session.configuration.transition ?? .identity)
                         .id(ObjectIdentifier(document))
                 } else {
-                    SwiftUI.Group {
-                        switch coordinator.state {
-                        case .connected, .reconnecting:
-                            fatalError()
-                        case .notConnected:
-                            stateViews.disconnectedView()
-                        case .connecting:
-                            stateViews.connectingView()
-                        case .connectionFailed(let error):
-                            stateViews.errorView(error)
-                        }
-                    }
+                    buildPhaseView(phase)
                     .transition(coordinator.session.configuration.transition ?? .identity)
                 }
             }
