@@ -5,13 +5,14 @@
 
 import SwiftUI
 
-struct ReconnectingView: View {
-    var content: AnyView
-    var isReconnecting: Bool
+struct ReconnectingView<Content: View>: View {
+    let isReconnecting: Bool
+    @ViewBuilder let content: Content
     
     var body: some View {
         content
-            .safeAreaInset(edge: .top) {
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(alignment: .top) {
                 if isReconnecting {
                     VStack {
                         Label("No Connection", systemImage: "wifi.slash")
@@ -19,24 +20,30 @@ struct ReconnectingView: View {
                         Text("Reconnecting")
                             .foregroundStyle(.secondary)
                     }
-                        .font(.caption)
-                        .padding(8)
-                        .frame(maxWidth: .infinity)
-                        #if os(watchOS)
-                        .background(.background)
-                        #else
-                        .background(.regularMaterial)
-                        #endif
-                        .transition(.move(edge: .top).combined(with: .opacity))
+                    .font(.caption)
+                    .padding(8)
+                    .frame(maxWidth: .infinity)
+                    #if os(watchOS)
+                    .background(.background)
+                    #else
+                    .background(.regularMaterial)
+                    #endif
+                    .transition(.move(edge: .top).combined(with: .opacity))
                 }
             }
             .animation(.default, value: isReconnecting)
     }
 }
 
-//#Preview {
-//    ReconnectingView(
-//        content: Text("Test"),
-//        isReconnecting: true
-//    )
-//}
+#Preview {
+    struct PreviewView: View {
+        @State private var isReconnecting = true
+        
+        var body: some View {
+            ReconnectingView(isReconnecting: isReconnecting) {
+                Toggle("Reconnecting", isOn: $isReconnecting)
+            }
+        }
+    }
+    return PreviewView()
+}

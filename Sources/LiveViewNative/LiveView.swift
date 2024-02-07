@@ -33,23 +33,20 @@ public macro LiveView<
     addons: [any CustomRegistry<EmptyRegistry>.Type] = [],
     @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
     @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-    @ViewBuilder reconnecting: @escaping (AnyView, Bool) -> ReconnectingView = { (_: AnyView, _: Bool) -> Never in fatalError() },
+    @ViewBuilder reconnecting: @escaping (_ConnectedContent<EmptyRegistry>, Bool) -> ReconnectingView = { (_: _ConnectedContent<EmptyRegistry>, _: Bool) -> Never in fatalError() },
     @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
 
-public struct _StatelessReconnectingView<Content: View>: View {
-    let content: AnyView
-    let isReconnecting: Bool
-    let reconnectingView: (AnyView) -> Content
-    
-    public var body: some View {
-        if isReconnecting {
-            reconnectingView(content)
-        } else {
-            content
-        }
-    }
-}
+@freestanding(expression)
+public macro LiveView<
+    Host: LiveViewHost,
+    PhaseView: View
+>(
+    _ host: Host,
+    configuration: LiveSessionConfiguration = .init(),
+    addons: [any CustomRegistry<EmptyRegistry>.Type] = [],
+    @ViewBuilder content: @escaping (LiveViewPhase<EmptyRegistry>) -> PhaseView = { (_: LiveViewPhase<EmptyRegistry>) -> Never in fatalError() }
+) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
 
 /// The SwiftUI root view for a Phoenix LiveView.
 ///
@@ -108,6 +105,7 @@ public struct _StatelessReconnectingView<Content: View>: View {
 /// - ``LiveViewModel``
 public struct LiveView<
     R: RootRegistry,
+    PhaseView: View,
     ConnectingView: View,
     DisconnectedView: View,
     ReconnectingView: View,
@@ -119,162 +117,26 @@ public struct LiveView<
     
     @Environment(\.scenePhase) private var scenePhase
     
+    let phaseView: (LiveViewPhase<R>) -> PhaseView
     let connectingView: () -> ConnectingView
     let disconnectedView: () -> DisconnectedView
-    let reconnectingView: (AnyView, Bool) -> ReconnectingView
+    let reconnectingView: (_ConnectedContent<R>, Bool) -> ReconnectingView
     let errorView: (Error) -> ErrorView
     
-    /// Creates a new LiveView attached to the given coordinator.
-    ///
-    /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
-    public init(
-        registry _: R.Type = EmptyRegistry.self,
-        session: @autoclosure @escaping () -> LiveSessionCoordinator<R>,
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView, Bool) -> ReconnectingView = { (_: AnyView, _: Bool) -> Never in fatalError() },
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) {
-        self._session = .init(wrappedValue: session())
-        self.connectingView = connecting
-        self.disconnectedView = disconnected
-        self.reconnectingView = reconnecting
-        self.errorView = error
-    }
-    
-    public init(
-        registry: R.Type = EmptyRegistry.self,
-        _ host: some LiveViewHost,
-        configuration: LiveSessionConfiguration = .init(),
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView, Bool) -> ReconnectingView = { (_: AnyView, _: Bool) -> Never in fatalError() },
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) {
-        self.init(
-            registry: registry,
-            session: .init(host.url, config: configuration),
-            connecting: connecting,
-            disconnected: disconnected,
-            reconnecting: reconnecting,
-            error: error
-        )
-    }
-    
-    public init(
-        registry: R.Type = EmptyRegistry.self,
-        url: URL,
-        configuration: LiveSessionConfiguration = .init(),
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView, Bool) -> ReconnectingView = { (_: AnyView, _: Bool) -> Never in fatalError() },
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) {
-        self.init(
-            registry: registry,
-            session: .init(url, config: configuration),
-            connecting: connecting,
-            disconnected: disconnected,
-            reconnecting: reconnecting,
-            error: error
-        )
-    }
-    
-    public init<ReconnectingContent>(
-        registry: R.Type = EmptyRegistry.self,
-        session: @autoclosure @escaping () -> LiveSessionCoordinator<R>,
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingContent,
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) where ReconnectingView == _StatelessReconnectingView<ReconnectingContent>, ReconnectingContent: View {
-        self.init(
-            registry: registry,
-            session: session(),
-            connecting: connecting,
-            disconnected: disconnected,
-            reconnecting: { content, isReconnecting in
-                _StatelessReconnectingView<ReconnectingContent>(content: content, isReconnecting: isReconnecting, reconnectingView: reconnecting)
-            },
-            error: error
-        )
-    }
-    
-    public init<ReconnectingContent>(
-        registry: R.Type = EmptyRegistry.self,
-        _ host: some LiveViewHost,
-        configuration: LiveSessionConfiguration = .init(),
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingContent,
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) where ReconnectingView == _StatelessReconnectingView<ReconnectingContent>, ReconnectingContent: View {
-        self.init(
-            registry: registry,
-            session: .init(host.url, config: configuration),
-            connecting: connecting,
-            disconnected: disconnected,
-            reconnecting: reconnecting,
-            error: error
-        )
-    }
-    
-    public init<ReconnectingContent>(
-        registry: R.Type = EmptyRegistry.self,
-        url: URL,
-        configuration: LiveSessionConfiguration = .init(),
-        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
-        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
-        @ViewBuilder reconnecting: @escaping (AnyView) -> ReconnectingContent,
-        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
-    ) where ReconnectingView == _StatelessReconnectingView<ReconnectingContent>, ReconnectingContent: View {
-        self.init(
-            registry: registry,
-            session: .init(url, config: configuration),
-            connecting: connecting,
-            disconnected: disconnected,
-            reconnecting: reconnecting,
-            error: error
-        )
-    }
-    
-    private var rootCoordinator: LiveViewCoordinator<R> {
-        session.navigationPath.first!.coordinator
-    }
-    
     @ViewBuilder
-    var connectedContent: some View {
-        if let rootLayout = session.rootLayout {
-            self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
-                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
-        } else {
-            PhxMain<R>()
-                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
-                .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
-        }
-    }
-    
-    public var body: some View {
-        SwiftUI.Group {
-            switch session.state {
-            case .connected, .reconnecting:
-                SwiftUI.Group {
-                    if ReconnectingView.self == Never.self {
-                        connectedContent
-                    } else {
-                        reconnectingView(
-                            AnyView(
-                                connectedContent
-                            ),
-                            session.state.isReconnecting
-                        )
-                    }
-                }
+    func buildPhaseView(_ phase: LiveViewPhase<R>) -> some View {
+        if PhaseView.self != Never.self {
+            phaseView(phase)
                 .transition(session.configuration.transition ?? .identity)
-            case .notConnected:
+        } else {
+            switch phase {
+            case let .connected(content),
+                 let .reconnecting(content):
                 SwiftUI.Group {
-                    if DisconnectedView.self != Never.self {
-                        disconnectedView()
+                    if ReconnectingView.self != Never.self {
+                        reconnectingView(content, !phase.isConnected)
+                    } else {
+                        content
                     }
                 }
                 .transition(session.configuration.transition ?? .identity)
@@ -285,7 +147,14 @@ public struct LiveView<
                     }
                 }
                 .transition(session.configuration.transition ?? .identity)
-            case .connectionFailed(let error):
+            case .disconnected:
+                SwiftUI.Group {
+                    if DisconnectedView.self != Never.self {
+                        disconnectedView()
+                    }
+                }
+                .transition(session.configuration.transition ?? .identity)
+            case let .error(error):
                 SwiftUI.Group {
                     if ErrorView.self != Never.self {
                         errorView(error)
@@ -294,13 +163,33 @@ public struct LiveView<
                 .transition(session.configuration.transition ?? .identity)
             }
         }
+    }
+    
+    var phase: LiveViewPhase<R> {
+        switch session.state {
+        case .connected:
+            return .connected(_ConnectedContent<R>(session: session))
+        case .connecting:
+            return .connecting
+        case let .connectionFailed(error):
+            return .error(error)
+        case .notConnected:
+            return .disconnected
+        case .reconnecting:
+            return .reconnecting(_ConnectedContent<R>(session: session))
+        }
+    }
+    
+    public var body: some View {
+        SwiftUI.Group {
+            buildPhaseView(phase)
+        }
         .animation(session.configuration.transition.map({ _ in .default }), value: session.state.isConnected)
-        .environment(\.liveViewStateViews, LiveViewStateViews(
-            connecting: connectingView,
-            disconnected: disconnectedView,
-            reconnecting: reconnectingView,
-            error: errorView
-        ))
+        .transformEnvironment(\.liveViewStateViews) { stateViews in
+            stateViews[ObjectIdentifier(R.self)] = { phase in
+                AnyView(buildPhaseView(phase as! LiveViewPhase<R>))
+            }
+        }
         .transformEnvironment(\.stylesheets) { stylesheets in
             guard let stylesheet = session.stylesheet
             else { return }
@@ -322,6 +211,7 @@ public struct LiveView<
     }
 }
 
+/// The `<div data-phx-main>` element.
 struct PhxMain<R: RootRegistry>: View {
     @LiveContext<R> private var context
     @EnvironmentObject private var session: LiveSessionCoordinator<R>
@@ -331,56 +221,133 @@ struct PhxMain<R: RootRegistry>: View {
     }
 }
 
-/// Type-erased collection of state views, passed through the `Environment` for use in `NavStackEntryView`.
-struct LiveViewStateViews {
-    let connectingView: () -> AnyView
-    let disconnectedView: () -> AnyView
-    let reconnectingView: (AnyView, Bool) -> AnyView
-    let errorView: (Error) -> AnyView
+/// The content of a ``LiveView`` when connected/reconnecting.
+public struct _ConnectedContent<R: RootRegistry>: View {
+    @ObservedObject var session: LiveSessionCoordinator<R>
     
-    init<ConnectingView: View, DisconnectedView: View, ReconnectingView: View, ErrorView: View>(
-        connecting: @escaping () -> ConnectingView,
-        disconnected: @escaping () -> DisconnectedView,
-        reconnecting: @escaping (AnyView, Bool) -> ReconnectingView,
-        error errorView: @escaping (Error) -> ErrorView
-    ) {
-        self.connectingView = {
-            if ConnectingView.self != Never.self {
-                AnyView(connecting())
-            } else {
-                AnyView(EmptyView())
-            }
-        }
-        self.disconnectedView = {
-            if DisconnectedView.self != Never.self {
-                AnyView(connecting())
-            } else {
-                AnyView(EmptyView())
-            }
-        }
-        self.reconnectingView = { content, isReconnecting in
-            if ReconnectingView.self != Never.self {
-                AnyView(reconnecting(content, isReconnecting))
-            } else {
-                AnyView(content)
-            }
-        }
-        self.errorView = { error in
-            if ErrorView.self != Never.self {
-                AnyView(errorView(error))
-            } else {
-                AnyView(EmptyView())
-            }
+    private var rootCoordinator: LiveViewCoordinator<R> {
+        session.navigationPath.first!.coordinator
+    }
+    
+    public var body: some View {
+        if let rootLayout = session.rootLayout {
+            self.rootCoordinator.builder.fromNodes(rootLayout[rootLayout.root()].children(), coordinator: rootCoordinator, url: rootCoordinator.url)
+                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootLayout))
+        } else {
+            PhxMain<R>()
+                .environment(\.coordinatorEnvironment, CoordinatorEnvironment(rootCoordinator, document: rootCoordinator.document!))
+                .environment(\.anyLiveContextStorage, LiveContextStorage(coordinator: rootCoordinator, url: rootCoordinator.url))
         }
     }
 }
+
 extension EnvironmentValues {
     enum LiveViewStateViewsKey: EnvironmentKey {
-        static let defaultValue = LiveViewStateViews(connecting: { fatalError() }, disconnected: { fatalError() }, reconnecting: { _, _ in fatalError() }, error: { _ in fatalError() })
+        static let defaultValue: [ObjectIdentifier:(Any) -> AnyView] = [:]
     }
     
-    var liveViewStateViews: LiveViewStateViews {
+    var liveViewStateViews: [ObjectIdentifier:(Any) -> AnyView] {
         get { self[LiveViewStateViewsKey.self] }
         set { self[LiveViewStateViewsKey.self] = newValue }
+    }
+}
+
+extension LiveView where PhaseView == Never {
+    /// Creates a new LiveView attached to the given coordinator.
+    ///
+    /// - Note: Changing coordinators after the `LiveView` is setup and connected is forbidden.
+    public init(
+        registry _: R.Type = EmptyRegistry.self,
+        session: @autoclosure @escaping () -> LiveSessionCoordinator<R>,
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (_ConnectedContent<R>, Bool) -> ReconnectingView = { (_: _ConnectedContent<R>, _: Bool) -> Never in fatalError() },
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) {
+        self._session = .init(wrappedValue: session())
+        self.phaseView = { _ in fatalError() }
+        self.connectingView = connecting
+        self.disconnectedView = disconnected
+        self.reconnectingView = reconnecting
+        self.errorView = error
+    }
+    
+    public init(
+        registry: R.Type = EmptyRegistry.self,
+        _ host: some LiveViewHost,
+        configuration: LiveSessionConfiguration = .init(),
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (_ConnectedContent<R>, Bool) -> ReconnectingView = { (_: _ConnectedContent<R>, _: Bool) -> Never in fatalError() },
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) {
+        self.init(
+            registry: registry,
+            session: .init(host.url, config: configuration),
+            connecting: connecting,
+            disconnected: disconnected,
+            reconnecting: reconnecting,
+            error: error
+        )
+    }
+    
+    public init(
+        registry: R.Type = EmptyRegistry.self,
+        url: URL,
+        configuration: LiveSessionConfiguration = .init(),
+        @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+        @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+        @ViewBuilder reconnecting: @escaping (_ConnectedContent<R>, Bool) -> ReconnectingView = { (_: _ConnectedContent<R>, _: Bool) -> Never in fatalError() },
+        @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+    ) {
+        self.init(
+            registry: registry,
+            session: .init(url, config: configuration),
+            connecting: connecting,
+            disconnected: disconnected,
+            reconnecting: reconnecting,
+            error: error
+        )
+    }
+}
+
+extension LiveView where ConnectingView == Never, DisconnectedView == Never, ReconnectingView == Never, ErrorView == Never {
+    public init(
+        registry _: R.Type = EmptyRegistry.self,
+        session: @autoclosure @escaping () -> LiveSessionCoordinator<R>,
+        @ViewBuilder content: @escaping (LiveViewPhase<R>) -> PhaseView
+    ) {
+        self._session = .init(wrappedValue: session())
+        self.phaseView = content
+        self.connectingView = { fatalError() }
+        self.disconnectedView = { fatalError() }
+        self.reconnectingView = { _, _ in fatalError() }
+        self.errorView = { _ in fatalError() }
+    }
+    
+    public init(
+        registry: R.Type = EmptyRegistry.self,
+        _ host: some LiveViewHost,
+        configuration: LiveSessionConfiguration = .init(),
+        @ViewBuilder content: @escaping (LiveViewPhase<R>) -> PhaseView
+    ) {
+        self.init(
+            registry: registry,
+            session: .init(host.url, config: configuration),
+            content: content
+        )
+    }
+    
+    public init(
+        registry: R.Type = EmptyRegistry.self,
+        url: URL,
+        configuration: LiveSessionConfiguration = .init(),
+        @ViewBuilder content: @escaping (LiveViewPhase<R>) -> PhaseView
+    ) {
+        self.init(
+            registry: registry,
+            session: .init(url, config: configuration),
+            content: content
+        )
     }
 }

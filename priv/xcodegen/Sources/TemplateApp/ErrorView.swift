@@ -7,20 +7,10 @@ import SwiftUI
 import LiveViewNative
 
 struct ErrorView: View {
-    var error: Error
+    let error: Error
+
     var body: some View {
         LiveErrorView(error: error) {
-            let description = Group {
-                #if DEBUG
-                ScrollView {
-                    Text(error.localizedDescription)
-                        .font(.caption.monospaced())
-                        .multilineTextAlignment(.leading)
-                }
-                #else
-                Text("The app will reconnect when network connection is regained.")
-                #endif
-            }
             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
                 ContentUnavailableView {
                     Label("Connection Failed", systemImage: "network.slash")
@@ -43,8 +33,21 @@ struct ErrorView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    var description: some View {
+        #if DEBUG
+        ScrollView {
+            Text(error.localizedDescription)
+                .font(.caption.monospaced())
+                .multilineTextAlignment(.leading)
+        }
+        #else
+        Text("The app will reconnect when network connection is regained.")
+        #endif
+    }
 }
 
-//#Preview {
-//    ErrorView()
-//}
+#Preview {
+   ErrorView(error: LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken))
+}
