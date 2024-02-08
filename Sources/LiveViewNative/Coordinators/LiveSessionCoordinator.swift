@@ -183,8 +183,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// This can be used to force the LiveView to reset, for example after an unrecoverable error occurs.
     public func reconnect() async {
+        let previousNavigationPath = self.navigationPath
         await self.disconnect()
         await self.connect()
+        self.navigationPath = previousNavigationPath
     }
     
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
