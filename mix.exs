@@ -2,69 +2,31 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   use Mix.Project
 
   @version "0.3.0-alpha.4"
+  @source_url "https://github.com/liveview-native/liveview-client-swiftui"
 
   def project do
     [
       app: :live_view_native_swiftui,
       version: @version,
       elixir: "~> 1.15",
-      description: "LiveView Native platform for SwiftUI",
-      elixirc_paths: elixirc_paths(Mix.env()),
-      package: package(),
+      description: description(),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-
-      docs: [
-        main: "about",
-        extras: [
-          "guides/introduction/about.md",
-          "guides/architecture/architecture.md",
-          "guides/architecture/modifiers.md",
-          "guides/architecture/navigation.md",
-          "guides/architecture/updates.md",
-        ],
-        groups_for_extras: [
-          "Introduction": Path.wildcard("guides/introduction/*.md"),
-          "Architecture": Path.wildcard("guides/architecture/*.md"),
-        ],
-        before_closing_body_tag: %{
-          html: """
-          <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.3/dist/mermaid.min.js"></script>
-          <script>
-            document.addEventListener("DOMContentLoaded", function () {
-              mermaid.initialize({
-                startOnLoad: false,
-                theme: document.body.className.includes("dark") ? "dark" : "default"
-              });
-              let id = 0;
-              for (const codeEl of document.querySelectorAll("pre code.mermaid")) {
-                const preEl = codeEl.parentElement;
-                const graphDefinition = codeEl.textContent;
-                const graphEl = document.createElement("div");
-                const graphId = "mermaid-graph-" + id++;
-                mermaid.render(graphId, graphDefinition).then(({svg, bindFunctions}) => {
-                  graphEl.innerHTML = svg;
-                  bindFunctions?.(graphEl);
-                  preEl.insertAdjacentElement("afterend", graphEl);
-                  preEl.remove();
-                });
-              }
-            });
-          </script>
-          """
-        }
-      ]
+      package: package(),
+      elixirc_paths: elixirc_paths(Mix.env()),
+      docs: docs()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
+
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
@@ -78,24 +40,29 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       # {:live_view_native_test, path: "../live_view_native_test", only: :test, override: true},
       {:live_view_native_test, github: "liveview-native/live_view_native_test", tag: "0.3.0-alpha.3", only: :test},
       {:jason, "~> 1.2"},
-      {:nimble_parsec, "~> 1.3"},
+      {:nimble_parsec, "~> 1.3"}
     ]
   end
 
-  @source_url "https://github.com/liveview-native/liveview-client-swiftui"
+  defp docs do
+    [
+      extras: ["README.md"],
+      main: "readme",
+      source_url: @source_url,
+      source_ref: "v#{@version}"
+    ]
+  end
 
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  defp description, do: "LiveView Native SwiftUI Client"
 
-  # Hex package configuration
   defp package do
     %{
       maintainers: ["Brian Cardarella"],
       licenses: ["MIT"],
       links: %{
-        "GitHub" => @source_url
-      },
-      source_url: @source_url
+        "GitHub" => @source_url,
+        "Built by DockYard, Expert Elixir & Phoenix Consultants" => "https://dockyard.com/phoenix-consulting"
+      }
     }
   end
 end

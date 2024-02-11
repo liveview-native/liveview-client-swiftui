@@ -1,4 +1,6 @@
 defmodule LiveViewNative.SwiftUI do
+  @moduledoc false
+
   use LiveViewNative,
     format: :swiftui,
     component: LiveViewNative.SwiftUI.Component,

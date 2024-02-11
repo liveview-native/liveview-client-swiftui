@@ -1,4 +1,6 @@
 defmodule LiveViewNative.SwiftUI.RulesParser.Expressions do
+  @moduledoc false
+
   import NimbleParsec
   import LiveViewNative.SwiftUI.RulesParser.Parser
   import LiveViewNative.SwiftUI.RulesParser.Tokens

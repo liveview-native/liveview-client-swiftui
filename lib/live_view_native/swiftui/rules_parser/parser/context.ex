@@ -1,4 +1,6 @@
 defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Context do
+  @moduledoc false
+
   defstruct [
     :file,
     :annotations,

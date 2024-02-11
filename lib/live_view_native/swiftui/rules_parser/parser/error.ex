@@ -1,4 +1,6 @@
 defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
+  @moduledoc false
+
   alias LiveViewNative.SwiftUI.RulesParser.Parser.Context
 
   defstruct([

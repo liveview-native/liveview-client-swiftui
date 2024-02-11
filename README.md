@@ -7,6 +7,8 @@
 > module_suffix: `SwiftUI`
 >
 > template_sigil: `~LVN`
+>
+> component: `LiveViewNative.SwiftUI.Component`
 
 The LiveViewNative Swift package lets you use Phoenix LiveView to build native iOS apps with SwiftUI.
 

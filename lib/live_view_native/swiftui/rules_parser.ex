@@ -1,4 +1,6 @@
 defmodule LiveViewNative.SwiftUI.RulesParser do
+  @moduledoc false
+
   alias LiveViewNative.SwiftUI.RulesParser.Modifiers
   alias LiveViewNative.SwiftUI.RulesParser.Parser
 
