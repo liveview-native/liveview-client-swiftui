@@ -1,4 +1,6 @@
 defmodule LiveViewNative.SwiftUI.RulesParser.Parser do
+  @moduledoc false
+
   import NimbleParsec
   alias LiveViewNative.SwiftUI.RulesParser.Parser.Context
   alias LiveViewNative.SwiftUI.RulesParser.Parser.Error

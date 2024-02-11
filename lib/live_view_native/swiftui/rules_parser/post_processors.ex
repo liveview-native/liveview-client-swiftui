@@ -1,4 +1,6 @@
 defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
+  @moduledoc false
+
   import LiveViewNative.SwiftUI.RulesParser.Parser.Annotations
 
   if Mix.env() == :test do

@@ -1,4 +1,6 @@
 defmodule LiveViewNative.SwiftUI.Component do
+  @moduledoc false
+
   defmacro __using__(_) do
     quote do
       import LiveViewNative.Component, only: [sigil_LVN: 2]
