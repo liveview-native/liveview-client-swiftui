@@ -18,7 +18,11 @@ struct ErrorView: View {
                     description
                 } actions: {
                     Button {
+                        #if os(iOS)
                         UIPasteboard.general.string = error.localizedDescription
+                        #elseif os(macOS)
+                        NSPasteboard.general.setString(error.localizedDescription, forType: .string)
+                        #endif
                     } label: {
                         Label("Copy Error", systemImage: "doc.on.doc")
                     }
