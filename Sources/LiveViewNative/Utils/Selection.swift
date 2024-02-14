@@ -16,7 +16,7 @@ enum Selection: Codable, AttributeDecodable, Equatable {
     
     var single: String? {
         get {
-            guard case let .single(selection) = self else { fatalError() }
+            guard case let .single(selection) = self else { return nil }
             return selection
         }
         set {
@@ -26,7 +26,7 @@ enum Selection: Codable, AttributeDecodable, Equatable {
     
     var multiple: Set<String> {
         get {
-            guard case let .multiple(selection) = self else { fatalError() }
+            guard case let .multiple(selection) = self else { return [] }
             return selection
         }
         set {
