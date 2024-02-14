@@ -25,15 +25,16 @@ struct NavigationSplitView<R: RootRegistry>: View {
                     detail
                 }
             )
+            .environment(\.navigationSplitViewContext, true)
         } else {
             SwiftUI.NavigationSplitView(
                 sidebar: {
                     sidebar
                 }, detail: {
-                    content
                     detail
                 }
             )
+            .environment(\.navigationSplitViewContext, true)
         }
     }
     
@@ -56,5 +57,20 @@ struct NavigationSplitView<R: RootRegistry>: View {
     }
     var detail: some View {
         context.buildChildren(of: element, forTemplate: "detail", includeDefaultSlot: false)
+    }
+}
+
+extension EnvironmentValues {
+    private enum NavigationSplitViewContext: EnvironmentKey {
+        static let defaultValue = false
+    }
+    
+    /// Whether the navigation structure is a `NavigationSplitView`.
+    /// Set to `true` by `NavigationSplitView` and `false` by `NavigationStack`.
+    ///
+    /// Used by `NavigationLink` to determine how navigation connections are established.
+    var navigationSplitViewContext: Bool {
+        get { self[NavigationSplitViewContext.self] }
+        set { self[NavigationSplitViewContext.self] = newValue }
     }
 }

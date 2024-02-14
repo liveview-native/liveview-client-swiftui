@@ -48,7 +48,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     // Socket connection
     var socket: Socket?
     
-    private var domValues: DOMValues!
+    private(set) var domValues: DOMValues!
     
     private var liveReloadSocket: Socket?
     private var liveReloadChannel: Channel?

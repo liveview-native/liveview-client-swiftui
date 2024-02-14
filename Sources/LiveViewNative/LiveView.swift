@@ -195,6 +195,16 @@ public struct LiveView<
             else { return }
             stylesheets[ObjectIdentifier(R.self)] = stylesheet
         }
+        .environment(\.buildDetachedLiveView, {
+            AnyView(Self(
+                session: .init($0),
+                phaseView: phaseView,
+                connectingView: connectingView,
+                disconnectedView: disconnectedView,
+                reconnectingView: reconnectingView,
+                errorView: errorView
+            ))
+        })
         .environmentObject(session)
         .environmentObject(liveViewModel)
         .task {

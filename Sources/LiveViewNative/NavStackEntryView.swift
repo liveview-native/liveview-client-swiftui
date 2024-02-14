@@ -68,3 +68,30 @@ struct NavStackEntryView<R: RootRegistry>: View {
         .animation(coordinator.session.configuration.transition.map({ _ in .default }), value: coordinator.state.isConnected)
     }
 }
+
+struct DetachedNavEntryView<R: RootRegistry>: View {
+    private var url: URL
+    @Environment(\.buildDetachedLiveView) private var buildDetachedLiveView
+    
+    init(url: URL) {
+        self.url = url
+    }
+    
+    var body: some View {
+        buildDetachedLiveView(url)
+            .id(url)
+    }
+}
+
+extension EnvironmentValues {
+    private enum BuildDetachedLiveViewKey: EnvironmentKey {
+        static let defaultValue = { (_: URL) -> AnyView in AnyView(EmptyView()) }
+    }
+    
+    /// Create an instance of ``LiveView`` for a given route.
+    /// Used by ``DetachedNavEntryView`` to establish secondary connections.
+    var buildDetachedLiveView: (URL) -> AnyView {
+        get { self[BuildDetachedLiveViewKey.self] }
+        set { self[BuildDetachedLiveViewKey.self] = newValue }
+    }
+}

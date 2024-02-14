@@ -26,5 +26,6 @@ struct NavigationStack<R: RootRegistry>: View {
                 NavStackEntryView(destination)
             }
         }
+        .environment(\.navigationSplitViewContext, false)
     }
 }
