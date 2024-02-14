@@ -12,29 +12,34 @@ struct NavigationSplitView<R: RootRegistry>: View {
     @ObservedElement private var element
     
     @EnvironmentObject private var session: LiveSessionCoordinator<R>
+    @Environment(\.navigationSplitViewContext) private var navigationSplitViewContext
     
     var body: some View {
-        if hasContent && hasDetail {
-            SwiftUI.NavigationSplitView(
-                sidebar: {
-                    sidebar
-                },
-                content: {
-                    content
-                }, detail: {
-                    detail
-                }
-            )
-            .environment(\.navigationSplitViewContext, true)
+        if navigationSplitViewContext {
+            sidebar
         } else {
-            SwiftUI.NavigationSplitView(
-                sidebar: {
-                    sidebar
-                }, detail: {
-                    detail
-                }
-            )
-            .environment(\.navigationSplitViewContext, true)
+            if hasContent && hasDetail {
+                SwiftUI.NavigationSplitView(
+                    sidebar: {
+                        sidebar
+                    },
+                    content: {
+                        content
+                    }, detail: {
+                        detail
+                    }
+                )
+                .environment(\.navigationSplitViewContext, true)
+            } else {
+                SwiftUI.NavigationSplitView(
+                    sidebar: {
+                        sidebar
+                    }, detail: {
+                        detail
+                    }
+                )
+                .environment(\.navigationSplitViewContext, true)
+            }
         }
     }
     

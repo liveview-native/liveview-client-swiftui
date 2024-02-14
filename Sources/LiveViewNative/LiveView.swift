@@ -197,7 +197,7 @@ public struct LiveView<
         }
         .environment(\.buildDetachedLiveView, {
             AnyView(Self(
-                session: .init($0),
+                session: .init($0, config: session.configuration),
                 phaseView: phaseView,
                 connectingView: connectingView,
                 disconnectedView: disconnectedView,
