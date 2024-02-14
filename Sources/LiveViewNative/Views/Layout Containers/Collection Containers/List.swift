@@ -149,16 +149,17 @@ struct List<R: RootRegistry>: View {
         }
         #else
         switch selection {
-        case .none:
-            SwiftUI.List {
+        case .multiple:
+            SwiftUI.List(selection: $selection.multiple) {
                 content
             }
-        case .single:
+        case .single,
+             _ where element.attribute(named: "phx-change") != nil:
             SwiftUI.List(selection: $selection.single) {
                 content
             }
-        case .multiple:
-            SwiftUI.List(selection: $selection.multiple) {
+        case .none:
+            SwiftUI.List {
                 content
             }
         }
