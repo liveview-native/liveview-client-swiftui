@@ -3,24 +3,38 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
 
   use Mix.Task
 
+  @base_path "generated_docs"
+  @cheatsheet_path "#{@base_path}/view-index.cheatmd"
+
   @shortdoc "Generates ex doc files for all SwiftUI views"
   def run(_) do
+    # clear cheatsheet
+    File.write!(@cheatsheet_path, "# View Index\n")
+
     categorized_views = Path.wildcard("Sources/LiveViewNative/Views/**/*.swift")
       |> Enum.group_by(
         &(Path.basename(Path.dirname(&1))),
         &(Path.basename(&1, ".swift"))
       )
     for {category, views} <- categorized_views do
+      # build cheatsheet sections
+      File.write!(@cheatsheet_path, "## #{category}\n{: .col-2}\n", [:append])
+
       for view <- views do
         with {:ok, data} <- File.read("docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}.json") do
           docs = Jason.decode!(data)
-          path = "generated_docs/#{category}/#{view}.md"
+          path = "#{@base_path}/#{category}/#{view}.md"
           File.mkdir_p!(Path.dirname(path))
           File.write!(path, markdown(docs, docs))
+
+          # build cheatsheet entries
+          File.write!(@cheatsheet_path, cheatsheet(docs, docs) <> "\n", [:append])
         end
       end
     end
   end
+
+  ### Markdown
 
   defp markdown(
     %{
@@ -69,4 +83,33 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
   end
 
   defp markdown(_data, _ctx), do: ""
+
+
+  ### Cheatsheet
+
+  defp cheatsheet(
+    %{
+      "metadata" => %{ "title" => title },
+      "abstract" => abstract,
+      "primaryContentSections" => content
+    },
+    ctx
+  ) do
+    """
+    ### `#{title}`
+    #{markdown(abstract, ctx)}
+
+    #{cheatsheet(content, ctx)}
+    """
+  end
+
+  defp cheatsheet(data, ctx) when is_list(data), do: data |> Enum.map(&(cheatsheet(&1, ctx))) |> Enum.join()
+
+  defp cheatsheet(%{ "kind" => "content", "content" => content }, ctx), do: cheatsheet(content, ctx)
+
+  defp cheatsheet(%{ "type" => "paragraph", "inlineContent" => content }, ctx), do: "#{cheatsheet(content, ctx)}\n"
+
+  defp cheatsheet(%{ "type" => "codeListing" } = code, ctx), do: markdown(code, ctx)
+
+  defp cheatsheet(_data, _ctx), do: ""
 end
