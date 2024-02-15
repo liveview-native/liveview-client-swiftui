@@ -171,7 +171,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private func disconnect(preserveNavigationPath: Bool = false) async {
         for entry in self.navigationPath {
             await entry.coordinator.disconnect()
-            entry.coordinator.document = nil
+            if !preserveNavigationPath {
+                entry.coordinator.document = nil
+            }
         }
         if !preserveNavigationPath {
             self.navigationPath = [self.navigationPath.first!]
