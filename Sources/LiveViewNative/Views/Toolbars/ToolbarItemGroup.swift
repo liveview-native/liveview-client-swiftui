@@ -12,7 +12,7 @@ import SwiftUI
 /// Optionally specify a ``placement`` to reposition the elements.
 ///
 /// ```html
-/// <ToolbarItemGroup placement="destructive-action">
+/// <ToolbarItemGroup placement="destructiveAction">
 ///     <Button phx-click="delete">Delete</Button>
 ///     <Button phx-click="destroy">Destroy</Button>
 ///     <Button phx-click="eradicate">Eradicate</Button>

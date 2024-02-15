@@ -21,7 +21,7 @@ import SwiftUI
 ///
 /// ```html
 /// <TextField text="last_name">
-///     <Text font-weight="bold" font="caption">Last Name</Text>
+///     <Text fontWeight="bold" font="caption">Last Name</Text>
 /// </TextField>
 /// ```
 ///

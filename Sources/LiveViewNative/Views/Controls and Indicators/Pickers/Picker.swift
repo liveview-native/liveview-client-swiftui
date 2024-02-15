@@ -17,9 +17,9 @@ import SwiftUI
 /// <Picker selection={@transport} phx-change="transport-changed">
 ///     <Text template={:label}>Transportation</Text>
 ///     <Group template={:content}>
-///         <Label system-image="car" tag="car">Car</Label>
-///         <Label system-image="bus" tag="bus">Bus</Label>
-///         <Label system-image="tram" tag="tram">Tram</Label>
+///         <Label systemImage="car" tag="car">Car</Label>
+///         <Label systemImage="bus" tag="bus">Bus</Label>
+///         <Label systemImage="tram" tag="tram">Tram</Label>
 ///     </Group>
 /// </Picker>
 /// ```
