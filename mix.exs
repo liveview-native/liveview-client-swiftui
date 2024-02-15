@@ -47,7 +47,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   defp docs do
     [
-      extras: ["README.md"] ++ Path.wildcard("generated_docs/**/*.md"),
+      extras: ["README.md"] ++ Path.wildcard("generated_docs/**/*.{md,cheatmd}"),
       groups_for_extras: Path.wildcard("generated_docs/*")
         |> Enum.map(fn p -> {Path.basename(p), Path.wildcard("#{p}/*.md")} end)
         |> Map.new,
