@@ -21,7 +21,7 @@ final class TextTests: XCTestCase {
     func testTextNesting() throws {
         try assertMatch(#"""
 <Text>
-    <Image system-name="person.crop.circle.fill" />
+    <Image systemName="person.crop.circle.fill" />
     <Text verbatim=" " />
     <Text>John Doe</Text>
     <Text verbatim="
