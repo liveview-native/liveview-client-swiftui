@@ -135,14 +135,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             return
         }
         
-        logger.debug("Connecting to \(self.url.absoluteString)")
+        let url = self.navigationPath.last!.url
+        
+        logger.debug("Connecting to \(url.absoluteString)")
         
         state = .connecting
         
         do {
-            let html = try await fetchDOM(url: self.url)
+            let html = try await fetchDOM(url: url)
             
-            let doc = try SwiftSoup.parse(html, self.url.absoluteString, SwiftSoup.Parser.xmlParser().settings(.init(true, true)))
+            let doc = try SwiftSoup.parse(html, url.absoluteString, SwiftSoup.Parser.xmlParser().settings(.init(true, true)))
             let domValues = try self.extractDOMValues(doc)
             // extract the root layout, removing anything within the `<div data-phx-main>`.
             let mainDiv = try doc.select("div[data-phx-main]")[0]
@@ -158,7 +160,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 try await self.connectSocket(domValues)
             }
             
-            try await navigationPath.first!.coordinator.connect(domValues: domValues, redirect: false)
+            try await navigationPath.last!.coordinator.connect(domValues: domValues, redirect: false)
         } catch {
             self.state = .connectionFailed(error)
             logger.log(level: .error, "\(error.localizedDescription)")
@@ -166,12 +168,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    private func disconnect() async {
+    private func disconnect(preserveNavigationPath: Bool = false) async {
         for entry in self.navigationPath {
             await entry.coordinator.disconnect()
             entry.coordinator.document = nil
         }
-        self.navigationPath = [self.navigationPath.first!]
+        if !preserveNavigationPath {
+            self.navigationPath = [self.navigationPath.first!]
+        }
         self.socket?.disconnect()
         self.socket = nil
         self.state = .notConnected
@@ -183,10 +187,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// This can be used to force the LiveView to reset, for example after an unrecoverable error occurs.
     public func reconnect() async {
-        let previousNavigationPath = self.navigationPath
-        await self.disconnect()
+        await self.disconnect(preserveNavigationPath: true)
         await self.connect()
-        self.navigationPath = previousNavigationPath
     }
     
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
