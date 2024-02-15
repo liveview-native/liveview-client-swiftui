@@ -5,13 +5,11 @@ import ArgumentParser
 @main
 struct DocumentationExtensionGenerator: ParsableCommand {
     @Option(name: .customLong("view")) private var views: [String] = []
-    @Option(name: .customLong("modifier")) private var modifiers: [String] = []
     
     static let denylist = [
         "LiveView",
         "Shape",
         "TextFieldProtocol",
-        "NamespaceContext"
     ]
     
     static let categoryDenyList = [
@@ -25,9 +23,6 @@ struct DocumentationExtensionGenerator: ParsableCommand {
         ],
         ["Layout Containers", "Separators"]: [
             "<doc:Divider>",
-        ],
-        ["Animations Modifiers", "Views"]: [
-            "``NamespaceContext``"
         ]
     ]
     
@@ -39,12 +34,6 @@ struct DocumentationExtensionGenerator: ParsableCommand {
             directory: packageDirectory.appending(path: "Sources/LiveViewNative/Views"),
             output: extensionsURL,
             fallbackSubcategory: "Views"
-        )
-
-        try viewCategories(
-            directory: packageDirectory.appending(path: "Sources/LiveViewNative/Modifiers"),
-            output: extensionsURL,
-            fallbackSubcategory: "Modifiers"
         )
         
         // MARK: View element and attribute/event names
@@ -121,47 +110,6 @@ struct DocumentationExtensionGenerator: ParsableCommand {
                         encoding: .utf8
                     )
             }
-        }
-        
-        // MARK: Modifier function names
-        let modifiers = self.modifiers.map { URL(filePath: $0) }
-        for modifier in modifiers {
-            let name = modifier.deletingPathExtension().lastPathComponent
-            guard !Self.denylist.contains(name) else { continue }
-
-            let markdownURL = extensionsURL
-                .appending(path: name)
-                .appendingPathExtension("md")
-
-            try FileManager.default.createDirectory(at: markdownURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-
-            let expression = Regex {
-                ChoiceOf {
-                    Anchor.startOfLine
-                    "a"..."z"
-                }
-                "A"..."Z"
-            }
-            let functionName = name
-                .replacing("Modifier", with: "")
-                .replacing(expression) { match in
-                    switch match.output.count {
-                    case 2:
-                        return "\(match.output[match.startIndex])_\(match.output[match.output.index(before: match.output.endIndex)])".lowercased()
-                    default:
-                        return match.output.lowercased()
-                    }
-                }
-
-            let override = #"""
-            # ``LiveViewNative/\#(name)``
-
-            @Metadata {
-                @DocumentationExtension(mergeBehavior: append)
-                @DisplayName("\#(functionName)", style: symbol)
-            }
-            """#
-            try override.write(to: markdownURL, atomically: true, encoding: .utf8)
         }
     }
 

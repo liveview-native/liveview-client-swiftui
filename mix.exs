@@ -32,6 +32,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:makeup_swift, "~> 0.0.1"},
       {:makeup_json, "~> 0.1.0"},
+      {:makeup_eex, ">= 0.1.1"},
       {:floki, ">= 0.30.0", only: :test},
       # {:live_view_native, path: "../live_view_native", override: true},
       {:live_view_native, github: "liveview-native/live_view_native", branch: "main", override: true},
@@ -46,7 +47,10 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   defp docs do
     [
-      extras: ["README.md"],
+      extras: ["README.md"] ++ Path.wildcard("generated_docs/**/*.md"),
+      groups_for_extras: Path.wildcard("generated_docs/*")
+        |> Enum.map(fn p -> {Path.basename(p), Path.wildcard("#{p}/*.md")} end)
+        |> Map.new,
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}"
