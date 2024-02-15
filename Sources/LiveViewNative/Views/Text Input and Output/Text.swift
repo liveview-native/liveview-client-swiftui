@@ -139,7 +139,7 @@ struct Text<R: RootRegistry>: View {
     /// - Note: The value is expected to be in ISO 8601 format (with optional time)
     ///
     /// ```html
-    /// <Text date={DateTime.utc_now()} date-style="date" />
+    /// <Text date={DateTime.utc_now()} dateStyle="date" />
     /// ```
     @_documentation(visibility: public)
     @Attribute("date", transform: Self.formatDate(_:)) private var date: Date?

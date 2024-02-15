@@ -12,7 +12,7 @@ import SwiftUI
 /// Use this element to scale a value with the accessibility dynamic type size.
 ///
 /// ```html
-/// <ScaledMetric phx-change="scaled-value-changed" value={100} relativeTo="large-title">
+/// <ScaledMetric phx-change="scaled-value-changed" value={100} relativeTo="largeTitle">
 ///   <Image systemName="heart" resizable modifiers={frame(width: @scaled_value, height: @scaled_value)}>
 /// </ScaledMetric>
 /// ```

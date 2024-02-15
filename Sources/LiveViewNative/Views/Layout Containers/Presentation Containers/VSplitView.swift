@@ -15,8 +15,8 @@ import SwiftUI
 ///
 /// ```html
 /// <VSplitView>
-///     <Rectangle fill-color="system-red" />
-///     <Rectangle fill-color="system-blue" />
+///     <Rectangle fillColor="system-red" />
+///     <Rectangle fillColor="system-blue" />
 /// </VSplitView>
 /// ```
 @_documentation(visibility: public)

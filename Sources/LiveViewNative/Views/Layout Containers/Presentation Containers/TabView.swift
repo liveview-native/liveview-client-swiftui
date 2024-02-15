@@ -13,9 +13,9 @@ import SwiftUI
 ///
 /// ```html
 /// <TabView modifiers={tab_view_style(:page)}>
-///     <Rectangle fill-color="system-red" />
-///     <Rectangle fill-color="system-red" />
-///     <Rectangle fill-color="system-red" />
+///     <Rectangle fillColor="system-red" />
+///     <Rectangle fillColor="system-red" />
+///     <Rectangle fillColor="system-red" />
 /// </TabView>
 /// ```
 ///

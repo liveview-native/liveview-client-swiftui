@@ -25,7 +25,7 @@ import SwiftUI
 /// To synchronize the expansion state with the server, use the ``isExpanded`` attribute.
 ///
 /// ```html
-/// <DisclosureGroup is-expanded={@actions_open} phx-change="actions-group-changed">
+/// <DisclosureGroup isExpanded={@actions_open} phx-change="actions-group-changed">
 ///     ...
 /// </DisclosureGroup>
 /// ```
@@ -48,7 +48,7 @@ struct DisclosureGroup<R: RootRegistry>: View {
     
     /// Synchronizes the expansion state with the server.
     @_documentation(visibility: public)
-    @ChangeTracked(attribute: "is-expanded") private var isExpanded = false
+    @ChangeTracked(attribute: "isExpanded") private var isExpanded = false
 
     public var body: some View {
 #if os(iOS) || os(macOS)

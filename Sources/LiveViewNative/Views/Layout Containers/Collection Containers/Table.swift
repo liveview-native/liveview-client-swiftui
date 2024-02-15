@@ -47,7 +47,7 @@ import LiveViewNativeCore
 /// Use the ``sortOrder`` attribute to handle changes in the sorting options.
 ///
 /// ```html
-/// <Table sort-order={@sports_sort_order} phx-change="sort-changed">
+/// <Table sortOrder={@sports_sort_order} phx-change="sort-changed">
 ///     ...
 ///     <Group template={:rows}>
 ///         <%= for sport <- Enum.sort_by(
@@ -121,7 +121,7 @@ struct Table<R: RootRegistry>: View {
     /// The value of `id` matches the `id` attribute of the `<TableColumn>`, or its index if there is no `id` attribute.
     /// The value of `order` matches [`Foundation.SortOrder`](https://developer.apple.com/documentation/Foundation/SortOrder).
     @_documentation(visibility: public)
-    @ChangeTracked(attribute: "sort-order") private var sortOrder = TableColumnSortContainer(value: [])
+    @ChangeTracked(attribute: "sortOrder") private var sortOrder = TableColumnSortContainer(value: [])
     
     public var body: some View {
         #if os(iOS) || os(macOS)
@@ -250,9 +250,9 @@ struct Table<R: RootRegistry>: View {
             }
             .width(item.element.attributeValue(for: "width").flatMap(Double.init(_:)).flatMap(CGFloat.init))
             .width(
-                min: item.element.attributeValue(for: "min-width").flatMap(Double.init(_:)).flatMap(CGFloat.init),
-                ideal: item.element.attributeValue(for: "ideal-width").flatMap(Double.init(_:)).flatMap(CGFloat.init),
-                max: item.element.attributeValue(for: "max-width").flatMap(Double.init(_:)).flatMap(CGFloat.init)
+                min: item.element.attributeValue(for: "minWidth").flatMap(Double.init(_:)).flatMap(CGFloat.init),
+                ideal: item.element.attributeValue(for: "idealWidth").flatMap(Double.init(_:)).flatMap(CGFloat.init),
+                max: item.element.attributeValue(for: "maxWidth").flatMap(Double.init(_:)).flatMap(CGFloat.init)
             )
         }
     }

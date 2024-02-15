@@ -12,7 +12,7 @@ import SwiftUI
 /// Optionally specify a ``placement`` to reposition the element.
 ///
 /// ```html
-/// <ToolbarItem placement="destructive-action">
+/// <ToolbarItem placement="destructiveAction">
 ///     <Button phx-click="delete">Delete</Button>
 /// </ToolbarItem>
 /// ```
@@ -130,8 +130,8 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
             default: return .automatic
             }
         }, element: element)
-        self._alwaysAvailable = .init(wrappedValue: false, "always-available", element: element)
-        self._customizationBehavior = .init(wrappedValue: .default, "customization-behavior", transform: {
+        self._alwaysAvailable = .init(wrappedValue: false, "alwaysAvailable", element: element)
+        self._customizationBehavior = .init(wrappedValue: .default, "customizationBehavior", transform: {
             switch $0?.value {
             case "disabled": return .disabled
             case "reorderable": return .reorderable
@@ -160,21 +160,21 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
     case navigation
     /// `primary-action`
     @_documentation(visibility: public)
-    case primaryAction = "primary-action"
+    case primaryAction
     /// `secondary-action`
     @_documentation(visibility: public)
-    case secondaryAction = "secondary-action"
+    case secondaryAction
     @_documentation(visibility: public)
     case status
     /// `confirmation-action`
     @_documentation(visibility: public)
-    case confirmationAction = "confirmation-action"
+    case confirmationAction
     /// `cancellation-action`
     @_documentation(visibility: public)
-    case cancellationAction = "cancellation-action"
+    case cancellationAction
     /// `destructive-action`
     @_documentation(visibility: public)
-    case destructiveAction = "destructive-action"
+    case destructiveAction
     @_documentation(visibility: public)
     case keyboard
     

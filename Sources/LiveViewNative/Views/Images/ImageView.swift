@@ -81,8 +81,8 @@ struct ImageView<R: RootRegistry>: View {
     
     init(element: ElementNode) {
         self._element = .init(element: element)
-        self._systemName = .init("system-name", element: element)
-        self._variableValue = .init("variable-value", element: element)
+        self._systemName = .init("systemName", element: element)
+        self._variableValue = .init("variableValue", element: element)
         self._name = .init("name", element: element)
     }
     
