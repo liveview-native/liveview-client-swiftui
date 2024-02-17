@@ -61,7 +61,7 @@ final class ModifierVisitor: SyntaxVisitor {
     }
 
     override func visit(_ node: ExtensionDeclSyntax) -> SyntaxVisitorContinueKind {
-        guard node.extendedType.trimmed.description == "SwiftUI.View" else { return .skipChildren }
+        guard node.extendedType.trimmedDescription == "SwiftUI.View" else { return .skipChildren }
         guard let extendedType = node.extendedType.as(MemberTypeSyntax.self),
               extendedType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
               extendedType.name.tokenKind == .identifier("View"),
