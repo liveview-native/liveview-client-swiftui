@@ -25,8 +25,6 @@ import SwiftUI
 /// </LazyHGrid>
 /// ```
 ///
-/// - Precondition: The ``rows`` attribute must be JSON encoded.
-///
 /// There are 3 types of grid item:
 /// * `fixed(size, spacing, alignment)`: creates a single row that takes up the specified amount of space.
 /// * `flexible(minimum, maximum, spacing, alignment)`: creates a single row that fills the available space.
@@ -43,8 +41,6 @@ struct LazyHGrid<R: RootRegistry>: View {
     @LiveContext<R> private var context
     
     /// Configured rows to fill with the child elements.
-    ///
-    /// - Precondition: The value of the attribute must be JSON encoded.
     @_documentation(visibility: public)
     @Attribute("rows") private var rows: [GridItem]
     /// The alignment between rows.

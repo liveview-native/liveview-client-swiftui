@@ -25,8 +25,6 @@ import SwiftUI
 /// </LazyVGrid>
 /// ```
 ///
-/// - Precondition: The ``columns`` attribute must be JSON encoded.
-///
 /// There are 3 types of grid item:
 /// * `fixed(size, spacing, alignment)`: creates a single column that takes up the specified amount of space.
 /// * `flexible(minimum, maximum, spacing, alignment)`: creates a single column that fills the available space.
@@ -43,8 +41,6 @@ struct LazyVGrid<R: RootRegistry>: View {
     @LiveContext<R> private var context
     
     /// Configured columns to fill with the child elements.
-    ///
-    /// - Precondition: The value of the attribute must be JSON encoded.
     @_documentation(visibility: public)
     @Attribute("columns") private var columns: [GridItem]
     /// The alignment between columns.
