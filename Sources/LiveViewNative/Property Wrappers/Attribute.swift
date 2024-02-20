@@ -123,6 +123,7 @@ public struct Attribute<T>: DynamicProperty {
         do {
             return try transform(element.attribute(named: name), element)
         } catch {
+            print(error)
             guard let defaultValue else { fatalError(error.localizedDescription) }
             return defaultValue
         }

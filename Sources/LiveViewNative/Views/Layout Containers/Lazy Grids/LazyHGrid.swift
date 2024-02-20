@@ -14,10 +14,10 @@ import SwiftUI
 /// ```html
 /// <LazyHGrid
 ///     rows={[
-///         LiveViewNative.SwiftUI.Types.GridItem.fixed(100),
-///         LiveViewNative.SwiftUI.Types.GridItem.flexible(),
-///         LiveViewNative.SwiftUI.Types.GridItem.adaptive(50),
-///     ] |> Jason.encode!}
+///         %{ size: %{ fixed: 100 } },
+///         %{ size: :flexible },
+///         %{ size: %{ adaptive: %{ minimum: 50 } }
+///     ]}
 /// >
 ///     <%= for i <- 1..50 do %>
 ///         <Text id={i |> Integer.to_string}><%= i %></Text>
