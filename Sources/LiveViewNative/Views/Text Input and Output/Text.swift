@@ -55,27 +55,18 @@ import LiveViewNativeCore
 /// ## Formatting Text
 /// Use text modifiers to customize the appearance of text.
 ///
+/// ```elixir
+/// "large-bold" do
+///     font(.largeTitle)
+///     bold()
+/// end
+/// ```
+///
 /// ```html
-/// <Text modifiers={font({:system, :large_title}) |> bold()}>
+/// <Text class="large-bold">
 ///     Hello, world!
 /// </Text>
 /// ```
-///
-/// These modifiers can be used on ``Text`` elements:
-/// * ``FontModifier``
-/// * ``FontWeightModifier``
-/// * ``ForegroundColorModifier``
-/// * ``BoldModifier``
-/// * ``ItalicModifier``
-/// * ``StrikethroughModifier``
-/// * ``UnderlineModifier``
-/// * ``MonospacedDigitModifier``
-/// * ``KerningModifier``
-/// * ``TrackingModifier``
-/// * ``BaselineOffsetModifier``
-/// * ``FontDesignModifier``
-/// * ``FontWidthModifier``
-/// * ``MonospacedModifier``
 ///
 /// ## Nesting Elements
 /// Certain elements may be nested within a ``Text``.
@@ -87,7 +78,7 @@ import LiveViewNativeCore
 ///
 /// ```html
 /// <Text>
-///     <Image systemName="person.crop.circle.fill" /><Text value="Doe John" format="name" modifiers={foreground_color(:blue) |> bold()} />
+///     <Image systemName="person.crop.circle.fill" /><Text value="Doe John" format="name" class="blue bold" />
 ///     <Text verbatim={"\n"} />
 ///     Check out this thing I made: <Link destination="mysite.com">mysite.com</Link>
 /// </Text>

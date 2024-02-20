@@ -16,7 +16,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "Link")
 ///
 /// ```html
 /// <Link destination="https://native.live">
-///     Go to <Text modifiers={font_weight(:bold)}>LiveView Native</Text>
+///     Go to <Text class="bold">LiveView Native</Text>
 /// </Link>
 /// ```
 ///
