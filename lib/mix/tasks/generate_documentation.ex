@@ -35,18 +35,21 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
   end
 
   ### Markdown
-
   defp markdown(
     %{
+      "identifier" => %{ "url" => url },
       "metadata" => %{ "title" => title },
       "abstract" => abstract,
       "primaryContentSections" => content
-    },
+    } = data,
     ctx
   ) do
     trimmed_title = title |> String.replace("<", "") |> String.replace(">", "")
+    attributes = Enum.find(Map.get(data, "topicSections", []), %{ "identifiers" => [] }, &(&1["title"] == "Instance Properties"))["identifiers"]
+      |> Enum.filter(&(Path.basename(&1) != "body"))
     """
     # #{trimmed_title}
+    <!-- tooltip support -->
     <div id="#{trimmed_title}/1" class="detail">
 
     <h1 style="display: none;">
@@ -56,16 +59,20 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
     </h1>
 
     <section class="docstring">
-    <p>
-
-    #{markdown(abstract, ctx)}
-
-    </p>
+      #{markdown(abstract, ctx) |> ExDoc.Markdown.to_ast |> ExDoc.DocAST.to_string}
     </section>
 
     </div>
+    <!-- end tooltip support -->
 
     #{markdown(content, ctx)}
+
+    <!-- attribute list -->
+    # References
+
+    #{Enum.map(attributes, &(attribute_details(Path.basename(url), &1)))}
+
+    <!-- end attribute list -->
     """
   end
 
@@ -74,6 +81,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
   defp markdown(%{ "kind" => "content", "content" => content }, ctx), do: markdown(content, ctx)
 
   defp markdown(%{ "type" => "text", "text" => text }, _ctx), do: text
+  defp markdown(%{ "type" => "heading", "level" => level, "text" => text }, %{ "inlineHeadings" => true }), do: "### #{text}\n\n"
   defp markdown(%{ "type" => "heading", "level" => level, "text" => text }, _ctx), do: "#{String.duplicate("#", level)} #{text}\n"
   defp markdown(%{ "type" => "paragraph", "inlineContent" => content }, ctx), do: "#{markdown(content, ctx)}\n"
 
@@ -87,12 +95,17 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
 
   defp markdown(
     %{ "type" => "reference", "identifier" => identifier },
-    %{ "references" => references }
+    %{ "references" => references, "identifier" => %{ "url" => base_url } }
   ) do
     %{ "title" => title, "url" => url } = Map.get(references, identifier)
+    hash = "#{title |> String.replace("<", "") |> String.replace(">", "")}/1"
     resolved_url = case url do
       "/documentation/liveviewnative/" <> rest ->
-        "#{rest}.html##{title |> String.replace("<", "") |> String.replace(">", "")}/1"
+        if String.starts_with?(rest, "#{base_url |> Path.basename |> String.downcase}/") do
+          "##{hash}"
+        else
+          "#{rest}.html##{hash}"
+        end
       url ->
         url
     end
@@ -101,6 +114,26 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
 
   defp markdown(_data, _ctx), do: ""
 
+  defp attribute_details(view, identifier) do
+    {:ok, data} = File.read("docc_build/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}/#{Path.basename(identifier)}.json")
+    docs = Jason.decode!(data)
+    %{ "metadata" => %{ "title" => title }, "abstract" => abstract, "primaryContentSections" => content } = docs
+    docs = Map.put(docs, "inlineHeadings", true)
+    """
+    <section id="#{title}/1" class="detail">
+      <div class="detail-header">
+        <h1 class="signature">#{title}</h1>
+      </div>
+      <section class="docstring">
+
+    #{markdown(abstract, docs) |> ExDoc.Markdown.to_ast |> ExDoc.DocAST.to_string}
+
+    #{markdown(content, docs) |> ExDoc.Markdown.to_ast |> ExDoc.DocAST.to_string}
+
+      </section>
+    </section>
+    """
+  end
 
   ### Cheatsheet
 
