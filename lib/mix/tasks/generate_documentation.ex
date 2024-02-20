@@ -47,6 +47,14 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
     trimmed_title = title |> String.replace("<", "") |> String.replace(">", "")
     attributes = Enum.find(Map.get(data, "topicSections", []), %{ "identifiers" => [] }, &(&1["title"] == "Instance Properties"))["identifiers"]
       |> Enum.filter(&(Path.basename(&1) != "body"))
+    references = """
+    <!-- attribute list -->
+    # References
+
+    #{Enum.map(attributes, &(attribute_details(Path.basename(url), &1)))}
+
+    <!-- end attribute list -->
+    """
     """
     # #{trimmed_title}
     <!-- tooltip support -->
@@ -67,12 +75,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
 
     #{markdown(content, ctx)}
 
-    <!-- attribute list -->
-    # References
-
-    #{Enum.map(attributes, &(attribute_details(Path.basename(url), &1)))}
-
-    <!-- end attribute list -->
+    #{if length(attributes) > 0, do: references, else: ""}
     """
   end
 
@@ -81,7 +84,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
   defp markdown(%{ "kind" => "content", "content" => content }, ctx), do: markdown(content, ctx)
 
   defp markdown(%{ "type" => "text", "text" => text }, _ctx), do: text
-  defp markdown(%{ "type" => "heading", "level" => level, "text" => text }, %{ "inlineHeadings" => true }), do: "### #{text}\n\n"
+  defp markdown(%{ "type" => "heading", "text" => text }, %{ "inlineHeadings" => true }), do: "### #{text}\n\n"
   defp markdown(%{ "type" => "heading", "level" => level, "text" => text }, _ctx), do: "#{String.duplicate("#", level)} #{text}\n"
   defp markdown(%{ "type" => "paragraph", "inlineContent" => content }, ctx), do: "#{markdown(content, ctx)}\n"
 
@@ -119,9 +122,14 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
     docs = Jason.decode!(data)
     %{ "metadata" => %{ "title" => title }, "abstract" => abstract, "primaryContentSections" => content } = docs
     docs = Map.put(docs, "inlineHeadings", true)
+    hash = "#{title}/1"
     """
-    <section id="#{title}/1" class="detail">
+    <section id="#{hash}" class="detail">
       <div class="detail-header">
+        <a href="##{hash}" class="detail-link" title="Link to this reference">
+          <i class="ri-link-m" aria-hidden="true"></i>
+          <span class="sr-only">Link to this reference</span>
+        </a>
         <h1 class="signature">#{title}</h1>
       </div>
       <section class="docstring">
