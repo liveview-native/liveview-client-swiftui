@@ -44,9 +44,26 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
     },
     ctx
   ) do
+    trimmed_title = title |> String.replace("<", "") |> String.replace(">", "")
     """
-    # `#{title |> String.replace("<", "&lt;") |> String.replace(">", "&gt;")}`
+    # #{trimmed_title}
+    <div id="#{trimmed_title}/1" class="detail">
+
+    <h1 style="display: none;">
+
+    #{title |> String.replace("<", "&lt;") |> String.replace(">", "&gt;")}
+
+    </h1>
+
+    <section class="docstring">
+    <p>
+
     #{markdown(abstract, ctx)}
+
+    </p>
+    </section>
+
+    </div>
 
     #{markdown(content, ctx)}
     """
@@ -75,11 +92,11 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
     %{ "title" => title, "url" => url } = Map.get(references, identifier)
     resolved_url = case url do
       "/documentation/liveviewnative/" <> rest ->
-        "#{rest}.html"
+        "#{rest}.html##{title |> String.replace("<", "") |> String.replace(">", "")}/1"
       url ->
         url
     end
-    "[#{title}](#{resolved_url})"
+    "[`#{title}`](#{resolved_url})"
   end
 
   defp markdown(_data, _ctx), do: ""
