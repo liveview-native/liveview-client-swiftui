@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// A configuration item for ``LazyVGrid`` and ``LazyHGrid``.
 ///
@@ -17,7 +18,7 @@ import SwiftUI
 /// %{ size: %{ flexible: %{ minimum: 0, maximum: 100 } }, spacing: 1, alignment: :topLeading }
 /// %{ size: %{ adaptive: %{ minimum: 10 } } }
 /// ```
-extension GridItem: Decodable {
+extension GridItem: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
@@ -31,6 +32,12 @@ extension GridItem: Decodable {
         case size
         case spacing
         case alignment
+    }
+    
+    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self = try JSONDecoder().decode(Self.self, from: Data(value.utf8))
     }
 }
 

@@ -46,13 +46,7 @@ struct LazyVGrid<R: RootRegistry>: View {
     ///
     /// - Precondition: The value of the attribute must be JSON encoded.
     @_documentation(visibility: public)
-    @Attribute(
-        "columns",
-        transform: {
-            guard let value = $0?.value?.data(using: .utf8) else { throw AttributeDecodingError.missingAttribute([GridItem].self) }
-            return try makeJSONDecoder().decode([GridItem].self, from: value)
-        }
-    ) private var columns: [GridItem]
+    @Attribute("columns") private var columns: [GridItem]
     /// The alignment between columns.
     @_documentation(visibility: public)
     @Attribute("alignment") private var alignment: HorizontalAlignment = .center
