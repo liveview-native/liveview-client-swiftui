@@ -122,7 +122,7 @@ struct ImageView<R: RootRegistry>: View {
         if let labelNode = element.children().first {
             switch labelNode.data {
             case let .element(element):
-                return Text<R>(element: ElementNode(node: labelNode, data: element)).body
+                return Text<R>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: nil).body
             case let .leaf(label):
                 return .init(label)
             case .root:

@@ -150,6 +150,10 @@ struct ModifierGenerator: ParsableCommand {
         "focusScope",
         "prefersDefaultFocus",
         
+        // manually implemented for `Text`
+        "bold",
+        "italic",
+        
         // fixme: missing types
         "accessibilityRotor",
         "accessibilityChartDescriptor",
@@ -374,6 +378,7 @@ struct ModifierGenerator: ParsableCommand {
                     \#(chunks.indices.map({ i in "case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
                     \#(Self.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
                     case _customRegistryModifier(R.CustomModifier)
+                    case _anyTextModifier(_AnyTextModifier<R>)
                     
                     func body(content: Content) -> some View {
                         switch self {
@@ -390,6 +395,8 @@ struct ModifierGenerator: ParsableCommand {
                             """
                         }).joined(separator: "\n"))
                         case let ._customRegistryModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyTextModifier(modifier):
                             content.modifier(modifier)
                         }
                     }
@@ -458,21 +465,26 @@ struct ModifierGenerator: ParsableCommand {
                                     }
                                 }
                             } catch let builtinError {
-                                // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
                                 input = copy
-                                do {
-                                    return try ._customRegistryModifier(R.parseModifier(&input, in: context))
-                                } catch let error as ModifierParseError {
-                                    if let deprecation = deprecations[modifierName] {
-                                        throw ModifierParseError(
-                                            error: .deprecatedModifier(modifierName, message: deprecation),
-                                            metadata: metadata
-                                        )
-                                    } else {
-                                        throw error
+                                if let textModifier = try? _AnyTextModifier<R>.parser(in: context).parse(&input) {
+                                    return ._anyTextModifier(textModifier)
+                                } else {
+                                    // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
+                                    input = copy
+                                    do {
+                                        return try ._customRegistryModifier(R.parseModifier(&input, in: context))
+                                    } catch let error as ModifierParseError {
+                                        if let deprecation = deprecations[modifierName] {
+                                            throw ModifierParseError(
+                                                error: .deprecatedModifier(modifierName, message: deprecation),
+                                                metadata: metadata
+                                            )
+                                        } else {
+                                            throw error
+                                        }
+                                    } catch {
+                                        throw builtinError
                                     }
-                                } catch {
-                                    throw builtinError
                                 }
                             }
                         }

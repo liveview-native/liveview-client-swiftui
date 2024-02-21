@@ -188,9 +188,18 @@ struct Text<R: RootRegistry>: View {
     @_documentation(visibility: public)
     @Attribute("dateStyle") private var dateStyle: SwiftUI.Text.DateStyle = .date
     
-    init() {}
+    @ClassModifiers<R> private var modifiers
+    let overrideStylesheet: (any StylesheetProtocol)?
+    @Environment(\.stylesheets) private var stylesheets
+    var stylesheet: (any StylesheetProtocol)? {
+        overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]
+    }
     
-    init(element: ElementNode) {
+    init() {
+        self.overrideStylesheet = nil
+    }
+    
+    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
         self._element = .init(element: element)
         self._verbatim = .init(wrappedValue: nil, "verbatim", element: element)
         self._date = .init(
@@ -217,10 +226,22 @@ struct Text<R: RootRegistry>: View {
         self._currencyCode = .init(wrappedValue: nil, "currencyCode", element: element)
         self._nameStyle = .init(wrappedValue: .medium, "nameStyle", element: element)
         self._dateStyle = .init(wrappedValue: .date, "dateStyle", element: element)
+        self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
+        self.overrideStylesheet = overrideStylesheet
     }
     
     public var body: SwiftUI.Text {
-        return text
+        if let overrideStylesheet {
+            return modifiers.reduce(text) { result, modifier in
+                if case let ._anyTextModifier(textModifier) = modifier {
+                    return textModifier.apply(to: result, on: element)
+                } else {
+                    return result
+                }
+            }
+        } else {
+            return text
+        }
     }
     
     private static func formatDate(_ value: LiveViewNativeCore.Attribute?) throws -> Date? {
@@ -298,7 +319,7 @@ struct Text<R: RootRegistry>: View {
                     else { return }
                     switch element.tag {
                     case "Text":
-                        prev = prev + Self(element: element).body
+                        prev = prev + Self(element: element, overrideStylesheet: stylesheet).body
                     case "Link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")

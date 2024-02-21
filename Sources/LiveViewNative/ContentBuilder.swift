@@ -591,7 +591,7 @@ public extension ContentBuilder {
         element.children()
             .lazy
             .filter({ $0.attributes.contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) })
-            .first?.asElement().flatMap({ Text<R>(element: $0).body })
+            .first?.asElement().flatMap({ Text<R>(element: $0, overrideStylesheet: context.stylesheet).body })
                 ?? SwiftUI.Text("")
     }
     

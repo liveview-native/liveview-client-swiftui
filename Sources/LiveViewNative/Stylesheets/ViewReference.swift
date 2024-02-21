@@ -34,8 +34,11 @@ typealias InlineViewReference = ViewReference
 public struct TextReference: ParseableModifierValue {
     let value: String
 
+    @MainActor
     public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
-        context.children(of: element, forTemplate: value).first?.asElement().flatMap({ Text<R>(element: $0).body })
+        context.children(of: element, forTemplate: value).first?.asElement().flatMap({
+            Text<R>(element: $0, overrideStylesheet: context.coordinator.session.stylesheet).body
+        })
             ?? SwiftUI.Text("")
     }
 
