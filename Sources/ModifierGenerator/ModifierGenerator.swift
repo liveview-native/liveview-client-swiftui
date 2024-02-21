@@ -151,8 +151,21 @@ struct ModifierGenerator: ParsableCommand {
         "prefersDefaultFocus",
         
         // manually implemented for `Text`
+        "font",
+        "fontWeight",
+        "fontDesign",
+        "fontWidth",
+        "foregroundStyle",
         "bold",
         "italic",
+        "strikethrough",
+        "underline",
+        "monospaced",
+        "monospacedDigit",
+        "kerning",
+        "tracking",
+        "baselineOffset",
+        "textScale",
         
         // fixme: missing types
         "accessibilityRotor",
