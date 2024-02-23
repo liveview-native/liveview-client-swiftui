@@ -4,7 +4,8 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
   use Mix.Task
   require Logger
 
-  @temp_doc_folder "../lvn_swiftui_docs"
+  # Using a temporary folder outside of the project avoids ElixirLS file watching issues
+  @temp_doc_folder "../temp_swiftui_docs"
   @allow_writing_to_package_dir_command ~c"xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions"
   @generate_swift_lvn_docs_command ~c"xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath #{@temp_doc_folder} -skipMacroValidation -skipPackagePluginValidation"
   @doc_folder "generated_docs"
