@@ -2,6 +2,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
   @moduledoc "Generates ex doc files for all SwiftUI views"
 
   use Mix.Task
+  require Logger
 
   @temp_doc_folder "../lvn_swiftui_docs"
   @allow_writing_to_package_dir_command ~c"xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions"
@@ -11,9 +12,12 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
 
   @shortdoc "Generates ex doc files for all SwiftUI views"
   def run(_) do
+    Logger.info("Enabling writing to package...")
     :os.cmd(@allow_writing_to_package_dir_command)
+    Logger.info("Generating SwiftUI documentation files...")
     :os.cmd(@generate_swift_lvn_docs_command)
 
+    Logger.info("Generating LiveView Native documentation files...")
     # Ensure generated_docs folder exists
     File.mkdir("generated_docs")
 
@@ -41,6 +45,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
       end
     end
 
+    Logger.info("Cleaning up temporary files...")
     File.rm_rf(@temp_doc_folder)
   end
 

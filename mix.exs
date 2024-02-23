@@ -44,20 +44,37 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       # {:live_view_native, path: "../live_view_native", override: true},
       {:live_view_native, github: "liveview-native/live_view_native", tag: "0.3.0-alpha.3"},
       # {:live_view_native_stylesheet, path: "../live_view_native_stylesheet", override: true},
-      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet", tag: "0.3.0-alpha.4"},
+      {:live_view_native_stylesheet,
+       github: "liveview-native/live_view_native_stylesheet", tag: "0.3.0-alpha.4"},
       # {:live_view_native_test, path: "../live_view_native_test", only: :test, override: true},
-      {:live_view_native_test, github: "liveview-native/live_view_native_test", tag: "0.3.0-alpha.3", only: :test},
+      {:live_view_native_test,
+       github: "liveview-native/live_view_native_test", tag: "0.3.0-alpha.3", only: :test},
       {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"}
     ]
   end
 
   defp docs do
-    [
-      extras: ["README.md"] ++ Path.wildcard("generated_docs/**/*.{md,cheatmd}"),
-      groups_for_extras: Path.wildcard("generated_docs/*")
+    # Feature Flagging Docs
+    extras =
+      if System.get_env("INCLUDE_GENERATED_DOCS") do
+        ["README.md"] ++ Path.wildcard("generated_docs/**/*.{md,cheatmd}")
+      else
+        ["README.md"]
+      end
+
+    groups_for_extras =
+      if System.get_env("INCLUDE_GENERATED_DOCS") do
+        Path.wildcard("generated_docs/*")
         |> Enum.map(fn p -> {Path.basename(p), Path.wildcard("#{p}/*.md")} end)
-        |> Map.new,
+        |> Map.new()
+      else
+        []
+      end
+
+    [
+      extras: extras,
+      groups_for_extras: groups_for_extras,
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}"
@@ -72,7 +89,8 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       licenses: ["MIT"],
       links: %{
         "GitHub" => @source_url,
-        "Built by DockYard, Expert Elixir & Phoenix Consultants" => "https://dockyard.com/phoenix-consulting"
+        "Built by DockYard, Expert Elixir & Phoenix Consultants" =>
+          "https://dockyard.com/phoenix-consulting"
       }
     }
   end
