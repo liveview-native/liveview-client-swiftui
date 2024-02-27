@@ -5,7 +5,7 @@
 /*.xcodeproj
 xcuserdata/
 .swiftpm
-docc_build/
+generated_docs/
 docs/
 tutorial/
 swift-docc-render/
