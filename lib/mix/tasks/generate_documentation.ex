@@ -5,9 +5,9 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
   require Logger
 
   # Using a temporary folder outside of the project avoids ElixirLS file watching issues
-  @temp_doc_folder "../temp_swiftui_docs"
+  defp temp_doc_folder, do: Path.join(System.tmp_dir!(), "temp_swiftui_docs")
+  defp generate_swift_lvn_docs_command, do: ~c"xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath #{temp_doc_folder()} -skipMacroValidation -skipPackagePluginValidation"
   @allow_writing_to_package_dir_command ~c"xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions"
-  @generate_swift_lvn_docs_command ~c"xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath #{@temp_doc_folder} -skipMacroValidation -skipPackagePluginValidation"
   @doc_folder "generated_docs"
   @cheatsheet_path "#{@doc_folder}/view-index.cheatmd"
 
@@ -16,7 +16,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
     Logger.info("Enabling writing to package...")
     :os.cmd(@allow_writing_to_package_dir_command)
     Logger.info("Generating SwiftUI documentation files...")
-    :os.cmd(@generate_swift_lvn_docs_command)
+    :os.cmd(generate_swift_lvn_docs_command())
 
     Logger.info("Generating LiveView Native documentation files...")
     # Ensure generated_docs folder exists
@@ -33,7 +33,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
       for view <- views do
         with {:ok, data} <-
                File.read(
-                 "#{@temp_doc_folder}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}.json"
+                 "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}.json"
                ) do
           docs = Jason.decode!(data)
           path = "#{@doc_folder}/#{category}/#{view}.md"
@@ -47,7 +47,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
     end
 
     Logger.info("Cleaning up temporary files...")
-    File.rm_rf(@temp_doc_folder)
+    File.rm_rf(temp_doc_folder())
   end
 
   ### Cheatsheet
@@ -192,7 +192,7 @@ defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
   defp attribute_details(view, identifier) do
     {:ok, data} =
       File.read(
-        "#{@temp_doc_folder}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}/#{Path.basename(identifier)}.json"
+        "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}/#{Path.basename(identifier)}.json"
       )
 
     docs = Jason.decode!(data)
