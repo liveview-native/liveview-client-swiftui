@@ -54,15 +54,16 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   defp docs do
     # Feature Flagging Docs
+    include_generated_docs = System.get_env("INCLUDE_GENERATED_DOCS")
     extras =
-      if System.get_env("INCLUDE_GENERATED_DOCS") do
+      if include_generated_docs do
         ["README.md"] ++ Path.wildcard("generated_docs/**/*.{md,cheatmd}")
       else
         ["README.md"]
       end
 
     groups_for_extras =
-      if System.get_env("INCLUDE_GENERATED_DOCS") do
+      if include_generated_docs do
         Path.wildcard("generated_docs/*")
         |> Enum.map(fn p -> {Path.basename(p), Path.wildcard("#{p}/*.md")} end)
         |> Map.new()
