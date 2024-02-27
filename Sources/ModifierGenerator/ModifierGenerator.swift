@@ -195,7 +195,6 @@ struct ModifierGenerator: ParsableCommand {
         "pageCommand",
         "pasteDestination",
         "sensoryFeedback",
-        "symbolEffect",
         "transaction",
         "userActivity",
         "allowedDynamicRange",

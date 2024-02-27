@@ -10,7 +10,7 @@ import Symbols
 import LiveViewNativeStylesheet
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-struct AnySymbolEffect: SymbolEffect, ContentTransitionSymbolEffect, ParseableModifierValue {
+struct AnySymbolEffect: SymbolEffect, ContentTransitionSymbolEffect, ParseableModifierValue, IndefiniteSymbolEffect, DiscreteSymbolEffect {
     let configuration: SymbolEffectConfiguration
     
     init(configuration: SymbolEffectConfiguration) {
@@ -363,3 +363,8 @@ extension SymbolEffectOptions: ParseableModifierValue {
         }
     }
 }
+
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+typealias AnyIndefiniteSymbolEffect = AnySymbolEffect
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
+typealias AnyDiscreteSymbolEffect = AnySymbolEffect
