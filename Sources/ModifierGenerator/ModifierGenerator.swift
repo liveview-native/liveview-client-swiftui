@@ -251,6 +251,7 @@ struct ModifierGenerator: ParsableCommand {
                 // File generated with `swift run ModifierGenerator "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
                 
                 import SwiftUI
+                import Symbols
                 import LiveViewNativeStylesheet
 
 
