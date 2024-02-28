@@ -14,18 +14,16 @@ import SwiftUI
 /// ```html
 /// <LazyVGrid
 ///     columns={[
-///         LiveViewNative.SwiftUI.Types.GridItem.fixed(100),
-///         LiveViewNative.SwiftUI.Types.GridItem.flexible(),
-///         LiveViewNative.SwiftUI.Types.GridItem.adaptive(50),
-///     ] |> Jason.encode!}
+///         %{ size: %{ fixed: 100 } },
+///         %{ size: :flexible },
+///         %{ size: %{ adaptive: %{ minimum: 50 } } }
+///     ]}
 /// >
 ///     <%= for i <- 1..50 do %>
 ///         <Text id={i |> Integer.to_string}><%= i %></Text>
 ///     <% end %>
 /// </LazyVGrid>
 /// ```
-///
-/// - Precondition: The ``columns`` attribute must be JSON encoded.
 ///
 /// There are 3 types of grid item:
 /// * `fixed(size, spacing, alignment)`: creates a single column that takes up the specified amount of space.
@@ -43,16 +41,8 @@ struct LazyVGrid<R: RootRegistry>: View {
     @LiveContext<R> private var context
     
     /// Configured columns to fill with the child elements.
-    ///
-    /// - Precondition: The value of the attribute must be JSON encoded.
     @_documentation(visibility: public)
-    @Attribute(
-        "columns",
-        transform: {
-            guard let value = $0?.value?.data(using: .utf8) else { throw AttributeDecodingError.missingAttribute([GridItem].self) }
-            return try makeJSONDecoder().decode([GridItem].self, from: value)
-        }
-    ) private var columns: [GridItem]
+    @Attribute("columns") private var columns: [GridItem]
     /// The alignment between columns.
     @_documentation(visibility: public)
     @Attribute("alignment") private var alignment: HorizontalAlignment = .center

@@ -108,12 +108,9 @@ struct Table<R: RootRegistry>: View {
     ///
     /// The order is serialized as a list of maps with an `id` and `order` property.
     ///
-    /// ```json
+    /// ```elixir
     /// [
-    ///     {
-    ///         "id": string,
-    ///         "order": boolean
-    ///     },
+    ///     %{ id: <string>, order: <boolean> },
     ///     ...
     /// ]
     /// ```

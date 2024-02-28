@@ -14,18 +14,16 @@ import SwiftUI
 /// ```html
 /// <LazyHGrid
 ///     rows={[
-///         LiveViewNative.SwiftUI.Types.GridItem.fixed(100),
-///         LiveViewNative.SwiftUI.Types.GridItem.flexible(),
-///         LiveViewNative.SwiftUI.Types.GridItem.adaptive(50),
-///     ] |> Jason.encode!}
+///         %{ size: %{ fixed: 100 } },
+///         %{ size: :flexible },
+///         %{ size: %{ adaptive: %{ minimum: 50 } }
+///     ]}
 /// >
 ///     <%= for i <- 1..50 do %>
 ///         <Text id={i |> Integer.to_string}><%= i %></Text>
 ///     <% end %>
 /// </LazyHGrid>
 /// ```
-///
-/// - Precondition: The ``rows`` attribute must be JSON encoded.
 ///
 /// There are 3 types of grid item:
 /// * `fixed(size, spacing, alignment)`: creates a single row that takes up the specified amount of space.
@@ -43,16 +41,8 @@ struct LazyHGrid<R: RootRegistry>: View {
     @LiveContext<R> private var context
     
     /// Configured rows to fill with the child elements.
-    ///
-    /// - Precondition: The value of the attribute must be JSON encoded.
     @_documentation(visibility: public)
-    @Attribute(
-        "rows",
-        transform: {
-            guard let value = $0?.value?.data(using: .utf8) else { throw AttributeDecodingError.missingAttribute([GridItem].self) }
-            return try makeJSONDecoder().decode([GridItem].self, from: value)
-        }
-    ) private var rows: [GridItem]
+    @Attribute("rows") private var rows: [GridItem]
     /// The alignment between rows.
     @_documentation(visibility: public)
     @Attribute("alignment") private var alignment: VerticalAlignment = .center
