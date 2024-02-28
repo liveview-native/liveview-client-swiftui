@@ -12,7 +12,7 @@ import SwiftUI
 /// Each child element will become its own tab.
 ///
 /// ```html
-/// <TabView modifiers={tab_view_style(:page)}>
+/// <TabView class="tab-view-style-page">
 ///     <Rectangle fillColor="system-red" />
 ///     <Rectangle fillColor="system-red" />
 ///     <Rectangle fillColor="system-red" />

@@ -28,15 +28,19 @@ import SwiftUI
 /// ### Input Configuration
 /// Use modifiers to configure how text is input.
 ///
+/// ```elixir
+/// "search-field" do
+///   autocorrectDisabled(true)
+///   textInputAutocapitalization(.words)
+///   keyboardType(.webSearch)
+///   submitLabel(.search)
+/// end
+/// ```
+///
 /// ```html
 /// <TextField
 ///     text="value"
-///     modifiers={
-///         autocorrection_disabled(true)
-///         |> text_input_autocapitalization(:words)
-///         |> keyboard_type(:web_search)
-///         |> submit_label(:search)
-///     }
+///     class="search-field"
 /// >
 ///     Enter Search Text
 /// </TextField>
@@ -51,7 +55,7 @@ import SwiftUI
 ///         text="amount"
 ///         format="currency"
 ///         currencyCode="usd"
-///         modifier={keyboard_type(:decimal_pad)}
+///         class="decimal-pad"
 ///     >
 ///         Enter Amount
 ///     </TextField>

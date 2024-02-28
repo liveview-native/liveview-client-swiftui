@@ -114,25 +114,46 @@ extension CodingUserInfoKey {
     static var modifierAnimationScale: Self { .init(rawValue: "modifierAnimationScale")! }
 }
 
-private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
-    let parent: Parent
-    @ObservedElement private var element
-    @LiveContext<R> private var context
+@propertyWrapper
+struct ClassModifiers<R: RootRegistry>: DynamicProperty {
     @Attribute("class", transform: { attribute in
         guard let classNames = attribute?.value else { return [] }
-        
         return classNames.split(separator: " ")
     }) private var classNames: [Substring]
-    
     @Environment(\.stylesheets) private var stylesheets
+    let overrideStylesheet: (any StylesheetProtocol)?
+    
+    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
+        self._classNames = .init(
+            wrappedValue: nil,
+            "class",
+            transform: { attribute in
+                guard let classNames = attribute?.value else { return [] }
+                return classNames.split(separator: " ")
+            },
+            element: element
+        )
+        self.overrideStylesheet = overrideStylesheet
+    }
+    
+    init() {
+        self.overrideStylesheet = nil
+    }
+    
+    var wrappedValue: ArraySlice<BuiltinRegistry<R>.BuiltinModifier> {
+        let sheet = overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]
+        return classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
+            $0.append(contentsOf: (sheet?.classModifiers(String($1)) ?? []) as! [BuiltinRegistry<R>.BuiltinModifier])
+        }
+    }
+}
+
+private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
+    let parent: Parent
+    @ClassModifiers<R> private var modifiers
     
     var body: some View {
-        let sheet = stylesheets[ObjectIdentifier(R.self)]
-        return parent.applyModifiers(
-            classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
-                $0.append(contentsOf: (sheet?.classModifiers(String($1)) ?? []) as! [BuiltinRegistry<R>.BuiltinModifier])
-            }
-        )
+        parent.applyModifiers(modifiers)
     }
 }
 

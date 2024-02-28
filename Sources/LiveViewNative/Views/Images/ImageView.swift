@@ -42,16 +42,16 @@ import SwiftUI
 /// ### Modifying Images
 /// Use image modifiers to customize the appearance of an image.
 ///
-/// ```html
-/// <Image systemName="heart.fill" modifiers={resizable([]) |> symbol_rendering_mode(mode: :multicolor)} />
+/// ```elixir
+/// "heart" do
+///     resizable()
+///     symbolRenderingMode(.multicolor)
+/// end
 /// ```
 ///
-/// These modifiers can be used on ``Image`` elements:
-/// * ``ResizableModifier``
-/// * ``AntialiasedModifier``
-/// * ``SymbolRenderingModeModifier``
-/// * ``RenderingModeModifier``
-/// * ``InterpolationModifier``
+/// ```html
+/// <Image systemName="heart.fill" class="heart" />
+/// ```
 ///
 /// ## Attributes
 /// * ``systemName``
@@ -122,7 +122,7 @@ struct ImageView<R: RootRegistry>: View {
         if let labelNode = element.children().first {
             switch labelNode.data {
             case let .element(element):
-                return Text<R>(element: ElementNode(node: labelNode, data: element)).body
+                return Text<R>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: nil).body
             case let .leaf(label):
                 return .init(label)
             case .root:

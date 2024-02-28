@@ -13,7 +13,7 @@ import SwiftUI
 /// <ScrollView>
 ///     <VStack>
 ///         <%= for color <- @colors %>
-///             <Rectangle id={color} fillColor={color} modifiers={frame(height: 100)} />
+///             <Rectangle id={color} fillColor={color} class="height:100" />
 ///         <% end %>
 ///     </VStack>
 /// </ScrollView>
