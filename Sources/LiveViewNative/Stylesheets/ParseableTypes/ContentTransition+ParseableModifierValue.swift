@@ -18,6 +18,7 @@ extension ContentTransition: ParseableModifierValue {
                 ConstantAtomLiteral("opacity").map({ Self.opacity })
                 NumericText.parser(in: context).map(\.value)
                 if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
+                    SymbolEffect.parser(in: context).map(\.value)
                     ConstantAtomLiteral("symbolEffect").map({ Self.symbolEffect })
                 }
             }
