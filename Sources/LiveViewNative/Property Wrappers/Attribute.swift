@@ -199,8 +199,8 @@ extension Optional: AttributeDecodable where Wrapped: AttributeDecodable {
 /// Decodes a string from an attribute, if the attribute is present.
 extension String: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
-        guard let attributeValue = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
-        self = attributeValue
+        guard let attribute else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self = attribute.value ?? ""
     }
 }
 
