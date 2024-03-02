@@ -25,14 +25,14 @@ import LiveViewNativeCore
 /// - ``innerText()``
 public struct ElementNode: Identifiable, @unchecked Sendable {
     public let node: Node
-    public let data: ElementData
+    public let data: Element
     
-    init(node: Node, data: ElementData) {
+    init(node: Node, data: Element) {
         self.node = node
         self.data = data
     }
     
-    public var id: NodeRef { node.id }
+    public var id: NodeRef { node.id() }
     
     /// A sequence representing this element's direct children.
     public func children() -> NodeChildrenSequence { node.children() }
@@ -40,11 +40,11 @@ public struct ElementNode: Identifiable, @unchecked Sendable {
     public func depthFirstChildren() -> NodeDepthFirstChildrenSequence { node.depthFirstChildren() }
     /// A sequence representing this element's direct children that are elements.
     public func elementChildren() -> [ElementNode] { node.children().compactMap({ $0.asElement() }) }
-    
+
     /// The namespace of the element.
-    public var namespace: String? { data.namespace }
+    public var namespace: String? { data.name.namespace }
     /// The tag name of the element.
-    public var tag: String { data.tag }
+    public var tag: String { data.name.name }
     /// The list of attributes present on this element.
     public var attributes: [LiveViewNativeCore.Attribute] { data.attributes }
     /// The attribute with the given name, or `nil` if there is no such attribute.
@@ -93,7 +93,7 @@ public struct ElementNode: Identifiable, @unchecked Sendable {
     public func innerText() -> String {
         // TODO: should follow the spec and insert/collapse whitespace around elements
         self.children().compactMap { node in
-            if case .leaf(let content) = node.data {
+            if case .leaf(let content) = node.data() {
                 return content
             } else {
                 return nil
@@ -114,8 +114,8 @@ public struct ElementNode: Identifiable, @unchecked Sendable {
 }
 
 extension Node {
-    public func asElement() -> ElementNode? {
-        if case .element(let data) = self.data {
+    func asElement() -> ElementNode? {
+        if case .nodeElement(let data) = self.data() {
             return ElementNode(node: self, data: data)
         } else {
             return nil
