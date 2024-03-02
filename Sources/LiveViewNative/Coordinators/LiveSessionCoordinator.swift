@@ -42,29 +42,29 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     @Published public internal(set) var navigationPath = [LiveNavigationEntry<R>]()
     
     internal let configuration: LiveSessionConfiguration
-    
+
     @Published private(set) var rootLayout: LiveViewNativeCore.Document?
     @Published private(set) var stylesheet: Stylesheet<R>?
-    
+
     // Socket connection
-    var socket: Socket?
-    
+    var socket: SwiftPhoenixClient.Socket?
+
     private var domValues: DOMValues!
-    
-    private var liveReloadSocket: Socket?
-    private var liveReloadChannel: Channel?
-    
+
+    private var liveReloadSocket: SwiftPhoenixClient.Socket?
+    private var liveReloadChannel: SwiftPhoenixClient.Channel?
+
     private var cancellables = Set<AnyCancellable>()
-    
+
     private var mergedEventSubjects: AnyCancellable?
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
-    
+
     /// Delegate for the ``urlSession``.
     ///
     /// This delegate will add the `_format` and other necessary query params to any redirects.
     private var urlSessionDelegate: LiveSessionURLSessionDelegate<R>
-    
+
     /// The ``URLSession`` instance to use for all HTTP requests.
     ///
     /// This session is created using the ``LiveSessionConfiguration/urlSessionConfiguration``.
@@ -92,16 +92,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
     }
-    
+
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
     /// - Parameter customRegistryType: The type of the registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM. This can generally be inferred automatically.
     public init(_ url: URL, config: LiveSessionConfiguration = .init(), customRegistryType _: R.Type = R.self) {
         self.url = url.appending(path: "").absoluteURL
-        
+
         self.configuration = config
-        
+
         config.urlSessionConfiguration.httpCookieStorage = .shared
         self.urlSessionDelegate = .init()
         self.urlSession = .init(
@@ -118,7 +118,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         .sink(receiveValue: { [weak self] value in
             self?.eventSubject.send(value)
         })
-        
+
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
             let isDisconnected = switch next.last!.coordinator.state {
@@ -164,14 +164,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
         }.store(in: &cancellables)
     }
-    
+
     /// Creates a new coordinator without a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.
     public convenience init(_ url: URL, config: LiveSessionConfiguration = .init()) where R == EmptyRegistry {
         self.init(url, config: config, customRegistryType: EmptyRegistry.self)
     }
-    
+
     /// Connects this coordinator to the LiveView channel.
     ///
     /// You generally do not call this function yourself. It is called automatically when the ``LiveView`` appears.
@@ -189,13 +189,13 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         default:
             return
         }
-        
+
         let originalURL = self.navigationPath.last!.url
-        
+
         logger.debug("Connecting to \(originalURL.absoluteString)")
-        
+
         state = .connecting
-        
+
         do {
             var request = URLRequest(url: originalURL)
             request.httpMethod = httpMethod
@@ -255,9 +255,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             if socket == nil {
                 try await self.connectSocket(domValues)
             }
-            
+
             self.stylesheet = try await stylesheet
-            
+
             try await navigationPath.last!.coordinator.connect(domValues: domValues, redirect: false)
             
             reconnectAttempts = 0
@@ -278,7 +278,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             return
         }
     }
-    
+
     private func disconnect(preserveNavigationPath: Bool = false) async {
         // disconnect all views
         for entry in navigationPath {
@@ -296,7 +296,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.socket = nil
         self.state = .disconnected
     }
-    
+
     /// Forces the session to disconnect then connect.
     ///
     /// All state will be lost when the reload occurs, as an entirely new LiveView is mounted.
@@ -312,7 +312,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
         await self.connect(httpMethod: httpMethod, httpBody: httpBody)
     }
-    
+
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
     ///
     /// - Parameter event: The event name that is being listened for.
@@ -326,7 +326,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             .filter { $0.1.0 == event }
             .map({ ($0.0, $0.1.1) })
     }
-    
+
     /// Permanently registers a handler for a server-sent LiveView event.
     ///
     /// - Parameter event: The event name that is being listened for.
@@ -340,7 +340,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             .sink(receiveValue: handler)
             .store(in: &eventHandlers)
     }
-    
+
     /// Request the dead render with the given `request`.
     ///
     /// Returns the dead render HTML and the HTTP response information (including the final URL after redirects).
@@ -356,7 +356,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         if let domValues {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
         }
-        
+
         let data: Data
         let response: URLResponse
         do {
@@ -364,7 +364,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         } catch {
             throw LiveConnectionError.initialFetchError(error)
         }
-        
+
         guard let response = response as? HTTPURLResponse,
               response.statusCode == 200,
               let html = String(data: data, encoding: .utf8)
@@ -381,7 +381,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
         return (html, response)
     }
-    
+
     struct DOMValues {
         let phxCSRFToken: String
         let phxSession: String
@@ -394,13 +394,13 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     nonisolated private func extractLiveReloadFrame(_ doc: SwiftSoup.Document) throws -> Bool {
         !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
     }
-    
+
     private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> DOMValues {
         let csrfToken = try doc.select("csrf-token")
         guard !csrfToken.isEmpty() else {
             throw LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken)
         }
-        
+
         let mainDivRes = try doc.select("div[data-phx-main]")
         guard !mainDivRes.isEmpty() else {
             throw LiveConnectionError.initialParseError(missingOrInvalid: .phxMain)
@@ -416,7 +416,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         )
     }
 
-    private nonisolated func connectSocket(_ domValues: DOMValues) async throws {
+    @MainActor
+    private func connectSocket(_ domValues: DOMValues) async throws {
         var wsEndpoint = await URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
         wsEndpoint.scheme = await self.url.scheme == "https" ? "wss" : "ws"
         wsEndpoint.path = "/live/websocket"
@@ -458,7 +459,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             var refs = [String]()
             
-            refs.append(socket.onOpen { [weak self, weak socket, refs] in
+            refs.append(socket.onOpen { [weak self, weak socket] in
                 guard let socket else { return }
                 guard self != nil else {
                     socket.disconnect()
@@ -476,15 +477,13 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
                 logger.error("[Socket] Error: \(String(describing: error))")
                 socket.off(refs)
-                continuation.resume(throwing: LiveConnectionError.socketError(error))
             })
-            socket.connect()
         }
-        await MainActor.run {
-            self.socket = socket
-            self.state = .connected
-        }
-        
+        self.socket?.onClose { logger.debug("[Socket] Closed") }
+        self.socket?.logger = { message in logger.debug("[Socket] \(message)") }
+
+        self.state = .connected
+
         if domValues.liveReloadEnabled {
             await self.connectLiveReloadSocket(urlSessionConfiguration: urlSession.configuration)
         }
@@ -496,28 +495,21 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 liveReloadSocket.disconnect()
                 self.liveReloadSocket = nil
             }
-            
-            logger.debug("[LiveReload] attempting to connect...")
-            
-            var liveReloadEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
-            liveReloadEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
-            liveReloadEndpoint.path = "/phoenix/live_reload/socket"
-            self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
-                URLSessionTransport(url: $0, configuration: urlSessionConfiguration)
-            })
-            liveReloadSocket!.connect()
-            self.liveReloadChannel = liveReloadSocket!.channel("phoenix:live_reload")
+
+        var liveReloadEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
+        liveReloadEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
+        liveReloadEndpoint.path = "/phoenix/live_reload/socket"
+        self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
+            URLSessionTransport(url: $0, configuration: urlSessionConfiguration)
+        })
+        liveReloadSocket!.connect()
+        self.liveReloadChannel = liveReloadSocket!.channel("phoenix:live_reload")
+        self.liveReloadChannel!.join().receive("ok") { msg in
+            logger.debug("[LiveReload] connected to channel")
+        }.receive("error") { msg in
+            logger.debug("[LiveReload] error connecting to channel: \(msg.payload)")
         }
-        
-        await self.liveReloadChannel!.join()
-            .receive("ok") { @Sendable msg in
-                logger.debug("[LiveReload] connected to channel")
-            }
-            .receive("error") { @Sendable msg in
-                logger.debug("[LiveReload] error connecting to channel: \(msg.payload)")
-            }
-        
-        await self.liveReloadChannel!.on("assets_change") { @Sendable [weak self] _ in
+        self.liveReloadChannel!.on("assets_change") { [weak self] _ in
             logger.debug("[LiveReload] assets changed, reloading")
             Task {
                 await StylesheetCache.shared.removeAll()
@@ -574,6 +566,8 @@ final class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSession
             return request
         }
         
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+
         var newRequest = request
         newRequest.url = await url.appendingLiveViewItems()
         return newRequest
@@ -595,19 +589,19 @@ enum LiveSessionParameters {
             "i18n": getInternationalization()
         ]
     }
-    
+
     private static func getAppVersion() -> String {
         let dictionary = Bundle.main.infoDictionary!
 
         return dictionary["CFBundleShortVersionString"] as! String
     }
-    
+
     private static func getAppBuild() -> String {
         let dictionary = Bundle.main.infoDictionary!
 
         return dictionary["CFBundleVersion"] as! String
     }
-    
+
     private static func getBundleID() -> String {
         let dictionary = Bundle.main.infoDictionary!
 
@@ -638,7 +632,7 @@ enum LiveSessionParameters {
         let majorVersion = operatingSystemVersion.majorVersion
         let minorVersion = operatingSystemVersion.minorVersion
         let patchVersion = operatingSystemVersion.patchVersion
-        
+
         return "\(majorVersion).\(minorVersion).\(patchVersion)"
         #else
         return UIDevice.current.systemVersion
