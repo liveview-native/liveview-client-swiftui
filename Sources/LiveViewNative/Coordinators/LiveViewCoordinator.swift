@@ -85,10 +85,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         ])))
     }
     
-    struct ReplyPayload: @unchecked Sendable {
-        let payload: [String: Any]
-    }
-    
     @discardableResult
     public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> [String:Any]? {
         return try await doPushEvent("event", payload: .jsonPayload(json: .object(object: [
@@ -97,10 +93,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             "value": try JSONDecoder().decode(Json.self, from: JSONSerialization.data(withJSONObject: value, options: .fragmentsAllowed)),
             "cid": target.flatMap({ .numb(number: .posInt(pos: UInt64($0))) }) ?? .null
         ])))
-    }
-    
-    struct ReplyPayload: @unchecked Sendable {
-        let payload: [String: Any]
     }
     
     @discardableResult
