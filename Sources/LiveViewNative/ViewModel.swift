@@ -35,8 +35,8 @@ public class LiveViewModel: ObservableObject {
     func updateForms(nodes: NodeDepthFirstChildrenSequence) {
         var formIDs = Set<String>()
         for node in nodes {
-            guard case .element(let elementData) = node.data,
-                  elementData.namespace == nil && elementData.tag == "live-form" else {
+            guard case .nodeElement(let elementData) = node.data(),
+                  elementData.name.namespace == nil && elementData.name.name == "live-form" else {
                 continue
             }
             let id = node["id"]!.value!

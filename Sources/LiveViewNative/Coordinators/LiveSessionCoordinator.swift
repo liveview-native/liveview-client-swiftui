@@ -34,35 +34,35 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// The current state of the live view connection.
     @Published public private(set) var state = LiveSessionState.notConnected
-    
+
     /// The current URL this live view is connected to.
     public private(set) var url: URL
-    
+
     @Published var navigationPath = [LiveNavigationEntry<R>]()
-    
+
     internal let configuration: LiveSessionConfiguration
-    
+
     @Published private(set) var rootLayout: LiveViewNativeCore.Document?
     @Published private(set) var stylesheet: Stylesheet<R>?
-    
+
     // Socket connection
-    var socket: Socket?
-    
+    var socket: SwiftPhoenixClient.Socket?
+
     private var domValues: DOMValues!
-    
-    private var liveReloadSocket: Socket?
-    private var liveReloadChannel: Channel?
-    
+
+    private var liveReloadSocket: SwiftPhoenixClient.Socket?
+    private var liveReloadChannel: SwiftPhoenixClient.Channel?
+
     private var cancellables = Set<AnyCancellable>()
-    
+
     private var mergedEventSubjects: AnyCancellable?
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
-    
+
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
     }
-    
+
     /// Creates a new coordinator with a custom registry.
     /// - Parameter url: The URL of the page to establish the connection to.
     /// - Parameter config: The configuration for this coordinator.

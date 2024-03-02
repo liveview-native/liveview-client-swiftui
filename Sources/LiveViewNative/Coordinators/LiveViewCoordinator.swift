@@ -27,16 +27,16 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 @MainActor
 public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     @Published internal private(set) var internalState: LiveSessionState = .notConnected
-    
+
     var state: LiveSessionState {
         internalState
     }
-    
+
     let session: LiveSessionCoordinator<R>
     var url: URL
-    
-    private var channel: Channel?
-    
+
+    private var channel: SwiftPhoenixClient.Channel?
+
     @Published var document: LiveViewNativeCore.Document?
     private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
     func elementChanged(_ ref: NodeRef) -> ObjectWillChangePublisher {
@@ -194,9 +194,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     private func handleDiff(payload: Payload, baseURL: URL) throws {
         handleEvents(payload: payload)
-        let diff = try RootDiff(from: FragmentDecoder(data: payload))
-        self.rendered = try self.rendered.merge(with: diff)
-        self.document?.merge(with: try Document.parse(self.rendered.buildString()))
+        try self.document?.mergeFragmentJson(payload)
+
+        //let diff = try RootDiff(from: FragmentDecoder(data: payload))
+        //self.rendered = try self.rendered.merge(with: diff)
+        //self.document?.merge(with: try Document.parse(self.rendered.buildString()))
     }
     
     private func handleEvents(payload: Payload) {
@@ -320,13 +322,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             self?.internalState = .notConnected
         }
     }
-    
+
     enum JoinResult {
         case rendered(Payload)
         case redirect(LiveRedirect)
     }
 
-    private func join(channel: Channel) -> AsyncThrowingStream<JoinResult, Error> {
+    private func join(channel: SwiftPhoenixClient.Channel) -> AsyncThrowingStream<JoinResult, Error> {
         return AsyncThrowingStream<JoinResult, Error> { [weak channel] (continuation: AsyncThrowingStream<JoinResult, Error>.Continuation) -> Void in
             channel?.join()
                 .receive("ok") { [weak self, weak channel] message in
@@ -382,10 +384,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
-        self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-        self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
+        //self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
+        //self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
+        self.document = try! LiveViewNativeCore.Document.parseFragmentJson(payload: renderedPayload)
         self.document?.on(.changed) { [unowned self] doc, nodeRef in
-            switch doc[nodeRef].data {
+            switch doc[nodeRef].data() {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
                 self.objectWillChange.send()
@@ -396,7 +399,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 } else {
                     self.elementChanged(nodeRef).send()
                 }
-            case .element:
+            case .nodeElement:
                 // when a single element changes, send an update only to that element.
                 self.elementChanged(nodeRef).send()
             }

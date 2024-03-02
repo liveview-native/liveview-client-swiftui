@@ -117,11 +117,11 @@ struct ImageView<R: RootRegistry>: View {
             return nil
         }
     }
-    
+
     var label: SwiftUI.Text? {
         if let labelNode = element.children().first {
-            switch labelNode.data {
-            case let .element(element):
+            switch labelNode.data() {
+            case let .nodeElement(element):
                 return Text<R>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: nil).body
             case let .leaf(label):
                 return .init(label)
