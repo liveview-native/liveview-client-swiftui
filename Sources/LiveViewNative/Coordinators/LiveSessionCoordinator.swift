@@ -46,12 +46,12 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     @Published private(set) var stylesheet: Stylesheet<R>?
     
     // Socket connection
-    var socket: Socket?
+    var socket: SwiftPhoenixClient.Socket?
     
     private var domValues: DOMValues!
     
-    private var liveReloadSocket: Socket?
-    private var liveReloadChannel: Channel?
+    private var liveReloadSocket: SwiftPhoenixClient.Socket?
+    private var liveReloadChannel: SwiftPhoenixClient.Channel?
     
     private var cancellables = Set<AnyCancellable>()
     

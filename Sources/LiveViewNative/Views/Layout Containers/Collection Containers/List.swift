@@ -171,7 +171,7 @@ struct List<Root: RootRegistry>: View {
     private var content: some View {
         forEach(
             nodes: $liveElement.childNodes.filter({
-                !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+                !$0.attributes().contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
             }),
             context: $liveElement.context.storage
         )

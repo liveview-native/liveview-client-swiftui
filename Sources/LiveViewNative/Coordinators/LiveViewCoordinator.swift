@@ -35,7 +35,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     @_spi(LiveForm) public let session: LiveSessionCoordinator<R>
     var url: URL
     
-    private var channel: Channel?
+    private var channel: SwiftPhoenixClient.Channel?
     
     @Published var document: LiveViewNativeCore.Document?
     private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
@@ -197,9 +197,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     private func handleDiff(payload: Payload, baseURL: URL) throws {
         handleEvents(payload: payload)
-        let diff = try RootDiff(from: FragmentDecoder(data: payload))
-        self.rendered = try self.rendered.merge(with: diff)
-        self.document?.merge(with: try Document.parse(self.rendered.buildString()))
+        try self.document?.mergeFragmentJson(payload)
     }
     
     private func handleEvents(payload: Payload) {
@@ -329,7 +327,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         case redirect(LiveRedirect)
     }
 
-    private func join(channel: Channel) -> AsyncThrowingStream<JoinResult, Error> {
+    private func join(channel: SwiftPhoenixClient.Channel) -> AsyncThrowingStream<JoinResult, Error> {
         return AsyncThrowingStream<JoinResult, Error> { [weak channel] (continuation: AsyncThrowingStream<JoinResult, Error>.Continuation) -> Void in
             channel?.join()
                 .receive("ok") { [weak self, weak channel] message in
@@ -385,21 +383,20 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
-        self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-        self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
-        self.document?.on(.changed) { [unowned self] doc, nodeRef in
-            switch doc[nodeRef].data {
+        self.document = try! LiveViewNativeCore.Document.parseFragmentJson(payload: renderedPayload)
+        self.document?.on(.changed) { nodeRef, nodeData, parent in
+            switch nodeData  {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
                 self.objectWillChange.send()
             case .leaf:
                 // text nodes don't have their own views, changes to them need to be handled by the parent Text view
-                if let parent = doc.getParent(nodeRef) {
+                if let parent = parent {
                     self.elementChanged(nodeRef).send()
                 } else {
                     self.elementChanged(nodeRef).send()
                 }
-            case .element:
+            case .nodeElement:
                 // when a single element changes, send an update only to that element.
                 self.elementChanged(nodeRef).send()
             }

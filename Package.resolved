@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "liveview-native-core-swift",
+      "identity" : "liveview-native-core",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/liveview-native/liveview-native-core-swift.git",
+      "location" : "https://github.com/liveview-native/liveview-native-core.git",
       "state" : {
-        "revision" : "339594b395938e38f1fb2216a31c8791030ec9ba",
-        "version" : "0.2.1"
+        "revision" : "ced90995fda19a1b4eba0ea379112822246ee7ce",
+        "version" : "0.4.0-alpha-1"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davidstump/SwiftPhoenixClient.git",
       "state" : {
-        "revision" : "613989bf2e562d8a851ea83741681c3439353b45",
-        "version" : "5.0.0"
+        "revision" : "588bf6baab5d049752748e19a4bff32421ea40ec",
+        "version" : "5.3.2"
       }
     },
     {

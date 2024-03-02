@@ -213,14 +213,14 @@ struct Text<Root: RootRegistry>: View {
             }
         } else {
             return $liveElement.childNodes.reduce(into: SwiftUI.Text("")) { prev, next in
-                switch next.data {
-                case let .element(data):
+                switch next.data() {
+                case let .nodeElement(data):
                     guard !data.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
                     else { return }
-                    
+
                     let element = ElementNode(node: next, data: data)
-                    
-                    switch data.tag {
+
+                    switch data.name.name {
                     case "Text":
                         prev = prev + Self(
                             element: element,

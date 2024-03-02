@@ -58,7 +58,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     /// Ignores any children with a `template` attribute.
     public func buildChildren(of element: ElementNode) -> some View {
         return coordinator.builder.fromNodes(element.children().filter({
-            if case let .element(element) = $0.data {
+            if case let .nodeElement(element) = $0.data() {
                 return !element.attributes.contains(where: { $0.name == "template" })
             } else {
                 return true
@@ -70,7 +70,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         _ template: String
     ) -> (NodeChildrenSequence.Element) -> Bool {
         { child in
-            if case let .element(element) = child.data,
+            if case let .nodeElement(element) = child.data(),
                element.attributes.first(where: { $0.name == "template" })?.value == template
             {
                 return true
@@ -81,7 +81,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     }
     
     private static func hasTemplateAttribute(_ child: NodeChildrenSequence.Element) -> Bool {
-        if case let .element(element) = child.data,
+        if case let .nodeElement(element) = child.data(),
            element.attributes.contains(where: { $0.name == "template" })
         {
             return true
@@ -127,7 +127,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         let namedSlotChildren = children.filter(Self.isTemplateElement(template))
         if namedSlotChildren.isEmpty && includeDefaultSlot {
             let defaultSlotChildren = children.filter({
-                if case let .element(element) = $0.data {
+                if case let .nodeElement(element) = $0.data() {
                     return !element.attributes.contains(where: {
                         $0.name.rawValue == "template"
                     })
@@ -169,7 +169,7 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         of element: ElementNode
     ) -> [NodeChildrenSequence.Element] {
         element.children().filter {
-            !$0.attributes.contains(where: { $0.name.rawValue == "template" })
+            !$0.attributes().contains(where: { $0.name.rawValue == "template" })
         }
     }
 }
