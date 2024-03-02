@@ -16,30 +16,30 @@ struct ViewTreeBuilder<R: RootRegistry> {
         return fromNodes(nodes, context: context)
             .environment(\.anyLiveContextStorage, context)
     }
-    
+
     @ViewBuilder
     func fromNodes<Nodes>(_ nodes: Nodes, context: LiveContextStorage<R>) -> some View
         where Nodes: RandomAccessCollection, Nodes.Index == Int, Nodes.Element == Node
     {
         forEach(nodes: nodes, context: context)
     }
-    
+
     struct NodeView: View {
         let node: Node
         let context: LiveContextStorage<R>
-        
+
         var body: some View {
-            switch node.data {
+            switch node.data() {
             case .root:
                 fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
             case .leaf(let content):
                 SwiftUI.Text(content)
-            case .element(let element):
+            case .nodeElement(let element):
                 context.coordinator.builder.fromElement(ElementNode(node: node, data: element), context: context)
             }
         }
     }
-    
+
     func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
 
@@ -48,7 +48,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let withID = applyID(element: element, to: bound)
         let withIDAndTag = applyTag(element: element, to: withID)
 
-        return ObservedElement.Observer.Applicator(element.node.id) {
+        return ObservedElement.Observer.Applicator(element.node.id()) {
             withIDAndTag
                 .environment(\.element, element)
         }
@@ -72,7 +72,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
             view
         }
     }
-    
+
     @ViewBuilder
     private func createView(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         if let tagName = R.TagName(rawValue: element.tag) {
@@ -81,7 +81,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
             BuiltinRegistry<R>.lookup(element.tag, element)
         }
     }
-    
+
     @ViewBuilder
     private func applyBindings(
         to view: some View,
@@ -105,7 +105,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
 extension ViewTreeBuilder {
     enum Error: Swift.Error {
         case unknownModifierType
-        
+
         var localizedDescription: String {
             switch self {
             case .unknownModifierType:
@@ -123,24 +123,24 @@ extension CodingUserInfoKey {
 @LiveElement
 struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     @LiveAttribute(.init(name: "class")) private var `class`: String?
-    
+
     @LiveElementIgnored
     @Environment(\.stylesheet)
     var stylesheet
-    
+
     @LiveElementIgnored
     let overrideStylesheet: Stylesheet<Root>?
-    
+
     init(element: ElementNode, overrideStylesheet: Stylesheet<Root>?) {
         self._liveElement = .init(element: element)
         self.overrideStylesheet = overrideStylesheet
     }
-    
+
     init(overrideStylesheet: Stylesheet<Root>? = nil) {
         self._liveElement = .init(wrappedValue: .init())
         self.overrideStylesheet = overrideStylesheet
     }
-    
+
     @LiveElementIgnored
     var wrappedValue: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
         if _liveElement.isConstant {
@@ -155,10 +155,10 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
             return resolvedModifiers
         }
     }
-    
+
     @LiveElementIgnored
     var resolvedModifiers: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> = .init()
-    
+
     mutating func update() {
         if let `class`,
            !`class`.isEmpty
@@ -168,7 +168,7 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
             resolvedModifiers.removeAll()
         }
     }
-    
+
     private func resolveModifiers(for `class`: String) -> ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
         let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
         return `class`
@@ -183,7 +183,7 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
 private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     @ClassModifiers<R> private var modifiers
-    
+
     var body: some View {
         ModifierApplicator(parent: parent, modifiers: modifiers)
     }
@@ -193,7 +193,7 @@ extension EnvironmentValues {
     private enum StylesheetKey: EnvironmentKey {
         static let defaultValue: Any = Stylesheet<EmptyRegistry>(content: [], classes: [:])
     }
-    
+
     var stylesheet: Any {
         get { self[StylesheetKey.self] }
         set { self[StylesheetKey.self] = newValue }
@@ -224,7 +224,7 @@ private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
 private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
     let modifiers: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>
-    
+
     var body: some View {
         if modifiers.isEmpty {
             parent
@@ -256,16 +256,16 @@ extension View {
 private enum ForEachElement: Identifiable {
     case keyed(Node, id: String)
     case unkeyed(Node)
-    
+
     var id: String {
         switch self {
         case let .keyed(_, id):
             return id
         case let .unkeyed(node):
-            return "\(node.id)"
+            return "\(node.id())"
         }
     }
-    
+
     var node: Node {
         switch self {
         case let .keyed(node, _),
@@ -293,7 +293,7 @@ func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveConte
 enum ForEachViewError: LocalizedError {
     case invalidNode
     case missingID
-    
+
     var errorDescription: String? {
         switch self {
         case .invalidNode:

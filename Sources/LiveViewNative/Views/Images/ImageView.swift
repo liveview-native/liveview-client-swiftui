@@ -68,29 +68,29 @@ struct ImageView<Root: RootRegistry>: View {
     /// The name of an image in the app's asset catalog.
     @_documentation(visibility: public)
     private var name: String?
-    
+
     /// The value represented by this image, in the range `0.0` to `1.0`.
     @_documentation(visibility: public)
     private var variableValue: Double?
-    
+
     @LiveElementIgnored
     @ClassModifiers<Root> private var modifiers
     let overrideImage: SwiftUI.Image?
-    
+
     init() {
         self.overrideImage = nil
     }
-    
+
     init(image: SwiftUI.Image? = nil) {
         self.overrideImage = image
     }
-    
+
     init(element: ElementNode, overrideStylesheet: Stylesheet<Root>?, overrideImage: SwiftUI.Image? = nil) {
         self._liveElement = .init(element: element)
         self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
         self.overrideImage = overrideImage
     }
-    
+
     public var body: SwiftUI.Image? {
         image.flatMap({ (image: SwiftUI.Image) -> SwiftUI.Image in
             return modifiers.reduce(image) { result, modifier in
@@ -102,7 +102,7 @@ struct ImageView<Root: RootRegistry>: View {
             }
         })
     }
-    
+
     var image: SwiftUI.Image? {
         if let overrideImage {
             return overrideImage
@@ -126,10 +126,10 @@ struct ImageView<Root: RootRegistry>: View {
             return nil
         }
     }
-    
+
     var label: SwiftUI.Text? {
-        if let labelNode = $liveElement.childNodes.first {
-            switch labelNode.data {
+        if let labelNode = $liveElement.children().first {
+            switch labelNode.data() {
             case let .element(element):
                 return Text<Root>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: nil).body
             case let .leaf(label):
