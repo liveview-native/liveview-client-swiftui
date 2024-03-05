@@ -22,8 +22,8 @@ import SwiftUI
 /// ```
 /// 
 /// ## Attributes
-/// * ``disabled``
-/// 
+/// * ``role``
+///
 /// ## Events
 /// * ``click``
 @_documentation(visibility: public)
@@ -38,19 +38,22 @@ public struct Button<R: RootRegistry>: View {
     @_documentation(visibility: public)
     @Event("phx-click", type: "click") private var click
     
-    /// Boolean attribute that indicates whether the button is tappable.
+    /// The semantic role of the button.
+    ///
+    /// Possible values:
+    /// * `destructive`
+    /// * `cancel`
     @_documentation(visibility: public)
-    @Attribute("disabled") private var disabled: Bool
+    @Attribute("role") private var role: ButtonRole?
     
     @_spi(LiveForm) public init(action: (() -> Void)? = nil) {
         self.action = action
     }
     
     public var body: some View {
-        SwiftUI.Button(action: self.handleClick) {
+        SwiftUI.Button(role: role, action: self.handleClick) {
             context.buildChildren(of: element)
         }
-        .disabled(disabled)
         .preference(key: _ProvidedBindingsKey.self, value: ["phx-click"])
     }
     
