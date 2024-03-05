@@ -207,67 +207,68 @@ struct _AnyGesture: ParseableModifierValue {
                 return AnyGesture<Any>(gesture.simultaneously(with: simultaneously.other.resolve(on: element, in: context)).map({ $0 as Any }))
             case .onEnded(let onEnded):
                 return AnyGesture<Any>(gesture.onEnded({ value in
-                    let eventValue: [String:Any]
-                    if let drag = value as? DragGesture.Value {
-                        eventValue = [
-                            "translation": [
-                                "width": drag.translation.width,
-                                "height": drag.translation.height
-                            ],
-                            "startLocation": [
-                                "x": drag.startLocation.x,
-                                "y": drag.startLocation.y
-                            ],
-                            "location": [
-                                "x": drag.location.x,
-                                "y": drag.location.y
-                            ],
-                            "predictedEndLocation": [
-                                "x": drag.predictedEndLocation.x,
-                                "y": drag.predictedEndLocation.y
-                            ],
-                            "predictedEndTranslation": [
-                                "width": drag.predictedEndTranslation.width,
-                                "height": drag.predictedEndTranslation.height
-                            ],
-                            "velocity": [
-                                "width": drag.velocity.width,
-                                "height": drag.velocity.height
-                            ]
-                        ]
-                    } else if #available(iOS 17, macOS 14, *),
-                              let magnify = value as? MagnifyGesture.Value
-                    {
-                        eventValue = [
-                            "magnification": magnify.magnification,
-                            "startLocation": [
-                                "x": magnify.startLocation.x,
-                                "y": magnify.startLocation.y
-                            ],
-                            "velocity": magnify.velocity
-                        ]
-                    } else if #available(iOS 17, macOS 14, *),
-                              let rotate = value as? RotateGesture.Value
-                    {
-                        eventValue = [
-                            "rotation": rotate.rotation.radians,
-                            "startLocation": [
-                                "x": rotate.startLocation.x,
-                                "y": rotate.startLocation.y
-                            ],
-                            "velocity": rotate.velocity
-                        ]
-                    } else if let spatialTap = value as? SpatialTapGesture.Value {
-                        eventValue = [
-                            "location": [
-                                "x": spatialTap.location.x,
-                                "y": spatialTap.location.y
-                            ]
-                        ]
-                    } else {
-                        eventValue = [:]
-                    }
                     Task {
+                        var eventValue: [String:Any]
+                        if let drag = value as? DragGesture.Value {
+                            eventValue = [
+                                "translation": [
+                                    "width": drag.translation.width,
+                                    "height": drag.translation.height
+                                ],
+                                "startLocation": [
+                                    "x": drag.startLocation.x,
+                                    "y": drag.startLocation.y
+                                ],
+                                "location": [
+                                    "x": drag.location.x,
+                                    "y": drag.location.y
+                                ],
+                                "predictedEndLocation": [
+                                    "x": drag.predictedEndLocation.x,
+                                    "y": drag.predictedEndLocation.y
+                                ],
+                                "predictedEndTranslation": [
+                                    "width": drag.predictedEndTranslation.width,
+                                    "height": drag.predictedEndTranslation.height
+                                ],
+                                "velocity": [
+                                    "width": drag.velocity.width,
+                                    "height": drag.velocity.height
+                                ]
+                            ]
+                        } else if #available(iOS 17, macOS 14, *),
+                                  let magnify = value as? MagnifyGesture.Value
+                        {
+                            eventValue = [
+                                "magnification": magnify.magnification,
+                                "startLocation": [
+                                    "x": magnify.startLocation.x,
+                                    "y": magnify.startLocation.y
+                                ],
+                                "velocity": magnify.velocity
+                            ]
+                        } else if #available(iOS 17, macOS 14, *),
+                                  let rotate = value as? RotateGesture.Value
+                        {
+                            eventValue = [
+                                "rotation": rotate.rotation.radians,
+                                "startLocation": [
+                                    "x": rotate.startLocation.x,
+                                    "y": rotate.startLocation.y
+                                ],
+                                "velocity": rotate.velocity
+                            ]
+                        } else if let spatialTap = value as? SpatialTapGesture.Value {
+                            eventValue = [
+                                "location": [
+                                    "x": spatialTap.location.x,
+                                    "y": spatialTap.location.y
+                                ]
+                            ]
+                        } else {
+                            eventValue = [:]
+                        }
+                        eventValue.merge(element.buildPhxValuePayload(), uniquingKeysWith: { $1 })
                         try await onEnded.action(value: eventValue, in: context)
                     }
                 }).map({ $0 as Any }))
