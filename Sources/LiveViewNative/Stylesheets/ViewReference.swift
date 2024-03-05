@@ -8,9 +8,18 @@ import LiveViewNativeCore
 public struct ViewReference: ParseableModifierValue {
     let value: [String]
 
+    @MainActor
     public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some View {
         ForEach(value, id: \.self) {
             context.buildChildren(of: element, forTemplate: $0)
+        }
+        .transformEnvironment(\.self) { environment in
+            if environment.anyLiveContextStorage == nil {
+                environment.anyLiveContextStorage = context.storage
+            }
+            if environment.coordinatorEnvironment == nil {
+                environment.coordinatorEnvironment = .init(context.coordinator, document: context.coordinator.document!)
+            }
         }
     }
 
