@@ -26,7 +26,15 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
     enum Storage {
         case constant(Value)
         case reference(AttributeName)
-        case gestureState(String, GestureStateReference.PropertyReference, defaultValue: Value?)
+        case gestureState(
+            String,
+            GestureStateReference.PropertyReference,
+            defaultValue: Value?,
+            min: CGFloat?,
+            max: CGFloat?,
+            scale: CGFloat,
+            offset: CGFloat
+        )
     }
     
     let storage: Storage
@@ -54,8 +62,15 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
             return value
         case .reference(let name):
             return try! element.attributeValue(Value.self, for: name)
-        case let .gestureState(name, body, defaultValue):
+        case let .gestureState(name, body, defaultValue, minValue, maxValue, scale, offset):
             let castValue = { (value: CGFloat) -> Value in
+                var value = (value + offset) * scale
+                if let minValue {
+                    value = max(minValue, value)
+                }
+                if let maxValue {
+                    value = min(maxValue, value)
+                }
                 switch Value.self {
                 case is String.Type:
                     return String(describing: value) as! Value
@@ -104,7 +119,14 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
                     case .degrees:
                         return castValue(CGFloat(value.rotation.degrees))
                     default:
-                        return value.rotation as! Value
+                        var rotation = value.rotation
+                        if let minValue {
+                            rotation = .degrees(max(minValue, value.rotation.degrees))
+                        }
+                        if let maxValue {
+                            rotation = .degrees(min(maxValue, value.rotation.degrees))
+                        }
+                        return rotation as! Value
                     }
                 } else {
                     return defaultValue
@@ -180,8 +202,16 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
             }
         }
         
-        init(_ name: String, _ body: PropertyReference, defaultValue: Value? = nil) {
-            self.value = .gestureState(name, body, defaultValue: defaultValue)
+        init(
+            _ name: String,
+            _ body: PropertyReference,
+            defaultValue: Value? = nil,
+            min: CGFloat? = nil,
+            max: CGFloat? = nil,
+            scale: CGFloat = 1,
+            offset: CGFloat = 0
+        ) {
+            self.value = .gestureState(name, body, defaultValue: defaultValue, min: min, max: max, scale: scale, offset: offset)
         }
     }
     

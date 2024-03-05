@@ -329,5 +329,18 @@ public struct Event: DynamicProperty, Decodable {
             }
             await owner.handler.channel.send((owner.type, event, owner.params ?? value, owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init)))
         }
+        
+        public func callAsFunction<R: RootRegistry>(value: Any = [String:String](), in context: LiveContext<R>) async throws {
+            guard let event else {
+                return
+            }
+            let handler = Handler()
+            handler.update(
+                coordinator: CoordinatorEnvironment(context.coordinator, document: context.coordinator.document!),
+                debounce: owner.debounce,
+                throttle: owner.throttle
+            )
+            await handler.channel.send((owner.type, event, owner.params ?? value, owner.target))
+        }
     }
 }
