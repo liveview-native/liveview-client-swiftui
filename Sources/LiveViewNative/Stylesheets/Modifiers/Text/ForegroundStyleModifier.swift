@@ -54,7 +54,7 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _ForegroundStyleModifier<R: RootRegistry>: TextModifier {
+struct _ForegroundStyleModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "foregroundStyle" }
 
     enum Value {
@@ -66,6 +66,7 @@ struct _ForegroundStyleModifier<R: RootRegistry>: TextModifier {
     let value: Value
     
     @ObservedElement private var element
+    @LiveContext<Root> private var context
     
     init(_ style: AnyShapeStyle.Resolvable) {
         self.value = ._0(style: style)
@@ -82,19 +83,19 @@ struct _ForegroundStyleModifier<R: RootRegistry>: TextModifier {
     func body(content: Content) -> some View {
         switch value {
         case let ._0(style):
-            content.foregroundStyle(style.resolve(on: element))
+            content.foregroundStyle(style.resolve(on: element, in: context))
         case let ._1(primary, secondary):
-            content.foregroundStyle(primary.resolve(on: element), secondary.resolve(on: element))
+            content.foregroundStyle(primary.resolve(on: element, in: context), secondary.resolve(on: element, in: context))
         case let ._2(primary, secondary, tertiary):
-            content.foregroundStyle(primary.resolve(on: element), secondary.resolve(on: element), tertiary.resolve(on: element))
+            content.foregroundStyle(primary.resolve(on: element, in: context), secondary.resolve(on: element, in: context), tertiary.resolve(on: element, in: context))
         }
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *),
            case let ._0(style) = value
         {
-            return text.foregroundStyle(style.resolve(on: element))
+            return text.foregroundStyle(style.resolve(on: element, in: context))
         } else {
             return text
         }

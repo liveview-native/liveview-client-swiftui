@@ -25,8 +25,8 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _TransformModifier: ShapeModifier {
-    static let name = "transform"
+struct _TransformModifier<Root: RootRegistry>: ShapeModifier {
+    static var name: String { "transform" }
 
     let transform: CGAffineTransform
     
@@ -34,7 +34,7 @@ struct _TransformModifier: ShapeModifier {
         self.transform = transform
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         return shape.transform(transform)
     }
 }

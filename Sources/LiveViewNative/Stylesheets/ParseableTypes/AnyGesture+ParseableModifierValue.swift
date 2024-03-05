@@ -106,17 +106,24 @@ import LiveViewNativeStylesheet
 /// def handle_event("tapped", gesture_value, socket), do: ...
 /// ```
 @_documentation(visibility: public)
-extension AnyGesture: ParseableModifierValue where Value == Any {
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+struct _AnyGesture: ParseableModifierValue {
+    let gesture: AnyGesture<Any>
+    let members: [Member]
+    
+    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyGesture<Any> {
+        members.reduce(gesture) { gesture, member in
+            member.apply(to: gesture, on: element, in: context)
+        }
+    }
+    
+    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
             baseParser(in: context)
         } member: {
             Member.parser(in: context)
         }
         .map { (base, members) in
-            return members.reduce(into: base) { result, member in
-                result = member.apply(to: result)
-            }
+            self.init(gesture: base, members: members)
         }
     }
     
@@ -125,14 +132,15 @@ extension AnyGesture: ParseableModifierValue where Value == Any {
         case simultaneously(Simultaneously)
         case onEnded(OnEnded)
         case exclusively(Exclusively)
+        case updating(Updating)
         
         @ParseableExpression
         struct Sequenced {
             static let name = "sequenced"
             
-            let other: AnyGesture<Any>
+            let other: _AnyGesture
             
-            init(before other: AnyGesture<Any>) {
+            init(before other: _AnyGesture) {
                 self.other = other
             }
         }
@@ -141,9 +149,9 @@ extension AnyGesture: ParseableModifierValue where Value == Any {
         struct Simultaneously {
             static let name = "simultaneously"
             
-            let other: AnyGesture<Any>
+            let other: _AnyGesture
             
-            init(with other: AnyGesture<Any>) {
+            init(with other: _AnyGesture) {
                 self.other = other
             }
         }
@@ -163,10 +171,21 @@ extension AnyGesture: ParseableModifierValue where Value == Any {
         struct Exclusively {
             static let name = "exclusively"
             
-            let other: AnyGesture<Any>
+            let other: _AnyGesture
             
-            init(before other: AnyGesture<Any>) {
+            init(before other: _AnyGesture) {
                 self.other = other
+            }
+        }
+        
+        @ParseableExpression
+        struct Updating {
+            static let name = "updating"
+            
+            let name: String
+            
+            init(_ name: String) {
+                self.name = name
             }
         }
         
@@ -176,15 +195,16 @@ extension AnyGesture: ParseableModifierValue where Value == Any {
                 Simultaneously.parser(in: context).map(Self.simultaneously)
                 OnEnded.parser(in: context).map(Self.onEnded)
                 Exclusively.parser(in: context).map(Self.exclusively)
+                Updating.parser(in: context).map(Self.updating)
             }
         }
         
-        func apply(to gesture: AnyGesture<Any>) -> AnyGesture<Any> {
+        func apply<R: RootRegistry>(to gesture: AnyGesture<Any>, on element: ElementNode, in context: LiveContext<R>) -> AnyGesture<Any> {
             switch self {
             case .sequenced(let sequenced):
-                return AnyGesture<Any>(gesture.sequenced(before: sequenced.other).map({ $0 as Any }))
+                return AnyGesture<Any>(gesture.sequenced(before: sequenced.other.resolve(on: element, in: context)).map({ $0 as Any }))
             case .simultaneously(let simultaneously):
-                return AnyGesture<Any>(gesture.simultaneously(with: simultaneously.other).map({ $0 as Any }))
+                return AnyGesture<Any>(gesture.simultaneously(with: simultaneously.other.resolve(on: element, in: context)).map({ $0 as Any }))
             case .onEnded(let onEnded):
                 return AnyGesture<Any>(gesture.onEnded({ value in
                     Task {
@@ -192,25 +212,31 @@ extension AnyGesture: ParseableModifierValue where Value == Any {
                     }
                 }).map({ $0 as Any }))
             case .exclusively(let exclusively):
-                return AnyGesture<Any>(gesture.exclusively(before: exclusively.other).map({ $0 as Any }))
+                return AnyGesture<Any>(gesture.exclusively(before: exclusively.other.resolve(on: element, in: context)).map({ $0 as Any }))
+            case .updating(let updating):
+                return AnyGesture<Any>(
+                    gesture.updating(context.gestureState, body: { value, state, transaction in
+                        state[updating.name] = value
+                    })
+                )
             }
         }
     }
     
-    static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+    static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, AnyGesture<Any>> {
         OneOf {
             #if !os(tvOS)
-            Drag.parser(in: context).map({ Self.init($0.value.map({ $0 as Any })) })
+            Drag.parser(in: context).map({ AnyGesture<Any>($0.value.map({ $0 as Any })) })
             #endif
-            LongPress.parser(in: context).map({ Self.init($0.value.map({ $0 as Any })) })
+            LongPress.parser(in: context).map({ AnyGesture<Any>($0.value.map({ $0 as Any })) })
             #if os(iOS) || os(macOS)
-            Magnify.parser(in: context).map({ Self.init($0.value.map({ $0 as Any })) })
-            Rotate.parser(in: context).map({ Self.init($0.value.map({ $0 as Any })) })
+            Magnify.parser(in: context).map({ AnyGesture<Any>($0.value.map({ $0 as Any })) })
+            Rotate.parser(in: context).map({ AnyGesture<Any>($0.value.map({ $0 as Any })) })
             #endif
             #if !os(tvOS)
-            SpatialTap.parser(in: context).map({ Self.init($0.value.map({ $0 as Any })) })
+            SpatialTap.parser(in: context).map({ AnyGesture<Any>($0.value.map({ $0 as Any })) })
             #endif
-            Tap.parser(in: context).map({ Self.init($0.value.map({ $0 as Any })) })
+            Tap.parser(in: context).map({ AnyGesture<Any>($0.value.map({ $0 as Any })) })
         }
     }
     
@@ -295,3 +321,13 @@ extension AnyGesture: ParseableModifierValue where Value == Any {
     }
 }
 
+extension EnvironmentValues {
+    private enum GestureStateKey: EnvironmentKey {
+        static let defaultValue: GestureState<[String:Any]> = .init(initialValue: [:])
+    }
+    
+    var gestureState: GestureState<[String:Any]> {
+        get { self[GestureStateKey.self] }
+        set { self[GestureStateKey.self] = newValue }
+    }
+}

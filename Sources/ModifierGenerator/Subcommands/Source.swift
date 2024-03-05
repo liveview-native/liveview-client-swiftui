@@ -53,6 +53,7 @@ extension ModifierGenerator {
 
                         \#(signatures.requiresContext ? "@ObservedElement private var element" : "")
                         \#(signatures.requiresContext ? "@LiveContext<R> private var context" : "")
+                        \#(signatures.requiresGestureState ? "@GestureState private var gestureState = [String:Any]()" : "")
                     
                     \#(signatures.0.compactMap(\.properties).joined(separator: "\n"))
 

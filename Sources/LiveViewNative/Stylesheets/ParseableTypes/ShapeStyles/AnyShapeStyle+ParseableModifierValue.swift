@@ -163,36 +163,32 @@ public extension AnyShapeStyle {
         let storage: Storage
         let modifiers: [StyleModifier]
         
-        public func resolve(on element: ElementNode) -> AnyShapeStyle {
+        public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyShapeStyle {
             let base: any ShapeStyle = switch storage {
             case .value(let value):
                 value
             case .color(let color):
-                color.resolve(on: element)
+                color.resolve(on: element, in: context)
             case let .gradient(gradient):
-                gradient.resolve(on: element)
+                gradient.resolve(on: element, in: context)
             case let .anyGradient(gradient):
-                gradient.resolve(on: element)
+                gradient.resolve(on: element, in: context)
             case let .angularGradient(gradient):
-                gradient.resolve(on: element)
+                gradient.resolve(on: element, in: context)
             case let .conicGradient(gradient):
-                gradient.resolve(on: element)
+                gradient.resolve(on: element, in: context)
             case let .ellipticalGradient(gradient):
-                gradient.resolve(on: element)
+                gradient.resolve(on: element, in: context)
             case let .linearGradient(gradient):
-                gradient.resolve(on: element)
+                gradient.resolve(on: element, in: context)
             case let .radialGradient(gradient):
-                gradient.resolve(on: element)
+                gradient.resolve(on: element, in: context)
             case let .modifier(modifier):
-                modifier.resolve(on: element)
+                modifier.resolve(on: element, in: context)
             }
             return modifiers.reduce(AnyShapeStyle(base)) {
-                AnyShapeStyle($1.apply(to: $0, on: element))
+                AnyShapeStyle($1.apply(to: $0, on: element, in: context))
             }
-        }
-        
-        public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyShapeStyle {
-            resolve(on: element)
         }
         
         public init(_ constant: AnyShapeStyle) {
@@ -336,16 +332,16 @@ public extension AnyShapeStyle {
                 self = .stops(stops: stops, center: center, startAngle: startAngle, endAngle: endAngle)
             }
             
-            func resolve(on element: ElementNode) -> any ShapeStyle {
+            func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> any ShapeStyle {
                 switch self {
                 case .anyGradient(let gradient, let center, let startAngle, let endAngle):
-                    AngularGradient.angularGradient(gradient.resolve(on: element), center: center.resolve(on: element), startAngle: startAngle.resolve(on: element), endAngle: endAngle.resolve(on: element))
+                    AngularGradient.angularGradient(gradient.resolve(on: element, in: context), center: center.resolve(on: element, in: context), startAngle: startAngle.resolve(on: element, in: context), endAngle: endAngle.resolve(on: element, in: context))
                 case .gradient(let gradient, let center, let startAngle, let endAngle):
-                    AngularGradient.angularGradient(gradient.resolve(on: element), center: center.resolve(on: element), startAngle: startAngle.resolve(on: element), endAngle: endAngle.resolve(on: element))
+                    AngularGradient.angularGradient(gradient.resolve(on: element, in: context), center: center.resolve(on: element, in: context), startAngle: startAngle.resolve(on: element, in: context), endAngle: endAngle.resolve(on: element, in: context))
                 case .colors(let colors, let center, let startAngle, let endAngle):
-                    AngularGradient.angularGradient(colors: colors.map({ $0.resolve(on: element) }), center: center.resolve(on: element), startAngle: startAngle.resolve(on: element), endAngle: endAngle.resolve(on: element))
+                    AngularGradient.angularGradient(colors: colors.map({ $0.resolve(on: element, in: context) }), center: center.resolve(on: element, in: context), startAngle: startAngle.resolve(on: element, in: context), endAngle: endAngle.resolve(on: element, in: context))
                 case .stops(let stops, let center, let startAngle, let endAngle):
-                    AngularGradient.angularGradient(stops: stops.map({ $0.resolve(on: element) }), center: center.resolve(on: element), startAngle: startAngle.resolve(on: element), endAngle: endAngle.resolve(on: element))
+                    AngularGradient.angularGradient(stops: stops.map({ $0.resolve(on: element, in: context) }), center: center.resolve(on: element, in: context), startAngle: startAngle.resolve(on: element, in: context), endAngle: endAngle.resolve(on: element, in: context))
                 }
             }
         }
@@ -375,16 +371,16 @@ public extension AnyShapeStyle {
                 self = .stops(stops: stops, center: center, angle: angle)
             }
             
-            func resolve(on element: ElementNode) -> any ShapeStyle {
+            func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case .anyGradient(let gradient, let center, let angle):
-                    AngularGradient.conicGradient(gradient.resolve(on: element), center: center.resolve(on: element), angle: angle.resolve(on: element))
+                    AngularGradient.conicGradient(gradient.resolve(on: element, in: context), center: center.resolve(on: element, in: context), angle: angle.resolve(on: element, in: context))
                 case .gradient(let gradient, let center, let angle):
-                    AngularGradient.conicGradient(gradient.resolve(on: element), center: center.resolve(on: element), angle: angle.resolve(on: element))
+                    AngularGradient.conicGradient(gradient.resolve(on: element, in: context), center: center.resolve(on: element, in: context), angle: angle.resolve(on: element, in: context))
                 case .colors(let colors, let center, let angle):
-                    AngularGradient.conicGradient(colors: colors.map({ $0.resolve(on: element) }), center: center.resolve(on: element), angle: angle.resolve(on: element))
+                    AngularGradient.conicGradient(colors: colors.map({ $0.resolve(on: element, in: context) }), center: center.resolve(on: element, in: context), angle: angle.resolve(on: element, in: context))
                 case .stops(let stops, let center, let angle):
-                    AngularGradient.conicGradient(stops: stops.map({ $0.resolve(on: element) }), center: center.resolve(on: element), angle: angle.resolve(on: element))
+                    AngularGradient.conicGradient(stops: stops.map({ $0.resolve(on: element, in: context) }), center: center.resolve(on: element, in: context), angle: angle.resolve(on: element, in: context))
                 }
             }
         }
@@ -414,16 +410,16 @@ public extension AnyShapeStyle {
                 self = .anyGradient(gradient: gradient, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
             }
             
-            func resolve(on element: ElementNode) -> any ShapeStyle {
+            func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case .gradient(let gradient, let center, let startRadiusFraction, let endRadiusFraction):
-                    EllipticalGradient.ellipticalGradient(gradient.resolve(on: element), center: center.resolve(on: element), startRadiusFraction: startRadiusFraction.resolve(on: element), endRadiusFraction: endRadiusFraction.resolve(on: element))
+                    EllipticalGradient.ellipticalGradient(gradient.resolve(on: element, in: context), center: center.resolve(on: element, in: context), startRadiusFraction: startRadiusFraction.resolve(on: element, in: context), endRadiusFraction: endRadiusFraction.resolve(on: element, in: context))
                 case .colors(let colors, let center, let startRadiusFraction, let endRadiusFraction):
-                    EllipticalGradient.ellipticalGradient(colors: colors.map({ $0.resolve(on: element) }), center: center.resolve(on: element), startRadiusFraction: startRadiusFraction.resolve(on: element), endRadiusFraction: endRadiusFraction.resolve(on: element))
+                    EllipticalGradient.ellipticalGradient(colors: colors.map({ $0.resolve(on: element, in: context) }), center: center.resolve(on: element, in: context), startRadiusFraction: startRadiusFraction.resolve(on: element, in: context), endRadiusFraction: endRadiusFraction.resolve(on: element, in: context))
                 case .stops(let stops, let center, let startRadiusFraction, let endRadiusFraction):
-                    EllipticalGradient.ellipticalGradient(stops: stops.map({ $0.resolve(on: element) }), center: center.resolve(on: element), startRadiusFraction: startRadiusFraction.resolve(on: element), endRadiusFraction: endRadiusFraction.resolve(on: element))
+                    EllipticalGradient.ellipticalGradient(stops: stops.map({ $0.resolve(on: element, in: context) }), center: center.resolve(on: element, in: context), startRadiusFraction: startRadiusFraction.resolve(on: element, in: context), endRadiusFraction: endRadiusFraction.resolve(on: element, in: context))
                 case .anyGradient(let gradient, let center, let startRadiusFraction, let endRadiusFraction):
-                    EllipticalGradient.ellipticalGradient(gradient.resolve(on: element), center: center.resolve(on: element), startRadiusFraction: startRadiusFraction.resolve(on: element), endRadiusFraction: endRadiusFraction.resolve(on: element))
+                    EllipticalGradient.ellipticalGradient(gradient.resolve(on: element, in: context), center: center.resolve(on: element, in: context), startRadiusFraction: startRadiusFraction.resolve(on: element, in: context), endRadiusFraction: endRadiusFraction.resolve(on: element, in: context))
                 }
             }
         }
@@ -453,16 +449,16 @@ public extension AnyShapeStyle {
                 self = .anyGradient(gradient: gradient, startPoint: startPoint, endPoint: endPoint)
             }
             
-            func resolve(on element: ElementNode) -> any ShapeStyle {
+            func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case .gradient(let gradient, let startPoint, let endPoint):
-                    LinearGradient.linearGradient(gradient.resolve(on: element), startPoint: startPoint.resolve(on: element), endPoint: endPoint.resolve(on: element))
+                    LinearGradient.linearGradient(gradient.resolve(on: element, in: context), startPoint: startPoint.resolve(on: element, in: context), endPoint: endPoint.resolve(on: element, in: context))
                 case .colors(let colors, let startPoint, let endPoint):
-                    LinearGradient.linearGradient(colors: colors.map({ $0.resolve(on: element) }), startPoint: startPoint.resolve(on: element), endPoint: endPoint.resolve(on: element))
+                    LinearGradient.linearGradient(colors: colors.map({ $0.resolve(on: element, in: context) }), startPoint: startPoint.resolve(on: element, in: context), endPoint: endPoint.resolve(on: element, in: context))
                 case .stops(let stops, let startPoint, let endPoint):
-                    LinearGradient.linearGradient(stops: stops.map({ $0.resolve(on: element) }), startPoint: startPoint.resolve(on: element), endPoint: endPoint.resolve(on: element))
+                    LinearGradient.linearGradient(stops: stops.map({ $0.resolve(on: element, in: context) }), startPoint: startPoint.resolve(on: element, in: context), endPoint: endPoint.resolve(on: element, in: context))
                 case .anyGradient(let gradient, let startPoint, let endPoint):
-                    LinearGradient.linearGradient(gradient.resolve(on: element), startPoint: startPoint.resolve(on: element), endPoint: endPoint.resolve(on: element))
+                    LinearGradient.linearGradient(gradient.resolve(on: element, in: context), startPoint: startPoint.resolve(on: element, in: context), endPoint: endPoint.resolve(on: element, in: context))
                 }
             }
         }
@@ -512,35 +508,35 @@ public extension AnyShapeStyle {
                 self = .anyGradient(gradient: gradient, center: center, startRadius: startRadius, endRadius: endRadius)
             }
             
-            func resolve(on element: ElementNode) -> any ShapeStyle {
+            func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case .gradient(let gradient, let center, let startRadius, let endRadius):
                     RadialGradient.radialGradient(
-                        gradient.resolve(on: element),
-                        center: center.resolve(on: element),
-                        startRadius: startRadius.resolve(on: element),
-                        endRadius: endRadius.resolve(on: element)
+                        gradient.resolve(on: element, in: context),
+                        center: center.resolve(on: element, in: context),
+                        startRadius: startRadius.resolve(on: element, in: context),
+                        endRadius: endRadius.resolve(on: element, in: context)
                     )
                 case .colors(let colors, let center, let startRadius, let endRadius):
                     RadialGradient.radialGradient(
-                        colors: colors.map({ $0.resolve(on: element) }),
-                        center: center.resolve(on: element),
-                        startRadius: startRadius.resolve(on: element),
-                        endRadius: endRadius.resolve(on: element)
+                        colors: colors.map({ $0.resolve(on: element, in: context) }),
+                        center: center.resolve(on: element, in: context),
+                        startRadius: startRadius.resolve(on: element, in: context),
+                        endRadius: endRadius.resolve(on: element, in: context)
                     )
                 case .stops(let stops, let center, let startRadius, let endRadius):
                     RadialGradient.radialGradient(
-                        stops: stops.map({ $0.resolve(on: element) }),
-                        center: center.resolve(on: element),
-                        startRadius: startRadius.resolve(on: element),
-                        endRadius: endRadius.resolve(on: element)
+                        stops: stops.map({ $0.resolve(on: element, in: context) }),
+                        center: center.resolve(on: element, in: context),
+                        startRadius: startRadius.resolve(on: element, in: context),
+                        endRadius: endRadius.resolve(on: element, in: context)
                     )
                 case .anyGradient(let gradient, let center, let startRadius, let endRadius):
                     RadialGradient.radialGradient(
-                        gradient.resolve(on: element),
-                        center: center.resolve(on: element),
-                        startRadius: startRadius.resolve(on: element),
-                        endRadius: endRadius.resolve(on: element)
+                        gradient.resolve(on: element, in: context),
+                        center: center.resolve(on: element, in: context),
+                        startRadius: startRadius.resolve(on: element, in: context),
+                        endRadius: endRadius.resolve(on: element, in: context)
                     )
                 }
             }
@@ -587,9 +583,9 @@ public extension AnyShapeStyle {
             struct _opacity {
                 static let name = "opacity"
                 
-                let value: Double
+                let value: AttributeReference<Double>
                 
-                init(_ value: Double) {
+                init(_ value: AttributeReference<Double>) {
                     self.value = value
                 }
             }
@@ -619,14 +615,14 @@ public extension AnyShapeStyle {
             }
             
             /// Apply this modifier to an existing `ShapeStyle`.
-            func apply(to style: some ShapeStyle, on element: ElementNode) -> any ShapeStyle {
+            func apply(to style: some ShapeStyle, on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case let .blendMode(blendMode):
                     return style.blendMode(blendMode.value)
                 case let .opacity(opacity):
-                    return style.opacity(opacity.value)
+                    return style.opacity(opacity.value.resolve(on: element, in: context))
                 case let .shadow(shadow):
-                    return style.shadow(shadow.value.resolve(on: element))
+                    return style.shadow(shadow.value.resolve(on: element, in: context))
                 case let .hierarchical(level):
                     if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
                         switch level {
@@ -646,14 +642,14 @@ public extension AnyShapeStyle {
             }
             
             /// Use this modifier itself as a `ShapeStyle`. SwiftUI will apply it to the foreground style.
-            func resolve(on element: ElementNode) -> any ShapeStyle {
+            func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case let .blendMode(blendMode):
                     return AnyShapeStyle(.blendMode(blendMode.value))
                 case let .opacity(opacity):
-                    return AnyShapeStyle(.opacity(opacity.value))
+                    return AnyShapeStyle(.opacity(opacity.value.resolve(on: element, in: context)))
                 case let .shadow(shadow):
-                    return AnyShapeStyle(.shadow(shadow.value.resolve(on: element)))
+                    return AnyShapeStyle(.shadow(shadow.value.resolve(on: element, in: context)))
                 case let .hierarchical(level):
                     switch level {
                     case .secondary:

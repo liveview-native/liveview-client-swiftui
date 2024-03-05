@@ -32,13 +32,13 @@ struct Shape<Root: RootRegistry, S: SwiftUI.InsettableShape>: View {
         var modifiers = modifiers
         var shape = shape.erasedToAnyShape()
         while case let ._anyShapeModifier(modifier) = modifiers.first {
-            shape = modifier.apply(to: shape, on: $liveElement.element).erasedToAnyShape()
+            shape = modifier.apply(to: shape, on: $liveElement.element, in: $liveElement.context).erasedToAnyShape()
             modifiers.removeFirst()
         }
         
         return SwiftUI.Group {
             if case let ._anyShapeFinalizerModifier(modifier) = modifiers.first {
-                modifier.apply(to: shape, on: $liveElement.element)
+                modifier.apply(to: shape, on: $liveElement.element, in: $liveElement.context)
             } else {
                 shape
             }

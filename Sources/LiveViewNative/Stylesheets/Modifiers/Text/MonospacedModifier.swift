@@ -22,13 +22,13 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _MonospacedModifier<R: RootRegistry>: TextModifier {
+struct _MonospacedModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "monospaced" }
 
     let isActive: AttributeReference<Bool>
 
     @ObservedElement private var element
-    @LiveContext<R> private var context
+    @LiveContext<Root> private var context
 
     init(_ isActive: AttributeReference<Bool> = .init(storage: .constant(true))) {
         self.isActive = isActive
@@ -39,9 +39,9 @@ struct _MonospacedModifier<R: RootRegistry>: TextModifier {
         content.monospaced(isActive.resolve(on: element, in: context))
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         if #available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *) {
-            return text.monospaced(isActive.resolve(on: element))
+            return text.monospaced(isActive.resolve(on: element, in: context))
         } else {
             return text
         }

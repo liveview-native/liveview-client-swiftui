@@ -22,13 +22,13 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _ItalicModifier<R: RootRegistry>: TextModifier {
+struct _ItalicModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "italic" }
     
     let isActive: AttributeReference<Bool>
 
     @ObservedElement private var element
-    @LiveContext<R> private var context
+    @LiveContext<Root> private var context
 
     init(_ isActive: AttributeReference<Bool> = .init(storage: .constant(true)) ) {
         self.isActive = isActive
@@ -38,7 +38,7 @@ struct _ItalicModifier<R: RootRegistry>: TextModifier {
         content.italic(isActive.resolve(on: element, in: context))
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
-        text.italic(isActive.resolve(on: element))
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
+        text.italic(isActive.resolve(on: element, in: context))
     }
 }
