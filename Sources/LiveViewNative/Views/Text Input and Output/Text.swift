@@ -101,6 +101,16 @@ struct Text<R: RootRegistry>: View {
     
     @ObservedElement private var element: ElementNode
     
+    /// A string value to use as the text content.
+    ///
+    /// In most cases, you should provide the content as a child of the element.
+    /// 
+    /// ```html
+    /// <Text>Hello, world!</Text>
+    /// ```
+    @_documentation(visibility: public)
+    @Attribute("content") private var content: String?
+    
     /// A string value to use as the text content without modification.
     ///
     /// In some cases, whitespaces and newlines in the text content are trimmed.
@@ -201,6 +211,7 @@ struct Text<R: RootRegistry>: View {
     
     init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
         self._element = .init(element: element)
+        self._content = .init(wrappedValue: nil, "content", element: element)
         self._verbatim = .init(wrappedValue: nil, "verbatim", element: element)
         self._date = .init(
             wrappedValue: nil,
@@ -253,7 +264,9 @@ struct Text<R: RootRegistry>: View {
     }
     
     private var text: SwiftUI.Text {
-        if let verbatim {
+        if let content {
+            return SwiftUI.Text(content)
+        } else if let verbatim {
             return SwiftUI.Text(verbatim: verbatim)
         } else if let date {
             return SwiftUI.Text(date, style: dateStyle)
