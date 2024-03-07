@@ -220,19 +220,31 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
             #if os(macOS)
             return .automatic
             #else
-            return .topBarLeading
+            if #available(watchOS 10, *) {
+                return .topBarLeading
+            } else {
+                return .automatic
+            }
             #endif
         case .topBarTrailing:
             #if os(macOS)
             return .automatic
             #else
-            return .topBarTrailing
+            if #available(watchOS 10, *) {
+                return .topBarTrailing
+            } else {
+                return .automatic
+            }
             #endif
         case .bottomBar:
             #if os(macOS) || os(tvOS)
             return .automatic
             #else
-            return .bottomBar
+            if #available(watchOS 10, *) {
+                return .bottomBar
+            } else {
+                return .automatic
+            }
             #endif
         }
     }
