@@ -75,6 +75,8 @@ extension Alignment: Decodable, AttributeDecodable {
 /// - `leading`
 /// - `center`
 /// - `trailing`
+/// - `listRowSeparatorLeading`
+/// - `listRowSeparatorTrailing`
 extension HorizontalAlignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -94,6 +96,12 @@ extension HorizontalAlignment: Decodable, AttributeDecodable {
             self = .leading
         case "trailing":
             self = .trailing
+        #if os(iOS) || os(macOS)
+        case "listRowSeparatorLeading":
+            self = .listRowSeparatorLeading
+        case "listRowSeparatorTrailing":
+            self = .listRowSeparatorTrailing
+        #endif
         default:
             return nil
         }
@@ -112,6 +120,8 @@ extension HorizontalAlignment: Decodable, AttributeDecodable {
 /// - `top`
 /// - `center`
 /// - `bottom`
+/// - `firstTextBaseline`
+/// - `lastTextBaseline`
 extension VerticalAlignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -131,6 +141,10 @@ extension VerticalAlignment: Decodable, AttributeDecodable {
             self = .top
         case "bottom":
             self = .bottom
+        case "firstTextBaseline":
+            self = .firstTextBaseline
+        case "lastTextBaseline":
+            self = .lastTextBaseline
         default:
             return nil
         }
