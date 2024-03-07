@@ -158,25 +158,26 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
     case principal
     @_documentation(visibility: public)
     case navigation
-    /// `primary-action`
     @_documentation(visibility: public)
     case primaryAction
-    /// `secondary-action`
     @_documentation(visibility: public)
     case secondaryAction
     @_documentation(visibility: public)
     case status
-    /// `confirmation-action`
     @_documentation(visibility: public)
     case confirmationAction
-    /// `cancellation-action`
     @_documentation(visibility: public)
     case cancellationAction
-    /// `destructive-action`
     @_documentation(visibility: public)
     case destructiveAction
     @_documentation(visibility: public)
     case keyboard
+    @_documentation(visibility: public)
+    case topBarLeading
+    @_documentation(visibility: public)
+    case topBarTrailing
+    @_documentation(visibility: public)
+    case bottomBar
     
     var placement: SwiftUI.ToolbarItemPlacement {
         switch self {
@@ -214,6 +215,36 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
             return .automatic
             #else
             return .keyboard
+            #endif
+        case .topBarLeading:
+            #if os(macOS)
+            return .automatic
+            #else
+            if #available(watchOS 10, *) {
+                return .topBarLeading
+            } else {
+                return .automatic
+            }
+            #endif
+        case .topBarTrailing:
+            #if os(macOS)
+            return .automatic
+            #else
+            if #available(watchOS 10, *) {
+                return .topBarTrailing
+            } else {
+                return .automatic
+            }
+            #endif
+        case .bottomBar:
+            #if os(macOS) || os(tvOS)
+            return .automatic
+            #else
+            if #available(watchOS 10, *) {
+                return .bottomBar
+            } else {
+                return .automatic
+            }
             #endif
         }
     }
