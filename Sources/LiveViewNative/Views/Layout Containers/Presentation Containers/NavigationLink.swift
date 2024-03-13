@@ -37,18 +37,30 @@ struct NavigationLink<R: RootRegistry>: View {
     @_documentation(visibility: public)
     @Attribute("disabled") private var disabled: Bool
     
+    @Environment(\.navigationSplitViewContext) private var navigationSplitViewContext
+    
     @ViewBuilder
     public var body: some View {
         if let url = destination.flatMap({ URL(string: $0, relativeTo: context.coordinator.url) })?.appending(path: "").absoluteURL {
-            SwiftUI.NavigationLink(
-                value: LiveNavigationEntry(
-                    url: url,
-                    coordinator: LiveViewCoordinator(session: context.coordinator.session, url: url)
-                )
-            ) {
-                context.buildChildren(of: element)
+            if navigationSplitViewContext {
+                // split view requires opening a separate LiveView for each column
+                SwiftUI.NavigationLink {
+                    DetachedNavEntryView<R>(url: url)
+                } label: {
+                    context.buildChildren(of: element)
+                }
+                .disabled(disabled)
+            } else {
+                SwiftUI.NavigationLink(
+                    value: LiveNavigationEntry(
+                        url: url,
+                        coordinator: LiveViewCoordinator(session: context.coordinator.session, url: url)
+                    )
+                ) {
+                    context.buildChildren(of: element)
+                }
+                .disabled(disabled)
             }
-            .disabled(disabled)
         } else {
             context.buildChildren(of: element)
                 .task {
