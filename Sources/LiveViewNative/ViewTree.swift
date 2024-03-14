@@ -293,7 +293,7 @@ enum ForEachElement: Identifiable {
         case let .keyed(_, id):
             return id
         case let .unkeyed(node):
-            return "\(node.id())"
+            return "\(node.id().ref())"
         }
     }
 
