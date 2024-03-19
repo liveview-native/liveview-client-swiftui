@@ -149,8 +149,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             // extract the root layout, removing anything within the `<div data-phx-main>`.
             let mainDiv = try doc.select("div[data-phx-main]")[0]
             try mainDiv.replaceWith(doc.createElement("phx-main"))
-            self.stylesheet = try? doc.select("Style").reduce(Stylesheet<R>(content: [], classes: [:])) {
-                (try? Stylesheet<R>(from: $1.text(), in: .init()).merge(with: $0)) ?? $0
+            async let stylesheet = withThrowingTaskGroup(of: (Data, URLResponse).self) { group in
+                for style in try doc.select("Style") {
+                    guard let url = URL(string: try style.attr("url"), relativeTo: url)
+                    else { continue }
+                    group.addTask { try await self.configuration.urlSession.data(from: url) }
+                }
+                return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
+                    guard let contents = String(data: next.0, encoding: .utf8)
+                    else { return result }
+                    return result.merge(with: try Stylesheet<R>(from: contents, in: .init()))
+                }
             }
             self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
             
@@ -159,6 +168,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             if socket == nil {
                 try await self.connectSocket(domValues)
             }
+            
+            self.stylesheet = try await stylesheet
             
             try await navigationPath.last!.coordinator.connect(domValues: domValues, redirect: false)
         } catch {
