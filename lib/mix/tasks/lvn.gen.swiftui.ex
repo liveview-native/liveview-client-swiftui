@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Lvn.SwiftUI.Install do
+defmodule Mix.Tasks.Lvn.Gen.Swiftui do
   @moduledoc "Installer Mix task for LiveView Native: `mix lvn.install`"
   use Mix.Task
 
