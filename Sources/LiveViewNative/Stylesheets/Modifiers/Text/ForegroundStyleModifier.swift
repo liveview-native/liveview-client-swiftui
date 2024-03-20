@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 @ParseableExpression
-struct _ForegroundStyleModifier<R: RootRegistry>: TextModifier {
+struct _ForegroundStyleModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "foregroundStyle" }
 
     enum Value {
@@ -43,7 +43,7 @@ struct _ForegroundStyleModifier<R: RootRegistry>: TextModifier {
         }
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *),
            case let ._0(style) = value
         {

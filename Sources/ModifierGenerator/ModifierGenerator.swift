@@ -305,7 +305,16 @@ struct ModifierGenerator: ParsableCommand {
                 })
             let requiresContext = signatures.contains(where: {
                 $0.parameters.contains(where: {
-                    ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference"].contains(
+                    ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference", "_AnyGesture"].contains(
+                        $0.type.as(IdentifierTypeSyntax.self)?.name.text
+                         ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
+                    )
+                })
+            })
+            
+            let requiresGestureState = signatures.contains(where: {
+                $0.parameters.contains(where: {
+                    ["_AnyGesture"].contains(
                         $0.type.as(IdentifierTypeSyntax.self)?.name.text
                          ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
                     )
@@ -338,6 +347,7 @@ struct ModifierGenerator: ParsableCommand {
 
                         \#(requiresContext ? "@ObservedElement private var element" : "")
                         \#(requiresContext ? "@LiveContext<R> private var context" : "")
+                        \#(requiresGestureState ? "@GestureState private var gestureState = [String:Any]()" : "")
                     
                     \#(signatures.compactMap(\.properties).joined(separator: "\n"))
 

@@ -245,7 +245,7 @@ struct Text<R: RootRegistry>: View {
         if let overrideStylesheet {
             return modifiers.reduce(text) { result, modifier in
                 if case let ._anyTextModifier(textModifier) = modifier {
-                    return textModifier.apply(to: result, on: element)
+                    return textModifier.apply(to: result, on: element, in: context)
                 } else {
                     return result
                 }

@@ -84,6 +84,8 @@ struct Signature {
                 })).description)\#(boundParameters.isEmpty ? "" : ")")
                 \#(platformAvailability.isEmpty ? "" : "#endif")
         """#
+        
+        let requiresGestureState = parameters.contains(where: { $0.type.as(IdentifierTypeSyntax.self)?.name.text.contains("_AnyGesture") == true })
 
         self.content = #"""
                 \#(platformAvailability)
@@ -103,10 +105,12 @@ struct Signature {
                             switch $0.type.as(IdentifierTypeSyntax.self)?.name.text {
                             case "ViewReference", "ToolbarContentReference", "CustomizableToolbarContentReference":
                                 return $0.firstName.tokenKind == .wildcard ? "{ \($0.secondName!.text).resolve(on: element, in: context) }" : "\($0.firstName.text): { \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context) }"
-                            case "InlineViewReference":
+                            case "InlineViewReference", "TextReference", "AttributeReference":
                                 return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
-                            case "TextReference":
-                                return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
+                            case "_AnyGesture":
+                                return $0.firstName.tokenKind == .wildcard
+                                    ? "\($0.secondName!.text).resolve(on: element, in: context.withGestureState(_gestureState))"
+                                    : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context.withGestureState(_gestureState))"
                             case "ChangeTracked":
                                 // These are registered on the View so they get proper DynamicProperty treatment.
                                 return $0.firstName.tokenKind == .wildcard ? "__\(offset)_\($0.secondName!.text).projectedValue" : "\($0.firstName.text): __\(offset)_\(($0.secondName ?? $0.firstName).text).projectedValue"
@@ -122,8 +126,6 @@ struct Signature {
                                     let arguments = (0..<parameterCount).map({ "$\($0)" }).joined(separator: ", ")
                                     return $0.firstName.tokenKind == .wildcard ? "{ __\(offset)_\($0.secondName!.text).wrappedValue(value: [\(arguments)]) }" : "\($0.firstName.text): { __\(offset)_\(($0.secondName ?? $0.firstName).text).wrappedValue(value: [\(arguments)]) }"
                                 }
-                            case "AttributeReference":
-                                return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
                             default:
                                 if let optionalType = $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text {
                                     switch optionalType {
@@ -138,6 +140,7 @@ struct Signature {
                                 return $0.firstName.tokenKind == .wildcard ? $0.secondName!.text : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)"
                             }
                         }).joined(separator: ", ")))
+                        \#(requiresGestureState ? ".environment(\\.gestureState, _gestureState)" : "")
                     \#(availability.isEmpty ? "" : "} else { __content }")
                 \#(platformAvailability.isEmpty ? "" : "#endif")
         """#
@@ -175,7 +178,7 @@ extension TypeSyntax {
             // use the unmodified type name
             return self
         } else if self.as(IdentifierTypeSyntax.self)?.name.text == "Gesture" {
-            return TypeSyntax("AnyGesture<Any>")
+            return TypeSyntax("_AnyGesture")
         } else if self.as(IdentifierTypeSyntax.self)?.name.text == "View" {
             return TypeSyntax("InlineViewReference")
         } else {

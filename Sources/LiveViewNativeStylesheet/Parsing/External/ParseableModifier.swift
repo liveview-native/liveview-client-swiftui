@@ -52,6 +52,7 @@ public struct StandardExpressionParser<Output: ParseableExpressionProtocol>: Par
 
 public class ParseableModifierContext {
     public var metadata: Metadata = .init(file: "", line: 0, module: "unknown", source: "<unknown>")
+    public var gestureState = GestureState<[String:Any]>(initialValue: [:])
     
     public init() {}
 }
@@ -76,6 +77,13 @@ public struct EnumParser<T>: Parser {
         }
     }
 }
+
+public extension EnumParser where T: CaseIterable & RawRepresentable, T.RawValue == String {
+    init() {
+        self.allCases = Dictionary(uniqueKeysWithValues: T.allCases.map({ (key: $0.rawValue, value: $0) }))
+    }
+}
+
 extension ParseableModifierValue where Self: CaseIterable & RawRepresentable<String>, Self._ParserType == ImplicitStaticMember<Self, EnumParser<Self>> {
     public static func parser(in context: ParseableModifierContext) -> _ParserType {
         ImplicitStaticMember {

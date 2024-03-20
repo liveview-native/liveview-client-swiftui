@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 @ParseableExpression
-struct _FontWidthModifier<R: RootRegistry>: TextModifier {
+struct _FontWidthModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "fontWidth" }
 
     let width: SwiftUI.Font.Width?
@@ -22,7 +22,7 @@ struct _FontWidthModifier<R: RootRegistry>: TextModifier {
         content.fontWidth(width)
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         text.fontWidth(width)
     }
 }

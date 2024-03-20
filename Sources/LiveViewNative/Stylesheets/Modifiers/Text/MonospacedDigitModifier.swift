@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 @ParseableExpression
-struct _MonospacedDigitModifier<R: RootRegistry>: TextModifier {
+struct _MonospacedDigitModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "monospacedDigit" }
 
     init() {}
@@ -18,7 +18,7 @@ struct _MonospacedDigitModifier<R: RootRegistry>: TextModifier {
         content.monospacedDigit()
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         text.monospacedDigit()
     }
 }

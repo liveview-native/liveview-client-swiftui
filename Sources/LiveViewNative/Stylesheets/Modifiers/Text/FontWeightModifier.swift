@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 @ParseableExpression
-struct _FontWeightModifier<R: RootRegistry>: TextModifier {
+struct _FontWeightModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "fontWeight" }
 
     let weight: SwiftUI.Font.Weight?
@@ -22,7 +22,7 @@ struct _FontWeightModifier<R: RootRegistry>: TextModifier {
         content.fontWeight(weight)
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         text.fontWeight(weight)
     }
 }

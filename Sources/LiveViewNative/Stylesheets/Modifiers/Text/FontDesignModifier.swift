@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 @ParseableExpression
-struct _FontDesignModifier<R: RootRegistry>: TextModifier {
+struct _FontDesignModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "fontDesign" }
     
     let design: Any?
@@ -31,7 +31,7 @@ struct _FontDesignModifier<R: RootRegistry>: TextModifier {
         #endif
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         if #available(watchOS 9.1,tvOS 16.1,iOS 16.1,macOS 13.0, *) {
             return text.fontDesign(design as? SwiftUI.Font.Design)

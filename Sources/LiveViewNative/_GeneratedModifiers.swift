@@ -19,6 +19,7 @@ struct _accessibilityActionModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 @Event private var _0_action__0: Event.EventHandler
@@ -41,6 +42,7 @@ struct _accessibilityActionModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .accessibilityAction(action: { __0_action__0.wrappedValue() }, label: { label.resolve(on: element, in: context) })
+                
             
         
         }
@@ -61,6 +63,7 @@ struct _accessibilityActionsModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -83,6 +86,7 @@ struct _accessibilityActionsModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .accessibilityActions({ content.resolve(on: element, in: context) })
+                
             
         
         }
@@ -103,6 +107,7 @@ struct _accessibilityChildrenModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -125,6 +130,7 @@ struct _accessibilityChildrenModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .accessibilityChildren(children: { children.resolve(on: element, in: context) })
+                
             
         
         }
@@ -145,6 +151,7 @@ struct _accessibilityIgnoresInvertColorsModifier<R: RootRegistry>: ViewModifier 
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -167,6 +174,7 @@ struct _accessibilityIgnoresInvertColorsModifier<R: RootRegistry>: ViewModifier 
             
             __content
                 .accessibilityIgnoresInvertColors(active.resolve(on: element, in: context))
+                
             
         
         }
@@ -187,6 +195,7 @@ struct _accessibilityRepresentationModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -209,6 +218,7 @@ struct _accessibilityRepresentationModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .accessibilityRepresentation(representation: { representation.resolve(on: element, in: context) })
+                
             
         
         }
@@ -232,6 +242,7 @@ struct _accessibilityShowsLargeContentViewerModifier<R: RootRegistry>: ViewModif
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -263,6 +274,7 @@ struct _accessibilityShowsLargeContentViewerModifier<R: RootRegistry>: ViewModif
             
             __content
                 .accessibilityShowsLargeContentViewer({ largeContentView.resolve(on: element, in: context) })
+                
             
         
         
@@ -271,6 +283,7 @@ struct _accessibilityShowsLargeContentViewerModifier<R: RootRegistry>: ViewModif
             
             __content
                 .accessibilityShowsLargeContentViewer()
+                
             
         
         }
@@ -309,6 +322,7 @@ struct _alertModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_isPresented: Swift.Bool
 
@@ -385,6 +399,7 @@ struct _alertModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .alert(titleKey, isPresented: __0_isPresented.projectedValue, actions: { actions.resolve(on: element, in: context) })
+                
             
         
         
@@ -393,6 +408,7 @@ struct _alertModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .alert(title.resolve(on: element, in: context), isPresented: __1_isPresented.projectedValue, actions: { actions.resolve(on: element, in: context) })
+                
             
         
         
@@ -401,6 +417,7 @@ struct _alertModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .alert(title.resolve(on: element, in: context), isPresented: __2_isPresented.projectedValue, actions: { actions.resolve(on: element, in: context) })
+                
             
         
         
@@ -409,6 +426,7 @@ struct _alertModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .alert(titleKey, isPresented: __3_isPresented.projectedValue, actions: { actions.resolve(on: element, in: context) }, message: { message.resolve(on: element, in: context) })
+                
             
         
         
@@ -417,6 +435,7 @@ struct _alertModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .alert(title.resolve(on: element, in: context), isPresented: __4_isPresented.projectedValue, actions: { actions.resolve(on: element, in: context) }, message: { message.resolve(on: element, in: context) })
+                
             
         
         
@@ -425,6 +444,7 @@ struct _alertModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .alert(title.resolve(on: element, in: context), isPresented: __5_isPresented.projectedValue, actions: { actions.resolve(on: element, in: context) }, message: { message.resolve(on: element, in: context) })
+                
             
         
         
@@ -433,6 +453,7 @@ struct _alertModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .alert(isPresented: __6_isPresented.projectedValue, error: error, actions: { actions.resolve(on: element, in: context) })
+                
             
         
         }
@@ -453,6 +474,7 @@ struct _allowsHitTestingModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -475,6 +497,7 @@ struct _allowsHitTestingModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .allowsHitTesting(enabled.resolve(on: element, in: context))
+                
             
         
         }
@@ -495,6 +518,7 @@ struct _allowsTighteningModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -517,6 +541,7 @@ struct _allowsTighteningModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .allowsTightening(flag.resolve(on: element, in: context))
+                
             
         
         }
@@ -537,6 +562,7 @@ struct _animationModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -559,6 +585,7 @@ struct _animationModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .animation(animation, value: value.resolve(on: element, in: context))
+                
             
         
         }
@@ -582,6 +609,7 @@ struct _aspectRatioModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -613,6 +641,7 @@ struct _aspectRatioModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .aspectRatio(aspectRatio?.resolve(on: element, in: context), contentMode: contentMode)
+                
             
         
         
@@ -621,6 +650,7 @@ struct _aspectRatioModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .aspectRatio(aspectRatio, contentMode: contentMode)
+                
             
         
         }
@@ -641,6 +671,7 @@ struct _autocorrectionDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -663,6 +694,7 @@ struct _autocorrectionDisabledModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .autocorrectionDisabled(disable.resolve(on: element, in: context))
+                
             
         
         }
@@ -701,6 +733,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -777,6 +810,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .background(alignment: alignment.resolve(on: element, in: context), content: { content.resolve(on: element, in: context) })
+                
             
         
         
@@ -785,6 +819,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .background(ignoresSafeAreaEdges: edges)
+                
             
         
         
@@ -793,6 +828,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .background(style, ignoresSafeAreaEdges: edges)
+                
             
         
         
@@ -801,6 +837,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .background(in: shape, fillStyle: fillStyle)
+                
             
         
         
@@ -809,6 +846,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .background(style, in: shape, fillStyle: fillStyle)
+                
             
         
         
@@ -817,6 +855,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .background(in: shape, fillStyle: fillStyle)
+                
             
         
         
@@ -825,6 +864,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .background(style, in: shape, fillStyle: fillStyle)
+                
             
         
         }
@@ -843,6 +883,7 @@ struct _backgroundStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -867,6 +908,7 @@ struct _backgroundStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .backgroundStyle(style)
+                
             
         
         }
@@ -896,6 +938,7 @@ struct _badgeModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -907,28 +950,28 @@ struct _badgeModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 12.0, *)
+    @available(macOS 12.0,iOS 15.0, *)
     init(_ count: AttributeReference<Swift.Int>) {
         self.value = ._0(count: count)
         
     }
     #endif
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 12.0, *)
+    @available(macOS 12.0,iOS 15.0, *)
     init(_ label: TextReference?) {
         self.value = ._1(label: label)
         
     }
     #endif
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 12.0, *)
+    @available(macOS 12.0,iOS 15.0, *)
     init(_ key: SwiftUI.LocalizedStringKey?) {
         self.value = ._2(key: key)
         
     }
     #endif
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 12.0, *)
+    @available(macOS 12.0,iOS 15.0, *)
     init(_ label: AttributeReference<String>) {
         self.value = ._3(label: label)
         
@@ -941,34 +984,38 @@ struct _badgeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(count):
-            if #available(iOS 15.0,macOS 12.0, *) {
+            if #available(macOS 12.0,iOS 15.0, *) {
             let count = count as! AttributeReference<Swift.Int>
             __content
                 .badge(count.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
         case let ._1(label):
-            if #available(iOS 15.0,macOS 12.0, *) {
+            if #available(macOS 12.0,iOS 15.0, *) {
             let label = label as? TextReference
             __content
                 .badge(label?.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
         case let ._2(key):
-            if #available(iOS 15.0,macOS 12.0, *) {
+            if #available(macOS 12.0,iOS 15.0, *) {
             let key = key as? SwiftUI.LocalizedStringKey
             __content
                 .badge(key)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
         case let ._3(label):
-            if #available(iOS 15.0,macOS 12.0, *) {
+            if #available(macOS 12.0,iOS 15.0, *) {
             let label = label as! AttributeReference<String>
             __content
                 .badge(label.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -987,6 +1034,7 @@ struct _blendModeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -1011,6 +1059,7 @@ struct _blendModeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .blendMode(blendMode)
+                
             
         
         }
@@ -1031,6 +1080,7 @@ struct _blurModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1053,6 +1103,7 @@ struct _blurModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .blur(radius: radius.resolve(on: element, in: context), opaque: opaque.resolve(on: element, in: context))
+                
             
         
         }
@@ -1073,6 +1124,7 @@ struct _borderModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1095,6 +1147,7 @@ struct _borderModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .border(content, width: width.resolve(on: element, in: context))
+                
             
         
         }
@@ -1115,6 +1168,7 @@ struct _brightnessModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1137,6 +1191,7 @@ struct _brightnessModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .brightness(amount.resolve(on: element, in: context))
+                
             
         
         }
@@ -1155,6 +1210,7 @@ struct _buttonBorderShapeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -1179,6 +1235,7 @@ struct _buttonBorderShapeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .buttonBorderShape(shape)
+                
             
         
         }
@@ -1200,6 +1257,7 @@ struct _buttonStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -1233,6 +1291,7 @@ struct _buttonStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .buttonStyle(style)
+                
             
         
         
@@ -1241,6 +1300,7 @@ struct _buttonStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .buttonStyle(style)
+                
             
         
         }
@@ -1259,6 +1319,7 @@ struct _clipShapeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -1283,6 +1344,7 @@ struct _clipShapeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .clipShape(shape, style: style)
+                
             
         
         }
@@ -1303,6 +1365,7 @@ struct _clippedModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1325,6 +1388,7 @@ struct _clippedModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .clipped(antialiased: antialiased.resolve(on: element, in: context))
+                
             
         
         }
@@ -1343,6 +1407,7 @@ struct _colorInvertModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -1367,6 +1432,7 @@ struct _colorInvertModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .colorInvert()
+                
             
         
         }
@@ -1387,6 +1453,7 @@ struct _colorMultiplyModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1409,6 +1476,7 @@ struct _colorMultiplyModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .colorMultiply(color.resolve(on: element, in: context))
+                
             
         
         }
@@ -1427,6 +1495,7 @@ struct _compositingGroupModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -1451,6 +1520,7 @@ struct _compositingGroupModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .compositingGroup()
+                
             
         
         }
@@ -1486,6 +1556,7 @@ struct _confirmationDialogModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_isPresented: Swift.Bool
 
@@ -1553,6 +1624,7 @@ struct _confirmationDialogModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .confirmationDialog(titleKey, isPresented: __0_isPresented.projectedValue, titleVisibility: titleVisibility.resolve(on: element, in: context), actions: { actions.resolve(on: element, in: context) })
+                
             
         
         
@@ -1561,6 +1633,7 @@ struct _confirmationDialogModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .confirmationDialog(title.resolve(on: element, in: context), isPresented: __1_isPresented.projectedValue, titleVisibility: titleVisibility.resolve(on: element, in: context), actions: { actions.resolve(on: element, in: context) })
+                
             
         
         
@@ -1569,6 +1642,7 @@ struct _confirmationDialogModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .confirmationDialog(title.resolve(on: element, in: context), isPresented: __2_isPresented.projectedValue, titleVisibility: titleVisibility.resolve(on: element, in: context), actions: { actions.resolve(on: element, in: context) })
+                
             
         
         
@@ -1577,6 +1651,7 @@ struct _confirmationDialogModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .confirmationDialog(titleKey, isPresented: __3_isPresented.projectedValue, titleVisibility: titleVisibility.resolve(on: element, in: context), actions: { actions.resolve(on: element, in: context) }, message: { message.resolve(on: element, in: context) })
+                
             
         
         
@@ -1585,6 +1660,7 @@ struct _confirmationDialogModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .confirmationDialog(title.resolve(on: element, in: context), isPresented: __4_isPresented.projectedValue, titleVisibility: titleVisibility.resolve(on: element, in: context), actions: { actions.resolve(on: element, in: context) }, message: { message.resolve(on: element, in: context) })
+                
             
         
         
@@ -1593,6 +1669,7 @@ struct _confirmationDialogModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .confirmationDialog(title.resolve(on: element, in: context), isPresented: __5_isPresented.projectedValue, titleVisibility: titleVisibility.resolve(on: element, in: context), actions: { actions.resolve(on: element, in: context) }, message: { message.resolve(on: element, in: context) })
+                
             
         
         }
@@ -1616,6 +1693,7 @@ struct _containerRelativeFrameModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1623,14 +1701,14 @@ struct _containerRelativeFrameModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *)
+    @available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *)
     init(_ axes: SwiftUI.Axis.Set,alignment: AttributeReference<SwiftUI.Alignment> = .init(storage: .constant(.center)) ) {
         self.value = ._0(axes: axes, alignment: alignment)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *)
+    @available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *)
     init(_ axes: SwiftUI.Axis.Set,count: AttributeReference<Swift.Int>,span: AttributeReference<Swift.Int> = .init(storage: .constant(1)), spacing: AttributeReference<CoreFoundation.CGFloat>,alignment: AttributeReference<SwiftUI.Alignment> = .init(storage: .constant(.center)) ) {
         self.value = ._1(axes: axes, count: count, span: span, spacing: spacing, alignment: alignment)
         
@@ -1643,16 +1721,17 @@ struct _containerRelativeFrameModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(axes, alignment):
-            if #available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *) {
             let axes = axes as! SwiftUI.Axis.Set
 let alignment = alignment as! AttributeReference<SwiftUI.Alignment>
             __content
                 .containerRelativeFrame(axes, alignment: alignment.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._1(axes, count, span, spacing, alignment):
-            if #available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *) {
+            if #available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *) {
             let axes = axes as! SwiftUI.Axis.Set
 let count = count as! AttributeReference<Swift.Int>
 let span = span as! AttributeReference<Swift.Int>
@@ -1660,6 +1739,7 @@ let spacing = spacing as! AttributeReference<CoreFoundation.CGFloat>
 let alignment = alignment as! AttributeReference<SwiftUI.Alignment>
             __content
                 .containerRelativeFrame(axes, count: count.resolve(on: element, in: context), span: span.resolve(on: element, in: context), spacing: spacing.resolve(on: element, in: context), alignment: alignment.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -1678,6 +1758,7 @@ struct _containerShapeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -1702,6 +1783,7 @@ struct _containerShapeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .containerShape(shape)
+                
             
         
         }
@@ -1725,6 +1807,7 @@ struct _contentShapeModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1756,6 +1839,7 @@ struct _contentShapeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .contentShape(shape, eoFill: eoFill.resolve(on: element, in: context))
+                
             
         
         
@@ -1764,6 +1848,7 @@ struct _contentShapeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .contentShape(kind, shape, eoFill: eoFill.resolve(on: element, in: context))
+                
             
         
         }
@@ -1782,6 +1867,7 @@ struct _contentTransitionModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -1806,6 +1892,7 @@ struct _contentTransitionModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .contentTransition(transition)
+                
             
         
         }
@@ -1829,6 +1916,7 @@ struct _contextMenuModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1860,6 +1948,7 @@ struct _contextMenuModifier<R: RootRegistry>: ViewModifier {
             let menuItems = menuItems as! ViewReference
             __content
                 .contextMenu(menuItems: { menuItems.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS)
@@ -1869,6 +1958,7 @@ struct _contextMenuModifier<R: RootRegistry>: ViewModifier {
 let preview = preview as! ViewReference
             __content
                 .contextMenu(menuItems: { menuItems.resolve(on: element, in: context) }, preview: { preview.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         }
@@ -1889,6 +1979,7 @@ struct _contrastModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -1911,6 +2002,7 @@ struct _contrastModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .contrast(amount.resolve(on: element, in: context))
+                
             
         
         }
@@ -1931,12 +2023,13 @@ struct _controlGroupStyleModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS)
-    @available(tvOS 17.0,iOS 15.0,macOS 12.0, *)
+    @available(macOS 12.0,tvOS 17.0,iOS 15.0, *)
     init(_ style: AnyControlGroupStyle) {
         self.value = ._0(style: style)
         
@@ -1949,10 +2042,11 @@ struct _controlGroupStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS)
         case let ._0(style):
-            if #available(tvOS 17.0,iOS 15.0,macOS 12.0, *) {
+            if #available(macOS 12.0,tvOS 17.0,iOS 15.0, *) {
             let style = style as! AnyControlGroupStyle
             __content
                 .controlGroupStyle(style)
+                
             } else { __content }
         #endif
         }
@@ -1973,12 +2067,13 @@ struct _controlSizeModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(watchOS)
-    @available(watchOS 9.0,iOS 15.0,macOS 10.15, *)
+    @available(macOS 10.15,watchOS 9.0,iOS 15.0, *)
     init(_ controlSize: SwiftUI.ControlSize) {
         self.value = ._0(controlSize: controlSize)
         
@@ -1991,10 +2086,11 @@ struct _controlSizeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(watchOS)
         case let ._0(controlSize):
-            if #available(watchOS 9.0,iOS 15.0,macOS 10.15, *) {
+            if #available(macOS 10.15,watchOS 9.0,iOS 15.0, *) {
             let controlSize = controlSize as! SwiftUI.ControlSize
             __content
                 .controlSize(controlSize)
+                
             } else { __content }
         #endif
         }
@@ -2015,12 +2111,13 @@ struct _coordinateSpaceModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *)
+    @available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
     init(_ name: SwiftUI.NamedCoordinateSpace) {
         self.value = ._0(name: name)
         
@@ -2033,10 +2130,11 @@ struct _coordinateSpaceModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(name):
-            if #available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *) {
+            if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
             let name = name as! SwiftUI.NamedCoordinateSpace
             __content
                 .coordinateSpace(name)
+                
             } else { __content }
         #endif
         }
@@ -2055,6 +2153,7 @@ struct _datePickerStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -2079,6 +2178,7 @@ struct _datePickerStyleModifier<R: RootRegistry>: ViewModifier {
             let style = style as! AnyDatePickerStyle
             __content
                 .datePickerStyle(style)
+                
             } else { __content }
         #endif
         }
@@ -2099,12 +2199,13 @@ struct _defaultScrollAnchorModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0, *)
+    @available(tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *)
     init(_ anchor: AttributeReference<SwiftUI.UnitPoint?>?) {
         self.value = ._0(anchor: anchor)
         
@@ -2117,10 +2218,11 @@ struct _defaultScrollAnchorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(anchor):
-            if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0, *) {
+            if #available(tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *) {
             let anchor = anchor as? AttributeReference<SwiftUI.UnitPoint?>
             __content
                 .defaultScrollAnchor(anchor?.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -2141,6 +2243,7 @@ struct _defaultWheelPickerItemHeightModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2163,6 +2266,7 @@ struct _defaultWheelPickerItemHeightModifier<R: RootRegistry>: ViewModifier {
             let height = height as! AttributeReference<CoreFoundation.CGFloat>
             __content
                 .defaultWheelPickerItemHeight(height.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -2181,6 +2285,7 @@ struct _defersSystemGesturesModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -2205,6 +2310,7 @@ struct _defersSystemGesturesModifier<R: RootRegistry>: ViewModifier {
             let edges = edges as! SwiftUI.Edge.Set
             __content
                 .defersSystemGestures(on: edges)
+                
             } else { __content }
         #endif
         }
@@ -2225,6 +2331,7 @@ struct _deleteDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2247,6 +2354,7 @@ struct _deleteDisabledModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .deleteDisabled(isDisabled.resolve(on: element, in: context))
+                
             
         
         }
@@ -2276,6 +2384,7 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_isSuppressed: Swift.Bool
 
@@ -2287,28 +2396,28 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *)
+    @available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0, *)
     init(_ titleKey: SwiftUI.LocalizedStringKey,isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._0(titleKey: titleKey)
         self.__0_isSuppressed = isSuppressed
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *)
+    @available(macOS 14.0,watchOS 10.0,tvOS 17.0,iOS 17.0, *)
     init(_ title: AttributeReference<String>,isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._1(title: title)
         self.__1_isSuppressed = isSuppressed
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *)
+    @available(watchOS 10.0,macOS 14.0,tvOS 17.0,iOS 17.0, *)
     init(_ label: TextReference,isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._2(label: label)
         self.__2_isSuppressed = isSuppressed
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *)
+    @available(watchOS 10.0,macOS 14.0,tvOS 17.0,iOS 17.0, *)
     init(isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._3
         self.__3_isSuppressed = isSuppressed
@@ -2321,34 +2430,38 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(titleKey):
-            if #available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0, *) {
             let titleKey = titleKey as! SwiftUI.LocalizedStringKey
             __content
                 .dialogSuppressionToggle(titleKey, isSuppressed: __0_isSuppressed.projectedValue)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._1(title):
-            if #available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *) {
+            if #available(macOS 14.0,watchOS 10.0,tvOS 17.0,iOS 17.0, *) {
             let title = title as! AttributeReference<String>
             __content
                 .dialogSuppressionToggle(title.resolve(on: element, in: context), isSuppressed: __1_isSuppressed.projectedValue)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._2(label):
-            if #available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(watchOS 10.0,macOS 14.0,tvOS 17.0,iOS 17.0, *) {
             let label = label as! TextReference
             __content
                 .dialogSuppressionToggle(label.resolve(on: element, in: context), isSuppressed: __2_isSuppressed.projectedValue)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case ._3:
-            if #available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *) {
+            if #available(watchOS 10.0,macOS 14.0,tvOS 17.0,iOS 17.0, *) {
             
             __content
                 .dialogSuppressionToggle(isSuppressed: __3_isSuppressed.projectedValue)
+                
             } else { __content }
         #endif
         }
@@ -2372,6 +2485,7 @@ struct _digitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2403,6 +2517,7 @@ struct _digitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier {
             let content = content as! ViewReference
             __content
                 .digitalCrownAccessory(content: { content.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         #if os(watchOS)
@@ -2411,6 +2526,7 @@ struct _digitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
             __content
                 .digitalCrownAccessory(visibility.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -2431,6 +2547,7 @@ struct _disabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2453,6 +2570,7 @@ struct _disabledModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .disabled(disabled.resolve(on: element, in: context))
+                
             
         
         }
@@ -2473,6 +2591,7 @@ struct _drawingGroupModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2495,6 +2614,7 @@ struct _drawingGroupModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .drawingGroup(opaque: opaque.resolve(on: element, in: context), colorMode: colorMode)
+                
             
         
         }
@@ -2516,6 +2636,7 @@ struct _dynamicTypeSizeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -2549,6 +2670,7 @@ struct _dynamicTypeSizeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .dynamicTypeSize(size)
+                
             
         
         
@@ -2557,6 +2679,7 @@ struct _dynamicTypeSizeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .dynamicTypeSize(range)
+                
             
         
         }
@@ -2577,6 +2700,7 @@ struct _fileDialogCustomizationIDModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2599,6 +2723,7 @@ struct _fileDialogCustomizationIDModifier<R: RootRegistry>: ViewModifier {
             let id = id as! AttributeReference<Swift.String>
             __content
                 .fileDialogCustomizationID(id.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -2619,12 +2744,13 @@ struct _fileDialogImportsUnresolvedAliasesModifier<R: RootRegistry>: ViewModifie
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS)
-    @available(iOS 17.0,macOS 14.0, *)
+    @available(macOS 14.0,iOS 17.0, *)
     init(_ imports: AttributeReference<Swift.Bool>) {
         self.value = ._0(imports: imports)
         
@@ -2637,10 +2763,11 @@ struct _fileDialogImportsUnresolvedAliasesModifier<R: RootRegistry>: ViewModifie
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(imports):
-            if #available(iOS 17.0,macOS 14.0, *) {
+            if #available(macOS 14.0,iOS 17.0, *) {
             let imports = imports as! AttributeReference<Swift.Bool>
             __content
                 .fileDialogImportsUnresolvedAliases(imports.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -2661,6 +2788,7 @@ struct _findDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2683,6 +2811,7 @@ struct _findDisabledModifier<R: RootRegistry>: ViewModifier {
             let isDisabled = isDisabled as! AttributeReference<Swift.Bool>
             __content
                 .findDisabled(isDisabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -2701,6 +2830,7 @@ struct _findNavigatorModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -2725,6 +2855,7 @@ struct _findNavigatorModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .findNavigator(isPresented: __0_isPresented.projectedValue)
+                
             } else { __content }
         #endif
         }
@@ -2748,6 +2879,7 @@ struct _fixedSizeModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2779,6 +2911,7 @@ struct _fixedSizeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .fixedSize(horizontal: horizontal.resolve(on: element, in: context), vertical: vertical.resolve(on: element, in: context))
+                
             
         
         
@@ -2787,6 +2920,7 @@ struct _fixedSizeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .fixedSize()
+                
             
         
         }
@@ -2807,6 +2941,7 @@ struct _flipsForRightToLeftLayoutDirectionModifier<R: RootRegistry>: ViewModifie
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2829,6 +2964,7 @@ struct _flipsForRightToLeftLayoutDirectionModifier<R: RootRegistry>: ViewModifie
             
             __content
                 .flipsForRightToLeftLayoutDirection(enabled.resolve(on: element, in: context))
+                
             
         
         }
@@ -2849,12 +2985,13 @@ struct _focusEffectDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,watchOS 10.0,tvOS 17.0,macOS 14.0, *)
+    @available(macOS 14.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *)
     init(_ disabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(disabled: disabled)
         
@@ -2867,10 +3004,11 @@ struct _focusEffectDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(disabled):
-            if #available(iOS 17.0,watchOS 10.0,tvOS 17.0,macOS 14.0, *) {
+            if #available(macOS 14.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *) {
             let disabled = disabled as! AttributeReference<Swift.Bool>
             __content
                 .focusEffectDisabled(disabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -2891,12 +3029,13 @@ struct _focusSectionModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(macOS) || os(tvOS)
-    @available(tvOS 15.0,macOS 13.0, *)
+    @available(macOS 13.0,tvOS 15.0, *)
     init() {
         self.value = ._0
         
@@ -2909,10 +3048,11 @@ struct _focusSectionModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(macOS) || os(tvOS)
         case ._0:
-            if #available(tvOS 15.0,macOS 13.0, *) {
+            if #available(macOS 13.0,tvOS 15.0, *) {
             
             __content
                 .focusSection()
+                
             } else { __content }
         #endif
         }
@@ -2936,6 +3076,7 @@ struct _focusableModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -2943,14 +3084,14 @@ struct _focusableModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,watchOS 8.0,tvOS 15.0,macOS 12.0, *)
+    @available(macOS 12.0,iOS 17.0,tvOS 15.0,watchOS 8.0, *)
     init(_ isFocusable: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isFocusable: isFocusable)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,watchOS 10.0,tvOS 17.0,macOS 14.0, *)
+    @available(macOS 14.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *)
     init(_ isFocusable: AttributeReference<Swift.Bool> = .init(storage: .constant(true)), interactions: SwiftUI.FocusInteractions) {
         self.value = ._1(isFocusable: isFocusable, interactions: interactions)
         
@@ -2963,19 +3104,21 @@ struct _focusableModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(isFocusable):
-            if #available(iOS 17.0,watchOS 8.0,tvOS 15.0,macOS 12.0, *) {
+            if #available(macOS 12.0,iOS 17.0,tvOS 15.0,watchOS 8.0, *) {
             let isFocusable = isFocusable as! AttributeReference<Swift.Bool>
             __content
                 .focusable(isFocusable.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._1(isFocusable, interactions):
-            if #available(iOS 17.0,watchOS 10.0,tvOS 17.0,macOS 14.0, *) {
+            if #available(macOS 14.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *) {
             let isFocusable = isFocusable as! AttributeReference<Swift.Bool>
 let interactions = interactions as! SwiftUI.FocusInteractions
             __content
                 .focusable(isFocusable.resolve(on: element, in: context), interactions: interactions)
+                
             } else { __content }
         #endif
         }
@@ -2994,6 +3137,7 @@ struct _formStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -3018,6 +3162,7 @@ struct _formStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .formStyle(style)
+                
             
         
         }
@@ -3044,6 +3189,7 @@ struct _frameModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -3084,6 +3230,7 @@ struct _frameModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .frame(width: width?.resolve(on: element, in: context), height: height?.resolve(on: element, in: context), alignment: alignment.resolve(on: element, in: context))
+                
             
         
         
@@ -3092,6 +3239,7 @@ struct _frameModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .frame()
+                
             
         
         
@@ -3100,6 +3248,7 @@ struct _frameModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .frame(minWidth: minWidth?.resolve(on: element, in: context), idealWidth: idealWidth?.resolve(on: element, in: context), maxWidth: maxWidth?.resolve(on: element, in: context), minHeight: minHeight?.resolve(on: element, in: context), idealHeight: idealHeight?.resolve(on: element, in: context), maxHeight: maxHeight?.resolve(on: element, in: context), alignment: alignment.resolve(on: element, in: context))
+                
             
         
         }
@@ -3120,6 +3269,7 @@ struct _fullScreenCoverModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_isPresented: Swift.Bool
 @Event private var _0_onDismiss__0: Event.EventHandler
@@ -3143,6 +3293,7 @@ self.__0_onDismiss__0 = onDismiss__0
             let content = content as! ViewReference
             __content
                 .fullScreenCover(isPresented: __0_isPresented.projectedValue, onDismiss: { __0_onDismiss__0.wrappedValue() }, content: { content.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         }
@@ -3163,12 +3314,13 @@ struct _gaugeStyleModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(watchOS)
-    @available(watchOS 7.0,iOS 16.0,macOS 13.0, *)
+    @available(macOS 13.0,watchOS 7.0,iOS 16.0, *)
     init(_ style: AnyGaugeStyle) {
         self.value = ._0(style: style)
         
@@ -3181,10 +3333,11 @@ struct _gaugeStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(watchOS)
         case let ._0(style):
-            if #available(watchOS 7.0,iOS 16.0,macOS 13.0, *) {
+            if #available(macOS 13.0,watchOS 7.0,iOS 16.0, *) {
             let style = style as! AnyGaugeStyle
             __content
                 .gaugeStyle(style)
+                
             } else { __content }
         #endif
         }
@@ -3205,12 +3358,13 @@ struct _geometryGroupModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *)
+    @available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *)
     init() {
         self.value = ._0
         
@@ -3223,10 +3377,11 @@ struct _geometryGroupModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case ._0:
-            if #available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *) {
             
             __content
                 .geometryGroup()
+                
             } else { __content }
         #endif
         }
@@ -3239,21 +3394,22 @@ struct _gestureModifier<R: RootRegistry>: ViewModifier {
     enum Value {
         case _never
         
-        case _0(gesture: AnyGesture<Any>,mask: SwiftUI.GestureMask = .all )
+        case _0(gesture: _AnyGesture,mask: SwiftUI.GestureMask = .all )
         
     }
 
     let value: Value
 
-    
-    
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+    @GestureState private var gestureState = [String:Any]()
 
 
 
 
     
     
-    init(_ gesture: AnyGesture<Any>,including mask: SwiftUI.GestureMask = .all ) {
+    init(_ gesture: _AnyGesture,including mask: SwiftUI.GestureMask = .all ) {
         self.value = ._0(gesture: gesture, mask: mask)
         
     }
@@ -3268,7 +3424,8 @@ struct _gestureModifier<R: RootRegistry>: ViewModifier {
             
             
             __content
-                .gesture(gesture, including: mask)
+                .gesture(gesture.resolve(on: element, in: context.withGestureState(_gestureState)), including: mask)
+                .environment(\.gestureState, _gestureState)
             
         
         }
@@ -3289,6 +3446,7 @@ struct _grayscaleModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -3311,6 +3469,7 @@ struct _grayscaleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .grayscale(amount.resolve(on: element, in: context))
+                
             
         
         }
@@ -3331,6 +3490,7 @@ struct _gridCellAnchorModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -3353,6 +3513,7 @@ struct _gridCellAnchorModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .gridCellAnchor(anchor.resolve(on: element, in: context))
+                
             
         
         }
@@ -3373,6 +3534,7 @@ struct _gridCellColumnsModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -3395,6 +3557,7 @@ struct _gridCellColumnsModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .gridCellColumns(count.resolve(on: element, in: context))
+                
             
         
         }
@@ -3413,6 +3576,7 @@ struct _gridCellUnsizedAxesModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -3437,6 +3601,7 @@ struct _gridCellUnsizedAxesModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .gridCellUnsizedAxes(axes)
+                
             
         
         }
@@ -3457,6 +3622,7 @@ struct _gridColumnAlignmentModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -3479,6 +3645,7 @@ struct _gridColumnAlignmentModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .gridColumnAlignment(guide.resolve(on: element, in: context))
+                
             
         
         }
@@ -3497,6 +3664,7 @@ struct _groupBoxStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -3521,6 +3689,7 @@ struct _groupBoxStyleModifier<R: RootRegistry>: ViewModifier {
             let style = style as! AnyGroupBoxStyle
             __content
                 .groupBoxStyle(style)
+                
             } else { __content }
         #endif
         }
@@ -3539,6 +3708,7 @@ struct _headerProminenceModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -3563,6 +3733,7 @@ struct _headerProminenceModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .headerProminence(prominence)
+                
             
         
         }
@@ -3589,6 +3760,7 @@ struct _helpModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -3629,6 +3801,7 @@ struct _helpModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .help(textKey)
+                
             
         
         
@@ -3637,6 +3810,7 @@ struct _helpModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .help(text.resolve(on: element, in: context))
+                
             
         
         
@@ -3645,6 +3819,7 @@ struct _helpModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .help(text.resolve(on: element, in: context))
+                
             
         
         }
@@ -3663,6 +3838,7 @@ struct _hiddenModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -3687,6 +3863,7 @@ struct _hiddenModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .hidden()
+                
             
         
         }
@@ -3699,21 +3876,22 @@ struct _highPriorityGestureModifier<R: RootRegistry>: ViewModifier {
     enum Value {
         case _never
         
-        case _0(gesture: AnyGesture<Any>,mask: SwiftUI.GestureMask = .all )
+        case _0(gesture: _AnyGesture,mask: SwiftUI.GestureMask = .all )
         
     }
 
     let value: Value
 
-    
-    
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+    @GestureState private var gestureState = [String:Any]()
 
 
 
 
     
     
-    init(_ gesture: AnyGesture<Any>,including mask: SwiftUI.GestureMask = .all ) {
+    init(_ gesture: _AnyGesture,including mask: SwiftUI.GestureMask = .all ) {
         self.value = ._0(gesture: gesture, mask: mask)
         
     }
@@ -3728,7 +3906,8 @@ struct _highPriorityGestureModifier<R: RootRegistry>: ViewModifier {
             
             
             __content
-                .highPriorityGesture(gesture, including: mask)
+                .highPriorityGesture(gesture.resolve(on: element, in: context.withGestureState(_gestureState)), including: mask)
+                .environment(\.gestureState, _gestureState)
             
         
         }
@@ -3747,6 +3926,7 @@ struct _horizontalRadioGroupLayoutModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -3771,6 +3951,7 @@ struct _horizontalRadioGroupLayoutModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .horizontalRadioGroupLayout()
+                
             } else { __content }
         #endif
         }
@@ -3794,6 +3975,7 @@ struct _hoverEffectModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -3801,14 +3983,14 @@ struct _hoverEffectModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(tvOS) || os(visionOS)
-    @available(tvOS 16.0,iOS 13.4,visionOS 1.0, *)
+    @available(tvOS 16.0,visionOS 1.0,iOS 13.4, *)
     init(_ effect: SwiftUI.HoverEffect = .automatic ) {
         self.value = ._0(effect: effect)
         
     }
     #endif
     #if os(iOS) || os(tvOS) || os(visionOS)
-    @available(iOS 17.0,tvOS 17.0,visionOS 1.0, *)
+    @available(tvOS 17.0,visionOS 1.0,iOS 17.0, *)
     init(_ effect: SwiftUI.HoverEffect = .automatic, isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._1(effect: effect, isEnabled: isEnabled)
         
@@ -3821,19 +4003,21 @@ struct _hoverEffectModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS)
         case let ._0(effect):
-            if #available(tvOS 16.0,iOS 13.4,visionOS 1.0, *) {
+            if #available(tvOS 16.0,visionOS 1.0,iOS 13.4, *) {
             let effect = effect as! SwiftUI.HoverEffect 
             __content
                 .hoverEffect(effect)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(tvOS) || os(visionOS)
         case let ._1(effect, isEnabled):
-            if #available(iOS 17.0,tvOS 17.0,visionOS 1.0, *) {
+            if #available(tvOS 17.0,visionOS 1.0,iOS 17.0, *) {
             let effect = effect as! SwiftUI.HoverEffect 
 let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
             __content
                 .hoverEffect(effect, isEnabled: isEnabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -3854,12 +4038,13 @@ struct _hoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(tvOS) || os(visionOS)
-    @available(tvOS 17.0,iOS 17.0,visionOS 1.0, *)
+    @available(tvOS 17.0,visionOS 1.0,iOS 17.0, *)
     init(_ disabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(disabled: disabled)
         
@@ -3872,10 +4057,11 @@ struct _hoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS)
         case let ._0(disabled):
-            if #available(tvOS 17.0,iOS 17.0,visionOS 1.0, *) {
+            if #available(tvOS 17.0,visionOS 1.0,iOS 17.0, *) {
             let disabled = disabled as! AttributeReference<Swift.Bool>
             __content
                 .hoverEffectDisabled(disabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -3896,6 +4082,7 @@ struct _hueRotationModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -3918,6 +4105,7 @@ struct _hueRotationModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .hueRotation(angle.resolve(on: element, in: context))
+                
             
         
         }
@@ -3936,6 +4124,7 @@ struct _ignoresSafeAreaModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -3960,6 +4149,7 @@ struct _ignoresSafeAreaModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .ignoresSafeArea(regions, edges: edges)
+                
             
         
         }
@@ -3978,6 +4168,7 @@ struct _imageScaleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -4002,6 +4193,7 @@ struct _imageScaleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .imageScale(scale)
+                
             
         
         }
@@ -4022,12 +4214,13 @@ struct _indexViewStyleModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(tvOS) || os(watchOS)
-    @available(iOS 14.0,tvOS 14.0,watchOS 8.0, *)
+    @available(watchOS 8.0,iOS 14.0,tvOS 14.0, *)
     init(_ style: AnyIndexViewStyle) {
         self.value = ._0(style: style)
         
@@ -4040,10 +4233,11 @@ struct _indexViewStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(watchOS)
         case let ._0(style):
-            if #available(iOS 14.0,tvOS 14.0,watchOS 8.0, *) {
+            if #available(watchOS 8.0,iOS 14.0,tvOS 14.0, *) {
             let style = style as! AnyIndexViewStyle
             __content
                 .indexViewStyle(style)
+                
             } else { __content }
         #endif
         }
@@ -4064,6 +4258,7 @@ struct _inspectorModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_isPresented: Swift.Bool
 
@@ -4086,6 +4281,7 @@ struct _inspectorModifier<R: RootRegistry>: ViewModifier {
             let content = content as! ViewReference
             __content
                 .inspector(isPresented: __0_isPresented.projectedValue, content: { content.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         }
@@ -4109,6 +4305,7 @@ struct _inspectorColumnWidthModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4142,6 +4339,7 @@ let ideal = ideal as! AttributeReference<CoreFoundation.CGFloat>
 let max = max as? AttributeReference<CoreFoundation.CGFloat?>
             __content
                 .inspectorColumnWidth(min: min?.resolve(on: element, in: context), ideal: ideal.resolve(on: element, in: context), max: max?.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
@@ -4150,6 +4348,7 @@ let max = max as? AttributeReference<CoreFoundation.CGFloat?>
             let width = width as! AttributeReference<CoreFoundation.CGFloat>
             __content
                 .inspectorColumnWidth(width.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -4170,6 +4369,7 @@ struct _interactionActivityTrackingTagModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4192,6 +4392,7 @@ struct _interactionActivityTrackingTagModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .interactionActivityTrackingTag(tag.resolve(on: element, in: context))
+                
             
         
         }
@@ -4212,6 +4413,7 @@ struct _interactiveDismissDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4234,6 +4436,7 @@ struct _interactiveDismissDisabledModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .interactiveDismissDisabled(isDisabled.resolve(on: element, in: context))
+                
             
         
         }
@@ -4254,6 +4457,7 @@ struct _invalidatableContentModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4276,6 +4480,7 @@ struct _invalidatableContentModifier<R: RootRegistry>: ViewModifier {
             let invalidatable = invalidatable as! AttributeReference<Swift.Bool>
             __content
                 .invalidatableContent(invalidatable.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -4305,6 +4510,7 @@ struct _keyboardShortcutModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
@@ -4316,28 +4522,28 @@ struct _keyboardShortcutModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS)
-    @available(iOS 14.0,macOS 11.0, *)
+    @available(macOS 11.0,iOS 14.0, *)
     init(_ key: SwiftUI.KeyEquivalent,modifiers: SwiftUI.EventModifiers = .command ) {
         self.value = ._0(key: key, modifiers: modifiers)
         
     }
     #endif
     #if os(iOS) || os(macOS)
-    @available(iOS 14.0,macOS 11.0, *)
+    @available(macOS 11.0,iOS 14.0, *)
     init(_ shortcut: SwiftUI.KeyboardShortcut) {
         self.value = ._1(shortcut: shortcut)
         
     }
     #endif
     #if os(iOS) || os(macOS)
-    @available(iOS 15.4,macOS 12.3, *)
+    @available(macOS 12.3,iOS 15.4, *)
     init(_ shortcut: SwiftUI.KeyboardShortcut?) {
         self.value = ._2(shortcut: shortcut)
         
     }
     #endif
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 12.0, *)
+    @available(macOS 12.0,iOS 15.0, *)
     init(_ key: SwiftUI.KeyEquivalent,modifiers: SwiftUI.EventModifiers = .command, localization: SwiftUI.KeyboardShortcut.Localization) {
         self.value = ._3(key: key, modifiers: modifiers, localization: localization)
         
@@ -4350,37 +4556,41 @@ struct _keyboardShortcutModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(key, modifiers):
-            if #available(iOS 14.0,macOS 11.0, *) {
+            if #available(macOS 11.0,iOS 14.0, *) {
             let key = key as! SwiftUI.KeyEquivalent
 let modifiers = modifiers as! SwiftUI.EventModifiers 
             __content
                 .keyboardShortcut(key, modifiers: modifiers)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
         case let ._1(shortcut):
-            if #available(iOS 14.0,macOS 11.0, *) {
+            if #available(macOS 11.0,iOS 14.0, *) {
             let shortcut = shortcut as! SwiftUI.KeyboardShortcut
             __content
                 .keyboardShortcut(shortcut)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
         case let ._2(shortcut):
-            if #available(iOS 15.4,macOS 12.3, *) {
+            if #available(macOS 12.3,iOS 15.4, *) {
             let shortcut = shortcut as? SwiftUI.KeyboardShortcut
             __content
                 .keyboardShortcut(shortcut)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
         case let ._3(key, modifiers, localization):
-            if #available(iOS 15.0,macOS 12.0, *) {
+            if #available(macOS 12.0,iOS 15.0, *) {
             let key = key as! SwiftUI.KeyEquivalent
 let modifiers = modifiers as! SwiftUI.EventModifiers 
 let localization = localization as! SwiftUI.KeyboardShortcut.Localization
             __content
                 .keyboardShortcut(key, modifiers: modifiers, localization: localization)
+                
             } else { __content }
         #endif
         }
@@ -4401,12 +4611,13 @@ struct _keyboardTypeModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(tvOS)
-    @available(tvOS 13.0,iOS 13.0, *)
+    @available(iOS 13.0,tvOS 13.0, *)
     init(_ type: UIKit.UIKeyboardType) {
         self.value = ._0(type: type)
         
@@ -4419,10 +4630,11 @@ struct _keyboardTypeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS)
         case let ._0(type):
-            if #available(tvOS 13.0,iOS 13.0, *) {
+            if #available(iOS 13.0,tvOS 13.0, *) {
             let type = type as! UIKit.UIKeyboardType
             __content
                 .keyboardType(type)
+                
             } else { __content }
         #endif
         }
@@ -4441,6 +4653,7 @@ struct _labelStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -4465,6 +4678,7 @@ struct _labelStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .labelStyle(style)
+                
             
         
         }
@@ -4483,6 +4697,7 @@ struct _labeledContentStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -4507,6 +4722,7 @@ struct _labeledContentStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .labeledContentStyle(style)
+                
             
         
         }
@@ -4525,6 +4741,7 @@ struct _labelsHiddenModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -4549,6 +4766,7 @@ struct _labelsHiddenModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .labelsHidden()
+                
             
         
         }
@@ -4569,6 +4787,7 @@ struct _layoutPriorityModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4591,6 +4810,7 @@ struct _layoutPriorityModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .layoutPriority(value.resolve(on: element, in: context))
+                
             
         
         }
@@ -4623,6 +4843,7 @@ struct _lineLimitModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4681,6 +4902,7 @@ struct _lineLimitModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .lineLimit(number?.resolve(on: element, in: context))
+                
             
         
         
@@ -4689,6 +4911,7 @@ struct _lineLimitModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .lineLimit(limit)
+                
             
         
         
@@ -4697,6 +4920,7 @@ struct _lineLimitModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .lineLimit(limit)
+                
             
         
         
@@ -4705,6 +4929,7 @@ struct _lineLimitModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .lineLimit(limit)
+                
             
         
         
@@ -4713,6 +4938,7 @@ struct _lineLimitModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .lineLimit(limit.resolve(on: element, in: context), reservesSpace: reservesSpace.resolve(on: element, in: context))
+                
             
         
         }
@@ -4733,6 +4959,7 @@ struct _lineSpacingModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4755,6 +4982,7 @@ struct _lineSpacingModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .lineSpacing(lineSpacing.resolve(on: element, in: context))
+                
             
         
         }
@@ -4778,6 +5006,7 @@ struct _listItemTintModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4809,6 +5038,7 @@ struct _listItemTintModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .listItemTint(tint)
+                
             
         
         
@@ -4817,6 +5047,7 @@ struct _listItemTintModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .listItemTint(tint?.resolve(on: element, in: context))
+                
             
         
         }
@@ -4837,6 +5068,7 @@ struct _listRowBackgroundModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4859,6 +5091,7 @@ struct _listRowBackgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .listRowBackground(view.resolve(on: element, in: context))
+                
             
         
         }
@@ -4877,6 +5110,7 @@ struct _listRowHoverEffectModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -4901,6 +5135,7 @@ struct _listRowHoverEffectModifier<R: RootRegistry>: ViewModifier {
             let effect = effect as? SwiftUI.HoverEffect
             __content
                 .listRowHoverEffect(effect)
+                
             } else { __content }
         #endif
         }
@@ -4921,6 +5156,7 @@ struct _listRowHoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -4943,6 +5179,7 @@ struct _listRowHoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
             let disabled = disabled as! AttributeReference<Swift.Bool>
             __content
                 .listRowHoverEffectDisabled(disabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -4961,6 +5198,7 @@ struct _listRowInsetsModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -4985,6 +5223,7 @@ struct _listRowInsetsModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .listRowInsets(insets)
+                
             
         
         }
@@ -5005,12 +5244,13 @@ struct _listRowSeparatorModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 13.0, *)
+    @available(macOS 13.0,iOS 15.0, *)
     init(_ visibility: AttributeReference<SwiftUI.Visibility>,edges: SwiftUI.VerticalEdge.Set = .all ) {
         self.value = ._0(visibility: visibility, edges: edges)
         
@@ -5023,11 +5263,12 @@ struct _listRowSeparatorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(visibility, edges):
-            if #available(iOS 15.0,macOS 13.0, *) {
+            if #available(macOS 13.0,iOS 15.0, *) {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
 let edges = edges as! SwiftUI.VerticalEdge.Set 
             __content
                 .listRowSeparator(visibility.resolve(on: element, in: context), edges: edges)
+                
             } else { __content }
         #endif
         }
@@ -5048,12 +5289,13 @@ struct _listRowSeparatorTintModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 13.0, *)
+    @available(macOS 13.0,iOS 15.0, *)
     init(_ color: AttributeReference<SwiftUI.Color?>?,edges: SwiftUI.VerticalEdge.Set = .all ) {
         self.value = ._0(color: color, edges: edges)
         
@@ -5066,11 +5308,12 @@ struct _listRowSeparatorTintModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(color, edges):
-            if #available(iOS 15.0,macOS 13.0, *) {
+            if #available(macOS 13.0,iOS 15.0, *) {
             let color = color as? AttributeReference<SwiftUI.Color?>
 let edges = edges as! SwiftUI.VerticalEdge.Set 
             __content
                 .listRowSeparatorTint(color?.resolve(on: element, in: context), edges: edges)
+                
             } else { __content }
         #endif
         }
@@ -5091,6 +5334,7 @@ struct _listRowSpacingModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -5113,6 +5357,7 @@ struct _listRowSpacingModifier<R: RootRegistry>: ViewModifier {
             let spacing = spacing as? AttributeReference<CoreFoundation.CGFloat?>
             __content
                 .listRowSpacing(spacing?.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -5133,12 +5378,13 @@ struct _listSectionSeparatorModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 13.0, *)
+    @available(macOS 13.0,iOS 15.0, *)
     init(_ visibility: AttributeReference<SwiftUI.Visibility>,edges: SwiftUI.VerticalEdge.Set = .all ) {
         self.value = ._0(visibility: visibility, edges: edges)
         
@@ -5151,11 +5397,12 @@ struct _listSectionSeparatorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(visibility, edges):
-            if #available(iOS 15.0,macOS 13.0, *) {
+            if #available(macOS 13.0,iOS 15.0, *) {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
 let edges = edges as! SwiftUI.VerticalEdge.Set 
             __content
                 .listSectionSeparator(visibility.resolve(on: element, in: context), edges: edges)
+                
             } else { __content }
         #endif
         }
@@ -5176,12 +5423,13 @@ struct _listSectionSeparatorTintModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS)
-    @available(iOS 15.0,macOS 13.0, *)
+    @available(macOS 13.0,iOS 15.0, *)
     init(_ color: AttributeReference<SwiftUI.Color?>?,edges: SwiftUI.VerticalEdge.Set = .all ) {
         self.value = ._0(color: color, edges: edges)
         
@@ -5194,11 +5442,12 @@ struct _listSectionSeparatorTintModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(color, edges):
-            if #available(iOS 15.0,macOS 13.0, *) {
+            if #available(macOS 13.0,iOS 15.0, *) {
             let color = color as? AttributeReference<SwiftUI.Color?>
 let edges = edges as! SwiftUI.VerticalEdge.Set 
             __content
                 .listSectionSeparatorTint(color?.resolve(on: element, in: context), edges: edges)
+                
             } else { __content }
         #endif
         }
@@ -5222,6 +5471,7 @@ struct _listSectionSpacingModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -5253,6 +5503,7 @@ struct _listSectionSpacingModifier<R: RootRegistry>: ViewModifier {
             let spacing = spacing as! SwiftUI.ListSectionSpacing
             __content
                 .listSectionSpacing(spacing)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(watchOS)
@@ -5261,6 +5512,7 @@ struct _listSectionSpacingModifier<R: RootRegistry>: ViewModifier {
             let spacing = spacing as! AttributeReference<CoreFoundation.CGFloat>
             __content
                 .listSectionSpacing(spacing.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -5279,6 +5531,7 @@ struct _listStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -5303,6 +5556,7 @@ struct _listStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .listStyle(style)
+                
             
         
         }
@@ -5321,6 +5575,7 @@ struct _luminanceToAlphaModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -5345,6 +5600,7 @@ struct _luminanceToAlphaModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .luminanceToAlpha()
+                
             
         
         }
@@ -5365,12 +5621,13 @@ struct _menuIndicatorModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS)
-    @available(macOS 12.0,iOS 15.0,tvOS 17.0, *)
+    @available(macOS 12.0,tvOS 17.0,iOS 15.0, *)
     init(_ visibility: AttributeReference<SwiftUI.Visibility>) {
         self.value = ._0(visibility: visibility)
         
@@ -5383,10 +5640,11 @@ struct _menuIndicatorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS)
         case let ._0(visibility):
-            if #available(macOS 12.0,iOS 15.0,tvOS 17.0, *) {
+            if #available(macOS 12.0,tvOS 17.0,iOS 15.0, *) {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
             __content
                 .menuIndicator(visibility.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -5405,6 +5663,7 @@ struct _menuOrderModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -5429,6 +5688,7 @@ struct _menuOrderModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .menuOrder(order)
+                
             
         
         }
@@ -5449,12 +5709,13 @@ struct _menuStyleModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS)
-    @available(iOS 14.0,tvOS 17.0,macOS 11.0, *)
+    @available(macOS 11.0,tvOS 17.0,iOS 14.0, *)
     init(_ style: AnyMenuStyle) {
         self.value = ._0(style: style)
         
@@ -5467,10 +5728,11 @@ struct _menuStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS)
         case let ._0(style):
-            if #available(iOS 14.0,tvOS 17.0,macOS 11.0, *) {
+            if #available(macOS 11.0,tvOS 17.0,iOS 14.0, *) {
             let style = style as! AnyMenuStyle
             __content
                 .menuStyle(style)
+                
             } else { __content }
         #endif
         }
@@ -5491,6 +5753,7 @@ struct _minimumScaleFactorModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -5513,6 +5776,7 @@ struct _minimumScaleFactorModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .minimumScaleFactor(factor.resolve(on: element, in: context))
+                
             
         
         }
@@ -5533,6 +5797,7 @@ struct _moveDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -5555,6 +5820,7 @@ struct _moveDisabledModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .moveDisabled(isDisabled.resolve(on: element, in: context))
+                
             
         
         }
@@ -5573,6 +5839,7 @@ struct _multilineTextAlignmentModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -5597,6 +5864,7 @@ struct _multilineTextAlignmentModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .multilineTextAlignment(alignment)
+                
             
         
         }
@@ -5617,6 +5885,7 @@ struct _navigationBarBackButtonHiddenModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -5639,6 +5908,7 @@ struct _navigationBarBackButtonHiddenModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationBarBackButtonHidden(hidesBackButton.resolve(on: element, in: context))
+                
             
         
         }
@@ -5657,6 +5927,7 @@ struct _navigationBarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -5681,6 +5952,7 @@ struct _navigationBarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
             let displayMode = displayMode as! SwiftUI.NavigationBarItem.TitleDisplayMode
             __content
                 .navigationBarTitleDisplayMode(displayMode)
+                
             } else { __content }
         #endif
         }
@@ -5701,6 +5973,7 @@ struct _navigationDestinationModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_isPresented: Swift.Bool
 
@@ -5723,6 +5996,7 @@ struct _navigationDestinationModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationDestination(isPresented: __0_isPresented.projectedValue, destination: { destination.resolve(on: element, in: context) })
+                
             
         
         }
@@ -5746,6 +6020,7 @@ struct _navigationSplitViewColumnWidthModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -5777,6 +6052,7 @@ struct _navigationSplitViewColumnWidthModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationSplitViewColumnWidth(width.resolve(on: element, in: context))
+                
             
         
         
@@ -5785,6 +6061,7 @@ struct _navigationSplitViewColumnWidthModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationSplitViewColumnWidth(min: min?.resolve(on: element, in: context), ideal: ideal.resolve(on: element, in: context), max: max?.resolve(on: element, in: context))
+                
             
         
         }
@@ -5803,6 +6080,7 @@ struct _navigationSplitViewStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -5827,6 +6105,7 @@ struct _navigationSplitViewStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationSplitViewStyle(style)
+                
             
         
         }
@@ -5853,6 +6132,7 @@ struct _navigationSubtitleModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -5869,14 +6149,14 @@ struct _navigationSubtitleModifier<R: RootRegistry>: ViewModifier {
     }
     #endif
     #if os(macOS) || targetEnvironment(macCatalyst)
-    @available(macCatalyst 14.0,macOS 11.0, *)
+    @available(macOS 11.0,macCatalyst 14.0, *)
     init(_ subtitleKey: SwiftUI.LocalizedStringKey) {
         self.value = ._1(subtitleKey: subtitleKey)
         
     }
     #endif
     #if os(macOS) || targetEnvironment(macCatalyst)
-    @available(macCatalyst 14.0,macOS 11.0, *)
+    @available(macOS 11.0,macCatalyst 14.0, *)
     init(_ subtitle: AttributeReference<String>) {
         self.value = ._2(subtitle: subtitle)
         
@@ -5893,22 +6173,25 @@ struct _navigationSubtitleModifier<R: RootRegistry>: ViewModifier {
             let subtitle = subtitle as! TextReference
             __content
                 .navigationSubtitle(subtitle.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(macOS) || targetEnvironment(macCatalyst)
         case let ._1(subtitleKey):
-            if #available(macCatalyst 14.0,macOS 11.0, *) {
+            if #available(macOS 11.0,macCatalyst 14.0, *) {
             let subtitleKey = subtitleKey as! SwiftUI.LocalizedStringKey
             __content
                 .navigationSubtitle(subtitleKey)
+                
             } else { __content }
         #endif
         #if os(macOS) || targetEnvironment(macCatalyst)
         case let ._2(subtitle):
-            if #available(macCatalyst 14.0,macOS 11.0, *) {
+            if #available(macOS 11.0,macCatalyst 14.0, *) {
             let subtitle = subtitle as! AttributeReference<String>
             __content
                 .navigationSubtitle(subtitle.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -5941,6 +6224,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -5975,7 +6259,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(watchOS)
-    @available(iOS 14.0,tvOS 14.0,watchOS 7.0,macOS 11.0, *)
+    @available(watchOS 7.0,iOS 14.0,macOS 11.0,tvOS 14.0, *)
     init(_ title: ViewReference=ViewReference(value: [])) {
         self.value = ._3(title: title)
         
@@ -5999,6 +6283,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationTitle(title.resolve(on: element, in: context))
+                
             
         
         
@@ -6007,6 +6292,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationTitle(titleKey)
+                
             
         
         
@@ -6015,14 +6301,16 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationTitle(title.resolve(on: element, in: context))
+                
             
         
         #if os(watchOS)
         case let ._3(title):
-            if #available(iOS 14.0,tvOS 14.0,watchOS 7.0,macOS 11.0, *) {
+            if #available(watchOS 7.0,iOS 14.0,macOS 11.0,tvOS 14.0, *) {
             let title = title as! ViewReference
             __content
                 .navigationTitle({ title.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         
@@ -6031,6 +6319,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationTitle(__4_title.projectedValue)
+                
             
         
         }
@@ -6054,6 +6343,7 @@ struct _offsetModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -6085,14 +6375,14 @@ struct _offsetModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .offset(offset)
+                
             
         
         
         case let ._1(x, y):
-            
-            
             __content
                 .offset(x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context))
+                
             
         
         }
@@ -6111,6 +6401,7 @@ struct _onAppearModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -6135,6 +6426,7 @@ struct _onAppearModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .onAppear(perform: { __0_action__0.wrappedValue() })
+                
             
         
         }
@@ -6153,6 +6445,7 @@ struct _onDeleteCommandModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -6177,6 +6470,7 @@ struct _onDeleteCommandModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .onDeleteCommand(perform: { __0_action__0.wrappedValue() })
+                
             } else { __content }
         #endif
         }
@@ -6195,6 +6489,7 @@ struct _onDisappearModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -6219,6 +6514,7 @@ struct _onDisappearModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .onDisappear(perform: { __0_action__0.wrappedValue() })
+                
             
         
         }
@@ -6237,6 +6533,7 @@ struct _onExitCommandModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -6261,6 +6558,7 @@ struct _onExitCommandModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .onExitCommand(perform: { __0_action__0.wrappedValue() })
+                
             } else { __content }
         #endif
         }
@@ -6281,12 +6579,13 @@ struct _onHoverModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 @Event private var _0_action__1: Event.EventHandler
 
     #if os(iOS) || os(macOS)
-    @available(iOS 13.4,macOS 10.15, *)
+    @available(macOS 10.15,iOS 13.4, *)
     init(perform action__1: Event) {
         self.value = ._0
         self.__0_action__1 = action__1
@@ -6299,10 +6598,11 @@ struct _onHoverModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case ._0:
-            if #available(iOS 13.4,macOS 10.15, *) {
+            if #available(macOS 10.15,iOS 13.4, *) {
             
             __content
                 .onHover(perform: { __0_action__1.wrappedValue(value: $0) })
+                
             } else { __content }
         #endif
         }
@@ -6326,6 +6626,7 @@ struct _onLongPressGestureModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 @Event private var _0_action__0: Event.EventHandler
@@ -6335,7 +6636,7 @@ struct _onLongPressGestureModifier<R: RootRegistry>: ViewModifier {
 @Event private var _1_onPressingChanged__1: Event.EventHandler
 
     #if os(iOS) || os(macOS) || os(watchOS)
-    @available(tvOS 14.0,watchOS 6.0,macOS 10.15,iOS 13.0, *)
+    @available(iOS 13.0,watchOS 6.0,tvOS 14.0,macOS 10.15, *)
     init(minimumDuration: AttributeReference<Swift.Double> = .init(storage: .constant(0.5)), maximumDistance: AttributeReference<CoreFoundation.CGFloat> = .init(storage: .constant(10)), perform action__0: Event,onPressingChanged onPressingChanged__1: Event=Event() ) {
         self.value = ._0(minimumDuration: minimumDuration, maximumDistance: maximumDistance)
         self.__0_action__0 = action__0
@@ -6343,7 +6644,7 @@ self.__0_onPressingChanged__1 = onPressingChanged__1
     }
     #endif
     #if os(tvOS)
-    @available(tvOS 14.0,watchOS 6.0,macOS 10.15,iOS 13.0, *)
+    @available(iOS 13.0,watchOS 6.0,macOS 10.15,tvOS 14.0, *)
     init(minimumDuration: AttributeReference<Swift.Double> = .init(storage: .constant(0.5)), perform action__0: Event,onPressingChanged onPressingChanged__1: Event=Event() ) {
         self.value = ._1(minimumDuration: minimumDuration)
         self.__1_action__0 = action__0
@@ -6357,19 +6658,21 @@ self.__1_onPressingChanged__1 = onPressingChanged__1
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(watchOS)
         case let ._0(minimumDuration, maximumDistance):
-            if #available(tvOS 14.0,watchOS 6.0,macOS 10.15,iOS 13.0, *) {
+            if #available(iOS 13.0,watchOS 6.0,tvOS 14.0,macOS 10.15, *) {
             let minimumDuration = minimumDuration as! AttributeReference<Swift.Double>
 let maximumDistance = maximumDistance as! AttributeReference<CoreFoundation.CGFloat>
             __content
                 .onLongPressGesture(minimumDuration: minimumDuration.resolve(on: element, in: context), maximumDistance: maximumDistance.resolve(on: element, in: context), perform: { __0_action__0.wrappedValue() }, onPressingChanged: { __0_onPressingChanged__1.wrappedValue(value: $0) })
+                
             } else { __content }
         #endif
         #if os(tvOS)
         case let ._1(minimumDuration):
-            if #available(tvOS 14.0,watchOS 6.0,macOS 10.15,iOS 13.0, *) {
+            if #available(iOS 13.0,watchOS 6.0,macOS 10.15,tvOS 14.0, *) {
             let minimumDuration = minimumDuration as! AttributeReference<Swift.Double>
             __content
                 .onLongPressGesture(minimumDuration: minimumDuration.resolve(on: element, in: context), perform: { __1_action__0.wrappedValue() }, onPressingChanged: { __1_onPressingChanged__1.wrappedValue(value: $0) })
+                
             } else { __content }
         #endif
         }
@@ -6390,6 +6693,7 @@ struct _onLongTouchGestureModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 @Event private var _0_action__0: Event.EventHandler
@@ -6414,6 +6718,7 @@ self.__0_onTouchingChanged__1 = onTouchingChanged__1
             let minimumDuration = minimumDuration as! AttributeReference<Swift.Double>
             __content
                 .onLongTouchGesture(minimumDuration: minimumDuration.resolve(on: element, in: context), perform: { __0_action__0.wrappedValue() }, onTouchingChanged: { __0_onTouchingChanged__1.wrappedValue(value: $0) })
+                
             } else { __content }
         #endif
         }
@@ -6432,6 +6737,7 @@ struct _onMoveCommandModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -6456,6 +6762,7 @@ struct _onMoveCommandModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .onMoveCommand(perform: { __0_action__1.wrappedValue(value: $0) })
+                
             } else { __content }
         #endif
         }
@@ -6474,6 +6781,7 @@ struct _onPlayPauseCommandModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -6498,6 +6806,7 @@ struct _onPlayPauseCommandModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .onPlayPauseCommand(perform: { __0_action__0.wrappedValue() })
+                
             } else { __content }
         #endif
         }
@@ -6521,6 +6830,7 @@ struct _onTapGestureModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 @Event private var _0_action__0: Event.EventHandler
@@ -6535,7 +6845,7 @@ struct _onTapGestureModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(iOS) || os(macOS) || os(watchOS)
-    @available(watchOS 10.0,iOS 17.0,macOS 14.0, *)
+    @available(macOS 14.0,iOS 17.0,watchOS 10.0, *)
     init(count: AttributeReference<Swift.Int> = .init(storage: .constant(1)), coordinateSpace: AnyCoordinateSpaceProtocol = .local, perform action__1: Event) {
         self.value = ._1(count: count, coordinateSpace: coordinateSpace)
         self.__1_action__1 = action__1
@@ -6552,15 +6862,17 @@ struct _onTapGestureModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .onTapGesture(count: count.resolve(on: element, in: context), perform: { __0_action__0.wrappedValue() })
+                
             
         
         #if os(iOS) || os(macOS) || os(watchOS)
         case let ._1(count, coordinateSpace):
-            if #available(watchOS 10.0,iOS 17.0,macOS 14.0, *) {
+            if #available(macOS 14.0,iOS 17.0,watchOS 10.0, *) {
             let count = count as! AttributeReference<Swift.Int>
 let coordinateSpace = coordinateSpace as! AnyCoordinateSpaceProtocol 
             __content
                 .onTapGesture(count: count.resolve(on: element, in: context), coordinateSpace: coordinateSpace, perform: { __1_action__1.wrappedValue(value: $0) })
+                
             } else { __content }
         #endif
         }
@@ -6581,6 +6893,7 @@ struct _opacityModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -6603,6 +6916,7 @@ struct _opacityModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .opacity(opacity.resolve(on: element, in: context))
+                
             
         
         }
@@ -6629,6 +6943,7 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -6669,6 +6984,7 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .overlay(alignment: alignment.resolve(on: element, in: context), content: { content.resolve(on: element, in: context) })
+                
             
         
         
@@ -6677,6 +6993,7 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .overlay(style, ignoresSafeAreaEdges: edges)
+                
             
         
         
@@ -6685,6 +7002,7 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .overlay(style, in: shape, fillStyle: fillStyle)
+                
             
         
         }
@@ -6711,6 +7029,7 @@ struct _paddingModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -6751,6 +7070,7 @@ struct _paddingModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .padding(insets)
+                
             
         
         
@@ -6759,6 +7079,7 @@ struct _paddingModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .padding(edges, length?.resolve(on: element, in: context))
+                
             
         
         
@@ -6767,6 +7088,7 @@ struct _paddingModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .padding(length.resolve(on: element, in: context))
+                
             
         
         }
@@ -6787,6 +7109,7 @@ struct _persistentSystemOverlaysModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -6809,6 +7132,7 @@ struct _persistentSystemOverlaysModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .persistentSystemOverlays(visibility.resolve(on: element, in: context))
+                
             
         
         }
@@ -6827,6 +7151,7 @@ struct _pickerStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -6851,6 +7176,7 @@ struct _pickerStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .pickerStyle(style)
+                
             
         
         }
@@ -6871,6 +7197,7 @@ struct _popoverModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_isPresented: Swift.Bool
 
@@ -6895,6 +7222,7 @@ let arrowEdge = arrowEdge as! SwiftUI.Edge
 let content = content as! ViewReference
             __content
                 .popover(isPresented: __0_isPresented.projectedValue, attachmentAnchor: attachmentAnchor, arrowEdge: arrowEdge, content: { content.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         }
@@ -6918,6 +7246,7 @@ struct _positionModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -6949,6 +7278,7 @@ struct _positionModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .position(position)
+                
             
         
         
@@ -6957,6 +7287,7 @@ struct _positionModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .position(x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context))
+                
             
         
         }
@@ -6977,6 +7308,7 @@ struct _preferredColorSchemeModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -6999,6 +7331,7 @@ struct _preferredColorSchemeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .preferredColorScheme(colorScheme?.resolve(on: element, in: context))
+                
             
         
         }
@@ -7022,6 +7355,7 @@ struct _presentationBackgroundModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7029,14 +7363,14 @@ struct _presentationBackgroundModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *)
+    @available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4, *)
     init(_ style: AnyShapeStyle) {
         self.value = ._0(style: style)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(macOS 13.3,watchOS 9.4,tvOS 16.4,iOS 16.4, *)
+    @available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4, *)
     init(alignment: AttributeReference<SwiftUI.Alignment> = .init(storage: .constant(.center)), content: ViewReference=ViewReference(value: [])) {
         self.value = ._1(alignment: alignment, content: content)
         
@@ -7049,19 +7383,21 @@ struct _presentationBackgroundModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(style):
-            if #available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *) {
+            if #available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4, *) {
             let style = style as! AnyShapeStyle
             __content
                 .presentationBackground(style)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._1(alignment, content):
-            if #available(macOS 13.3,watchOS 9.4,tvOS 16.4,iOS 16.4, *) {
+            if #available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4, *) {
             let alignment = alignment as! AttributeReference<SwiftUI.Alignment>
 let content = content as! ViewReference
             __content
                 .presentationBackground(alignment: alignment.resolve(on: element, in: context), content: { content.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         }
@@ -7082,12 +7418,13 @@ struct _presentationBackgroundInteractionModifier<R: RootRegistry>: ViewModifier
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *)
+    @available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ interaction: SwiftUI.PresentationBackgroundInteraction) {
         self.value = ._0(interaction: interaction)
         
@@ -7100,10 +7437,11 @@ struct _presentationBackgroundInteractionModifier<R: RootRegistry>: ViewModifier
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(interaction):
-            if #available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *) {
+            if #available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let interaction = interaction as! SwiftUI.PresentationBackgroundInteraction
             __content
                 .presentationBackgroundInteraction(interaction)
+                
             } else { __content }
         #endif
         }
@@ -7127,6 +7465,7 @@ struct _presentationCompactAdaptationModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
@@ -7134,14 +7473,14 @@ struct _presentationCompactAdaptationModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *)
+    @available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ adaptation: SwiftUI.PresentationAdaptation) {
         self.value = ._0(adaptation: adaptation)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *)
+    @available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(horizontal horizontalAdaptation: SwiftUI.PresentationAdaptation,vertical verticalAdaptation: SwiftUI.PresentationAdaptation) {
         self.value = ._1(horizontalAdaptation: horizontalAdaptation, verticalAdaptation: verticalAdaptation)
         
@@ -7154,19 +7493,21 @@ struct _presentationCompactAdaptationModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(adaptation):
-            if #available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *) {
+            if #available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let adaptation = adaptation as! SwiftUI.PresentationAdaptation
             __content
                 .presentationCompactAdaptation(adaptation)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._1(horizontalAdaptation, verticalAdaptation):
-            if #available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *) {
+            if #available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let horizontalAdaptation = horizontalAdaptation as! SwiftUI.PresentationAdaptation
 let verticalAdaptation = verticalAdaptation as! SwiftUI.PresentationAdaptation
             __content
                 .presentationCompactAdaptation(horizontal: horizontalAdaptation, vertical: verticalAdaptation)
+                
             } else { __content }
         #endif
         }
@@ -7187,12 +7528,13 @@ struct _presentationContentInteractionModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(macOS 13.3,tvOS 16.4,iOS 16.4,watchOS 9.4, *)
+    @available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ behavior: SwiftUI.PresentationContentInteraction) {
         self.value = ._0(behavior: behavior)
         
@@ -7205,10 +7547,11 @@ struct _presentationContentInteractionModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(behavior):
-            if #available(macOS 13.3,tvOS 16.4,iOS 16.4,watchOS 9.4, *) {
+            if #available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let behavior = behavior as! SwiftUI.PresentationContentInteraction
             __content
                 .presentationContentInteraction(behavior)
+                
             } else { __content }
         #endif
         }
@@ -7229,12 +7572,13 @@ struct _presentationCornerRadiusModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *)
+    @available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ cornerRadius: AttributeReference<CoreFoundation.CGFloat?>?) {
         self.value = ._0(cornerRadius: cornerRadius)
         
@@ -7247,10 +7591,11 @@ struct _presentationCornerRadiusModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(cornerRadius):
-            if #available(iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *) {
+            if #available(watchOS 9.4,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let cornerRadius = cornerRadius as? AttributeReference<CoreFoundation.CGFloat?>
             __content
                 .presentationCornerRadius(cornerRadius?.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -7271,6 +7616,7 @@ struct _presentationDragIndicatorModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7293,6 +7639,7 @@ struct _presentationDragIndicatorModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .presentationDragIndicator(visibility.resolve(on: element, in: context))
+                
             
         
         }
@@ -7313,6 +7660,7 @@ struct _previewDisplayNameModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7335,6 +7683,7 @@ struct _previewDisplayNameModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .previewDisplayName(value?.resolve(on: element, in: context))
+                
             
         
         }
@@ -7355,6 +7704,7 @@ struct _privacySensitiveModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7377,6 +7727,7 @@ struct _privacySensitiveModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .privacySensitive(sensitive.resolve(on: element, in: context))
+                
             
         
         }
@@ -7395,6 +7746,7 @@ struct _progressViewStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -7419,6 +7771,7 @@ struct _progressViewStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .progressViewStyle(style)
+                
             
         
         }
@@ -7437,6 +7790,7 @@ struct _projectionEffectModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -7461,6 +7815,7 @@ struct _projectionEffectModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .projectionEffect(transform)
+                
             
         
         }
@@ -7479,6 +7834,7 @@ struct _redactedModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -7503,6 +7859,7 @@ struct _redactedModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .redacted(reason: reason)
+                
             
         
         }
@@ -7521,6 +7878,7 @@ struct _refreshableModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -7545,6 +7903,7 @@ struct _refreshableModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .refreshable(action: { __0_action__0.wrappedValue() })
+                
             
         
         }
@@ -7563,6 +7922,7 @@ struct _renameActionModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -7587,6 +7947,7 @@ struct _renameActionModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .renameAction({ __0_action__0.wrappedValue() })
+                
             
         
         }
@@ -7607,6 +7968,7 @@ struct _replaceDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7629,6 +7991,7 @@ struct _replaceDisabledModifier<R: RootRegistry>: ViewModifier {
             let isDisabled = isDisabled as! AttributeReference<Swift.Bool>
             __content
                 .replaceDisabled(isDisabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -7649,6 +8012,7 @@ struct _rotationEffectModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7671,6 +8035,7 @@ struct _rotationEffectModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .rotationEffect(angle.resolve(on: element, in: context), anchor: anchor.resolve(on: element, in: context))
+                
             
         
         }
@@ -7694,6 +8059,7 @@ struct _safeAreaInsetModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7725,6 +8091,7 @@ struct _safeAreaInsetModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .safeAreaInset(edge: edge, alignment: alignment.resolve(on: element, in: context), spacing: spacing?.resolve(on: element, in: context), content: { content.resolve(on: element, in: context) })
+                
             
         
         
@@ -7733,6 +8100,7 @@ struct _safeAreaInsetModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .safeAreaInset(edge: edge, alignment: alignment.resolve(on: element, in: context), spacing: spacing?.resolve(on: element, in: context), content: { content.resolve(on: element, in: context) })
+                
             
         
         }
@@ -7753,6 +8121,7 @@ struct _saturationModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7775,6 +8144,7 @@ struct _saturationModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .saturation(amount.resolve(on: element, in: context))
+                
             
         
         }
@@ -7801,6 +8171,7 @@ struct _scaleEffectModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -7841,6 +8212,7 @@ struct _scaleEffectModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scaleEffect(scale, anchor: anchor.resolve(on: element, in: context))
+                
             
         
         
@@ -7849,6 +8221,7 @@ struct _scaleEffectModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scaleEffect(s.resolve(on: element, in: context), anchor: anchor.resolve(on: element, in: context))
+                
             
         
         
@@ -7857,6 +8230,7 @@ struct _scaleEffectModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scaleEffect(x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context), anchor: anchor.resolve(on: element, in: context))
+                
             
         
         }
@@ -7875,6 +8249,7 @@ struct _scaledToFillModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -7899,6 +8274,7 @@ struct _scaledToFillModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scaledToFill()
+                
             
         
         }
@@ -7917,6 +8293,7 @@ struct _scaledToFitModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -7941,6 +8318,7 @@ struct _scaledToFitModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scaledToFit()
+                
             
         
         }
@@ -7962,6 +8340,7 @@ struct _scenePaddingModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -7995,6 +8374,7 @@ struct _scenePaddingModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scenePadding(edges)
+                
             
         
         
@@ -8003,6 +8383,7 @@ struct _scenePaddingModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scenePadding(padding, edges: edges)
+                
             
         
         }
@@ -8023,12 +8404,13 @@ struct _scrollBounceBehaviorModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 16.4,macOS 13.3,watchOS 9.4,tvOS 16.4, *)
+    @available(tvOS 16.4,iOS 16.4,macOS 13.3,watchOS 9.4, *)
     init(_ behavior: SwiftUI.ScrollBounceBehavior,axes: SwiftUI.Axis.Set = [.vertical] ) {
         self.value = ._0(behavior: behavior, axes: axes)
         
@@ -8041,11 +8423,12 @@ struct _scrollBounceBehaviorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(behavior, axes):
-            if #available(iOS 16.4,macOS 13.3,watchOS 9.4,tvOS 16.4, *) {
+            if #available(tvOS 16.4,iOS 16.4,macOS 13.3,watchOS 9.4, *) {
             let behavior = behavior as! SwiftUI.ScrollBounceBehavior
 let axes = axes as! SwiftUI.Axis.Set 
             __content
                 .scrollBounceBehavior(behavior, axes: axes)
+                
             } else { __content }
         #endif
         }
@@ -8066,12 +8449,13 @@ struct _scrollClipDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *)
+    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *)
     init(_ disabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(disabled: disabled)
         
@@ -8084,10 +8468,11 @@ struct _scrollClipDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(disabled):
-            if #available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *) {
+            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *) {
             let disabled = disabled as! AttributeReference<Swift.Bool>
             __content
                 .scrollClipDisabled(disabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -8108,6 +8493,7 @@ struct _scrollContentBackgroundModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -8130,6 +8516,7 @@ struct _scrollContentBackgroundModifier<R: RootRegistry>: ViewModifier {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
             __content
                 .scrollContentBackground(visibility.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -8150,6 +8537,7 @@ struct _scrollDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -8172,6 +8560,7 @@ struct _scrollDisabledModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scrollDisabled(disabled.resolve(on: element, in: context))
+                
             
         
         }
@@ -8192,12 +8581,13 @@ struct _scrollDismissesKeyboardModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 16.0,macOS 13.0,watchOS 9.0,tvOS 16.0, *)
+    @available(iOS 16.0,tvOS 16.0,watchOS 9.0,macOS 13.0, *)
     init(_ mode: SwiftUI.ScrollDismissesKeyboardMode) {
         self.value = ._0(mode: mode)
         
@@ -8210,10 +8600,11 @@ struct _scrollDismissesKeyboardModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(mode):
-            if #available(iOS 16.0,macOS 13.0,watchOS 9.0,tvOS 16.0, *) {
+            if #available(iOS 16.0,tvOS 16.0,watchOS 9.0,macOS 13.0, *) {
             let mode = mode as! SwiftUI.ScrollDismissesKeyboardMode
             __content
                 .scrollDismissesKeyboard(mode)
+                
             } else { __content }
         #endif
         }
@@ -8232,6 +8623,7 @@ struct _scrollIndicatorsModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -8256,6 +8648,7 @@ struct _scrollIndicatorsModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .scrollIndicators(visibility, axes: axes)
+                
             
         
         }
@@ -8279,6 +8672,7 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -8286,14 +8680,14 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *)
+    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *)
     init(trigger value: AttributeReference<String>) {
         self.value = ._0(value: value)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *)
+    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *)
     init(onAppear: AttributeReference<Swift.Bool>) {
         self.value = ._1(onAppear: onAppear)
         
@@ -8306,18 +8700,20 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(value):
-            if #available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *) {
+            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *) {
             let value = value as! AttributeReference<String>
             __content
                 .scrollIndicatorsFlash(trigger: value.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._1(onAppear):
-            if #available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *) {
+            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *) {
             let onAppear = onAppear as! AttributeReference<Swift.Bool>
             __content
                 .scrollIndicatorsFlash(onAppear: onAppear.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -8338,12 +8734,13 @@ struct _scrollPositionModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_id: String?
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *)
+    @available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *)
     init(id: ChangeTracked<String?>,anchor: AttributeReference<SwiftUI.UnitPoint?>? = .init(storage: .constant(nil)) ) {
         self.value = ._0(anchor: anchor)
         self.__0_id = id
@@ -8356,10 +8753,11 @@ struct _scrollPositionModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(anchor):
-            if #available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *) {
+            if #available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *) {
             let anchor = anchor as? AttributeReference<SwiftUI.UnitPoint?>
             __content
                 .scrollPosition(id: __0_id.projectedValue, anchor: anchor?.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -8380,12 +8778,13 @@ struct _scrollTargetBehaviorModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *)
+    @available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *)
     init(_ behavior: AnyScrollTargetBehavior) {
         self.value = ._0(behavior: behavior)
         
@@ -8398,10 +8797,11 @@ struct _scrollTargetBehaviorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(behavior):
-            if #available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *) {
+            if #available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *) {
             let behavior = behavior as! AnyScrollTargetBehavior
             __content
                 .scrollTargetBehavior(behavior)
+                
             } else { __content }
         #endif
         }
@@ -8422,12 +8822,13 @@ struct _scrollTargetLayoutModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *)
+    @available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *)
     init(isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isEnabled: isEnabled)
         
@@ -8440,10 +8841,11 @@ struct _scrollTargetLayoutModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(isEnabled):
-            if #available(tvOS 17.0,macOS 14.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *) {
             let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
             __content
                 .scrollTargetLayout(isEnabled: isEnabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -8464,12 +8866,13 @@ struct _searchDictationBehaviorModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(visionOS)
-    @available(iOS 17.0,visionOS 1.0, *)
+    @available(visionOS 1.0,iOS 17.0, *)
     init(_ dictationBehavior: SwiftUI.TextInputDictationBehavior) {
         self.value = ._0(dictationBehavior: dictationBehavior)
         
@@ -8482,10 +8885,11 @@ struct _searchDictationBehaviorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(visionOS)
         case let ._0(dictationBehavior):
-            if #available(iOS 17.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,iOS 17.0, *) {
             let dictationBehavior = dictationBehavior as! SwiftUI.TextInputDictationBehavior
             __content
                 .searchDictationBehavior(dictationBehavior)
+                
             } else { __content }
         #endif
         }
@@ -8506,12 +8910,13 @@ struct _searchPresentationToolbarBehaviorModifier<R: RootRegistry>: ViewModifier
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(macOS 14.1,iOS 17.1,watchOS 10.1,tvOS 17.1, *)
+    @available(macOS 14.1,watchOS 10.1,tvOS 17.1,iOS 17.1, *)
     init(_ behavior: SwiftUI.SearchPresentationToolbarBehavior) {
         self.value = ._0(behavior: behavior)
         
@@ -8524,10 +8929,11 @@ struct _searchPresentationToolbarBehaviorModifier<R: RootRegistry>: ViewModifier
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(behavior):
-            if #available(macOS 14.1,iOS 17.1,watchOS 10.1,tvOS 17.1, *) {
+            if #available(macOS 14.1,watchOS 10.1,tvOS 17.1,iOS 17.1, *) {
             let behavior = behavior as! SwiftUI.SearchPresentationToolbarBehavior
             __content
                 .searchPresentationToolbarBehavior(behavior)
+                
             } else { __content }
         #endif
         }
@@ -8551,6 +8957,7 @@ struct _searchSuggestionsModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -8582,6 +8989,7 @@ struct _searchSuggestionsModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .searchSuggestions({ suggestions.resolve(on: element, in: context) })
+                
             
         
         
@@ -8590,6 +8998,7 @@ struct _searchSuggestionsModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .searchSuggestions(visibility.resolve(on: element, in: context), for: placements)
+                
             
         
         }
@@ -8625,6 +9034,7 @@ struct _searchableModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_text: Swift.String
 
@@ -8698,6 +9108,7 @@ self.__5_isPresented = isPresented
             
             __content
                 .searchable(text: __0_text.projectedValue, placement: placement, prompt: prompt?.resolve(on: element, in: context))
+                
             
         
         
@@ -8706,6 +9117,7 @@ self.__5_isPresented = isPresented
             
             __content
                 .searchable(text: __1_text.projectedValue, placement: placement, prompt: prompt)
+                
             
         
         
@@ -8714,6 +9126,7 @@ self.__5_isPresented = isPresented
             
             __content
                 .searchable(text: __2_text.projectedValue, placement: placement, prompt: prompt.resolve(on: element, in: context))
+                
             
         
         #if os(iOS) || os(macOS)
@@ -8723,6 +9136,7 @@ self.__5_isPresented = isPresented
 let prompt = prompt as? TextReference
             __content
                 .searchable(text: __3_text.projectedValue, isPresented: __3_isPresented.projectedValue, placement: placement, prompt: prompt?.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
@@ -8732,6 +9146,7 @@ let prompt = prompt as? TextReference
 let prompt = prompt as! SwiftUI.LocalizedStringKey
             __content
                 .searchable(text: __4_text.projectedValue, isPresented: __4_isPresented.projectedValue, placement: placement, prompt: prompt)
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS)
@@ -8741,6 +9156,7 @@ let prompt = prompt as! SwiftUI.LocalizedStringKey
 let prompt = prompt as! AttributeReference<String>
             __content
                 .searchable(text: __5_text.projectedValue, isPresented: __5_isPresented.projectedValue, placement: placement, prompt: prompt.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -8761,12 +9177,13 @@ struct _selectionDisabledModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(macOS 14.0,iOS 17.0,watchOS 10.0,tvOS 17.0, *)
+    @available(macOS 14.0,watchOS 10.0,tvOS 17.0,iOS 17.0, *)
     init(_ isDisabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isDisabled: isDisabled)
         
@@ -8779,10 +9196,11 @@ struct _selectionDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(isDisabled):
-            if #available(macOS 14.0,iOS 17.0,watchOS 10.0,tvOS 17.0, *) {
+            if #available(macOS 14.0,watchOS 10.0,tvOS 17.0,iOS 17.0, *) {
             let isDisabled = isDisabled as! AttributeReference<Swift.Bool>
             __content
                 .selectionDisabled(isDisabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -8803,6 +9221,7 @@ struct _shadowModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -8825,6 +9244,7 @@ struct _shadowModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .shadow(color: color.resolve(on: element, in: context), radius: radius.resolve(on: element, in: context), x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context))
+                
             
         
         }
@@ -8845,6 +9265,7 @@ struct _sheetModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 @ChangeTracked private var _0_isPresented: Swift.Bool
 @Event private var _0_onDismiss__0: Event.EventHandler
@@ -8868,6 +9289,7 @@ self.__0_onDismiss__0 = onDismiss__0
             
             __content
                 .sheet(isPresented: __0_isPresented.projectedValue, onDismiss: { __0_onDismiss__0.wrappedValue() }, content: { content.resolve(on: element, in: context) })
+                
             
         
         }
@@ -8880,21 +9302,22 @@ struct _simultaneousGestureModifier<R: RootRegistry>: ViewModifier {
     enum Value {
         case _never
         
-        case _0(gesture: AnyGesture<Any>,mask: SwiftUI.GestureMask = .all )
+        case _0(gesture: _AnyGesture,mask: SwiftUI.GestureMask = .all )
         
     }
 
     let value: Value
 
-    
-    
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+    @GestureState private var gestureState = [String:Any]()
 
 
 
 
     
     
-    init(_ gesture: AnyGesture<Any>,including mask: SwiftUI.GestureMask = .all ) {
+    init(_ gesture: _AnyGesture,including mask: SwiftUI.GestureMask = .all ) {
         self.value = ._0(gesture: gesture, mask: mask)
         
     }
@@ -8909,7 +9332,8 @@ struct _simultaneousGestureModifier<R: RootRegistry>: ViewModifier {
             
             
             __content
-                .simultaneousGesture(gesture, including: mask)
+                .simultaneousGesture(gesture.resolve(on: element, in: context.withGestureState(_gestureState)), including: mask)
+                .environment(\.gestureState, _gestureState)
             
         
         }
@@ -8930,6 +9354,7 @@ struct _speechAdjustedPitchModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -8952,6 +9377,7 @@ struct _speechAdjustedPitchModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .speechAdjustedPitch(value.resolve(on: element, in: context))
+                
             
         
         }
@@ -8972,6 +9398,7 @@ struct _speechAlwaysIncludesPunctuationModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -8994,6 +9421,7 @@ struct _speechAlwaysIncludesPunctuationModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .speechAlwaysIncludesPunctuation(value.resolve(on: element, in: context))
+                
             
         
         }
@@ -9014,6 +9442,7 @@ struct _speechAnnouncementsQueuedModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9036,6 +9465,7 @@ struct _speechAnnouncementsQueuedModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .speechAnnouncementsQueued(value.resolve(on: element, in: context))
+                
             
         
         }
@@ -9056,6 +9486,7 @@ struct _speechSpellsOutCharactersModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9078,6 +9509,7 @@ struct _speechSpellsOutCharactersModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .speechSpellsOutCharacters(value.resolve(on: element, in: context))
+                
             
         
         }
@@ -9098,6 +9530,7 @@ struct _statusBarHiddenModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9120,6 +9553,7 @@ struct _statusBarHiddenModifier<R: RootRegistry>: ViewModifier {
             let hidden = hidden as! AttributeReference<Swift.Bool>
             __content
                 .statusBarHidden(hidden.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -9138,6 +9572,7 @@ struct _submitLabelModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -9162,6 +9597,7 @@ struct _submitLabelModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .submitLabel(submitLabel)
+                
             
         
         }
@@ -9182,6 +9618,7 @@ struct _submitScopeModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9204,6 +9641,7 @@ struct _submitScopeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .submitScope(isBlocking.resolve(on: element, in: context))
+                
             
         
         }
@@ -9224,6 +9662,7 @@ struct _swipeActionsModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9248,6 +9687,7 @@ let allowsFullSwipe = allowsFullSwipe as! AttributeReference<Swift.Bool>
 let content = content as! ViewReference
             __content
                 .swipeActions(edge: edge, allowsFullSwipe: allowsFullSwipe.resolve(on: element, in: context), content: { content.resolve(on: element, in: context) })
+                
             } else { __content }
         #endif
         }
@@ -9271,6 +9711,7 @@ struct _symbolEffectModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9278,14 +9719,14 @@ struct _symbolEffectModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *)
+    @available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *)
     init(_ effect: AnyIndefiniteSymbolEffect,options: Symbols.SymbolEffectOptions = .default, isActive: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(effect: effect, options: options, isActive: isActive)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *)
+    @available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *)
     init(_ effect: AnyDiscreteSymbolEffect,options: Symbols.SymbolEffectOptions = .default, value: AttributeReference<String>) {
         self.value = ._1(effect: effect, options: options, value: value)
         
@@ -9298,22 +9739,24 @@ struct _symbolEffectModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(effect, options, isActive):
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *) {
             let effect = effect as! AnyIndefiniteSymbolEffect
 let options = options as! Symbols.SymbolEffectOptions 
 let isActive = isActive as! AttributeReference<Swift.Bool>
             __content
                 .symbolEffect(effect, options: options, isActive: isActive.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._1(effect, options, value):
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,watchOS 10.0,macOS 14.0,iOS 17.0, *) {
             let effect = effect as! AnyDiscreteSymbolEffect
 let options = options as! Symbols.SymbolEffectOptions 
 let value = value as! AttributeReference<String>
             __content
                 .symbolEffect(effect, options: options, value: value.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -9334,12 +9777,13 @@ struct _symbolEffectsRemovedModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *)
+    @available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
     init(_ isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isEnabled: isEnabled)
         
@@ -9352,10 +9796,11 @@ struct _symbolEffectsRemovedModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(isEnabled):
-            if #available(tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *) {
+            if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
             let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
             __content
                 .symbolEffectsRemoved(isEnabled.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -9374,6 +9819,7 @@ struct _symbolRenderingModeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -9398,6 +9844,7 @@ struct _symbolRenderingModeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .symbolRenderingMode(mode)
+                
             
         
         }
@@ -9416,6 +9863,7 @@ struct _symbolVariantModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -9440,6 +9888,7 @@ struct _symbolVariantModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .symbolVariant(variant)
+                
             
         
         }
@@ -9460,6 +9909,7 @@ struct _tabItemModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9482,6 +9932,7 @@ struct _tabItemModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .tabItem({ label.resolve(on: element, in: context) })
+                
             
         
         }
@@ -9500,6 +9951,7 @@ struct _tabViewStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -9524,6 +9976,7 @@ struct _tabViewStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .tabViewStyle(style)
+                
             
         
         }
@@ -9544,12 +9997,13 @@ struct _tableStyleModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS)
-    @available(iOS 16.0,macOS 12.0, *)
+    @available(macOS 12.0,iOS 16.0, *)
     init(_ style: AnyTableStyle) {
         self.value = ._0(style: style)
         
@@ -9562,10 +10016,11 @@ struct _tableStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(style):
-            if #available(iOS 16.0,macOS 12.0, *) {
+            if #available(macOS 12.0,iOS 16.0, *) {
             let style = style as! AnyTableStyle
             __content
                 .tableStyle(style)
+                
             } else { __content }
         #endif
         }
@@ -9584,6 +10039,7 @@ struct _textCaseModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -9608,6 +10064,7 @@ struct _textCaseModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .textCase(textCase)
+                
             
         
         }
@@ -9626,6 +10083,7 @@ struct _textContentTypeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -9650,6 +10108,7 @@ struct _textContentTypeModifier<R: RootRegistry>: ViewModifier {
             let textContentType = textContentType as? UIKit.UITextContentType
             __content
                 .textContentType(textContentType)
+                
             } else { __content }
         #endif
         }
@@ -9670,12 +10129,13 @@ struct _textEditorStyleModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(iOS 17.0,visionOS 1.0,macOS 14.0, *)
+    @available(visionOS 1.0,iOS 17.0,macOS 14.0, *)
     init(_ style: AnyTextEditorStyle) {
         self.value = ._0(style: style)
         
@@ -9688,10 +10148,11 @@ struct _textEditorStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(style):
-            if #available(iOS 17.0,visionOS 1.0,macOS 14.0, *) {
+            if #available(visionOS 1.0,iOS 17.0,macOS 14.0, *) {
             let style = style as! AnyTextEditorStyle
             __content
                 .textEditorStyle(style)
+                
             } else { __content }
         #endif
         }
@@ -9710,6 +10171,7 @@ struct _textFieldStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -9734,6 +10196,7 @@ struct _textFieldStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .textFieldStyle(style)
+                
             
         
         }
@@ -9754,12 +10217,13 @@ struct _textInputAutocapitalizationModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(tvOS) || os(watchOS)
-    @available(iOS 15.0,tvOS 15.0,watchOS 8.0, *)
+    @available(watchOS 8.0,iOS 15.0,tvOS 15.0, *)
     init(_ autocapitalization: SwiftUI.TextInputAutocapitalization?) {
         self.value = ._0(autocapitalization: autocapitalization)
         
@@ -9772,10 +10236,11 @@ struct _textInputAutocapitalizationModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(watchOS)
         case let ._0(autocapitalization):
-            if #available(iOS 15.0,tvOS 15.0,watchOS 8.0, *) {
+            if #available(watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
             let autocapitalization = autocapitalization as? SwiftUI.TextInputAutocapitalization
             __content
                 .textInputAutocapitalization(autocapitalization)
+                
             } else { __content }
         #endif
         }
@@ -9796,12 +10261,13 @@ struct _textSelectionModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS)
-    @available(macOS 12.0,iOS 15.0, *)
+    @available(iOS 15.0,macOS 12.0, *)
     init(_ selectability: AnyTextSelectability) {
         self.value = ._0(selectability: selectability)
         
@@ -9814,10 +10280,11 @@ struct _textSelectionModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case let ._0(selectability):
-            if #available(macOS 12.0,iOS 15.0, *) {
+            if #available(iOS 15.0,macOS 12.0, *) {
             let selectability = selectability as! AnyTextSelectability
             __content
                 .textSelection(selectability)
+                
             } else { __content }
         #endif
         }
@@ -9841,6 +10308,7 @@ struct _tintModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9872,6 +10340,7 @@ struct _tintModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .tint(tint)
+                
             
         
         
@@ -9880,6 +10349,7 @@ struct _tintModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .tint(tint?.resolve(on: element, in: context))
+                
             
         
         }
@@ -9898,6 +10368,7 @@ struct _toggleStyleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -9922,6 +10393,7 @@ struct _toggleStyleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toggleStyle(style)
+                
             
         
         }
@@ -9951,6 +10423,7 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -9969,7 +10442,7 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *)
+    @available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
     init(removing defaultItemKind: SwiftUI.ToolbarDefaultItemKind?) {
         self.value = ._1(defaultItemKind: defaultItemKind)
         
@@ -10000,14 +10473,16 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbar(visibility.resolve(on: element, in: context), for: bars)
+                
             
         
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._1(defaultItemKind):
-            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *) {
+            if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
             let defaultItemKind = defaultItemKind as? SwiftUI.ToolbarDefaultItemKind
             __content
                 .toolbar(removing: defaultItemKind)
+                
             } else { __content }
         #endif
         
@@ -10016,6 +10491,7 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbar(content: { content.resolve(on: element, in: context) })
+                
             
         
         
@@ -10024,6 +10500,7 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbar(id: id.resolve(on: element, in: context), content: { content.resolve(on: element, in: context) })
+                
             
         
         }
@@ -10047,6 +10524,7 @@ struct _toolbarBackgroundModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -10078,6 +10556,7 @@ struct _toolbarBackgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbarBackground(style, for: bars)
+                
             
         
         
@@ -10086,6 +10565,7 @@ struct _toolbarBackgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbarBackground(visibility.resolve(on: element, in: context), for: bars)
+                
             
         
         }
@@ -10106,6 +10586,7 @@ struct _toolbarColorSchemeModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -10128,6 +10609,7 @@ struct _toolbarColorSchemeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbarColorScheme(colorScheme?.resolve(on: element, in: context), for: bars)
+                
             
         
         }
@@ -10146,6 +10628,7 @@ struct _toolbarRoleModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -10170,6 +10653,7 @@ struct _toolbarRoleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbarRole(role)
+                
             
         
         }
@@ -10190,12 +10674,13 @@ struct _toolbarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
 
     
     
+    
 
 
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(iOS 17.0,watchOS 10.0,tvOS 17.0,macOS 14.0, *)
+    @available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *)
     init(_ mode: SwiftUI.ToolbarTitleDisplayMode) {
         self.value = ._0(mode: mode)
         
@@ -10208,10 +10693,11 @@ struct _toolbarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(mode):
-            if #available(iOS 17.0,watchOS 10.0,tvOS 17.0,macOS 14.0, *) {
+            if #available(iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *) {
             let mode = mode as! SwiftUI.ToolbarTitleDisplayMode
             __content
                 .toolbarTitleDisplayMode(mode)
+                
             } else { __content }
         #endif
         }
@@ -10232,6 +10718,7 @@ struct _toolbarTitleMenuModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -10254,6 +10741,7 @@ struct _toolbarTitleMenuModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbarTitleMenu(content: { content.resolve(on: element, in: context) })
+                
             
         
         }
@@ -10274,6 +10762,7 @@ struct _touchBarCustomizationLabelModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -10296,6 +10785,7 @@ struct _touchBarCustomizationLabelModifier<R: RootRegistry>: ViewModifier {
             let label = label as! TextReference
             __content
                 .touchBarCustomizationLabel(label.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -10316,6 +10806,7 @@ struct _touchBarItemPrincipalModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -10338,6 +10829,7 @@ struct _touchBarItemPrincipalModifier<R: RootRegistry>: ViewModifier {
             let principal = principal as! AttributeReference<Swift.Bool>
             __content
                 .touchBarItemPrincipal(principal.resolve(on: element, in: context))
+                
             } else { __content }
         #endif
         }
@@ -10356,6 +10848,7 @@ struct _transformEffectModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -10380,6 +10873,7 @@ struct _transformEffectModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .transformEffect(transform)
+                
             
         
         }
@@ -10398,6 +10892,7 @@ struct _transitionModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -10422,6 +10917,7 @@ struct _transitionModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .transition(t)
+                
             
         
         }
@@ -10440,6 +10936,7 @@ struct _truncationModeModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -10464,6 +10961,7 @@ struct _truncationModeModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .truncationMode(mode)
+                
             
         
         }
@@ -10482,6 +10980,7 @@ struct _unredactedModifier<R: RootRegistry>: ViewModifier {
 
     let value: Value
 
+    
     
     
 
@@ -10506,6 +11005,7 @@ struct _unredactedModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .unredacted()
+                
             
         
         }
@@ -10526,6 +11026,7 @@ struct _zIndexModifier<R: RootRegistry>: ViewModifier {
 
     @ObservedElement private var element
     @LiveContext<R> private var context
+    
 
 
 
@@ -10548,6 +11049,7 @@ struct _zIndexModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .zIndex(value.resolve(on: element, in: context))
+                
             
         
         }
@@ -11409,28 +11911,28 @@ case chunk18(_BuiltinModifierChunk18)
 case chunk19(_BuiltinModifierChunk19)
 case chunk20(_BuiltinModifierChunk20)
 case chunk21(_BuiltinModifierChunk21)
-        case _SearchScopesModifier(LiveViewNative._SearchScopesModifier<R>)
-case _SearchCompletionModifier(LiveViewNative._SearchCompletionModifier<R>)
-case _FocusScopeModifier(LiveViewNative._FocusScopeModifier<R>)
-case _Rotation3DEffectModifier(LiveViewNative._Rotation3DEffectModifier<R>)
-case _MatchedGeometryEffectModifier(LiveViewNative._MatchedGeometryEffectModifier<R>)
+        case _FocusScopeModifier(LiveViewNative._FocusScopeModifier<R>)
 case _ScaleModifier(LiveViewNative._ScaleModifier<R>)
-case _TransformModifier(LiveViewNative._TransformModifier)
-case _UnionModifier(LiveViewNative._UnionModifier)
-case _LineSubtractionModifier(LiveViewNative._LineSubtractionModifier)
-case _StrokeModifier(LiveViewNative._StrokeModifier<R>)
-case _SymmetricDifferenceModifier(LiveViewNative._SymmetricDifferenceModifier)
-case _IntersectionModifier(LiveViewNative._IntersectionModifier)
-case _PresentationDetentsModifier(LiveViewNative._PresentationDetentsModifier)
-case _RenderingModeModifier(LiveViewNative._RenderingModeModifier)
 case _SubtractingModifier(LiveViewNative._SubtractingModifier)
-case _ResizableModifier(LiveViewNative._ResizableModifier)
-case _FillModifier(LiveViewNative._FillModifier)
-case _LineIntersectionModifier(LiveViewNative._LineIntersectionModifier)
 case _OnSubmitModifier(LiveViewNative._OnSubmitModifier)
-case _MaskModifier(LiveViewNative._MaskModifier<R>)
-case _PrefersDefaultFocusModifier(LiveViewNative._PrefersDefaultFocusModifier<R>)
+case _StrokeModifier(LiveViewNative._StrokeModifier<R>)
+case _TransformModifier(LiveViewNative._TransformModifier)
+case _IntersectionModifier(LiveViewNative._IntersectionModifier)
+case _Rotation3DEffectModifier(LiveViewNative._Rotation3DEffectModifier<R>)
+case _UnionModifier(LiveViewNative._UnionModifier)
+case _PresentationDetentsModifier(LiveViewNative._PresentationDetentsModifier)
 case _RotationModifier(LiveViewNative._RotationModifier)
+case _SymmetricDifferenceModifier(LiveViewNative._SymmetricDifferenceModifier)
+case _FillModifier(LiveViewNative._FillModifier)
+case _LineSubtractionModifier(LiveViewNative._LineSubtractionModifier)
+case _SearchScopesModifier(LiveViewNative._SearchScopesModifier<R>)
+case _LineIntersectionModifier(LiveViewNative._LineIntersectionModifier)
+case _SearchCompletionModifier(LiveViewNative._SearchCompletionModifier<R>)
+case _RenderingModeModifier(LiveViewNative._RenderingModeModifier)
+case _MatchedGeometryEffectModifier(LiveViewNative._MatchedGeometryEffectModifier<R>)
+case _PrefersDefaultFocusModifier(LiveViewNative._PrefersDefaultFocusModifier<R>)
+case _MaskModifier(LiveViewNative._MaskModifier<R>)
+case _ResizableModifier(LiveViewNative._ResizableModifier)
         case _customRegistryModifier(R.CustomModifier)
         case _anyTextModifier(_AnyTextModifier<R>)
         
@@ -11480,49 +11982,49 @@ case let .chunk20(chunk):
     content.modifier(chunk)
 case let .chunk21(chunk):
     content.modifier(chunk)
-            case let ._SearchScopesModifier(modifier):
-    content.modifier(modifier)
-case let ._SearchCompletionModifier(modifier):
-    content.modifier(modifier)
-case let ._FocusScopeModifier(modifier):
-    content.modifier(modifier)
-case let ._Rotation3DEffectModifier(modifier):
-    content.modifier(modifier)
-case let ._MatchedGeometryEffectModifier(modifier):
+            case let ._FocusScopeModifier(modifier):
     content.modifier(modifier)
 case let ._ScaleModifier(modifier):
     content.modifier(modifier)
-case let ._TransformModifier(modifier):
-    content.modifier(modifier)
-case let ._UnionModifier(modifier):
-    content.modifier(modifier)
-case let ._LineSubtractionModifier(modifier):
-    content.modifier(modifier)
-case let ._StrokeModifier(modifier):
-    content.modifier(modifier)
-case let ._SymmetricDifferenceModifier(modifier):
-    content.modifier(modifier)
-case let ._IntersectionModifier(modifier):
-    content.modifier(modifier)
-case let ._PresentationDetentsModifier(modifier):
-    content.modifier(modifier)
-case let ._RenderingModeModifier(modifier):
-    content.modifier(modifier)
 case let ._SubtractingModifier(modifier):
-    content.modifier(modifier)
-case let ._ResizableModifier(modifier):
-    content.modifier(modifier)
-case let ._FillModifier(modifier):
-    content.modifier(modifier)
-case let ._LineIntersectionModifier(modifier):
     content.modifier(modifier)
 case let ._OnSubmitModifier(modifier):
     content.modifier(modifier)
-case let ._MaskModifier(modifier):
+case let ._StrokeModifier(modifier):
+    content.modifier(modifier)
+case let ._TransformModifier(modifier):
+    content.modifier(modifier)
+case let ._IntersectionModifier(modifier):
+    content.modifier(modifier)
+case let ._Rotation3DEffectModifier(modifier):
+    content.modifier(modifier)
+case let ._UnionModifier(modifier):
+    content.modifier(modifier)
+case let ._PresentationDetentsModifier(modifier):
+    content.modifier(modifier)
+case let ._RotationModifier(modifier):
+    content.modifier(modifier)
+case let ._SymmetricDifferenceModifier(modifier):
+    content.modifier(modifier)
+case let ._FillModifier(modifier):
+    content.modifier(modifier)
+case let ._LineSubtractionModifier(modifier):
+    content.modifier(modifier)
+case let ._SearchScopesModifier(modifier):
+    content.modifier(modifier)
+case let ._LineIntersectionModifier(modifier):
+    content.modifier(modifier)
+case let ._SearchCompletionModifier(modifier):
+    content.modifier(modifier)
+case let ._RenderingModeModifier(modifier):
+    content.modifier(modifier)
+case let ._MatchedGeometryEffectModifier(modifier):
     content.modifier(modifier)
 case let ._PrefersDefaultFocusModifier(modifier):
     content.modifier(modifier)
-case let ._RotationModifier(modifier):
+case let ._MaskModifier(modifier):
+    content.modifier(modifier)
+case let ._ResizableModifier(modifier):
     content.modifier(modifier)
             case let ._customRegistryModifier(modifier):
                 content.modifier(modifier)
@@ -11754,28 +12256,28 @@ _transitionModifier<R>.name: _transitionModifier<R>.parser(in: context).map({ Ou
 _truncationModeModifier<R>.name: _truncationModeModifier<R>.parser(in: context).map({ Output.chunk20(.truncationMode($0)) }).eraseToAnyParser(),
 _unredactedModifier<R>.name: _unredactedModifier<R>.parser(in: context).map({ Output.chunk20(.unredacted($0)) }).eraseToAnyParser(),
 _zIndexModifier<R>.name: _zIndexModifier<R>.parser(in: context).map({ Output.chunk21(.zIndex($0)) }).eraseToAnyParser(),
-                    LiveViewNative._SearchScopesModifier<R>.name: LiveViewNative._SearchScopesModifier<R>.parser(in: context).map(Output._SearchScopesModifier).eraseToAnyParser(),
-LiveViewNative._SearchCompletionModifier<R>.name: LiveViewNative._SearchCompletionModifier<R>.parser(in: context).map(Output._SearchCompletionModifier).eraseToAnyParser(),
-LiveViewNative._FocusScopeModifier<R>.name: LiveViewNative._FocusScopeModifier<R>.parser(in: context).map(Output._FocusScopeModifier).eraseToAnyParser(),
-LiveViewNative._Rotation3DEffectModifier<R>.name: LiveViewNative._Rotation3DEffectModifier<R>.parser(in: context).map(Output._Rotation3DEffectModifier).eraseToAnyParser(),
-LiveViewNative._MatchedGeometryEffectModifier<R>.name: LiveViewNative._MatchedGeometryEffectModifier<R>.parser(in: context).map(Output._MatchedGeometryEffectModifier).eraseToAnyParser(),
+                    LiveViewNative._FocusScopeModifier<R>.name: LiveViewNative._FocusScopeModifier<R>.parser(in: context).map(Output._FocusScopeModifier).eraseToAnyParser(),
 LiveViewNative._ScaleModifier<R>.name: LiveViewNative._ScaleModifier<R>.parser(in: context).map(Output._ScaleModifier).eraseToAnyParser(),
-LiveViewNative._TransformModifier.name: LiveViewNative._TransformModifier.parser(in: context).map(Output._TransformModifier).eraseToAnyParser(),
-LiveViewNative._UnionModifier.name: LiveViewNative._UnionModifier.parser(in: context).map(Output._UnionModifier).eraseToAnyParser(),
-LiveViewNative._LineSubtractionModifier.name: LiveViewNative._LineSubtractionModifier.parser(in: context).map(Output._LineSubtractionModifier).eraseToAnyParser(),
-LiveViewNative._StrokeModifier<R>.name: LiveViewNative._StrokeModifier<R>.parser(in: context).map(Output._StrokeModifier).eraseToAnyParser(),
-LiveViewNative._SymmetricDifferenceModifier.name: LiveViewNative._SymmetricDifferenceModifier.parser(in: context).map(Output._SymmetricDifferenceModifier).eraseToAnyParser(),
-LiveViewNative._IntersectionModifier.name: LiveViewNative._IntersectionModifier.parser(in: context).map(Output._IntersectionModifier).eraseToAnyParser(),
-LiveViewNative._PresentationDetentsModifier.name: LiveViewNative._PresentationDetentsModifier.parser(in: context).map(Output._PresentationDetentsModifier).eraseToAnyParser(),
-LiveViewNative._RenderingModeModifier.name: LiveViewNative._RenderingModeModifier.parser(in: context).map(Output._RenderingModeModifier).eraseToAnyParser(),
 LiveViewNative._SubtractingModifier.name: LiveViewNative._SubtractingModifier.parser(in: context).map(Output._SubtractingModifier).eraseToAnyParser(),
-LiveViewNative._ResizableModifier.name: LiveViewNative._ResizableModifier.parser(in: context).map(Output._ResizableModifier).eraseToAnyParser(),
-LiveViewNative._FillModifier.name: LiveViewNative._FillModifier.parser(in: context).map(Output._FillModifier).eraseToAnyParser(),
-LiveViewNative._LineIntersectionModifier.name: LiveViewNative._LineIntersectionModifier.parser(in: context).map(Output._LineIntersectionModifier).eraseToAnyParser(),
 LiveViewNative._OnSubmitModifier.name: LiveViewNative._OnSubmitModifier.parser(in: context).map(Output._OnSubmitModifier).eraseToAnyParser(),
-LiveViewNative._MaskModifier<R>.name: LiveViewNative._MaskModifier<R>.parser(in: context).map(Output._MaskModifier).eraseToAnyParser(),
-LiveViewNative._PrefersDefaultFocusModifier<R>.name: LiveViewNative._PrefersDefaultFocusModifier<R>.parser(in: context).map(Output._PrefersDefaultFocusModifier).eraseToAnyParser(),
+LiveViewNative._StrokeModifier<R>.name: LiveViewNative._StrokeModifier<R>.parser(in: context).map(Output._StrokeModifier).eraseToAnyParser(),
+LiveViewNative._TransformModifier.name: LiveViewNative._TransformModifier.parser(in: context).map(Output._TransformModifier).eraseToAnyParser(),
+LiveViewNative._IntersectionModifier.name: LiveViewNative._IntersectionModifier.parser(in: context).map(Output._IntersectionModifier).eraseToAnyParser(),
+LiveViewNative._Rotation3DEffectModifier<R>.name: LiveViewNative._Rotation3DEffectModifier<R>.parser(in: context).map(Output._Rotation3DEffectModifier).eraseToAnyParser(),
+LiveViewNative._UnionModifier.name: LiveViewNative._UnionModifier.parser(in: context).map(Output._UnionModifier).eraseToAnyParser(),
+LiveViewNative._PresentationDetentsModifier.name: LiveViewNative._PresentationDetentsModifier.parser(in: context).map(Output._PresentationDetentsModifier).eraseToAnyParser(),
 LiveViewNative._RotationModifier.name: LiveViewNative._RotationModifier.parser(in: context).map(Output._RotationModifier).eraseToAnyParser(),
+LiveViewNative._SymmetricDifferenceModifier.name: LiveViewNative._SymmetricDifferenceModifier.parser(in: context).map(Output._SymmetricDifferenceModifier).eraseToAnyParser(),
+LiveViewNative._FillModifier.name: LiveViewNative._FillModifier.parser(in: context).map(Output._FillModifier).eraseToAnyParser(),
+LiveViewNative._LineSubtractionModifier.name: LiveViewNative._LineSubtractionModifier.parser(in: context).map(Output._LineSubtractionModifier).eraseToAnyParser(),
+LiveViewNative._SearchScopesModifier<R>.name: LiveViewNative._SearchScopesModifier<R>.parser(in: context).map(Output._SearchScopesModifier).eraseToAnyParser(),
+LiveViewNative._LineIntersectionModifier.name: LiveViewNative._LineIntersectionModifier.parser(in: context).map(Output._LineIntersectionModifier).eraseToAnyParser(),
+LiveViewNative._SearchCompletionModifier<R>.name: LiveViewNative._SearchCompletionModifier<R>.parser(in: context).map(Output._SearchCompletionModifier).eraseToAnyParser(),
+LiveViewNative._RenderingModeModifier.name: LiveViewNative._RenderingModeModifier.parser(in: context).map(Output._RenderingModeModifier).eraseToAnyParser(),
+LiveViewNative._MatchedGeometryEffectModifier<R>.name: LiveViewNative._MatchedGeometryEffectModifier<R>.parser(in: context).map(Output._MatchedGeometryEffectModifier).eraseToAnyParser(),
+LiveViewNative._PrefersDefaultFocusModifier<R>.name: LiveViewNative._PrefersDefaultFocusModifier<R>.parser(in: context).map(Output._PrefersDefaultFocusModifier).eraseToAnyParser(),
+LiveViewNative._MaskModifier<R>.name: LiveViewNative._MaskModifier<R>.parser(in: context).map(Output._MaskModifier).eraseToAnyParser(),
+LiveViewNative._ResizableModifier.name: LiveViewNative._ResizableModifier.parser(in: context).map(Output._ResizableModifier).eraseToAnyParser(),
                 ]
 
                 let deprecations = [
@@ -12242,7 +12744,7 @@ ConstantAtomLiteral("plusLighter").map({ () -> Self in
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(watchOS 10.0,macOS 14.0,iOS 17.0,tvOS 17.0, *)
+@available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
 extension ButtonRepeatBehavior: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -12347,7 +12849,7 @@ ConstantAtomLiteral("dark").map({ () -> Self in
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *)
+@available(macOS 14.0,watchOS 10.0,iOS 17.0,tvOS 17.0, *)
 extension ContainerBackgroundPlacement: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -12376,7 +12878,7 @@ fatalError("'navigation' is not available on this OS")
 }
 #endif
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *)
+@available(macOS 14.0,watchOS 10.0,iOS 17.0,tvOS 17.0, *)
 extension ContentMarginPlacement: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -12430,7 +12932,7 @@ extension ContentShapeKinds: ParseableModifierValue {
 })
 ConstantAtomLiteral("dragPreview").map({ () -> Self in
 #if os(iOS) || os(macOS)
-if #available(tvOS 15.0,macOS 12.0,iOS 15.0,watchOS 8.0, *) {
+if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
     return Self.dragPreview
 } else { fatalError("'dragPreview' is not available in this OS version") }
 #else
@@ -12439,7 +12941,7 @@ fatalError("'dragPreview' is not available on this OS")
 })
 ConstantAtomLiteral("contextMenuPreview").map({ () -> Self in
 #if os(iOS) || os(tvOS)
-if #available(tvOS 17.0,macOS 12.0,iOS 15.0,watchOS 8.0, *) {
+if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 17.0, *) {
     return Self.contextMenuPreview
 } else { fatalError("'contextMenuPreview' is not available in this OS version") }
 #else
@@ -12448,7 +12950,7 @@ fatalError("'contextMenuPreview' is not available on this OS")
 })
 ConstantAtomLiteral("hoverEffect").map({ () -> Self in
 #if os(iOS)
-if #available(tvOS 15.0,macOS 12.0,iOS 15.0,watchOS 8.0, *) {
+if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
     return Self.hoverEffect
 } else { fatalError("'hoverEffect' is not available in this OS version") }
 #else
@@ -12457,7 +12959,7 @@ fatalError("'hoverEffect' is not available on this OS")
 })
 ConstantAtomLiteral("focusEffect").map({ () -> Self in
 #if os(macOS) || os(watchOS)
-if #available(tvOS 15.0,macOS 12.0,iOS 15.0,watchOS 8.0, *) {
+if #available(macOS 12.0,watchOS 8.0,iOS 15.0,tvOS 15.0, *) {
     return Self.focusEffect
 } else { fatalError("'focusEffect' is not available in this OS version") }
 #else
@@ -12466,7 +12968,7 @@ fatalError("'focusEffect' is not available on this OS")
 })
 ConstantAtomLiteral("accessibility").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-if #available(macOS 14.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *) {
+if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
     return Self.accessibility
 } else { fatalError("'accessibility' is not available in this OS version") }
 #else
@@ -12479,7 +12981,7 @@ fatalError("'accessibility' is not available on this OS")
 }
 
 #if os(iOS) || os(macOS) || os(watchOS)
-@available(iOS 15.0,watchOS 9.0,macOS 10.15, *)
+@available(watchOS 9.0,iOS 15.0,macOS 10.15, *)
 extension ControlSize: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -12513,7 +13015,7 @@ fatalError("'regular' is not available on this OS")
 })
 ConstantAtomLiteral("large").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(watchOS)
-if #available(iOS 15.0,watchOS 9.0,macOS 11.0, *) {
+if #available(watchOS 9.0,iOS 15.0,macOS 11.0, *) {
     return Self.large
 } else { fatalError("'large' is not available in this OS version") }
 #else
@@ -12522,7 +13024,7 @@ fatalError("'large' is not available on this OS")
 })
 ConstantAtomLiteral("extraLarge").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-if #available(macOS 14.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+if #available(visionOS 1.0,macOS 14.0,watchOS 10.0,iOS 17.0, *) {
     return Self.extraLarge
 } else { fatalError("'extraLarge' is not available in this OS version") }
 #else
@@ -12564,7 +13066,7 @@ ConstantAtomLiteral("userInitiated").map({ () -> Self in
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(iOS 17.0,macOS 13.0,watchOS 10.0,tvOS 17.0, *)
+@available(macOS 13.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
 extension DialogSeverity: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -12589,7 +13091,7 @@ fatalError("'critical' is not available on this OS")
 })
 ConstantAtomLiteral("standard").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-if #available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *) {
+if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
     return Self.standard
 } else { fatalError("'standard' is not available in this OS version") }
 #else
@@ -13052,7 +13554,7 @@ extension MenuOrder: ParseableModifierValue {
 })
 ConstantAtomLiteral("priority").map({ () -> Self in
 #if os(iOS)
-if #available(macOS 13.0,iOS 16.0,tvOS 16.0,watchOS 9.0, *) {
+if #available(macOS 13.0,watchOS 9.0,tvOS 16.0,iOS 16.0, *) {
     return Self.priority
 } else { fatalError("'priority' is not available in this OS version") }
 #else
@@ -13074,7 +13576,7 @@ ConstantAtomLiteral("fixed").map({ () -> Self in
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4, *)
+@available(tvOS 16.4,iOS 16.4,watchOS 9.4,macOS 13.3, *)
 extension PresentationAdaptation: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -13130,7 +13632,7 @@ fatalError("'fullScreenCover' is not available on this OS")
 }
 #endif
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(watchOS 9.4,macOS 13.3,iOS 16.4,tvOS 16.4, *)
+@available(macOS 13.3,tvOS 16.4,iOS 16.4,watchOS 9.4, *)
 extension PresentationContentInteraction: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -13222,7 +13724,7 @@ ConstantAtomLiteral("privacy").map({ () -> Self in
 })
 ConstantAtomLiteral("invalidated").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0, *) {
+if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0, *) {
     return Self.invalidated
 } else { fatalError("'invalidated' is not available in this OS version") }
 #else
@@ -13318,7 +13820,7 @@ extension ScenePadding: ParseableModifierValue {
 })
 ConstantAtomLiteral("navigationBar").map({ () -> Self in
 #if os(watchOS)
-if #available(iOS 16.0,macOS 13.0,watchOS 9.0,tvOS 16.0, *) {
+if #available(tvOS 16.0,iOS 16.0,watchOS 9.0,macOS 13.0, *) {
     return Self.navigationBar
 } else { fatalError("'navigationBar' is not available in this OS version") }
 #else
@@ -13331,7 +13833,7 @@ fatalError("'navigationBar' is not available on this OS")
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(iOS 16.4,macOS 13.3,watchOS 9.4,tvOS 16.4, *)
+@available(macOS 13.3,watchOS 9.4,iOS 16.4,tvOS 16.4, *)
 extension ScrollBounceBehavior: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -13369,7 +13871,7 @@ fatalError("'basedOnSize' is not available on this OS")
 }
 #endif
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(iOS 16.0,macOS 13.0,watchOS 9.0,tvOS 16.0, *)
+@available(macOS 13.0,watchOS 9.0,iOS 16.0,tvOS 16.0, *)
 extension ScrollDismissesKeyboardMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -13463,7 +13965,7 @@ ConstantAtomLiteral("never").map({ () -> Self in
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(tvOS 16.4,macOS 13.3,iOS 16.4,watchOS 9.4, *)
+@available(tvOS 16.4,watchOS 9.4,macOS 13.3,iOS 16.4, *)
 extension SearchScopeActivation: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -13539,7 +14041,7 @@ ConstantAtomLiteral("content").map({ () -> Self in
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(macOS 14.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *)
+@available(macOS 14.0,watchOS 10.0,tvOS 17.0,iOS 17.0, *)
 extension SpringLoadingBehavior: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -13698,7 +14200,7 @@ ConstantAtomLiteral("search").map({ () -> Self in
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(iOS 17.0,macOS 14.0,watchOS 10.0,tvOS 17.0, *)
+@available(macOS 14.0,iOS 17.0,watchOS 10.0,tvOS 17.0, *)
 extension ToolbarDefaultItemKind: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -13734,7 +14236,7 @@ extension ToolbarRole: ParseableModifierValue {
 })
 ConstantAtomLiteral("navigationStack").map({ () -> Self in
 #if os(iOS) || os(tvOS) || os(watchOS)
-if #available(iOS 16.0,macOS 13.0,watchOS 9.0,tvOS 16.0, *) {
+if #available(macOS 13.0,tvOS 16.0,iOS 16.0,watchOS 9.0, *) {
     return Self.navigationStack
 } else { fatalError("'navigationStack' is not available in this OS version") }
 #else
@@ -13743,7 +14245,7 @@ fatalError("'navigationStack' is not available on this OS")
 })
 ConstantAtomLiteral("browser").map({ () -> Self in
 #if os(iOS)
-if #available(iOS 16.0,macOS 13.0,watchOS 9.0,tvOS 16.0, *) {
+if #available(macOS 13.0,tvOS 16.0,iOS 16.0,watchOS 9.0, *) {
     return Self.browser
 } else { fatalError("'browser' is not available in this OS version") }
 #else
@@ -13752,7 +14254,7 @@ fatalError("'browser' is not available on this OS")
 })
 ConstantAtomLiteral("editor").map({ () -> Self in
 #if os(iOS) || os(macOS)
-if #available(iOS 16.0,macOS 13.0,watchOS 9.0,tvOS 16.0, *) {
+if #available(macOS 13.0,tvOS 16.0,iOS 16.0,watchOS 9.0, *) {
     return Self.editor
 } else { fatalError("'editor' is not available in this OS version") }
 #else
@@ -13765,7 +14267,7 @@ fatalError("'editor' is not available on this OS")
 }
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-@available(macOS 14.0,watchOS 10.0,iOS 17.0,tvOS 17.0, *)
+@available(watchOS 10.0,iOS 17.0,tvOS 17.0,macOS 14.0, *)
 extension ToolbarTitleDisplayMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
