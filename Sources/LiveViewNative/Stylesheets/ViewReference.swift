@@ -142,19 +142,19 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
             return ToolbarContentBuilder.buildBlock(f(.e(ToolbarError.badChildCount(e.count)), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         }
     }
-    
+
     // alias for typing
     @inline(__always)
     fileprivate func f(_ n: FromNodeValue?, _ c: LiveContextStorage<R>) -> some ToolbarContent {
         return n.flatMap({ fromNode($0, context: c) })
     }
-    
+
     @ToolbarContentBuilder
     fileprivate func fromNode(_ node: FromNodeValue, context: LiveContextStorage<R>) -> some ToolbarContent {
         // ToolbarTreeBuilder.fromNode may not be called with a root or leaf node
         switch node {
         case let .n(node):
-            if case .element(let element) = node.data {
+            if case .nodeElement(let element) = node.data() {
                 Self.lookup(ElementNode(node: node, data: element))
             }
         case let .e(error):
@@ -212,19 +212,19 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
             return ToolbarContentBuilder.buildBlock(f(.e(ToolbarError.badChildCount(e.count)), c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c), f(nil, c))
         }
     }
-    
+
     // alias for typing
     @inline(__always)
     fileprivate func f(_ n: FromNodeValue?, _ c: LiveContextStorage<R>) -> some CustomizableToolbarContent {
         return n.flatMap({ fromNode($0, context: c) })
     }
-    
+
     @ToolbarContentBuilder
     fileprivate func fromNode(_ node: FromNodeValue, context: LiveContextStorage<R>) -> some CustomizableToolbarContent {
         // CustomizableToolbarTreeBuilder.fromNode may not be called with a root or leaf node
         switch node {
         case let .n(node):
-            if case .element(let element) = node.data {
+            if case .nodeElement(let element) = node.data() {
                 Self.lookup(ElementNode(node: node, data: element))
             }
         case let .e(error):

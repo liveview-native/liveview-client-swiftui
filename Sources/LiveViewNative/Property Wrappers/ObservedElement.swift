@@ -132,6 +132,6 @@ extension ObservedElement {
 
 private extension Optional where Wrapped == ElementNode {
     var nodeRef: NodeRef? {
-        self?.node.id
+        self?.node.id()
     }
 }
