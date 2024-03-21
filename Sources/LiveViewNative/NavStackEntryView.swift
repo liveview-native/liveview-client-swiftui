@@ -22,12 +22,6 @@ struct NavStackEntryView<R: RootRegistry>: View {
     var body: some View {
         elementTree
             .environmentObject(liveViewModel)
-            .onReceive(coordinator.$document) { newDocument in
-                if let doc = newDocument {
-                    // todo: doing this every time the DOM changes is probably not efficient
-                    liveViewModel.updateForms(nodes: doc[doc.root()].depthFirstChildren())
-                }
-            }
     }
     
     private func buildPhaseView(_ phase: LiveViewPhase<R>) -> some View {

@@ -32,7 +32,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         internalState
     }
     
-    let session: LiveSessionCoordinator<R>
+    @_spi(LiveForm) public let session: LiveSessionCoordinator<R>
     var url: URL
     
     private var channel: Channel?
@@ -230,6 +230,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         connectParams["_csrf_token"] = domValues.phxCSRFToken
         connectParams["_lvn"] = session.platformParams
 
+        print("CONNECT LV:", self.url)
         let params: Payload = [
             "session": domValues.phxSession,
             "static": domValues.phxStatic,

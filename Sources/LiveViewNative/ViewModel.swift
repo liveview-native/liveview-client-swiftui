@@ -30,23 +30,6 @@ public class LiveViewModel: ObservableObject {
             return model
         }
     }
-    
-    /// Called whenever the document changes to update form models with their current data from the DOM and remove any models for no-longer-present forms.
-    func updateForms(nodes: NodeDepthFirstChildrenSequence) {
-        var formIDs = Set<String>()
-        for node in nodes {
-            guard case .element(let elementData) = node.data,
-                  elementData.namespace == nil && elementData.tag == "live-form" else {
-                continue
-            }
-            let id = node["id"]!.value!
-            formIDs.insert(id)
-            forms[id]?.updateFromElement(ElementNode(node: node, data: elementData))
-        }
-        for id in forms.keys where !formIDs.contains(id) {
-            forms.removeValue(forKey: id)
-        }
-    }
 }
 
 /// A form model stores the working copy of the data for a specific `<form>` element.
@@ -55,8 +38,11 @@ public class LiveViewModel: ObservableObject {
 public class FormModel: ObservableObject, CustomDebugStringConvertible {
     let elementID: String
     @_spi(LiveForm) public var pushEventImpl: ((String, String, Any, Int?) async throws -> Void)!
+    
     var changeEvent: String?
     var submitEvent: String?
+    var submitAction: (() -> ())?
+    
     /// The form data for this form.
     @Published internal private(set) var data = [String: any FormValue]()
     var formFieldWillChange = PassthroughSubject<String, Never>()
@@ -65,9 +51,10 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         self.elementID = elementID
     }
     
-    @_spi(LiveForm) public func updateFromElement(_ element: ElementNode) {
-        changeEvent = element.attributeValue(for: "phx-change")
-        submitEvent = element.attributeValue(for: "phx-submit")
+    @_spi(LiveForm) public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
+        self.changeEvent = element.attributeValue(for: "phx-change")
+        self.submitEvent = element.attributeValue(for: "phx-submit")
+        self.submitAction = submitAction
     }
     
     /// Sends a phx-change event (if configured) to the server with the current form data.
@@ -91,22 +78,33 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     public func sendSubmitEvent() async throws {
         if let submitEvent = submitEvent {
             try await pushFormEvent(submitEvent)
+        } else if let submitAction {
+            submitAction()
         }
+    }
+    
+    public func buildFormQuery() throws -> String {
+        let encoder = JSONEncoder()
+        let data = try data.mapValues { value in
+            if let value = value as? String {
+                return value
+            } else {
+                return try String(data: encoder.encode(value), encoding: .utf8)!
+            }
+        }
+        
+        var components = URLComponents()
+        components.queryItems = data.map {
+            URLQueryItem(name: $0.key, value: $0.value)
+        }
+        
+        return components.query!
     }
     
     @MainActor
     private func pushFormEvent(_ event: String) async throws {
-        let encoder = JSONEncoder()
-        let data = data.mapValues { value in
-            if let value = value as? String {
-                return value
-            } else {
-                return try! String(data: encoder.encode(value), encoding: .utf8)!
-            }
-        }
-
         // the `form` event type signals to LiveView on the backend that the payload is url encoded (e.g., `a=b&c=d`), so we use a different type
-        try await pushEventImpl("native-form", event, data, nil)
+        try await pushEventImpl("form", event, try buildFormQuery(), nil)
     }
     
     public var debugDescription: String {

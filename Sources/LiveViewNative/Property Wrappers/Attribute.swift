@@ -208,7 +208,7 @@ extension String: AttributeDecodable {
 /// The value is `true` if the attribute is present (regardless of value) and `false` otherwise.
 extension Bool: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
-        self = attribute != nil
+        self = attribute != nil && attribute?.value != "false"
     }
 }
 
