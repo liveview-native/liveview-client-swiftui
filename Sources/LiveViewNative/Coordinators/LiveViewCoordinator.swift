@@ -107,7 +107,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         let token = self.currentConnectionToken
 
-        let replyPayload = try await withCheckedThrowingContinuation({ [weak channel] continuation in
+        let replyPayload: [String:Any] = try await withCheckedThrowingContinuation({ [weak channel] continuation in
+            guard channel?.isJoined == true else {
+                return continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
+            }
             channel?.push(event, payload: payload, timeout: PUSH_TIMEOUT)
                 .receive("ok") { reply in
                     continuation.resume(returning: reply.payload)
@@ -228,7 +231,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         connectParams["_mounts"] = 0
         connectParams["_format"] = "swiftui"
         connectParams["_csrf_token"] = domValues.phxCSRFToken
-        connectParams["_lvn"] = session.platformParams
+        connectParams["_lvn"] = LiveSessionCoordinator<R>.platformParams
 
         print("CONNECT LV:", self.url)
         let params: Payload = [

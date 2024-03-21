@@ -31,7 +31,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 /// - ``LiveSessionState``
 /// - ``LiveConnectionError``
 @MainActor
-public class LiveSessionCoordinator<R: RootRegistry>: NSObject, ObservableObject, URLSessionTaskDelegate {
+public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// The current state of the live view connection.
     @Published public private(set) var state = LiveSessionState.notConnected
     
@@ -59,7 +59,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: NSObject, ObservableObject
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
     
-    private var urlSession: URLSession!
+    private var urlSessionDelegate: LiveSessionURLSessionDelegate<R>
+    private var urlSession: URLSession
     
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
@@ -72,11 +73,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: NSObject, ObservableObject
     public init(_ url: URL, config: LiveSessionConfiguration = .init(), customRegistryType _: R.Type = R.self) {
         self.url = url.appending(path: "").absoluteURL
         self.configuration = config
-        super.init()
         config.urlSessionConfiguration.httpCookieStorage = .shared
+        self.urlSessionDelegate = .init()
         self.urlSession = .init(
             configuration: config.urlSessionConfiguration,
-            delegate: self,
+            delegate: self.urlSessionDelegate,
             delegateQueue: nil
         )
         self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url))]
@@ -468,22 +469,26 @@ public class LiveSessionCoordinator<R: RootRegistry>: NSObject, ObservableObject
     }
     
     // MARK: URLSessionTaskDelegate
-    
-    public func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest) async -> URLRequest? {
+}
+
+class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDelegate {
+    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest) async -> URLRequest? {
         guard let url = request.url else {
             return request
         }
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         
         var newRequest = request
-        newRequest.url = url.appending(queryItems: [.init(name: "_format", value: platform)])
+        if !(components?.queryItems?.contains(where: { $0.name == "_format" }) ?? false) {
+            newRequest.url = url.appending(queryItems: [.init(name: "_format", value: await LiveSessionCoordinator<R>.platform)])
+        }
         return newRequest
     }
 }
 
 extension LiveSessionCoordinator {
-    var platform: String { "swiftui" }
-    var platformParams: Payload {
+    static var platform: String { "swiftui" }
+    static var platformParams: Payload {
         [
             "app_version": getAppVersion(),
             "app_build": getAppBuild(),
@@ -495,25 +500,25 @@ extension LiveSessionCoordinator {
         ]
     }
     
-    private func getAppVersion() -> String {
+    private static func getAppVersion() -> String {
         let dictionary = Bundle.main.infoDictionary!
 
         return dictionary["CFBundleShortVersionString"] as! String
     }
     
-    private func getAppBuild() -> String {
+    private static func getAppBuild() -> String {
         let dictionary = Bundle.main.infoDictionary!
 
         return dictionary["CFBundleVersion"] as! String
     }
     
-    private func getBundleID() -> String {
+    private static func getBundleID() -> String {
         let dictionary = Bundle.main.infoDictionary!
 
         return dictionary["CFBundleIdentifier"] as! String
     }
 
-    private func getOSName() -> String {
+    private static func getOSName() -> String {
         #if os(macOS)
         return "macOS"
         #elseif os(tvOS)
@@ -525,7 +530,7 @@ extension LiveSessionCoordinator {
         #endif
     }
 
-    private func getOSVersion() -> String {
+    private static func getOSVersion() -> String {
         #if os(watchOS)
         return WKInterfaceDevice.current().systemVersion
         #elseif os(macOS)
@@ -540,7 +545,7 @@ extension LiveSessionCoordinator {
         #endif
     }
 
-    private func getTarget() -> String {
+    private static func getTarget() -> String {
         #if os(watchOS)
         return "watch"
         #elseif os(macOS)
