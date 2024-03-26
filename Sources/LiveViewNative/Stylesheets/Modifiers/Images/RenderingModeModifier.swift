@@ -18,8 +18,12 @@ struct _RenderingModeModifier: ImageModifier {
         self.renderingMode = renderingMode
     }
     
-    func apply(to image: SwiftUI.Image) -> SwiftUI.Image {
+    func apply(to image: SwiftUI.Image, on element: ElementNode) -> SwiftUI.Image {
         image.renderingMode(renderingMode)
+    }
+    
+    func body(content: Content) -> some View {
+        content
     }
 }
 

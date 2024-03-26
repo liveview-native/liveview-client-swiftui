@@ -233,7 +233,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         connectParams["_csrf_token"] = domValues.phxCSRFToken
         connectParams["_lvn"] = LiveSessionCoordinator<R>.platformParams
 
-        print("CONNECT LV:", self.url)
         let params: Payload = [
             "session": domValues.phxSession,
             "static": domValues.phxStatic,

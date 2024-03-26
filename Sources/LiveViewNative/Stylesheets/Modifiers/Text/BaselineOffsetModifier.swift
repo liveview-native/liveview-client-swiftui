@@ -21,6 +21,10 @@ struct _BaselineOffsetModifier<R: RootRegistry>: TextModifier {
         self.baselineOffset = baselineOffset
     }
     
+    init(_ baselineOffset: AttributeReference<String>) {
+        self.baselineOffset = .init(storage: .constant(0))
+    }
+    
     func body(content: Content) -> some View {
         content
             .baselineOffset(baselineOffset.resolve(on: element, in: context))

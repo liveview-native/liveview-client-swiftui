@@ -8,34 +8,38 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-protocol ImageModifier: ViewModifier where Body == ImageModifierBody<Self.Content> {
-    func apply(to image: SwiftUI.Image) -> SwiftUI.Image
+protocol ImageModifier: ViewModifier {
+    func apply(to image: SwiftUI.Image, on element: ElementNode) -> SwiftUI.Image
 }
 
-extension ImageModifier {
-    func body(content: Self.Content) -> Body {
-        ImageModifierBody(content: content, modifier: self)
-    }
-}
-
-struct ImageModifierBody<Content: View>: View {
-    let content: Content
-    let modifier: any ImageModifier
+/// A type-erased `ImageModifier`, which can be applied to a `View` or directly on `Image`.
+enum _AnyImageModifier<R: RootRegistry>: ViewModifier, ImageModifier, ParseableModifierValue {
+    case renderingMode(_RenderingModeModifier)
+    case resizable(_ResizableModifier)
     
-    var body: some View {
-        content.transformEnvironment(\.imageModifiers) {
-            $0.append(modifier)
+    func body(content: Content) -> some View {
+        switch self {
+        case let .renderingMode(modifier):
+            content.modifier(modifier)
+        case let .resizable(modifier):
+            content.modifier(modifier)
+        }
+    }
+    
+    func apply(to image: SwiftUI.Image, on element: ElementNode) -> SwiftUI.Image {
+        switch self {
+        case let .renderingMode(modifier):
+            return modifier.apply(to: image, on: element)
+        case let .resizable(modifier):
+            return modifier.apply(to: image, on: element)
+        }
+    }
+    
+    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            _RenderingModeModifier.parser(in: context).map(Self.renderingMode)
+            _ResizableModifier.parser(in: context).map(Self.resizable)
         }
     }
 }
 
-extension EnvironmentValues {
-    private enum ImageModifiersKey: EnvironmentKey {
-        static let defaultValue = [any ImageModifier]()
-    }
-    
-    var imageModifiers: [any ImageModifier] {
-        get { self[ImageModifiersKey.self] }
-        set { self[ImageModifiersKey.self] = newValue }
-    }
-}
