@@ -41,6 +41,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     var changeEvent: String?
     var submitEvent: String?
+    /// An action called when no `phx-submit` event is present.
+    ///
+    /// This typically performs a HTTP request and reconnects the LiveView.
     var submitAction: (() -> ())?
     
     /// The form data for this form.
@@ -83,6 +86,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
     }
     
+    /// Create a URL encoded body from the data in the form.
     public func buildFormQuery() throws -> String {
         let encoder = JSONEncoder()
         let data = try data.mapValues { value in
@@ -103,7 +107,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     @MainActor
     private func pushFormEvent(_ event: String) async throws {
-        // the `form` event type signals to LiveView on the backend that the payload is url encoded (e.g., `a=b&c=d`), so we use a different type
+        // the `form` event type expects a URL encoded payload (e.g., `a=b&c=d`)
         try await pushEventImpl("form", event, try buildFormQuery(), nil)
     }
     

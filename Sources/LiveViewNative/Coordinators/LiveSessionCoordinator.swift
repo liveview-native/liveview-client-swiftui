@@ -59,7 +59,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
     
+    /// Delegate for the ``urlSession``.
+    ///
+    /// This delegate will add the `_format` and other necessary query params to any redirects.
     private var urlSessionDelegate: LiveSessionURLSessionDelegate<R>
+    
+    /// The ``URLSession`` instance to use for all HTTP requests.
+    ///
+    /// This session is created using the ``LiveSessionConfiguration/urlSessionConfiguration``.
     private var urlSession: URLSession
     
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
@@ -72,7 +79,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter customRegistryType: The type of the registry of custom views this coordinator will use when building the SwiftUI view tree from the DOM. This can generally be inferred automatically.
     public init(_ url: URL, config: LiveSessionConfiguration = .init(), customRegistryType _: R.Type = R.self) {
         self.url = url.appending(path: "").absoluteURL
+        
         self.configuration = config
+        
         config.urlSessionConfiguration.httpCookieStorage = .shared
         self.urlSessionDelegate = .init()
         self.urlSession = .init(
@@ -80,13 +89,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             delegate: self.urlSessionDelegate,
             delegateQueue: nil
         )
+        
         self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url))]
+        
         self.mergedEventSubjects = self.navigationPath.first!.coordinator.eventSubject.compactMap({ [weak self] value in
             self.map({ ($0.navigationPath.first!.coordinator, value) })
         })
         .sink(receiveValue: { [weak self] value in
             self?.eventSubject.send(value)
         })
+        
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
             let isDisconnected: Bool
@@ -140,6 +152,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// This function is a no-op unless ``state`` is ``LiveSessionState/notConnected``.
     ///
     /// This is an async function which completes when the connection has been established or failed.
+    ///
+    /// - Parameter httpMethod: The HTTP method to use for the dead render. Defaults to `GET`.
+    /// - Parameter httpBody: The HTTP body to send when requesting the dead render.
     public func connect(httpMethod: String? = nil, httpBody: Data? = nil) async {
         guard case .notConnected = state else {
             return
@@ -152,7 +167,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         state = .connecting
         
         do {
-            let (html, response) = try await fetchDOM(url: originalURL, httpMethod: httpMethod, httpBody: httpBody)
+            var request = URLRequest(url: originalURL)
+            request.httpMethod = httpMethod
+            request.httpBody = httpBody
+            let (html, response) = try await deadRender(for: request)
+            // update the URL if redirects happened.
             let url: URL
             if let responseURL = response.url {
                 if self.navigationPath.count == 1 {
@@ -262,39 +281,41 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             .store(in: &eventHandlers)
     }
     
-    func fetchDOM(url: URL, httpMethod: String? = nil, httpBody: Data? = nil) async throws -> (String, URLResponse) {
+    /// Request the dead render with the given `request`.
+    ///
+    /// Returns the dead render HTML and the HTTP response information (including the final URL after redirects).
+    func deadRender(for request: URLRequest) async throws -> (String, HTTPURLResponse) {
+        var request = request
+        request.url = request.url!.appending(queryItems: [
+            .init(name: "_format", value: "swiftui")
+        ])
+        if domValues != nil {
+            request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
+        }
+        
         let data: Data
-        let resp: URLResponse
+        let response: URLResponse
         do {
-            var request = URLRequest(
-                url: url.appending(queryItems: [
-                    .init(name: "_format", value: "swiftui")
-                ])
-            )
-            request.httpMethod = httpMethod
-            request.httpBody = httpBody
-            if domValues != nil {
-                request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
-            }
-            (data, resp) = try await urlSession.data(for: request)
+            (data, response) = try await urlSession.data(for: request)
         } catch {
             throw LiveConnectionError.initialFetchError(error)
         }
-            
-        if (resp as! HTTPURLResponse).statusCode == 200,
-           let html = String(data: data, encoding: .utf8) {
-            return (html, resp)
-        } else {
+        
+        guard let response = response as? HTTPURLResponse,
+              response.statusCode == 200,
+              let html = String(data: data, encoding: .utf8)
+        else {
             if let html = String(data: data, encoding: .utf8)
             {
                 if try extractLiveReloadFrame(SwiftSoup.parse(html)) {
                     await connectLiveReloadSocket(urlSessionConfiguration: urlSession.configuration)
                 }
-                throw LiveConnectionError.initialFetchUnexpectedResponse(resp, html)
+                throw LiveConnectionError.initialFetchUnexpectedResponse(response, html)
             } else {
-                throw LiveConnectionError.initialFetchUnexpectedResponse(resp)
+                throw LiveConnectionError.initialFetchUnexpectedResponse(response)
             }
         }
+        return (html, response)
     }
     
     struct DOMValues {
@@ -467,10 +488,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
         }
     }
-    
-    // MARK: URLSessionTaskDelegate
 }
 
+/// A delegate that adds the `_format` query parameter to any redirects.
 class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest) async -> URLRequest? {
         guard let url = request.url else {

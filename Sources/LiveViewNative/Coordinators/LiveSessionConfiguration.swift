@@ -16,7 +16,11 @@ public struct LiveSessionConfiguration {
     /// By default, no connection params are provided.
     public var connectParams: ((URL) -> [String: Any])? = nil
     
-    /// The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.
+    /// The URL session configuration the coordinator will use for performing HTTP and socket requests.
+    /// 
+    /// By default, this is the `default` configuration.
+    /// 
+    /// Some properties of the configuration (such as the `httpCookieStorage`) will be overridden by the session coordinator.
     public var urlSessionConfiguration: URLSessionConfiguration = .default
     
     /// The transition used when the live view changes connects.
