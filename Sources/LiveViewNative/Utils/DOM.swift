@@ -80,7 +80,9 @@ public struct ElementNode {
     /// > The strings `"true"`/`"false"` are ignored, and only the presence of the attribute is considered.
     /// > A value of `"false"` would still return `true`.
     public func attributeBoolean(for name: AttributeName) -> Bool {
-        attribute(named: name) != nil
+        guard let attribute = attribute(named: name)?.value
+        else { return false }
+        return attribute != "false"
     }
     
     /// The text of this element.

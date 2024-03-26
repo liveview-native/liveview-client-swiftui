@@ -38,7 +38,7 @@ struct AsyncImage<R: RootRegistry>: View {
     /// How the image should be displayed if its native aspect ratio does not match that of the view.
     ///
     /// Possible values:
-    /// - `fill`: The image fills the view (meaning the edges may be croppped).
+    /// - `fill`: The image fills the view (meaning the edges may be cropped).
     /// - `fit` (deafult): The image is displayed at its native aspect ratio centered in the view.
     @_documentation(visibility: public)
     @Attribute("contentMode", transform: { $0?.value == "fill" ? .fill : .fit }) private var contentMode: ContentMode
