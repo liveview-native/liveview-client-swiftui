@@ -14,7 +14,7 @@ import Combine
 /// Specify the attribute name and an optional default value. Then use the value in the body of the View.
 /// ```swift
 /// struct MyElement: View {
-///     @Attribute("count") private var count: Double = 0
+///     @Attribute(.init(name: "count")) private var count: Double = 0
 ///
 ///     var body: some View {
 ///         Text("Count: \(count)")

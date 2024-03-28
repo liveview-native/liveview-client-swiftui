@@ -36,13 +36,13 @@ struct Gauge<R: RootRegistry>: View {
     
     /// The current value of the gauge.
     @_documentation(visibility: public)
-    @Attribute("value") private var value: Double = 0
+    @Attribute(.init(name: "value")) private var value: Double = 0
     /// The lowest possible value of the gauge.
     @_documentation(visibility: public)
-    @Attribute("lowerBound") private var lowerBound: Double = 0
+    @Attribute(.init(name: "lowerBound")) private var lowerBound: Double = 0
     /// The highest possible value of the gauge.
     @_documentation(visibility: public)
-    @Attribute("upperBound") private var upperBound: Double = 1
+    @Attribute(.init(name: "upperBound")) private var upperBound: Double = 1
     
     public var body: some View {
         #if !os(tvOS)

@@ -47,7 +47,7 @@ struct GroupBox<R: RootRegistry>: View {
     ///
     /// Takes precedence over a `label` child.
     @_documentation(visibility: public)
-    @Attribute("title") private var title: String?
+    @Attribute(.init(name: "title")) private var title: String?
 
     public var body: some View {
 #if os(iOS) || os(macOS)

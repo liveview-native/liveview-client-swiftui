@@ -66,14 +66,14 @@ struct ImageView<R: RootRegistry>: View {
     ///
     /// See [Apple's documentation](https://developer.apple.com/sf-symbols/) for more information.
     @_documentation(visibility: public)
-    @Attribute("systemName") private var systemName: String?
+    @Attribute(.init(name: "systemName")) private var systemName: String?
     /// The name of an image in the app's asset catalog.
     @_documentation(visibility: public)
-    @Attribute("name") private var name: String?
+    @Attribute(.init(name: "name")) private var name: String?
     
     /// The value represented by this image, in the range `0.0` to `1.0`.
     @_documentation(visibility: public)
-    @Attribute("variableValue") private var variableValue: Double?
+    @Attribute(.init(name: "variableValue")) private var variableValue: Double?
     
     @ClassModifiers<R> private var modifiers
     let overrideImage: SwiftUI.Image?

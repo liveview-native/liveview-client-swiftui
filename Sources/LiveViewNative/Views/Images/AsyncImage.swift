@@ -27,18 +27,18 @@ struct AsyncImage<R: RootRegistry>: View {
     ///
     /// If no URL is provided, the view will remain in the loading state.
     @_documentation(visibility: public)
-    @Attribute("url") private var url: String?
+    @Attribute(.init(name: "url")) private var url: String?
     /// The display scale of the image (defaults to 1).
     ///
     /// This corresponds to the `@2x`, `@3x` suffixes you would use for images shipped with the app.
     /// A scale of 1 indicates that 1 pixel in the image corresponds to 1 point, a scale of 2 indicates that there are 2 image pixels per point, etc.
     @_documentation(visibility: public)
-    @Attribute("scale") private var scale: Double = 1
+    @Attribute(.init(name: "scale")) private var scale: Double = 1
     
     @Environment(\.asyncImagePhase) private var phase
     
-    @Attribute("image") private var image: Bool
-    @Attribute("error") private var error: Bool
+    @Attribute(.init(name: "image")) private var image: Bool
+    @Attribute(.init(name: "error")) private var error: Bool
     
     public var body: some View {
         if image {

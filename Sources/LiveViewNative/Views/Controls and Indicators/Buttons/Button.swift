@@ -44,7 +44,7 @@ public struct Button<R: RootRegistry>: View {
     /// * `destructive`
     /// * `cancel`
     @_documentation(visibility: public)
-    @Attribute("role") private var role: ButtonRole?
+    @Attribute(.init(name: "role")) private var role: ButtonRole?
     
     @_spi(LiveForm) public init(action: (() -> Void)? = nil) {
         self.action = action

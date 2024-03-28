@@ -59,7 +59,7 @@ struct Section<R: RootRegistry>: View {
     
     /// Enables this section to be collapsed in sidebar lists on macOS.
     @_documentation(visibility: public)
-    @Attribute("collapsible") private var collapsible: Bool
+    @Attribute(.init(name: "collapsible")) private var collapsible: Bool
     
     public var body: some View {
         SwiftUI.Section {

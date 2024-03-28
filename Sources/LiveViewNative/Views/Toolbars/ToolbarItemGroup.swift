@@ -34,7 +34,7 @@ struct ToolbarItemGroup<R: RootRegistry>: ToolbarContent {
     
     /// The position of this group in the toolbar.
     @_documentation(visibility: public)
-    @Attribute("placement", transform: { _ in fatalError() }) private var placement: SwiftUI.ToolbarItemPlacement
+    @Attribute(.init(name: "placement"), transform: { _ in fatalError() }) private var placement: SwiftUI.ToolbarItemPlacement
     
     init(element: ElementNode) {
         self._element = .init(element: element)

@@ -42,18 +42,18 @@ struct LazyHGrid<R: RootRegistry>: View {
     
     /// Configured rows to fill with the child elements.
     @_documentation(visibility: public)
-    @Attribute("rows") private var rows: [GridItem]
+    @Attribute(.init(name: "rows")) private var rows: [GridItem]
     /// The alignment between rows.
     @_documentation(visibility: public)
-    @Attribute("alignment") private var alignment: VerticalAlignment = .center
+    @Attribute(.init(name: "alignment")) private var alignment: VerticalAlignment = .center
     /// The spacing between rows.
     @_documentation(visibility: public)
-    @Attribute("spacing") private var spacing: Double?
+    @Attribute(.init(name: "spacing")) private var spacing: Double?
     /// Pins section headers/footers.
     ///
     /// See ``LiveViewNative/SwiftUI/PinnedScrollableViews``.
     @_documentation(visibility: public)
-    @Attribute("pinnedViews") private var pinnedViews: PinnedScrollableViews = []
+    @Attribute(.init(name: "pinnedViews")) private var pinnedViews: PinnedScrollableViews = []
 
     public var body: some View {
         SwiftUI.LazyHGrid(

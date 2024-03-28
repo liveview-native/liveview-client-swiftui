@@ -29,7 +29,7 @@ struct Link<R: RootRegistry>: View {
     
     /// A valid URL to open when tapped.
     @_documentation(visibility: public)
-    @Attribute("destination") private var destination: String?
+    @Attribute(.init(name: "destination")) private var destination: String?
     
     public var body: some View {
         if let destination = destination.flatMap({ URL(string: $0, relativeTo: context.coordinator.url) })?.appending(path: "").absoluteURL {

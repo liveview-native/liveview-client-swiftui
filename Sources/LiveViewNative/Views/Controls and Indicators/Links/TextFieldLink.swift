@@ -32,7 +32,7 @@ struct TextFieldLink<R: RootRegistry>: View {
     
     /// Describes the reason for requesting text input.
     @_documentation(visibility: public)
-    @Attribute("prompt", transform: { $0?.value.flatMap(SwiftUI.Text.init) })
+    @Attribute(.init(name: "prompt"), transform: { $0?.value.flatMap(SwiftUI.Text.init) })
     private var prompt: SwiftUI.Text?
     
     var body: some View {

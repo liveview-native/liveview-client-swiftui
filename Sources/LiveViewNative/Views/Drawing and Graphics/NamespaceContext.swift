@@ -21,7 +21,7 @@ struct NamespaceContext<R: RootRegistry>: View {
     
     /// The unique identifier for this namespace.
     @_documentation(visibility: public)
-    @Attribute("id") private var id: String
+    @Attribute(.init(name: "id")) private var id: String
     
     @Namespace private var namespace
     @Environment(\.namespaces) private var namespaces

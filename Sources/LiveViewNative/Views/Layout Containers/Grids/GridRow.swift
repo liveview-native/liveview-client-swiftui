@@ -37,7 +37,7 @@ struct GridRow<R: RootRegistry>: View {
     
     /// The positioning of elements within the row.
     @_documentation(visibility: public)
-    @Attribute("alignment") private var alignment: VerticalAlignment?
+    @Attribute(.init(name: "alignment")) private var alignment: VerticalAlignment?
 
     public var body: some View {
         SwiftUI.GridRow(alignment: alignment) {

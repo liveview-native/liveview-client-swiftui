@@ -69,15 +69,15 @@ struct Slider<R: RootRegistry>: View {
     
     /// The lowest allowed value.
     @_documentation(visibility: public)
-    @Attribute("lowerBound") private var lowerBound: Double = 0
+    @Attribute(.init(name: "lowerBound")) private var lowerBound: Double = 0
     
     /// The highest allowed value.
     @_documentation(visibility: public)
-    @Attribute("upperBound") private var upperBound: Double = 1
+    @Attribute(.init(name: "upperBound")) private var upperBound: Double = 1
     
     /// The distance between allowed values.
     @_documentation(visibility: public)
-    @Attribute("step") private var step: Double.Stride?
+    @Attribute(.init(name: "step")) private var step: Double.Stride?
     
     public var body: some View {
         #if !os(tvOS)

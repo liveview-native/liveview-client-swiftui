@@ -49,7 +49,7 @@ struct LabeledContent<R: RootRegistry>: View {
     ///
     /// For more details on formatting options, see ``Text``.
     @_documentation(visibility: public)
-    @Attribute("format") private var format: String?
+    @Attribute(.init(name: "format")) private var format: String?
     
     var body: some View {
         SwiftUI.Group {

@@ -45,13 +45,13 @@ struct Grid<R: RootRegistry>: View {
     
     /// The positioning of elements within the grid.
     @_documentation(visibility: public)
-    @Attribute("alignment") private var alignment: Alignment = .center
+    @Attribute(.init(name: "alignment")) private var alignment: Alignment = .center
     /// The spacing between elements in a ``GridRow``.
     @_documentation(visibility: public)
-    @Attribute("horizontalSpacing") private var horizontalSpacing: Double?
+    @Attribute(.init(name: "horizontalSpacing")) private var horizontalSpacing: Double?
     /// The spacing between ``GridRow`` elements.
     @_documentation(visibility: public)
-    @Attribute("verticalSpacing") private var verticalSpacing: Double?
+    @Attribute(.init(name: "verticalSpacing")) private var verticalSpacing: Double?
     
     public var body: some View {
         SwiftUI.Grid(

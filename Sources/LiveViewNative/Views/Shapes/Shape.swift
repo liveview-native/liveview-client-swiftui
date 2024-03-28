@@ -24,12 +24,12 @@ struct Shape<S: SwiftUI.InsettableShape>: View {
     ///
     /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
     @_documentation(visibility: public)
-    @Attribute("fillColor") private var fillColor: SwiftUI.Color? = nil
+    @Attribute(.init(name: "fillColor")) private var fillColor: SwiftUI.Color? = nil
     /// The ``LiveViewNative/SwiftUI/Color`` the shape stroke is drawn with.
     ///
     /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
     @_documentation(visibility: public)
-    @Attribute("strokeColor") private var strokeColor: SwiftUI.Color? = nil
+    @Attribute(.init(name: "strokeColor")) private var strokeColor: SwiftUI.Color? = nil
     
     @Environment(\.shapeModifiers) private var shapeModifiers: [any ShapeModifier]
     @Environment(\.shapeFinalizerModifier) private var shapeFinalizerModifier: (any ShapeFinalizerModifier)?

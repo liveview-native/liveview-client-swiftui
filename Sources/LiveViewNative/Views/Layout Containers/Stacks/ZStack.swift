@@ -27,7 +27,7 @@ struct ZStack<R: RootRegistry>: View {
     ///
     /// See ``LiveViewNative/SwiftUI/Alignment``.
     @_documentation(visibility: public)
-    @Attribute("alignment") private var alignment: Alignment = .center
+    @Attribute(.init(name: "alignment")) private var alignment: Alignment = .center
     
     public var body: some View {
         SwiftUI.ZStack(alignment: alignment) {

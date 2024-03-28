@@ -50,15 +50,15 @@ struct Stepper<R: RootRegistry>: View {
     
     /// The amount to increment/decrement the value by.
     @_documentation(visibility: public)
-    @Attribute("step") private var step: Double = 1
+    @Attribute(.init(name: "step")) private var step: Double = 1
     
     /// The lowest allowed value.
     @_documentation(visibility: public)
-    @Attribute("lowerBound") private var lowerBound: Double?
+    @Attribute(.init(name: "lowerBound")) private var lowerBound: Double?
     
     /// The highest allowed value.
     @_documentation(visibility: public)
-    @Attribute("upperBound") private var upperBound: Double?
+    @Attribute(.init(name: "upperBound")) private var upperBound: Double?
     
     public var body: some View {
         #if !os(tvOS)
