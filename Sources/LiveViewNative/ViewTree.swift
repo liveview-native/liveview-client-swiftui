@@ -123,14 +123,10 @@ struct ClassModifiers<R: RootRegistry>: DynamicProperty {
         guard let classNames = attribute?.value else { return [] }
         return classNames.split(separator: " " as Character)
     }) private var classNames: [Substring]
-    @Environment(\.stylesheets) var stylesheets
-    let overrideStylesheet: (any StylesheetProtocol)?
+    @Environment(\.stylesheet) var stylesheet
+    let overrideStylesheet: Stylesheet<R>?
     
-    init(overrideStylesheet: (any StylesheetProtocol)?) {
-        self.overrideStylesheet = overrideStylesheet
-    }
-    
-    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
+    init(element: ElementNode, overrideStylesheet: Stylesheet<R>?) {
         self._classNames = .init(
             wrappedValue: nil,
             .init(name: "class"),
@@ -143,16 +139,16 @@ struct ClassModifiers<R: RootRegistry>: DynamicProperty {
         self.overrideStylesheet = overrideStylesheet
     }
     
-    init() {
-        self.overrideStylesheet = nil
+    init(overrideStylesheet: Stylesheet<R>? = nil) {
+        self.overrideStylesheet = overrideStylesheet
     }
     
     var wrappedValue: ArraySlice<BuiltinRegistry<R>.BuiltinModifier> = .init()
     
     mutating func update() {
-        let sheet = (overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]) as? Stylesheet<R>
+        let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<R>)
         wrappedValue = classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
-            $0.append(contentsOf: sheet?.classes[String($1)] ?? [])
+            $0.append(contentsOf: sheet.classes[String($1)] ?? [])
         }
     }
 }
@@ -167,15 +163,13 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
 }
 
 extension EnvironmentValues {
-    private enum StylesheetsKey: EnvironmentKey {
-        static var defaultValue: [ObjectIdentifier:any StylesheetProtocol] {
-            [:]
-        }
+    private enum StylesheetKey: EnvironmentKey {
+        static let defaultValue: Any = Stylesheet<EmptyRegistry>(content: [], classes: [:])
     }
     
-    var stylesheets: [ObjectIdentifier:any StylesheetProtocol] {
-        get { self[StylesheetsKey.self] }
-        set { self[StylesheetsKey.self] = newValue }
+    var stylesheet: Any {
+        get { self[StylesheetKey.self] }
+        set { self[StylesheetKey.self] = newValue }
     }
 }
 

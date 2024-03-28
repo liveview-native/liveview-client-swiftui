@@ -190,11 +190,7 @@ public struct LiveView<
                 AnyView(buildPhaseView(phase as! LiveViewPhase<R>))
             }
         }
-        .transformEnvironment(\.stylesheets) { stylesheets in
-            guard let stylesheet = session.stylesheet
-            else { return }
-            stylesheets[ObjectIdentifier(R.self)] = stylesheet
-        }
+        .environment(\.stylesheet, session.stylesheet ?? .init(content: [], classes: [:]))
         .environmentObject(session)
         .environmentObject(liveViewModel)
         .task {

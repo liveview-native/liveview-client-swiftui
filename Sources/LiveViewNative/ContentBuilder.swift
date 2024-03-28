@@ -313,7 +313,7 @@ public extension ContentBuilder {
 public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: DynamicProperty {
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @LiveContext<R> private var context
-    @Environment(\.stylesheets) private var stylesheets
+    @Environment(\.stylesheet) private var stylesheet
     
     @StateObject private var stylesheetResolver = StylesheetResolver()
     
@@ -328,7 +328,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         Value(
             coordinatorEnvironment: coordinatorEnvironment,
             context: context.storage,
-            stylesheet: stylesheets[ObjectIdentifier(R.self)] as? Stylesheet<R>,
+            stylesheet: stylesheet as! Stylesheet<R>,
             resolvedStylesheet: stylesheetResolver.resolvedStylesheet
         )
     }
@@ -353,7 +353,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
     }
     
     public func update() {
-        let stylesheet = stylesheets[ObjectIdentifier(R.self)] as? Stylesheet<R>
+        let stylesheet = stylesheet as? Stylesheet<R>
         guard stylesheet?.content != stylesheetResolver.previousStylesheetContent
         else { return }
         stylesheetResolver.previousStylesheetContent = stylesheet?.content ?? []
