@@ -70,7 +70,7 @@ extension ModifierGenerator {
                 ))
             }
 
-            let modifierList = Array(modifiers.keys)
+            let modifierList = Array(modifiers.keys).sorted()
             let chunks: [[String]] = stride(from: 0, to: modifierList.count, by: chunkSize).map {
                 Array(modifierList[$0..<min($0 + chunkSize, modifierList.count)])
             }
