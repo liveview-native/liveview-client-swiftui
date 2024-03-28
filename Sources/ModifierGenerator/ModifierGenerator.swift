@@ -9,7 +9,8 @@ struct ModifierGenerator: ParsableCommand {
     static let configuration: CommandConfiguration = .init(
         subcommands: [
             ModifierGenerator.Source.self,
-            ModifierGenerator.Schema.self
+            ModifierGenerator.Schema.self,
+            ModifierGenerator.List.self
         ]
     )
 
