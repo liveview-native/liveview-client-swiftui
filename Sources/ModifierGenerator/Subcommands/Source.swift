@@ -141,6 +141,21 @@ extension ModifierGenerator {
                         let context: ParseableModifierContext
                         
                         func parse(_ input: inout Substring.UTF8View) throws -> Output {
+                            let parsers = [
+                                \#(chunks
+                                    .enumerated()
+                                    .reduce([String]()) { (result, chunk) in
+                                        result + chunk.element.map({ modifier in
+                                            "_\(modifier)Modifier<R>.name: _\(modifier)Modifier<R>.parser(in: context).map({ Output.chunk\(chunk.offset)(.\(modifier)($0)) }).eraseToAnyParser(),"
+                                        })
+                                    }
+                                    .joined(separator: "\n")
+                                )
+                                \#(ModifierGenerator.extraModifierTypes.map({
+                                    "LiveViewNative.\($0).name: LiveViewNative.\($0).parser(in: context).map(Output.\($0.split(separator: "<").first!)).eraseToAnyParser(),"
+                                }).joined(separator: "\n"))
+                            ]
+            
                             let deprecations = [
                                 \#(deprecations
                                     .sorted(by: { $0.key < $1.key })
@@ -165,34 +180,9 @@ extension ModifierGenerator {
                             
                             // attempt to parse the built-in modifiers first.
                             do {
-                                switch modifierName {
-                                \#(chunks
-                                    .enumerated()
-                                    .reduce([String]()) { (result, chunk) in
-                                        result + chunk.element.map({ modifier in
-                                            """
-                                            case _\(modifier)Modifier<R>.name:
-                                                return Output.chunk\(chunk.offset)(.\(modifier)(
-                                                    try _\(modifier)Modifier<R>
-                                                        .parser(in: context)
-                                                        .parse(&input)
-                                                ))
-                                            """
-                                        })
-                                    }
-                                    .joined(separator: "\n")
-                                )
-                                \#(ModifierGenerator.extraModifierTypes.map({
-                                    """
-                                    case LiveViewNative.\($0).name:
-                                        return Output.\($0.split(separator: "<").first!)(
-                                            try LiveViewNative.\($0)
-                                                .parser(in: context)
-                                                .parse(&input)
-                                        )
-                                    """
-                                }).joined(separator: "\n"))
-                                default:
+                                if let parser = parsers[modifierName] {
+                                    return try parser.parse(&input)
+                                } else {
                                     if let deprecation = deprecations[modifierName] {
                                         throw ModifierParseError(
                                             error: .deprecatedModifier(modifierName, message: deprecation),
