@@ -47,12 +47,12 @@ struct ScaledMetric<R: RootRegistry>: View {
     
     /// The initial value to scale.
     @_documentation(visibility: public)
-    @Attribute("value") private var value: Double
+    @Attribute(.init(name: "value")) private var value: Double
     
     /// The ``LiveViewNative/SwiftUI/Font/TextStyle`` to scale with.
     /// Defaults to `body`.
     @_documentation(visibility: public)
-    @Attribute("relativeTo") private var relativeStyle: Font.TextStyle = .body
+    @Attribute(.init(name: "relativeTo")) private var relativeStyle: Font.TextStyle = .body
     
     var body: some View {
         ScaledMetricObserver(

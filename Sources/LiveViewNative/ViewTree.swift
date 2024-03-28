@@ -116,7 +116,7 @@ extension CodingUserInfoKey {
 
 @propertyWrapper
 struct ClassModifiers<R: RootRegistry>: DynamicProperty {
-    @Attribute("class", transform: { attribute in
+    @Attribute(.init(name: "class"), transform: { attribute in
         guard let classNames = attribute?.value else { return [] }
         return classNames.split(separator: " ")
     }) private var classNames: [Substring]
@@ -144,9 +144,11 @@ struct ClassModifiers<R: RootRegistry>: DynamicProperty {
         self.overrideStylesheet = nil
     }
     
-    var wrappedValue: ArraySlice<BuiltinRegistry<R>.BuiltinModifier> {
+    var wrappedValue: ArraySlice<BuiltinRegistry<R>.BuiltinModifier> = .init()
+    
+    mutating func update() {
         let sheet = overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]
-        return classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
+        wrappedValue = classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
             $0.append(contentsOf: (sheet?.classModifiers(String($1)) ?? []) as! [BuiltinRegistry<R>.BuiltinModifier])
         }
     }

@@ -39,7 +39,7 @@ struct ColorPicker<R: RootRegistry>: View {
     
     /// Enables the selection of transparent colors.
     @_documentation(visibility: public)
-    @Attribute("supportsOpacity") private var supportsOpacity: Bool
+    @Attribute(.init(name: "supportsOpacity")) private var supportsOpacity: Bool
     
     struct CodableColor: AttributeDecodable, Codable, Equatable {
         init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {

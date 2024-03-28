@@ -109,7 +109,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text>Hello, world!</Text>
     /// ```
     @_documentation(visibility: public)
-    @Attribute("content") private var content: String?
+    @Attribute(.init(name: "content")) private var content: String?
     
     /// A string value to use as the text content without modification.
     ///
@@ -121,7 +121,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text verbatim={"\n"} />
     /// ```
     @_documentation(visibility: public)
-    @Attribute("verbatim") private var verbatim: String?
+    @Attribute(.init(name: "verbatim")) private var verbatim: String?
     
     /// The value of this attribute is parsed as markdown.
     ///
@@ -131,7 +131,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text markdown="Hello, *world*!" />
     /// ```
     @_documentation(visibility: public)
-    @Attribute("markdown") private var markdown: String?
+    @Attribute(.init(name: "markdown")) private var markdown: String?
     
     /// Render an Elixir date.
     ///
@@ -143,7 +143,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text date={DateTime.utc_now()} dateStyle="date" />
     /// ```
     @_documentation(visibility: public)
-    @Attribute("date", transform: Self.formatDate(_:)) private var date: Date?
+    @Attribute(.init(name: "date"), transform: Self.formatDate(_:)) private var date: Date?
     /// The lower bound of a date range.
     ///
     /// Use this attribute with the ``dateEnd`` attribute to display a date range.
@@ -154,7 +154,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text date:start={DateTime.utc_now()} date:end={DateTime.add(DateTime.utc_now(), 3, :day)} />
     /// ```
     @_documentation(visibility: public)
-    @Attribute("date:start", transform: Self.formatDate(_:)) private var dateStart: Date?
+    @Attribute(.init(namespace: "date", name: "start"), transform: Self.formatDate(_:)) private var dateStart: Date?
     /// The upper bound of a date range.
     ///
     /// Use this attribute with the ``dateStart`` attribute to display a date range.
@@ -165,13 +165,13 @@ struct Text<R: RootRegistry>: View {
     /// <Text date:start={DateTime.utc_now()} date:end={DateTime.add(DateTime.utc_now(), 3, :day)} />
     /// ```
     @_documentation(visibility: public)
-    @Attribute("date:end", transform: Self.formatDate(_:)) private var dateEnd: Date?
+    @Attribute(.init(namespace: "date", name: "end"), transform: Self.formatDate(_:)) private var dateEnd: Date?
     
     /// A value to format.
     ///
     /// Use the ``format`` attribute to choose how this value should be formatted.
     @_documentation(visibility: public)
-    @Attribute("value") private var value: String?
+    @Attribute(.init(name: "value")) private var value: String?
     /// The format of ``value``.
     ///
     /// Possible values:
@@ -183,20 +183,20 @@ struct Text<R: RootRegistry>: View {
     /// - `currency`: The value is a `Double` and is shown as a localized currency value using the currency specified in the ``currencyCode`` attribute.
     /// - `name`: The value is a string interpreted as a person's name. The ``nameStyle`` attribute determines the format of the name and may be `short`, `medium` (default), `long`, or `abbreviated`.
     @_documentation(visibility: public)
-    @Attribute("format") private var format: String?
+    @Attribute(.init(name: "format")) private var format: String?
     /// The currency code to use with the `currency` format.
     @_documentation(visibility: public)
-    @Attribute("currencyCode") private var currencyCode: String?
+    @Attribute(.init(name: "currencyCode")) private var currencyCode: String?
     /// The style for a `name` format.
     ///
     /// See ``LiveViewNative/Foundation/PersonNameComponents/FormatStyle/Style`` for a list of possible values.
     @_documentation(visibility: public)
-    @Attribute("nameStyle") private var nameStyle: PersonNameComponents.FormatStyle.Style = .medium
+    @Attribute(.init(name: "nameStyle")) private var nameStyle: PersonNameComponents.FormatStyle.Style = .medium
     /// The style for a ``date`` value.
     ///
     /// See ``LiveViewNative/SwiftUI/Text/DateStyle`` for a list of possible values.
     @_documentation(visibility: public)
-    @Attribute("dateStyle") private var dateStyle: SwiftUI.Text.DateStyle = .date
+    @Attribute(.init(name: "dateStyle")) private var dateStyle: SwiftUI.Text.DateStyle = .date
     
     @ClassModifiers<R> private var modifiers
     let overrideStylesheet: (any StylesheetProtocol)?

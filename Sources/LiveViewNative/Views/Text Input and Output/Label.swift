@@ -39,7 +39,7 @@ struct Label<R: RootRegistry>: View {
     ///
     /// This is equivalent to the `systemName` attribute on ``Image``.
     @_documentation(visibility: public)
-    @Attribute("systemImage") private var systemImage: String?
+    @Attribute(.init(name: "systemImage")) private var systemImage: String?
     
     public var body: some View {
         SwiftUI.Label {

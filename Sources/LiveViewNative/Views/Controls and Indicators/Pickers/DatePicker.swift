@@ -37,24 +37,24 @@ struct DatePicker<R: RootRegistry>: View {
     
     ///The start date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
     @_documentation(visibility: public)
-    @Attribute("start") private var start: Date?
+    @Attribute(.init(name: "start")) private var start: Date?
     
     ///The end date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
     @_documentation(visibility: public)
-    @Attribute("end") private var end: Date?
+    @Attribute(.init(name: "end")) private var end: Date?
     
     ///Which components of the date to display in the picker. Defaults to all.
     ///
     ///Possible values:
-    ///- `hour-and-minute`
+    ///- `hourAndMinute`
     ///- `date`
     @_documentation(visibility: public)
     @Attribute(
-        "displayed-components",
+        .init(name: "displayedComponents"),
         transform: {
             #if os(iOS) || os(macOS)
             switch $0?.value {
-            case "hour-and-minute":
+            case "hourAndMinute":
                 return .hourAndMinute
             case "date":
                 return .date

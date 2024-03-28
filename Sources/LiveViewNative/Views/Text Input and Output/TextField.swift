@@ -94,10 +94,10 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     @FocusState private var isFocused: Bool
     
     @_documentation(visibility: public)
-    @Event("phx-focus", type: "focus") var focusEvent
+    @Event(.init(name: "phx-focus"), type: "focus") var focusEvent
     
     @_documentation(visibility: public)
-    @Event("phx-blur", type: "blur") var blurEvent
+    @Event(.init(name: "phx-blur"), type: "blur") var blurEvent
 
     /// Possible values:
     /// * `date-time`
@@ -108,13 +108,13 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     /// * `currency`
     /// * `name`
     @_documentation(visibility: public)
-    @Attribute("format") private var format: String?
+    @Attribute(.init(name: "format")) private var format: String?
     
     /// The currency code for the locale.
     ///
     /// Example currency codes include `USD`, `EUR`, and `JPY`.
     @_documentation(visibility: public)
-    @Attribute("currencyCode") private var currencyCode: String?
+    @Attribute(.init(name: "currencyCode")) private var currencyCode: String?
     
     /// A type used to format a person’s name with a style appropriate for the given locale.
     /// 

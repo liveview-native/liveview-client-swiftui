@@ -66,26 +66,26 @@ struct ProgressView<R: RootRegistry>: View {
     ///
     /// This attribute has no effect without ``timerIntervalEnd``.
     @_documentation(visibility: public)
-    @Attribute("timerInterval:start") private var timerIntervalStart: Date?
+    @Attribute(.init(namespace: "timerInterval", name: "start")) private var timerIntervalStart: Date?
     /// The end date for a timer.
     ///
     /// Expected to be in the ISO8601 format produced by Elixir's `DateTime`.
     ///
     /// This attribute has no effect without ``timerIntervalStart``.
     @_documentation(visibility: public)
-    @Attribute("timerInterval:end") private var timerIntervalEnd: Date?
+    @Attribute(.init(namespace: "timerInterval", name: "end")) private var timerIntervalEnd: Date?
     /// Reverses the direction of a timer progress view.
     ///
     /// This attribute has no effect without ``timerIntervalStart`` and ``timerIntervalEnd``.
     @_documentation(visibility: public)
-    @Attribute("countsDown") private var countsDown: Bool
+    @Attribute(.init(name: "countsDown")) private var countsDown: Bool
     
     /// Completed amount, out of ``total``.
     @_documentation(visibility: public)
-    @Attribute("value") private var value: Double?
+    @Attribute(.init(name: "value")) private var value: Double?
     /// The full amount.
     @_documentation(visibility: public)
-    @Attribute("total") private var total: Double = 1
+    @Attribute(.init(name: "total")) private var total: Double = 1
     
     public var body: some View {
         SwiftUI.Group {

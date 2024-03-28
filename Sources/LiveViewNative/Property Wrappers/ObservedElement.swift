@@ -51,7 +51,6 @@ import Combine
 /// ```
 @propertyWrapper
 public struct ObservedElement {
-    @Environment(\.element.nodeRef) private var nodeRef: NodeRef?
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
     @EnvironmentObject private var observer: Observer
     
@@ -77,18 +76,7 @@ public struct ObservedElement {
     
     /// The observed element in the document, with all current data.
     public var wrappedValue: ElementNode {
-        if let overrideElement {
-            return overrideElement
-        }
-        
-        guard let nodeRef,
-              let coordinator else {
-            fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
-        }
-        guard let element = coordinator.document[nodeRef].asElement() else {
-            preconditionFailure("@ObservedElement ref turned into a non-element node, this should not be possible")
-        }
-        return element
+        overrideElement ?? observer.resolvedElement
     }
     
     /// A publisher that publishes when the observed element changes.
@@ -98,10 +86,11 @@ public struct ObservedElement {
 }
 
 extension ObservedElement: DynamicProperty {
-    public func update() {
+    public mutating func update() {
         guard let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
+        
         self.observer.update(
             coordinator
         )
@@ -114,6 +103,8 @@ extension ObservedElement {
         
         let id: NodeRef
         
+        var resolvedElement: ElementNode!
+        
         var objectWillChange = ObjectWillChangePublisher()
         
         init(_ id: NodeRef) {
@@ -122,16 +113,13 @@ extension ObservedElement {
         
         fileprivate func update(_ context: CoordinatorEnvironment) {
             guard cancellable == nil else { return }
+            self.resolvedElement = context.document[id].asElement()
             cancellable = context.elementChanged(id)
                 .sink { [weak self] _ in
-                    self?.objectWillChange.send()
+                    guard let self else { return }
+                    self.resolvedElement = context.document[id].asElement()
+                    self.objectWillChange.send()
                 }
         }
-    }
-}
-
-private extension Optional where Wrapped == ElementNode {
-    var nodeRef: NodeRef? {
-        self?.node.id
     }
 }

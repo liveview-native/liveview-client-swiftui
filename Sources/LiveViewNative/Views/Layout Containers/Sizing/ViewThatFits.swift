@@ -31,7 +31,7 @@ struct ViewThatFits<R: RootRegistry>: View {
     ///
     /// See ``LiveViewNative/SwiftUI/Axis/Set``
     @_documentation(visibility: public)
-    @Attribute("axes") private var axes: Axis.Set = [.horizontal, .vertical]
+    @Attribute(.init(name: "axes")) private var axes: Axis.Set = [.horizontal, .vertical]
     
     public var body: some View {
         SwiftUI.ViewThatFits(

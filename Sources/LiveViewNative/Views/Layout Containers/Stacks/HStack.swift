@@ -29,11 +29,11 @@ struct HStack<R: RootRegistry>: View {
     ///
     /// See ``LiveViewNative/SwiftUI/VerticalAlignment``.
     @_documentation(visibility: public)
-    @Attribute("alignment") private var alignment: VerticalAlignment = .center
+    @Attribute(.init(name: "alignment")) private var alignment: VerticalAlignment = .center
     
     /// The spacing between views in the stack. If not provided, the stack uses the system spacing.
     @_documentation(visibility: public)
-    @Attribute("spacing") private var spacing: Double?
+    @Attribute(.init(name: "spacing")) private var spacing: Double?
     
     public var body: some View {
         SwiftUI.HStack(

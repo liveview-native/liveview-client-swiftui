@@ -67,7 +67,7 @@ struct ToolbarItem<R: RootRegistry>: ToolbarContent {
     
     /// The position of this item in the toolbar.
     @_documentation(visibility: public)
-    @Attribute("placement", transform: { _ in fatalError() }) private var placement: SwiftUI.ToolbarItemPlacement
+    @Attribute(.init(name: "placement"), transform: { _ in fatalError() }) private var placement: SwiftUI.ToolbarItemPlacement
     
     init(element: ElementNode) {
         self._element = .init(element: element)
@@ -95,7 +95,7 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     
     /// The unique ID for this customizable item.
     @_documentation(visibility: public)
-    @Attribute("id") private var id: String
+    @Attribute(.init(name: "id")) private var id: String
     
     /// The visibility of the item when the toolbar is not customized.
     ///
@@ -105,11 +105,11 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     ///
     /// When set to `hidden`, the item must be added to the toolbar by the user to be visible.
     @_documentation(visibility: public)
-    @Attribute("defaultVisibility", transform: { _ in fatalError() }) private var defaultVisibility: Visibility
+    @Attribute(.init(name: "defaultVisibility"), transform: { _ in fatalError() }) private var defaultVisibility: Visibility
     
     /// Ensures the item is available in the overflow menu if removed from the toolbar.
     @_documentation(visibility: public)
-    @Attribute("alwaysAvailable") private var alwaysAvailable: Bool = false
+    @Attribute(.init(name: "alwaysAvailable")) private var alwaysAvailable: Bool = false
     
     /// Changes the level of customization for this item.
     ///
@@ -118,7 +118,7 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     /// * `disabled` - The item is not customizable.
     /// * `reorderable` - The item can be reordered, but not removed.
     @_documentation(visibility: public)
-    @Attribute("customizationBehavior", transform: { _ in fatalError() }) private var customizationBehavior: ToolbarCustomizationBehavior
+    @Attribute(.init(name: "customizationBehavior"), transform: { _ in fatalError() }) private var customizationBehavior: ToolbarCustomizationBehavior
     
     init(element: ElementNode) {
         self._element = .init(element: element)

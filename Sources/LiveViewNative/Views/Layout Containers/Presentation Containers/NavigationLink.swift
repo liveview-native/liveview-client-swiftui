@@ -32,10 +32,10 @@ struct NavigationLink<R: RootRegistry>: View {
     
     /// The URL of the destination live view, relative to the current live view's URL.
     @_documentation(visibility: public)
-    @Attribute("destination") private var destination: String?
+    @Attribute(.init(name: "destination")) private var destination: String?
     /// Whether the link is disabled.
     @_documentation(visibility: public)
-    @Attribute("disabled") private var disabled: Bool
+    @Attribute(.init(name: "disabled")) private var disabled: Bool
     
     @ViewBuilder
     public var body: some View {

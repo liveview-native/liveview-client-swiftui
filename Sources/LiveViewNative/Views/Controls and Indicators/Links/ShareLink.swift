@@ -80,16 +80,16 @@ struct ShareLink<R: RootRegistry>: View {
     
     /// The title to use when sharing to a service with a subject field.
     @_documentation(visibility: public)
-    @Attribute("subject", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var subject: SwiftUI.Text?
+    @Attribute(.init(name: "subject"), transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var subject: SwiftUI.Text?
     
     /// The description to use when sharing to a service with a message field.
     @_documentation(visibility: public)
-    @Attribute("message", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var message: SwiftUI.Text?
+    @Attribute(.init(name: "message"), transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var message: SwiftUI.Text?
     
     /// A JSON-encoded list of strings to share.
     @_documentation(visibility: public)
     @Attribute(
-        "items",
+        .init(name: "items"),
         transform: {
             $0?.value.flatMap({
                 guard let data = $0.data(using: .utf8) else { return nil }
@@ -100,7 +100,7 @@ struct ShareLink<R: RootRegistry>: View {
     
     /// A string to share.
     @_documentation(visibility: public)
-    @Attribute("item") private var item: String?
+    @Attribute(.init(name: "item")) private var item: String?
     
     public var body: some View {
         #if !os(tvOS)
