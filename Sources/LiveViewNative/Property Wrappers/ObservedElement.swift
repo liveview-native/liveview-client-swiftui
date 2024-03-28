@@ -121,5 +121,20 @@ extension ObservedElement {
                     self.objectWillChange.send()
                 }
         }
+        
+        struct Applicator<Content: View>: View {
+            @StateObject private var observer: Observer
+            let content: Content
+            
+            init(_ id: NodeRef, @ViewBuilder content: () -> Content) {
+                self._observer = .init(wrappedValue: .init(id))
+                self.content = content()
+            }
+            
+            var body: some View {
+                content
+                    .environmentObject(observer)
+            }
+        }
     }
 }

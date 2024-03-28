@@ -199,21 +199,10 @@ struct Text<R: RootRegistry>: View {
     @Attribute(.init(name: "dateStyle")) private var dateStyle: SwiftUI.Text.DateStyle = .date
     
     @ClassModifiers<R> private var modifiers
-    let overrideStylesheet: (any StylesheetProtocol)?
-    @Environment(\.stylesheets) private var stylesheets
-    var stylesheet: (any StylesheetProtocol)? {
-        overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]
-    }
     
     let overrideText: SwiftUI.Text?
     
-    init() {
-        self.overrideStylesheet = nil
-        self.overrideText = nil
-    }
-    
     init(text: SwiftUI.Text? = nil) {
-        self.overrideStylesheet = nil
         self.overrideText = text
     }
     
@@ -246,16 +235,17 @@ struct Text<R: RootRegistry>: View {
         self._nameStyle = .init(wrappedValue: .medium, "nameStyle", element: element)
         self._dateStyle = .init(wrappedValue: .date, "dateStyle", element: element)
         self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
-        self.overrideStylesheet = overrideStylesheet
         self.overrideText = overrideText
     }
     
     public var body: SwiftUI.Text {
-        return modifiers.reduce(text) { result, modifier in
-            if case let ._anyTextModifier(textModifier) = modifier {
-                return textModifier.apply(to: result, on: element)
-            } else {
-                return result
+        if _modifiers.overrideStylesheet != nil {
+            return modifiers.reduce(text) { result, modifier in
+                if case let ._anyTextModifier(textModifier) = modifier {
+                    return textModifier.apply(to: result, on: element)
+                } else {
+                    return result
+                }
             }
         }
     }
@@ -339,13 +329,16 @@ struct Text<R: RootRegistry>: View {
                     else { return }
                     switch element.tag {
                     case "Text":
-                        prev = prev + Self(element: element, overrideStylesheet: stylesheet).body
+                        prev = prev + Self(
+                            element: element,
+                            overrideStylesheet: _modifiers.overrideStylesheet ?? _modifiers.stylesheets[ObjectIdentifier(R.self)]
+                        ).body
                     case "Link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
                     case "Image":
-                        if let image = ImageView<R>(element: element, overrideStylesheet: stylesheet).body {
+                        if let image = ImageView<R>(element: element, overrideStylesheet: _modifiers.overrideStylesheet ?? _modifiers.stylesheets[ObjectIdentifier(R.self)]).body {
                             prev = prev + SwiftUI.Text(image)
                         }
                     default:
