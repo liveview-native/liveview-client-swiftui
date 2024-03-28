@@ -14,10 +14,6 @@ struct ModifierGenerator: ParsableCommand {
     )
 
     static let extraModifierTypes: Set<String> = [
-        // Image modifiers
-        "_ResizableModifier",
-        "_RenderingModeModifier",
-
         // Shape modifiers
         "_FillModifier",
         "_RotationModifier",
@@ -142,6 +138,23 @@ struct ModifierGenerator: ParsableCommand {
         "focusScope",
         "prefersDefaultFocus",
         
+        // manually implemented for `Text`
+        "font",
+        "fontWeight",
+        "fontDesign",
+        "fontWidth",
+        "foregroundStyle",
+        "bold",
+        "italic",
+        "strikethrough",
+        "underline",
+        "monospaced",
+        "monospacedDigit",
+        "kerning",
+        "tracking",
+        "baselineOffset",
+        "textScale",
+        
         // fixme: missing types
         "accessibilityRotor",
         "accessibilityChartDescriptor",
@@ -170,7 +183,6 @@ struct ModifierGenerator: ParsableCommand {
         "pageCommand",
         "pasteDestination",
         "sensoryFeedback",
-        "symbolEffect",
         "transaction",
         "userActivity",
         "allowedDynamicRange",

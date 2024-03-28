@@ -28,6 +28,7 @@ extension ModifierGenerator {
                 // File generated with `swift run ModifierGenerator "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
                 
                 import SwiftUI
+                import Symbols
                 import LiveViewNativeStylesheet
                 
                 
@@ -103,6 +104,8 @@ extension ModifierGenerator {
                     \#(chunks.indices.map({ i in "case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
                     \#(ModifierGenerator.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
                     case _customRegistryModifier(R.CustomModifier)
+                    case _anyTextModifier(_AnyTextModifier<R>)
+                    case _anyImageModifier(_AnyImageModifier<R>)
                     
                     func body(content: Content) -> some View {
                         switch self {
@@ -120,6 +123,10 @@ extension ModifierGenerator {
                         }).joined(separator: "\n"))
                         case let ._customRegistryModifier(modifier):
                             content.modifier(modifier)
+                        case let ._anyTextModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyImageModifier(modifier):
+                            content.modifier(modifier)
                         }
                     }
                     
@@ -134,19 +141,6 @@ extension ModifierGenerator {
                         let context: ParseableModifierContext
                         
                         func parse(_ input: inout Substring.UTF8View) throws -> Output {
-                            let parsers = [
-                                \#(chunks
-                                    .enumerated()
-                                    .reduce([String]()) { (result, chunk) in
-                                        result + chunk.element.map({ modifier in
-                                            "_\(modifier)Modifier<R>.name: _\(modifier)Modifier<R>.parser(in: context).map({ Output.chunk\(chunk.offset)(.\(modifier)($0)) }).eraseToAnyParser(),"
-                                        })
-                                    }
-                                    .joined(separator: "\n")
-                                )
-                                \#(ModifierGenerator.extraModifierTypes.map({ "LiveViewNative.\($0).name: LiveViewNative.\($0).parser(in: context).map(Output.\($0.split(separator: "<").first!)).eraseToAnyParser()," }).joined(separator: "\n"))
-                            ]
-            
                             let deprecations = [
                                 \#(deprecations
                                     .sorted(by: { $0.key < $1.key })
@@ -171,9 +165,34 @@ extension ModifierGenerator {
                             
                             // attempt to parse the built-in modifiers first.
                             do {
-                                if let parser = parsers[modifierName] {
-                                    return try parser.parse(&input)
-                                } else {
+                                switch modifierName {
+                                \#(chunks
+                                    .enumerated()
+                                    .reduce([String]()) { (result, chunk) in
+                                        result + chunk.element.map({ modifier in
+                                            """
+                                            case _\(modifier)Modifier<R>.name:
+                                                return Output.chunk\(chunk.offset)(.\(modifier)(
+                                                    try _\(modifier)Modifier<R>
+                                                        .parser(in: context)
+                                                        .parse(&input)
+                                                ))
+                                            """
+                                        })
+                                    }
+                                    .joined(separator: "\n")
+                                )
+                                \#(ModifierGenerator.extraModifierTypes.map({
+                                    """
+                                    case LiveViewNative.\($0).name:
+                                        return Output.\($0.split(separator: "<").first!)(
+                                            try LiveViewNative.\($0)
+                                                .parser(in: context)
+                                                .parse(&input)
+                                        )
+                                    """
+                                }).joined(separator: "\n"))
+                                default:
                                     if let deprecation = deprecations[modifierName] {
                                         throw ModifierParseError(
                                             error: .deprecatedModifier(modifierName, message: deprecation),
@@ -187,21 +206,31 @@ extension ModifierGenerator {
                                     }
                                 }
                             } catch let builtinError {
-                                // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
                                 input = copy
-                                do {
-                                    return try ._customRegistryModifier(R.parseModifier(&input, in: context))
-                                } catch let error as ModifierParseError {
-                                    if let deprecation = deprecations[modifierName] {
-                                        throw ModifierParseError(
-                                            error: .deprecatedModifier(modifierName, message: deprecation),
-                                            metadata: metadata
-                                        )
+                                if let textModifier = try? _AnyTextModifier<R>.parser(in: context).parse(&input) {
+                                    return ._anyTextModifier(textModifier)
+                                } else {
+                                    input = copy
+                                    if let imageModifier = try? _AnyImageModifier<R>.parser(in: context).parse(&input) {
+                                        return ._anyImageModifier(imageModifier)
                                     } else {
-                                        throw error
+                                        // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
+                                        input = copy
+                                        do {
+                                            return try ._customRegistryModifier(R.parseModifier(&input, in: context))
+                                        } catch let error as ModifierParseError {
+                                            if let deprecation = deprecations[modifierName] {
+                                                throw ModifierParseError(
+                                                    error: .deprecatedModifier(modifierName, message: deprecation),
+                                                    metadata: metadata
+                                                )
+                                            } else {
+                                                throw error
+                                            }
+                                        } catch {
+                                            throw builtinError
+                                        }
                                     }
-                                } catch {
-                                    throw builtinError
                                 }
                             }
                         }
