@@ -8,7 +8,6 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "Stylesheet")
 protocol StylesheetProtocol<R> {
     associatedtype R: RootRegistry
     
-    func classModifiers(_ name: String) -> [any ViewModifier]
     func merge(with other: Self) -> Self
 }
 
@@ -28,10 +27,6 @@ struct Stylesheet<R: RootRegistry> {
 }
 
 extension Stylesheet: StylesheetProtocol {
-    func classModifiers(_ name: String) -> [any ViewModifier] {
-        classes[name, default: []]
-    }
-    
     func merge(with other: Stylesheet<R>) -> Stylesheet<R> {
         .init(content: self.content + other.content, classes: classes.merging(other.classes, uniquingKeysWith: { $1 }))
     }

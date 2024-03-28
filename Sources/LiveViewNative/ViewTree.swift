@@ -48,15 +48,16 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let withID = applyID(element: element, to: bound)
         let withIDAndTag = applyTag(element: element, to: withID)
 
-        return withIDAndTag
-            .environment(\.element, element)
-            .environmentObject(ObservedElement.Observer(element.node.id))
+        return ObservedElement.Observer.Applicator(element.node.id) {
+            withIDAndTag
+                .environment(\.element, element)
+        }
             .preference(key: _ProvidedBindingsKey.self, value: []) // reset for the next View.
     }
 
     @ViewBuilder
     private func applyID(element: ElementNode, to view: some View) -> some View {
-        if let id = element.attributeValue(for: "id") {
+        if let id = element.attributeValue(for: .init(name: "id")) {
             view.id(id)
         } else {
             view
@@ -65,7 +66,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
 
     @ViewBuilder
     private func applyTag(element: ElementNode, to view: some View) -> some View {
-        if let tag = element.attributeValue(for: "tag") {
+        if let tag = element.attributeValue(for: .init(name: "tag")) {
             view.tag(Optional<String>.some(tag))
         } else {
             view
@@ -89,7 +90,9 @@ struct ViewTreeBuilder<R: RootRegistry> {
     ) -> some View {
         view.applyBindings(
             element.attributes.filter({
-                $0.name.rawValue.starts(with: "phx-") && $0.value != nil
+                $0.name.namespace == nil
+                    && $0.name.name.hasPrefix("phx-")
+                    && $0.value != nil
             })[...],
             element: element,
             context: context
@@ -118,9 +121,9 @@ extension CodingUserInfoKey {
 struct ClassModifiers<R: RootRegistry>: DynamicProperty {
     @Attribute(.init(name: "class"), transform: { attribute in
         guard let classNames = attribute?.value else { return [] }
-        return classNames.split(separator: " ")
+        return classNames.split(separator: " " as Character)
     }) private var classNames: [Substring]
-    @Environment(\.stylesheets) private var stylesheets
+    @Environment(\.stylesheets) var stylesheets
     let overrideStylesheet: (any StylesheetProtocol)?
     
     init(overrideStylesheet: (any StylesheetProtocol)?) {
@@ -130,7 +133,7 @@ struct ClassModifiers<R: RootRegistry>: DynamicProperty {
     init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
         self._classNames = .init(
             wrappedValue: nil,
-            "class",
+            .init(name: "class"),
             transform: { attribute in
                 guard let classNames = attribute?.value else { return [] }
                 return classNames.split(separator: " ")
@@ -147,9 +150,9 @@ struct ClassModifiers<R: RootRegistry>: DynamicProperty {
     var wrappedValue: ArraySlice<BuiltinRegistry<R>.BuiltinModifier> = .init()
     
     mutating func update() {
-        let sheet = overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]
+        let sheet = (overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]) as? Stylesheet<R>
         wrappedValue = classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
-            $0.append(contentsOf: (sheet?.classModifiers(String($1)) ?? []) as! [BuiltinRegistry<R>.BuiltinModifier])
+            $0.append(contentsOf: sheet?.classes[String($1)] ?? [])
         }
     }
 }
@@ -257,7 +260,7 @@ private enum ForEachElement: Identifiable {
 func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContextStorage<R>) -> some DynamicViewContent {
     let elements = nodes.map { (node) -> ForEachElement in
         if let element = node.asElement(),
-           let id = element.attributeValue(for: "id")
+           let id = element.attributeValue(for: .init(name: "id"))
         {
             return .keyed(node, id: id)
         } else {

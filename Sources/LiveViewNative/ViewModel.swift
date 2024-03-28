@@ -55,8 +55,8 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
     
     @_spi(LiveForm) public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
-        self.changeEvent = element.attributeValue(for: "phx-change")
-        self.submitEvent = element.attributeValue(for: "phx-submit")
+        self.changeEvent = element.attributeValue(for: .init(name: "phx-change"))
+        self.submitEvent = element.attributeValue(for: .init(name: "phx-submit"))
         self.submitAction = submitAction
     }
     
