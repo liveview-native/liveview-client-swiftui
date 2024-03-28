@@ -141,6 +141,22 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         }
     }
     
+    public func hasTemplate(
+        of element: ElementNode,
+        withName name: String,
+        value: String
+    ) -> Bool {
+        hasTemplate(of: element, withName: "\(name).\(value)")
+    }
+    
+    public func buildChildren(
+        of element: ElementNode,
+        forTemplate template: String,
+        withValue value: String
+    ) -> some View {
+        buildChildren(of: element, forTemplate: "\(template).\(value)")
+    }
+    
     /// Get the children of an element with the correct template attribute.
     func children(
         of element: ElementNode,

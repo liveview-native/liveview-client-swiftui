@@ -205,11 +205,19 @@ struct Text<R: RootRegistry>: View {
         overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]
     }
     
+    let overrideText: SwiftUI.Text?
+    
     init() {
         self.overrideStylesheet = nil
+        self.overrideText = nil
     }
     
-    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
+    init(text: SwiftUI.Text? = nil) {
+        self.overrideStylesheet = nil
+        self.overrideText = text
+    }
+    
+    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?, overrideText: SwiftUI.Text? = nil) {
         self._element = .init(element: element)
         self._content = .init(wrappedValue: nil, "content", element: element)
         self._verbatim = .init(wrappedValue: nil, "verbatim", element: element)
@@ -239,19 +247,16 @@ struct Text<R: RootRegistry>: View {
         self._dateStyle = .init(wrappedValue: .date, "dateStyle", element: element)
         self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
         self.overrideStylesheet = overrideStylesheet
+        self.overrideText = overrideText
     }
     
     public var body: SwiftUI.Text {
-        if let overrideStylesheet {
-            return modifiers.reduce(text) { result, modifier in
-                if case let ._anyTextModifier(textModifier) = modifier {
-                    return textModifier.apply(to: result, on: element)
-                } else {
-                    return result
-                }
+        return modifiers.reduce(text) { result, modifier in
+            if case let ._anyTextModifier(textModifier) = modifier {
+                return textModifier.apply(to: result, on: element)
+            } else {
+                return result
             }
-        } else {
-            return text
         }
     }
     
@@ -264,7 +269,9 @@ struct Text<R: RootRegistry>: View {
     }
     
     private var text: SwiftUI.Text {
-        if let content {
+        if let overrideText {
+            return overrideText
+        } else if let content {
             return SwiftUI.Text(content)
         } else if let verbatim {
             return SwiftUI.Text(verbatim: verbatim)
@@ -338,7 +345,7 @@ struct Text<R: RootRegistry>: View {
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
                     case "Image":
-                        if let image = ImageView<R>(element: element).body {
+                        if let image = ImageView<R>(element: element, overrideStylesheet: stylesheet).body {
                             prev = prev + SwiftUI.Text(image)
                         }
                     default:

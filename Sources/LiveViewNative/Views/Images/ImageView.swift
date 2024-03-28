@@ -75,29 +75,42 @@ struct ImageView<R: RootRegistry>: View {
     @_documentation(visibility: public)
     @Attribute("variableValue") private var variableValue: Double?
     
-    @Environment(\.imageModifiers) private var modifiers
+    @ClassModifiers<R> private var modifiers
+    let overrideImage: SwiftUI.Image?
     
-    init() {}
+    init() {
+        self.overrideImage = nil
+    }
     
-    init(element: ElementNode) {
+    init(image: SwiftUI.Image? = nil) {
+        self.overrideImage = image
+    }
+    
+    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?, overrideImage: SwiftUI.Image? = nil) {
         self._element = .init(element: element)
         self._systemName = .init("systemName", element: element)
         self._variableValue = .init("variableValue", element: element)
         self._name = .init("name", element: element)
+        self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
+        self.overrideImage = overrideImage
     }
     
     public var body: SwiftUI.Image? {
         image.flatMap({ (image: SwiftUI.Image) -> SwiftUI.Image in
-            guard !_element.isConstant
-            else { return image }
-            return modifiers.reduce(image) { image, modifier in
-                modifier.apply(to: image)
+            return modifiers.reduce(image) { result, modifier in
+                if case let ._anyImageModifier(imageModifier) = modifier {
+                    return imageModifier.apply(to: result, on: element)
+                } else {
+                    return result
+                }
             }
         })
     }
     
     var image: SwiftUI.Image? {
-        if let systemName {
+        if let overrideImage {
+            return overrideImage
+        } else if let systemName {
             return SwiftUI.Image(systemName: systemName, variableValue: variableValue)
         } else if let name {
             if let variableValue {

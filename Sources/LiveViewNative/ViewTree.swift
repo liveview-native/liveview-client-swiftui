@@ -123,6 +123,10 @@ struct ClassModifiers<R: RootRegistry>: DynamicProperty {
     @Environment(\.stylesheets) private var stylesheets
     let overrideStylesheet: (any StylesheetProtocol)?
     
+    init(overrideStylesheet: (any StylesheetProtocol)?) {
+        self.overrideStylesheet = overrideStylesheet
+    }
+    
     init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
         self._classNames = .init(
             wrappedValue: nil,
