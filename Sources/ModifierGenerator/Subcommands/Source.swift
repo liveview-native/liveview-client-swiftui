@@ -36,7 +36,7 @@ extension ModifierGenerator {
             ))
             
             let (modifiers, deprecations) = ModifierGenerator.modifiers(from: sourceFile)
-            for (modifier, signatures) in modifiers {
+            for (modifier, signatures) in modifiers.sorted(by: { $0.key < $1.key }) {
                 FileHandle.standardOutput.write(Data(
                     #"""
                     @ParseableExpression
