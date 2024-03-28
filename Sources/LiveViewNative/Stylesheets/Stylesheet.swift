@@ -5,12 +5,6 @@ import OSLog
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "Stylesheet")
 
-protocol StylesheetProtocol<R> {
-    associatedtype R: RootRegistry
-    
-    func merge(with other: Self) -> Self
-}
-
 struct Stylesheet<R: RootRegistry> {
     let content: [String]
     let classes: [String:[BuiltinRegistry<R>.BuiltinModifier]]
@@ -24,9 +18,7 @@ struct Stylesheet<R: RootRegistry> {
         self.content = [data]
         self.classes = try StylesheetParser<BuiltinRegistry<R>.BuiltinModifier>(context: context).parse(data.utf8)
     }
-}
-
-extension Stylesheet: StylesheetProtocol {
+    
     func merge(with other: Stylesheet<R>) -> Stylesheet<R> {
         .init(content: self.content + other.content, classes: classes.merging(other.classes, uniquingKeysWith: { $1 }))
     }

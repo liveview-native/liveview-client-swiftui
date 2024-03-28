@@ -143,7 +143,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text date={DateTime.utc_now()} dateStyle="date" />
     /// ```
     @_documentation(visibility: public)
-    @Attribute(.init(name: "date"), transform: Self.formatDate(_:)) private var date: Date?
+    @Attribute(.init(name: "date")) private var date: Date?
     /// The lower bound of a date range.
     ///
     /// Use this attribute with the ``dateEnd`` attribute to display a date range.
@@ -154,7 +154,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text date:start={DateTime.utc_now()} date:end={DateTime.add(DateTime.utc_now(), 3, :day)} />
     /// ```
     @_documentation(visibility: public)
-    @Attribute(.init(namespace: "date", name: "start"), transform: Self.formatDate(_:)) private var dateStart: Date?
+    @Attribute(.init(namespace: "date", name: "start")) private var dateStart: Date?
     /// The upper bound of a date range.
     ///
     /// Use this attribute with the ``dateStart`` attribute to display a date range.
@@ -165,7 +165,7 @@ struct Text<R: RootRegistry>: View {
     /// <Text date:start={DateTime.utc_now()} date:end={DateTime.add(DateTime.utc_now(), 3, :day)} />
     /// ```
     @_documentation(visibility: public)
-    @Attribute(.init(namespace: "date", name: "end"), transform: Self.formatDate(_:)) private var dateEnd: Date?
+    @Attribute(.init(namespace: "date", name: "end")) private var dateEnd: Date?
     
     /// A value to format.
     ///
@@ -206,26 +206,23 @@ struct Text<R: RootRegistry>: View {
         self.overrideText = text
     }
     
-    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?, overrideText: SwiftUI.Text? = nil) {
+    init(element: ElementNode, overrideStylesheet: Stylesheet<R>?, overrideText: SwiftUI.Text? = nil) {
         self._element = .init(element: element)
         self._content = .init(wrappedValue: nil, "content", element: element)
         self._verbatim = .init(wrappedValue: nil, "verbatim", element: element)
         self._date = .init(
             wrappedValue: nil,
             "date",
-            transform: Self.formatDate(_:),
             element: element
         )
         self._dateStart = .init(
             wrappedValue: nil,
             "date:start",
-            transform: Self.formatDate(_:),
             element: element
         )
         self._dateEnd = .init(
             wrappedValue: nil,
             "date:end",
-            transform: Self.formatDate(_:),
             element: element
         )
         self._markdown = .init(wrappedValue: nil, "markdown", element: element)
@@ -250,14 +247,6 @@ struct Text<R: RootRegistry>: View {
         }
     }
     
-    private static func formatDate(_ value: LiveViewNativeCore.Attribute?) throws -> Date? {
-        try value.flatMap(\.value).flatMap(formatDate(_:))
-    }
-    
-    private static func formatDate(_ value: String) throws -> Date {
-        try Date(value, strategy: .elixirDateTimeOrDate)
-    }
-    
     private var text: SwiftUI.Text {
         if let overrideText {
             return overrideText
@@ -277,7 +266,7 @@ struct Text<R: RootRegistry>: View {
             let innerText = value ?? element.innerText()
             switch format {
             case "dateTime":
-                if let date = try? Self.formatDate(innerText) {
+                if let date = try? Date(innerText, strategy: .elixirDateTimeOrDate) {
                     return SwiftUI.Text(date, format: .dateTime)
                 } else {
                     return SwiftUI.Text(innerText)
@@ -289,7 +278,7 @@ struct Text<R: RootRegistry>: View {
                     return SwiftUI.Text(innerText)
                 }
             case "iso8601":
-                if let date = try? Self.formatDate(innerText) {
+                if let date = try? Date(innerText, strategy: .elixirDateTimeOrDate) {
                     return SwiftUI.Text(date, format: .iso8601)
                 } else {
                     return SwiftUI.Text(innerText)
@@ -324,28 +313,34 @@ struct Text<R: RootRegistry>: View {
             }
         } else {
             return element.children().reduce(into: SwiftUI.Text("")) { prev, next in
-                if let element = next.asElement() {
-                    guard !element.attributes.contains(where: { $0.name == "template" })
+                switch next.data {
+                case let .element(data):
+                    guard !data.attributes.contains(where: { $0.name == "template" })
                     else { return }
-                    switch element.tag {
+                    
+                    let element = ElementNode(node: next, data: data)
+                    
+                    switch data.tag {
                     case "Text":
                         prev = prev + Self(
                             element: element,
-                            overrideStylesheet: _modifiers.overrideStylesheet ?? _modifiers.stylesheets[ObjectIdentifier(R.self)]
+                            overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<R>)
                         ).body
                     case "Link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
                     case "Image":
-                        if let image = ImageView<R>(element: element, overrideStylesheet: _modifiers.overrideStylesheet ?? _modifiers.stylesheets[ObjectIdentifier(R.self)]).body {
+                        if let image = ImageView<R>(element: element, overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<R>)).body {
                             prev = prev + SwiftUI.Text(image)
                         }
                     default:
                         break
                     }
-                } else {
-                    prev = prev + SwiftUI.Text(next.toString())
+                case let .leaf(text):
+                    prev = prev + SwiftUI.Text(text)
+                case .root:
+                    break
                 }
             }
         }
