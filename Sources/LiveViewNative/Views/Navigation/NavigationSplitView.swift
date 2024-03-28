@@ -12,28 +12,34 @@ struct NavigationSplitView<R: RootRegistry>: View {
     @ObservedElement private var element
     
     @EnvironmentObject private var session: LiveSessionCoordinator<R>
+    @Environment(\.navigationSplitViewContext) private var navigationSplitViewContext
     
     var body: some View {
-        if hasContent && hasDetail {
-            SwiftUI.NavigationSplitView(
-                sidebar: {
-                    sidebar
-                },
-                content: {
-                    content
-                }, detail: {
-                    detail
-                }
-            )
+        if navigationSplitViewContext {
+            sidebar
         } else {
-            SwiftUI.NavigationSplitView(
-                sidebar: {
-                    sidebar
-                }, detail: {
-                    content
-                    detail
-                }
-            )
+            if hasContent && hasDetail {
+                SwiftUI.NavigationSplitView(
+                    sidebar: {
+                        sidebar
+                    },
+                    content: {
+                        content
+                    }, detail: {
+                        detail
+                    }
+                )
+                .environment(\.navigationSplitViewContext, true)
+            } else {
+                SwiftUI.NavigationSplitView(
+                    sidebar: {
+                        sidebar
+                    }, detail: {
+                        detail
+                    }
+                )
+                .environment(\.navigationSplitViewContext, true)
+            }
         }
     }
     
@@ -56,5 +62,20 @@ struct NavigationSplitView<R: RootRegistry>: View {
     }
     var detail: some View {
         context.buildChildren(of: element, forTemplate: "detail", includeDefaultSlot: false)
+    }
+}
+
+extension EnvironmentValues {
+    private enum NavigationSplitViewContext: EnvironmentKey {
+        static let defaultValue = false
+    }
+    
+    /// Whether the navigation structure is a `NavigationSplitView`.
+    /// Set to `true` by `NavigationSplitView` and `false` by `NavigationStack`.
+    ///
+    /// Used by `NavigationLink` to determine how navigation connections are established.
+    var navigationSplitViewContext: Bool {
+        get { self[NavigationSplitViewContext.self] }
+        set { self[NavigationSplitViewContext.self] = newValue }
     }
 }
