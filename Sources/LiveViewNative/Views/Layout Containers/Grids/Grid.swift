@@ -48,16 +48,16 @@ struct Grid<R: RootRegistry>: View {
     @Attribute(.init(name: "alignment")) private var alignment: Alignment = .center
     /// The spacing between elements in a ``GridRow``.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "horizontalSpacing")) private var horizontalSpacing: Double?
+    @Attribute(.init(name: "horizontalSpacing")) private var horizontalSpacing: CGFloat?
     /// The spacing between ``GridRow`` elements.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "verticalSpacing")) private var verticalSpacing: Double?
+    @Attribute(.init(name: "verticalSpacing")) private var verticalSpacing: CGFloat?
     
     public var body: some View {
         SwiftUI.Grid(
             alignment: alignment,
-            horizontalSpacing: horizontalSpacing.flatMap(CGFloat.init),
-            verticalSpacing: verticalSpacing.flatMap(CGFloat.init)
+            horizontalSpacing: horizontalSpacing,
+            verticalSpacing: verticalSpacing
         ) {
             context.buildChildren(of: element)
         }
