@@ -43,7 +43,7 @@ struct LazyVStack<R: RootRegistry>: View {
     @Attribute(.init(name: "alignment")) private var alignment: HorizontalAlignment = .center
     /// The spacing between views in the stack. If not provided, the stack uses the system spacing.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "spacing")) private var spacing: Double?
+    @Attribute(.init(name: "spacing")) private var spacing: CGFloat?
     /// Pins section headers/footers.
     ///
     /// See ``LiveViewNative/SwiftUI/PinnedScrollableViews``.
@@ -53,7 +53,7 @@ struct LazyVStack<R: RootRegistry>: View {
     public var body: some View {
         SwiftUI.LazyVStack(
             alignment: alignment,
-            spacing: spacing.flatMap(CGFloat.init),
+            spacing: spacing,
             pinnedViews: pinnedViews
         ) {
             context.buildChildren(of: element)

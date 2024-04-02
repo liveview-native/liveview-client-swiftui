@@ -32,12 +32,12 @@ struct VStack<R: RootRegistry>: View {
     
     /// The spacing between views in the stack. If not provided, the stack uses the system spacing.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "spacing")) private var spacing: Double?
+    @Attribute(.init(name: "spacing")) private var spacing: CGFloat?
     
     public var body: some View {
         SwiftUI.VStack(
             alignment: alignment,
-            spacing: spacing.flatMap(CGFloat.init)
+            spacing: spacing
         ) {
             context.buildChildren(of: element)
         }
