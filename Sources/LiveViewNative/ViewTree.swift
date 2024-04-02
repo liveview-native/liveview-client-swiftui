@@ -199,9 +199,10 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let modifiers: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>
     
     var body: some View {
-        parent
-            .modifier(modifiers.first!)
-            .applyModifiers(modifiers.dropFirst())
+        var modifiers = modifiers
+        return parent
+            .modifier(modifiers.removeFirst())
+            .applyModifiers(modifiers)
     }
 }
 
