@@ -86,7 +86,7 @@ struct ImageView<R: RootRegistry>: View {
         self.overrideImage = image
     }
     
-    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?, overrideImage: SwiftUI.Image? = nil) {
+    init(element: ElementNode, overrideStylesheet: Stylesheet<R>?, overrideImage: SwiftUI.Image? = nil) {
         self._element = .init(element: element)
         self._systemName = .init("systemName", element: element)
         self._variableValue = .init("variableValue", element: element)

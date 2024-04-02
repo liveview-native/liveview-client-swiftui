@@ -244,6 +244,8 @@ struct Text<R: RootRegistry>: View {
                     return result
                 }
             }
+        } else {
+            return text
         }
     }
     
