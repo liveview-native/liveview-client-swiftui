@@ -27,9 +27,9 @@ struct BuiltinRegistryGenerator: ParsableCommand {
     ]
     
     static let additionalViews = [
-        "Capsule": "Shape(shape: Capsule(from: element))",
-        "Circle": "Shape(shape: Circle())",
-        "ContainerRelativeShape": "Shape(shape: ContainerRelativeShape())",
+        "Capsule": "Shape<R, Capsule>(shape: Capsule(from: element))",
+        "Circle": "Shape<R, Circle>(shape: Circle())",
+        "ContainerRelativeShape": "Shape<R, ContainerRelativeShape>(shape: ContainerRelativeShape())",
         "Divider": "Divider()",
         "EditButton": """
         #if os(iOS)
@@ -38,9 +38,9 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         """,
         "Ellipse": "Ellipse()",
         "NamespaceContext": "NamespaceContext<R>()",
-        "Rectangle": "Shape(shape: Rectangle())",
+        "Rectangle": "Shape<R, Rectangle>(shape: Rectangle())",
         "RenameButton": "RenameButton()",
-        "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
+        "RoundedRectangle": "Shape<R, RoundedRectangle>(shape: RoundedRectangle(from: element))",
         "Color": "ColorView()",
         "Image": "ImageView<R>()",
         "phx-main": "PhxMain<R>()"

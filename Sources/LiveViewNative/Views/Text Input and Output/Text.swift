@@ -97,9 +97,9 @@ import LiveViewNativeCore
 /// * ``dateStyle``
 @_documentation(visibility: public)
 @LiveElement
-struct Text<R: RootRegistry>: View {
+struct Text<Root: RootRegistry>: View {
     @LiveElementIgnored
-    @ClassModifiers<R>
+    @ClassModifiers<Root>
     private var modifiers
     
     private let overrideText: SwiftUI.Text?
@@ -122,12 +122,12 @@ struct Text<R: RootRegistry>: View {
     private var nameStyle: PersonNameComponents.FormatStyle.Style = .medium
     private var dateStyle: SwiftUI.Text.DateStyle = .date
     
-    init(text: SwiftUI.Text? = nil, overrideStylesheet: Stylesheet<R>? = nil) {
+    init(text: SwiftUI.Text? = nil, overrideStylesheet: Stylesheet<Root>? = nil) {
         self.overrideText = text
         self._modifiers = .init(overrideStylesheet: overrideStylesheet)
     }
     
-    init(element: ElementNode, overrideStylesheet: Stylesheet<R>? = nil) {
+    init(element: ElementNode, overrideStylesheet: Stylesheet<Root>? = nil) {
         self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
         self.overrideText = nil
     }
@@ -136,7 +136,7 @@ struct Text<R: RootRegistry>: View {
         if _modifiers.overrideStylesheet != nil {
             return modifiers.reduce(text) { result, modifier in
                 if case let ._anyTextModifier(textModifier) = modifier {
-                    return textModifier.apply(to: result, on: $_$element)
+                    return textModifier.apply(to: result, on: $liveElement.element)
                 } else {
                     return result
                 }
@@ -162,7 +162,7 @@ struct Text<R: RootRegistry>: View {
         } else if let markdown {
             return SwiftUI.Text(.init(markdown))
         } else if let format {
-            let innerText = value ?? $_$element.innerText()
+            let innerText = value ?? $liveElement.element.innerText()
             switch format {
             case "dateTime":
                 if let date = try? Date(innerText, strategy: .elixirDateTimeOrDate) {
@@ -211,7 +211,7 @@ struct Text<R: RootRegistry>: View {
                 return SwiftUI.Text(innerText)
             }
         } else {
-            return $_$element.children().reduce(into: SwiftUI.Text("")) { prev, next in
+            return $liveElement.element.children().reduce(into: SwiftUI.Text("")) { prev, next in
                 switch next.data {
                 case let .element(data):
                     guard !data.attributes.contains(where: { $0.name == "template" })
@@ -223,14 +223,14 @@ struct Text<R: RootRegistry>: View {
                     case "Text":
                         prev = prev + Self(
                             element: element,
-                            overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<R>)
+                            overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<Root>)
                         ).body
                     case "Link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
                     case "Image":
-                        if let image = ImageView<R>(element: element, overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<R>)).body {
+                        if let image = ImageView<Root>(element: element, overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<Root>)).body {
                             prev = prev + SwiftUI.Text(image)
                         }
                     default:

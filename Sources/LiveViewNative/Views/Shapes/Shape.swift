@@ -17,7 +17,7 @@ import LiveViewNativeCore
 /// - ``strokeColor``
 @_documentation(visibility: public)
 @LiveElement
-struct Shape<S: SwiftUI.InsettableShape>: View {
+struct Shape<Root: RootRegistry, S: SwiftUI.InsettableShape>: View {
     private let shape: S
 
     /// The ``LiveViewNative/SwiftUI/Color`` the shape is filled with.

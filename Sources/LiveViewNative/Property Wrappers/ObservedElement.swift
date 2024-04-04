@@ -83,6 +83,8 @@ public struct ObservedElement {
     public var projectedValue: some Publisher<Void, Never> {
         observer.objectWillChange
     }
+    
+    var children: [Node] { observer.resolvedChildren }
 }
 
 extension ObservedElement: DynamicProperty {
@@ -104,6 +106,7 @@ extension ObservedElement {
         let id: NodeRef
         
         var resolvedElement: ElementNode!
+        var resolvedChildren: [Node]!
         
         var objectWillChange = ObjectWillChangePublisher()
         
@@ -114,10 +117,12 @@ extension ObservedElement {
         fileprivate func update(_ context: CoordinatorEnvironment) {
             guard cancellable == nil else { return }
             self.resolvedElement = context.document[id].asElement()
+            self.resolvedChildren = Array(self.resolvedElement.children())
             cancellable = context.elementChanged(id)
                 .sink { [weak self] _ in
                     guard let self else { return }
                     self.resolvedElement = context.document[id].asElement()
+                    self.resolvedChildren = Array(self.resolvedElement.children())
                     self.objectWillChange.send()
                 }
         }

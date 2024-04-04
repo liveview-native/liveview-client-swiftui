@@ -8,9 +8,9 @@
 import SwiftUI
 import LiveViewNativeCore
 
-@attached(member, names: named(_$element), named(_TrackedContent))
+@attached(member, names: named(liveElement), named(_TrackedContent))
 @attached(memberAttribute)
-@attached(extension, conformances: View)
+@attached(extension, conformances: SwiftUI.View)
 public macro LiveElement() = #externalMacro(module: "LiveViewNativeMacros", type: "LiveElementMacro")
 
 @attached(accessor, names: named(get))
@@ -23,13 +23,14 @@ public protocol _LiveElementTrackedContent {
     init(from element: ElementNode) throws
 }
 
-@propertyWrapper public struct _LiveElementTracked<T: _LiveElementTrackedContent>: DynamicProperty {
+@propertyWrapper public struct _LiveElementTracked<R: RootRegistry, T: _LiveElementTrackedContent>: DynamicProperty {
     @ObservedElement public var element
+    @LiveContext<R> public var context
     
     public var wrappedValue: T
     
-    public var projectedValue: ElementNode {
-        element
+    public var projectedValue: Self {
+        self
     }
     
     public init(wrappedValue: T) {
@@ -43,5 +44,65 @@ public protocol _LiveElementTrackedContent {
     
     public mutating func update() {
         self.wrappedValue = try! T.init(from: element)
+    }
+}
+
+public extension _LiveElementTracked {
+    func children(_ predicate: (Node) -> Bool = { _ in true }) -> some View {
+        context.coordinator.builder.fromNodes(_element.children.filter(predicate), context: context.storage)
+    }
+    
+    func children(in template: Template) -> some View {
+        children {
+            $0.attributes.contains(where: {
+                $0 == template
+            })
+        }
+    }
+    
+    func hasTemplate(_ template: Template) -> Bool {
+        _element.children.contains(where: {
+            $0.attributes.contains(where: {
+                $0 == template
+            })
+        })
+    }
+    
+    func hasTemplate(_ name: String, value: String) -> Bool {
+        hasTemplate(.init(name, value: value))
+    }
+}
+
+public struct Template: RawRepresentable, ExpressibleByStringLiteral {
+    let name: String
+    let value: String?
+    
+    public init(_ name: String, value: String? = nil) {
+        self.name = name
+        self.value = value
+    }
+    
+    public init(rawValue: String) {
+        var components = rawValue.split(separator: "." as Character)
+        self.name = String(components.removeFirst())
+        self.value = components.isEmpty ? nil : components.joined(separator: ".")
+    }
+    
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+    
+    public var rawValue: String {
+        if let value {
+            return "\(name).\(value)"
+        } else {
+            return name
+        }
+    }
+    
+    static func == (_ lhs: LiveViewNativeCore.Attribute, _ rhs: Self) -> Bool {
+        lhs.name.namespace == nil
+            && lhs.name.name == "template"
+            && lhs.value == rhs.rawValue
     }
 }

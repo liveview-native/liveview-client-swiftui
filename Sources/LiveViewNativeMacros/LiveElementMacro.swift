@@ -18,10 +18,12 @@ public enum LiveElementMacro {
     static let attributeMacroName = "LiveAttribute"
     static let ignoredMacroName = "LiveElementIgnored"
     
-    static let elementVariableName = "_$element"
+    static let eventPropertyWrapperName = "Event"
+    
+    static let elementVariableName = "liveElement"
     
     static func elementVariable() -> DeclSyntax {
-        return "@\(raw: ignoredMacroName) @_LiveElementTracked private var \(raw: elementVariableName) = _TrackedContent()"
+        return "@\(raw: ignoredMacroName) @_LiveElementTracked<Root, _TrackedContent> private var \(raw: elementVariableName) = _TrackedContent()"
     }
     
     static let elementNodeTypeName = "ElementNode"
@@ -40,7 +42,9 @@ public enum LiveElementMacro {
                   property.identifier != nil,
                   property.isValidForAttribute
             else { return nil }
-            if property.hasMacroApplication(ignoredMacroName) {
+            if property.hasMacroApplication(ignoredMacroName) ||
+                property.hasMacroApplication(eventPropertyWrapperName)
+            {
                 return nil
             }
             return property
@@ -87,7 +91,7 @@ public enum LiveElementMacro {
         private struct _TrackedContent: _LiveElementTrackedContent {
         \#(raw: properties.map({ property in
         #"""
-        var \#(property.identifier?.text ?? ""): \#(property.type?.trimmedDescription ?? "")\#(property.bindings.first?.initializer?.description ?? "")
+        \#(property.with(\.bindingSpecifier, .keyword(.var, trailingTrivia: .space)).with(\.modifiers, []).with(\.attributes, []))
         """#
         }).joined(separator: "\n"))
         
@@ -121,7 +125,9 @@ extension LiveElementMacro: MemberAttributeMacro {
         else { return [] }
         
         if property.hasMacroApplication(ignoredMacroName) ||
-            property.hasMacroApplication(attributeMacroName) {
+            property.hasMacroApplication(attributeMacroName) ||
+            property.hasMacroApplication(eventPropertyWrapperName)
+        {
             return []
         }
         
@@ -205,7 +211,7 @@ public struct LiveAttributeMacro: AccessorMacro {
         let getAccessor: AccessorDeclSyntax =
             """
             get {
-                return _$element.\(identifier)
+                return \(raw: LiveElementMacro.elementVariableName).\(identifier)
             }
             """
         

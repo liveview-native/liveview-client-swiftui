@@ -20,9 +20,9 @@ import SwiftUI
 /// - ``scale``
 @_documentation(visibility: public)
 @LiveElement
-struct AsyncImage<R: RootRegistry>: View {
+struct AsyncImage<Root: RootRegistry>: View {
     @LiveElementIgnored
-    @LiveContext<R>
+    @LiveContext<Root>
     private var context
     
     @LiveElementIgnored
@@ -47,11 +47,11 @@ struct AsyncImage<R: RootRegistry>: View {
     public var body: some View {
         if image {
             if case let .success(image) = phase {
-                ImageView<R>(image: image)
+                ImageView<Root>(image: image)
             }
         } else if error {
             if case let .failure(error) = phase {
-                Text<R>(text: SwiftUI.Text(verbatim: error.localizedDescription))
+                Text<Root>(text: SwiftUI.Text(verbatim: error.localizedDescription))
             }
         } else {
             asyncImage
@@ -59,26 +59,30 @@ struct AsyncImage<R: RootRegistry>: View {
     }
     
     var asyncImage: some View {
-        SwiftUI.AsyncImage(url: url.flatMap({ URL(string: $0, relativeTo: context.url) }), scale: scale, transaction: Transaction(animation: .default)) { phase in
+        SwiftUI.AsyncImage(
+            url: url.flatMap({ URL(string: $0, relativeTo: context.url) }),
+            scale: scale,
+            transaction: Transaction(animation: .default)
+        ) { phase in
             SwiftUI.Group {
                 switch phase {
+                case .empty:
+                    if $liveElement.hasTemplate(.phase(.empty)) {
+                        $liveElement.children(in: .phase(.empty))
+                    } else {
+                        SwiftUI.ProgressView().progressViewStyle(.circular)
+                    }
                 case .success(let image):
-                    if context.hasTemplate(of: $_$element, withName: "phase", value: "success") {
-                        context.buildChildren(of: $_$element, forTemplate: "phase", withValue: "success")
+                    if $liveElement.hasTemplate(.phase(.success)) {
+                        $liveElement.children(in: .phase(.success))
                     } else {
                         image
                     }
                 case .failure(let error):
-                    if context.hasTemplate(of: $_$element, withName: "phase", value: "failure") {
-                        context.buildChildren(of: $_$element, forTemplate: "phase", withValue: "failure")
+                    if $liveElement.hasTemplate(.phase(.failure)) {
+                        $liveElement.children(in: .phase(.failure))
                     } else {
                         SwiftUI.Text(error.localizedDescription)
-                    }
-                case .empty:
-                    if context.hasTemplate(of: $_$element, withName: "phase", value: "empty") {
-                        context.buildChildren(of: $_$element, forTemplate: "phase", withValue: "empty")
-                    } else {
-                        SwiftUI.ProgressView().progressViewStyle(.circular)
                     }
                 @unknown default:
                     EmptyView()
@@ -96,5 +100,17 @@ private extension EnvironmentValues {
     var asyncImagePhase: AsyncImagePhase {
         get { self[AsyncImagePhaseKey.self] }
         set { self[AsyncImagePhaseKey.self] = newValue }
+    }
+}
+
+fileprivate extension Template {
+    enum Phase: String {
+        case empty
+        case success
+        case failure
+    }
+    
+    static func phase(_ value: Phase) -> Self {
+        return .init("phase", value: value.rawValue)
     }
 }
