@@ -19,26 +19,30 @@ import SwiftUI
 /// - ``url``
 /// - ``scale``
 @_documentation(visibility: public)
+@LiveElement
 struct AsyncImage<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
+    @LiveElementIgnored
+    @LiveContext<R>
+    private var context
+    
+    @LiveElementIgnored
+    @Environment(\.asyncImagePhase)
+    private var phase
     
     /// The URL from which to load the image (relative to the current Live View's URL).
     ///
     /// If no URL is provided, the view will remain in the loading state.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "url")) private var url: String?
+    private var url: String?
     /// The display scale of the image (defaults to 1).
     ///
     /// This corresponds to the `@2x`, `@3x` suffixes you would use for images shipped with the app.
     /// A scale of 1 indicates that 1 pixel in the image corresponds to 1 point, a scale of 2 indicates that there are 2 image pixels per point, etc.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "scale")) private var scale: Double = 1
+    private var scale: Double = 1
     
-    @Environment(\.asyncImagePhase) private var phase
-    
-    @Attribute(.init(name: "image")) private var image: Bool
-    @Attribute(.init(name: "error")) private var error: Bool
+    private var image: Bool = false
+    private var error: Bool = false
     
     public var body: some View {
         if image {
@@ -59,20 +63,20 @@ struct AsyncImage<R: RootRegistry>: View {
             SwiftUI.Group {
                 switch phase {
                 case .success(let image):
-                    if context.hasTemplate(of: element, withName: "phase", value: "success") {
-                        context.buildChildren(of: element, forTemplate: "phase", withValue: "success")
+                    if context.hasTemplate(of: $_$element, withName: "phase", value: "success") {
+                        context.buildChildren(of: $_$element, forTemplate: "phase", withValue: "success")
                     } else {
                         image
                     }
                 case .failure(let error):
-                    if context.hasTemplate(of: element, withName: "phase", value: "failure") {
-                        context.buildChildren(of: element, forTemplate: "phase", withValue: "failure")
+                    if context.hasTemplate(of: $_$element, withName: "phase", value: "failure") {
+                        context.buildChildren(of: $_$element, forTemplate: "phase", withValue: "failure")
                     } else {
                         SwiftUI.Text(error.localizedDescription)
                     }
                 case .empty:
-                    if context.hasTemplate(of: element, withName: "phase", value: "empty") {
-                        context.buildChildren(of: element, forTemplate: "phase", withValue: "empty")
+                    if context.hasTemplate(of: $_$element, withName: "phase", value: "empty") {
+                        context.buildChildren(of: $_$element, forTemplate: "phase", withValue: "empty")
                     } else {
                         SwiftUI.ProgressView().progressViewStyle(.circular)
                     }

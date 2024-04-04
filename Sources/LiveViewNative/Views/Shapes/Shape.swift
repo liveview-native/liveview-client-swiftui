@@ -16,23 +16,27 @@ import LiveViewNativeCore
 /// - ``fillColor``
 /// - ``strokeColor``
 @_documentation(visibility: public)
+@LiveElement
 struct Shape<S: SwiftUI.InsettableShape>: View {
-    @ObservedElement private var element: ElementNode
     private let shape: S
 
     /// The ``LiveViewNative/SwiftUI/Color`` the shape is filled with.
     ///
     /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "fillColor")) private var fillColor: SwiftUI.Color? = nil
+    private var fillColor: SwiftUI.Color? = nil
     /// The ``LiveViewNative/SwiftUI/Color`` the shape stroke is drawn with.
     ///
     /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "strokeColor")) private var strokeColor: SwiftUI.Color? = nil
+    private var strokeColor: SwiftUI.Color? = nil
     
-    @Environment(\.shapeModifiers) private var shapeModifiers: [any ShapeModifier]
-    @Environment(\.shapeFinalizerModifier) private var shapeFinalizerModifier: (any ShapeFinalizerModifier)?
+    @LiveElementIgnored
+    @Environment(\.shapeModifiers)
+    private var shapeModifiers: [any ShapeModifier]
+    @LiveElementIgnored
+    @Environment(\.shapeFinalizerModifier)
+    private var shapeFinalizerModifier: (any ShapeFinalizerModifier)?
     
     init(shape: S) {
         self.shape = shape
