@@ -40,7 +40,7 @@ final class EnumTypeVisitor: SyntaxVisitor {
     override func visit(_ node: ExtensionDeclSyntax) -> SyntaxVisitorContinueKind {
         let name = node.extendedType.as(IdentifierTypeSyntax.self)?.name.text
             ?? node.extendedType.as(MemberTypeSyntax.self)?.name.text
-            ?? node.extendedType.trimmed.description
+            ?? node.extendedType.trimmedDescription
         guard typeNames.contains(name)
         else { return .skipChildren }
         
