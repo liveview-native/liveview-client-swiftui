@@ -23,25 +23,23 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "Link")
 /// ## Attributes
 /// * ``destination``
 @_documentation(visibility: public)
-struct Link<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Link<Root: RootRegistry>: View {
     /// A valid URL to open when tapped.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "destination")) private var destination: String?
+    private var destination: String?
     
     public var body: some View {
-        if let destination = destination.flatMap({ URL(string: $0, relativeTo: context.coordinator.url) })?.appending(path: "").absoluteURL {
+        if let destination = destination.flatMap({ URL(string: $0, relativeTo: $liveElement.context.coordinator.url) })?.appending(path: "").absoluteURL {
             SwiftUI.Link(
                 destination: destination
             ) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         } else {
-            context.buildChildren(of: element)
+            $liveElement.children()
                 .task {
-                    logger.error("Missing or invalid `destination` on `<Link>\(element.innerText())</Link>`")
+                    logger.error("Missing or invalid `destination` on `<Link>\($liveElement.element.innerText())</Link>`")
                 }
         }
     }

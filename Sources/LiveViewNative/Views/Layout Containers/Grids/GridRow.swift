@@ -31,17 +31,15 @@ import SwiftUI
 /// ### Creating Grids
 /// * ``Grid``
 @_documentation(visibility: public)
-struct GridRow<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct GridRow<Root: RootRegistry>: View {
     /// The positioning of elements within the row.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "alignment")) private var alignment: VerticalAlignment?
+    private var alignment: VerticalAlignment?
 
     public var body: some View {
         SwiftUI.GridRow(alignment: alignment) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

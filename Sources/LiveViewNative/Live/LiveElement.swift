@@ -10,7 +10,6 @@ import LiveViewNativeCore
 
 @attached(member, names: named(liveElement), named(_TrackedContent))
 @attached(memberAttribute)
-@attached(extension, conformances: SwiftUI.View)
 public macro LiveElement() = #externalMacro(module: "LiveViewNativeMacros", type: "LiveElementMacro")
 
 @attached(accessor, names: named(get))
@@ -52,24 +51,33 @@ public extension _LiveElementTracked {
         context.coordinator.builder.fromNodes(_element.children.filter(predicate), context: context.storage)
     }
     
-    func children(in template: Template) -> some View {
+    func children(in template: Template, default includeDefault: Bool = false) -> some View {
         children {
             $0.attributes.contains(where: {
                 $0 == template
-            })
+            }) || (includeDefault && !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" }))
         }
     }
     
-    func hasTemplate(_ template: Template) -> Bool {
+    func hasTemplate(_ template: Template, default includeDefault: Bool = false) -> Bool {
         _element.children.contains(where: {
-            $0.attributes.contains(where: {
-                $0 == template
-            })
+            for attribute in $0.attributes {
+                if attribute == template {
+                    return true
+                } else if includeDefault && attribute.name.namespace == nil && attribute.name.name == "template" {
+                    return false
+                }
+            }
+            return includeDefault
         })
     }
     
     func hasTemplate(_ name: String, value: String) -> Bool {
         hasTemplate(.init(name, value: value))
+    }
+    
+    var childNodes: [LiveViewNativeCore.Node] {
+        _element.children
     }
 }
 

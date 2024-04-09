@@ -53,21 +53,19 @@ import SwiftUI
 /// * `header` - Describes the content of the section.
 /// * `footer` - Elements displayed at the end of the section.
 @_documentation(visibility: public)
-struct Section<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Section<Root: RootRegistry>: View {
     /// Enables this section to be collapsed in sidebar lists on macOS.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "collapsible")) private var collapsible: Bool
+    private var collapsible: Bool = false
     
     public var body: some View {
         SwiftUI.Section {
-            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+            $liveElement.children(in: "content", default: true)
         } header: {
-            context.buildChildren(of: element, forTemplate: "header")
+            $liveElement.children(in: "header")
         } footer: {
-            context.buildChildren(of: element, forTemplate: "footer")
+            $liveElement.children(in: "footer")
         }
         #if os(macOS)
             .collapsible(collapsible)

@@ -56,36 +56,34 @@ import SwiftUI
 /// - ``timerIntervalEnd``
 /// - ``countsDown``
 @_documentation(visibility: public)
-struct ProgressView<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ProgressView<Root: RootRegistry>: View {
     /// The start date for a timer.
     ///
     /// Expected to be in the ISO8601 format produced by Elixir's `DateTime`.
     ///
     /// This attribute has no effect without ``timerIntervalEnd``.
     @_documentation(visibility: public)
-    @Attribute(.init(namespace: "timerInterval", name: "start")) private var timerIntervalStart: Date?
+    @LiveAttribute(.init(namespace: "timerInterval", name: "start")) private var timerIntervalStart: Date?
     /// The end date for a timer.
     ///
     /// Expected to be in the ISO8601 format produced by Elixir's `DateTime`.
     ///
     /// This attribute has no effect without ``timerIntervalStart``.
     @_documentation(visibility: public)
-    @Attribute(.init(namespace: "timerInterval", name: "end")) private var timerIntervalEnd: Date?
+    @LiveAttribute(.init(namespace: "timerInterval", name: "end")) private var timerIntervalEnd: Date?
     /// Reverses the direction of a timer progress view.
     ///
     /// This attribute has no effect without ``timerIntervalStart`` and ``timerIntervalEnd``.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "countsDown")) private var countsDown: Bool
+    private var countsDown: Bool = false
     
     /// Completed amount, out of ``total``.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "value")) private var value: Double?
+    private var value: Double?
     /// The full amount.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "total")) private var total: Double = 1
+    private var total: Double = 1
     
     public var body: some View {
         SwiftUI.Group {
@@ -94,21 +92,21 @@ struct ProgressView<R: RootRegistry>: View {
             {
                 // SwiftUI's default `currentValueLabel` is not present unless the argument is not included in the initializer.
                 // Check if we have it first otherwise use the default.
-                if context.hasTemplate(of: element, withName: "currentValueLabel") {
+                if $liveElement.hasTemplate("currentValueLabel") {
                     SwiftUI.ProgressView(
                         timerInterval: timerIntervalStart...timerIntervalEnd,
                         countsDown: countsDown
                     ) {
-                        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
+                        $liveElement.children(in: "label", default: true)
                     } currentValueLabel: {
-                        context.buildChildren(of: element, forTemplate: "currentValueLabel")
+                        $liveElement.children(in: "currentValueLabel")
                     }
                 } else {
                     SwiftUI.ProgressView(
                         timerInterval: timerIntervalStart...timerIntervalEnd,
                         countsDown: countsDown
                     ) {
-                        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
+                        $liveElement.children(in: "label", default: true)
                     }
                 }
             } else if let value {
@@ -116,13 +114,13 @@ struct ProgressView<R: RootRegistry>: View {
                     value: value,
                     total: total
                 ) {
-                    context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
+                    $liveElement.children(in: "label", default: true)
                 } currentValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "currentValueLabel")
+                    $liveElement.children(in: "currentValueLabel")
                 }
             } else {
                 SwiftUI.ProgressView {
-                    context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
+                    $liveElement.children(in: "label", default: true)
                 }
             }
         }

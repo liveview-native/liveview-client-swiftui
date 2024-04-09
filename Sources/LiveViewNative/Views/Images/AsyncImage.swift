@@ -67,20 +67,20 @@ struct AsyncImage<Root: RootRegistry>: View {
             SwiftUI.Group {
                 switch phase {
                 case .empty:
-                    if $liveElement.hasTemplate(.phase(.empty)) {
-                        $liveElement.children(in: .phase(.empty))
+                    if $liveElement.hasTemplate(.asyncImagePhase(.empty)) {
+                        $liveElement.children(in: .asyncImagePhase(.empty))
                     } else {
                         SwiftUI.ProgressView().progressViewStyle(.circular)
                     }
                 case .success(let image):
-                    if $liveElement.hasTemplate(.phase(.success)) {
-                        $liveElement.children(in: .phase(.success))
+                    if $liveElement.hasTemplate(.asyncImagePhase(.success)) {
+                        $liveElement.children(in: .asyncImagePhase(.success))
                     } else {
                         image
                     }
                 case .failure(let error):
-                    if $liveElement.hasTemplate(.phase(.failure)) {
-                        $liveElement.children(in: .phase(.failure))
+                    if $liveElement.hasTemplate(.asyncImagePhase(.failure)) {
+                        $liveElement.children(in: .asyncImagePhase(.failure))
                     } else {
                         SwiftUI.Text(error.localizedDescription)
                     }
@@ -104,13 +104,13 @@ private extension EnvironmentValues {
 }
 
 fileprivate extension Template {
-    enum Phase: String {
+    enum AsyncImagePhase: String {
         case empty
         case success
         case failure
     }
     
-    static func phase(_ value: Phase) -> Self {
+    static func asyncImagePhase(_ value: AsyncImagePhase) -> Self {
         return .init("phase", value: value.rawValue)
     }
 }

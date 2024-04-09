@@ -31,16 +31,15 @@ import SwiftUI
 /// - `content`
 /// - `label`
 @_documentation(visibility: public)
-struct Picker<R: RootRegistry>: View {
-    @LiveContext<R> private var context
-    @ObservedElement private var element
+@LiveElement
+struct Picker<Root: RootRegistry>: View {
     @FormState("selection") private var selection: String?
     
     var body: some View {
         SwiftUI.Picker(selection: $selection) {
-            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+            $liveElement.children(in: "content", default: true)
         } label: {
-            context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: false)
+            $liveElement.children(in: "label")
         }
     }
 }

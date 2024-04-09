@@ -118,37 +118,40 @@ extension CodingUserInfoKey {
 }
 
 @propertyWrapper
-struct ClassModifiers<R: RootRegistry>: DynamicProperty {
-    @Attribute(.init(name: "class"), transform: { attribute in
-        guard let classNames = attribute?.value else { return [] }
-        return classNames.split(separator: " " as Character)
-    }) private var classNames: [Substring]
-    @Environment(\.stylesheet) var stylesheet
-    let overrideStylesheet: Stylesheet<R>?
+@LiveElement
+struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
+    @LiveAttribute(.init(name: "class")) private var `class`: String?
     
-    init(element: ElementNode, overrideStylesheet: Stylesheet<R>?) {
-        self._classNames = .init(
-            wrappedValue: nil,
-            .init(name: "class"),
-            transform: { attribute in
-                guard let classNames = attribute?.value else { return [] }
-                return classNames.split(separator: " ")
-            },
-            element: element
-        )
+    @LiveElementIgnored
+    @Environment(\.stylesheet)
+    var stylesheet
+    
+    @LiveElementIgnored
+    let overrideStylesheet: Stylesheet<Root>?
+    
+    init(element: ElementNode, overrideStylesheet: Stylesheet<Root>?) {
+        self._liveElement = .init(wrappedValue: .init(), element: element)
         self.overrideStylesheet = overrideStylesheet
     }
     
-    init(overrideStylesheet: Stylesheet<R>? = nil) {
+    init(overrideStylesheet: Stylesheet<Root>? = nil) {
+        self._liveElement = .init(wrappedValue: .init())
         self.overrideStylesheet = overrideStylesheet
     }
     
-    var wrappedValue: ArraySlice<BuiltinRegistry<R>.BuiltinModifier> = .init()
+    @LiveElementIgnored
+    var wrappedValue: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> = .init()
     
     mutating func update() {
-        let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<R>)
-        wrappedValue = classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
-            $0.append(contentsOf: sheet.classes[String($1)] ?? [])
+        if let `class` {
+            let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
+            wrappedValue = `class`
+                .split(separator: " " as Character)
+                .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
+                    $0.append(contentsOf: sheet.classes[String($1)] ?? [])
+                }
+        } else {
+            wrappedValue.removeAll()
         }
     }
 }

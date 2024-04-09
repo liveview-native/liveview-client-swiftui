@@ -36,24 +36,22 @@ import SwiftUI
 /// * ``spacing``
 /// * ``pinnedViews``
 @_documentation(visibility: public)
-struct LazyHGrid<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct LazyHGrid<Root: RootRegistry>: View {
     /// Configured rows to fill with the child elements.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "rows")) private var rows: [GridItem]
+    private var rows: [GridItem] = []
     /// The alignment between rows.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "alignment")) private var alignment: VerticalAlignment = .center
+    private var alignment: VerticalAlignment = .center
     /// The spacing between rows.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "spacing")) private var spacing: CGFloat?
+    private var spacing: CGFloat?
     /// Pins section headers/footers.
     ///
     /// See ``LiveViewNative/SwiftUI/PinnedScrollableViews``.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "pinnedViews")) private var pinnedViews: PinnedScrollableViews = []
+    private var pinnedViews: PinnedScrollableViews = []
 
     public var body: some View {
         SwiftUI.LazyHGrid(
@@ -62,7 +60,7 @@ struct LazyHGrid<R: RootRegistry>: View {
             spacing: spacing,
             pinnedViews: pinnedViews
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

@@ -41,7 +41,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "Rectangle": "Shape<R, Rectangle>(shape: Rectangle())",
         "RenameButton": "RenameButton()",
         "RoundedRectangle": "Shape<R, RoundedRectangle>(shape: RoundedRectangle(from: element))",
-        "Color": "ColorView()",
+        "Color": "ColorView<R>()",
         "Image": "ImageView<R>()",
         "phx-main": "PhxMain<R>()"
     ]

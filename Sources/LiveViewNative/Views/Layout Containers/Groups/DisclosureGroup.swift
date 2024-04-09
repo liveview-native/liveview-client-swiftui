@@ -42,10 +42,8 @@ import SwiftUI
 /// - ``DisclosureGroupStyle``
 @_documentation(visibility: public)
 @available(iOS 16.0, macOS 13.0, *)
-struct DisclosureGroup<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct DisclosureGroup<Root: RootRegistry>: View {
     /// Synchronizes the expansion state with the server.
     @_documentation(visibility: public)
     @ChangeTracked(attribute: "isExpanded") private var isExpanded = false
@@ -53,9 +51,9 @@ struct DisclosureGroup<R: RootRegistry>: View {
     public var body: some View {
 #if os(iOS) || os(macOS)
         SwiftUI.DisclosureGroup(isExpanded: $isExpanded) {
-            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+            $liveElement.children(in: "content", default: true)
         } label: {
-            context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: false)
+            $liveElement.children(in: "label")
         }
 #endif
     }

@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct NavigationSplitView<R: RootRegistry>: View {
-    @LiveContext<R> private var context
-    @ObservedElement private var element
-    
-    @EnvironmentObject private var session: LiveSessionCoordinator<R>
+@LiveElement
+struct NavigationSplitView<Root: RootRegistry>: View {
+    @LiveElementIgnored
+    @EnvironmentObject
+    private var session: LiveSessionCoordinator<Root>
     
     var body: some View {
         if hasContent && hasDetail {
@@ -38,23 +38,23 @@ struct NavigationSplitView<R: RootRegistry>: View {
     }
     
     var hasSidebar: Bool {
-        context.hasTemplate(of: element, withName: "sidebar")
+        $liveElement.hasTemplate("sidebar")
     }
     var sidebar: some View {
-        context.buildChildren(of: element, forTemplate: "sidebar", includeDefaultSlot: false)
+        $liveElement.children(in: "sidebar")
     }
     
     var hasContent: Bool {
-        context.hasTemplate(of: element, withName: "content") || context.hasDefaultSlot(of: element)
+        $liveElement.hasTemplate("context", default: true)
     }
     var content: some View {
-        context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+        $liveElement.children(in: "content", default: true)
     }
     
     var hasDetail: Bool {
-        context.hasTemplate(of: element, withName: "detail")
+        $liveElement.hasTemplate("detail")
     }
     var detail: some View {
-        context.buildChildren(of: element, forTemplate: "detail", includeDefaultSlot: false)
+        $liveElement.children(in: "detail")
     }
 }

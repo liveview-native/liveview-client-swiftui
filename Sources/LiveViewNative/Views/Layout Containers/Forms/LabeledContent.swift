@@ -41,29 +41,27 @@ import SwiftUI
 /// ### Formatting Values
 /// * ``Text``
 @_documentation(visibility: public)
-struct LabeledContent<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct LabeledContent<Root: RootRegistry>: View {
     /// Automatically formats the value of the `value` attribute.
     ///
     /// For more details on formatting options, see ``Text``.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "format")) private var format: String?
+    private var format: String?
     
     var body: some View {
         SwiftUI.Group {
             if format != nil {
                 SwiftUI.LabeledContent {
-                    Text<R>()
+                    Text<Root>()
                 } label: {
-                    context.buildChildren(of: element)
+                    $liveElement.children()
                 }
             } else {
                 SwiftUI.LabeledContent {
-                    context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+                    $liveElement.children(in: "content", default: true)
                 } label: {
-                    context.buildChildren(of: element, forTemplate: "label")
+                    $liveElement.children(in: "label")
                 }
             }
         }

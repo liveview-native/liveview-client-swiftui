@@ -30,52 +30,46 @@ import SwiftUI
 /// * `minimumValueLabel` - Describes the lowest possible value.
 /// * `maximumValueLabel` - Describes the highest possible value.
 @_documentation(visibility: public)
-struct Gauge<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Gauge<Root: RootRegistry>: View {
     /// The current value of the gauge.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "value")) private var value: Double = 0
+    private var value: Double = 0
     /// The lowest possible value of the gauge.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "lowerBound")) private var lowerBound: Double = 0
+    private var lowerBound: Double = 0
     /// The highest possible value of the gauge.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "upperBound")) private var upperBound: Double = 1
+    private var upperBound: Double = 1
     
     public var body: some View {
         #if !os(tvOS)
         SwiftUI.Group {
-            if context.hasTemplate(of: element, withName: "currentValueLabel") ||
-               context.hasTemplate(of: element, withName: "minimumValueLabel") ||
-               context.hasTemplate(of: element, withName: "maximumValueLabel")
+            if $liveElement.hasTemplate("currentValueLabel") ||
+                $liveElement.hasTemplate("minimumValueLabel") ||
+                $liveElement.hasTemplate("maximumValueLabel")
             {
                 SwiftUI.Gauge(
                     value: self.value,
                     in: self.lowerBound...self.upperBound
                 ) {
-                    label
+                    $liveElement.children(in: "label", default: true)
                 } currentValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "currentValueLabel")
+                    $liveElement.children(in: "currentValueLabel")
                 } minimumValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "minimumValueLabel")
+                    $liveElement.children(in: "minimumValueLabel")
                 } maximumValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "maximumValueLabel")
+                    $liveElement.children(in: "maximumValueLabel")
                 }
             } else {
                 SwiftUI.Gauge(
                     value: value,
                     in: lowerBound...upperBound
                 ) {
-                    label
+                    $liveElement.children(in: "label", default: true)
                 }
             }
         }
         #endif
-    }
-    
-    private var label: some View {
-        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
     }
 }

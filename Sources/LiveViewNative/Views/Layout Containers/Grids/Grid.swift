@@ -39,19 +39,17 @@ import SwiftUI
 /// * ``GridCellUnsizedAxesModifier``
 /// * ``GridColumnAlignmentModifier``
 @_documentation(visibility: public)
-struct Grid<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Grid<Root: RootRegistry>: View {
     /// The positioning of elements within the grid.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "alignment")) private var alignment: Alignment = .center
+    private var alignment: Alignment = .center
     /// The spacing between elements in a ``GridRow``.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "horizontalSpacing")) private var horizontalSpacing: CGFloat?
+    private var horizontalSpacing: CGFloat?
     /// The spacing between ``GridRow`` elements.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "verticalSpacing")) private var verticalSpacing: CGFloat?
+    private var verticalSpacing: CGFloat?
     
     public var body: some View {
         SwiftUI.Grid(
@@ -59,7 +57,7 @@ struct Grid<R: RootRegistry>: View {
             horizontalSpacing: horizontalSpacing,
             verticalSpacing: verticalSpacing
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

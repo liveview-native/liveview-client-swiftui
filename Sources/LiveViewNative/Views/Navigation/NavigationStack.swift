@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct NavigationStack<R: RootRegistry>: View {
-    @LiveContext<R> private var context
-    @ObservedElement private var element
-    
-    @EnvironmentObject private var session: LiveSessionCoordinator<R>
+@LiveElement
+struct NavigationStack<Root: RootRegistry>: View {
+    @LiveElementIgnored
+    @EnvironmentObject
+    private var session: LiveSessionCoordinator<Root>
     
     var body: some View {
         SwiftUI.NavigationStack(path: Binding {
@@ -20,9 +20,9 @@ struct NavigationStack<R: RootRegistry>: View {
             session.navigationPath[1...] = value
         }) {
             SwiftUI.VStack {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
-            .navigationDestination(for: LiveNavigationEntry<R>.self) { destination in
+            .navigationDestination(for: LiveNavigationEntry<Root>.self) { destination in
                 NavStackEntryView(destination)
             }
         }

@@ -21,7 +21,7 @@ import SwiftUI
 /// - ``spacing``
 @_documentation(visibility: public)
 @LiveElement
-struct VStack<Root: RootRegistry> {
+struct VStack<Root: RootRegistry>: View {
     /// The horizontal alignment of views within the stack. Defaults to center-aligned.
     ///
     /// See ``LiveViewNative/SwiftUI/HorizontalAlignment``

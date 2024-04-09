@@ -29,26 +29,24 @@ import SwiftUI
 /// ## Attributes
 /// * ``systemImage``
 @_documentation(visibility: public)
-struct Label<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Label<Root: RootRegistry>: View {
     /// A symbol to use for the `icon`.
     ///
     /// This attribute takes precedence over the `icon` child.
     ///
     /// This is equivalent to the `systemName` attribute on ``Image``.
     @_documentation(visibility: public)
-    @Attribute(.init(name: "systemImage")) private var systemImage: String?
+    private var systemImage: String?
     
     public var body: some View {
         SwiftUI.Label {
-            context.buildChildren(of: element, forTemplate: "title", includeDefaultSlot: true)
+            $liveElement.children(in: "title", default: true)
         } icon: {
             if let systemImage {
                 SwiftUI.Image(systemName: systemImage)
             } else {
-                context.buildChildren(of: element, forTemplate: "icon")
+                $liveElement.children(in: "icon")
             }
         }
     }

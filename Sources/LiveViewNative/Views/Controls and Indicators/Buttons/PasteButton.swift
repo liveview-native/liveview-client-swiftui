@@ -26,10 +26,8 @@ import SwiftUI
 /// * ``click``
 @_documentation(visibility: public)
 @available(iOS 16.0, macOS 13.0, *)
-struct PasteButton<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct PasteButton<Root: RootRegistry>: View {
     /// Event sent when tapped.
     ///
     /// Sends a payload with the following format:

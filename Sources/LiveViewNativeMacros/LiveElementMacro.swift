@@ -18,8 +18,6 @@ public enum LiveElementMacro {
     static let attributeMacroName = "LiveAttribute"
     static let ignoredMacroName = "LiveElementIgnored"
     
-    static let eventPropertyWrapperName = "Event"
-    
     static let elementVariableName = "liveElement"
     
     static func elementVariable() -> DeclSyntax {
@@ -42,9 +40,7 @@ public enum LiveElementMacro {
                   property.identifier != nil,
                   property.isValidForAttribute
             else { return nil }
-            if property.hasMacroApplication(ignoredMacroName) ||
-                property.hasMacroApplication(eventPropertyWrapperName)
-            {
+            if property.hasMacroApplication(ignoredMacroName) {
                 return nil
             }
             return property
@@ -125,8 +121,7 @@ extension LiveElementMacro: MemberAttributeMacro {
         else { return [] }
         
         if property.hasMacroApplication(ignoredMacroName) ||
-            property.hasMacroApplication(attributeMacroName) ||
-            property.hasMacroApplication(eventPropertyWrapperName)
+            property.hasMacroApplication(attributeMacroName)
         {
             return []
         }
@@ -161,31 +156,6 @@ extension LiveElementMacro: MemberMacro {
         declaration.addIfNeeded(trackedContentStruct(identified.as(StructDeclSyntax.self)?.memberBlock.members), to: &declarations)
         
         return declarations
-    }
-}
-
-extension LiveElementMacro: ExtensionMacro {
-    public static func expansion(
-        of node: AttributeSyntax,
-        attachedTo declaration: some DeclGroupSyntax,
-        providingExtensionsOf type: some TypeSyntaxProtocol,
-        conformingTo protocols: [TypeSyntax],
-        in context: some MacroExpansionContext
-    ) throws -> [ExtensionDeclSyntax] {
-        // This method can be called twice - first with an empty `protocols` when
-        // no conformance is needed, and second with a `MissingTypeSyntax` instance.
-        if protocols.isEmpty {
-            return []
-        }
-        
-        let decl: DeclSyntax = "extension \(raw: type.trimmedDescription): SwiftUI.View {}"
-        let ext = decl.cast(ExtensionDeclSyntax.self)
-        
-        if let availability = declaration.attributes.availability {
-            return [ext.with(\.attributes, availability)]
-        } else {
-            return [ext]
-        }
     }
 }
 
@@ -235,6 +205,8 @@ public struct LiveElementIgnoredMacro: AccessorMacro {
 extension VariableDeclSyntax {
     var isValidForAttribute: Bool {
         !isComputed && isInstance && !isImmutable && identifier != nil
+        // property wrappers that disable `@LiveAttribute`.
+        && !hasMacroApplication("Event") && !hasMacroApplication("FormState") && !hasMacroApplication("ChangeTracked")
     }
 }
 
