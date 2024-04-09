@@ -114,6 +114,7 @@ extension ObservedElement {
             self.id = id
         }
         
+        @MainActor
         fileprivate func update(_ context: CoordinatorEnvironment) {
             guard cancellable == nil else { return }
             self.resolvedElement = context.document[id].asElement()

@@ -52,7 +52,7 @@ private struct LiveContextStorageKey: EnvironmentKey {
 struct CoordinatorEnvironment {
     private final class Storage {
         let pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void
-        let elementChanged: (NodeRef) -> ObservableObjectPublisher
+        let elementChanged: @MainActor (NodeRef) -> ObservableObjectPublisher
         let document: Document
         
         init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>, document: Document) {
@@ -66,7 +66,7 @@ struct CoordinatorEnvironment {
     var pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void {
         storage.pushEvent
     }
-    var elementChanged: (NodeRef) -> ObservableObjectPublisher {
+    var elementChanged: @MainActor (NodeRef) -> ObservableObjectPublisher {
         storage.elementChanged
     }
     var document: Document {
