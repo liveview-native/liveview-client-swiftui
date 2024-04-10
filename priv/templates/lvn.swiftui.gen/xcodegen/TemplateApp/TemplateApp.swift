@@ -1,12 +1,12 @@
 //
-//  TemplateApp.swift
-//  TemplateApp
+//  <%= @app_namespace %>.swift
+//  <%= @app_namespace %>
 //
 
 import SwiftUI
 
 @main
-struct TemplateApp: App {
+struct <%= @app_namespace %>: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
