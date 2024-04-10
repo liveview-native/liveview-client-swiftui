@@ -43,7 +43,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
     func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
 
-        let modified = view.applyModifiers(R.self)
+        let modified = ModifierObserver<_, R>(parent: view)
         let bound = applyBindings(to: modified, element: element, context: context)
         let withID = applyID(element: element, to: bound)
         let withIDAndTag = applyTag(element: element, to: withID)
@@ -79,7 +79,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
             R.lookup(tagName, element: element)
         } else {
             BuiltinRegistry<R>.lookup(element.tag, element)
-        } 
+        }
     }
     
     @ViewBuilder
@@ -161,7 +161,7 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     @ClassModifiers<R> private var modifiers
     
     var body: some View {
-        parent.applyModifiers(modifiers)
+        ModifierApplicator(parent: parent, modifiers: modifiers)
     }
 }
 
@@ -202,27 +202,19 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let modifiers: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>
     
     var body: some View {
-        var modifiers = modifiers
-        return parent
-            .modifier(modifiers.removeFirst())
-            .applyModifiers(modifiers)
+        if modifiers.isEmpty {
+            parent
+        } else {
+            var modifiers = modifiers
+            ModifierApplicator<_, R>(
+                parent: parent.modifier(modifiers.removeFirst()),
+                modifiers: modifiers
+            )
+        }
     }
 }
 
 extension View {
-    func applyModifiers<R: RootRegistry>(_: R.Type = R.self) -> some View {
-        ModifierObserver<Self, R>(parent: self)
-    }
-    
-    @ViewBuilder
-    func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>) -> some View {
-        if modifiers.isEmpty {
-            self
-        } else {
-            ModifierApplicator(parent: self, modifiers: modifiers)
-        }
-    }
-    
     @ViewBuilder
     func applyBindings<R: RootRegistry>(_ bindings: ArraySlice<LiveViewNativeCore.Attribute>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
         if bindings.isEmpty {

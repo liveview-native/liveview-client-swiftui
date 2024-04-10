@@ -17,7 +17,7 @@ extension ModifierGenerator {
         @Option(
             help: "The number of modifiers included in each chunk. Chunks are used to reduce the size of switch statements in SwiftUI. Only applicable when using `--generate-source`"
         )
-        private var chunkSize: Int = 10
+        private var chunkSize: Int = 14
 
         func run() throws {
             let source = try String(contentsOf: interface, encoding: .utf8)
@@ -80,7 +80,7 @@ extension ModifierGenerator {
                 
                 extension BuiltinRegistry {
                     enum _BuiltinModifierChunk\#(i): ViewModifier {
-                        \#(chunk.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
+                        \#(chunk.map({ "indirect case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
                         
                         func body(content: Content) -> some View {
                             switch self {
@@ -101,11 +101,11 @@ extension ModifierGenerator {
             
             extension BuiltinRegistry {
                 enum BuiltinModifier: ViewModifier, ParseableModifierValue {
-                    \#(chunks.indices.map({ i in "case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
-                    \#(ModifierGenerator.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
-                    case _customRegistryModifier(R.CustomModifier)
-                    case _anyTextModifier(_AnyTextModifier<R>)
-                    case _anyImageModifier(_AnyImageModifier<R>)
+                    \#(chunks.indices.map({ i in "indirect case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
+                    \#(ModifierGenerator.extraModifierTypes.map({ "indirect case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
+                    indirect case _customRegistryModifier(R.CustomModifier)
+                    indirect case _anyTextModifier(_AnyTextModifier<R>)
+                    indirect case _anyImageModifier(_AnyImageModifier<R>)
                     
                     func body(content: Content) -> some View {
                         switch self {

@@ -73,7 +73,7 @@ struct Signature {
 
         self.`case` = #"""
                 \#(platformAvailability)
-                case _\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(FunctionParameterListSyntax(boundParameters.map({
+                \#(boundParameters.isEmpty ? "" : "indirect") case _\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(FunctionParameterListSyntax(boundParameters.map({
                     if availability.isEmpty {
                         return $0
                     } else {
