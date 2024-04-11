@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  TemplateApp
+//  <%= @app_namespace %>
 //
 
 import SwiftUI
@@ -10,8 +10,8 @@ struct ContentView: View {
     var body: some View {
         #LiveView(
             .automatic(
-                development: .localhost(path: "%LVN_PREFERRED_ROUTE%"),
-                production: URL(string: "https://%LVN_PREFERRED_PROD_URL%%LVN_PREFERRED_ROUTE%")!
+                development: .localhost(path: "/"),
+                production: URL(string: "https://example.com")!
             ),
             addons: []
         ) {

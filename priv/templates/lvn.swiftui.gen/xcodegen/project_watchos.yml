@@ -3,7 +3,7 @@ targets:
     type: application
     platform: watchOS
     sources:
-      - Sources/${LVN_APP_NAME}
+      - ${LVN_APP_NAME}
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: ${LVN_BUNDLE_IDENTIFIER}.watchkit
     dependencies:

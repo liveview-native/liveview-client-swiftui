@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Lvn.SwiftUi.GenerateDocumentation do
+defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   @moduledoc "Generates ex doc files for all SwiftUI views"
 
   use Mix.Task
