@@ -106,6 +106,8 @@ extension ModifierGenerator {
                     indirect case _customRegistryModifier(R.CustomModifier)
                     indirect case _anyTextModifier(_AnyTextModifier<R>)
                     indirect case _anyImageModifier(_AnyImageModifier<R>)
+                    indirect case _anyShapeModifier(_AnyShapeModifier<R>)
+                    indirect case _anyShapeFinalizerModifier(_AnyShapeFinalizerModifier<R>)
                     
                     func body(content: Content) -> some View {
                         switch self {
@@ -126,6 +128,10 @@ extension ModifierGenerator {
                         case let ._anyTextModifier(modifier):
                             content.modifier(modifier)
                         case let ._anyImageModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyShapeModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyShapeFinalizerModifier(modifier):
                             content.modifier(modifier)
                         }
                     }
@@ -204,21 +210,31 @@ extension ModifierGenerator {
                                     if let imageModifier = try? _AnyImageModifier<R>.parser(in: context).parse(&input) {
                                         return ._anyImageModifier(imageModifier)
                                     } else {
-                                        // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
                                         input = copy
-                                        do {
-                                            return try ._customRegistryModifier(R.parseModifier(&input, in: context))
-                                        } catch let error as ModifierParseError {
-                                            if let deprecation = deprecations[modifierName] {
-                                                throw ModifierParseError(
-                                                    error: .deprecatedModifier(modifierName, message: deprecation),
-                                                    metadata: metadata
-                                                )
+                                        if let shapeModifier = try? _AnyShapeModifier<R>.parser(in: context).parse(&input) {
+                                            return ._anyShapeModifier(shapeModifier)
+                                        } else {
+                                            input = copy
+                                            if let shapeFinalizerModifier = try? _AnyShapeFinalizerModifier<R>.parser(in: context).parse(&input) {
+                                                return ._anyShapeFinalizerModifier(shapeFinalizerModifier)
                                             } else {
-                                                throw error
+                                                // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
+                                                input = copy
+                                                do {
+                                                    return try ._customRegistryModifier(R.parseModifier(&input, in: context))
+                                                } catch let error as ModifierParseError {
+                                                    if let deprecation = deprecations[modifierName] {
+                                                        throw ModifierParseError(
+                                                            error: .deprecatedModifier(modifierName, message: deprecation),
+                                                            metadata: metadata
+                                                        )
+                                                    } else {
+                                                        throw error
+                                                    }
+                                                } catch {
+                                                    throw builtinError
+                                                }
                                             }
-                                        } catch {
-                                            throw builtinError
                                         }
                                     }
                                 }

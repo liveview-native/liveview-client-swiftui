@@ -146,9 +146,10 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
         if let `class` {
             let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
             wrappedValue = `class`
-                .split(separator: " " as Character)
+                .components(separatedBy: .whitespaces)
                 .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
-                    $0.append(contentsOf: sheet.classes[String($1)] ?? [])
+                    guard let modifiers = sheet.classes[$1] else { return }
+                    $0.append(contentsOf: modifiers)
                 }
         } else {
             wrappedValue.removeAll()

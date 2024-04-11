@@ -6,76 +6,105 @@
 //
 
 import SwiftUI
+import LiveViewNativeStylesheet
 
-protocol ShapeModifier: ViewModifier where Body == ShapeModifierBody<Self.Content> {
+/// A `ViewModifier` that can be applied directly to `Shape`.
+protocol ShapeModifier {
     associatedtype ModifiedShape: SwiftUI.Shape
     
-    func apply(to shape: AnyShape) -> ModifiedShape
+    func apply(to shape: SwiftUI.AnyShape, on element: ElementNode) -> ModifiedShape
 }
 
-protocol ShapeFinalizerModifier: ViewModifier where Body == ShapeFinalizerModifierBody<Self.Content> {
-    associatedtype FinalView: SwiftUI.View
+/// A `ViewModifier` that can be applied directly to `Shape`.
+protocol ShapeFinalizerModifier {
+    associatedtype FinalizedShape: SwiftUI.View
     
     @ViewBuilder
-    func apply(to shape: AnyShape) -> FinalView
-}
-
-extension ShapeModifier {
-    func body(content: Content) -> Body {
-        ShapeModifierBody(content: content, modifier: self)
-    }
-}
-
-extension ShapeFinalizerModifier {
-    func body(content: Content) -> Body {
-        ShapeFinalizerModifierBody(content: content, modifier: self)
-    }
-}
-
-struct ShapeModifierBody<Content: View>: View {
-    let content: Content
-    let modifier: any ShapeModifier
-    
-    var body: some View {
-        content
-            .transformEnvironment(\.shapeModifiers) { modifiers in
-                modifiers.append(modifier)
-            }
-    }
-}
-
-struct ShapeFinalizerModifierBody<Content: View>: View {
-    let content: Content
-    let modifier: any ShapeFinalizerModifier
-    
-    var body: some View {
-        content
-            .environment(\.shapeFinalizerModifier, modifier)
-    }
-}
-
-extension EnvironmentValues {
-    private enum ShapeModifiersKey: EnvironmentKey {
-        static let defaultValue = [any ShapeModifier]()
-    }
-    
-    var shapeModifiers: [any ShapeModifier] {
-        get { self[ShapeModifiersKey.self] }
-        set { self[ShapeModifiersKey.self] = newValue }
-    }
-    
-    private enum ShapeFinalizerModifierKey: EnvironmentKey {
-        static let defaultValue = (any ShapeFinalizerModifier)?.none
-    }
-    
-    var shapeFinalizerModifier: (any ShapeFinalizerModifier)? {
-        get { self[ShapeFinalizerModifierKey.self] }
-        set { self[ShapeFinalizerModifierKey.self] = newValue }
-    }
+    func apply(to shape: SwiftUI.AnyShape, on element: ElementNode) -> FinalizedShape
 }
 
 extension SwiftUI.Shape {
     func erasedToAnyShape() -> AnyShape {
         AnyShape(self)
+    }
+}
+
+/// A type-erased `ShapeModifier`, which can be applied to a `View` or directly on `Shape`.
+enum _AnyShapeModifier<R: RootRegistry>: ViewModifier, ShapeModifier, ParseableModifierValue {
+    case rotation(_RotationModifier)
+    case scale(_ScaleModifier<R>)
+    case intersection(_IntersectionModifier)
+    case union(_UnionModifier)
+    case subtracting(_SubtractingModifier)
+    case symmetricDifference(_SymmetricDifferenceModifier)
+    case lineIntersection(_LineIntersectionModifier)
+    case lineSubtraction(_LineSubtractionModifier)
+    case transform(_TransformModifier)
+    
+    func body(content: Content) -> some View {
+        content
+    }
+    
+    func apply(to shape: SwiftUI.AnyShape, on element: ElementNode) -> SwiftUI.AnyShape {
+        switch self {
+        case let .rotation(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        case let .scale(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        case let .intersection(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        case let .union(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        case let .subtracting(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        case let .symmetricDifference(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        case let .lineIntersection(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        case let .lineSubtraction(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        case let .transform(modifier):
+            return modifier.apply(to: shape, on: element).erasedToAnyShape()
+        }
+    }
+    
+    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            _RotationModifier.parser(in: context).map(Self.rotation)
+            _ScaleModifier<R>.parser(in: context).map(Self.scale)
+            _IntersectionModifier.parser(in: context).map(Self.intersection)
+            _UnionModifier.parser(in: context).map(Self.union)
+            _SubtractingModifier.parser(in: context).map(Self.subtracting)
+            _SymmetricDifferenceModifier.parser(in: context).map(Self.symmetricDifference)
+            _LineIntersectionModifier.parser(in: context).map(Self.lineIntersection)
+            _LineSubtractionModifier.parser(in: context).map(Self.lineSubtraction)
+            _TransformModifier.parser(in: context).map(Self.transform)
+        }
+    }
+}
+
+/// A type-erased `ShapeFinalizerModifier`, which can be applied to a `View` or directly on `Shape`.
+enum _AnyShapeFinalizerModifier<R: RootRegistry>: ViewModifier, ShapeFinalizerModifier, ParseableModifierValue {
+    case fill(_FillModifier)
+    case stroke(_StrokeModifier<R>)
+    
+    func body(content: Content) -> some View {
+        content
+    }
+    
+    func apply(to shape: SwiftUI.AnyShape, on element: ElementNode) -> some View {
+        switch self {
+        case let .fill(modifier):
+            modifier.apply(to: shape, on: element)
+        case let .stroke(modifier):
+            modifier.apply(to: shape, on: element)
+        }
+    }
+    
+    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        OneOf {
+            _FillModifier.parser(in: context).map(Self.fill)
+            _StrokeModifier<R>.parser(in: context).map(Self.stroke)
+        }
     }
 }

@@ -31,7 +31,7 @@ struct _StrokeModifier<R: RootRegistry>: ShapeFinalizerModifier {
     }
     
     @ViewBuilder
-    func apply(to shape: AnyShape) -> some View {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some View {
         switch storage {
         case ._0(let content, let style, let antialiased):
             if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
