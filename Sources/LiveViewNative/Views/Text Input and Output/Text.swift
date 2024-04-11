@@ -128,6 +128,7 @@ struct Text<Root: RootRegistry>: View {
     }
     
     init(element: ElementNode, overrideStylesheet: Stylesheet<Root>? = nil) {
+        self._liveElement = .init(wrappedValue: .init(), element: element)
         self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
         self.overrideText = nil
     }

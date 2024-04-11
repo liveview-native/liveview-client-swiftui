@@ -17,20 +17,20 @@ final class GridTests: XCTestCase {
             <Grid>
                 <GridRow alignment="top">
                     <Text>Row 1</Text>
-                    <Rectangle fillColor="system-red" />
+                    <Rectangle />
                 </GridRow>
                 <Divider />
                 <GridRow>
                     <Text>Row 2</Text>
-                    <Rectangle fillColor="system-green" />
-                    <Rectangle fillColor="system-green" />
+                    <Rectangle />
+                    <Rectangle />
                 </GridRow>
                 <Divider />
                 <GridRow alignment="bottom">
                     <Text>Row 3</Text>
-                    <Rectangle fillColor="system-blue" />
-                    <Rectangle fillColor="system-blue" />
-                    <Rectangle fillColor="system-blue" />
+                    <Rectangle />
+                    <Rectangle />
+                    <Rectangle />
                 </GridRow>
             </Grid>
             """#,
@@ -39,20 +39,20 @@ final class GridTests: XCTestCase {
             Grid {
                 GridRow(alignment: .top) {
                     Text("Row 1")
-                    Rectangle().fill(.red)
+                    Rectangle()
                 }
                 Divider()
                 GridRow {
                     Text("Row 2")
-                    Rectangle().fill(.green)
-                    Rectangle().fill(.green)
+                    Rectangle()
+                    Rectangle()
                 }
                 Divider()
                 GridRow(alignment: .bottom) {
                     Text("Row 3")
-                    Rectangle().fill(.blue)
-                    Rectangle().fill(.blue)
-                    Rectangle().fill(.blue)
+                    Rectangle()
+                    Rectangle()
+                    Rectangle()
                 }
             }
         }
