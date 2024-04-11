@@ -48,24 +48,30 @@ struct DatePicker<Root: RootRegistry>: View {
     ///- `hourAndMinute`
     ///- `date`
     @_documentation(visibility: public)
-    private var components: DatePickerComponents = [.hourAndMinute, .date]
+    private var components: String?
+    
+    #if os(iOS) || os(macOS)
+    private var datePickerComponents: DatePickerComponents {
+        components.flatMap({ DatePickerComponents.init(from: $0) }) ?? [.hourAndMinute, .date]
+    }
+    #endif
     
     var body: some View {
 #if os(iOS) || os(macOS)
         if let start, let end {
-            SwiftUI.DatePicker(selection: $selection.date, in: start...end, displayedComponents: components) {
+            SwiftUI.DatePicker(selection: $selection.date, in: start...end, displayedComponents: datePickerComponents) {
                 $liveElement.children()
             }
         } else if let start {
-            SwiftUI.DatePicker(selection: $selection.date, in: start..., displayedComponents: components) {
+            SwiftUI.DatePicker(selection: $selection.date, in: start..., displayedComponents: datePickerComponents) {
                 $liveElement.children()
             }
         } else if let end {
-            SwiftUI.DatePicker(selection: $selection.date, in: ...end, displayedComponents: components) {
+            SwiftUI.DatePicker(selection: $selection.date, in: ...end, displayedComponents: datePickerComponents) {
                 $liveElement.children()
             }
         } else {
-            SwiftUI.DatePicker(selection: $selection.date, displayedComponents: components) {
+            SwiftUI.DatePicker(selection: $selection.date, displayedComponents: datePickerComponents) {
                 $liveElement.children()
             }
         }
@@ -103,10 +109,10 @@ private struct CodableDate: FormValue, AttributeDecodable {
 #if !os(iOS) && !os(macOS)
 typealias DatePickerComponents = Never
 #else
-extension DatePickerComponents: AttributeDecodable {
-    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+extension DatePickerComponents {
+    public init(from string: String) {
         #if os(iOS) || os(macOS)
-        switch attribute?.value {
+        switch string {
         case "hourAndMinute":
             self = .hourAndMinute
         case "date":
