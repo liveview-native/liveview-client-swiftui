@@ -35,7 +35,7 @@ struct ToolbarItemGroup<Root: RootRegistry>: ToolbarContent {
     private var placement: ToolbarItemPlacement = .automatic
     
     init(element: ElementNode) {
-        self._liveElement = .init(wrappedValue: .init(), element: element)
+        self._liveElement = .init(element: element)
     }
     
     var body: some ToolbarContent {

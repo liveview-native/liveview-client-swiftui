@@ -86,7 +86,7 @@ struct ImageView<Root: RootRegistry>: View {
     }
     
     init(element: ElementNode, overrideStylesheet: Stylesheet<Root>?, overrideImage: SwiftUI.Image? = nil) {
-        self._liveElement = .init(wrappedValue: .init(), element: element)
+        self._liveElement = .init(element: element)
         self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
         self.overrideImage = overrideImage
     }

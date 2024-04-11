@@ -19,6 +19,7 @@ public macro LiveAttribute(_ name: AttributeName? = nil) = #externalMacro(module
 public macro LiveElementIgnored() = #externalMacro(module: "LiveViewNativeMacros", type: "LiveElementIgnoredMacro")
 
 public protocol _LiveElementTrackedContent {
+    init()
     init(from element: ElementNode) throws
 }
 
@@ -36,13 +37,17 @@ public protocol _LiveElementTrackedContent {
         self.wrappedValue = wrappedValue
     }
     
-    public init(wrappedValue: T, element: ElementNode) {
+    public init(wrappedValue: T? = nil, element: ElementNode) {
         self._element = .init(element: element)
-        self.wrappedValue = wrappedValue
+        self.wrappedValue = wrappedValue ?? (try? T.init(from: element)) ?? T.init()
     }
     
     public mutating func update() {
         self.wrappedValue = try! T.init(from: element)
+    }
+    
+    var isConstant: Bool {
+        _element.isConstant
     }
 }
 

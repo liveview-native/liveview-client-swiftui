@@ -84,7 +84,7 @@ public struct ObservedElement {
         observer.objectWillChange
     }
     
-    var children: [Node] { observer.resolvedChildren }
+    var children: [Node] { overrideElement.flatMap({ Array($0.children()) }) ?? observer.resolvedChildren }
 }
 
 extension ObservedElement: DynamicProperty {

@@ -130,7 +130,7 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     let overrideStylesheet: Stylesheet<Root>?
     
     init(element: ElementNode, overrideStylesheet: Stylesheet<Root>?) {
-        self._liveElement = .init(wrappedValue: .init(), element: element)
+        self._liveElement = .init(element: element)
         self.overrideStylesheet = overrideStylesheet
     }
     
@@ -140,20 +140,41 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     }
     
     @LiveElementIgnored
-    var wrappedValue: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> = .init()
+    var wrappedValue: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
+        if _liveElement.isConstant {
+            if let `class`,
+               !`class`.isEmpty
+            {
+                return resolveModifiers(for: `class`)
+            } else {
+                return .init()
+            }
+        } else {
+            return resolvedModifiers
+        }
+    }
+    
+    @LiveElementIgnored
+    var resolvedModifiers: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> = .init()
     
     mutating func update() {
-        if let `class` {
-            let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
-            wrappedValue = `class`
-                .components(separatedBy: .whitespaces)
-                .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
-                    guard let modifiers = sheet.classes[$1] else { return }
-                    $0.append(contentsOf: modifiers)
-                }
+        if let `class`,
+           !`class`.isEmpty
+        {
+            resolvedModifiers = resolveModifiers(for: `class`)
         } else {
-            wrappedValue.removeAll()
+            resolvedModifiers.removeAll()
         }
+    }
+    
+    private func resolveModifiers(for `class`: String) -> ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
+        let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
+        return `class`
+            .components(separatedBy: .whitespaces)
+            .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
+                guard let modifiers = sheet.classes[$1] else { return }
+                $0.append(contentsOf: modifiers)
+            }
     }
 }
 

@@ -128,13 +128,13 @@ struct Text<Root: RootRegistry>: View {
     }
     
     init(element: ElementNode, overrideStylesheet: Stylesheet<Root>? = nil) {
-        self._liveElement = .init(wrappedValue: .init(), element: element)
+        self._liveElement = .init(element: element)
         self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
         self.overrideText = nil
     }
     
     var body: SwiftUI.Text {
-        if _modifiers.overrideStylesheet != nil {
+        if _liveElement.isConstant {
             return modifiers.reduce(text) { result, modifier in
                 if case let ._anyTextModifier(textModifier) = modifier {
                     return textModifier.apply(to: result, on: $liveElement.element)
@@ -212,7 +212,7 @@ struct Text<Root: RootRegistry>: View {
                 return SwiftUI.Text(innerText)
             }
         } else {
-            return $liveElement.element.children().reduce(into: SwiftUI.Text("")) { prev, next in
+            return $liveElement.childNodes.reduce(into: SwiftUI.Text("")) { prev, next in
                 switch next.data {
                 case let .element(data):
                     guard !data.attributes.contains(where: { $0.name == "template" })

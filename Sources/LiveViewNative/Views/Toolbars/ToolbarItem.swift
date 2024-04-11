@@ -69,7 +69,7 @@ struct ToolbarItem<Root: RootRegistry>: ToolbarContent {
     private var placement: ToolbarItemPlacement = .automatic
     
     init(element: ElementNode) {
-        self._liveElement = .init(wrappedValue: .init(), element: element)
+        self._liveElement = .init(element: element)
     }
     
     var body: some ToolbarContent {
@@ -113,7 +113,7 @@ struct CustomizableToolbarItem<Root: RootRegistry>: CustomizableToolbarContent {
     private var customizationBehavior: ToolbarCustomizationBehavior = .default
     
     init(element: ElementNode) {
-        self._liveElement = .init(wrappedValue: .init(), element: element)
+        self._liveElement = .init(element: element)
     }
     
     var body: some CustomizableToolbarContent {
