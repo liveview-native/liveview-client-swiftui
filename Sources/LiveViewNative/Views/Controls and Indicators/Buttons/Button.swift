@@ -53,7 +53,7 @@ public struct Button<Root: RootRegistry>: View {
         SwiftUI.Button(role: role, action: self.handleClick) {
             $liveElement.children()
         }
-        .preference(key: _ProvidedBindingsKey.self, value: ["phx-click"])
+        .preference(key: _ProvidedBindingsKey.self, value: [.click])
     }
     
     private func handleClick() {

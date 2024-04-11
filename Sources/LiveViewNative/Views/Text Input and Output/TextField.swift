@@ -141,7 +141,7 @@ struct TextField<Root: RootRegistry>: TextFieldProtocol {
         field
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .preference(key: _ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+            .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
     }
     
     @MainActor

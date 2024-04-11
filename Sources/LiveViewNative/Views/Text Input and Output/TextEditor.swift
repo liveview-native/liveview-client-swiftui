@@ -39,7 +39,7 @@ struct TextEditor<Root: RootRegistry>: TextFieldProtocol {
         SwiftUI.TextEditor(text: textBinding)
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .preference(key: _ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+            .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
 #endif
     }
     

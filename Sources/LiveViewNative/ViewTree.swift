@@ -89,10 +89,12 @@ struct ViewTreeBuilder<R: RootRegistry> {
         context: LiveContextStorage<R>
     ) -> some View {
         view.applyBindings(
-            element.attributes.filter({
-                $0.name.namespace == nil
-                    && $0.name.name.hasPrefix("phx-")
-                    && $0.value != nil
+            element.attributes.compactMap({
+                guard $0.name.namespace == nil,
+                      $0.value != nil,
+                      let name = _EventBinding(rawValue: $0.name.name)
+                else { return nil }
+                return (name, $0)
             })[...],
             element: element,
             context: context
@@ -200,7 +202,7 @@ extension EnvironmentValues {
 
 private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
-    let bindings: ArraySlice<LiveViewNativeCore.Attribute>
+    let bindings: ArraySlice<(_EventBinding, LiveViewNativeCore.Attribute)>
     let element: ElementNode
     let context: LiveContextStorage<R>
 
@@ -209,8 +211,8 @@ private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
         // force-unwrap is okay, this view is never constructed with an empty slice
         let binding = bindings.first!
         BuiltinRegistry<R>.applyBinding(
-            binding.name,
-            event: binding.value!,
+            binding.0,
+            event: binding.1.value!,
             value: element.buildPhxValuePayload(),
             to: parent,
             element: element
@@ -238,7 +240,11 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
 
 extension View {
     @ViewBuilder
-    func applyBindings<R: RootRegistry>(_ bindings: ArraySlice<LiveViewNativeCore.Attribute>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
+    func applyBindings<R: RootRegistry>(
+        _ bindings: ArraySlice<(_EventBinding, LiveViewNativeCore.Attribute)>,
+        element: ElementNode,
+        context: LiveContextStorage<R>
+    ) -> some View {
         if bindings.isEmpty {
             self
         } else {
