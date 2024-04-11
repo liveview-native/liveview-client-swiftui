@@ -25,6 +25,7 @@ import SwiftUI
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 @_documentation(visibility: public)
 @available(watchOS 9.0, *)
+@LiveElement
 struct TextFieldLink<Root: RootRegistry>: View {
     @FormState("value") private var value: String?
     
