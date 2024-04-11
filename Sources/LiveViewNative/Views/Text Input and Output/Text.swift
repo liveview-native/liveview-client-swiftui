@@ -215,7 +215,7 @@ struct Text<Root: RootRegistry>: View {
             return $liveElement.childNodes.reduce(into: SwiftUI.Text("")) { prev, next in
                 switch next.data {
                 case let .element(data):
-                    guard !data.attributes.contains(where: { $0.name == "template" })
+                    guard !data.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
                     else { return }
                     
                     let element = ElementNode(node: next, data: data)

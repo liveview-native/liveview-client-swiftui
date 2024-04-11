@@ -169,7 +169,12 @@ struct List<Root: RootRegistry>: View {
     }
     
     private var content: some View {
-        forEach(nodes: $liveElement.childNodes, context: $liveElement.context.storage)
+        forEach(
+            nodes: $liveElement.childNodes.filter({
+                !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+            }),
+            context: $liveElement.context.storage
+        )
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }
