@@ -27,10 +27,8 @@ import LiveViewNativeCore
 /// * ``selection``
 @_documentation(visibility: public)
 @available(iOS 16.0, macOS 13.0, *)
-struct ColorPicker<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ColorPicker<Root: RootRegistry>: View {
     /// The currently selected color value.
     ///
     /// The color is stored as a map with the keys `r`, `g`, `b`, and optionally `a`.
@@ -39,7 +37,7 @@ struct ColorPicker<R: RootRegistry>: View {
     
     /// Enables the selection of transparent colors.
     @_documentation(visibility: public)
-    @Attribute("supportsOpacity") private var supportsOpacity: Bool
+    private var supportsOpacity: Bool = false
     
     struct CodableColor: AttributeDecodable, Codable, Equatable {
         init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
@@ -89,7 +87,7 @@ struct ColorPicker<R: RootRegistry>: View {
             selection: $selection.cgColor,
             supportsOpacity: supportsOpacity
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
         #endif
     }

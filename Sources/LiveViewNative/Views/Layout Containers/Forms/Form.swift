@@ -11,13 +11,11 @@ import SwiftUI
 ///
 /// - Note: This element does not provide a form data model. See [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form).
 @_documentation(visibility: public)
-struct Form<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Form<Root: RootRegistry>: View {
     var body: some View {
         SwiftUI.Form {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

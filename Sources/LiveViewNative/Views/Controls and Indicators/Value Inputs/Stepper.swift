@@ -42,23 +42,21 @@ import SwiftUI
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 @_documentation(visibility: public)
 @available(iOS 13.0, macOS 10.15, watchOS 9.0, *)
-struct Stepper<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Stepper<Root: RootRegistry>: View {
     @FormState("value", default: 0) var value: Double
     
     /// The amount to increment/decrement the value by.
     @_documentation(visibility: public)
-    @Attribute("step") private var step: Double = 1
+    private var step: Double = 1
     
     /// The lowest allowed value.
     @_documentation(visibility: public)
-    @Attribute("lowerBound") private var lowerBound: Double?
+    private var lowerBound: Double?
     
     /// The highest allowed value.
     @_documentation(visibility: public)
-    @Attribute("upperBound") private var upperBound: Double?
+    private var upperBound: Double?
     
     public var body: some View {
         #if !os(tvOS)
@@ -77,6 +75,6 @@ struct Stepper<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element)
+        $liveElement.children()
     }
 }

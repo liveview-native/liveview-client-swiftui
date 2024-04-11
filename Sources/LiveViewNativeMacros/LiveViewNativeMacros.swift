@@ -12,6 +12,10 @@ import SwiftSyntaxMacros
 struct LiveViewNativeMacrosPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         RegistriesMacro.self,
-        LiveViewMacro.self
+        LiveViewMacro.self,
+        
+        LiveElementMacro.self,
+        LiveAttributeMacro.self,
+        LiveElementIgnoredMacro.self
     ]
 }

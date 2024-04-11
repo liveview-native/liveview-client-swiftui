@@ -74,8 +74,12 @@ public struct Event: DynamicProperty, Decodable {
     @_documentation(visibility: public)
     private let params: Any?
     
-    @Attribute("phx-debounce") private var debounceAttribute: Double?
-    @Attribute("phx-throttle") private var throttleAttribute: Double?
+    private var debounceAttribute: Double? {
+        try? element.attributeValue(Double.self, for: "phx-debounce")
+    }
+    private var throttleAttribute: Double? {
+        try? element.attributeValue(Double.self, for: "phx-throttle")
+    }
     
     final class Handler: ObservableObject {
         let channel = AsyncChannel<(String, String, Any, Int?)>()

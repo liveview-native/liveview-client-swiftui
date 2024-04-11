@@ -26,33 +26,27 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "NavigationLi
 /// - ``disabled``
 @_documentation(visibility: public)
 @available(iOS 16.0, *)
-struct NavigationLink<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct NavigationLink<Root: RootRegistry>: View {
     /// The URL of the destination live view, relative to the current live view's URL.
     @_documentation(visibility: public)
-    @Attribute("destination") private var destination: String?
-    /// Whether the link is disabled.
-    @_documentation(visibility: public)
-    @Attribute("disabled") private var disabled: Bool
+    private var destination: String?
     
     @ViewBuilder
     public var body: some View {
-        if let url = destination.flatMap({ URL(string: $0, relativeTo: context.coordinator.url) })?.appending(path: "").absoluteURL {
+        if let url = destination.flatMap({ URL(string: $0, relativeTo: $liveElement.context.coordinator.url) })?.appending(path: "").absoluteURL {
             SwiftUI.NavigationLink(
                 value: LiveNavigationEntry(
                     url: url,
-                    coordinator: LiveViewCoordinator(session: context.coordinator.session, url: url)
+                    coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url)
                 )
             ) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
-            .disabled(disabled)
         } else {
-            context.buildChildren(of: element)
+            $liveElement.children()
                 .task {
-                    logger.error("Missing or invalid `destination` on `<NavigationLink>\(element.innerText())</NavigationLink>`")
+                    logger.error("Missing or invalid `destination` on `<NavigationLink>\($liveElement.element.innerText())</NavigationLink>`")
                 }
         }
     }

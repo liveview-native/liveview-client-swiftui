@@ -74,42 +74,48 @@ fileprivate let itemsDecoder = makeJSONDecoder()
 /// ### Sharing Multiple Items
 /// * ``items``
 @_documentation(visibility: public)
-struct ShareLink<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ShareLink<Root: RootRegistry>: View {
     /// The title to use when sharing to a service with a subject field.
     @_documentation(visibility: public)
-    @Attribute("subject", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var subject: SwiftUI.Text?
+    private var subject: String?
     
     /// The description to use when sharing to a service with a message field.
     @_documentation(visibility: public)
-    @Attribute("message", transform: { $0?.value.flatMap(SwiftUI.Text.init) }) private var message: SwiftUI.Text?
+    private var message: String?
     
     /// A JSON-encoded list of strings to share.
     @_documentation(visibility: public)
-    @Attribute(
-        "items",
-        transform: {
-            $0?.value.flatMap({
-                guard let data = $0.data(using: .utf8) else { return nil }
-                return try? itemsDecoder.decode([String].self, from: data)
-            })
+    private var items: Items?
+    
+    struct Items: AttributeDecodable {
+        let value: [String]
+        
+        init(from attribute: LiveViewNativeCore.Attribute?) throws {
+            guard let value = attribute?.value,
+                  let data = value.data(using: .utf8)
+            else { throw AttributeDecodingError.missingAttribute(Self.self) }
+            self.value = try itemsDecoder.decode([String].self, from: data)
         }
-    ) private var items: [String]?
+    }
     
     /// A string to share.
     @_documentation(visibility: public)
-    @Attribute("item") private var item: String?
+    private var item: String?
     
     public var body: some View {
         #if !os(tvOS)
-        let useDefaultLabel = element.children().filter({
-            guard let element = $0.asElement() else { return true }
-            return element.tag != "SharePreview"
+        let useDefaultLabel = $liveElement.childNodes.filter({
+            guard case let .element(data) = $0.data else { return true }
+            return data.tag != "SharePreview"
         }).isEmpty
-        if let items {
+        
+        let subject = self.subject.flatMap(SwiftUI.Text.init)
+        let message = self.message.flatMap(SwiftUI.Text.init)
+        
+        if let items = items?.value {
             let previews = previews(for: items)
+            
             if useDefaultLabel {
                 switch previews {
                 case nil:
@@ -284,7 +290,7 @@ struct ShareLink<R: RootRegistry>: View {
     }
     
     private var label: some View {
-        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
+        $liveElement.children(in: "label", default: true)
     }
     
     /// The set of values used to create the `SharePreview` for each item.
@@ -332,16 +338,16 @@ struct ShareLink<R: RootRegistry>: View {
     /// This is due to a limitation in the `ShareLink` type wherein a single `SharePreview` type must be returned, but would have a different type if the presence of the `image`/`icon` differed.
     private func previews(for items: [String]) -> PreviewBranch<String>? {
         // Collect the `share-link:preview` values for each item, and the default if present.
-        var previews: ([String: PreviewData], default: PreviewData?) = element.elementChildren()
+        var previews: ([String: PreviewData], default: PreviewData?) = $liveElement.element.elementChildren()
             .filter({ $0.tag == "SharePreview" })
             .reduce(into: ([:], default: nil)) { pairs, element in
                 let title = element.attributeValue(for: "title") ?? ""
                 let image = element.elementChildren()
                     .first(where: { $0.attributeValue(for: "template") == "image" })
-                    .flatMap({ ImageView<R>(element: $0, overrideStylesheet: context.coordinator.session.stylesheet).body })
+                    .flatMap({ ImageView<Root>(element: $0, overrideStylesheet: $liveElement.context.coordinator.session.stylesheet).body })
                 let icon = element.elementChildren()
                     .first(where: { $0.attributeValue(for: "template") == "icon" })
-                    .flatMap({ ImageView<R>(element: $0, overrideStylesheet: context.coordinator.session.stylesheet).body })
+                    .flatMap({ ImageView<Root>(element: $0, overrideStylesheet: $liveElement.context.coordinator.session.stylesheet).body })
                 
                 let data = PreviewData(
                     title: title,

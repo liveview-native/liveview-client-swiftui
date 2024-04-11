@@ -33,6 +33,8 @@ enum _AnyTextModifier<R: RootRegistry>: ViewModifier, TextModifier, ParseableMod
     
     func body(content: Content) -> some View {
         switch self {
+        case let .foregroundStyle(modifier):
+            content.modifier(modifier)
         case let .font(modifier):
             content.modifier(modifier)
         case let .fontWeight(modifier):
@@ -40,8 +42,6 @@ enum _AnyTextModifier<R: RootRegistry>: ViewModifier, TextModifier, ParseableMod
         case let .fontDesign(modifier):
             content.modifier(modifier)
         case let .fontWidth(modifier):
-            content.modifier(modifier)
-        case let .foregroundStyle(modifier):
             content.modifier(modifier)
         case let .bold(modifier):
             content.modifier(modifier)

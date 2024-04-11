@@ -17,7 +17,7 @@ extension ModifierGenerator {
         @Option(
             help: "The number of modifiers included in each chunk. Chunks are used to reduce the size of switch statements in SwiftUI. Only applicable when using `--generate-source`"
         )
-        private var chunkSize: Int = 10
+        private var chunkSize: Int = 14
 
         func run() throws {
             let source = try String(contentsOf: interface, encoding: .utf8)
@@ -80,7 +80,7 @@ extension ModifierGenerator {
                 
                 extension BuiltinRegistry {
                     enum _BuiltinModifierChunk\#(i): ViewModifier {
-                        \#(chunk.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
+                        \#(chunk.map({ "indirect case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
                         
                         func body(content: Content) -> some View {
                             switch self {
@@ -101,11 +101,13 @@ extension ModifierGenerator {
             
             extension BuiltinRegistry {
                 enum BuiltinModifier: ViewModifier, ParseableModifierValue {
-                    \#(chunks.indices.map({ i in "case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
-                    \#(ModifierGenerator.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
-                    case _customRegistryModifier(R.CustomModifier)
-                    case _anyTextModifier(_AnyTextModifier<R>)
-                    case _anyImageModifier(_AnyImageModifier<R>)
+                    \#(chunks.indices.map({ i in "indirect case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
+                    \#(ModifierGenerator.extraModifierTypes.map({ "indirect case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
+                    indirect case _customRegistryModifier(R.CustomModifier)
+                    indirect case _anyTextModifier(_AnyTextModifier<R>)
+                    indirect case _anyImageModifier(_AnyImageModifier<R>)
+                    indirect case _anyShapeModifier(_AnyShapeModifier<R>)
+                    indirect case _anyShapeFinalizerModifier(_AnyShapeFinalizerModifier<R>)
                     
                     func body(content: Content) -> some View {
                         switch self {
@@ -126,6 +128,10 @@ extension ModifierGenerator {
                         case let ._anyTextModifier(modifier):
                             content.modifier(modifier)
                         case let ._anyImageModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyShapeModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyShapeFinalizerModifier(modifier):
                             content.modifier(modifier)
                         }
                     }
@@ -204,21 +210,31 @@ extension ModifierGenerator {
                                     if let imageModifier = try? _AnyImageModifier<R>.parser(in: context).parse(&input) {
                                         return ._anyImageModifier(imageModifier)
                                     } else {
-                                        // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
                                         input = copy
-                                        do {
-                                            return try ._customRegistryModifier(R.parseModifier(&input, in: context))
-                                        } catch let error as ModifierParseError {
-                                            if let deprecation = deprecations[modifierName] {
-                                                throw ModifierParseError(
-                                                    error: .deprecatedModifier(modifierName, message: deprecation),
-                                                    metadata: metadata
-                                                )
+                                        if let shapeModifier = try? _AnyShapeModifier<R>.parser(in: context).parse(&input) {
+                                            return ._anyShapeModifier(shapeModifier)
+                                        } else {
+                                            input = copy
+                                            if let shapeFinalizerModifier = try? _AnyShapeFinalizerModifier<R>.parser(in: context).parse(&input) {
+                                                return ._anyShapeFinalizerModifier(shapeFinalizerModifier)
                                             } else {
-                                                throw error
+                                                // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
+                                                input = copy
+                                                do {
+                                                    return try ._customRegistryModifier(R.parseModifier(&input, in: context))
+                                                } catch let error as ModifierParseError {
+                                                    if let deprecation = deprecations[modifierName] {
+                                                        throw ModifierParseError(
+                                                            error: .deprecatedModifier(modifierName, message: deprecation),
+                                                            metadata: metadata
+                                                        )
+                                                    } else {
+                                                        throw error
+                                                    }
+                                                } catch {
+                                                    throw builtinError
+                                                }
                                             }
-                                        } catch {
-                                            throw builtinError
                                         }
                                     }
                                 }

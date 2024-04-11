@@ -21,7 +21,7 @@ struct _FillModifier: ShapeFinalizerModifier {
     }
     
     @ViewBuilder
-    func apply(to shape: AnyShape) -> some View {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some View {
         shape.fill(content, style: style)
     }
 }

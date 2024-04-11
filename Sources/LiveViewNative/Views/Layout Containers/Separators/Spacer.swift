@@ -23,12 +23,13 @@ import SwiftUI
 /// ## Attributes
 /// - ``minLength``
 @_documentation(visibility: public)
-struct Spacer: View {
+@LiveElement
+struct Spacer<Root: RootRegistry>: View {
     /// The minimum size of the spacer. If not provided, the minimum length is the system spacing.
     @_documentation(visibility: public)
-    @Attribute("minLength") private var minLength: Double?
+    private var minLength: CGFloat?
     
     public var body: some View {
-        SwiftUI.Spacer(minLength: minLength.flatMap(CGFloat.init))
+        SwiftUI.Spacer(minLength: minLength)
     }
 }

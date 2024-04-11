@@ -39,28 +39,26 @@ import SwiftUI
 /// * `label` - Describes the content of the group box.
 /// * `content` - The elements to group together.
 @_documentation(visibility: public)
-struct GroupBox<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct GroupBox<Root: RootRegistry>: View {
     /// The title to use.
     ///
     /// Takes precedence over a `label` child.
     @_documentation(visibility: public)
-    @Attribute("title") private var title: String?
+    private var title: String?
 
     public var body: some View {
 #if os(iOS) || os(macOS)
         SwiftUI.Group {
             if let title {
                 SwiftUI.GroupBox(title) {
-                    context.buildChildren(of: element)
+                    $liveElement.children()
                 }
             } else {
                 SwiftUI.GroupBox {
-                    context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+                    $liveElement.children(in: "content", default: true)
                 } label: {
-                    context.buildChildren(of: element, forTemplate: "label")
+                    $liveElement.children(in: "label")
                 }
             }
         }

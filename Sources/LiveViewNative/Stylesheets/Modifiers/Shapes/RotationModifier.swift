@@ -23,7 +23,7 @@ struct _RotationModifier: ShapeModifier {
         self.anchor = anchor
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         return shape.rotation(angle, anchor: anchor)
     }
 }

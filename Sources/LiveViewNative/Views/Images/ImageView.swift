@@ -58,24 +58,23 @@ import SwiftUI
 /// * ``name``
 /// * ``variableValue``
 @_documentation(visibility: public)
-struct ImageView<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ImageView<Root: RootRegistry>: View {
     /// The name of the system image (SF Symbol) to display.
     ///
     /// See [Apple's documentation](https://developer.apple.com/sf-symbols/) for more information.
     @_documentation(visibility: public)
-    @Attribute("systemName") private var systemName: String?
+    private var systemName: String?
     /// The name of an image in the app's asset catalog.
     @_documentation(visibility: public)
-    @Attribute("name") private var name: String?
+    private var name: String?
     
     /// The value represented by this image, in the range `0.0` to `1.0`.
     @_documentation(visibility: public)
-    @Attribute("variableValue") private var variableValue: Double?
+    private var variableValue: Double?
     
-    @ClassModifiers<R> private var modifiers
+    @LiveElementIgnored
+    @ClassModifiers<Root> private var modifiers
     let overrideImage: SwiftUI.Image?
     
     init() {
@@ -86,11 +85,8 @@ struct ImageView<R: RootRegistry>: View {
         self.overrideImage = image
     }
     
-    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?, overrideImage: SwiftUI.Image? = nil) {
-        self._element = .init(element: element)
-        self._systemName = .init("systemName", element: element)
-        self._variableValue = .init("variableValue", element: element)
-        self._name = .init("name", element: element)
+    init(element: ElementNode, overrideStylesheet: Stylesheet<Root>?, overrideImage: SwiftUI.Image? = nil) {
+        self._liveElement = .init(element: element)
         self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
         self.overrideImage = overrideImage
     }
@@ -99,7 +95,7 @@ struct ImageView<R: RootRegistry>: View {
         image.flatMap({ (image: SwiftUI.Image) -> SwiftUI.Image in
             return modifiers.reduce(image) { result, modifier in
                 if case let ._anyImageModifier(imageModifier) = modifier {
-                    return imageModifier.apply(to: result, on: element)
+                    return imageModifier.apply(to: result, on: $liveElement.element)
                 } else {
                     return result
                 }
@@ -132,10 +128,10 @@ struct ImageView<R: RootRegistry>: View {
     }
     
     var label: SwiftUI.Text? {
-        if let labelNode = element.children().first {
+        if let labelNode = $liveElement.childNodes.first {
             switch labelNode.data {
             case let .element(element):
-                return Text<R>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: nil).body
+                return Text<Root>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: nil).body
             case let .leaf(label):
                 return .init(label)
             case .root:

@@ -18,9 +18,10 @@ import SwiftUI
 /// - ``blurEvent``
 @_documentation(visibility: public)
 @available(iOS 16.0, macOS 13.0, *)
-struct TextEditor: TextFieldProtocol {
-    @ObservedElement var element: ElementNode
+@LiveElement
+struct TextEditor<Root: RootRegistry>: TextFieldProtocol {
     @FormState("text") var text: String?
+    @LiveElementIgnored
     @FocusState private var isFocused: Bool
     
     /// An event that fires when the text editor is focused.
@@ -30,12 +31,30 @@ struct TextEditor: TextFieldProtocol {
     @_documentation(visibility: public)
     @Event("phx-blur", type: "blur") var blurEvent
     
+    var axis: Axis = .horizontal
+    var prompt: String?
+    
     var body: some View {
 #if os(iOS) || os(macOS)
         SwiftUI.TextEditor(text: textBinding)
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .preference(key: _ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+            .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
 #endif
+    }
+    
+    @MainActor
+    func handleFocus(_ isFocused: Bool) {
+        if isFocused {
+            focusEvent(value:
+                $liveElement.element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            )
+        } else {
+            blurEvent(value:
+                $liveElement.element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            )
+        }
     }
 }

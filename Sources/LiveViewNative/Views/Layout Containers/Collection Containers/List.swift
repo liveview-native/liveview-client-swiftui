@@ -84,10 +84,10 @@ import SwiftUI
 /// * ``delete``
 /// * ``move``
 @_documentation(visibility: public)
-struct List<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
+@LiveElement
+struct List<Root: RootRegistry>: View {
     #if os(iOS) || os(tvOS)
+    @LiveElementIgnored
     @Environment(\.editMode) var editMode
     #endif
     
@@ -142,6 +142,8 @@ struct List<R: RootRegistry>: View {
     @_documentation(visibility: public)
     @ChangeTracked(attribute: "selection") private var selection = Selection.none
     
+    @LiveAttribute(.init(name: "phx-change")) var phxChange: String?
+    
     public var body: some View {
         #if os(watchOS)
         SwiftUI.List {
@@ -154,7 +156,7 @@ struct List<R: RootRegistry>: View {
                 content
             }
         case .single,
-             _ where element.attribute(named: "phx-change") != nil:
+             _ where phxChange != nil:
             SwiftUI.List(selection: $selection.single) {
                 content
             }
@@ -167,7 +169,12 @@ struct List<R: RootRegistry>: View {
     }
     
     private var content: some View {
-        forEach(nodes: context.children(of: element), context: context.storage)
+        forEach(
+            nodes: $liveElement.childNodes.filter({
+                !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+            }),
+            context: $liveElement.context.storage
+        )
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }
@@ -175,7 +182,7 @@ struct List<R: RootRegistry>: View {
     private var onDeleteHandler: ((IndexSet) -> Void)? {
         guard delete.event != nil else { return nil }
         return { indices in
-            var meta = element.buildPhxValuePayload()
+            var meta = $liveElement.element.buildPhxValuePayload()
             // todo: what about multiple indicies?
             meta["index"] = indices.first!
             delete(value: meta) {}
@@ -185,7 +192,7 @@ struct List<R: RootRegistry>: View {
     private var onMoveHandler: ((IndexSet, Int) -> Void)? {
         guard move.event != nil else { return nil }
         return { indices, index in
-            var meta = element.buildPhxValuePayload()
+            var meta = $liveElement.element.buildPhxValuePayload()
             meta["index"] = indices.first!
             meta["destination"] = index
             move(value: meta) {

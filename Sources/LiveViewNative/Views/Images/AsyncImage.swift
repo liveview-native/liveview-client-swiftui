@@ -19,35 +19,39 @@ import SwiftUI
 /// - ``url``
 /// - ``scale``
 @_documentation(visibility: public)
-struct AsyncImage<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
+@LiveElement
+struct AsyncImage<Root: RootRegistry>: View {
+    @LiveElementIgnored
+    @LiveContext<Root>
+    private var context
+    
+    @LiveElementIgnored
+    @Environment(\.asyncImagePhase)
+    private var phase
     
     /// The URL from which to load the image (relative to the current Live View's URL).
     ///
     /// If no URL is provided, the view will remain in the loading state.
     @_documentation(visibility: public)
-    @Attribute("url") private var url: String?
+    private var url: String?
     /// The display scale of the image (defaults to 1).
     ///
     /// This corresponds to the `@2x`, `@3x` suffixes you would use for images shipped with the app.
     /// A scale of 1 indicates that 1 pixel in the image corresponds to 1 point, a scale of 2 indicates that there are 2 image pixels per point, etc.
     @_documentation(visibility: public)
-    @Attribute("scale") private var scale: Double = 1
+    private var scale: Double = 1
     
-    @Environment(\.asyncImagePhase) private var phase
-    
-    @Attribute("image") private var image: Bool
-    @Attribute("error") private var error: Bool
+    private var image: Bool = false
+    private var error: Bool = false
     
     public var body: some View {
         if image {
             if case let .success(image) = phase {
-                ImageView<R>(image: image)
+                ImageView<Root>(image: image)
             }
         } else if error {
             if case let .failure(error) = phase {
-                Text<R>(text: SwiftUI.Text(verbatim: error.localizedDescription))
+                Text<Root>(text: SwiftUI.Text(verbatim: error.localizedDescription))
             }
         } else {
             asyncImage
@@ -55,26 +59,30 @@ struct AsyncImage<R: RootRegistry>: View {
     }
     
     var asyncImage: some View {
-        SwiftUI.AsyncImage(url: url.flatMap({ URL(string: $0, relativeTo: context.url) }), scale: scale, transaction: Transaction(animation: .default)) { phase in
+        SwiftUI.AsyncImage(
+            url: url.flatMap({ URL(string: $0, relativeTo: context.url) }),
+            scale: scale,
+            transaction: Transaction(animation: .default)
+        ) { phase in
             SwiftUI.Group {
                 switch phase {
+                case .empty:
+                    if $liveElement.hasTemplate(.asyncImagePhase(.empty)) {
+                        $liveElement.children(in: .asyncImagePhase(.empty))
+                    } else {
+                        SwiftUI.ProgressView().progressViewStyle(.circular)
+                    }
                 case .success(let image):
-                    if context.hasTemplate(of: element, withName: "phase", value: "success") {
-                        context.buildChildren(of: element, forTemplate: "phase", withValue: "success")
+                    if $liveElement.hasTemplate(.asyncImagePhase(.success)) {
+                        $liveElement.children(in: .asyncImagePhase(.success))
                     } else {
                         image
                     }
                 case .failure(let error):
-                    if context.hasTemplate(of: element, withName: "phase", value: "failure") {
-                        context.buildChildren(of: element, forTemplate: "phase", withValue: "failure")
+                    if $liveElement.hasTemplate(.asyncImagePhase(.failure)) {
+                        $liveElement.children(in: .asyncImagePhase(.failure))
                     } else {
                         SwiftUI.Text(error.localizedDescription)
-                    }
-                case .empty:
-                    if context.hasTemplate(of: element, withName: "phase", value: "empty") {
-                        context.buildChildren(of: element, forTemplate: "phase", withValue: "empty")
-                    } else {
-                        SwiftUI.ProgressView().progressViewStyle(.circular)
                     }
                 @unknown default:
                     EmptyView()
@@ -92,5 +100,17 @@ private extension EnvironmentValues {
     var asyncImagePhase: AsyncImagePhase {
         get { self[AsyncImagePhaseKey.self] }
         set { self[AsyncImagePhaseKey.self] = newValue }
+    }
+}
+
+fileprivate extension Template {
+    enum AsyncImagePhase: String {
+        case empty
+        case success
+        case failure
+    }
+    
+    static func asyncImagePhase(_ value: AsyncImagePhase) -> Self {
+        return .init("phase", value: value.rawValue)
     }
 }

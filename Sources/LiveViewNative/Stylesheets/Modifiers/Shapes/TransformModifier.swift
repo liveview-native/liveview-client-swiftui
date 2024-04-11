@@ -18,7 +18,7 @@ struct _TransformModifier: ShapeModifier {
         self.transform = transform
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         return shape.transform(transform)
     }
 }

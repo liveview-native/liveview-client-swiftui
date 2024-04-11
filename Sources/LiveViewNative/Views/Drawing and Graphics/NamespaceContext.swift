@@ -15,32 +15,38 @@ import SwiftUI
 /// ## Attributes
 /// * ``id``
 @_documentation(visibility: public)
-struct NamespaceContext<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct NamespaceContext<Root: RootRegistry>: View {
     /// The unique identifier for this namespace.
     @_documentation(visibility: public)
-    @Attribute("id") private var id: String
+    private var id: String?
     
+    @LiveElementIgnored
     @Namespace private var namespace
+    
+    @LiveElementIgnored
     @Environment(\.namespaces) private var namespaces
     
     #if !os(iOS)
+    @LiveElementIgnored
     @Environment(\.resetFocus) private var resetFocus
     #endif
     
     var body: some View {
-        context.buildChildren(of: element)
-            .environment(\.namespaces, namespaces.merging([id: namespace], uniquingKeysWith: { $1 }))
-            #if !os(iOS)
-            .onReceive(context.coordinator.receiveEvent("reset_focus")) { event in
-                guard let namespace = event["namespace"] as? String,
-                      namespace == id
-                else { return }
-                resetFocus(in: self.namespace)
-            }
-            #endif
+        if let id {
+            $liveElement.children()
+                .environment(\.namespaces, namespaces.merging([id: namespace], uniquingKeysWith: { $1 }))
+                #if !os(iOS)
+                .onReceive($liveElement.context.coordinator.receiveEvent("reset_focus")) { event in
+                    guard let namespace = event["namespace"] as? String,
+                          namespace == id
+                    else { return }
+                    resetFocus(in: self.namespace)
+                }
+                #endif
+        } else {
+            $liveElement.children()
+        }
     }
 }
 

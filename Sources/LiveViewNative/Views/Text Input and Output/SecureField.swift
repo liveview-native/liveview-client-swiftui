@@ -28,10 +28,10 @@ import SwiftUI
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 @_documentation(visibility: public)
-struct SecureField<R: RootRegistry>: TextFieldProtocol {
-    @ObservedElement var element: ElementNode
-    @LiveContext<R> var context
+@LiveElement
+struct SecureField<Root: RootRegistry>: TextFieldProtocol {
     @FormState("text") var text: String?
+    @LiveElementIgnored
     @FocusState private var isFocused: Bool
     
     /// Sends an event when the field gains focus.
@@ -41,20 +41,34 @@ struct SecureField<R: RootRegistry>: TextFieldProtocol {
     @_documentation(visibility: public)
     @Event("phx-blur", type: "blur") var blurEvent
     
+    var axis: Axis = .horizontal
+    var prompt: String?
+    
     var body: some View {
         SwiftUI.SecureField(
             text: textBinding,
-            prompt: prompt
+            prompt: prompt.flatMap(SwiftUI.Text.init)
         ) {
-            label
+            $liveElement.children()
         }
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .preference(key: _ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+            .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
     }
     
-    var label: some View {
-        context.buildChildren(of: element)
+    @MainActor
+    func handleFocus(_ isFocused: Bool) {
+        if isFocused {
+            focusEvent(value:
+                $liveElement.element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            )
+        } else {
+            blurEvent(value:
+                $liveElement.element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            )
+        }
     }
 }
 

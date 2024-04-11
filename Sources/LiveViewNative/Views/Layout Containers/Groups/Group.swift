@@ -39,13 +39,11 @@ import SwiftUI
 /// </VStack>
 /// ```
 @_documentation(visibility: public)
-struct Group<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Group<Root: RootRegistry>: View {
     public var body: some View {
         SwiftUI.Group {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

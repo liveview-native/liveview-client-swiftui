@@ -20,7 +20,7 @@ struct _IntersectionModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.intersection(other, eoFill: eoFill))
         } else {
@@ -41,7 +41,7 @@ struct _UnionModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.union(other, eoFill: eoFill))
         } else {
@@ -62,7 +62,7 @@ struct _SubtractingModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.subtracting(other, eoFill: eoFill))
         } else {
@@ -83,7 +83,7 @@ struct _SymmetricDifferenceModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.symmetricDifference(other, eoFill: eoFill))
         } else {
@@ -104,7 +104,7 @@ struct _LineIntersectionModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.lineIntersection(other, eoFill: eoFill))
         } else {
@@ -125,7 +125,7 @@ struct _LineSubtractionModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.lineSubtraction(other, eoFill: eoFill))
         } else {

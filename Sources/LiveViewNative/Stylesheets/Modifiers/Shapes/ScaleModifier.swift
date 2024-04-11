@@ -34,7 +34,7 @@ struct _ScaleModifier<R: RootRegistry>: ShapeModifier {
         self.value = ._1(scale: scale, anchor: anchor)
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         switch value {
         case let ._0(x, y, anchor):
             return shape.scale(x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context), anchor: anchor)
