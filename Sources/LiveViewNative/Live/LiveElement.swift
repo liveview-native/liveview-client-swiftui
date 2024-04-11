@@ -52,7 +52,9 @@ public protocol _LiveElementTrackedContent {
 }
 
 public extension _LiveElementTracked {
-    func children(_ predicate: (Node) -> Bool = { _ in true }) -> some View {
+    func children(_ predicate: (Node) -> Bool = { node in
+        !node.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+    }) -> some View {
         context.coordinator.builder.fromNodes(_element.children.filter(predicate), context: context.storage)
     }
     
