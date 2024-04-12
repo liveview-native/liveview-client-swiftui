@@ -27,7 +27,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   defp aliases do
     [
-      docs: ["lvn.swift_ui.generate_documentation", "docs"]
+      docs: ["lvn.swiftui.gen.docs", "docs"]
     ]
   end
 
@@ -53,30 +53,51 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   end
 
   defp docs do
-    # Feature Flagging Docs
-    include_generated_docs = System.get_env("INCLUDE_GENERATED_DOCS")
-    extras =
-      if include_generated_docs do
-        ["README.md"] ++ Path.wildcard("generated_docs/**/*.{md,cheatmd}")
-      else
-        ["README.md"]
-      end
+    guides = Path.wildcard("guides/**/*.md")
+    generated_docs = Path.wildcard("generated_docs/**/*.{md,cheatmd}")
 
-    groups_for_extras =
-      if include_generated_docs do
-        Path.wildcard("generated_docs/*")
-        |> Enum.map(fn p -> {Path.basename(p), Path.wildcard("#{p}/*.md")} end)
-        |> Map.new()
-      else
-        []
-      end
+    extras = ["README.md"] ++ guides ++ generated_docs
+
+    guide_groups = [
+      "Architecture": Path.wildcard("guides/architecture/*.md")
+    ]
+
+    generated_groups =
+      Path.wildcard("generated_docs/*")
+      |> Enum.map(&({Path.basename(&1) |> String.to_atom(), Path.wildcard("#{&1}/*.md")}))
 
     [
       extras: extras,
-      groups_for_extras: groups_for_extras,
+      groups_for_extras: guide_groups ++ generated_groups,
       main: "readme",
       source_url: @source_url,
-      source_ref: "v#{@version}"
+      source_ref: "v#{@version}",
+      before_closing_body_tag: %{
+        html: """
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.3/dist/mermaid.min.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            mermaid.initialize({
+              startOnLoad: false,
+              theme: document.body.className.includes("dark") ? "dark" : "default"
+            });
+            let id = 0;
+            for (const codeEl of document.querySelectorAll("pre code.mermaid")) {
+              const preEl = codeEl.parentElement;
+              const graphDefinition = codeEl.textContent;
+              const graphEl = document.createElement("div");
+              const graphId = "mermaid-graph-" + id++;
+              mermaid.render(graphId, graphDefinition).then(({svg, bindFunctions}) => {
+                graphEl.innerHTML = svg;
+                bindFunctions?.(graphEl);
+                preEl.insertAdjacentElement("afterend", graphEl);
+                preEl.remove();
+              });
+            }
+          });
+        </script>
+        """
+      }
     ]
   end
 
