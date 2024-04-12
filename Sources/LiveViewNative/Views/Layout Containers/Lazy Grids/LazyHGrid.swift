@@ -16,7 +16,7 @@ import SwiftUI
 ///     rows={[
 ///         %{ size: %{ fixed: 100 } },
 ///         %{ size: :flexible },
-///         %{ size: %{ adaptive: %{ minimum: 50 } }
+///         %{ size: %{ adaptive: %{ minimum: 50 } } }
 ///     ]}
 /// >
 ///     <%= for i <- 1..50 do %>
