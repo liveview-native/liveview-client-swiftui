@@ -388,7 +388,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
         self.document = try! LiveViewNativeCore.Document.parseFragmentJson(payload: renderedPayload)
-        self.document?.on(.changed) { [unowned self] doc, nodeRef, nodeData, parent in
+        self.document?.on(.changed) { nodeRef, nodeData, parent in
             switch nodeData  {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.

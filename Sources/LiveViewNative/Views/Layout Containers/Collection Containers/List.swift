@@ -167,18 +167,18 @@ struct List<Root: RootRegistry>: View {
         }
         #endif
     }
-    
+
     private var content: some View {
         forEach(
             nodes: $liveElement.childNodes.filter({
-                !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+                !$0.attributes().contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
             }),
             context: $liveElement.context.storage
         )
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }
-    
+
     private var onDeleteHandler: ((IndexSet) -> Void)? {
         guard delete.event != nil else { return nil }
         return { indices in

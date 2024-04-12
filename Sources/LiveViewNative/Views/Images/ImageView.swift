@@ -128,9 +128,9 @@ struct ImageView<Root: RootRegistry>: View {
     }
 
     var label: SwiftUI.Text? {
-        if let labelNode = $liveElement.children().first {
+        if let labelNode = $liveElement.childNodes.first {
             switch labelNode.data() {
-            case let .element(element):
+            case let .nodeElement(element):
                 return Text<Root>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: nil).body
             case let .leaf(label):
                 return .init(label)

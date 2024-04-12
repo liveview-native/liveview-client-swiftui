@@ -53,22 +53,22 @@ public protocol _LiveElementTrackedContent {
 
 public extension _LiveElementTracked {
     func children(_ predicate: (Node) -> Bool = { node in
-        !node.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+        !node.attributes().contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
     }) -> some View {
         context.coordinator.builder.fromNodes(_element.children.filter(predicate), context: context.storage)
     }
-    
+
     func children(in template: Template, default includeDefault: Bool = false) -> some View {
         children {
-            $0.attributes.contains(where: {
+            $0.attributes().contains(where: {
                 $0 == template
-            }) || (includeDefault && !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" }))
+            }) || (includeDefault && !$0.attributes().contains(where: { $0.name.namespace == nil && $0.name.name == "template" }))
         }
     }
-    
+
     func hasTemplate(_ template: Template, default includeDefault: Bool = false) -> Bool {
         _element.children.contains(where: {
-            for attribute in $0.attributes {
+            for attribute in $0.attributes() {
                 if attribute == template {
                     return true
                 } else if includeDefault && attribute.name.namespace == nil && attribute.name.name == "template" {
