@@ -98,24 +98,24 @@ struct ShareLink<Root: RootRegistry>: View {
             self.value = try itemsDecoder.decode([String].self, from: data)
         }
     }
-    
+
     /// A string to share.
     @_documentation(visibility: public)
     private var item: String?
-    
+
     public var body: some View {
         #if !os(tvOS)
         let useDefaultLabel = $liveElement.childNodes.filter({
             guard case let .nodeElement(data) = $0.data() else { return true }
             return data.name.name != "SharePreview"
         }).isEmpty
-        
+
         let subject = self.subject.flatMap(SwiftUI.Text.init)
         let message = self.message.flatMap(SwiftUI.Text.init)
-        
+
         if let items = items?.value {
             let previews = previews(for: items)
-            
+
             if useDefaultLabel {
                 switch previews {
                 case nil:
