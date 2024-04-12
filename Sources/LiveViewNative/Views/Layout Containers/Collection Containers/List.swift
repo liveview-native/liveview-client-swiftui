@@ -219,7 +219,7 @@ struct List<Root: RootRegistry>: View {
             }
         }
     }
-    
+
     private var content: some View {
         let elements = $liveElement.childNodes
             .filter {
@@ -248,7 +248,7 @@ struct List<Root: RootRegistry>: View {
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }
-    
+
     private var onDeleteHandler: ((IndexSet) -> Void)? {
         guard delete.event != nil else { return nil }
         return { indices in
