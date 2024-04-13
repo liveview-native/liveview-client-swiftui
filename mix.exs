@@ -41,12 +41,9 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       {:makeup_json, "~> 0.1.0"},
       {:makeup_eex, ">= 0.1.1"},
       {:floki, ">= 0.30.0", only: :test},
-      # {:live_view_native, path: "../live_view_native", override: true},
-      {:live_view_native, github: "liveview-native/live_view_native", branch: "main", override: true},
-      # {:live_view_native_stylesheet, path: "../live_view_native_stylesheet", override: true},
-      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet", branch: "main", override: true},
-      # {:live_view_native_test, path: "../live_view_native_test", only: :test, override: true},
-      {:live_view_native_test, github: "liveview-native/live_view_native_test", branch: "main", only: :test},
+      {:live_view_native, github: "liveview-native/live_view_native", tag: "v0.3.0-beta.1"},
+      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet", tag: "v0.3.0-beta.1"},
+      {:live_view_native_test, github: "liveview-native/live_view_native_test", tag: "v0.3.0", only: :test},
       {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"}
     ]

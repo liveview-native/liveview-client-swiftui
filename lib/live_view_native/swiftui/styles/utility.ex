@@ -1,6 +1,6 @@
 defmodule LiveViewNative.SwiftUI.UtilityStyles do
   use LiveViewNative.Stylesheet, :swiftui
-  @output false
+  @export true
 
   @moduledoc """
   Tailwind-style utility classes for LiveView Native.
@@ -118,7 +118,7 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
     end
   end
 
-  for modifier <- Enum.sort_by(@modifier_names, &String.length/1, :desc) do
+  for modifier <- Enum.uniq(@modifier_names) |> Enum.sort_by(&String.length/1, :desc) do
     kebab_name =
       modifier
       |> Macro.underscore()
