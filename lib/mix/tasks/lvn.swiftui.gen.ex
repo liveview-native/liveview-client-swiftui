@@ -72,6 +72,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
         |> Path.extname()
         |> case do
         ".swift" -> :eex
+        ".yml" -> :eex
         _any -> :text
       end
 
@@ -87,10 +88,13 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
   end
 
   defp copy_new_files(%Context{} = context, files) do
+    version = Application.spec(:live_view_native_swiftui)[:vsn]
+
     binding = [
       context: context,
       assigns: %{
-        app_namespace: inspect(context.base_module)
+        app_namespace: inspect(context.base_module),
+        version: version
       }
     ]
 
