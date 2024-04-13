@@ -1,7 +1,7 @@
 defmodule LiveViewNative.SwiftUI.MixProject do
   use Mix.Project
 
-  @version "0.3.0-alpha.4"
+  @version "0.3.0-beta.1"
   @source_url "https://github.com/liveview-native/liveview-client-swiftui"
 
   def project do
