@@ -8,15 +8,14 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
   ## Modifier Translation
   Modifiers can easily be translated to classes.
 
-  1. Write the name of the modifier in `snake-case`
-  2. Separate any arguments with a dash (`-`)
-  3. Use labels for any named arguments (`key:value`)
+  1. Separate any arguments with a dash (`-`)
+  2. Use labels for any named arguments (`key:value`)
 
   | Modifier | Class |
   | -------- | ----- |
   | `padding(.leading, 32)` | `padding-leading-32` |
-  | `frame(width: 100, height: 100)` | `frame-width:100-height:100` |
-  | `buttonStyle(.borderedProminent)` | `button-style-borderedProminent` |
+  | `frame(width: 100, height: 100)` | `frameWidth:100-height:100` |
+  | `buttonStyle(.borderedProminent)` | `buttonStyle-borderedProminent` |
 
   ### Attribute References
   To reference an attribute value, use `[attr(attribute-name)]`:
@@ -29,7 +28,8 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
   Complex types (such as a gradient `ShapeStyle`) can be provided by writing out the full syntax as an argument.
 
   ```html
-  <Rectangle class="fg-LinearGradient(colors:[.red,.blue],startPoint:.leading,endPoint:.trailing)" />
+  <Rectangle class="fg(LinearGradient(colors:[.red,.blue],startPoint:.leading,endPoint:.trailing))" />
+  <Image class="font(.system(size:70))" />
   ```
 
   > [!NOTE]
@@ -40,13 +40,13 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
   Any underscores will be replaced with a space.
 
   ```html
-  <Group class="navigation-title-['Hello_World']">
+  <Group class="navigationTitle-['Hello_World']">
   ```
 
   If you need to include an underscore character, escape it with `\_`.
 
   ```html
-  <Group class="navigation-title-['Hello\_World']">
+  <Group class="navigationTitle-['Hello\_World']">
   ```
 
   ### Shorthand
@@ -68,17 +68,18 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
   | `max-w-` | `frame-maxWidth:` |
   | `min-h-` | `frame-minHeight:` |
   | `max-h-` | `frame-maxHeight:` |
-  | `fg` | `foreground-style` |
+  | `fg` | `foregroundStyle` |
   | `bg` | `background` |
   | `overlay--` | `overlay-content::` |
   | `bg--` | `background-content::` |
   | `mask--` | `mask-mask::` |
   | `toolbar--` | `toolbar-content::` |
-  | `safe-area-inset--` | `safe-area-inset-content::` |
+  | `safe-area-inset--` | `safeAreaInset-content::` |
   """
 
-  @modifier_names (File.read!("lib/live_view_native/swiftui/styles/modifier.names") |> String.split("\n", trim: true))
-    ++ ["stroke", "mask"]
+  @modifier_names "lib/live_view_native/swiftui/styles/modifier.names"
+  |> File.read!()
+  |> String.split("\n", trim: true)
 
   @aliases %{
     "px" => "padding-horizontal",
@@ -94,13 +95,13 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
     "max-w-" => "frame-maxWidth:",
     "min-h-" => "frame-minHeight:",
     "max-h-" => "frame-maxHeight:",
-    "fg" => "foreground-style",
+    "fg" => "foregroundStyle",
     "bg" => "background",
     "overlay--" => "overlay-content::",
     "bg--" => "background-content::",
     "mask--" => "mask-mask::",
     "toolbar--" => "toolbar-content::",
-    "safe-area-inset--" => "safe-area-inset-content::",
+    "safe-area-inset--" => "safeAreaInset-content::",
   }
 
   for {key, value} <- Enum.sort_by(@aliases, fn {k, _} -> String.length(k) end, :desc) do
@@ -119,38 +120,46 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
   end
 
   for modifier <- Enum.uniq(@modifier_names) |> Enum.sort_by(&String.length/1, :desc) do
-    kebab_name =
-      modifier
-      |> Macro.underscore()
-      |> String.replace("_", "-")
-
-    def class(unquote(kebab_name) <> arguments) do
+    def class(unquote(modifier) <> arguments = class_name) do
       name = unquote(modifier)
 
-      arguments =
-        arguments
-        |> String.trim_leading("-") # remove dash separating first argument
-        |> String.split(~r/(?<!-|:)-/) # arguments separated by a dash
-        |> Enum.map(fn arg ->
-          if String.contains?(arg, ":") and not String.starts_with?(arg, ":") do
-            [name | value] = String.split(arg, ":")
-            value = Enum.join(value, ":")
-            "#{name}: #{encode_argument(value)}" # add space between label and value
-          else
-            "#{encode_argument(arg)}" # encode argument values
-          end
-        end)
-        |> Enum.join(", ") # rejoin arguments with commas instead of dashes
-        |> String.replace(":.", ": .")
       try do
+        arguments = LiveViewNative.SwiftUI.UtilityStyles.parse_arguments(arguments)
         ~RULES"""
         <%= name %>(<%= arguments %>)
         """
       rescue
         _ ->
-          {:unmatched, ""}
+          {:unmatched, "Stylesheet warning: Could not match on class: #{class_name}"}
       end
     end
+  end
+
+  def parse_arguments(<<?(, arguments::binary>>) do
+    <<?), arguments::binary>> = String.reverse(arguments)
+
+    arguments
+    |> String.reverse()
+    |> String.replace(":", ": ")
+    |> String.replace(",", ", ")
+    |> String.replace(~S('), ~S("))
+  end
+
+  def parse_arguments(arguments) do
+    arguments
+    |> String.trim_leading("-") # remove dash separating first argument
+    |> String.split(~r/(?<!-|:)-/) # arguments separated by a dash
+    |> Enum.map(fn arg ->
+      if String.contains?(arg, ":") and not String.starts_with?(arg, ":") do
+        [name | value] = String.split(arg, ":")
+        value = Enum.join(value, ":")
+        "#{name}: #{encode_argument(value)}" # add space between label and value
+      else
+        "#{encode_argument(arg)}" # encode argument values
+      end
+    end)
+    |> Enum.join(", ") # rejoin arguments with commas instead of dashes
+    |> String.replace(":.", ": .")
   end
 
   defp encode_argument(value) when value in ["true", "false"], do: value
