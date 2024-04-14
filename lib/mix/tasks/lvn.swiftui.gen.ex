@@ -123,7 +123,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
   end
 
   defp remove_xcodegen_files(%{native_path: native_path} = context) do
-    ["base_spec.yml", "project_watchos.yml", "project.yml", "skip_spec.yml"]
+    ["base_spec.yml", "project_watchos.yml", "project.yml"]
     |> Enum.map(&(Path.join(native_path, &1)))
     |> Enum.map(&File.rm/1)
 
