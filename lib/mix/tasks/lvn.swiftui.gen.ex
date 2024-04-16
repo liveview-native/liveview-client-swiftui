@@ -22,7 +22,8 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
   def switches, do: [
     context_app: :string,
-    web: :string
+    web: :string,
+    live_form: :boolean
   ]
 
   def validate_args!([format]), do: [format]
@@ -32,6 +33,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
     --context-app
     --web
+    --no-live-form
     """)
   end
 
@@ -66,6 +68,11 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
     web_prefix = Mix.Phoenix.web_path(context.context_app)
 
+    apps = Mix.Project.deps_apps()
+
+    live_form_opt? = Keyword.get(context.opts, :live_form, true)
+    live_form_app? = Enum.member?(apps, :live_view_native_live_form)
+
     components_path = Path.join(web_prefix, "components")
 
     files =
@@ -86,8 +93,8 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
         {type, Path.join("xcodegen", path), rewrite_file_path(path, context)}
       end)
 
-    case Application.ensure_loaded(:live_view_native_live_form) do
-      :ok -> List.insert_at(files, 0, {:eex, "core_components.ex", Path.join(components_path, "core_components.swiftui.ex")})
+    case live_form_opt? && live_form_app? do
+      true -> List.insert_at(files, 0, {:eex, "core_components.ex", Path.join(components_path, "core_components.swiftui.ex")})
       _ -> files
     end
   end
