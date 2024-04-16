@@ -69,6 +69,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// This session is created using the ``LiveSessionConfiguration/urlSessionConfiguration``.
     private var urlSession: URLSession
     
+    private var reconnectAttempts = 0
+    
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
     }
@@ -156,7 +158,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter httpMethod: The HTTP method to use for the dead render. Defaults to `GET`.
     /// - Parameter httpBody: The HTTP body to send when requesting the dead render.
     public func connect(httpMethod: String? = nil, httpBody: Data? = nil) async {
-        guard case .notConnected = state else {
+        switch state {
+        case .notConnected, .connectionFailed:
+            break
+        default:
             return
         }
         
@@ -215,9 +220,22 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             self.stylesheet = try await stylesheet
             
             try await navigationPath.last!.coordinator.connect(domValues: domValues, redirect: false)
+            
+            reconnectAttempts = 0
         } catch {
             self.state = .connectionFailed(error)
             logger.log(level: .error, "\(error.localizedDescription)")
+            if let delay = configuration.reconnectBehavior.delay?(reconnectAttempts) {
+                logger.log(level: .debug, "Reconnecting in \(delay) seconds")
+                Task { [weak self] in
+                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                    guard let self,
+                          case .connectionFailed = self.state
+                    else { return } // already connected
+                    reconnectAttempts += 1
+                    await self.connect(httpMethod: httpMethod, httpBody: httpBody)
+                }
+            }
             return
         }
     }
