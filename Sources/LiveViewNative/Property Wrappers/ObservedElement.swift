@@ -105,8 +105,28 @@ extension ObservedElement {
 
         let id: NodeRef
 
-        var resolvedElement: ElementNode!
-        var resolvedChildren: [Node]!
+        var _resolvedElement: ElementNode?
+        var resolvedElement: ElementNode {
+            if let _resolvedElement {
+                return _resolvedElement
+            } else {
+                let element = document[id].asElement()!
+                _resolvedElement = element
+                return element
+            }
+        }
+        var _resolvedChildren: [Node]?
+        var resolvedChildren: [Node] {
+            if let _resolvedChildren {
+                return _resolvedChildren
+            } else {
+                let children = Array(self.resolvedElement.children())
+                _resolvedChildren = children
+                return children
+            }
+        }
+        
+        var document: Document!
 
         var objectWillChange = ObjectWillChangePublisher()
 
@@ -117,13 +137,12 @@ extension ObservedElement {
         @MainActor
         fileprivate func update(_ context: CoordinatorEnvironment) {
             guard cancellable == nil else { return }
-            self.resolvedElement = context.document[id].asElement()
-            self.resolvedChildren = Array(self.resolvedElement.children())
+            self.document = context.document
             cancellable = context.elementChanged(id)
                 .sink { [weak self] _ in
                     guard let self else { return }
-                    self.resolvedElement = context.document[id].asElement()
-                    self.resolvedChildren = Array(self.resolvedElement.children())
+                    self._resolvedElement = nil
+                    self._resolvedChildren = nil
                     self.objectWillChange.send()
                 }
         }
