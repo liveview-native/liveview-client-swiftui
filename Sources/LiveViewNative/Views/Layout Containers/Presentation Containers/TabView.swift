@@ -32,8 +32,13 @@ struct TabView<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     @ChangeTracked(attribute: "selection") private var selection: String? = nil
     
+    @LiveAttribute(.init(name: "selection")) var selectionAttribute: String?
+    @LiveAttribute(.init(name: "phx-change")) var changeAttribute: String?
+    
     var body: some View {
-        SwiftUI.TabView(selection: $selection) {
+        SwiftUI.TabView(
+            selection: (selectionAttribute != nil || changeAttribute != nil) ? $selection : nil
+        ) {
             $liveElement.children()
         }
     }
