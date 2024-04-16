@@ -1,7 +1,4 @@
 defmodule LiveViewNative.SwiftUI.UtilityStyles do
-  use LiveViewNative.Stylesheet, :swiftui
-  @export true
-
   @moduledoc """
   Tailwind-style utility classes for LiveView Native.
 
@@ -77,7 +74,9 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
   | `safe-area-inset--` | `safeAreaInset-content::` |
   """
 
-  @modifier_names "lib/live_view_native/swiftui/styles/modifier.names"
+  @modifier_names_path "lib/live_view_native/swiftui/styles/modifier.names"
+  @external_resource @modifier_names_path
+  @modifier_names @modifier_names_path
   |> File.read!()
   |> String.split("\n", trim: true)
 
@@ -104,6 +103,36 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
     "safe-area-inset--" => "safeAreaInset-content::",
   }
 
+  defmacro sigil_RULES({:<<>>, _meta, [rules]}, _modifier) do
+    opts = [
+      file: __CALLER__.file,
+      line: __CALLER__.line + 1,
+      module: __CALLER__.module,
+      variable_context: nil
+    ]
+
+    compiled_rules =
+      rules
+      |> String.replace("{", "<%=")
+      |> String.replace("}", "%>")
+      |> EEx.compile_string()
+
+    quote do
+      LiveViewNative.SwiftUI.RulesParser.parse(unquote(compiled_rules), unquote(opts))
+    end
+  end
+
+  def parse(body, opts \\ []) do
+    opts =
+      opts
+      |> Keyword.put_new(:variable_context, Elixir)
+      |> Keyword.update(:file, "", &Path.basename/1)
+
+    body
+    |> String.replace("\r\n", "\n")
+    |> LiveViewNative.SwiftUI.RulesParser.parse(opts)
+  end
+
   for {key, value} <- Enum.sort_by(@aliases, fn {k, _} -> String.length(k) end, :desc) do
     def class(unquote(key)) do
       class(unquote(value))
@@ -126,13 +155,17 @@ defmodule LiveViewNative.SwiftUI.UtilityStyles do
       try do
         arguments = LiveViewNative.SwiftUI.UtilityStyles.parse_arguments(arguments)
         ~RULES"""
-        <%= name %>(<%= arguments %>)
+        {name}({arguments})
         """
       rescue
         _ ->
           {:unmatched, "Stylesheet warning: Could not match on class: #{class_name}"}
       end
     end
+  end
+
+  def class(unmatched) do
+    {:unmatched, "Stylesheet warning: Could not match on class: #{inspect(unmatched)}"}
   end
 
   def parse_arguments(<<?(, arguments::binary>>) do
