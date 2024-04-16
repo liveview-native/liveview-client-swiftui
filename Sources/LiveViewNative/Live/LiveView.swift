@@ -191,6 +191,7 @@ public struct LiveView<
             }
         }
         .environment(\.stylesheet, session.stylesheet ?? .init(content: [], classes: [:]))
+        .environment(\.reconnectLiveView, .init(baseURL: session.url, action: session.reconnect))
         .environmentObject(session)
         .environmentObject(liveViewModel)
         .task {
