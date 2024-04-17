@@ -54,6 +54,8 @@ public struct ObservedElement {
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
     @EnvironmentObject private var observer: Observer
     
+    private let observeChildren: Bool
+    
     private let overrideElement: ElementNode?
     /// Indicates whether the element value was overridden.
     /// When true, assume this element is not mounted in the View tree, and is instead being processed as a nested element.
@@ -64,14 +66,17 @@ public struct ObservedElement {
     /// Creates an `ObservedElement` that observes changes to the view's element.
     public init(observeChildren: Bool = false) {
         self.overrideElement = nil
+        self.observeChildren = observeChildren
     }
     
     public init(element: ElementNode, observeChildren: Bool = false) {
         self.overrideElement = element
+        self.observeChildren = observeChildren
     }
     
     public init() {
         self.overrideElement = nil
+        self.observeChildren = false
     }
     
     /// The observed element in the document, with all current data.
@@ -94,7 +99,8 @@ extension ObservedElement: DynamicProperty {
         }
         
         self.observer.update(
-            coordinator
+            coordinator,
+            observeChildren: observeChildren
         )
     }
 }
@@ -104,9 +110,20 @@ extension ObservedElement {
         private var cancellable: AnyCancellable?
         
         let id: NodeRef
+        var observedChildIDs: Set<NodeRef> = []
         
         var resolvedElement: ElementNode!
         var resolvedChildren: [Node]!
+        private var _resolvedChildIDs: Set<NodeRef>?
+        var resolvedChildIDs: Set<NodeRef> {
+            if let _resolvedChildIDs {
+                return _resolvedChildIDs
+            } else {
+                let result = Set(self.resolvedChildren.map(\.id))
+                _resolvedChildIDs = result
+                return result
+            }
+        }
         
         var objectWillChange = ObjectWillChangePublisher()
         
@@ -115,15 +132,32 @@ extension ObservedElement {
         }
         
         @MainActor
-        fileprivate func update(_ context: CoordinatorEnvironment) {
-            guard cancellable == nil else { return }
+        fileprivate func update(
+            _ context: CoordinatorEnvironment,
+            observeChildren: Bool
+        ) {
+            guard cancellable == nil || (observeChildren && self.observedChildIDs != self.resolvedChildIDs) else { return }
             self.resolvedElement = context.document[id].asElement()
             self.resolvedChildren = Array(self.resolvedElement.children())
-            cancellable = context.elementChanged(id)
+            self._resolvedChildIDs = nil
+            
+            let publisher: AnyPublisher<(), Never>
+            if observeChildren {
+                publisher = Publishers.MergeMany(
+                    [context.elementChanged(id)] + self.resolvedChildIDs.map(context.elementChanged)
+                )
+                .eraseToAnyPublisher()
+                self.observedChildIDs = self.resolvedChildIDs
+            } else {
+                publisher = context.elementChanged(id).eraseToAnyPublisher()
+            }
+            
+            cancellable = publisher
                 .sink { [weak self] _ in
                     guard let self else { return }
                     self.resolvedElement = context.document[id].asElement()
                     self.resolvedChildren = Array(self.resolvedElement.children())
+                    self._resolvedChildIDs = nil
                     self.objectWillChange.send()
                 }
         }
