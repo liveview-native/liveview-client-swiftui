@@ -1,4 +1,4 @@
-defmodule <%= inspect context.web_module %>.Styles.<%= inspect context.schema_module %>.<%= inspect   context.module_suffix %> do
+defmodule <%= inspect context.web_module %>.Styles.<%= inspect context.schema_module %>.<%= inspect context.module_suffix %> do
   use LiveViewNative.Stylesheet, <%= inspect context.format %>
   # Read more about UtilityStyles if you want to use them
   # @import LiveViewNative.SwiftUI.UtilityStyles

@@ -7,4 +7,5 @@ targets:
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: ${LVN_BUNDLE_IDENTIFIER}.watchkit
     dependencies:
-      - package: LiveViewNative
+      - package: LiveViewNative<%= if @live_form? do %>
+      - package: LiveViewNativeLiveForm<% end %>

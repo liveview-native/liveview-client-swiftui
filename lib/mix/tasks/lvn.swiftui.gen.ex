@@ -22,7 +22,8 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
   def switches, do: [
     context_app: :string,
-    web: :string
+    web: :string,
+    live_form: :boolean
   ]
 
   def validate_args!([format]), do: [format]
@@ -32,6 +33,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
     --context-app
     --web
+    --no-live-form
     """)
   end
 
@@ -64,22 +66,37 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
       Mix.Project.deps_paths[:live_view_native_swiftui]
       |> Path.join("priv/templates/lvn.swiftui.gen/xcodegen/")
 
-    Path.wildcard(Path.join([root, "**/*"]))
-    |> Enum.filter(&(!File.dir?(&1)))
-    |> Enum.map(fn(path) ->
-      type =
-        path
-        |> Path.extname()
-        |> case do
-        ".swift" -> :eex
-        ".yml" -> :eex
-        _any -> :text
-      end
+    web_prefix = Mix.Phoenix.web_path(context.context_app)
 
-      path = Path.relative_to(path, root)
+    apps = Mix.Project.deps_apps()
 
-      {type, path, rewrite_file_path(path, context)}
-    end)
+    live_form_opt? = Keyword.get(context.opts, :live_form, true)
+    live_form_app? = Enum.member?(apps, :live_view_native_live_form)
+
+    components_path = Path.join(web_prefix, "components")
+
+    files =
+      Path.wildcard(Path.join([root, "**/*"]))
+      |> Enum.filter(&(!File.dir?(&1)))
+      |> Enum.map(fn(path) ->
+        type =
+          path
+          |> Path.extname()
+          |> case do
+          ".swift" -> :eex
+          ".yml" -> :eex
+          _any -> :text
+        end
+
+        path = Path.relative_to(path, root)
+
+        {type, Path.join("xcodegen", path), rewrite_file_path(path, context)}
+      end)
+
+    case live_form_opt? && live_form_app? do
+      true -> List.insert_at(files, 0, {:eex, "core_components.ex", Path.join(components_path, "core_components.swiftui.ex")})
+      _ -> files
+    end
   end
 
   defp rewrite_file_path(file_path, %{base_module: base_module, native_path: native_path}) do
@@ -89,18 +106,24 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
   defp copy_new_files(%Context{} = context, files) do
     version = Application.spec(:live_view_native_swiftui)[:vsn]
+    apps = Mix.Project.deps_apps()
+
+    live_form_opt? = Keyword.get(context.opts, :live_form, true)
+    live_form_app? = Enum.member?(apps, :live_view_native_live_form)
 
     binding = [
       context: context,
       assigns: %{
         app_namespace: inspect(context.base_module),
-        version: version
+        gettext: true,
+        version: version,
+        live_form?: live_form_opt? && live_form_app?
       }
     ]
 
     apps = Context.apps(context.format)
 
-    Mix.Phoenix.copy_from(apps, "priv/templates/lvn.swiftui.gen/xcodegen", binding, files)
+    Mix.Phoenix.copy_from(apps, "priv/templates/lvn.swiftui.gen", binding, files)
 
     context
   end
@@ -112,7 +135,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     ]
 
     if File.exists?("_build/tmp/xcodegen") do
-      xcodegen_spec_path = Path.join(native_path, "project.yml")
+      xcodegen_spec_path = Path.join([native_path, "project.yml"])
 
       System.cmd("swift", ["run", "xcodegen", "generate", "-s", xcodegen_spec_path], cd: "_build/tmp/xcodegen", env: xcodegen_env)
     else
@@ -124,7 +147,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
   defp remove_xcodegen_files(%{native_path: native_path} = context) do
     ["base_spec.yml", "project_watchos.yml", "project.yml"]
-    |> Enum.map(&(Path.join(native_path, &1)))
+    |> Enum.map(&(Path.join([native_path, &1])))
     |> Enum.map(&File.rm/1)
 
     context

@@ -4,7 +4,8 @@
 //
 
 import SwiftUI
-import LiveViewNative
+import LiveViewNative<%= if @live_form? do %>
+import LiveViewNativeLiveForm<% end %>
 
 struct ContentView: View {
     var body: some View {
@@ -13,7 +14,9 @@ struct ContentView: View {
                 development: .localhost(path: "/"),
                 production: URL(string: "https://example.com")!
             ),
-            addons: []
+            addons: [<%= if @live_form? do %>
+                LiveFormRegistry<_>.self
+            ]<% else %>]<% end %>
         ) {
             ConnectingView()
         } disconnected: {
