@@ -17,6 +17,14 @@ import LiveViewNativeCore
 /// 4. `Double`
 /// 5. `Date`
 public protocol FormValue: Equatable, Codable {
+    func formQueryEncoded() throws -> String
+}
+
+private let formQueryEncoder = JSONEncoder()
+public extension FormValue {
+    func formQueryEncoded() throws -> String {
+        String(data: try formQueryEncoder.encode(self), encoding: .utf8)!
+    }
 }
 
 extension FormValue {

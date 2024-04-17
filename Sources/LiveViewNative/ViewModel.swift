@@ -93,7 +93,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             if let value = value as? String {
                 return value
             } else {
-                return try String(data: encoder.encode(value), encoding: .utf8)!
+                return try value.formQueryEncoded()
             }
         }
         
