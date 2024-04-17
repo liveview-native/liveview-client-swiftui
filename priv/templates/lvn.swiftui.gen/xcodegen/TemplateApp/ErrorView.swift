@@ -57,6 +57,16 @@ struct ErrorView: View {
         } label: {
             Label("Copy Error", systemImage: "doc.on.doc")
         }
+        #if os(watchOS)
+        SwiftUI.Button {
+            Task {
+                await reconnectLiveView(.restart)
+            }
+        } label: {
+            SwiftUI.Label("Restart", systemImage: "arrow.circlepath")
+        }
+        .padding()
+        #else
         Menu {
             Button {
                 Task {
@@ -76,6 +86,7 @@ struct ErrorView: View {
             Label("Reconnect", systemImage: "arrow.2.circlepath")
         }
         .padding()
+        #endif
     }
 }
 

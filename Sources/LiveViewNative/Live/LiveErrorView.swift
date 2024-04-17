@@ -29,6 +29,16 @@ public struct LiveErrorView<Fallback: View>: View {
         {
             SwiftUI.VStack {
                 WebErrorView(html: trace)
+                #if os(watchOS)
+                SwiftUI.Button {
+                    Task {
+                        await reconnectLiveView(.restart)
+                    }
+                } label: {
+                    SwiftUI.Label("Restart", systemImage: "arrow.circlepath")
+                }
+                .padding()
+                #else
                 SwiftUI.Menu {
                     SwiftUI.Button {
                         Task {
@@ -48,6 +58,7 @@ public struct LiveErrorView<Fallback: View>: View {
                     SwiftUI.Label("Reconnect", systemImage: "arrow.2.circlepath")
                 }
                 .padding()
+                #endif
             }
         } else {
             fallback
