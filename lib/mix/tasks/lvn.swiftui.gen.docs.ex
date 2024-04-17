@@ -190,40 +190,39 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   def markdown(_data, _ctx), do: ""
 
   defp attribute_details(view, identifier) do
-    {:ok, data} =
-      File.read(
-        "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}/#{Path.basename(identifier)}.json"
-      )
+    "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}/#{Path.basename(identifier)}.json"
+    |> File.read()
+    |> case do
+      {:ok, data} ->
+        docs = Jason.decode!(data)
 
-    docs = Jason.decode!(data)
+        title = Map.get(docs, "metadata", %{}) |> Map.get("title", "")
+        abstract = Map.get(docs, "abstract", [])
+        content = Map.get(docs, "primaryContentSections", [])
 
-    %{
-      "metadata" => %{"title" => title},
-      "abstract" => abstract,
-      "primaryContentSections" => content
-    } = docs
+        docs = Map.put(docs, "inlineHeadings", true)
+        hash = "#{title}/1"
 
-    docs = Map.put(docs, "inlineHeadings", true)
-    hash = "#{title}/1"
+        """
+        <section id="#{hash}" class="detail">
+          <div class="detail-header">
+            <a href="##{hash}" class="detail-link" title="Link to this reference">
+              <i class="ri-link-m" aria-hidden="true"></i>
+              <span class="sr-only">Link to this reference</span>
+            </a>
+            <h1 class="signature">#{title}</h1>
+          </div>
+          <section class="docstring">
 
-    """
-    <section id="#{hash}" class="detail">
-      <div class="detail-header">
-        <a href="##{hash}" class="detail-link" title="Link to this reference">
-          <i class="ri-link-m" aria-hidden="true"></i>
-          <span class="sr-only">Link to this reference</span>
-        </a>
-        <h1 class="signature">#{title}</h1>
-      </div>
-      <section class="docstring">
+        #{markdown(abstract, docs) |> ExDoc.Markdown.to_ast() |> ExDoc.DocAST.to_string()}
 
-    #{markdown(abstract, docs) |> ExDoc.Markdown.to_ast() |> ExDoc.DocAST.to_string()}
+        #{markdown(content, docs) |> ExDoc.Markdown.to_ast() |> ExDoc.DocAST.to_string()}
 
-    #{markdown(content, docs) |> ExDoc.Markdown.to_ast() |> ExDoc.DocAST.to_string()}
-
-      </section>
-    </section>
-    """
+          </section>
+        </section>
+        """
+      {:error, _} -> ""
+    end
   end
 
   @spec categorized_views() :: %{String.t() => [String.t()]}
