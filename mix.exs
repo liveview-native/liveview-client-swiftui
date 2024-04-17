@@ -25,18 +25,32 @@ defmodule LiveViewNative.SwiftUI.MixProject do
     ]
   end
 
+  def cli do
+    [
+      preferred_envs: [docs: :docs]
+    ]
+  end
+
   defp aliases do
     [
       docs: ["lvn.swiftui.gen.docs", "docs"]
     ]
   end
 
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  defp elixirc_paths(:docs), do: ["lib"]
+  defp elixirc_paths(:test), do: ignore_docs_task(["lib", "test/support"])
+  defp elixirc_paths(_), do: ignore_docs_task(["lib"])
+
+  defp ignore_docs_task(paths) do
+    Enum.flat_map(paths, fn(path) ->
+      Path.wildcard("#{path}/**/*.ex")
+    end)
+    |> Enum.filter(&(!(&1 =~ "lvn.swiftui.gen.docs")))
+  end
 
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:ex_doc, ">= 0.0.0", only: :docs},
       {:makeup_swift, "~> 0.0.1"},
       {:makeup_json, "~> 0.1.0"},
       {:makeup_eex, ">= 0.1.1"},
