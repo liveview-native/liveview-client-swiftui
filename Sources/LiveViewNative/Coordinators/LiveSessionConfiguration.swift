@@ -26,6 +26,8 @@ public struct LiveSessionConfiguration {
     /// The transition used when the live view changes connects.
     public var transition: AnyTransition?
     
+    public var reconnectBehavior: ReconnectBehavior = .exponential
+    
     /// Constructs a default, empty configuration.
     public init() {
     }
@@ -33,10 +35,56 @@ public struct LiveSessionConfiguration {
     public init(
         connectParams: ((URL) -> [String: Any])? = nil,
         urlSessionConfiguration: URLSessionConfiguration = .default,
-        transition: AnyTransition? = nil
+        transition: AnyTransition? = nil,
+        reconnectBehavior: ReconnectBehavior = .exponential
     ) {
         self.connectParams = connectParams
         self.urlSessionConfiguration = urlSessionConfiguration
         self.transition = transition
+        self.reconnectBehavior = reconnectBehavior
+    }
+    
+    public struct ReconnectBehavior {
+        let delay: ((_ tries: Int) -> TimeInterval)?
+        
+        public init(_ delay: @escaping (_ tries: Int) -> TimeInterval) {
+            self.delay = delay
+        }
+        
+        private init() {
+            self.delay = nil
+        }
+        
+        /// Attempt to reconnect at an exponential rate.
+        public static func exponential(
+            upTo maxDelay: TimeInterval = 32,
+            step: TimeInterval = 1,
+            jitter: ClosedRange<TimeInterval> = 0...0.25
+        ) -> Self {
+            .init { attempt in
+                let delay = pow(2, Double(attempt)) * step
+                let jitter = TimeInterval.random(in: jitter)
+                return min(delay, maxDelay) + jitter
+            }
+        }
+        
+        /// Attempt to reconnect at an exponential rate.
+        public static let exponential: Self = .exponential()
+        
+        /// Attempt to reconnect at a constant rate.
+        public static func constant(
+            _ delay: TimeInterval = 3,
+            jitter: ClosedRange<TimeInterval> = 0...0.25
+        ) -> Self {
+            .init { _ in
+                delay + TimeInterval.random(in: jitter)
+            }
+        }
+        
+        /// Attempt to reconnect at a constant rate.
+        public static let constant: Self = .constant()
+        
+        /// Never automatically reconnect.
+        public static let never: Self = .init()
     }
 }
