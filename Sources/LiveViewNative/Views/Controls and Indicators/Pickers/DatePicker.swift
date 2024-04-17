@@ -104,6 +104,10 @@ private struct CodableDate: FormValue, AttributeDecodable {
         var container = encoder.singleValueContainer()
         try container.encode(date.formatted(.elixirDateTime))
     }
+    
+    func formQueryEncoded() throws -> String {
+        ElixirDateTimeFormat().format(self.date)
+    }
 }
 
 #if !os(iOS) && !os(macOS)
