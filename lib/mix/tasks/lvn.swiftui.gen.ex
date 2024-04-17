@@ -106,13 +106,18 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
   defp copy_new_files(%Context{} = context, files) do
     version = Application.spec(:live_view_native_swiftui)[:vsn]
+    apps = Mix.Project.deps_apps()
+
+    live_form_opt? = Keyword.get(context.opts, :live_form, true)
+    live_form_app? = Enum.member?(apps, :live_view_native_live_form)
 
     binding = [
       context: context,
       assigns: %{
         app_namespace: inspect(context.base_module),
         gettext: true,
-        version: version
+        version: version,
+        live_form?: live_form_opt? && live_form_app?
       }
     ]
 
