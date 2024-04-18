@@ -89,7 +89,7 @@ extension LiveViewMacro: ExpressionMacro {
             let name = member.declName.baseName.text
             return TypeSyntax(MemberTypeSyntax(
                 baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("LiveViewNative")), name: .identifier("Addons")),
-                // transform camelCase name back to registry type name. See ``RegisterAddonMacro`` for the inverse transformation.
+                // transform camelCase name back to registry type name. See ``AddonMacro`` for the inverse transformation.
                 name: .identifier(name.prefix(1).uppercased() + name.dropFirst()),
                 genericArgumentClause: genericArgumentClause
             ))
