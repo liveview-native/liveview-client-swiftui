@@ -1,7 +1,7 @@
 defmodule LiveViewNative.SwiftUI.MixProject do
   use Mix.Project
 
-  @version "0.3.0-beta.1"
+  @version "0.3.0-rc.1"
   @source_url "https://github.com/liveview-native/liveview-client-swiftui"
 
   def project do
@@ -38,7 +38,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   end
 
   defp elixirc_paths(:docs), do: ["lib"]
-  defp elixirc_paths(:test), do: ignore_docs_task(["lib", "test/support"])
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ignore_docs_task(["lib"])
 
   defp ignore_docs_task(paths) do
@@ -50,13 +50,13 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: :docs},
+      {:ex_doc, ">= 0.0.0", only: [:docs, :test]},
       {:makeup_swift, "~> 0.0.1"},
       {:makeup_json, "~> 0.1.0"},
       {:makeup_eex, ">= 0.1.1"},
       {:floki, ">= 0.30.0", only: :test},
-      {:live_view_native, github: "liveview-native/live_view_native", branch: "main"},
-      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet", branch: "main", only: :test},
+      {:live_view_native, "~> 0.3.0-rc.1"},
+      {:live_view_native_stylesheet, "~> 0.3.0-rc.1", only: :test},
       {:live_view_native_test, github: "liveview-native/live_view_native_test", tag: "v0.3.0", only: :test},
       {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"}
