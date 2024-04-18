@@ -9,6 +9,20 @@ import SwiftUI
 import LiveViewNativeCore
 import LiveViewNativeStylesheet
 
+@freestanding(declaration, names: arbitrary)
+public macro registerAddon(_ type: any CustomRegistry<EmptyRegistry>.Type) = #externalMacro(module: "LiveViewNativeMacros", type: "RegisterAddonMacro")
+
+/// A host for all `CustomRegistry` static members.
+///
+/// Register your addon in the registry by creating an extension and calling ``registerAddon(_:)``.
+///
+/// ```swift
+/// public extension AddonRegistry {
+///     #registerAddon(MyCustomRegistry<_>.self)
+/// }
+/// ```
+public enum AddonRegistry {}
+
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///
 /// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method.

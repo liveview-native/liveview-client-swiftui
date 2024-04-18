@@ -79,13 +79,26 @@ extension LiveViewMacro: ExpressionMacro {
     }
     
     private static func transformAddon(_ element: ArrayElementSyntax) throws -> IdentifierTypeSyntax {
-        guard let registry = element.expression.as(MemberAccessExprSyntax.self)?.base?.as(GenericSpecializationExprSyntax.self),
-              let name = registry.expression.as(DeclReferenceExprSyntax.self)
-        else { throw LiveViewMacroError.invalidAddonElement }
-        return IdentifierTypeSyntax(
-            name: name.baseName,
-            genericArgumentClause: .init(.init(arguments: .init([.init(argument: IdentifierTypeSyntax(name: .identifier("Self")))])))
-        )
+        let genericArgumentClause = GenericArgumentClauseSyntax(arguments: .init([.init(argument: IdentifierTypeSyntax(name: .identifier("Self")))]))
+        if let registry = element.expression.as(MemberAccessExprSyntax.self)?.base?.as(GenericSpecializationExprSyntax.self),
+           let name = registry.expression.as(DeclReferenceExprSyntax.self)
+        {
+            return IdentifierTypeSyntax(
+                name: name.baseName,
+                genericArgumentClause: genericArgumentClause
+            )
+        } else if let member = element.expression.as(MemberAccessExprSyntax.self),
+                  member.base == nil
+        {
+            let name = member.declName.baseName.text
+            return IdentifierTypeSyntax(
+                // transform camelCase name back to registry type name. See ``RegisterAddonMacro`` for the inverse transformation.
+                name: .identifier(name.prefix(1).uppercased() + name.dropFirst() + "Registry"),
+                genericArgumentClause: genericArgumentClause
+            )
+        } else {
+            throw LiveViewMacroError.invalidAddonElement
+        }
     }
 }
 

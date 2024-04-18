@@ -40,11 +40,39 @@ public macro LiveView<
 @freestanding(expression)
 public macro LiveView<
     Host: LiveViewHost,
+    ConnectingView: View,
+    DisconnectedView: View,
+    ReconnectingView: View,
+    ErrorView: View
+>(
+    _ host: Host,
+    configuration: LiveSessionConfiguration = .init(),
+    addons: [AddonRegistry],
+    @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
+    @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
+    @ViewBuilder reconnecting: @escaping (_ConnectedContent<EmptyRegistry>, Bool) -> ReconnectingView = { (_: _ConnectedContent<EmptyRegistry>, _: Bool) -> Never in fatalError() },
+    @ViewBuilder error: @escaping (Error) -> ErrorView = { (_: Error) -> Never in fatalError() }
+) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
+
+@freestanding(expression)
+public macro LiveView<
+    Host: LiveViewHost,
     PhaseView: View
 >(
     _ host: Host,
     configuration: LiveSessionConfiguration = .init(),
     addons: [any CustomRegistry<EmptyRegistry>.Type] = [],
+    @ViewBuilder content: @escaping (LiveViewPhase<EmptyRegistry>) -> PhaseView = { (_: LiveViewPhase<EmptyRegistry>) -> Never in fatalError() }
+) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
+
+@freestanding(expression)
+public macro LiveView<
+    Host: LiveViewHost,
+    PhaseView: View
+>(
+    _ host: Host,
+    configuration: LiveSessionConfiguration = .init(),
+    addons: [AddonRegistry],
     @ViewBuilder content: @escaping (LiveViewPhase<EmptyRegistry>) -> PhaseView = { (_: LiveViewPhase<EmptyRegistry>) -> Never in fatalError() }
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
 
