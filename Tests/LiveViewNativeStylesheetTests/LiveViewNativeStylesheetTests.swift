@@ -23,4 +23,9 @@ final class LiveViewNativeStylesheetTests: XCTestCase {
         XCTAssertEqual(try Alignment.parser(in: .init()).parse("{:., [], [nil, :leading]}"), Alignment.leading)
         XCTAssertEqual(try Alignment.parser(in: .init()).parse("{:., [], [nil, :trailing]}"), Alignment.trailing)
     }
+    
+    func testEvent() throws {
+        XCTAssertNoThrow(try Event.parser(in: .init()).parse(#"{:__event__, [], ["search"]}"#))
+        XCTAssertNoThrow(try Event.parser(in: .init()).parse(#"{:__event__, [], ["search", []]}"#))
+    }
 }

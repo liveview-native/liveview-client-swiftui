@@ -189,6 +189,8 @@ public enum ParseableExpressionMacro: ExtensionMacro {
             
             #"try "[".utf8.parse(&input)"#
             
+            #"if input.first != "]".utf8.first {"#
+            
             try WhileStmtSyntax("while !input.isEmpty {") {
                 // switch over the argument name to parse the correct type
                 "try Whitespace().parse(&input)"
@@ -227,6 +229,8 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                 }
                 #"try ",".utf8.parse(&input)"#
             }
+            
+            #"}"#
             
             #"try "]".utf8.parse(&input)"#
             
