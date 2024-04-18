@@ -21,7 +21,11 @@ public macro registerAddon(_ type: any CustomRegistry<EmptyRegistry>.Type) = #ex
 ///     #registerAddon(MyCustomRegistry<_>.self)
 /// }
 /// ```
-public enum AddonRegistry {}
+public enum Addons {}
+
+@attached(peer, names: arbitrary)
+@attached(extension, conformances: CustomRegistry)
+public macro Addon() = #externalMacro(module: "LiveViewNativeMacros", type: "AddonMacro")
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///

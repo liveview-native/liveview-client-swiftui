@@ -47,7 +47,7 @@ public macro LiveView<
 >(
     _ host: Host,
     configuration: LiveSessionConfiguration = .init(),
-    addons: [AddonRegistry],
+    addons: [Addons],
     @ViewBuilder connecting: @escaping () -> ConnectingView = { () -> Never in fatalError() },
     @ViewBuilder disconnected: @escaping () -> DisconnectedView = { () -> Never in fatalError() },
     @ViewBuilder reconnecting: @escaping (_ConnectedContent<EmptyRegistry>, Bool) -> ReconnectingView = { (_: _ConnectedContent<EmptyRegistry>, _: Bool) -> Never in fatalError() },
@@ -72,7 +72,7 @@ public macro LiveView<
 >(
     _ host: Host,
     configuration: LiveSessionConfiguration = .init(),
-    addons: [AddonRegistry],
+    addons: [Addons],
     @ViewBuilder content: @escaping (LiveViewPhase<EmptyRegistry>) -> PhaseView = { (_: LiveViewPhase<EmptyRegistry>) -> Never in fatalError() }
 ) -> AnyView = #externalMacro(module: "LiveViewNativeMacros", type: "LiveViewMacro")
 

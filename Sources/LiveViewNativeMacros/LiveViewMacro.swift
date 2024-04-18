@@ -32,7 +32,7 @@ extension LiveViewMacro: ExpressionMacro {
         case 1:
             registries = "typealias Registries = \(addons.first!)"
         default:
-            func multiRegistry(_ addons: some RandomAccessCollection<IdentifierTypeSyntax>) -> IdentifierTypeSyntax {
+            func multiRegistry(_ addons: some RandomAccessCollection<TypeSyntax>) -> IdentifierTypeSyntax {
                 switch addons.count {
                 case 2:
                     return IdentifierTypeSyntax(
@@ -78,24 +78,21 @@ extension LiveViewMacro: ExpressionMacro {
         """
     }
     
-    private static func transformAddon(_ element: ArrayElementSyntax) throws -> IdentifierTypeSyntax {
+    private static func transformAddon(_ element: ArrayElementSyntax) throws -> TypeSyntax {
         let genericArgumentClause = GenericArgumentClauseSyntax(arguments: .init([.init(argument: IdentifierTypeSyntax(name: .identifier("Self")))]))
-        if let registry = element.expression.as(MemberAccessExprSyntax.self)?.base?.as(GenericSpecializationExprSyntax.self),
-           let name = registry.expression.as(DeclReferenceExprSyntax.self)
-        {
-            return IdentifierTypeSyntax(
-                name: name.baseName,
-                genericArgumentClause: genericArgumentClause
-            )
+        
+        if let registry = element.expression.as(MemberAccessExprSyntax.self)?.base?.as(GenericSpecializationExprSyntax.self) {
+            return TypeSyntax(#"\#(registry.expression)\#(genericArgumentClause)"#)
         } else if let member = element.expression.as(MemberAccessExprSyntax.self),
                   member.base == nil
         {
             let name = member.declName.baseName.text
-            return IdentifierTypeSyntax(
+            return TypeSyntax(MemberTypeSyntax(
+                baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("LiveViewNative")), name: .identifier("Addons")),
                 // transform camelCase name back to registry type name. See ``RegisterAddonMacro`` for the inverse transformation.
-                name: .identifier(name.prefix(1).uppercased() + name.dropFirst() + "Registry"),
+                name: .identifier(name.prefix(1).uppercased() + name.dropFirst()),
                 genericArgumentClause: genericArgumentClause
-            )
+            ))
         } else {
             throw LiveViewMacroError.invalidAddonElement
         }

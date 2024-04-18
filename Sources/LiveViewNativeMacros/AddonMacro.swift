@@ -27,7 +27,8 @@ extension RegisterAddonMacro: DeclarationMacro {
             .baseName.text
         else { throw DiagnosticsError(syntax: node, message: "Missing or invalid `CustomRegistry` type. Pass a registry in the form `MyCustomRegistry<_>.self`.", id: .missingRegistry) }
         
-        guard baseName.hasSuffix(suffix)
+        guard baseName.hasSuffix(suffix),
+              baseName != suffix
         else { throw DiagnosticsError(syntax: node, message: "Registry type name must have the 'Registry' suffix.", id: .invalidRegistryName) }
         
         guard baseName.first?.isUppercase == true
@@ -36,9 +37,7 @@ extension RegisterAddonMacro: DeclarationMacro {
         var name = baseName
         
         // Remove `*Registry` suffix.
-        if name != suffix {
-          name = String(name.prefix(upTo: name.index(name.endIndex, offsetBy: -suffix.count)))
-        }
+        name = String(name.prefix(upTo: name.index(name.endIndex, offsetBy: -suffix.count)))
 
         // Lowercase the first character for camelCase.
         name = name.prefix(1).lowercased() + name.dropFirst()
@@ -77,5 +76,44 @@ extension DiagnosticsError {
         self.init(diagnostics: [
             Diagnostic(node: Syntax(syntax), message: RegisterAddonDiagnostic(message: message, domain: domain, id: id, severity: severity))
         ])
+    }
+}
+
+enum AddonMacro {}
+
+extension AddonMacro: PeerMacro {
+    static func expansion(
+        of node: AttributeSyntax,
+        providingPeersOf declaration: some DeclSyntaxProtocol,
+        in context: some MacroExpansionContext
+    ) throws -> [DeclSyntax] {
+        guard let baseName = declaration.as(StructDeclSyntax.self)?.name.text
+        else { throw DiagnosticsError(syntax: node, message: "'@Addon' can only be applied to 'struct' types.", id: .missingRegistry) }
+        
+        guard baseName.first?.isUppercase == true
+        else { throw DiagnosticsError(syntax: node, message: "Registry type name must start with an uppercase letter.", id: .invalidRegistryName) }
+        
+        var name = baseName
+
+        // Lowercase the first character for camelCase.
+        name = name.prefix(1).lowercased() + name.dropFirst()
+        
+        return [
+            DeclSyntax(#"static var \#(raw: name): LiveViewNative.Addons { fatalError("Registered addons cannot be accessed outside of the #LiveView macro.") }"#)
+        ]
+    }
+}
+
+extension AddonMacro: ExtensionMacro {
+    static func expansion(
+        of node: AttributeSyntax,
+        attachedTo declaration: some DeclGroupSyntax,
+        providingExtensionsOf type: some TypeSyntaxProtocol,
+        conformingTo protocols: [TypeSyntax],
+        in context: some MacroExpansionContext
+    ) throws -> [ExtensionDeclSyntax] {
+        [
+            try ExtensionDeclSyntax(#"extension \#(type): LiveViewNative.CustomRegistry"#) {}
+        ]
     }
 }

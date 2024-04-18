@@ -18,6 +18,7 @@ struct LiveViewNativeMacrosPlugin: CompilerPlugin {
         LiveAttributeMacro.self,
         LiveElementIgnoredMacro.self,
         
-        RegisterAddonMacro.self
+        RegisterAddonMacro.self,
+        AddonMacro.self
     ]
 }
