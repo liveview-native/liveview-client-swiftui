@@ -10,7 +10,8 @@ struct ModifierGenerator: ParsableCommand {
         subcommands: [
             ModifierGenerator.Source.self,
             ModifierGenerator.Schema.self,
-            ModifierGenerator.List.self
+            ModifierGenerator.List.self,
+            ModifierGenerator.DocumentationExtensions.self,
         ]
     )
 

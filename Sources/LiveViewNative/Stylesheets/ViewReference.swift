@@ -5,6 +5,17 @@ import LiveViewNativeCore
 /// A reference to nested content from a stylesheet.
 ///
 /// Parses an atom or list of atoms.
+///
+/// ```elixir
+/// :my_view
+/// [:view1, :view2]
+/// ```
+///
+/// ```html
+/// <Rectangle template="my_view" />
+/// <Text template="view1" />
+/// <ScrollView template="view2" />
+/// ```
 public struct ViewReference: ParseableModifierValue {
     let value: [String]
 
@@ -37,9 +48,11 @@ public struct ViewReference: ParseableModifierValue {
 }
 
 /// A type reference that is resolved inline (an argument that accepts `some View`, not `() -> some View`)
+///
+/// See ``ViewReference`` for more details.
 typealias InlineViewReference = ViewReference
 
-/// A `ViewReference` that only resolves to `SwiftUI.Text`.
+/// A ``ViewReference`` that only resolves to `SwiftUI.Text`.
 public struct TextReference: ParseableModifierValue {
     let value: String
 
@@ -56,6 +69,23 @@ public struct TextReference: ParseableModifierValue {
     }
 }
 
+/// A ``ViewReference`` that only resolves to `ToolbarContent` types.
+///
+/// Use an atom or list of atoms to reference toolbar content.
+///
+/// ```elixir
+/// :my_toolbar_content
+/// [:item1, :item2]
+/// ```
+///
+/// ```html
+/// <ToolbarItem template="my_toolbar_content">
+///     ...
+/// </ToolbarItem>
+/// <ToolbarItem template="item1" />
+/// <ToolbarItem template="item2" />
+/// ```
+@_documentation(visibility: public)
 struct ToolbarContentReference: ParseableModifierValue {
     let value: [String]
     
@@ -81,6 +111,23 @@ struct ToolbarContentReference: ParseableModifierValue {
     }
 }
 
+/// A ``ViewReference`` that only resolves to `CustomizableToolbarContent` types.
+///
+/// Use an atom or list of atoms to reference customizable toolbar content.
+///
+/// ```elixir
+/// :my_toolbar_content
+/// [:item1, :item2]
+/// ```
+///
+/// ```html
+/// <ToolbarItem template="my_toolbar_content" id="item0">
+///     ...
+/// </ToolbarItem>
+/// <ToolbarItem template="item1" id="item1" />
+/// <ToolbarItem template="item2" id="item2" />
+/// ```
+@_documentation(visibility: public)
 struct CustomizableToolbarContentReference: ParseableModifierValue {
     let value: [String]
     
