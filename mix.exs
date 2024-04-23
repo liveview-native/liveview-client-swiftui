@@ -27,7 +27,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   def cli do
     [
-      preferred_envs: [docs: :docs]
+      preferred_envs: [docs: :docs, "hex.publish": :docs]
     ]
   end
 
@@ -51,14 +51,13 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   defp deps do
     [
       {:ex_doc, ">= 0.0.0", only: [:docs, :test]},
-      {:makeup_swift, "~> 0.0.1"},
-      {:makeup_json, "~> 0.1.0"},
+      {:makeup_swift, "~> 0.0.1", only: [:docs, :test]},
+      {:makeup_json, "~> 0.1.0", only: [:docs, :test]},
       {:makeup_eex, ">= 0.1.1"},
       {:floki, ">= 0.30.0", only: :test},
       {:live_view_native, "~> 0.3.0-rc.1"},
       {:live_view_native_stylesheet, "~> 0.3.0-rc.1", only: :test},
       {:live_view_native_test, github: "liveview-native/live_view_native_test", tag: "v0.3.0", only: :test},
-      {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"}
     ]
   end
