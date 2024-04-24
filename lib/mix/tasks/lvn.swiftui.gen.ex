@@ -4,6 +4,16 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
   alias Mix.LiveViewNative.Context
 
   @shortdoc "Generates the SwiftUI Project for LiveView Native"
+  @moduledoc """
+  #{@shortdoc}
+
+     $ mix lvn.swiftui.gen
+
+  ## Options
+
+  * `--no-live-form` - don't include `LiveViewNative.LiveForm` in the generated templates
+  """
+
   def run(args) do
     args = List.insert_at(args, 0, "swiftui")
 
