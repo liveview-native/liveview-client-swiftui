@@ -5,8 +5,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   require Logger
 
   # Using a temporary folder outside of the project avoids ElixirLS file watching issues
-  # defp temp_doc_folder, do: Path.join(System.tmp_dir!(), "temp_swiftui_docs")
-  defp temp_doc_folder, do: Path.join("/var/folders/47/kzjdq9x56dj77sc4xng5nc180000gp/T/", "temp_swiftui_docs")
+  defp temp_doc_folder, do: Path.join(System.tmp_dir!(), "temp_swiftui_docs")
   defp generate_swift_lvn_docs_command, do: ~c"xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath #{temp_doc_folder()} -skipMacroValidation -skipPackagePluginValidation"
   @swiftui_interface_path "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface"
   defp generate_modifier_documentation_extensions(xcode_path), do: ~c(xcrun swift run ModifierGenerator documentation-extensions --interface "#{Path.join(xcode_path, @swiftui_interface_path)}" --output Sources/LiveViewNative/LiveViewNative.docc/DocumentationExtensions)
