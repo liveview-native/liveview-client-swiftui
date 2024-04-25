@@ -8,6 +8,14 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ToggleStyle`](https://developer.apple.com/documentation/swiftui/ToggleStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.button`
+/// - `.switch`
+/// - `.checkbox`
+@_documentation(visibility: public)
 enum AnyToggleStyle: String, CaseIterable, ParseableModifierValue, ToggleStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

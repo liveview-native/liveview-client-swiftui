@@ -8,6 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ProgressViewStyle`](https://developer.apple.com/documentation/swiftui/ProgressViewStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.circular`
+/// - `.linear`
+@_documentation(visibility: public)
 enum AnyProgressViewStyle: String, CaseIterable, ParseableModifierValue, ProgressViewStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

@@ -9,6 +9,25 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(macOS) || os(visionOS)
+/// See [`SwiftUI.KeyEquivalent`](https://developer.apple.com/documentation/swiftui/KeyEquivalent) for more details.
+///
+/// Possible values:
+/// - `.upArrow`
+/// - `.downArrow`
+/// - `.leftArrow`
+/// - `.rightArrow`
+/// - `.clear`
+/// - `.delete`
+/// - `.end`
+/// - `.escape`
+/// - `.home`
+/// - `.pageUp`
+/// - `.pageDown`
+/// - `.return`
+/// - `.space`
+/// - `.tab`
+/// - A string with a single character
+@_documentation(visibility: public)
 extension KeyEquivalent: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {

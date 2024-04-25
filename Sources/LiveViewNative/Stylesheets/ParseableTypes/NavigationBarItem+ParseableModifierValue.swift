@@ -9,6 +9,13 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+/// See [`SwiftUI.NavigationBarItem.TitleDisplayMode`](https://developer.apple.com/documentation/swiftui/NavigationBarItem/TitleDisplayMode) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.inline`
+/// - `.large`
+@_documentation(visibility: public)
 extension NavigationBarItem.TitleDisplayMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

@@ -8,6 +8,20 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/monospacedDigit()`](https://developer.apple.com/documentation/swiftui/view/monospacedDigit()) for more details on this ViewModifier.
+///
+/// ### monospacedDigit()
+/// See [`SwiftUI.View/monospacedDigit()`](https://developer.apple.com/documentation/swiftui/view/monospacedDigit()) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   monospacedDigit()
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _MonospacedDigitModifier<R: RootRegistry>: TextModifier {
     static var name: String { "monospacedDigit" }

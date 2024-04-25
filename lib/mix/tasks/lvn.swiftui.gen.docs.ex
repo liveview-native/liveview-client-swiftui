@@ -5,16 +5,32 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   require Logger
 
   # Using a temporary folder outside of the project avoids ElixirLS file watching issues
-  defp temp_doc_folder, do: Path.join(System.tmp_dir!(), "temp_swiftui_docs")
+  # defp temp_doc_folder, do: Path.join(System.tmp_dir!(), "temp_swiftui_docs")
+  defp temp_doc_folder, do: Path.join("/var/folders/47/kzjdq9x56dj77sc4xng5nc180000gp/T/", "temp_swiftui_docs")
   defp generate_swift_lvn_docs_command, do: ~c"xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath #{temp_doc_folder()} -skipMacroValidation -skipPackagePluginValidation"
+  @swiftui_interface_path "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface"
+  defp generate_modifier_documentation_extensions(xcode_path), do: ~c(xcrun swift run ModifierGenerator documentation-extensions --interface "#{Path.join(xcode_path, @swiftui_interface_path)}" --output Sources/LiveViewNative/LiveViewNative.docc/DocumentationExtensions)
+  @generate_documentation_extensions ~c(xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions)
+  defp modifier_list(xcode_path), do: ~s(xcrun swift run ModifierGenerator list --interface "#{Path.join(xcode_path, @swiftui_interface_path)}" --modifier-search-path Sources/LiveViewNative/Stylesheets/Modifiers)
+  @xcode_select_print_path ~c(xcode-select --print-path)
   @allow_writing_to_package_dir_command ~c"xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions"
   @doc_folder "generated_docs"
   @cheatsheet_path "#{@doc_folder}/view-index.cheatmd"
+  @modifier_cheatsheet_path "#{@doc_folder}/modifier-index.md"
 
   @shortdoc "Generates ex doc files for all SwiftUI views"
   def run(_) do
+    Logger.info("Locating Xcode installation")
+    xcode_path = :os.cmd(@xcode_select_print_path) |> to_string() |> String.trim()
+
     Logger.info("Enabling writing to package...")
     :os.cmd(@allow_writing_to_package_dir_command)
+
+    Logger.info("Generating documentation extensions")
+    :os.cmd(@generate_documentation_extensions)
+    Logger.info("Generating modifier documentation extensions")
+    :os.cmd(generate_modifier_documentation_extensions(xcode_path))
+
     Logger.info("Generating SwiftUI documentation files...")
     :os.cmd(generate_swift_lvn_docs_command())
 
@@ -44,6 +60,57 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
           File.write!(@cheatsheet_path, cheatsheet(docs, docs) <> "\n", [:append])
         end
       end
+    end
+
+    Logger.info("Generating LiveView Native modifier documentation files...")
+
+    modifiers = System.shell(modifier_list(xcode_path)) |> elem(0) |> String.split("\n")
+
+    # clear cheatsheet
+    File.write!(@modifier_cheatsheet_path, "# Modifier Index\n")
+
+    all_modifier_references = MapSet.new()
+    for modifier <- modifiers do
+      with {:ok, data} <-
+              File.read(
+                "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/_#{modifier}Modifier.json"
+              ) do
+        docs = Jason.decode!(data)
+        File.write!(@modifier_cheatsheet_path, "## #{modifier}\n", [:append])
+        File.write!(@modifier_cheatsheet_path, "<!-- tabs-open -->\n", [:append])
+        File.write!(@modifier_cheatsheet_path, modifier_cheatsheet(docs, docs) <> "\n", [:append])
+        File.write!(@modifier_cheatsheet_path, "<!-- tabs-close -->\n", [:append])
+        reduce_references(docs, all_modifier_references)
+      end
+    end
+
+    all_modifier_references = modifiers
+    |> Enum.reduce(MapSet.new(), fn modifier, acc ->
+      with {:ok, data} <- File.read("#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/_#{modifier}Modifier.json")
+      do
+        docs = Jason.decode!(data)
+        reduce_references(docs, acc)
+      else
+        _ -> acc
+      end
+    end)
+
+    # collect references made in references
+    all_modifier_references = Enum.reduce(all_modifier_references, all_modifier_references, fn reference, acc ->
+      path = String.trim_leading(reference, "doc://LiveViewNative/documentation/LiveViewNative/")
+      with {:ok, data} <- File.read("#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{path}.json")
+      do
+        docs = Jason.decode!(data)
+        reduce_references(docs, acc)
+      else
+        _ -> acc
+      end
+    end)
+
+    # write references to end of modifier index
+    File.write!(@modifier_cheatsheet_path, "## Types\n", [:append])
+    for reference <- Enum.sort(all_modifier_references) do
+      File.write!(@modifier_cheatsheet_path, attribute_details(String.trim_leading(reference, "doc://LiveViewNative/documentation/LiveViewNative/")) <> "\n", [:append])
     end
 
     Logger.info("Cleaning up temporary files...")
@@ -80,17 +147,30 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
 
   def cheatsheet(_data, _ctx), do: ""
 
+  ### Modifier Cheatsheet
+  def modifier_cheatsheet(data), do: modifier_cheatsheet(data, data)
+
+  def modifier_cheatsheet(
+    %{ "primaryContentSections" => content },
+    ctx
+  ) do
+    markdown(content, ctx |> Map.put("includeAllReferences", true))
+  end
+
+  def modifier_cheatsheet(_data, _ctx), do: ""
+
   ### Markdown
   def markdown(data), do: markdown(data, data)
   def markdown(
-        %{
-          "identifier" => %{"url" => url},
-          "metadata" => %{"title" => title},
-          "abstract" => abstract,
-          "primaryContentSections" => content
-        } = data,
-        ctx
-      ) do
+    %{
+      "identifier" => %{"url" => url},
+      "metadata" => %{"title" => title},
+      "primaryContentSections" => content
+    } = data,
+    ctx
+  ) do
+    abstract = Map.get(data, "abstract", [])
+
     trimmed_title = title |> String.replace("<", "") |> String.replace(">", "")
 
     attributes =
@@ -141,7 +221,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
 
   def markdown(%{"type" => "text", "text" => text}, _ctx), do: text
 
-  def markdown(%{"type" => "heading", "text" => text}, %{"inlineHeadings" => true}),
+  def markdown(%{"type" => "heading", "text" => text, "level" => level}, %{"inlineHeadings" => true}) when level < 3,
     do: "### #{text}\n\n"
 
   def markdown(%{"type" => "heading", "level" => level, "text" => text}, _ctx),
@@ -160,14 +240,24 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
 
   def markdown(%{"type" => "unorderedList", "items" => items}, ctx),
     do:
-      items
+      (items
       |> Enum.map(fn %{"content" => content} -> "* #{markdown(content, ctx)}" end)
-      |> Enum.join()
+      |> Enum.join())
+      <> "\n"
 
   def markdown(
-        %{"type" => "reference", "identifier" => identifier},
-        %{"references" => references, "identifier" => %{"url" => base_url}}
-      ) do
+    %{"type" => "reference", "identifier" => "doc:" <> _ = identifier},
+    %{"references" => references, "includeAllReferences" => true}
+  ) do
+    %{"title" => title} = Map.get(references, identifier)
+    hash = "#{title |> String.replace("<", "") |> String.replace(">", "")}/1"
+    "[`#{title}`](##{hash})"
+  end
+
+  def markdown(
+    %{"type" => "reference", "identifier" => identifier},
+    %{"references" => references, "identifier" => %{"url" => base_url}}
+  ) do
     %{"title" => title, "url" => url} = Map.get(references, identifier)
     hash = "#{title |> String.replace("<", "") |> String.replace(">", "")}/1"
 
@@ -190,7 +280,11 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   def markdown(_data, _ctx), do: ""
 
   defp attribute_details(view, identifier) do
-    "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}/#{Path.basename(identifier)}.json"
+    attribute_details("#{view}/#{Path.basename(identifier)}")
+  end
+
+  defp attribute_details(path) do
+    "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{path}.json"
     |> File.read()
     |> case do
       {:ok, data} ->
@@ -200,7 +294,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
         abstract = Map.get(docs, "abstract", [])
         content = Map.get(docs, "primaryContentSections", [])
 
-        docs = Map.put(docs, "inlineHeadings", true)
+        docs = Map.put(docs, "inlineHeadings", true) |> Map.put("includeAllReferences", true)
         hash = "#{title}/1"
 
         """
@@ -224,6 +318,38 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
       {:error, _} -> ""
     end
   end
+
+  defp reduce_references(
+    %{"type" => "reference", "identifier" => identifier},
+    acc
+  ) do
+    MapSet.put(acc, identifier)
+  end
+
+  defp reduce_references(
+    %{ "primaryContentSections" => content },
+    acc
+  ), do: reduce_references(content, acc)
+
+  defp reduce_references(markdown, acc) when is_list(markdown),
+    do: markdown |> Enum.reduce(acc, fn x, acc -> reduce_references(x, acc) end)
+
+  defp reduce_references(
+    %{"kind" => "content", "content" => content},
+    acc
+  ), do: reduce_references(content, acc)
+
+  defp reduce_references(
+    %{"type" => "paragraph", "inlineContent" => content},
+    acc
+  ), do: reduce_references(content, acc)
+
+  defp reduce_references(
+    %{"type" => "unorderedList", "items" => items},
+    acc
+  ), do: items |> Enum.reduce(acc, fn %{"content" => content}, acc -> reduce_references(content, acc) end)
+
+  defp reduce_references(_markdown, acc), do: acc
 
   @spec categorized_views() :: %{String.t() => [String.t()]}
   defp categorized_views do

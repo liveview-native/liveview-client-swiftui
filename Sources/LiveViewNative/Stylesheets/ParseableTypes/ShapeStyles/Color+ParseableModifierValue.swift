@@ -8,6 +8,61 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Color`](https://developer.apple.com/documentation/swiftui/Color) for more details.
+///
+/// System Colors:
+/// - `.red`
+/// - `.orange`
+/// - `.yellow`
+/// - `.green`
+/// - `.mint`
+/// - `.teal`
+/// - `.cyan`
+/// - `.blue`
+/// - `.indigo`
+/// - `.purple`
+/// - `.pink`
+/// - `.brown`
+/// - `.white`
+/// - `.gray`
+/// - `.black`
+/// - `.clear`
+/// - `.primary`
+/// - `.secondary`
+///
+/// ### Named Colors
+/// Get a custom color from the asset catalog by name.
+///
+/// ```swift
+/// Color("MyColor")
+/// ```
+///
+/// ### RGB Colors
+/// Optionally provide the ``SwiftUI/Color/RGBColorSpace``.
+///
+/// ```swift
+/// Color(red: 1, green: 0.5, blue: 0.5)
+/// Color(red: 1, green: 0, blue: 0, opacity: 0.5)
+/// Color(.displayP3, red: 0, green: 1, blue: 0)
+/// Color(white: 0.5, opacity: 1)
+/// ```
+///
+/// ### HSB Colors
+/// Use `hue`, `saturation`, `brightness`, and `opacity` to create a color.
+///
+/// ```swift
+/// Color(hue: 0.5, saturation: 1, brightness: 0.5)
+/// Color(hue: 0, saturation: 0.5, brightness: 1, opacity: 0.5)
+/// ```
+///
+/// ### Setting Opacity
+/// Use the `opacity` modifier to customize the appearance of a color.
+///
+/// ```swift
+/// .red.opacity(0.5)
+/// Color("MyColor").opacity(0.8)
+/// ```
+@_documentation(visibility: public)
 extension SwiftUI.Color: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         _ColorParser(context: context) {}
@@ -174,6 +229,13 @@ enum ColorModifier {
     }
 }
 
+/// See [`SwiftUI.Color.RGBColorSpace`](https://developer.apple.com/documentation/swiftui/Color/RGBColorSpace) for more details.
+///
+/// Possible values:
+/// - `.sRGB`
+/// - `.sRGBLinear`
+/// - `.displayP3`
+@_documentation(visibility: public)
 extension SwiftUI.Color.RGBColorSpace: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

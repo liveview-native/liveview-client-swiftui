@@ -9,6 +9,11 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(macOS) || os(visionOS)
+/// See [`SwiftUI.GroupBoxStyle`](https://developer.apple.com/documentation/swiftui/GroupBoxStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+@_documentation(visibility: public)
 enum AnyGroupBoxStyle: String, CaseIterable, ParseableModifierValue, GroupBoxStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

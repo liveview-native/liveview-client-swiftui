@@ -8,6 +8,22 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/fontWidth(_:)`](https://developer.apple.com/documentation/swiftui/view/fontWidth(_:)) for more details on this ViewModifier.
+///
+/// ### fontWidth(_:)
+/// - `width`: ``SwiftUI/Font/Width`` or `nil`
+///
+/// See [`SwiftUI.View/fontWidth(_:)`](https://developer.apple.com/documentation/swiftui/view/fontWidth(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   fontWidth(.compressed)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _FontWidthModifier<R: RootRegistry>: TextModifier {
     static var name: String { "fontWidth" }

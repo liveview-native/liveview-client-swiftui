@@ -10,6 +10,63 @@ import LiveViewNativeStylesheet
 
 // manual implementation
 // Last argument has no label in iOS 16.4, which is incompatible with the stylesheet format.
+/// See [`SwiftUI.View/searchScopes(_:activation:scopes:)`](https://developer.apple.com/documentation/swiftui/view/searchScopes(_:activation:_:)) for more details on this ViewModifier.
+///
+/// ### searchScopes(_:activation:scopes:)
+/// - `scope`: `attr("...")` for a ``Swift/String`` (required, change tracked)
+/// - `activation`: ``SwiftUI/SearchScopeActivation`` (required)
+/// - `scopes`: ``ViewReference`` (required)
+///
+/// See [`SwiftUI.View/searchScopes(_:activation:scopes:)`](https://developer.apple.com/documentation/swiftui/view/searchScopes(_:activation:_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   searchScopes(attr("scope"), activation: .automatic, scopes: :scopes)
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" scope={@scope} phx-change="scope">
+///   <Child template="scopes" />
+/// </Element>
+/// ```
+///
+/// ```elixir
+/// # LiveView
+/// def handle_event("scope", params, socket)
+/// ```
+///
+/// ### searchScopes(_:scopes:)
+/// - `scope`: `attr("...")` for a ``Swift/String`` (required, change tracked)
+/// - `scopes`: ``ViewReference`` (required)
+///
+/// See [`SwiftUI.View/searchScopes(_:scopes:)`](https://developer.apple.com/documentation/swiftui/view/searchScopes(_:scopes:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   searchScopes(attr("scope"), scopes: :scopes)
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" scope={@scope} phx-change="scope">
+///   <Child template="scopes" />
+/// </Element>
+/// ```
+///
+/// ```elixir
+/// # LiveView
+/// def handle_event("scope", params, socket)
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _SearchScopesModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "searchScopes" }

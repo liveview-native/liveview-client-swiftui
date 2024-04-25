@@ -8,6 +8,12 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.TextSelectability`](https://developer.apple.com/documentation/swiftui/TextSelectability) for more details.
+///
+/// Possible values:
+/// - `.enabled`
+/// - `.disabled`
+@_documentation(visibility: public)
 enum AnyTextSelectability: String, CaseIterable, ParseableModifierValue {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

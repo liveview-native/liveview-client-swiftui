@@ -8,6 +8,28 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/textScale(_:isEnabled:)`](https://developer.apple.com/documentation/swiftui/view/textScale(_:isEnabled:)) for more details on this ViewModifier.
+///
+/// ### textScale(_:isEnabled:)
+/// - `scale`: ``SwiftUI/Text/Scale``
+/// - `isEnabled`: `attr("...")` or ``Swift/Bool``
+///
+/// See [`SwiftUI.View/textScale(_:isEnabled:)`](https://developer.apple.com/documentation/swiftui/view/textScale(_:isEnabled:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   textScale(.default, isEnabled: attr("isEnabled"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" isEnabled={@isEnabled} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _TextScaleModifier<R: RootRegistry>: TextModifier {
     static var name: String { "textScale" }

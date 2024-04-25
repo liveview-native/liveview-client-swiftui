@@ -8,6 +8,14 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Edge`](https://developer.apple.com/documentation/swiftui/Edge) for more details.
+///
+/// Possible values:
+/// - `.top`
+/// - `.bottom`
+/// - `.leading`
+/// - `.trailing`
+@_documentation(visibility: public)
 extension Edge: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -19,6 +27,15 @@ extension Edge: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Edge.Set`](https://developer.apple.com/documentation/swiftui/Edge/Set) for more details.
+///
+/// Possible values:
+/// - `.all`
+/// - `.horizontal`
+/// - `.vertical`
+/// - An ``SwiftUI/Edge`` value
+/// - An array of ``SwiftUI/Edge`` values
+@_documentation(visibility: public)
 extension Edge.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
@@ -35,6 +52,13 @@ extension Edge.Set: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.EdgeInsets`](https://developer.apple.com/documentation/swiftui/EdgeInsets) for more details.
+///
+/// ```swift
+/// EdgeInsets()
+/// EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+/// ```
+@_documentation(visibility: public)
 extension EdgeInsets: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableEdgeInsets.parser(in: context).map(\.value)
@@ -56,6 +80,14 @@ extension EdgeInsets: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.HorizontalEdge.Set`](https://developer.apple.com/documentation/swiftui/HorizontalEdge/Set) for more details.
+///
+/// Possible values:
+/// - `.leading`
+/// - `.trailing`
+/// - `.all`
+/// - An array of ``SwiftUI/HorizontalEdge`` values
+@_documentation(visibility: public)
 extension HorizontalEdge.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
@@ -69,6 +101,14 @@ extension HorizontalEdge.Set: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.VerticalEdge.Set`](https://developer.apple.com/documentation/swiftui/VerticalEdge/Set) for more details.
+///
+/// Possible values:
+/// - `.top`
+/// - `.bottom`
+/// - `.all`
+/// - An array of ``SwiftUI/VerticalEdge`` values
+@_documentation(visibility: public)
 extension VerticalEdge.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {

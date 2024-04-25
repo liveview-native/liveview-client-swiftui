@@ -8,6 +8,15 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.AnyGradient`](https://developer.apple.com/documentation/swiftui/AnyGradient) for more details.
+///
+/// An automatic gradient created from a ``SwiftUI/Color``.
+///
+/// ```swift
+/// .red.gradient
+/// Color("MyColor").gradient
+/// ```
+@_documentation(visibility: public)
 extension AnyGradient: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         _ThrowingParse { (base: SwiftUI.Color, members: [()]) in
@@ -23,6 +32,15 @@ extension AnyGradient: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Gradient`](https://developer.apple.com/documentation/swiftui/Gradient) for more details.
+///
+/// A set of ``SwiftUI/Color`` or ``SwiftUI/Gradient/Stop`` values.
+///
+/// ```swift
+/// Gradient(colors: [.red, .blue])
+/// Gradient(stops: [Gradient.Stop(color: .red, location: 0), Gradient.Stop(color: .blue, location: 1)])
+/// ```
+@_documentation(visibility: public)
 extension Gradient: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         _Gradient.parser(in: context).map(\.value)
@@ -44,6 +62,15 @@ extension Gradient: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Gradient.Stop`](https://developer.apple.com/documentation/swiftui/Gradient/Stop) for more details.
+///
+/// An individual stop in a ``SwiftUI/Gradient``.
+///
+/// ```swift
+/// Gradient.Stop(color: .red, location: 0)
+/// Gradient.Stop(color: .blue, location: 1)
+/// ```
+@_documentation(visibility: public)
 extension Gradient.Stop: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         MemberExpression {

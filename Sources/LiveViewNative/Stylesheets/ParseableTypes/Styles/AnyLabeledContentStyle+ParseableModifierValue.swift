@@ -8,6 +8,11 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.LabeledContentStyle`](https://developer.apple.com/documentation/swiftui/LabeledContentStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+@_documentation(visibility: public)
 enum AnyLabeledContentStyle: String, CaseIterable, ParseableModifierValue, LabeledContentStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

@@ -252,6 +252,8 @@ extension ModifierGenerator {
             
             for (type, cases) in typeVisitor.types.sorted(by: { $0.key < $1.key }) {
                 let (availability, unavailable) = typeVisitor.availability[type]!
+                let appleDocs = URL(string: "https://developer.apple.com/documentation/swiftui/")!
+                    .appending(path: type)
                 FileHandle.standardOutput.write(Data(
                     """
                     \(
@@ -268,6 +270,11 @@ extension ModifierGenerator {
                         )
                         """
                     )
+                    /// See [`SwiftUI.\(type)`](\(appleDocs.absoluteString)) for more details.
+                    ///
+                    /// Possible values:
+                    \(cases.map({ "/// * `.\($0.0)`" }).joined(separator: "\n"))
+                    @_documentation(visibility: public)
                     \(availability.isEmpty ? "" : "@available(\(availability), *)")
                     extension \(type): ParseableModifierValue {
                         public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

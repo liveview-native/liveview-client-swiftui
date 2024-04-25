@@ -10,6 +10,31 @@ import LiveViewNativeStylesheet
 
 // manual implementation
 // `axis` is a tuple type, which cannot conform to `ParseableModifierValue`.
+/// See [`SwiftUI.View/rotation3DEffect(_:axis:anchor:anchorZ:perspective:)`](https://developer.apple.com/documentation/swiftui/view/rotation3DEffect(_:axis:anchor:anchorZ:perspective:)) for more details on this ViewModifier.
+///
+/// ### rotation3DEffect(_:axis:anchor:anchorZ:perspective:)
+/// - `angle`: ``SwiftUI/Angle`` (required)
+/// - `axis`: Tuple with structure `(x: CGFloat, y: CGFloat, z: CGFloat)` (required)
+/// - `anchor`: ``SwiftUI/UnitPoint``
+/// - `anchorZ`: `attr("...")` or ``CoreFoundation/CGFloat``
+/// - `perspective`: `attr("...")` or ``CoreFoundation/CGFloat``
+///
+/// See [`SwiftUI.View/rotation3DEffect(_:axis:anchor:anchorZ:perspective:)`](https://developer.apple.com/documentation/swiftui/view/rotation3DEffect(_:axis:anchor:anchorZ:perspective:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   rotation3DEffect(.zero, axis: (x: 1, y: 0, z: 0), anchor: .center, anchorZ: attr("anchorZ"), perspective: attr("perspective"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" anchorZ={@anchorZ} perspective={@perspective} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "rotation3DEffect" }

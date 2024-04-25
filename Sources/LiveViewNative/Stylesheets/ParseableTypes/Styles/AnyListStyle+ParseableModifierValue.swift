@@ -8,6 +8,19 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ListStyle`](https://developer.apple.com/documentation/swiftui/ListStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.plain`
+/// - `.carousel`
+/// - `.elliptical`
+/// - `.bordered`
+/// - `.grouped`
+/// - `.insetGrouped`
+/// - `.inset`
+/// - `.sidebar`
+@_documentation(visibility: public)
 enum AnyListStyle: String, CaseIterable, ParseableModifierValue {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

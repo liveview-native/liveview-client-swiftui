@@ -9,6 +9,22 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(tvOS) || os(visionOS)
+/// See [`UIKit.UIKeyboardType`](https://developer.apple.com/documentation/uikit/UIKeyboardType) for more details.
+///
+/// Possible values:
+/// - `.default`
+/// - `.asciiCapable`
+/// - `.numbersAndPunctuation`
+/// - `.URL`
+/// - `.numberPad`
+/// - `.phonePad`
+/// - `.namePhonePad`
+/// - `.emailAddress`
+/// - `.decimalPad`
+/// - `.twitter`
+/// - `.webSearch`
+/// - `.asciiCapableNumberPad`
+@_documentation(visibility: public)
 extension UIKeyboardType: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

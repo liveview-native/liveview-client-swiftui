@@ -8,6 +8,22 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/fontWeight(_:)`](https://developer.apple.com/documentation/swiftui/view/fontWeight(_:)) for more details on this ViewModifier.
+///
+/// ### fontWeight(_:)
+/// - `weight`: ``SwiftUI/Font/Weight`` or `nil`
+///
+/// See [`SwiftUI.View/fontWeight(_:)`](https://developer.apple.com/documentation/swiftui/view/fontWeight(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   fontWeight(.ultraLight)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _FontWeightModifier<R: RootRegistry>: TextModifier {
     static var name: String { "fontWeight" }
