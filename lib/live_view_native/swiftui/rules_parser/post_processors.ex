@@ -131,35 +131,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
     {rest, [{String.to_atom(ast_name), annotations, other_args}], context}
   end
 
-  def to_ime_function_call_ast(
-        rest,
-        [{Elixir, variable_annotations, variable}],
-        context,
-        {line, _},
-        _offset,
-        _is_initial = true
-      ) do
-    annotations = context_to_annotation(context.context, line)
-
-    {rest,
-     [
-       {:., annotations,
-        [nil, {Elixir, annotations, {:to_atom, variable_annotations, [variable]}}]}
-     ], context}
-  end
-
-  def to_ime_function_call_ast(
-        rest,
-        [{Elixir, variable_annotations, variable}],
-        context,
-        {line, _},
-        _offset,
-        _is_initial = false
-      ) do
-    annotations = context_to_annotation(context.context, line)
-    {rest, [{Elixir, annotations, {:to_atom, variable_annotations, [variable]}}], context}
-  end
-
   def to_keyword_tuple_ast(rest, [arg1, arg2], context, {_line, _}, _byte_offset) do
     {rest, [{String.to_atom(arg2), arg1}], context}
   end

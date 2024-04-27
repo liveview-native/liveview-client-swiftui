@@ -58,32 +58,9 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> post_traverse({PostProcessors, :to_dotted_ime_ast, [is_initial]})
   end
 
-  ime_function = fn is_initial ->
-    if is_initial do
-      empty()
-    else
-      ignore(string("."))
-    end
-    |> ignore(string("to_ime"))
-    |> enclosed(
-      "(",
-      variable(
-        force_error?: true,
-        error_message: "Expected a variable",
-        error_parser: non_whitespace(also_ignore: String.to_charlist(")"))
-      )
-      |> post_traverse({PostProcessors, :to_ime_function_call_ast, [is_initial]}),
-      ")",
-      []
-    )
-  end
-
   scoped_ime =
     type_name()
-    |> choice([
-      ime_function.(false),
-      dotted_ime.(false)
-    ])
+    |> concat(dotted_ime.(false))
     |> post_traverse({PostProcessors, :to_scoped_ime_ast, []})
 
   defparsecp(
@@ -93,20 +70,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       # Scoped
       # Color.red
       scoped_ime,
-      # to_ime(color)
-      ime_function.(true),
       # Implicit
       # .red
       dotted_ime.(true)
     ])
     # scoped_ime
     |> repeat(
-      choice([
-        # <other_ime>.to_ime(color)
-        ime_function.(false),
-        # <other_ime>.red
-        dotted_ime.(false)
-      ])
+      # <other_ime>.red
+      dotted_ime.(false)
     )
     |> post_traverse({PostProcessors, :chain_ast, []})
   )
@@ -116,12 +87,8 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     # Color(.displayP3, red: 0.4627, green: 0.8392, blue: 1.0)
     parsec(:nested_modifier)
     |> times(
-      choice([
-        # <other_ime>.#{color}
-        ime_function.(false),
-        # <other_ime>.red
-        dotted_ime.(false)
-      ]),
+      # <other_ime>.red
+      dotted_ime.(false),
       min: 1
     )
     |> post_traverse({PostProcessors, :chain_ast, []})
