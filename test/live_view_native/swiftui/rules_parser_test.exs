@@ -377,7 +377,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       ]}
     end
 
-    test "ensure to_ime doesn't double print ast node" do
+    test "ensure ime interpolation doesn't double print ast node" do
       output = MockSheet.compile_ast(["button-plain"])
 
       assert output == %{"button-plain" => [
