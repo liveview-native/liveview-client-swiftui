@@ -1,8 +1,8 @@
 //
-//  Rotation3DEffectModifier.swift
+//  PerspectiveRotationEffectModifier.swift
 //
 //
-//  Created by Carson Katri on 11/22/23.
+//  Created by Carson Katri on 4/30/24.
 //
 
 import SwiftUI
@@ -10,34 +10,9 @@ import LiveViewNativeStylesheet
 
 // manual implementation
 // `axis` is a tuple type, which cannot conform to `ParseableModifierValue`.
-/// See [`SwiftUI.View/rotation3DEffect(_:axis:anchor:anchorZ:perspective:)`](https://developer.apple.com/documentation/swiftui/view/rotation3DEffect(_:axis:anchor:anchorZ:perspective:)) for more details on this ViewModifier.
-///
-/// ### rotation3DEffect(_:axis:anchor:anchorZ:perspective:)
-/// - `angle`: ``SwiftUI/Angle`` (required)
-/// - `axis`: Tuple with structure `(x: CGFloat, y: CGFloat, z: CGFloat)` (required)
-/// - `anchor`: ``SwiftUI/UnitPoint``
-/// - `anchorZ`: `attr("...")` or ``CoreFoundation/CGFloat``
-/// - `perspective`: `attr("...")` or ``CoreFoundation/CGFloat``
-///
-/// See [`SwiftUI.View/rotation3DEffect(_:axis:anchor:anchorZ:perspective:)`](https://developer.apple.com/documentation/swiftui/view/rotation3DEffect(_:axis:anchor:anchorZ:perspective:)) for more details on this ViewModifier.
-///
-/// Example:
-///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   rotation3DEffect(.zero, axis: (x: 1, y: 0, z: 0), anchor: .center, anchorZ: attr("anchorZ"), perspective: attr("perspective"))
-/// end
-/// ```
-///
-/// ```heex
-/// <%!-- template --%>
-/// <Element class="example" anchorZ={@anchorZ} perspective={@perspective} />
-/// ```
-@_documentation(visibility: public)
 @ParseableExpression
-struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
-    static var name: String { "rotation3DEffect" }
+struct _PerspectiveRotationEffectModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "perspectiveRotationEffect" }
     
     let angle: AttributeReference<Angle>
     let axis: _3DAxis
@@ -48,6 +23,7 @@ struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
     @ObservedElement private var element
     @LiveContext<R> private var context
     
+    #if os(visionOS)
     init(
         _ angle: AttributeReference<Angle>,
         axis: _3DAxis,
@@ -61,16 +37,12 @@ struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
         self.anchorZ = anchorZ
         self.perspective = perspective
     }
+    #endif
     
     func body(content: Content) -> some View {
+        content
         #if os(visionOS)
-        content.rotation3DEffect(
-            angle.resolve(on: element, in: context),
-            axis: (x: axis.x, y: axis.y, z: axis.z),
-            anchor: anchor
-        )
-        #else
-        content.rotation3DEffect(
+        .perspectiveRotationEffect(
             angle.resolve(on: element, in: context),
             axis: (x: axis.x, y: axis.y, z: axis.z),
             anchor: anchor,

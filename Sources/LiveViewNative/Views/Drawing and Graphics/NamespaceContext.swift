@@ -27,7 +27,7 @@ struct NamespaceContext<Root: RootRegistry>: View {
     @LiveElementIgnored
     @Environment(\.namespaces) private var namespaces
     
-    #if !os(iOS)
+    #if !os(iOS) && !os(visionOS)
     @LiveElementIgnored
     @Environment(\.resetFocus) private var resetFocus
     #endif
@@ -36,7 +36,7 @@ struct NamespaceContext<Root: RootRegistry>: View {
         if let id {
             $liveElement.children()
                 .environment(\.namespaces, namespaces.merging([id: namespace], uniquingKeysWith: { $1 }))
-                #if !os(iOS)
+                #if !os(iOS) && !os(visionOS)
                 .onReceive($liveElement.context.coordinator.receiveEvent("reset_focus")) { event in
                     guard let namespace = event["namespace"] as? String,
                           namespace == id

@@ -9,7 +9,7 @@ extension ModifierGenerator {
         static let configuration = CommandConfiguration(abstract: "Generate Swift source code for modifiers and enums in a `swiftinterface` file.")
         
         @Argument(
-            help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface`",
+            help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface`",
             transform: { URL(filePath: $0) }
         )
         var interface: URL
@@ -25,7 +25,7 @@ extension ModifierGenerator {
             
             FileHandle.standardOutput.write(Data(
                 #"""
-                // File generated with `swift run ModifierGenerator source "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
+                // File generated with `swift run ModifierGenerator source "/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
                 
                 import SwiftUI
                 import Symbols

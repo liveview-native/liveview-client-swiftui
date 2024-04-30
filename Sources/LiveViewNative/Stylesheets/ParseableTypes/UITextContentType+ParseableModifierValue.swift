@@ -8,7 +8,7 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-#if os(iOS) || os(tvOS)
+#if os(iOS) || os(tvOS) || os(visionOS)
 /// See [`UIKit.UITextContentType`](https://developer.apple.com/documentation/uikit/UITextContentType) for more details.
 ///
 /// Possible values:
@@ -40,7 +40,7 @@ import LiveViewNativeStylesheet
 /// - `newPassword`
 /// - `oneTimeCode`
 @_documentation(visibility: public)
-@available(iOS 13.0, tvOS 13.0, *)
+@available(iOS 13.0, tvOS 13.0, visionOS 1, *)
 extension UITextContentType: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
