@@ -29,7 +29,7 @@ public struct LiveErrorView<Fallback: View>: View {
         {
             SwiftUI.VStack {
                 WebErrorView(html: trace)
-                #if os(watchOS)
+                #if os(watchOS) || os(tvOS)
                 SwiftUI.Button {
                     Task {
                         await reconnectLiveView(.restart)
