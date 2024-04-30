@@ -33,7 +33,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   defp aliases do
     [
-      docs: ["lvn.swiftui.gen.docs", "docs"]
+      docs: ["lvn.swiftui.gen.docs", "livebooks_to_markdown", "docs"]
     ]
   end
 
@@ -63,26 +63,13 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   end
 
   defp docs do
-    guides = Path.wildcard("guides/**/*.md")
-    generated_docs = Path.wildcard("generated_docs/**/*.{md,cheatmd}")
-
-    extras = ["README.md"] ++ guides ++ generated_docs
-
-    guide_groups = [
-      "Architecture": Path.wildcard("guides/architecture/*.md")
-    ]
-
-    generated_groups =
-      Path.wildcard("generated_docs/*")
-      |> Enum.map(&({Path.basename(&1) |> String.to_atom(), Path.wildcard("#{&1}/*.md")}))
-
     [
-      extras: extras,
-      groups_for_extras: guide_groups ++ generated_groups,
       groups_for_functions: [
         Components: &(&1[:type] == :component),
         Macros: &(&1[:type] == :macro)
       ],
+      extras: extras(),
+      groups_for_extras: groups_for_extras(),
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}",
@@ -110,12 +97,50 @@ defmodule LiveViewNative.SwiftUI.MixProject do
             }
           });
         </script>
+        <link
+          href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+          rel="stylesheet"
+        />
         """
       }
     ]
   end
 
   defp description, do: "LiveView Native SwiftUI Client"
+
+  defp extras do
+    guides = Path.wildcard("guides/**/*.md")
+    generated_docs = Path.wildcard("generated_docs/**/*.{md,cheatmd}")
+
+    livebooks = if System.get_env("LIVEBOOKS_ENABLED") do
+      [
+        "guides/markdown_livebooks/getting-started.md",
+        "guides/markdown_livebooks/create-a-swiftui-application.md",
+        "guides/markdown_livebooks/swiftui-views.md",
+        "guides/markdown_livebooks/interactive-swiftui-views.md",
+        "guides/markdown_livebooks/stylesheets.md",
+        "guides/markdown_livebooks/native-navigation.md",
+        "guides/markdown_livebooks/forms-and-validation.md"
+      ]
+    else
+      []
+    end
+
+    ["README.md"] ++ guides ++ generated_docs ++ livebooks
+  end
+
+  defp groups_for_extras do
+    guide_groups = [
+      "Architecture": Path.wildcard("guides/architecture/*.md"),
+      "Livebooks": ~r/markdown_livebooks/
+    ]
+
+    generated_groups =
+      Path.wildcard("generated_docs/*")
+      |> Enum.map(&({Path.basename(&1) |> String.to_atom(), Path.wildcard("#{&1}/*.md")}))
+
+    guide_groups ++ generated_groups
+  end
 
   defp package do
     %{
