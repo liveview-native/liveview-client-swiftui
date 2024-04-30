@@ -1,6 +1,6 @@
 # Stylesheets
 
-[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fliveview-native%2Flive_view_native%2Fmain%2Fguides%livebooks%stylesheets.livemd)
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fliveview-native%liveview-client-swiftui%2Fmain%2Flivebooks%stylesheets.livemd)
 
 ## Overview
 
@@ -23,7 +23,7 @@ sequenceDiagram
 
 We've setup this Livebook to be included when parsing the application for modifiers. You can visit http://localhost:4000/assets/app.swiftui.styles to see the Stylesheet AST created by all of the styles in this Livebook and any other styles used in the `kino_live_view_native` project.
 
-LiveView Native watches for changes and updates the stylesheet, so those will be dynamically picked up and applied, You may notice a slight delay as the Livebook takes **5 seconds** to write it's contents to a file.
+LiveView Native watches for changes and updates the stylesheet, so those will be dynamically picked up and applied, You may notice a slight delay as the Livebook takes **5 seconds** to write its contents to a file.
 
 ## Modifiers
 
@@ -79,6 +79,8 @@ There are some exceptions where the DSL differs from SwiftUI syntax, which we'll
 
 In addition to introducing stylesheets, LiveView Native `0.3.0` also introduced Utility classes, which will be our prefered method for writing styles in these Livebook guides.
 
+Utility styles are comperable to inline styles in HTML, which have been largely discouraged in the CSS community. We recommend Utility styles for now as the easiest way to prototype applications. But, we hope to replace Utility styles with a more mature styling framework in the future.
+
 The same SwiftUI syntax used inside of a stylesheet can be used directly inside of a `class` attribute. The example below defines the `foregroundStyle(.red)` modifier. Evaluate the example and view it in your simulator.
 
 <!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDxUZXh0IGNsYXNzPVwiZm9yZWdyb3VuZFN0eWxlKC5yZWQpXCI+SGVsbG8sIGZyb20gTGl2ZVZpZXcgTmF0aXZlITwvVGV4dD5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmRcblxuZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZSBkb1xuICB1c2UgU2VydmVyV2ViLCA6bGl2ZV92aWV3XG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIDpsaXZlX3ZpZXdcblxuICBAaW1wbCB0cnVlXG4gIGRlZiByZW5kZXIoYXNzaWducyksIGRvOiB+SFwiXCJcbmVuZCIsInBhdGgiOiIvIn0","chunks":[[0,85],[87,377],[466,49],[517,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
@@ -122,6 +124,16 @@ For newline characters, you'll need to wrap the string in curly brackets `{}`. U
 }>
 Hello, from LiveView Native!
 </Text>
+```
+
+<!-- livebook:{"break_markdown":true} -->
+
+### Spaces
+
+At the time of writing, the parser for utility styles interprets space characters as a separator for each rule, thus you should not includes spaces in modifiers that might traditionally have a space.
+
+```html
+<Text class="padding(height:10,width:10)">Hello, from LiveView Native!</Text>
 ```
 
 ## Dynamic Class Names
@@ -328,7 +340,7 @@ foregroundStyle(Color(.sRGB, red: 0.4627, green: 0.8392, blue: 1.0))
 
 Evaluate the example below to see the custom color in your simulator.
 
-<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDxUZXh0IGNsYXNzPVwiZm9yZWdyb3VuZFN0eWxlKENvbG9yKC5zUkdCLCByZWQ6IDAuNDYyNywgZ3JlZW46IDAuODM5MiwgYmx1ZTogMS4wKSlcIj5cbiAgICAgIEhlbGxvLCBmcm9tIExpdmVWaWV3IE5hdGl2ZSFcbiAgICA8L1RleHQ+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kXG5cbmRlZm1vZHVsZSBTZXJ2ZXJXZWIuRXhhbXBsZUxpdmUgZG9cbiAgdXNlIFNlcnZlcldlYiwgOmxpdmVfdmlld1xuICB1c2UgU2VydmVyTmF0aXZlLCA6bGl2ZV92aWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgcmVuZGVyKGFzc2lnbnMpLCBkbzogfkhcIlwiXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,85],[87,436],[525,49],[576,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDxUZXh0IGNsYXNzPVwiZm9yZWdyb3VuZFN0eWxlKENvbG9yKC5zUkdCLHJlZDowLjQ2MjcsZ3JlZW46MC44MzkyLGJsdWU6MS4wKSlcIj5cbiAgICAgIEhlbGxvLCBmcm9tIExpdmVWaWV3IE5hdGl2ZSFcbiAgICA8L1RleHQ+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kXG5cbmRlZm1vZHVsZSBTZXJ2ZXJXZWIuRXhhbXBsZUxpdmUgZG9cbiAgdXNlIFNlcnZlcldlYiwgOmxpdmVfdmlld1xuICB1c2UgU2VydmVyTmF0aXZlLCA6bGl2ZV92aWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgcmVuZGVyKGFzc2lnbnMpLCBkbzogfkhcIlwiXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,85],[87,430],[519,49],[570,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
 
 ```elixir
 defmodule ServerWeb.ExampleLive.SwiftUI do
@@ -336,7 +348,7 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
 
   def render(assigns) do
     ~LVN"""
-    <Text class="foregroundStyle(Color(.sRGB, red: 0.4627, green: 0.8392, blue: 1.0))">
+    <Text class="foregroundStyle(Color(.sRGB,red:0.4627,green:0.8392,blue:1.0))">
       Hello, from LiveView Native!
     </Text>
     """
@@ -457,7 +469,7 @@ You can find documentation and examples of modifiers on [Apple's SwiftUI documen
 
 The [Configuring View Elements](https://developer.apple.com/documentation/swiftui/view#configuring-view-elements) section of apple documentation contains links to modifiers organized by category. In that documentation you'll find useful references such as [Style Modifiers](https://developer.apple.com/documentation/swiftui/view-style-modifiers), [Layout Modifiers](https://developer.apple.com/documentation/swiftui/view-layout), and [Input and Event Modifiers](https://developer.apple.com/documentation/swiftui/view-input-and-events).
 
-You can also find the same modifiers with LiveView Native examples on the [LiveView Client SwiftUI Docs](https://liveview-native.github.io/liveview-client-swiftui/documentation/liveviewnative/paddingmodifier).
+You can also find more on modifiers with LiveView Native examples on the [liveview-client-swiftui](https://hexdocs.pm/live_view_native_swiftui) HexDocs.
 
 ## Visual Studio Code Extension
 
