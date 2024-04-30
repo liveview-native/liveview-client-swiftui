@@ -8,6 +8,22 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Shape/transform(_:)`](https://developer.apple.com/documentation/swiftui/shape/transform(_:)) for more details on this ViewModifier.
+///
+/// ### transform(_:)
+/// - `transform`: ``CoreGraphics/CGAffineTransform`` (required)
+///
+/// See [`SwiftUI.Shape/transform(_:)`](https://developer.apple.com/documentation/swiftui/shape/transform(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   transform(.identity)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _TransformModifier: ShapeModifier {
     static let name = "transform"

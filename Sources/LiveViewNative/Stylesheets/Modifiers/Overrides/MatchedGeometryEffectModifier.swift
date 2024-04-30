@@ -10,6 +10,31 @@ import LiveViewNativeStylesheet
 
 // manual implementation
 // `Namespace.ID` is a special case, and needs to be accessed from the environment.
+/// See [`SwiftUI.View/matchedGeometryEffect(id:in:properties:anchor:isSource:)`](https://developer.apple.com/documentation/swiftui/view/matchedGeometryEffect(id:in:properties:anchor:isSource:)) for more details on this ViewModifier.
+///
+/// ### matchedGeometryEffect(id:in:properties:anchor:isSource:)
+/// - `id`: `attr("...")` or ``Swift/String`` (required)
+/// - `in`: `attr("...")` or ``Swift/String`` (required)
+/// - `properties`: ``SwiftUI/MatchedGeometryProperties``
+/// - `anchor`: ``SwiftUI/UnitPoint``
+/// - `isSource`: `attr("...")` or ``Swift/Bool``
+///
+/// See [`SwiftUI.View/matchedGeometryEffect(id:in:properties:anchor:isSource:)`](https://developer.apple.com/documentation/swiftui/view/matchedGeometryEffect(id:in:properties:anchor:isSource:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   matchedGeometryEffect(id: attr("id"), in: attr("namespace"), properties: .frame, anchor: .center, isSource: attr("isSource"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" id={@id} namespace={@namespace} isSource={@isSource} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _MatchedGeometryEffectModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "matchedGeometryEffect" }

@@ -8,6 +8,43 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// A range of values with a given bound type.
+///
+/// Use range operators to create a range in a stylesheet.
+///
+/// ### Closed Ranges
+/// Use `...` with an upper and lower bound to build a closed range.
+///
+/// ```swift
+/// 1...10
+/// ```
+///
+/// ### Partial Ranges
+/// Use `...` after a lower bound to build a partial range from a value.
+///
+/// ```swift
+/// 1...
+/// ```
+///
+/// Use `...` before an upper bound to build a partial range through a value.
+///
+/// ```swift
+/// ...10
+/// ```
+///
+/// Use `..<` before an upper bound to build a partial range up to a value.
+///
+/// ```swift
+/// ..<10
+/// ```
+///
+/// ### Half Open Ranges
+/// Use `..<` with an upper and lower bound to build a half open range.
+///
+/// ```swift
+/// 1..<10
+/// ```
+@_documentation(visibility: public)
 struct ParseableRangeExpression<Bound: Comparable & ParseableModifierValue>: RangeExpression, ParseableModifierValue {
     let value: any RangeExpression<Bound>
     

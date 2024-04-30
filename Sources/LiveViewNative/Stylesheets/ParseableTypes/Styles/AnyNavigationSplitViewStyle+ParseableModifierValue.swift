@@ -8,6 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.NavigationSplitViewStyle`](https://developer.apple.com/documentation/swiftui/NavigationSplitViewStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.balanced`
+/// - `.prominentDetail`
+@_documentation(visibility: public)
 enum AnyNavigationSplitViewStyle: String, CaseIterable, ParseableModifierValue, NavigationSplitViewStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

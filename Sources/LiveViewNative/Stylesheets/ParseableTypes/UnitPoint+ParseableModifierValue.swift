@@ -8,6 +8,27 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.UnitPoint`](https://developer.apple.com/documentation/swiftui/UnitPoint) for more details.
+///
+/// Standard Unit Points:
+/// - `.zero`
+/// - `.center`
+/// - `.leading`
+/// - `.trailing`
+/// - `.top`
+/// - `.bottom`
+/// - `.topLeading`
+/// - `.topTrailing`
+/// - `.bottomLeading`
+/// - `.bottomTrailing`
+///
+/// Use an `x` and `y` value to construct a custom unit point.
+///
+/// ```swift
+/// UnitPoint(x: 0.5, y: 0.5)
+/// UnitPoint(x: 0, y: 0)
+/// ```
+@_documentation(visibility: public)
 extension UnitPoint: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {

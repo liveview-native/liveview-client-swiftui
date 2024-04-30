@@ -8,6 +8,25 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Alignment`](https://developer.apple.com/documentation/swiftui/Animation) for more details.
+///
+/// Possible values:
+/// - `centerFirstTextBaseline`
+/// - `centerLastTextBaseline`
+/// - `leadingFirstTextBaseline`
+/// - `leadingLastTextBaseline`
+/// - `trailingFirstTextBaseline`
+/// - `trailingLastTextBaseline`
+/// - `topLeading`
+/// - `topTrailing`
+/// - `bottomLeading`
+/// - `bottomTrailing`
+/// - `top`
+/// - `bottom`
+/// - `center`
+/// - `leading`
+/// - `trailing`
+@_documentation(visibility: public)
 extension Alignment: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

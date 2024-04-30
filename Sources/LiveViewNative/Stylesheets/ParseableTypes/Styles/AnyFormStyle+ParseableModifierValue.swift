@@ -8,6 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.FormStyle`](https://developer.apple.com/documentation/swiftui/FormStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.columns`
+/// - `.grouped`
+@_documentation(visibility: public)
 enum AnyFormStyle: String, CaseIterable, ParseableModifierValue, FormStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

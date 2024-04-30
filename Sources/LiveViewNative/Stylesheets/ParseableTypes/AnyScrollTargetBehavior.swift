@@ -8,6 +8,20 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ScrollTargetBehavior`](https://developer.apple.com/documentation/swiftui/ScrollTargetBehavior) for more details.
+///
+/// Possible values:
+/// - `.paging`
+/// - `.viewAligned`
+/// - `.viewAligned(limitBehavior:)`
+///
+/// Use ``SwiftUI/LimitBehavior`` to customize `.viewAligned`.
+///
+/// ```swift
+/// .viewAligned(limitBehavior: .always)
+/// .viewAligned(limitBehavior: .never)
+/// ```
+@_documentation(visibility: public)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 struct AnyScrollTargetBehavior: ParseableModifierValue, ScrollTargetBehavior {
     let _updateTarget: (inout ScrollTarget, ScrollTargetBehaviorContext) -> ()
@@ -42,6 +56,13 @@ struct AnyScrollTargetBehavior: ParseableModifierValue, ScrollTargetBehavior {
     }
 }
 
+/// See [`SwiftUI.ViewAlignedScrollTargetBehavior.LimitBehavior`](https://developer.apple.com/documentation/swiftui/ViewAlignedScrollTargetBehavior/LimitBehavior) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.always`
+/// - `.never`
+@_documentation(visibility: public)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension ViewAlignedScrollTargetBehavior.LimitBehavior: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

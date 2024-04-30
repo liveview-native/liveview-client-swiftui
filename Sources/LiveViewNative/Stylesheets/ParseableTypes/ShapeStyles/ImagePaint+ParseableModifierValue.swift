@@ -25,6 +25,16 @@ extension ImagePaint: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Image`](https://developer.apple.com/documentation/swiftui/Image) for more details.
+///
+/// Get an image by `name` from the asset catalog, or reference an SF Symbol by its `systemName`.
+///
+/// ```swift
+/// Image("MyImage")
+/// Image(systemName: "circle.fill")
+/// Image(systemName: "chart.bar.fill", variableValue: 0.6)
+/// ```
+@_documentation(visibility: public)
 extension Image: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         _Image.parser(in: context).map(\.value)

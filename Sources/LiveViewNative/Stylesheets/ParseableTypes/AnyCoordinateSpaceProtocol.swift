@@ -11,6 +11,25 @@ import LiveViewNativeStylesheet
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension AnyCoordinateSpaceProtocol: CoordinateSpaceProtocol {}
 
+/// See [`SwiftUI.CoordinateSpaceProtocol`](https://developer.apple.com/documentation/swiftui/CoordinateSpaceProtocol) for more details.
+///
+/// Possible values:
+/// - `.global`
+/// - `.local`
+/// - `.named(_:)`
+/// - `.scrollView`
+/// - `.scrollView(axis:)`
+///
+/// Use a ``Swift/String`` to reference a named coordinate space.
+/// ```swift
+/// .named("my-coordinate-space")
+/// ```
+///
+/// Use a ``SwiftUI/Axis`` to reference the coordinate space for the innermost ``ScrollView`` on the given axis.
+/// ```swift
+/// .scrollView(axis: .horizontal)
+/// ```
+@_documentation(visibility: public)
 struct AnyCoordinateSpaceProtocol: ParseableModifierValue {
     let coordinateSpace: CoordinateSpace
     

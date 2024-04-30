@@ -8,6 +8,28 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.UnitCurve`](https://developer.apple.com/documentation/swiftui/UnitCurve) for more details.
+///
+/// Possible values:
+/// - `.easeInOut`
+/// - `.easeIn`
+/// - `.easeOut`
+/// - `.circularEaseIn`
+/// - `.circularEaseOut`
+/// - `.circularEaseInOut`
+/// - `.linear`
+/// - `.bezier(startControlPoint:endControlPoint:)`
+///
+/// Apply `.inverse` to invert the curve.
+/// ```swift
+/// .easeIn.inverse
+/// ```
+///
+/// Use a ``SwiftUI/UnitPoint`` to specify the start/end points of a bezier curve.
+/// ```swift
+/// .bezier(startControlPoint: .topLeading, endControlPoint: .bottomTrailing)
+/// ```
+@_documentation(visibility: public)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension UnitCurve: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

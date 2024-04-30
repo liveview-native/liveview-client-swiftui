@@ -8,6 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.TextFieldStyle`](https://developer.apple.com/documentation/swiftui/TextFieldStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.roundedBorder`
+/// - `.plain`
+@_documentation(visibility: public)
 enum AnyTextFieldStyle: String, CaseIterable, ParseableModifierValue, TextFieldStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

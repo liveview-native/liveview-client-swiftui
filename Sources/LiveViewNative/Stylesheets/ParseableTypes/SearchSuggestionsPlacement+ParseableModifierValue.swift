@@ -8,6 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.SearchSuggestionsPlacement.Set`](https://developer.apple.com/documentation/swiftui/SearchSuggestionsPlacement/Set) for more details.
+///
+/// Possible values:
+/// - `.menu`
+/// - `.content`
+/// - Array of these values
+@_documentation(visibility: public)
 extension SearchSuggestionsPlacement.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {

@@ -9,6 +9,19 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(watchOS)
+/// See [`SwiftUI.ListSectionSpacing`](https://developer.apple.com/documentation/swiftui/ListSectionSpacing) for more details.
+///
+/// Possible values:
+/// - `.default`
+/// - `.compact`
+///
+/// Use `.custom(CGFloat)` to provide a custom spacing value.
+/// 
+/// ```swift
+/// .custom(16)
+/// .custom(8)
+/// ```
+@_documentation(visibility: public)
 @available(iOS 17.0, watchOS 10.0, *)
 extension ListSectionSpacing: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

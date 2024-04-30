@@ -9,6 +9,16 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
+/// See [`SwiftUI.DatePickerStyle`](https://developer.apple.com/documentation/swiftui/DatePickerStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.compact`
+/// - `.graphical`
+/// - `.field`
+/// - `.stepperField`
+/// - `.wheel`
+@_documentation(visibility: public)
 enum AnyDatePickerStyle: String, CaseIterable, ParseableModifierValue, DatePickerStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

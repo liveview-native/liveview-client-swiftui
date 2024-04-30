@@ -82,26 +82,8 @@ be found at <https://hexdocs.pm/live_view_native_swiftui>.
 - <doc:Toolbars>
 
 ### Supported Modifiers
-- <doc:AnimationsModifiers>
-- <doc:ControlsAndIndicatorsModifiers>
-- <doc:DocumentsModifiers>
-- <doc:DrawingAndGraphicsModifiers>
-- <doc:GesturesModifiers>
-- <doc:ImagesModifiers>
-- <doc:InputEventsModifiers>
-- <doc:LayoutAdjustmentsModifiers>
-- <doc:LayoutFundamentalsModifiers>
-- <doc:ListsModifiers>
-- <doc:MenusAndCommands>
-- <doc:ModalPresentations>
-- <doc:NavigationModifiers>
-- <doc:ScrollViewsModifiers>
-- <doc:SearchModifiers>
-- <doc:TextInputAndOutputModifiers>
-- <doc:ToolbarsModifiers>
-- <doc:ViewConfigurationModifiers>
-- <doc:ViewFundamentalsModifiers>
-- <doc:ViewStylesModifiers>
+
+- <doc:Modifiers>
 
 ### Custom DOM Elements and Attributes
 

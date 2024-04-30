@@ -8,6 +8,71 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.AnyTransition`](https://developer.apple.com/documentation/swiftui/AnyTransition) for more details.
+///
+/// Standard Transitions:
+/// - `.slide`
+/// - `.scale`
+/// - `.opacity`
+/// - `.identity`
+///
+/// ### Push
+/// Move in from a specific ``SwiftUI/Edge``, and move out at the opposite edge.
+///
+/// ```swift
+/// .push(edge: .leading)
+/// .push(edge: .top)
+/// ```
+///
+/// ### Offset
+/// Use a ``CoreFoundation/CGSize`` or individual components to construct an offset transition.
+///
+/// ```swift
+/// .offset(CGSize(width: 10, height: 10))
+/// .offset(width: 10, height: 10)
+/// ```
+///
+/// ### Scale
+/// Scale from a specific size at a given ``SwiftUI/UnitPoint`` anchor.
+///
+/// ```swift
+/// .scale(scale: 0.5, anchor: .topLeading)
+/// .scale(scale: 0, anchor: .bottomTrailing)
+/// ```
+///
+/// ### Move
+/// Move in/out from a specific ``SwiftUI/Edge``.
+///
+/// ```swift
+/// .move(edge: .leading)
+/// .move(edge: .top)
+/// ```
+///
+/// ### Asymmetric
+/// Use a different transition for `insertion` and `removal`.
+///
+/// ```swift
+/// .asymmetric(insertion: .scale, removal: .opacity)
+/// ```
+///
+/// ## Transition Modifiers
+/// Apply modifiers to customize a transition.
+///
+/// ### Animation
+/// Set a specific ``SwiftUI/Animation`` to use when transitioning.
+///
+/// ```swift
+/// .opacity.animation(.linear(duration: 2))
+/// .scale.animation(.bouncy)
+/// ```
+///
+/// ### Combined
+/// Merge transitions together.
+///
+/// ```swift
+/// .opacity.combined(with: .scale)
+/// ```
+@_documentation(visibility: public)
 extension AnyTransition: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {

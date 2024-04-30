@@ -8,6 +8,34 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Animation`](https://developer.apple.com/documentation/swiftui/Animation) for more details.
+///
+/// Standard Animations:
+/// - `.default`
+/// - `.bouncy`
+/// - `.smooth`
+/// - `.snappy`
+/// - `.spring`
+/// - `.interactiveSpring`
+/// - `.interpolatingSpring`
+///
+/// ## Easing Animations
+/// Use `.easeIn`, `.easeOut`, `.easeInOut`, and `.linear` with a duration to use a standard easing function.
+///
+/// ```swift
+/// .easeIn(duration: 3)
+/// .linear(duration: 1.5)
+/// ```
+///
+/// Use `.timingCurve` to build a custom bezier timing curve.
+/// Pass a ``SwiftUI/UnitCurve`` to use a standard curve.
+///
+/// ```swift
+/// .timingCurve(0.1, 0.75, 0.85, 0.35, duration: 2.0)
+/// .timingCurve(UnitCurve(0.1, 0.75, 0.85, 0.35), duration: 2.0)
+/// .timingCurve(.easeInOut, duration: 2.0)
+/// ```
+@_documentation(visibility: public)
 extension Animation: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {

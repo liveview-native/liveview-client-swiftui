@@ -9,6 +9,37 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(tvOS)
+/// See [`UIKit.UITextContentType`](https://developer.apple.com/documentation/uikit/UITextContentType) for more details.
+///
+/// Possible values:
+/// - `name`
+/// - `namePrefix`
+/// - `givenName`
+/// - `middleName`
+/// - `familyName`
+/// - `nameSuffix`
+/// - `nickname`
+/// - `jobTitle`
+/// - `organizationName`
+/// - `location`
+/// - `fullStreetAddress`
+/// - `streetAddressLine1`
+/// - `streetAddressLine2`
+/// - `addressCity`
+/// - `addressState`
+/// - `addressCityAndState`
+/// - `sublocality`
+/// - `countryName`
+/// - `postalCode`
+/// - `telephoneNumber`
+/// - `emailAddress`
+/// - `URL`
+/// - `creditCardNumber`
+/// - `username`
+/// - `password`
+/// - `newPassword`
+/// - `oneTimeCode`
+@_documentation(visibility: public)
 @available(iOS 13.0, tvOS 13.0, *)
 extension UITextContentType: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

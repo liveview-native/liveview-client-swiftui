@@ -8,6 +8,22 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/fontDesign(_:)`](https://developer.apple.com/documentation/swiftui/view/fontDesign(_:)) for more details on this ViewModifier.
+///
+/// ### fontDesign(_:)
+/// - `design`: ``SwiftUI/Font/Design`` or `nil`
+///
+/// See [`SwiftUI.View/fontDesign(_:)`](https://developer.apple.com/documentation/swiftui/view/fontDesign(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   fontDesign(.default)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _FontDesignModifier<R: RootRegistry>: TextModifier {
     static var name: String { "fontDesign" }

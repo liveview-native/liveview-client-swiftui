@@ -8,6 +8,23 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Image/resizable(capInsets:resizingMode:)`](https://developer.apple.com/documentation/swiftui/image/resizable(capInsets:resizingMode:)) for more details on this ViewModifier.
+///
+/// ### resizable(capInsets:resizingMode:)
+/// - `capInsets`: ``SwiftUI/EdgeInsets``
+/// - `resizingMode`: ``SwiftUI/Image/ResizingMode``
+///
+/// See [`SwiftUI.Image/renderingMode(_:)`](https://developer.apple.com/documentation/swiftui/image/resizable(capInsets:resizingMode:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   resizable(capInsets: EdgeInsets, resizingMode: .tile)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _ResizableModifier: ImageModifier {
     static let name = "resizable"
@@ -32,6 +49,12 @@ struct _ResizableModifier: ImageModifier {
     }
 }
 
+/// See [`SwiftUI.Image.ResizingMode`](https://developer.apple.com/documentation/swiftui/Image/ResizingMode) for more details.
+///
+/// Possible values:
+/// - `.tile`
+/// - `.stretch`
+@_documentation(visibility: public)
 extension SwiftUI.Image.ResizingMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

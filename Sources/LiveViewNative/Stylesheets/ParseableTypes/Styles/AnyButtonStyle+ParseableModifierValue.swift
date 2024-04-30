@@ -8,6 +8,15 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.PrimitiveButtonStyle`](https://developer.apple.com/documentation/swiftui/PrimitiveButtonStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.borderless`
+/// - `.plain`
+/// - `.bordered`
+/// - `.borderedProminent`
+@_documentation(visibility: public)
 enum AnyPrimitiveButtonStyle: String, CaseIterable, ParseableModifierValue, PrimitiveButtonStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
@@ -38,6 +47,8 @@ enum AnyPrimitiveButtonStyle: String, CaseIterable, ParseableModifierValue, Prim
     }
 }
 
+/// Use ``AnyPrimitiveButtonStyle`` instead.
+@_documentation(visibility: public)
 enum AnyButtonStyle: String, CaseIterable, ParseableModifierValue, ButtonStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

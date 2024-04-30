@@ -9,6 +9,13 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(macOS) || os(visionOS)
+/// See [`SwiftUI.TextEditorStyle`](https://developer.apple.com/documentation/swiftui/TextEditorStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.plain`
+/// - `.roundedBorder`
+@_documentation(visibility: public)
 enum AnyTextEditorStyle: String, CaseIterable, ParseableModifierValue, TextEditorStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

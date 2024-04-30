@@ -9,6 +9,18 @@ import LiveViewNativeStylesheet
 import LiveViewNativeCore
 
 /// An `attr("...")` reference in a stylesheet, or a concrete value.
+///
+/// The value associated with the specified attribute will be passed to the modifier.
+///
+/// ```elixir
+/// attr("my-attr-value")
+/// ```
+///
+/// ```html
+/// <Element my-attr-value="..." />
+/// ```
+///
+/// The attribute will be automatically decoded to the correct type using the conformance to ``AttributeDecodable``.
 public struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: ParseableModifierValue {
     enum Storage {
         case constant(Value)

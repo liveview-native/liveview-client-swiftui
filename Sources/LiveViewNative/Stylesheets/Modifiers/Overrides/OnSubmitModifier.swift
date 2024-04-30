@@ -10,6 +10,28 @@ import LiveViewNativeStylesheet
 
 // manual implementation
 // Last argument has no label, which is incompatible with the stylesheet format.
+/// See [`SwiftUI.View/onSubmit(of:action:)`](https://developer.apple.com/documentation/swiftui/view/onSubmit(of:_:)) for more details on this ViewModifier.
+///
+/// ### onSubmit(of:action:)
+/// - `of`: ``SwiftUI/SubmitTriggers``
+/// - `action`: `event("...")` (required)
+///
+/// See [`SwiftUI.View/onSubmit(of:action:)`](https://developer.apple.com/documentation/swiftui/view/onSubmit(of:_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   onSubmit(of: .text, action: event("action"))
+/// end
+/// ```
+///
+/// ```elixir
+/// # LiveView
+/// def handle_event("action", params, socket)
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _OnSubmitModifier: ViewModifier {
     static let name = "onSubmit"
