@@ -2,7 +2,7 @@
 
 # Create a SwiftUI Application
 
-[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fliveview-native%2Flive_view_native%2Fmain%2Fguides%livebooks%create-a-swiftui-application.livemd)
+[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fliveview-native%liveview-client-swiftui%2Fmain%2Flivebooks%create-a-swiftui-application.livemd)
 
 ## Overview
 
@@ -210,4 +210,4 @@ If you encountered any issues with the native application, here are some trouble
 * Update your [Xcode](https://developer.apple.com/xcode/) version if it is not already the latest version
 * Check for error messages in the Livebook smart cells.
 
-You can also [raise an issue](https://github.com/liveview-native/live_view_native/issues/new) if you would like support from the LiveView Native team.
+You can also [raise an issue](https://github.com/liveview-native/liveview-client-swiftui/issues/new) if you would like support from the LiveView Native team.

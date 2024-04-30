@@ -3,6 +3,8 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   @version "0.3.0-rc.1"
   @source_url "https://github.com/liveview-native/liveview-client-swiftui"
+  @livebooks_enabled System.get_env("LIVEBOOKS_ENABLED")
+  @gen_docs_enabled System.get_env("GEN_DOCS_ENABLED")
 
   def project do
     [
@@ -33,7 +35,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   defp aliases do
     [
-      docs: ["lvn.swiftui.gen.docs", "livebooks_to_markdown", "docs"]
+      docs: @gen_docs_enabled && ["lvn.swiftui.gen.docs"] || [] ++ ["livebooks_to_markdown", "docs"]
     ]
   end
 
@@ -108,15 +110,15 @@ defmodule LiveViewNative.SwiftUI.MixProject do
     guides = Path.wildcard("guides/**/*.md")
     generated_docs = Path.wildcard("generated_docs/**/*.{md,cheatmd}")
 
-    livebooks = if System.get_env("LIVEBOOKS_ENABLED") do
+    livebooks = if @livebooks_enabled do
       [
-        "guides/markdown_livebooks/getting-started.md",
-        "guides/markdown_livebooks/create-a-swiftui-application.md",
-        "guides/markdown_livebooks/swiftui-views.md",
-        "guides/markdown_livebooks/interactive-swiftui-views.md",
-        "guides/markdown_livebooks/stylesheets.md",
-        "guides/markdown_livebooks/native-navigation.md",
-        "guides/markdown_livebooks/forms-and-validation.md"
+        "livebooks/markdown/getting-started.md",
+        "livebooks/markdown/create-a-swiftui-application.md",
+        "livebooks/markdown/swiftui-views.md",
+        "livebooks/markdown/interactive-swiftui-views.md",
+        "livebooks/markdown/stylesheets.md",
+        "livebooks/markdown/native-navigation.md",
+        "livebooks/markdown/forms-and-validation.md"
       ]
     else
       []
