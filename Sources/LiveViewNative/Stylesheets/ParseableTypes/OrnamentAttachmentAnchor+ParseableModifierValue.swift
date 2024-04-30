@@ -17,7 +17,6 @@ import LiveViewNativeStylesheet
 /// .scene(.bottomTrailing)
 /// ```
 @_documentation(visibility: public)
-@_documentation(visibility: public)
 extension OrnamentAttachmentAnchor: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
