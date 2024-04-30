@@ -50,6 +50,7 @@ Mix.install(
           notebook_path
         ]
       ],
+      pretty: true,
       output: "priv/static/assets"
     ]
   ],
