@@ -39,7 +39,7 @@ import LiveViewNativeStylesheet
 struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "rotation3DEffect" }
     
-    let angle: Angle
+    let angle: AttributeReference<Angle>
     let axis: _3DAxis
     let anchor: UnitPoint
     let anchorZ: AttributeReference<CGFloat>
@@ -49,7 +49,7 @@ struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
     @LiveContext<R> private var context
     
     init(
-        _ angle: Angle,
+        _ angle: AttributeReference<Angle>,
         axis: _3DAxis,
         anchor: UnitPoint = .center,
         anchorZ: AttributeReference<CGFloat> = .init(storage: .constant(0)),
@@ -63,13 +63,21 @@ struct _Rotation3DEffectModifier<R: RootRegistry>: ViewModifier {
     }
     
     func body(content: Content) -> some View {
+        #if os(visionOS)
         content.rotation3DEffect(
-            angle,
+            angle.resolve(on: element, in: context),
+            axis: (x: axis.x, y: axis.y, z: axis.z),
+            anchor: anchor
+        )
+        #else
+        content.rotation3DEffect(
+            angle.resolve(on: element, in: context),
             axis: (x: axis.x, y: axis.y, z: axis.z),
             anchor: anchor,
             anchorZ: anchorZ.resolve(on: element, in: context),
             perspective: perspective.resolve(on: element, in: context)
         )
+        #endif
     }
     
     struct _3DAxis: ParseableModifierValue {

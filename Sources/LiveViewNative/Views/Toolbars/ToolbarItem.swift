@@ -158,6 +158,8 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
     case topBarTrailing
     @_documentation(visibility: public)
     case bottomBar
+    @_documentation(visibility: public)
+    case bottomOrnament
     
     var placement: SwiftUI.ToolbarItemPlacement {
         switch self {
@@ -191,7 +193,7 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
         case .cancellationAction: return .cancellationAction
         case .destructiveAction: return .destructiveAction
         case .keyboard:
-            #if os(watchOS) || os(tvOS)
+            #if os(watchOS) || os(tvOS) || os(visionOS)
             return .automatic
             #else
             return .keyboard
@@ -225,6 +227,12 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
             } else {
                 return .automatic
             }
+            #endif
+        case .bottomOrnament:
+            #if os(visionOS)
+            return .bottomOrnament
+            #else
+            return .automatic
             #endif
         }
     }

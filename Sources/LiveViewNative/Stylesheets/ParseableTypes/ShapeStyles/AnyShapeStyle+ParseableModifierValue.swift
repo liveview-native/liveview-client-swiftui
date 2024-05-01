@@ -183,9 +183,11 @@ extension AnyShapeStyle: ParseableModifierValue {
                 ConstantAtomLiteral("link").map({ LinkShapeStyle() as any ShapeStyle })
                 ConstantAtomLiteral("fill").map({ FillShapeStyle() as any ShapeStyle })
             }
+            #if !os(visionOS)
             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
                 ConstantAtomLiteral("windowBackground").map({ WindowBackgroundShapeStyle() as any ShapeStyle })
             }
+            #endif
             
             ImagePaint.parser(in: context).map({ $0 as any ShapeStyle })
             _image.parser(in: context).map(\.value)
