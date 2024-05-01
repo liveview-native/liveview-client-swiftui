@@ -178,11 +178,11 @@ public struct FormState<Value: FormValue> {
                     formModel.setInitialValue(initialValue, forName: elementName)
                     data.mode = .form(formModel)
                 } else {
-                    print("Warning: @FormState used on a name-less element inside of a <LiveForm>. This may not behave as expected.")
+                    logger.warning("@FormState used on a name-less element inside of a <LiveForm>. This may not behave as expected.")
                     data.mode = .local
                 }
             } else {
-                print("Warning: Form element used outside of a <LiveForm>. This may not behave as expected.")
+                logger.warning("Form element used outside of a <LiveForm>. This may not behave as expected.")
                 data.mode = .local
             }
         }
