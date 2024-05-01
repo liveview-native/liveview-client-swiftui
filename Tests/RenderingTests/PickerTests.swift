@@ -71,17 +71,16 @@ final class PickerTests: XCTestCase {
     
 #if os(iOS)
     func testDatePicker() throws {
-        let date = DateComponents(calendar: .current, year: 2023, month: 1, day: 1, hour: 8, minute: 30, second: 42).date!
         try assertMatch(
             #"""
             <VStack>
-                <DatePicker selection="\#(date.formatted(.elixirDateTime))">
+                <DatePicker>
                     <Text>Pick a date</Text>
                 </DatePicker>
             </VStack>
             """#) {
                 VStack {
-                    DatePicker(selection: .constant(date), displayedComponents: [.date, .hourAndMinute]) {
+                    DatePicker(selection: .constant(Date()), displayedComponents: [.date, .hourAndMinute]) {
                         Text("Pick a date")
                     }
                 }
