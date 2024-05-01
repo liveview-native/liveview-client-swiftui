@@ -59,8 +59,6 @@ public struct FormState<Value: FormValue> {
     private let defaultValue: Value
     private let sendChangeEvents: Bool
     @StateObject private var data = FormStateData<Value>()
-    // non-nil iff data.mode == .bound
-    @ChangeTracked private var boundValue: Value
     
     let valueAttribute: AttributeName
     
@@ -88,7 +86,6 @@ public struct FormState<Value: FormValue> {
     /// ```
     public init(_ valueAttribute: AttributeName, default: Value, sendChangeEvents: Bool = true) {
         self.valueAttribute = valueAttribute
-        self._boundValue = .init(wrappedValue: `default`, form: valueAttribute, sendChangeEvent: sendChangeEvents)
         self.defaultValue = `default`
         self.sendChangeEvents = sendChangeEvents
     }
@@ -121,7 +118,7 @@ public struct FormState<Value: FormValue> {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .local:
-                return boundValue
+                return defaultValue
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
@@ -142,7 +139,7 @@ public struct FormState<Value: FormValue> {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .local:
-                boundValue = newValue
+                break
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
@@ -185,6 +182,7 @@ public struct FormState<Value: FormValue> {
                     data.mode = .local
                 }
             } else {
+                print("Warning: Form element used outside of a <LiveForm>. This may not behave as expected.")
                 data.mode = .local
             }
         }
