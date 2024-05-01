@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 5/1/24.
 //
 
+#if os(visionOS)
 import SwiftUI
 import LiveViewNativeStylesheet
 
@@ -35,3 +36,4 @@ extension OrnamentAttachmentAnchor: ParseableModifierValue {
         }
     }
 }
+#endif
