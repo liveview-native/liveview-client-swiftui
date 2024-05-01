@@ -9,6 +9,23 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.EdgeInsets3D`](https://developer.apple.com/documentation/swiftui/EdgeInsets3D) for more details.
+///
+/// Provide a `horizontal`, `vertical`, and/or `depth` value to construct 3D edge insets.
+///
+/// ```swift
+/// EdgeInsets3D(vertical: 5, depth: 1)
+/// EdgeInsets3D(horizontal: 2)
+/// EdgeInsets3D(horizontal: 1, vertical: 2, depth: 3)
+/// ```
+///
+/// Provide `top`, `leading`, `bottom`, `trailing`, `front`, and `back` values to construct 3D edge insets.
+///
+/// ```swift
+/// EdgeInsets3D(top: 1, front: 5)
+/// EdgeInsets3D(leading: 8, trailing: 8, front: 6, back: 6)
+/// ```
+@_documentation(visibility: public)
 extension EdgeInsets3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableEdgeInsets3D.parser(in: context).map(\.value)
@@ -16,7 +33,7 @@ extension EdgeInsets3D: ParseableModifierValue {
     
     @ParseableExpression
     struct ParseableEdgeInsets3D {
-        static let name = "EdgeInsets"
+        static let name = "EdgeInsets3D"
         
         let value: EdgeInsets3D
         
@@ -52,6 +69,16 @@ extension EdgeInsets3D: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Edge3D.Set`](https://developer.apple.com/documentation/swiftui/Edge3D/Set) for more details.
+///
+/// Possible values:
+/// - `.all`
+/// - `.horizontal`
+/// - `.vertical`
+/// - `.depth`
+/// - An ``SwiftUI/Edge3D`` value
+/// - An array of ``SwiftUI/Edge3D`` values
+@_documentation(visibility: public)
 extension Edge3D.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {

@@ -9,6 +9,11 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.SurroundingsEffect`](https://developer.apple.com/documentation/swiftui/SurroundingsEffect) for more details.
+///
+/// Possible values:
+/// - `.systemDark`
+@_documentation(visibility: public)
 extension SurroundingsEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

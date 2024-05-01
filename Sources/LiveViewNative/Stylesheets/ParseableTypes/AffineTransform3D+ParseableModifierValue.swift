@@ -7,8 +7,21 @@
 
 #if os(visionOS)
 import SwiftUI
+import Spatial
 import LiveViewNativeStylesheet
 
+/// See [`Spatial.AffineTransform3D`](https://developer.apple.com/documentation/spatial/AffineTransform3D) for more details.
+///
+/// Use ``Spatial/Size3D``, ``Spatial/Rotation3D``, ``Spatial/Vector3D``, ``Spatial/Pose3D``, and ``Spatial/AxisWithFactors`` to build a transformation matrix.
+///
+/// ```swift
+/// AffineTransform3D()
+/// AffineTransform3D(scale: Size3D(width: 5, height: 1, depth: 2))
+/// AffineTransform3D(rotation: .degrees(45), translation: Vector3D(x: 10, z: 5))
+/// AffineTransform3D(pose: Pose3D(forward: Vector3D(x: 1))
+/// AffineTransform3D(shear: .xAxis(yShearFactor: 1, zShearFactor: 1))
+/// ```
+@_documentation(visibility: public)
 extension AffineTransform3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableAffineTransform3D.parser(in: context).map(\.value)
@@ -58,6 +71,21 @@ extension AffineTransform3D: ParseableModifierValue {
     }
 }
 
+/// See [`Spatial.Size3D`](https://developer.apple.com/documentation/spatial/Size3D) for more details.
+///
+/// Parameters:
+/// - `width`: ``Swift/Double``
+/// - `height`: ``Swift/Double``
+/// - `depth`: ``Swift/Double``
+///
+/// Example:
+///
+/// ```swift
+/// Size3D()
+/// Size3D(width: 10, depth: 5)
+/// Size3D(width: 1, height: 2, depth: 3)
+/// ```
+@_documentation(visibility: public)
 extension Size3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableSize3D.parser(in: context).map(\.value)
@@ -83,6 +111,26 @@ extension Size3D: ParseableModifierValue {
     }
 }
 
+/// See [`Spatial.Rotation3D`](https://developer.apple.com/documentation/spatial/Rotation3D) for more details.
+///
+/// Use ``Spatial/Angle2D`` and ``Spatial/RotationAxis3D`` to construct a 3D rotation from an angle and axis.
+///
+/// ```swift
+/// Rotation3D(angle: .degrees(45), axis: RotationAxis3D(x: 1, y: 0, z: 0))
+/// ```
+///
+/// Use a ``Spatial/Point3D`` `position` and `target`, and ``Spatial/Vector3D`` `up` to construct a look rotation.
+///
+/// ```swift
+/// Rotation3D(position: Point3D(), target: Point3D(x: 5), up: Vector3D(z: 1))
+/// ```
+///
+/// Use a ``Spatial/Vector3D`` `forward` and `up` to construct a rotation.
+///
+/// ```swift
+/// Rotation3D(forward: Vector3D(x: 1), up: Vector3D(z: 1))
+/// ```
+@_documentation(visibility: public)
 extension Rotation3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableRotation3D.parser(in: context).map(\.value)
@@ -108,6 +156,23 @@ extension Rotation3D: ParseableModifierValue {
     }
 }
 
+/// See [`Spatial.Point3D`](https://developer.apple.com/documentation/spatial/Point3D) for more details.
+///
+/// Provide an `x`, `y`, and `z` double to construct a point.
+///
+/// ```swift
+/// Point3D()
+/// Point3D(y: 1)
+/// Point3D(x: 1, y: 2, z: 3)
+/// ```
+///
+/// You can also convert a ``Spatial/Vector3D`` or ``Spatial/Size3D`` into a point.
+///
+/// ```swift
+/// Point3D(Vector3D(z: 1))
+/// Point3D(Size3D(x: 2, y: 2, z: 2))
+/// ```
+@_documentation(visibility: public)
 extension Point3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseablePoint3D.parser(in: context).map(\.value)
@@ -141,6 +206,24 @@ extension Point3D: ParseableModifierValue {
     }
 }
 
+/// See [`Spatial.Vector3D`](https://developer.apple.com/documentation/spatial/Vector3D) for more details.
+///
+/// Provide an `x`, `y`, and `z` double to construct a vector.
+///
+/// ```swift
+/// Vector3D()
+/// Vector3D(y: 1)
+/// Vector3D(x: 1, y: 2, z: 3)
+/// ```
+///
+/// You can also convert a ``Spatial/RotationAxis3D``, ``Spatial/Point3D`` or ``Spatial/Size3D`` into a vector.
+///
+/// ```swift
+/// Vector3D(RotationAxis3D(x: 1, y: 0, z: 1))
+/// Vector3D(Point3D(z: 1))
+/// Vector3D(Size3D(x: 2, y: 2, z: 2))
+/// ```
+@_documentation(visibility: public)
 extension Vector3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableVector3D.parser(in: context).map(\.value)
@@ -178,6 +261,24 @@ extension Vector3D: ParseableModifierValue {
     }
 }
 
+/// See [`Spatial.Angle2D`](https://developer.apple.com/documentation/spatial/Angle2D) for more details.
+///
+/// Provide an angle in `radians` or `degrees` to construct a angle.
+///
+/// ```swift
+/// Angle2D(radians: 3.14)
+/// Angle2D(degrees: 180)
+/// .radians(3.14)
+/// .degrees(180)
+/// ```
+///
+/// You can also convert a ``SwiftUI/Angle`` into a angle.
+///
+/// ```swift
+/// Angle2D(.radians(3.14))
+/// Angle2D(.degrees(180))
+/// ```
+@_documentation(visibility: public)
 extension Angle2D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
@@ -215,6 +316,20 @@ extension Angle2D: ParseableModifierValue {
     }
 }
 
+/// See [`Spatial.RotationAxis3D`](https://developer.apple.com/documentation/spatial/RotationAxis3D) for more details.
+///
+/// Provide an `x`, `y`, and `z` value to specify the axes.
+///
+/// ```swift
+/// RotationAxis3D(x: 1, y: 0, z: 0)
+/// ```
+///
+/// You can also convert a ``SwiftUI/Vector3D`` into a rotation axis.
+///
+/// ```swift
+/// RotationAxis3D(Vector3D(z: 1))
+/// ```
+@_documentation(visibility: public)
 extension RotationAxis3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableRotationAxis3D.parser(in: context).map(\.value)
@@ -236,6 +351,27 @@ extension RotationAxis3D: ParseableModifierValue {
     }
 }
 
+/// See [`Spatial.Pose3D`](https://developer.apple.com/documentation/spatial/Pose3D) for more details.
+///
+/// Provide an ``Spatial/Vector3D`` `forward` and `up` to construct a pose.
+///
+/// ```swift
+/// Pose3D(forward: Vector3D(x: 1), up: Vector3D(z: 1))
+/// ```
+///
+/// Provide an ``Spatial/Point3D`` `position` and ``Spatial/Rotation3D`` `rotation` to construct a pose.
+///
+/// ```swift
+/// Pose3D(position: Point3D(), up: Rotation3D(angle: .radians(3.14), axis: RotationAxis3D(x: 1, y: 0, z: 0)))
+/// ```
+///
+/// Provide an ``Spatial/Point3D`` `position` and `target`, and a ``Spatial/Vector3D`` `up` to construct a pose.
+///
+/// ```swift
+/// Pose3D(position: Point3D(), target: Point3D(x: 1))
+/// Pose3D(position: Point3D(y: 1), target: Point3D(z: 1), up: Vector3D(z: 1))
+/// ```
+@_documentation(visibility: public)
 extension Pose3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseablePose3D.parser(in: context).map(\.value)
@@ -275,6 +411,16 @@ extension Pose3D: ParseableModifierValue {
     }
 }
 
+/// See [`Spatial.AxisWithFactors`](https://developer.apple.com/documentation/spatial/AxisWithFactors) for more details.
+///
+/// Create an `x`, `y`, or `z` axis with shear factors
+///
+/// ```swift
+/// .xAxis(yShearFactor: 1, zShearFactor: 0.5)
+/// .yAxis(xShearFactor: 0, zShearFactor: 1)
+/// .zAxis(xShearFactor: 2, yShearFactor: 0.5)
+/// ```
+@_documentation(visibility: public)
 extension AxisWithFactors: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

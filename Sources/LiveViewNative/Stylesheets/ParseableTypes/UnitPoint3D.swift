@@ -9,6 +9,45 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.UnitPoint3D`](https://developer.apple.com/documentation/swiftui/UnitPoint3D) for more details.
+///
+/// Possible values:
+/// - `.origin`
+/// - `.zero`
+/// - `.topLeadingBack`
+/// - `.topLeading`
+/// - `.topLeadingFront`
+/// - `.topBack`
+/// - `.top`
+/// - `.topFront`
+/// - `.topTrailingBack`
+/// - `.topTrailing`
+/// - `.topTrailingFront`
+/// - `.leadingBack`
+/// - `.leading`
+/// - `.leadingFront`
+/// - `.back`
+/// - `.center`
+/// - `.front`
+/// - `.trailingBack`
+/// - `.trailing`
+/// - `.trailingFront`
+/// - `.bottomLeadingBack`
+/// - `.bottomLeading`
+/// - `.bottomLeadingFront`
+/// - `.bottomBack`
+/// - `.bottom`
+/// - `.bottomFront`
+/// - `.bottomTrailingBack`
+/// - `.bottomTrailing`
+/// - `.bottomTrailingFront`
+///
+/// Provide an `x`, `y`, and `z` value to construct a custom 3D unit point:
+///
+/// ```swift
+/// UnitPoint3D(x: 0, y: 0.5, z: 1)
+/// ```
+@_documentation(visibility: public)
 extension UnitPoint3D: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
