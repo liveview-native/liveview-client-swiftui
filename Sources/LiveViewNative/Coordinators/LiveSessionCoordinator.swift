@@ -526,7 +526,6 @@ extension LiveSessionCoordinator {
             "app_version": getAppVersion(),
             "app_build": getAppBuild(),
             "bundle_id": getBundleID(),
-            "format": platform,
             "os": getOSName(),
             "os_version": getOSVersion(),
             "target": getTarget()
@@ -584,25 +583,25 @@ extension LiveSessionCoordinator {
 
     private static func getTarget() -> String {
         #if os(watchOS)
-        return "watchOS"
+        return "watchos"
         #elseif os(macOS)
-        return "macOS"
+        return "macos"
         #elseif os(visionOS)
-        return "visionOS"
+        return "visionos"
         #elseif os(tvOS)
-        return "tvOS"
+        return "tvos"
         #else
         switch UIDevice.current.userInterfaceIdiom {
         case .phone:
-            return "iOS"
+            return "ios"
         case .pad:
-            return "iPadOS"
+            return "ipados"
         case .mac:
-            return "macCatalyst"
+            return "maccatalyst"
         case .tv:
-            return "tvOS"
+            return "tvos"
         case .vision:
-            return "visionOS"
+            return "visionos"
         default:
             return "unknown"
         }
