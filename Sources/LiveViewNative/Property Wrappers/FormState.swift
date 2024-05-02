@@ -134,7 +134,6 @@ public struct FormState<Value: FormValue> {
         }
         nonmutating set {
             resolveMode()
-            let oldValue = wrappedValue
             switch data.mode {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
@@ -145,11 +144,11 @@ public struct FormState<Value: FormValue> {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
                     return
                 }
-                formModel[elementName] = newValue
-                // todo: this will send a change event for both the form and the input if the input has one, check if that matches web
-            }
-            if oldValue != newValue {
-                sendChangeEventIfNecessary()
+                formModel.setValue(
+                    newValue,
+                    forName: elementName,
+                    changeEvent: sendChangeEvents ? element.attributeValue(for: "phx-change") : nil
+                )
             }
         }
     }
@@ -187,30 +186,6 @@ public struct FormState<Value: FormValue> {
             }
         }
     }
-    
-    private func sendChangeEventIfNecessary() {
-        switch data.mode {
-        case .local:
-            return
-        default:
-            guard sendChangeEvents,
-                  let changeEvent = element.attributeValue(for: "phx-change") else {
-                return
-            }
-            let name = element.attributeValue(for: "name") ?? "value"
-            let value: String
-            if let wrappedValue = wrappedValue as? String {
-                value = wrappedValue
-            } else {
-                let encoder = JSONEncoder()
-                value = try! String(data: encoder.encode(wrappedValue), encoding: .utf8)!
-            }
-            Task {
-                try? await coordinator!.pushEvent("native-form", changeEvent, [name: value], nil)
-            }
-        }
-    }
-    
 }
 
 extension FormState: DynamicProperty {

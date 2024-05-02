@@ -88,7 +88,6 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     /// Create a URL encoded body from the data in the form.
     public func buildFormQuery() throws -> String {
-        let encoder = JSONEncoder()
         let data = try data.mapValues { value in
             if let value = value as? String {
                 return value
@@ -124,22 +123,36 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         get {
             return data[name]
         }
-        set(newValue) {
-            if let existing = data[name],
-               let newValue = newValue {
-                if !existing.isEqual(to: newValue) {
-                    formFieldWillChange.send(name)
-                }
-            } else if data[name] != nil || newValue != nil {
-                // something -> nil or nil -> something
-                formFieldWillChange.send(name)
-            } else {
-                // nothing to do
-                return
-            }
-            data[name] = newValue
+    }
+    
+    public func setValue(_ value: (some FormValue)?, forName name: String, changeEvent: String?) {
+        let existing = data[name]
+        if let existing,
+           let value,
+           !existing.isEqual(to: value)
+        {
+            formFieldWillChange.send(name)
+        } else if (existing != nil && value == nil) || (existing == nil && value != nil) {
+            // something -> nil or nil -> something
+            formFieldWillChange.send(name)
+        } else {
+            // nothing to do
+            return
+        }
+        data[name] = value
+        if let changeEvent = changeEvent ?? self.changeEvent {
             Task {
-                try? await sendChangeEvent()
+                let data = if let value = value as? String {
+                    value
+                } else {
+                    try value.formQueryEncoded()
+                }
+                var components = URLComponents()
+                components.queryItems = [
+                    .init(name: name, value: data),
+                    .init(name: "_target", value: name)
+                ]
+                try await pushEventImpl("form", changeEvent, components.query!, nil)
             }
         }
     }
