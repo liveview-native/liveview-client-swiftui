@@ -29,11 +29,14 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
     files = files_to_be_generated(context)
 
-    context
-    |> install_xcodegen()
-    |> copy_new_files(files)
-    |> run_xcodegen()
-    |> remove_xcodegen_files()
+    copy_new_files(context, files)
+
+    if Keyword.get(context.opts, :xcodegen, true) do
+      context
+      |> install_xcodegen()
+      |> run_xcodegen()
+      |> remove_xcodegen_files()
+    end
 
     :ok
   end
@@ -58,9 +61,6 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     --no-copy
     """)
   end
-
-  defp install_xcodegen(%{opts: [xcodegen: false]} = context),
-    do: context
 
   defp install_xcodegen(context) do
     unless System.find_executable("xcodegen") do
@@ -155,9 +155,6 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     context
   end
 
-  defp run_xcodegen(%{opts: [xcodegen: false]} = context),
-    do: context
-
   defp run_xcodegen(%{base_module: base_module, native_path: native_path} = context) do
     xcodegen_env = [
       {"LVN_APP_NAME", inspect(base_module)},
@@ -174,9 +171,6 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
     context
   end
-
-  defp remove_xcodegen_files(%{opts: [xcodegen: false]} = context),
-    do: context
 
   defp remove_xcodegen_files(%{native_path: native_path} = context) do
     ["base_spec.yml", "project_watchos.yml", "project.yml"]

@@ -80,6 +80,10 @@ defmodule LiveViewNative.SwiftUI.MixProject do
     [
       extras: extras,
       groups_for_extras: guide_groups ++ generated_groups,
+      groups_for_functions: [
+        Components: &(&1[:type] == :component),
+        Macros: &(&1[:type] == :macro)
+      ],
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}",

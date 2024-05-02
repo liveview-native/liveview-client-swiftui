@@ -16,7 +16,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
         Gen.run([])
         assert_file "lib/live_view_native_swiftui_web/components/core_components.swiftui.ex", fn file ->
           assert file =~ "LiveViewNativeSwiftuiWeb.CoreComponents.SwiftUI"
-          assert file =~ "LiveForm"
+          assert file =~ "import LiveViewNative.LiveForm.Component"
         end
         assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
       end
@@ -27,7 +27,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
         Gen.run(["--no-live-form"])
         assert_file "lib/live_view_native_swiftui_web/components/core_components.swiftui.ex", fn file ->
           assert file =~ "LiveViewNativeSwiftuiWeb.CoreComponents.SwiftUI"
-          refute file =~ "LiveForm"
+          refute file =~ "import LiveViewNative.LiveForm.Component"
         end
         assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
       end
@@ -58,7 +58,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
           Gen.run([])
           assert_file "lib/live_view_native_swiftui_web/components/core_components.swiftui.ex", fn file ->
             assert file =~ "LiveViewNativeSwiftuiWeb.CoreComponents.SwiftUI"
-            assert file =~ "LiveForm"
+            assert file =~ "import LiveViewNative.LiveForm.Component"
           end
           assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
         end)
@@ -71,7 +71,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
           Gen.run(["--no-live-form"])
           assert_file "lib/live_view_native_swiftui_web/components/core_components.swiftui.ex", fn file ->
             assert file =~ "LiveViewNativeSwiftuiWeb.CoreComponents.SwiftUI"
-            refute file =~ "LiveForm"
+            refute file =~ "import LiveViewNative.LiveForm.Component"
           end
           assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
         end)
@@ -97,6 +97,5 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
         end)
       end
     end
-
   end
 end
