@@ -2,21 +2,32 @@
 
 > #### Client Spec {: .info}
 >
-> format: `:swiftui`
->
-> module_suffix: `SwiftUI`
->
-> template_sigil: `~LVN`
->
-> component: `LiveViewNative.SwiftUI.Component`
+> ```elixir
+> format: :swiftui
+> module_suffix: "SwiftUI"
+> template_sigil: ~LVN
+> component: LiveViewNative.SwiftUI.Component 
+> targets: ~w{ios ipados macos maccatalyst watchos tvos visionos unknown}
+> ```
 
 The LiveViewNative Swift package lets you use Phoenix LiveView to build native iOS apps with SwiftUI.
 
 ## Installation
 
+<!-- tabs-open -->
+
+### Elixir
+1. Add `{:live_view_native_swiftui, "~> 0.3.0-rc.2}` to `mix.exs`
+2. Add `LiveViewNative.SwiftUI` to the `plugins:` list of `config :live_view_native` in `config.exs`
+3. Run `mix help lvn.swiftui.gen` to see the options available for the generator
+4. You may want to re-run `mix lvn.setup` to ensure you get the properly generated files
+
+### Xcode
 1. In Xcode, select *File → Add Packages...*
 2. Enter the package URL `https://github.com/liveview-native/liveview-client-swiftui`
 3. Select *Add Package*
+
+<!-- tabs-close -->
 
 ## Usage
 Create a `LiveView` to connect to a Phoenix server running on `http://localhost:4000`.
