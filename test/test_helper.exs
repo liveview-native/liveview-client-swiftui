@@ -1,5 +1,7 @@
 {:ok, _} = LiveViewNativeTest.Endpoint.start_link()
 
+Mix.shell(Mix.Shell.Process)
+
 [MockSheet, AppSheet]
 |> Enum.each(&(LiveViewNative.Stylesheet.__after_verify__(&1)))
 

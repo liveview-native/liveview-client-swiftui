@@ -12,9 +12,17 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
   ## Options
 
   * `--no-live-form` - don't include `LiveViewNative.LiveForm` in the generated templates
+  * `--no-xcodegen` - don't generate the swiftui project
+  * `--no-copy` - don't copy files into your Phoenix project
   """
 
   def run(args) do
+    if Mix.Project.umbrella?() do
+      Mix.raise(
+        "mix lvn.swiftui.gen must be invoked from within your *_web application root directory"
+      )
+    end
+
     args = List.insert_at(args, 0, "swiftui")
 
     context = Context.build(args, __MODULE__)
@@ -33,7 +41,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
   def switches, do: [
     context_app: :string,
     web: :string,
-    live_form: :boolean
+    live_form: :boolean,
+    xcodegen: :boolean,
+    copy: :boolean
   ]
 
   def validate_args!([format]), do: [format]
@@ -44,8 +54,13 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     --context-app
     --web
     --no-live-form
+    --no-xcodegen
+    --no-copy
     """)
   end
+
+  defp install_xcodegen(%{opts: [xcodegen: false]} = context),
+    do: context
 
   defp install_xcodegen(context) do
     unless System.find_executable("xcodegen") do
@@ -73,37 +88,39 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
   def files_to_be_generated(context) do
     root =
-      Mix.Project.deps_paths[:live_view_native_swiftui]
+      Application.app_dir(:live_view_native_swiftui)
       |> Path.join("priv/templates/lvn.swiftui.gen/xcodegen/")
 
     web_prefix = Mix.Phoenix.web_path(context.context_app)
 
-    apps = Mix.Project.deps_apps()
-
-    live_form_opt? = Keyword.get(context.opts, :live_form, true)
-    live_form_app? = Enum.member?(apps, :live_view_native_live_form)
+    copy_files? = Keyword.get(context.opts, :copy, true)
+    xcodegen? = Keyword.get(context.opts, :xcodegen, true)
 
     components_path = Path.join(web_prefix, "components")
 
     files =
-      Path.wildcard(Path.join([root, "**/*"]))
-      |> Enum.filter(&(!File.dir?(&1)))
-      |> Enum.map(fn(path) ->
-        type =
-          path
-          |> Path.extname()
-          |> case do
-          ".swift" -> :eex
-          ".yml" -> :eex
-          _any -> :text
-        end
+      if xcodegen? do
+        Path.wildcard(Path.join([root, "**/*"]))
+        |> Enum.filter(&(!File.dir?(&1)))
+        |> Enum.map(fn(path) ->
+          type =
+            path
+            |> Path.extname()
+            |> case do
+            ".swift" -> :eex
+            ".yml" -> :eex
+            _any -> :text
+          end
 
-        path = Path.relative_to(path, root)
+          path = Path.relative_to(path, root)
 
-        {type, Path.join("xcodegen", path), rewrite_file_path(path, context)}
-      end)
+          {type, Path.join("xcodegen", path), rewrite_file_path(path, context)}
+        end)
+      else
+        []
+      end
 
-    case live_form_opt? && live_form_app? do
+    case copy_files? do
       true -> List.insert_at(files, 0, {:eex, "core_components.ex", Path.join(components_path, "core_components.swiftui.ex")})
       _ -> files
     end
@@ -119,7 +136,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     apps = Mix.Project.deps_apps()
 
     live_form_opt? = Keyword.get(context.opts, :live_form, true)
-    live_form_app? = Enum.member?(apps, :live_view_native_live_form)
+    live_form_app? = Enum.member?(apps, :live_view_native_live_form) || Mix.env() == :test # yeah, I know but it's a generator
 
     binding = [
       context: context,
@@ -138,6 +155,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     context
   end
 
+  defp run_xcodegen(%{opts: [xcodegen: false]} = context),
+    do: context
+
   defp run_xcodegen(%{base_module: base_module, native_path: native_path} = context) do
     xcodegen_env = [
       {"LVN_APP_NAME", inspect(base_module)},
@@ -154,6 +174,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
     context
   end
+
+  defp remove_xcodegen_files(%{opts: [xcodegen: false]} = context),
+    do: context
 
   defp remove_xcodegen_files(%{native_path: native_path} = context) do
     ["base_spec.yml", "project_watchos.yml", "project.yml"]

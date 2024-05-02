@@ -1,6 +1,6 @@
 defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.module_suffix %> do
   use LiveViewNative.Component
-
+<%= if @live_form? do %>
   import LiveViewNative.LiveForm.Component
 
   attr :id, :any, default: nil
@@ -188,7 +188,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       <%%= render_slot(@inner_block) %>
     </Group>
     """
-  end
+  end<% end %>
 
   attr :class, :string, default: nil
 
@@ -221,7 +221,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   slot :inner_block, required: true
   slot :actions, doc: "the slot for form actions, such as a submit button"
-
+<%= if @live_form? do %>
   def simple_form(assigns) do
     ~LVN"""
     <.form :let={f} for={@for} as={@as} {@rest}>
@@ -235,13 +235,14 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       </Form>
     </.form>
     """
-  end
+  end<% end %>
 
   attr :type, :string, default: nil
   attr :class, :string, default: nil
   attr :rest, :global, include: ~w(disabled form name value)
 
   slot :inner_block, required: true
+<%= if @live_form? do %>
   def button(%{ type: "submit" } = assigns) do
     ~LVN"""
     <Section>
@@ -252,7 +253,8 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       </LiveSubmitButton>
     </Section>
     """
-  end
+  end<% end %>
+
   def button(assigns) do
     ~LVN"""
     <Button>
@@ -325,7 +327,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     </Group>
     """
   end
-
+<%= if @live_form? do %>
   @doc """
   Translates an error message using gettext.
   """<%= if @gettext do %>
@@ -366,5 +368,5 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
-  end
+  end<% end %>
 end
