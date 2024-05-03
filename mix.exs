@@ -33,7 +33,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
 
   defp aliases do
     [
-      # docs: ["lvn.swiftui.gen.docs", "docs"]
+      docs: ["lvn.swiftui.gen.docs", "docs"]
     ]
   end
 
