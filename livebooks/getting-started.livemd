@@ -60,9 +60,9 @@ Mix.install(
 
 Our livebook guides provide step-by-step lessons to help you learn LiveView Native using Livebook. These guides assume that you already have some familiarity with Phoenix LiveView applications.
 
-You can read these guides online, or for the best experience we recommend you click on the "Run in Livebook" badge to import and run these guides locally with Livebook.
+You can read these guides online on HexDocs, but for the best experience, we recommend clicking on the "Run in Livebook" badge to import and run the guide locally with Livebook.
 
-Each guide can be completed independently, but we suggest following them chronologically for the most comprehensive learning experience.
+You may complete guides individually, but we suggest following them chronologically for the most comprehensive learning experience.
 
 ## Prerequisites
 
@@ -80,7 +80,7 @@ While not necessary for our guides, we also recommend you install the following 
 
 ## Hello World
 
-If you are not already running this guide in Livebook, click on the "Run in Livebook" badge at the top of this page to import this guide into Livebook.
+If you are not already running this guide in Livebook, click on the "Run in Livebook" badge at the top of this page to import it.
 
 Then, you can evaluate the following smart cell and visit http://localhost:4000 to ensure this Livebook works correctly.
 
@@ -119,19 +119,17 @@ import Kernel
 :ok
 ```
 
-In an upcoming lesson, you'll set up an iOS application with Xcode so you can run code native examples.
+In an upcoming lesson, you'll set up an iOS application with Xcode to run native code examples.
 
 ## Your Turn: Live Reloading
 
-Change `Hello from LiveView!` to `Hello again from LiveView!` in the above LiveView. Re-evaluate the cell and notice the application live reloads and automatically updates in the browser.
+In the above LiveView, change `Hello from LiveView!` to `Hello again from LiveView!`. After making the change, reevaluate the cell. Notice that the application live reloads and automatically updates in the browser.
 
 ## Kino LiveView Native
 
-To run a Phoenix Server setup with LiveView Native from within Livebook we built the [Kino LiveView Native](https://github.com/liveview-native/kino_live_view_native) library.
+To run a Phoenix + LiveView Native application from within Livebook we built the [Kino LiveView Native](https://github.com/liveview-native/kino_live_view_native) library.
 
-Whenever you run one of our Livebooks, a server starts on localhost:4000. Ensure you have no other servers running on port 4000
-
-Kino LiveView Native defines the **LiveView Native: LiveView** and **LiveViewNative: Render Component** smart cells within these guides.
+Whenever you run one of our Livebooks, a server starts on localhost:4000. Ensure no other servers are running on port 4000, or you may experience issues.
 
 ## Troubleshooting
 
