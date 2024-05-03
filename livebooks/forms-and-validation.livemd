@@ -5,7 +5,10 @@ notebook_path = __ENV__.file |> String.split("#") |> hd()
 
 Mix.install(
   [
-    {:kino_live_view_native, github: "liveview-native/kino_live_view_native"}
+    # {:kino_live_view_native, github: "liveview-native/kino_live_view_native"},
+    {:kino_live_view_native, path: "../kino_live_view_native"},
+    {:ecto, "~> 3.11"},
+    {:phoenix_ecto, "~> 4.5"}
   ],
   config: [
     server: [
@@ -50,6 +53,17 @@ Mix.install(
       ],
       pretty: true,
       output: "priv/static/assets"
+    ],
+    # Ensures that app.js compiles to avoid the switch to longpolling
+    # when a LiveView doesn't exist yet
+    esbuild: [
+      version: "0.17.11",
+      server_web: [
+        args:
+          ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+        cd: Path.expand("../assets", __DIR__),
+        env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+      ]
     ]
   ],
   force: true
@@ -60,321 +74,154 @@ Mix.install(
 
 The [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form) project makes it easier to build forms in LiveView Native. This project enables you to group different [Control Views](https://developer.apple.com/documentation/swiftui/controls-and-indicators) inside of a `LiveForm` and control them collectively under a single `phx-change` or `phx-submit` event handler, rather than with multiple different `phx-change` event handlers.
 
-Getting the most out of this material requires some understanding of the [Ecto](https://hexdocs.pm/ecto/Ecto.html) project and in particular a reasonably deep understanding of [Ecto.Changeset](https://hexdocs.pm/ecto/Ecto.Changeset.html). Review the linked Ecto documentation if you find any of the examples difficult to follow.
+Getting the most out of this material requires some understanding of the [Ecto](https://hexdocs.pm/ecto/Ecto.html) project and in particular a reasonably deep understanding of [Ecto.Changeset](https://hexdocs.pm/ecto/Ecto.Changeset.html). Review the Ecto documentation if you find any of the examples difficult to follow.
 
 ## Installing LiveView Native Live Form
 
 To install LiveView Native Form, we need to add the `liveview-native-live-form` SwiftUI package to our iOS application.
 
-Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#liveviewnativeliveform) on that project's README and come back to this guide after you have finished the installation process.
+Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#liveviewnativeliveform) on that project's README to add the `liveview-native-live-form` package to the SwiftUI application you created in the [Create a SwiftUI Application](https://hexdocs.pm/live_view_native_swiftui/create-a-swiftui-application.html) guide.
+
+Come back to this guide and continue after you have finished the installation process.
 
 ## Creating a Basic Form
 
-Once you have the LiveView Native Form package installed, you can use the `LiveForm` and `LiveSubmitButton` views to build forms more conveniently.
+The LiveView Native `mix lvn.install` task generates a [core_components.swiftui.ex](https://github.com/liveview-native/liveview-client-swiftui/blob/main/priv/templates/lvn.swiftui.gen/core_components.ex) for native SwiftUI function components similar to the [core_components.ex](https://github.com/phoenixframework/phoenix/blob/main/priv/templates/phx.gen.live/core_components.ex) file generated in a traditional phoenix application for web function components.
 
-Here's a basic example of a `LiveForm`. Keep in mind that `LiveForm` requires an `id` attribute.
+See Phoenix's [Components and HEEx](https://hexdocs.pm/phoenix/components.html) HexDoc documentation if you need a primer on function components.
 
-<!-- livebook:{"attrs":"eyJhY3Rpb24iOiI6aW5kZXgiLCJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlci5FeGFtcGxlTGl2ZSBkb1xuICB1c2UgUGhvZW5peC5MaXZlVmlld1xuICB1c2UgTGl2ZVZpZXdOYXRpdmUuTGl2ZVZpZXdcblxuICBAaW1wbCB0cnVlXG4gIGRlZiByZW5kZXIoJXtmb3JtYXQ6IDpzd2lmdHVpfSA9IGFzc2lnbnMpIGRvXG4gICAgflNXSUZUVUlcIlwiXCJcbiAgICA8TGl2ZUZvcm0gaWQ9XCJteWZvcm1cIiBwaHgtc3VibWl0PVwic3VibWl0XCI+XG4gICAgICA8VGV4dEZpZWxkIG5hbWU9XCJteS10ZXh0XCIgPlBsYWNlaG9sZGVyPC9UZXh0RmllbGQ+XG4gICAgICA8TGl2ZVN1Ym1pdEJ1dHRvbj5TdWJtaXQ8L0xpdmVTdWJtaXRCdXR0b24+XG4gICAgPC9MaXZlRm9ybT5cbiAgICBcIlwiXCJcbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgaGFuZGxlX2V2ZW50KFwic3VibWl0XCIsIHBhcmFtcywgc29ja2V0KSBkb1xuICAgIElPLmluc3BlY3QocGFyYW1zKVxuICAgIHs6bm9yZXBseSwgc29ja2V0fVxuICBlbmRcbmVuZCIsInBhdGgiOiIvIn0","chunks":[[0,109],[111,463],[576,45],[623,63]],"kind":"Elixir.KinoLiveViewNative","livebook_object":"smart_cell"} -->
+In the `core_components.swiftui.ex` file there's a `simple_form/1` component that is a similar abstraction to the `simple_form/1` component found in `core_components.ex`.
+
+First, we'll see how to use this abstraction at a basic level, then later we'll dive deeper into how forms work under the hood in LiveView Native.
+
+<!-- livebook:{"break_markdown":true} -->
+
+### A Basic Form
+
+This code below demonstrates how the basic skeleton of a native and web form that share event handlers for the `phx-submit` and `phx-change` handlers.
+
+We'll break down and understand the individual parts of this form in a moment.
+
+For now, evaluate the following example. Open the native form in your simulator, and open the web form on http://localhost:4000/. Enter some text into both forms, then submit them. Watch the logs in the cell below to see the printed params.'
+
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCIgcGh4LXN1Ym1pdD1cInN1Ym1pdFwiIHBoeC1jaGFuZ2U9XCJ2YWxpZGF0ZVwiPlxuICAgICAgPC5pbnB1dCBmaWVsZD17QGZvcm1bOnZhbHVlXX0gdHlwZT1cIlRleHRGaWVsZFwiIHBsYWNlaG9sZGVyPVwiRW50ZXIgYSB2YWx1ZVwiIC8+XG4gICAgICA8OmFjdGlvbnM+XG4gICAgICAgIDwuYnV0dG9uIHR5cGU9XCJzdWJtaXRcIj5cbiAgICAgICAgICBQaW5nXG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kXG5cbmRlZm1vZHVsZSBTZXJ2ZXJXZWIuRXhhbXBsZUxpdmUgZG9cbiAgdXNlIFNlcnZlcldlYiwgOmxpdmVfdmlld1xuICB1c2UgU2VydmVyTmF0aXZlLCA6bGl2ZV92aWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgbW91bnQoX3BhcmFtcywgX3Nlc3Npb24sIHNvY2tldCkgZG9cbiAgICB7Om9rLCBhc3NpZ24oc29ja2V0LCBmb3JtOiB0b19mb3JtKCV7fSwgYXM6IFwibXlfZm9ybVwiKSl9XG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIHJlbmRlcihhc3NpZ25zKSBkb1xuICAgIH5IXCJcIlwiXG4gICAgICA8LnNpbXBsZV9mb3JtIGZvcj17QGZvcm19IGlkPVwiZm9ybVwiIHBoeC1zdWJtaXQ9XCJzdWJtaXRcIiBwaHgtY2hhbmdlPVwidmFsaWRhdGVcIj5cbiAgICAgIDwuaW5wdXQgZmllbGQ9e0Bmb3JtWzp2YWx1ZV19IHBsYWNlaG9sZGVyPVwiRW50ZXIgYSB2YWx1ZVwiIC8+XG4gICAgICA8OmFjdGlvbnM+XG4gICAgICAgIDwuYnV0dG9uIHR5cGU9XCJzdWJtaXRcIj5cbiAgICAgICAgICBQaW5nXG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInN1Ym1pdFwiLCBwYXJhbXMsIHNvY2tldCkgZG9cbiAgICBJTy5pbnNwZWN0KHBhcmFtcywgbGFiZWw6IFwiU3VibWl0dGVkXCIpXG4gICAgezpub3JlcGx5LCBzb2NrZXR9XG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInZhbGlkYXRlXCIsIHBhcmFtcywgc29ja2V0KSBkb1xuICAgIElPLmluc3BlY3QocGFyYW1zLGxhYmVsOiBcIlZhbGlkYXRpbmdcIilcbiAgICB7Om5vcmVwbHksIHNvY2tldH1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,85],[87,1272],[1361,49],[1412,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
 
 ```elixir
-require KinoLiveViewNative.Livebook
-import KinoLiveViewNative.Livebook
+require Server.Livebook
+import Server.Livebook
 import Kernel, except: [defmodule: 2]
 
-defmodule Server.ExampleLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
+defmodule ServerWeb.ExampleLive.SwiftUI do
+  use ServerNative, [:render_component, format: :swiftui]
+
+  def render(assigns) do
+    ~LVN"""
+    <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+      <.input field={@form[:value]} type="TextField" placeholder="Enter a value" />
+      <:actions>
+        <.button type="submit">
+          Ping
+        </.button>
+      </:actions>
+    </.simple_form>
+    """
+  end
+end
+
+defmodule ServerWeb.ExampleLive do
+  use ServerWeb, :live_view
+  use ServerNative, :live_view
 
   @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <LiveForm id="myform" phx-submit="submit">
-      <TextField name="my-text">Placeholder</TextField>
-      <LiveSubmitButton>Submit</LiveSubmitButton>
-    </LiveForm>
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, form: to_form(%{}, as: "my_form"))}
+  end
+
+  @impl true
+  def render(assigns) do
+    ~H"""
+      <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+      <.input field={@form[:value]} placeholder="Enter a value" />
+      <:actions>
+        <.button type="submit">
+          Ping
+        </.button>
+      </:actions>
+    </.simple_form>
     """
   end
 
   @impl true
   def handle_event("submit", params, socket) do
-    IO.inspect(params)
+    IO.inspect(params, label: "Submitted")
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("validate", params, socket) do
+    IO.inspect(params, label: "Validating")
     {:noreply, socket}
   end
 end
-|> KinoLiveViewNative.register("/", ":index")
+|> Server.SmartCells.LiveViewNative.register("/")
 
-import KinoLiveViewNative.Livebook, only: []
+import Server.Livebook, only: []
 import Kernel
 :ok
 ```
 
-When a form is submitted, its data is sent as a map where each key is the 'name' attribute of the form's control views. Evaluate the example above in your simulator and you will see a map similar to the following:
+After submitting both forms, notice that both the web and native params are the same shape:`%{"my_form" => %{"value" => "some text"}}`. This makes it easier to share event handlers for both web and native.
+
+Sharing event handlers hugely simplifies and speeds up the process of writing web and native application logic because you only have to write the logic once. Alternatively, if your web and native UI deviates significantly, you can also separate the event handlers.
+
+## Breaking down a Basic Form
+
+### Simple Form
+
+The interface for the native `simple_form/1` and web `simple_form/1` is intentionally identical.
+
+```heex
+<.simple_form for={@form} id="form" phx-submit="submit">
+<!-- Inputs and Submit Button goes here -->
+</.simple_form>
+```
+
+We'll go into the internal implementation details later on, but for now you can treat these components as functionally identical. Both require a unique `id` and accept the `for` attribute that contains the [Phoenix.HTML.Form] datastructure containing form fields, error messages, and other form data.
+
+If you need a refresher on forms in Phoenix, see the [Form Bindings](https://hexdocs.pm/phoenix_live_view/form-bindings.html) HexDoc documentation.
+
+<!-- livebook:{"break_markdown":true} -->
+
+### Inputs
+
+Both web and native core components define a `input/1` function component. Inputs in the web form and native form differ since one is an abstraction on top of HTML elements and the other is an abstraction on top of SwiftUI Views. Therefore, they have different values for the `type` attribte that determines which input type to render.
+
+On web, the `input/1` component accepts the following values for the `type` attribute. These reflect [html input types](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types).
 
 <!-- livebook:{"force_markdown":true} -->
 
 ```elixir
-%{"my-text" => "some value"}
+  attr :type, :string,
+    default: "text",
+    values: ~w(checkbox color date datetime-local email file hidden month number password
+               range radio search select tel text textarea time url week)
 ```
 
-In a real-world application you could use these params to trigger some application logic, such as inserting a record into the database.
+On native, the `input/1` component accepts the following values for the `type` attribute. These reflect the SwiftUI Views from the [Controls and Indicators](https://developer.apple.com/documentation/swiftui/controls-and-indicators) and [Text Input and Outputs](https://developer.apple.com/documentation/swiftui/text-input-and-output) sections.
 
-## Controls and Indicators
-
-We've already covered many individual controls and indicator views that you can use inside of forms. For more information on those, go to the [Interactive SwiftUI Views](https://hexdocs.pm/live_view_native/interactive-swiftui-views.html) guide.
-
-<!-- livebook:{"break_markdown":true} -->
-
-### Your Turn
-
-Create a form that has `TextField`, `Slider`, `Toggle`, and `DatePicker` fields.
-
-<details style="background-color: lightgreen; padding: 1rem; margin: 1rem 0;">
-<summary>Example Solution</summary>
+<!-- livebook:{"force_markdown":true} -->
 
 ```elixir
-defmodule Server.MultiInputFormLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
-
-  @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <LiveForm id="myform" phx-submit="submit">
-      <TextField name="my-text" >Placeholder</TextField>
-      <Slider name="my-slider" />
-      <Toggle name="my-toggle" />
-      <DatePicker name="my-date-picker" />
-      <LiveSubmitButton>Submit</LiveSubmitButton>
-    </LiveForm>
-    """
-  end
-
-  @impl true
-  def handle_event("submit", params, socket) do
-    IO.inspect(params)
-    {:noreply, socket}
-  end
-end
+attr :type, :string,
+  default: "TextField",
+  values: ~w(TextFieldLink DatePicker MultiDatePicker Picker SecureField Slider Stepper TextEditor TextField Toggle hidden)
 ```
 
-</details>
+## Changesets
 
-<!-- livebook:{"attrs":"eyJhY3Rpb24iOiI6aW5kZXgiLCJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlci5NdWx0aUlucHV0Rm9ybUxpdmUgZG9cbiAgdXNlIFBob2VuaXguTGl2ZVZpZXdcbiAgdXNlIExpdmVWaWV3TmF0aXZlLkxpdmVWaWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgcmVuZGVyKCV7Zm9ybWF0OiA6c3dpZnR1aX0gPSBhc3NpZ25zKSBkb1xuICAgIH5TV0lGVFVJXCJcIlwiXG4gICAgPCEtLSBFbnRlciB5b3VyIHNvbHV0aW9uIGhlcmUgLS0+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gICMgWW91IG1heSB1c2UgdGhpcyBoYW5kbGVyIHRvIHRlc3QgeW91ciBzb2x1dGlvbi5cbiAgIyBZb3Ugc2hvdWxkIG5vdCBuZWVkIHRvIG1vZGlmeSB0aGlzIGhhbmRsZXIuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInN1Ym1pdFwiLCBwYXJhbXMsIHNvY2tldCkgZG9cbiAgICBJTy5pbnNwZWN0KHBhcmFtcylcbiAgICB7Om5vcmVwbHksIHNvY2tldH1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,109],[111,438],[551,45],[598,63]],"kind":"Elixir.KinoLiveViewNative","livebook_object":"smart_cell"} -->
+The [Phoenix.Component.to_form/2](https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html#to_form/2) function also supports Ecto changesets for form data and error validation. See [Ecto.Changeset](https://hexdocs.pm/ecto/Ecto.Changeset.html) for a refresher on changesets. Also see [Form Bindings](https://hexdocs.pm/phoenix_live_view/form-bindings.html) and [Phoenix.HTML.Form](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html) for a refresher on Phoenix Forms.
 
-```elixir
-require KinoLiveViewNative.Livebook
-import KinoLiveViewNative.Livebook
-import Kernel, except: [defmodule: 2]
-
-defmodule Server.MultiInputFormLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
-
-  @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <!-- Enter your solution here -->
-    """
-  end
-
-  # You may use this handler to test your solution.
-  # You should not need to modify this handler.
-  @impl true
-  def handle_event("submit", params, socket) do
-    IO.inspect(params)
-    {:noreply, socket}
-  end
-end
-|> KinoLiveViewNative.register("/", ":index")
-
-import KinoLiveViewNative.Livebook, only: []
-import Kernel
-:ok
-```
-
-### Controlled Values
-
-Some control views such as the `Stepper` require manually displaying their value. In this case, we can store the form params in the socket and update them everytime the `phx-change` form binding submits an event. You can also use this pattern to provide default values.
-
-Evaluate the example below to see this in action.
-
-<!-- livebook:{"attrs":"eyJhY3Rpb24iOiI6aW5kZXgiLCJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlci5TdGVwcGVyTGl2ZSBkb1xuICB1c2UgUGhvZW5peC5MaXZlVmlld1xuICB1c2UgTGl2ZVZpZXdOYXRpdmUuTGl2ZVZpZXdcblxuICBAaW1wbCB0cnVlXG4gIGRlZiBtb3VudChfcGFyYW1zLCBfc2Vzc2lvbiwgc29ja2V0KSBkb1xuICAgIHs6b2ssIGFzc2lnbihzb2NrZXQsIHBhcmFtczogJXtcIm15LXN0ZXBwZXJcIiA9PiAxfSl9XG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIHJlbmRlcigle2Zvcm1hdDogOnN3aWZ0dWl9ID0gYXNzaWducykgZG9cbiAgICB+U1dJRlRVSVwiXCJcIlxuICAgIDxMaXZlRm9ybSBpZD1cIm15Zm9ybVwiIHBoeC1jaGFuZ2U9XCJjaGFuZ2VcIj5cbiAgICAgIDxTdGVwcGVyIG5hbWU9XCJteS1zdGVwcGVyXCIgdmFsdWU9e0BwYXJhbXNbXCJteS1zdGVwcGVyXCJdfT48JT0gQHBhcmFtc1tcIm15LXN0ZXBwZXJcIl0gJT48L1N0ZXBwZXI+XG4gICAgPC9MaXZlRm9ybT5cbiAgICBcIlwiXCJcbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgaGFuZGxlX2V2ZW50KFwiY2hhbmdlXCIsIHBhcmFtcywgc29ja2V0KSBkb1xuICAgIElPLmluc3BlY3QocGFyYW1zKVxuICAgIHs6bm9yZXBseSwgYXNzaWduKHNvY2tldCwgcGFyYW1zOiBwYXJhbXMpfVxuICBlbmRcbmVuZCIsInBhdGgiOiIvIn0","chunks":[[0,109],[111,600],[713,45],[760,63]],"kind":"Elixir.KinoLiveViewNative","livebook_object":"smart_cell"} -->
-
-```elixir
-require KinoLiveViewNative.Livebook
-import KinoLiveViewNative.Livebook
-import Kernel, except: [defmodule: 2]
-
-defmodule Server.StepperLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
-
-  @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, params: %{"my-stepper" => 1})}
-  end
-
-  @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <LiveForm id="myform" phx-change="change">
-      <Stepper name="my-stepper" value={@params["my-stepper"]}><%= @params["my-stepper"] %></Stepper>
-    </LiveForm>
-    """
-  end
-
-  @impl true
-  def handle_event("change", params, socket) do
-    IO.inspect(params)
-    {:noreply, assign(socket, params: params)}
-  end
-end
-|> KinoLiveViewNative.register("/", ":index")
-
-import KinoLiveViewNative.Livebook, only: []
-import Kernel
-:ok
-```
-
-### Secure Field
-
-For password entry, or anytime you want to hide a given value, you can use the [SecureField](https://developer.apple.com/documentation/swiftui/securefield) view. This field works mostly the same as a `TextField` but hides the visual text.
-
-<!-- livebook:{"attrs":"eyJhY3Rpb24iOiI6aW5kZXgiLCJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlci5TZWN1cmVMaXZlIGRvXG4gIHVzZSBQaG9lbml4LkxpdmVWaWV3XG4gIHVzZSBMaXZlVmlld05hdGl2ZS5MaXZlVmlld1xuXG4gIEBpbXBsIHRydWVcbiAgZGVmIHJlbmRlcigle2Zvcm1hdDogOnN3aWZ0dWl9ID0gYXNzaWducykgZG9cbiAgICB+U1dJRlRVSVwiXCJcIlxuICAgIDxTZWN1cmVGaWVsZCBwaHgtY2hhbmdlPVwiY2hhbmdlXCI+RW50ZXIgYSBQYXNzd29yZDwvU2VjdXJlRmllbGQ+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcImNoYW5nZVwiLCBwYXJhbXMsIHNvY2tldCkgZG9cbiAgICBJTy5pbnNwZWN0KHBhcmFtcylcbiAgICB7Om5vcmVwbHksIHNvY2tldH1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,109],[111,360],[473,45],[520,63]],"kind":"Elixir.KinoLiveViewNative","livebook_object":"smart_cell"} -->
-
-```elixir
-require KinoLiveViewNative.Livebook
-import KinoLiveViewNative.Livebook
-import Kernel, except: [defmodule: 2]
-
-defmodule Server.SecureLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
-
-  @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <SecureField phx-change="change">Enter a Password</SecureField>
-    """
-  end
-
-  @impl true
-  def handle_event("change", params, socket) do
-    IO.inspect(params)
-    {:noreply, socket}
-  end
-end
-|> KinoLiveViewNative.register("/", ":index")
-
-import KinoLiveViewNative.Livebook, only: []
-import Kernel
-:ok
-```
-
-## Keyboard Types
-
-To format a `TextField` for specific input types we can use the [keyboardType](https://developer.apple.com/documentation/swiftui/view/keyboardtype(_:)) modifier.
-
-For a complete list of accepted keyboard types, see the [UIKeyboardType](https://developer.apple.com/documentation/uikit/uikeyboardtype) documentation.
-
-Below we've created several different common keyboard types. We've also included a generic `keyboard-*` to demonstrate how you can make a reusable class.
-
-```elixir
-defmodule KeyboardStylesheet do
-  use LiveViewNative.Stylesheet, :swiftui
-
-  ~SHEET"""
-  "number-pad" do
-    keyboardType(.numberPad)
-  end
-
-  "email-address" do
-    keyboardType(.emailAddress)
-  end
-
-  "phone-pad" do
-    keyboardType(.phonePad)
-  end
-
-  "keyboard-" <> type do
-    keyboardType(to_ime(type))
-  end
-  """
-end
-```
-
-Evaluate the example below to see the different keyboards as you focus on each input. If you don't see the keyboard, go to `I/O` -> `Keyboard` -> `Toggle Software Keyboard` to enable the software keyboard in your simulator.
-
-<!-- livebook:{"attrs":"eyJhY3Rpb24iOiI6aW5kZXgiLCJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlci5LZXlib2FyZExpdmUgZG9cbiAgdXNlIFBob2VuaXguTGl2ZVZpZXdcbiAgdXNlIExpdmVWaWV3TmF0aXZlLkxpdmVWaWV3XG4gIHVzZSBLZXlib2FyZFN0eWxlc2hlZXRcblxuICBAaW1wbCB0cnVlXG4gIGRlZiByZW5kZXIoJXtmb3JtYXQ6IDpzd2lmdHVpfSA9IGFzc2lnbnMpIGRvXG4gICAgflNXSUZUVUlcIlwiXCJcbiAgICA8VGV4dEZpZWxkIGNsYXNzPVwiZW1haWwtYWRkcmVzc1wiPkVudGVyIEVtYWlsPC9UZXh0RmllbGQ+XG4gICAgPFRleHRGaWVsZCBjbGFzcz1cInBob25lLXBhZFwiPkVudGVyIFBob25lPC9UZXh0RmllbGQ+XG4gICAgPFRleHRGaWVsZCBjbGFzcz1cIm51bWJlci1wYWRcIj5FbnRlciBOdW1iZXI8L1RleHRGaWVsZD5cbiAgICA8VGV4dEZpZWxkIGNsYXNzPVwia2V5Ym9hcmQtbnVtYmVyUGFkXCI+RW50ZXIgTnVtYmVyPC9UZXh0RmllbGQ+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gIGRlZiByZW5kZXIoYXNzaWducykgZG9cbiAgICB+SFwiXCJcIlxuICAgIDxwPkhlbGxvIGZyb20gTGl2ZVZpZXchPC9wPlxuICAgIFwiXCJcIlxuICBlbmRcbmVuZCIsInBhdGgiOiIvIn0","chunks":[[0,109],[111,531],[644,45],[691,63]],"kind":"Elixir.KinoLiveViewNative","livebook_object":"smart_cell"} -->
-
-```elixir
-require KinoLiveViewNative.Livebook
-import KinoLiveViewNative.Livebook
-import Kernel, except: [defmodule: 2]
-
-defmodule Server.KeyboardLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
-  use KeyboardStylesheet
-
-  @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <TextField class="email-address">Enter Email</TextField>
-    <TextField class="phone-pad">Enter Phone</TextField>
-    <TextField class="number-pad">Enter Number</TextField>
-    <TextField class="keyboard-numberPad">Enter Number</TextField>
-    """
-  end
-
-  def render(assigns) do
-    ~H"""
-    <p>Hello from LiveView!</p>
-    """
-  end
-end
-|> KinoLiveViewNative.register("/", ":index")
-
-import KinoLiveViewNative.Livebook, only: []
-import Kernel
-:ok
-```
-
-## Validation
-
-In this section, we'll focus mainly on using [Ecto Changesets](https://hexdocs.pm/ecto/Ecto.Changeset.html) to validate data, but know that this is not the only way to validate data if you would like to write your own custom logic in the form event handlers, you absolutely can.
-
-<!-- livebook:{"break_markdown":true} -->
-
-### LiveView Native Changesets Coming Soon!
-
-LiveView Native Form doesn't currently natively support [Changesets](https://hexdocs.pm/ecto/Ecto.Changeset.html) and [Phoenix.HTML.Form](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html) structs the way a traditional [Phoenix.Component.form](https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html#form/1) does. However there is an [open issue](https://github.com/liveview-native/liveview-native-live-form/issues/5) to add this behavior so this may change in the near future. As a result, this section is somewhat more verbose than will be necessary in the future, as we have to manually define much of the error handling logic that we expect will no longer be necessary in version `0.3` of LiveView Native.
-
-To make error handling easier, we've defined an `ErrorUtils` module below that will handle extracting the error message out of a Changeset. This will not be necessary in future versions of LiveView Native, but is a convenient helper for now.
-
-```elixir
-defmodule ErrorUtils do
-  def error_message(errors, field) do
-    with {msg, opts} <- errors[field] do
-      Server.CoreComponents.translate_error({msg, opts})
-    else
-      _ -> ""
-    end
-  end
-end
-```
-
-For the sake of context, the `translate_message/2` function handles formatting Ecto Changeset errors. For example, it will inject values such as `count` into the string.
-
-```elixir
-Server.CoreComponents.translate_error(
-  {"name must be longer than %{count} characters", [count: 10]}
-)
-```
-
-### Changesets
-
-Here's a `User` changeset we're going to use to validate a `User` struct's `email` field.
+We'll use the following changeset to demonstrate how to validate data in a LiveView Native Live Form.
 
 ```elixir
 defmodule User do
@@ -391,116 +238,512 @@ defmodule User do
 end
 ```
 
-We're going to define an `error` class so errors will appear red and be left-aligned.
+The [Phoenix.HTML.Form](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html) struct stores the changeset. The `simple_form/1` and `input/1` components for both web and native use the [Phoenix.HTML.Form](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html) struct and nested [Phoenix.HTML.FormField](https://hexdocs.pm/phoenix_html/Phoenix.HTML.FormField.html) structs to render form data and display errors.
+
+For example, `:action` field in the changeset determines if errors should display or not. Here's an example we'll use in a moment of faking a database `:insert` action and storing the changeset information inside of a form.
 
 ```elixir
-defmodule ErrorStylesheet do
-  use LiveViewNative.Stylesheet, :swiftui
-
-  ~SHEET"""
-  "error" do
-    foregroundStyle(.red)
-    frame(maxWidth: .infinity, alignment: .leading)
-  end
-  """
-end
+User.changeset(%User{}, %{email: "test"})
+|> Map.put(:action, :insert)
+|> Phoenix.Component.to_form()
 ```
 
-Then, we're going to create a LiveView that uses the `User` changeset to validate data.
+Here's an example of how we can use Ecto changesets with the LiveView Native Live Form. Now when we submit or validate the form data we apply the changes to the changeset and store the new version of the form in the socket. The `simple_form/1` and `input/1` components use the form data to render content and display errors.
 
-Evaluate the example below and view it in your simulator. We've included and `IO.inspect/2` call to view the changeset after submitting the form. Try submitting the form with different values to understand how those values affect the changeset.
+Evaluate the cell below and open your iOS application. Submit the form with an invalid email. You should notice a `has invalid format` error appear.
 
-<!-- livebook:{"attrs":"eyJhY3Rpb24iOiI6aW5kZXgiLCJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlci5Gb3JtVmFsaWRhdGlvbkxpdmUgZG9cbiAgdXNlIFBob2VuaXguTGl2ZVZpZXdcbiAgdXNlIExpdmVWaWV3TmF0aXZlLkxpdmVWaWV3XG4gIHVzZSBFcnJvclN0eWxlc2hlZXRcblxuICBAaW1wbCB0cnVlXG4gIGRlZiBtb3VudChfcGFyYW1zLCBfc2Vzc2lvbiwgc29ja2V0KSBkb1xuICAgIHVzZXJfY2hhbmdlc2V0ID0gVXNlci5jaGFuZ2VzZXQoJVVzZXJ7fSwgJXt9KVxuICAgIHs6b2ssIGFzc2lnbihzb2NrZXQsIDp1c2VyX2NoYW5nZXNldCwgdXNlcl9jaGFuZ2VzZXQpfVxuICBlbmRcblxuICBAaW1wbCB0cnVlXG4gIGRlZiByZW5kZXIoJXtmb3JtYXQ6IDpzd2lmdHVpfSA9IGFzc2lnbnMpIGRvXG4gICAgflNXSUZUVUlcIlwiXCJcbiAgICA8TGl2ZUZvcm0gaWQ9XCJteWZvcm1cIiBwaHgtY2hhbmdlPVwidmFsaWRhdGVcIiBwaHgtc3VibWl0PVwic3VibWl0XCI+XG4gICAgICA8VGV4dEZpZWxkIG5hbWU9XCJlbWFpbFwiID5FbnRlciB5b3VyIGVtYWlsPC9UZXh0RmllbGQ+XG4gICAgICA8VGV4dCA6aWY9e0B1c2VyX2NoYW5nZXNldC5hY3Rpb259IGNsYXNzPVwiZXJyb3JcIj5cbiAgICAgICAgPCU9IEVycm9yVXRpbHMuZXJyb3JfbWVzc2FnZShAdXNlcl9jaGFuZ2VzZXQuZXJyb3JzLCA6ZW1haWwpICU+XG4gICAgICA8L1RleHQ+XG4gICAgICA8TGl2ZVN1Ym1pdEJ1dHRvbj5TdWJtaXQ8L0xpdmVTdWJtaXRCdXR0b24+XG4gICAgPC9MaXZlRm9ybT5cbiAgICBcIlwiXCJcbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgaGFuZGxlX2V2ZW50KFwidmFsaWRhdGVcIiwgcGFyYW1zLCBzb2NrZXQpIGRvXG4gICAgdXNlcl9jaGFuZ2VzZXQgPVxuICAgICAgVXNlci5jaGFuZ2VzZXQoJVVzZXJ7fSwgcGFyYW1zKVxuICAgICAgIyBQcmVzZXJ2ZSB0aGUgYDphY3Rpb25gIGZpZWxkIHNvIGVycm9ycyBkbyBub3QgdmFuaXNoLlxuICAgICAgfD4gTWFwLnB1dCg6YWN0aW9uLCBzb2NrZXQuYXNzaWducy51c2VyX2NoYW5nZXNldC5hY3Rpb24pXG5cbiAgICB7Om5vcmVwbHksIGFzc2lnbihzb2NrZXQsIDp1c2VyX2NoYW5nZXNldCwgdXNlcl9jaGFuZ2VzZXQpfVxuICBlbmRcblxuICBkZWYgaGFuZGxlX2V2ZW50KFwic3VibWl0XCIsIHBhcmFtcywgc29ja2V0KSBkb1xuICAgIHVzZXJfY2hhbmdlc2V0ID1cbiAgICAgIFVzZXIuY2hhbmdlc2V0KCVVc2Vye30sIHBhcmFtcylcbiAgICAgICMgZmFraW5nIGEgRGF0YWJhc2UgaW5zZXJ0IGFjdGlvblxuICAgICAgfD4gTWFwLnB1dCg6YWN0aW9uLCA6aW5zZXJ0KVxuICAgICAgIyBTdWJtaXQgdGhlIGZvcm0gYW5kIGluc3BlY3QgdGhlIGxvZ3MgYmVsb3cgdG8gdmlldyB0aGUgY2hhbmdlc2V0LlxuICAgICAgfD4gSU8uaW5zcGVjdChsYWJlbDogXCJGb3JtIEZpZWxkIFZhbHVlc1wiKVxuXG4gICAgezpub3JlcGx5LCBhc3NpZ24oc29ja2V0LCA6dXNlcl9jaGFuZ2VzZXQsIHVzZXJfY2hhbmdlc2V0KX1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,109],[111,1412],[1525,45],[1572,63]],"kind":"Elixir.KinoLiveViewNative","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCIgcGh4LXN1Ym1pdD1cInN1Ym1pdFwiIHBoeC1jaGFuZ2U9XCJ2YWxpZGF0ZVwiPlxuICAgICAgPC5pbnB1dCBmaWVsZD17QGZvcm1bOmVtYWlsXX0gdHlwZT1cIlRleHRGaWVsZFwiIHBsYWNlaG9sZGVyPVwiRW1haWxcIiAvPlxuICAgICAgPDphY3Rpb25zPlxuICAgICAgICA8LmJ1dHRvbiB0eXBlPVwic3VibWl0XCI+XG4gICAgICAgICAgU3VibWl0XG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kXG5cbmRlZm1vZHVsZSBTZXJ2ZXJXZWIuRXhhbXBsZUxpdmUgZG9cbiAgdXNlIFNlcnZlcldlYiwgOmxpdmVfdmlld1xuICB1c2UgU2VydmVyTmF0aXZlLCA6bGl2ZV92aWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgbW91bnQoX3BhcmFtcywgX3Nlc3Npb24sIHNvY2tldCkgZG9cbiAgICBjaGFuZ2VzZXQgPSBVc2VyLmNoYW5nZXNldCglVXNlcnt9LCAle30pXG4gICAgezpvaywgYXNzaWduKHNvY2tldCwgZm9ybTogdG9fZm9ybShjaGFuZ2VzZXQpLCBjaGVja19lcnJvcnM6IGZhbHNlKX1cbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkhcIlwiXCJcbiAgICA8LnNpbXBsZV9mb3JtIGZvcj17QGZvcm19IGlkPVwiZm9ybVwiIHBoeC1zdWJtaXQ9XCJzdWJtaXRcIiBwaHgtY2hhbmdlPVwidmFsaWRhdGVcIj5cbiAgICAgIDwuaW5wdXQgZmllbGQ9e0Bmb3JtWzplbWFpbF19IHBsYWNlaG9sZGVyPVwiRW1haWxcIiAvPlxuICAgICAgPDphY3Rpb25zPlxuICAgICAgICA8LmJ1dHRvbiB0eXBlPVwic3VibWl0XCI+XG4gICAgICAgICAgU3VibWl0XG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInN1Ym1pdFwiLCAle1widXNlclwiID0+IHBhcmFtc30sIHNvY2tldCkgZG9cbiAgICBjaGFuZ2VzZXQgPVxuICAgICAgVXNlci5jaGFuZ2VzZXQoJVVzZXJ7fSwgcGFyYW1zKVxuICAgICAgIyBGYWtpbmcgYSBEYXRhYmFzZSBpbnNlcnQgYWN0aW9uXG4gICAgICB8PiBNYXAucHV0KDphY3Rpb24sIDppbnNlcnQpXG4gICAgICB8PiBJTy5pbnNwZWN0KGxhYmVsOiBcIkZvcm0gRmllbGQgVmFsdWVzXCIpXG5cbiAgICB7Om5vcmVwbHksIGFzc2lnbihzb2NrZXQsIGZvcm06IHRvX2Zvcm0oY2hhbmdlc2V0KSl9XG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInZhbGlkYXRlXCIsICV7XCJ1c2VyXCIgPT4gcGFyYW1zfSwgc29ja2V0KSBkb1xuICAgIGNoYW5nZXNldCA9XG4gICAgICBVc2VyLmNoYW5nZXNldCglVXNlcnt9LCBwYXJhbXMpXG4gICAgICB8PiBNYXAucHV0KDphY3Rpb24sIDp2YWxpZGF0ZSlcblxuICAgIHs6bm9yZXBseSwgYXNzaWduKHNvY2tldCwgZm9ybTogdG9fZm9ybShjaGFuZ2VzZXQpKX1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,85],[87,1593],[1682,49],[1733,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
 
 ```elixir
-require KinoLiveViewNative.Livebook
-import KinoLiveViewNative.Livebook
+require Server.Livebook
+import Server.Livebook
 import Kernel, except: [defmodule: 2]
 
-defmodule Server.FormValidationLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
-  use ErrorStylesheet
+defmodule ServerWeb.ExampleLive.SwiftUI do
+  use ServerNative, [:render_component, format: :swiftui]
+
+  def render(assigns) do
+    ~LVN"""
+    <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+      <.input field={@form[:email]} type="TextField" placeholder="Email" />
+      <:actions>
+        <.button type="submit">
+          Submit
+        </.button>
+      </:actions>
+    </.simple_form>
+    """
+  end
+end
+
+defmodule ServerWeb.ExampleLive do
+  use ServerWeb, :live_view
+  use ServerNative, :live_view
 
   @impl true
   def mount(_params, _session, socket) do
-    user_changeset = User.changeset(%User{}, %{})
-    {:ok, assign(socket, :user_changeset, user_changeset)}
+    changeset = User.changeset(%User{}, %{})
+    {:ok, assign(socket, form: to_form(changeset), check_errors: false)}
   end
 
   @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <LiveForm id="myform" phx-change="validate" phx-submit="submit">
-      <TextField name="email" >Enter your email</TextField>
-      <Text :if={@user_changeset.action} class="error">
-        <%= ErrorUtils.error_message(@user_changeset.errors, :email) %>
-      </Text>
-      <LiveSubmitButton>Submit</LiveSubmitButton>
-    </LiveForm>
+  def render(assigns) do
+    ~H"""
+    <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+      <.input field={@form[:email]} placeholder="Email" />
+      <:actions>
+        <.button type="submit">
+          Submit
+        </.button>
+      </:actions>
+    </.simple_form>
     """
   end
 
   @impl true
-  def handle_event("validate", params, socket) do
-    user_changeset =
+  def handle_event("submit", %{"user" => params}, socket) do
+    changeset =
       User.changeset(%User{}, params)
-      # Preserve the `:action` field so errors do not vanish.
-      |> Map.put(:action, socket.assigns.user_changeset.action)
-
-    {:noreply, assign(socket, :user_changeset, user_changeset)}
-  end
-
-  def handle_event("submit", params, socket) do
-    user_changeset =
-      User.changeset(%User{}, params)
-      # faking a Database insert action
+      # Faking a Database insert action
       |> Map.put(:action, :insert)
-      # Submit the form and inspect the logs below to view the changeset.
       |> IO.inspect(label: "Form Field Values")
 
-    {:noreply, assign(socket, :user_changeset, user_changeset)}
+    {:noreply, assign(socket, form: to_form(changeset))}
+  end
+
+  @impl true
+  def handle_event("validate", %{"user" => params}, socket) do
+    changeset =
+      User.changeset(%User{}, params)
+      |> Map.put(:action, :validate)
+
+    {:noreply, assign(socket, form: to_form(changeset))}
   end
 end
-|> KinoLiveViewNative.register("/", ":index")
+|> Server.SmartCells.LiveViewNative.register("/")
 
-import KinoLiveViewNative.Livebook, only: []
+import Server.Livebook, only: []
 import Kernel
 :ok
 ```
 
-In the code above, the `"sumbit"` and `"validate"` events update the changeset based on the current form params. This fills the `errors` field used by the `ErrorUtils` module to format the error message.
+## Keyboard Types
 
-After submitting the form, the `:action` field of the changeset has a value of `:insert`, so the red Text appears using the `:if` conditional display logic.
+The [keyboardType](https://developer.apple.com/documentation/swiftui/view/keyboardtype(_:)) modifier changes the type of keyboard for a TextField view.
 
-In the future, this complexity will likely be handled by the `live_view_native_form` library, but for now this example exists to show you how to write your own error handling based on changesets if needed.
+Evaluate the example below to see the different keyboards as you focus on each input. If you don't see the keyboard, go to `I/O` -> `Keyboard` -> `Toggle Software Keyboard` to enable the software keyboard in your simulator.
+
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCI+XG4gICAgICA8LmlucHV0IGZpZWxkPXtAZm9ybVs6bnVtYmVyX3BhZF19IHR5cGU9XCJUZXh0RmllbGRcIiBjbGFzcz1cImtleWJvYXJkVHlwZSgubnVtYmVyUGFkKVwiLz5cbiAgICAgIDwuaW5wdXQgZmllbGQ9e0Bmb3JtWzplbWFpbF9hZGRyZXNzXX0gdHlwZT1cIlRleHRGaWVsZFwiIGNsYXNzPVwia2V5Ym9hcmRUeXBlKC5lbWFpbEFkZHJlc3MpXCIvPlxuICAgICAgPC5pbnB1dCBmaWVsZD17QGZvcm1bOnBob25lUGFkXX0gdHlwZT1cIlRleHRGaWVsZFwiIGNsYXNzPVwia2V5Ym9hcmRUeXBlKC5waG9uZVBhZClcIi8+XG4gICAgICA8OmFjdGlvbnM+XG4gICAgICAgIDwuYnV0dG9uIHR5cGU9XCJzdWJtaXRcIj5cbiAgICAgICAgICBTdWJtaXRcbiAgICAgICAgPC8uYnV0dG9uPlxuICAgICAgPC86YWN0aW9ucz5cbiAgICA8Ly5zaW1wbGVfZm9ybT5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmQifQ","chunks":[[0,85],[87,602],[691,47],[740,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
+
+```elixir
+require Server.Livebook
+import Server.Livebook
+import Kernel, except: [defmodule: 2]
+
+defmodule ServerWeb.ExampleLive.SwiftUI do
+  use ServerNative, [:render_component, format: :swiftui]
+
+  def render(assigns) do
+    ~LVN"""
+    <.simple_form for={@form} id="form">
+      <.input field={@form[:number_pad]} type="TextField" class="keyboardType(.numberPad)"/>
+      <.input field={@form[:email_address]} type="TextField" class="keyboardType(.emailAddress)"/>
+      <.input field={@form[:phonePad]} type="TextField" class="keyboardType(.phonePad)"/>
+      <:actions>
+        <.button type="submit">
+          Submit
+        </.button>
+      </:actions>
+    </.simple_form>
+    """
+  end
+end
+|> Server.SmartCells.RenderComponent.register()
+
+import Server.Livebook, only: []
+import Kernel
+:ok
+```
+
+For a complete list of accepted keyboard types, see the [UIKeyboardType](https://developer.apple.com/documentation/uikit/uikeyboardtype) documentation.
+
+## Core Components
+
+Setting up a LiveView Native application using the generators creates a `core_components.swiftui.ex` file. If you have the [liveview-native-live-form](https://github.com/liveview-native/liveview-native-live-form) dependency, this file includes function components for building forms.
+
+To better understand how to work with each core component, refer to the `core_components.swiftui.ex` file generated in a Phoenix LiveView Native project. For the core components used in this Livebook, refer to the [core_components.swiftui.ex](https://github.com/liveview-native/kino_live_view_native/blob/main/apps/server_web/lib/server_web/components/core_components.swiftui.ex) from the Kino LiveView Native project.
+
+We've already been using the two main functions, `simple_form/1` and `input/1`. These are abstractions on top of the native SwiftUI views and some custom views defined by the LiveView Native Live Form library.
+
+in this section, we'll dive deeper into these abstractions so that you can build your own custom forms.
 
 <!-- livebook:{"break_markdown":true} -->
 
-### Empty Fields Send `"null"`.
+### Simple Form
 
-If you submit a form with empty fields, those fields may currently send `"null"`. There is an [open issue](https://github.com/liveview-native/liveview-native-live-form/issues/6) to fix this bug, but it may affect your form behavior for now and require a temporary workaround until the issue is fixed.
+Here's the `simple_form/1` definition.
 
-## Mini Project: User Form
-
-Taking everything you've learned, you're going to create a more complex user form with data validation and error displaying. We've defined a `FormStylesheet` you can use (and modify) if you would like to style your form.
+<!-- livebook:{"force_markdown":true} -->
 
 ```elixir
-defmodule FormStylesheet do
-  use LiveViewNative.Stylesheet, :swiftui
+  attr :for, :any, required: true, doc: "the datastructure for the form"
+  attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
 
-  ~SHEET"""
-  "error" do
-    foregroundStyle(.red)
-    frame(maxWidth: .infinity, alignment: .leading)
-  end
+  attr :rest, :global,
+    include: ~w(autocomplete name rel action enctype method novalidate target multipart),
+    doc: "the arbitrary HTML attributes to apply to the form tag"
 
-  "keyboard-" <> type do
-    keyboardType(to_ime(type))
+  slot :inner_block, required: true
+  slot :actions, doc: "the slot for form actions, such as a submit button"
+
+  def simple_form(assigns) do
+    ~LVN"""
+    <.form :let={f} for={@for} as={@as} {@rest}>
+      <Form>
+        <%= render_slot(@inner_block, f) %>
+        <Section>
+          <%= for action <- @actions do %>
+            <%= render_slot(action, f) %>
+          <% end %>
+        </Section>
+      </Form>
+    </.form>
+    """
   end
+```
+
+We show this to highlight the similarity between this form, and the one used in `core_components.ex`.
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+attr :for, :any, required: true, doc: "the datastructure for the form"
+attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
+
+attr :rest, :global,
+  include: ~w(autocomplete name rel action enctype method novalidate target multipart),
+  doc: "the arbitrary HTML attributes to apply to the form tag"
+
+slot :inner_block, required: true
+slot :actions, doc: "the slot for form actions, such as a submit button"
+
+def simple_form(assigns) do
+  ~H"""
+  <.form :let={f} for={@for} as={@as} {@rest}>
+    <div class="mt-10 space-y-8 bg-white">
+      <%= render_slot(@inner_block, f) %>
+      <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
+        <%= render_slot(action, f) %>
+      </div>
+    </div>
+  </.form>
   """
 end
 ```
+
+<!-- livebook:{"break_markdown":true} -->
+
+### Input
+
+The `type` attribute on the `input/1` component determines which View to render. Here's the same `input/1` definition.
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+attr :id, :any, default: nil
+attr :name, :any
+attr :label, :string, default: nil
+attr :value, :any
+
+attr :type, :string,
+  default: "TextField",
+  values: ~w(TextFieldLink DatePicker MultiDatePicker Picker SecureField Slider Stepper TextEditor TextField Toggle hidden)
+
+attr :field, Phoenix.HTML.FormField,
+  doc: "a form field struct retrieved from the form, for example: @form[:email]"
+
+attr :errors, :list, default: []
+attr :checked, :boolean, doc: "the checked flag for checkbox inputs"
+attr :prompt, :string, default: nil, doc: "the prompt for select inputs"
+attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
+attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
+
+attr :min, :any, default: nil
+attr :max, :any, default: nil
+
+attr :placeholder, :string, default: nil
+
+attr :readonly, :boolean, default: false
+
+attr :autocomplete, :string,
+  default: "on",
+  values: ~w(on off)
+
+attr :rest, :global,
+  include: ~w(disabled step)
+
+slot :inner_block
+
+def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+  assigns
+  |> assign(field: nil, id: assigns.id || field.id)
+  |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
+  |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
+  |> assign_new(:value, fn -> field.value end)
+  |> assign(
+    :rest,
+    Map.put(assigns.rest, :class, [
+      Map.get(assigns.rest, :class, ""),
+      (if assigns.readonly or Map.get(assigns.rest, :disabled, false), do: "disabled-true", else: ""),
+      (if assigns.autocomplete == "off", do: "text-input-autocapitalization-never autocorrection-disabled", else: "")
+    ] |> Enum.join(" "))
+  )
+  |> input()
+end
+```
+
+The `input/1` function then continues to call a separate function definition depending on the `type` attribute. For example, here's the `"TextField"` definition:
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+def input(%{type: "TextField"} = assigns) do
+  ~LVN"""
+  <VStack alignment="leading">
+    <TextField id={@id} name={@name} text={@value} prompt={@prompt} {@rest}><%= @placeholder || @label %></TextField>
+    <.error :for={msg <- @errors}><%= msg %></.error>
+  </VStack>
+  """
+end
+```
+
+Here's a list of valid options with links to their documentation:
+
+* [TextFieldLink](https://developer.apple.com/documentation/swiftui/textfieldlink)
+* [DatePicker](https://developer.apple.com/documentation/swiftui/datepicker)
+* [MultiDatePicker](https://developer.apple.com/documentation/swiftui/multidatepicker)
+* [Picker](https://developer.apple.com/documentation/swiftui/picker)
+* [SecureField](https://developer.apple.com/documentation/swiftui/securefield)
+* [Slider](https://developer.apple.com/documentation/swiftui/slider)
+* [Stepper](https://developer.apple.com/documentation/swiftui/stepper)
+* [TextEditor](https://developer.apple.com/documentation/swiftui/texteditor)
+* [TextField](https://developer.apple.com/documentation/swiftui/textfield)
+* [Toggle](https://developer.apple.com/documentation/swiftui/toggle)
+* hidden
+
+For more on the form compatible views see the [Interactive SwiftUI Views](https://hexdocs.pm/liveview-client-swiftui/interactive-swiftui-views.html) guide.
+
+<!-- livebook:{"break_markdown":true} -->
+
+### Core Components vs Views
+
+SwiftUI Core Components attempts to make the API consistent and easy to remember between platforms. For that reason, we deviate somewhat from the interface used by SwiftUI.
+
+Let's take the Slider view as an example. The Slider view accepts the `min` and `max` attributes instead of `lowerBound` and `upperBound` because they better reflect the html [range](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range) slider. The component also accepts the `label` attribute instead of using children for the same reason.
+
+<!-- livebook:{"force_markdown":true} -->
+
+```elixir
+  def input(%{type: "Slider"} = assigns) do
+    ~LVN"""
+    <VStack alignment="leading">
+      <LabeledContent>
+        <Text template="label"><%= @label %></Text>
+        <Slider id={@id} name={@name} value={@value} lowerBound={@min} upperBound={@max} {@rest}><%= @label %></Slider>
+      </LabeledContent>
+      <.error :for={msg <- @errors}><%= msg %></.error>
+    </VStack>
+    """
+  end
+```
+
+<!-- livebook:{"break_markdown":true} -->
+
+### Labels with Form Data
+
+Sometimes you may wish to use data within the form separately as part of your UI. For example, let's say we want to have a Stepper view with a dynamic label based on the current step value. In these cases, you can access form data through the `@form.params`.
+
+Here's an example showing how to have a dynamic label based on the Stepper view's current value. Evaluate the example below and run it in your simulator.
+
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCIgcGh4LXN1Ym1pdD1cInN1Ym1pdFwiIHBoeC1jaGFuZ2U9XCJ2YWxpZGF0ZVwiPlxuICAgICAgPC5pbnB1dCBcbiAgICAgICAgZmllbGQ9e0Bmb3JtWzp2YWx1ZV19IFxuICAgICAgICB0eXBlPVwiU3RlcHBlclwiXG4gICAgICAgIGxhYmVsPXtcIlZhbHVlOiAje0Bmb3JtLnBhcmFtc1tcInZhbHVlXCJdfVwifVxuICAgICAgLz5cbiAgICAgIDw6YWN0aW9ucz5cbiAgICAgICAgPC5idXR0b24gdHlwZT1cInN1Ym1pdFwiPlxuICAgICAgICAgIFBpbmdcbiAgICAgICAgPC8uYnV0dG9uPlxuICAgICAgPC86YWN0aW9ucz5cbiAgICA8Ly5zaW1wbGVfZm9ybT5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmRcblxuZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZSBkb1xuICB1c2UgU2VydmVyV2ViLCA6bGl2ZV92aWV3XG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIDpsaXZlX3ZpZXdcblxuICBAaW1wbCB0cnVlXG4gIGRlZiBtb3VudChfcGFyYW1zLCBfc2Vzc2lvbiwgc29ja2V0KSBkb1xuICAgIHs6b2ssIGFzc2lnbihzb2NrZXQsIGZvcm06IHRvX2Zvcm0oJXtcInZhbHVlXCIgPT4gMH0sIGFzOiBcIm15X2Zvcm1cIikpfVxuICBlbmRcblxuICBAaW1wbCB0cnVlXG4gIGRlZiByZW5kZXIoYXNzaWducyksIGRvOiB+SFwiXCJcblxuICBAaW1wbCB0cnVlXG4gIGRlZiBoYW5kbGVfZXZlbnQoXCJzdWJtaXRcIiwgcGFyYW1zLCBzb2NrZXQpIGRvXG4gICAgezpub3JlcGx5LCBhc3NpZ24oc29ja2V0LCBmb3JtOiB0b19mb3JtKHBhcmFtcywgYXM6IFwibXlfZm9ybVwiKSl9XG5cbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgaGFuZGxlX2V2ZW50KFwidmFsaWRhdGVcIiwgJXtcIm15X2Zvcm1cIiA9PiBwYXJhbXN9LCBzb2NrZXQpIGRvXG4gICAgezpub3JlcGx5LCBhc3NpZ24oc29ja2V0LCBmb3JtOiB0b19mb3JtKHBhcmFtcywgYXM6IFwibXlfZm9ybVwiKSl9XG4gIGVuZFxuZW5kIiwicGF0aCI6Ii8ifQ","chunks":[[0,85],[87,1061],[1150,49],[1201,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
+
+```elixir
+require Server.Livebook
+import Server.Livebook
+import Kernel, except: [defmodule: 2]
+
+defmodule ServerWeb.ExampleLive.SwiftUI do
+  use ServerNative, [:render_component, format: :swiftui]
+
+  def render(assigns) do
+    ~LVN"""
+    <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+      <.input 
+        field={@form[:value]} 
+        type="Stepper"
+        label={"Value: #{@form.params["value"]}"}
+      />
+      <:actions>
+        <.button type="submit">
+          Ping
+        </.button>
+      </:actions>
+    </.simple_form>
+    """
+  end
+end
+
+defmodule ServerWeb.ExampleLive do
+  use ServerWeb, :live_view
+  use ServerNative, :live_view
+
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, form: to_form(%{"value" => 0}, as: "my_form"))}
+  end
+
+  @impl true
+  def render(assigns), do: ~H""
+
+  @impl true
+  def handle_event("submit", params, socket) do
+    {:noreply, assign(socket, form: to_form(params, as: "my_form"))}
+  end
+
+  @impl true
+  def handle_event("validate", %{"my_form" => params}, socket) do
+    {:noreply, assign(socket, form: to_form(params, as: "my_form"))}
+  end
+end
+|> Server.SmartCells.LiveViewNative.register("/")
+
+import Server.Livebook, only: []
+import Kernel
+:ok
+```
+
+### Your Turn
+
+Create a form that has `TextField`, `Slider`, `Toggle`, and `DatePicker` fields.
+
+<details style="background-color: lightgreen; padding: 1rem; margin: 1rem 0;">
+<summary>Example Solution</summary>
+
+```elixir
+defmodule ServerWeb.ExampleLive.SwiftUI do
+  use ServerNative, [:render_component, format: :swiftui]
+
+  def render(assigns) do
+    ~LVN"""
+    <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+      <.input field={@form[:text]} type="TextField" placeholder="Enter a value" />
+      <.input field={@form[:slider]} type="Slider"/>
+      <.input field={@form[:toggle]} type="Toggle"/>
+      <.input field={@form[:date_picker]} type="DatePicker"/>
+      <:actions>
+        <.button type="submit">
+          Ping
+        </.button>
+      </:actions>
+    </.simple_form>
+    """
+  end
+end
+
+defmodule ServerWeb.ExampleLive do
+  use ServerWeb, :live_view
+  use ServerNative, :live_view
+
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, form: to_form(%{}, as: "my_form"))}
+  end
+
+  @impl true
+  def render(assigns), do: ""
+
+  @impl true
+  def handle_event("submit", params, socket) do
+    IO.inspect(params, label: "Submitted")
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("validate", params, socket) do
+    IO.inspect(params, label: "Validating")
+    {:noreply, socket}
+  end
+end
+```
+
+</details>
+
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCIgcGh4LXN1Ym1pdD1cInN1Ym1pdFwiIHBoeC1jaGFuZ2U9XCJ2YWxpZGF0ZVwiPlxuICAgICAgPCEtLSBGb3JtIGZpZWxkcyBnbyBoZXJlIC0tPlxuICAgICAgPDphY3Rpb25zPlxuICAgICAgICA8LmJ1dHRvbiB0eXBlPVwic3VibWl0XCI+XG4gICAgICAgICAgUGluZ1xuICAgICAgICA8Ly5idXR0b24+XG4gICAgICA8LzphY3Rpb25zPlxuICAgIDwvLnNpbXBsZV9mb3JtPlxuICAgIFwiXCJcIlxuICBlbmRcbmVuZFxuXG5kZWZtb2R1bGUgU2VydmVyV2ViLkV4YW1wbGVMaXZlIGRvXG4gIHVzZSBTZXJ2ZXJXZWIsIDpsaXZlX3ZpZXdcbiAgdXNlIFNlcnZlck5hdGl2ZSwgOmxpdmVfdmlld1xuXG4gIEBpbXBsIHRydWVcbiAgZGVmIG1vdW50KF9wYXJhbXMsIF9zZXNzaW9uLCBzb2NrZXQpIGRvXG4gICAgezpvaywgYXNzaWduKHNvY2tldCwgZm9ybTogdG9fZm9ybSgle30sIGFzOiBcIm15X2Zvcm1cIikpfVxuICBlbmRcblxuICBAaW1wbCB0cnVlXG4gIGRlZiByZW5kZXIoYXNzaWducyksIGRvOiB+SFwiXCJcblxuICBAaW1wbCB0cnVlXG4gIGRlZiBoYW5kbGVfZXZlbnQoXCJzdWJtaXRcIiwgcGFyYW1zLCBzb2NrZXQpIGRvXG4gICAgSU8uaW5zcGVjdChwYXJhbXMsIGxhYmVsOiBcIlN1Ym1pdHRlZFwiKVxuICAgIHs6bm9yZXBseSwgc29ja2V0fVxuICBlbmRcblxuICBAaW1wbCB0cnVlXG4gIGRlZiBoYW5kbGVfZXZlbnQoXCJ2YWxpZGF0ZVwiLCBwYXJhbXMsIHNvY2tldCkgZG9cbiAgICBJTy5pbnNwZWN0KHBhcmFtcywgbGFiZWw6IFwiVmFsaWRhdGluZ1wiKVxuICAgIHs6bm9yZXBseSwgc29ja2V0fVxuICBlbmRcbmVuZCIsInBhdGgiOiIvIn0","chunks":[[0,85],[87,934],[1023,49],[1074,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
+
+```elixir
+require Server.Livebook
+import Server.Livebook
+import Kernel, except: [defmodule: 2]
+
+defmodule ServerWeb.ExampleLive.SwiftUI do
+  use ServerNative, [:render_component, format: :swiftui]
+
+  def render(assigns) do
+    ~LVN"""
+    <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+      <!-- Form fields go here -->
+      <:actions>
+        <.button type="submit">
+          Ping
+        </.button>
+      </:actions>
+    </.simple_form>
+    """
+  end
+end
+
+defmodule ServerWeb.ExampleLive do
+  use ServerWeb, :live_view
+  use ServerNative, :live_view
+
+  @impl true
+  def mount(_params, _session, socket) do
+    {:ok, assign(socket, form: to_form(%{}, as: "my_form"))}
+  end
+
+  @impl true
+  def render(assigns), do: ~H""
+
+  @impl true
+  def handle_event("submit", params, socket) do
+    IO.inspect(params, label: "Submitted")
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("validate", params, socket) do
+    IO.inspect(params, label: "Validating")
+    {:noreply, socket}
+  end
+end
+|> Server.SmartCells.LiveViewNative.register("/")
+
+import Server.Livebook, only: []
+import Kernel
+:ok
+```
+
+### Native Views
+
+The LiveView Native LiveForm library defines [a few custom SwiftUI views](https://github.com/liveview-native/liveview-native-live-form/tree/main/swiftui/Sources/LiveViewNativeLiveForm) such as `LiveForm` and `LiveSubmitButton`. Several core components use these components.
+
+Typically, you won't need to use these views directly and will instead rely upon the core components directly.
+
+## Mini Project: User Form
+
+Taking everything you've learned, you're going to create a more complex user form with data validation and error displaying.
+
+<!-- livebook:{"break_markdown":true} -->
 
 ### User Changeset
 
@@ -537,17 +780,10 @@ defmodule CustomUser do
     {user, @types}
     |> cast(params, Map.keys(@types))
     |> validate_required(Map.keys(@types))
+    |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 10)
     |> validate_number(:age, greater_than: 0, less_than: 200)
     |> validate_acceptance(:accepted_terms)
-  end
-
-  def error_message(changeset, field) do
-    with {msg, _reason} <- changeset.errors[field] do
-      msg
-    else
-      _ -> ""
-    end
   end
 end
 ```
@@ -570,7 +806,7 @@ end
 
 ### LiveView
 
-Next, create the `CustomUserFormLive` Live View that lets the user enter their information and displays errors for invalid information upon form submission.
+Next, create a Live View that lets the user enter their information and displays errors for invalid information.
 
 **Requirements**
 
@@ -585,113 +821,104 @@ Next, create the `CustomUserFormLive` Live View that lets the user enter their i
 <summary>Example Solution</summary>
 
 ```elixir
-defmodule Server.CustomUserFormLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
-  use FormStylesheet
+defmodule ServerWeb.ExampleLive.SwiftUI do
+  use ServerNative, [:render_component, format: :swiftui]
+
+  def render(assigns) do
+    ~LVN"""
+    <!-- Form goes here -->
+    <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+      <.input field={@form[:name]} type="TextField" placeholder="name" />
+      <.input field={@form[:email]} type="TextField" placeholder="email" />
+      <.input field={@form[:password]} type="SecureField" placeholder="password" />
+      <.input field={@form[:age]} type="TextField" placeholder="age" class="keyboardType(.numberPad)" />
+      <.input field={@form[:accepted_terms]} type="Toggle"/>
+      <.input field={@form[:birthdate]} type="DatePicker"/>
+      
+      <:actions>
+        <.button type="submit">
+          Submit
+        </.button>
+      </:actions>
+    </.simple_form>
+    """
+  end
+end
+
+defmodule ServerWeb.ExampleLive do
+  use ServerWeb, :live_view
+  use ServerNative, :live_view
 
   @impl true
   def mount(_params, _session, socket) do
-    changeset = CustomUser.changeset(%CustomUser{}, %{})
-
-    {:ok, assign(socket, :changeset, changeset)}
+    changeset = User.changeset(%CustomUser{}, %{})
+    {:ok, assign(socket, form: to_form(changeset, as: :user))}
   end
 
   @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <LiveForm id="my-form" phx-change="validate" phx-submit="submit">
-      <TextField name="name">name...</TextField>
-      <.form_error changeset={@changeset} field={:name}/>
-
-      <TextField name="email">email...</TextField>
-      <.form_error changeset={@changeset} field={:email}/>
-
-      <TextField name="age" class="keyboard-numberPad">age...</TextField>
-      <.form_error changeset={@changeset} field={:age}/>
-
-      <SecureField name="password">password...</SecureField>
-      <.form_error changeset={@changeset} field={:password}/>
-
-      <Toggle name="accepted_terms">Accept the Terms and Conditions:</Toggle>
-      <.form_error changeset={@changeset} field={:accepted_terms}/>
-
-      <DatePicker name="birthdate">Birthday:</DatePicker>
-      <.form_error changeset={@changeset} field={:birthdate}/>
-      <LiveSubmitButton>Submit</LiveSubmitButton>
-    </LiveForm>
-    """
-  end
+  def render(assigns), do: ~H""
 
   @impl true
-  def handle_event("validate", params, socket) do
-    user_changeset =
+  def handle_event("submit", %{"user" => params}, socket) do
+    changeset =
       CustomUser.changeset(%CustomUser{}, params)
-      |> Map.put(:action, socket.assigns.changeset.action)
-
-    {:noreply, assign(socket, :changeset, user_changeset)}
-  end
-
-  def handle_event("submit", params, socket) do
-    user_changeset =
-      CustomUser.changeset(%CustomUser{}, params)
+      # Faking a Database insert action
       |> Map.put(:action, :insert)
+      |> IO.inspect(label: "Form Field Values")
 
-    {:noreply, assign(socket, :changeset, user_changeset)}
+    {:noreply, assign(socket, form: to_form(changeset, as: :user))}
   end
 
-  # While not strictly required, the form_error component reduces code bloat.
-  def form_error(assigns) do
-    ~SWIFTUI"""
-    <Text :if={@changeset.action} class="error">
-      <%= CustomUser.error_message(@changeset, @field) %>
-    </Text>
-    """
+  @impl true
+  def handle_event("validate", %{"user" => params}, socket) do
+    IO.inspect(params)
+    changeset =
+      CustomUser.changeset(%CustomUser{}, params)
+      |> Map.put(:action, :validate)
+      |> IO.inspect()
+
+    {:noreply, assign(socket, form: to_form(changeset, as: :user))}
   end
 end
 ```
 
 </details>
 
-<!-- livebook:{"attrs":"eyJhY3Rpb24iOiI6aW5kZXgiLCJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlci5DdXN0b21Vc2VyRm9ybUxpdmUgZG9cbiAgdXNlIFBob2VuaXguTGl2ZVZpZXdcbiAgdXNlIExpdmVWaWV3TmF0aXZlLkxpdmVWaWV3XG4gIHVzZSBGb3JtU3R5bGVzaGVldFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIG1vdW50KF9wYXJhbXMsIF9zZXNzaW9uLCBzb2NrZXQpIGRvXG4gICAgIyBSZW1lbWJlciB0byBwcm92aWRlIHRoZSBpbml0aWFsIGNoYW5nZXNldFxuICAgIHs6b2ssIHNvY2tldH1cbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgcmVuZGVyKCV7Zm9ybWF0OiA6c3dpZnR1aX0gPSBhc3NpZ25zKSBkb1xuICAgIH5TV0lGVFVJXCJcIlwiXG4gICAgPCEtLSBMaXZlRm9ybSBnb2VzIGhlcmUgLS0+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgIyBXcml0ZSB5b3VyIGBcInZhbGlkYXRlXCJgIGV2ZW50IGhhbmRsZXJcbiAgZGVmIGhhbmRsZV9ldmVudChcInZhbGlkYXRlXCIsIHBhcmFtcywgc29ja2V0KSBkb1xuICAgIHs6bm9yZXBseSwgc29ja2V0fVxuICBlbmRcblxuICAjIFdyaXRlIHlvdXIgYFwic3VibWl0XCJgIGV2ZW50IGhhbmRsZXJcbiAgZGVmIGhhbmRsZV9ldmVudChcInN1Ym1pdFwiLCBwYXJhbXMsIHNvY2tldCkgZG9cbiAgICB7Om5vcmVwbHksIHNvY2tldH1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,109],[111,620],[733,45],[780,63]],"kind":"Elixir.KinoLiveViewNative","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwhLS0gRm9ybSBnb2VzIGhlcmUgLS0+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kXG5cbmRlZm1vZHVsZSBTZXJ2ZXJXZWIuRXhhbXBsZUxpdmUgZG9cbiAgdXNlIFNlcnZlcldlYiwgOmxpdmVfdmlld1xuICB1c2UgU2VydmVyTmF0aXZlLCA6bGl2ZV92aWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgbW91bnQoX3BhcmFtcywgX3Nlc3Npb24sIHNvY2tldCkgZG9cbiAgICAjIFJlbWVtYmVyIHRvIGFzc2lnbiB0aGUgZm9ybVxuICAgIHs6b2ssIHNvY2tldH1cbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgcmVuZGVyKGFzc2lnbnMpLCBkbzogfkhcIlwiXG5cbiAgIyBFdmVudCBoYW5kbGVycyBmb3IgZm9ybSB2YWxpZGF0aW9uIGFuZCBzdWJtaXNzaW9uIGdvIGhlcmVcbmVuZCIsInBhdGgiOiIvIn0","chunks":[[0,85],[87,506],[595,49],[646,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
 
 ```elixir
-require KinoLiveViewNative.Livebook
-import KinoLiveViewNative.Livebook
+require Server.Livebook
+import Server.Livebook
 import Kernel, except: [defmodule: 2]
 
-defmodule Server.CustomUserFormLive do
-  use Phoenix.LiveView
-  use LiveViewNative.LiveView
-  use FormStylesheet
+defmodule ServerWeb.ExampleLive.SwiftUI do
+  use ServerNative, [:render_component, format: :swiftui]
+
+  def render(assigns) do
+    ~LVN"""
+    <!-- Form goes here -->
+    """
+  end
+end
+
+defmodule ServerWeb.ExampleLive do
+  use ServerWeb, :live_view
+  use ServerNative, :live_view
 
   @impl true
   def mount(_params, _session, socket) do
-    # Remember to provide the initial changeset
+    # Remember to assign the form
     {:ok, socket}
   end
 
   @impl true
-  def render(%{format: :swiftui} = assigns) do
-    ~SWIFTUI"""
-    <!-- LiveForm goes here -->
-    """
-  end
+  def render(assigns), do: ~H""
 
-  @impl true
-  # Write your `"validate"` event handler
-  def handle_event("validate", params, socket) do
-    {:noreply, socket}
-  end
-
-  # Write your `"submit"` event handler
-  def handle_event("submit", params, socket) do
-    {:noreply, socket}
-  end
+  # Event handlers for form validation and submission go here
 end
-|> KinoLiveViewNative.register("/", ":index")
+|> Server.SmartCells.LiveViewNative.register("/")
 
-import KinoLiveViewNative.Livebook, only: []
+import Server.Livebook, only: []
 import Kernel
 :ok
 ```
