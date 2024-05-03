@@ -62,45 +62,6 @@ end
 Finally, if you generated your Xcode project from the `Mix` task you can open the `MyDemoWeb.xcodeproj` file within `native/swiftui`.
 
 ## Usage
-Create a `LiveView` to connect to a Phoenix server running on `http://localhost:4000`.
-
-```swift
-import SwiftUI
-import LiveViewNative
-
-struct ContentView: View {
-    var body: some View {
-        LiveView(.localhost)
-    }
-}
-```
-
-Now when you start up your app, the LiveView will automatically connect and serve your native app.
-
-## Elixir Library
-
-### Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `live_view_native_swiftui` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:live_view_native_swiftui, "~> 0.3.0"}
-  ]
-end
-```
-
-Then add the `SwiftUI` plugin to your list of LiveView Native plugins:
-
-```elixir
-config :live_view_native, plugins: [
-  LiveViewNative.SwiftUI
-]
-```
-
-## Usage
 
 This plugin provides the SwiftUI rendering behavior of a Phoenix LiveView. Start by adding this plugin to a LiveView. We do this with `LiveViewNative.LiveView`:
 
