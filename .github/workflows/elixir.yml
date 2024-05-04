@@ -17,6 +17,9 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
+    - uses: tecolicom/actions-use-homebrew-tools@v1
+      with:
+        tools: xcodegen
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
       with:
