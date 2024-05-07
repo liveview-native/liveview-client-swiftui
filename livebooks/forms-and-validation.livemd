@@ -76,14 +76,6 @@ The [LiveView Native Live Form](https://github.com/liveview-native/liveview-nati
 
 Getting the most out of this material requires some understanding of the [Ecto](https://hexdocs.pm/ecto/Ecto.html) project and in particular a reasonably deep understanding of [Ecto.Changeset](https://hexdocs.pm/ecto/Ecto.Changeset.html). Review the Ecto documentation if you find any of the examples difficult to follow.
 
-## Installing LiveView Native Live Form
-
-To install LiveView Native Form, we need to add the `liveview-native-live-form` SwiftUI package to our iOS application.
-
-Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#liveviewnativeliveform) on that project's README to add the `liveview-native-live-form` package to the SwiftUI application you created in the [Create a SwiftUI Application](https://hexdocs.pm/live_view_native_swiftui/create-a-swiftui-application.html) guide.
-
-Come back to this guide and continue after you have finished the installation process.
-
 ## Creating a Basic Form
 
 The LiveView Native `mix lvn.install` task generates a [core_components.swiftui.ex](https://github.com/liveview-native/liveview-client-swiftui/blob/main/priv/templates/lvn.swiftui.gen/core_components.ex) for native SwiftUI function components similar to the [core_components.ex](https://github.com/phoenixframework/phoenix/blob/main/priv/templates/phx.gen.live/core_components.ex) file generated in a traditional phoenix application for web function components.
