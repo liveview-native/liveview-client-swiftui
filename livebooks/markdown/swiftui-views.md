@@ -4,19 +4,19 @@
 
 ## Overview
 
-LiveView Native aims to use minimal SwiftUI code. All patterns for building interactive UIs are the same as LiveView. However, unlike LiveView for the web, LiveView Native uses SwiftUI templates to build the native UI.
+LiveView Native aims to use minimal SwiftUI code and instead rely on the same patterns used in traditional Phoenix LiveView development as much as possible. We'll primarily use The LiveView Naive SwiftUI DSL (Domain Specific Language) to build the native template.
 
-This lesson will teach you how to build SwiftUI templates using common SwiftUI views. We'll cover common uses of each view and give you practical examples you can use to build your own native UIs. This lesson is like a recipe book you can refer back to whenever you need an example of how to use a particular SwiftUI view. In addition, once you understand how to convert these views into the LiveView Native DSL, you should have the tools to convert essentially any SwiftUI View into the LiveView Native DSL.
+This lesson will teach you how to build SwiftUI templates using common SwiftUI views. We'll cover common use cases and provide practical examples of how to build native UIs. This lesson is like a recipe book you can refer to whenever you need an example of a particular SwiftUI view. 
+
+In addition, we'll cover the LiveView Native DSL and teach you how to convert SwiftUI examples into the LiveView Native DSL. Once you understand how to convert SwiftUI code into the LiveView Native DSL, you'll have the knowledge you need to learn from the plethora of [SwiftUI resources available](https://developer.apple.com/tutorials/swiftui/creating-and-combining-views).
 
 ## Render Components
 
-LiveView Native `0.3.0` introduced render components to better encourage isolation of native and web templates and move away from co-location templates within the same LiveView module.
+LiveView Native `0.3.0` introduced render components to encourage isolation of native and web templates. This pattern generally scales better than co-located templates within the same LiveView module.
 
 Render components are namespaced under the main LiveView, and are responsible for defining the `render/1` callback function that returns the native template.
 
-For example, and `ExampleLive` LiveView module would have an `ExampleLive.SwiftUI` render component module for the native Template.
-
-This `ExampleLive.SwiftUI` render component may define a `render/1` callback function as seen below.
+For example, in the cell below, the `ExampleLive` LiveView module has a corresponding `ExampleLive.SwiftUI` render component module for the native template. This `ExampleLive.SwiftUI` render component may define a `render/1` callback function, as seen below.
 
 <!-- livebook:{"attrs":"eyJjb2RlIjoiIyBSZW5kZXIgQ29tcG9uZW50XG5kZWZtb2R1bGUgU2VydmVyV2ViLkV4YW1wbGVMaXZlLlN3aWZ0VUkgZG9cbiAgdXNlIFNlcnZlck5hdGl2ZSwgWzpyZW5kZXJfY29tcG9uZW50LCBmb3JtYXQ6IDpzd2lmdHVpXVxuXG4gIGRlZiByZW5kZXIoYXNzaWducykgZG9cbiAgICB+TFZOXCJcIlwiXG4gICAgPFRleHQ+SGVsbG8sIGZyb20gTGl2ZVZpZXcgTmF0aXZlITwvVGV4dD5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmRcblxuIyBMaXZlVmlld1xuZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZSBkb1xuICB1c2UgU2VydmVyV2ViLCA6bGl2ZV92aWV3XG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIDpsaXZlX3ZpZXdcblxuICBAaW1wbCB0cnVlXG4gIGRlZiByZW5kZXIoYXNzaWducykgZG9cbiAgICB+SFwiXCJcIlxuICAgIDxwPkhlbGxvIGZyb20gTGl2ZVZpZXchPC9wPlxuICAgIFwiXCJcIlxuICBlbmRcbmVuZCIsInBhdGgiOiIvIn0","chunks":[[0,85],[87,426],[515,49],[566,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
 
@@ -46,7 +46,7 @@ defmodule ServerWeb.ExampleLive do
 end
 ```
 
-Throughout this and further material we'll re-define render components you can evaluate and see reflected in your Xcode iOS simulator.
+Throughout this and further material, we'll re-define render components you can evaluate and see reflected in your Xcode iOS simulator.
 
 <!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMsIF9pbnRlcmZhY2UpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDxUZXh0PkhlbGxvLCBmcm9tIGEgTGl2ZVZpZXcgTmF0aXZlIFJlbmRlciBDb21wb25lbnQhPC9UZXh0PlxuICAgIFwiXCJcIlxuICBlbmRcbmVuZCJ9","chunks":[[0,85],[87,233],[322,47],[371,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
 
@@ -62,17 +62,21 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
 end
 ```
 
+In a Phoenix application, these two modules would traditionally be in separate files.
+
+<!-- livebook:{"break_markdown":true} -->
+
 ### Embedding Templates
 
-Alternatively, you may omit the render callback and instead define a `.neex` (Native + Embedded Elixir) template.
+Instead of defining a `render/1` callback function, you may instead define a `.neex` (Native + Embedded Elixir) template.
 
 By default, the module above would look for a template in the `swiftui/example_live*` path relative to the module's location. You can see the `LiveViewNative.Component` documentation for further explanation.
 
-For the sake of ease when working in Livebook, we'll prefer defining the `render/1` callback. However, we recommend you generally prefer template files when working locally in Phoenix LiveView Native projects.
+In Livebook, we'll use the `render/1` callback. However, we recommend using template files for local Phoenix + LiveView Native applications.
 
 ## SwiftUI Views
 
-In SwiftUI, a "View" is like a building block for what you see on your app's screen. It can be something simple like text or an image, or something more complex like a layout with multiple elements. Views are the pieces that make up your app's user interface.
+In SwiftUI, a "View" is like a building block for what you see on your app's screen. It can be something simple like text, or something more complex like a layout with multiple elements.
 
 Here's an example `Text` view that represents a text element.
 
@@ -90,11 +94,11 @@ LiveView Native uses the following syntax to represent the view above.
 
 SwiftUI provides a wide range of Views that can be used in native templates. You can find a full reference of these views in the SwiftUI Documentation at https://developer.apple.com/documentation/swiftui/. You can also find a shorthand on how to convert SwiftUI syntax into the LiveView Native DLS in the [LiveView Native Syntax Conversion Cheatsheet](https://hexdocs.pm/live_view_native/cheatsheet.cheatmd).
 
+We're going to cover a non-exhaustive list of the most common views and show examples of how to use them in your LiveView Native application.
+
 ## Text
 
-We've already seen the [Text](https://developer.apple.com/documentation/swiftui/text) view, but we'll start simple to get the interactive tutorial running.
-
-Evaluate the cell below, then in Xcode, Start the iOS application you created in the [Create a SwiftUI Application](https://hexdocs.pm/live_view_native/create-a-swiftui-application.html) lesson and ensure you see the `"Hello, from LiveView Native!"` text.
+Let's get the interactive tutorial running. Evaluate the cell below, then in Xcode, Start the iOS application you created in the [Create a SwiftUI Application](https://hexdocs.pm/live_view_native/create-a-swiftui-application.html) lesson and ensure you see the `"Hello, from LiveView Native!"` text.
 
 <!-- livebook:{"attrs":"e30","chunks":[[0,85],[87,202],[291,47],[340,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
 
@@ -119,7 +123,7 @@ SwiftUI includes many [Layout](https://developer.apple.com/documentation/swiftui
 
 Below, we've created a simple 3X3 game board to demonstrate how to use `VStack` and `HStack` to build a layout of horizontal rows in a single vertical column.o
 
-Here's a diagram to demonstrate how these rows and columns create our desired layout.
+Here's a diagram demonstrating how these rows and columns create our desired layout.
 
 ```mermaid
 flowchart
@@ -176,7 +180,7 @@ end
 
 ### Your Turn: 3x3 board using columns
 
-In the cell below, use `VStack` and `HStack` to create a 3X3 board using 3 columns instead of 3 rows as demonstrated above. The arrangement of `X` and `O` does not matter, however the content will not be properly aligned if you do not have exactly one character in each `Text` element.
+In the cell below, use `VStack` and `HStack` to create a 3X3 board using 3 **columns** instead of 3 rows. The arrangement of `X` and `O` does not matter. However, the UI will not align if you don't have exactly one character in each `Text` element.
 
 ```mermaid
 flowchart
@@ -287,7 +291,7 @@ Fortunately, we have a few common elements for creating a grid-based layout.
 * [Grid](https://developer.apple.com/documentation/swiftui/grid): A grid that arranges its child views in rows and columns that you specify.
 * [GridRow](https://developer.apple.com/documentation/swiftui/gridrow): A view that arranges its children in a horizontal line.
 
-A grid layout vertically and horizontally aligns elements in the grid based on the number of elements in each row.
+A grid layout aligns elements in the grid vertically and horizontally based on the number of elements in each row.
 
 Evaluate the example below and notice that rows and columns are aligned.
 
@@ -323,7 +327,7 @@ end
 
 ## List
 
-The SwiftUI [List](https://developer.apple.com/documentation/swiftui/list) view provides a system-specific interface, and has better performance for large amounts of scrolling elements.
+The SwiftUI [List](https://developer.apple.com/documentation/swiftui/list) view provides a system-specific interface and performs well with large numbers of scrolling elements (up to certain limits).
 
 <!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBMaXZlVmlld05hdGl2ZS5Db21wb25lbnQsXG4gICAgZm9ybWF0OiA6c3dpZnR1aVxuXG4gIGRlZiByZW5kZXIoYXNzaWducywgX2ludGVyZmFjZSkgZG9cbiAgICB+TFZOXCJcIlwiXG4gICAgPExpc3Q+XG4gICAgICA8VGV4dD5JdGVtIDE8L1RleHQ+XG4gICAgICA8VGV4dD5JdGVtIDI8L1RleHQ+XG4gICAgICA8VGV4dD5JdGVtIDM8L1RleHQ+XG4gICAgPC9MaXN0PlxuICAgIFwiXCJcIlxuICBlbmRcbmVuZCJ9","chunks":[[0,85],[87,264],[353,47],[402,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
 
@@ -373,7 +377,7 @@ end
 
 The SwiftUI [ScrollView](https://developer.apple.com/documentation/swiftui/scrollview) displays content within a scrollable region. ScrollView is often used in combination with [LazyHStack](https://developer.apple.com/documentation/swiftui/lazyvstack), [LazyVStack](https://developer.apple.com/documentation/swiftui/lazyhstack), [LazyHGrid](https://developer.apple.com/documentation/swiftui/lazyhgrid), and [LazyVGrid](https://developer.apple.com/documentation/swiftui/lazyhgrid) to create scrollable layouts optimized for displaying large amounts of data.
 
-While `ScrollView` also works with typical `VStack` and `HStack` views, they are not optimal choices for large amounts of data.
+While `ScrollView` also works with typical `VStack` and `HStack` views, they are not optimal for large amounts of data.
 
 <!-- livebook:{"break_markdown":true} -->
 
@@ -446,9 +450,9 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
 end
 ```
 
-To resolve the performance problem for large amounts of data, you can use the Lazy views. Lazy views only create items as needed. Items won't be rendered until they are present on the screen.
+You can use the Lazy views to resolve the performance problem for large amounts of data. Lazy views only create items as needed, meaning the client won't render them until they are on the screen.
 
-The next example demonstrates how using `LazyVStack` instead of `VStack` resolves the performance issue.
+The following example demonstrates how using `LazyVStack` instead of `VStack` resolves the performance issue. Evaluate the cell and notice the improved performance in your simulator.
 
 <!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBMaXZlVmlld05hdGl2ZS5Db21wb25lbnQsXG4gICAgZm9ybWF0OiA6c3dpZnR1aVxuXG4gIGRlZiByZW5kZXIoYXNzaWducywgX2ludGVyZmFjZSkgZG9cbiAgICB+TFZOXCJcIlwiXG4gICAgPFNjcm9sbFZpZXc+XG4gICAgICA8TGF6eVZTdGFjaz5cbiAgICAgICAgPFRleHQgOmZvcj17biA8LSAxLi4xMDAwMH0+SXRlbSA8JT0gbiAlPjwvVGV4dD5cbiAgICAgIDwvTGF6eVZTdGFjaz5cbiAgICA8L1Njcm9sbFZpZXc+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kIn0","chunks":[[0,85],[87,293],[382,47],[431,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
 
@@ -541,7 +545,7 @@ end
 
 ## AsyncImage
 
-`AsyncImage` is best for network images, or images served by the Phoenix server.
+`AsyncImage` is best for network images or images the Phoenix server serves.
 
 Here's an example of `AsyncImage` with a lorem picsum image from https://picsum.photos/400/600.
 
@@ -633,7 +637,7 @@ end
 
 ### Your Turn: Asset Catalogue
 
-You can place assets in your SwiftUI application's asset catalogue. Using the asset catalogue for SwiftUI assets provide many benefits such as device-specific image variants, dark mode images, high contrast image mode, and improved performance.
+You can place assets in your SwiftUI application's asset catalog. Using the asset catalogue for SwiftUI assets provide many benefits such as device-specific image variants, dark mode images, high contrast image mode, and improved performance.
 
 Follow this guide: https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs#Add-a-new-asset to create a new asset called Image.
 
@@ -641,13 +645,13 @@ Then evaluate the following example and you should see this image in your simula
 
 ![LiveView Native Logo](https://github.com/liveview-native/documentation_assets/blob/main/logo.png?raw=true)
 
-You will need to **rebuild the native application** to pick up the changes to the assets catalogue.
+Make sure to **rebuild the native application** to build the app with the updated asset catalog.
 
 <!-- livebook:{"break_markdown":true} -->
 
 ### Enter Your Solution Below
 
-You should not need to make changes to this cell. Set up an image in your asset catalogue named "Image", rebuild your native application, then evaluate this cell. You should see the image in your iOS simulator.
+Do not make changes to the cell below. Set up an image in your asset catalogue named "Image", rebuild your native application, then evaluate this cell. You should see the image in your iOS simulator.
 
 <!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBMaXZlVmlld05hdGl2ZS5Db21wb25lbnQsXG4gICAgZm9ybWF0OiA6c3dpZnR1aVxuXG4gIGRlZiByZW5kZXIoYXNzaWducywgX2ludGVyZmFjZSkgZG9cbiAgICB+TFZOXCJcIlwiXG4gICAgPEltYWdlIG5hbWU9XCJJbWFnZVwiLz5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmQifQ","chunks":[[0,85],[87,189],[278,47],[327,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
 
@@ -668,7 +672,7 @@ end
 
 A Button is a clickable SwiftUI View.
 
-The label of a button can be any view, such as a [Text](https://developer.apple.com/documentation/swiftui/text) view for text-only buttons or a [Label](https://developer.apple.com/documentation/swiftui/label) view for buttons with icons.
+A button's label can be any view, such as a [Text](https://developer.apple.com/documentation/swiftui/text) view for text-only buttons or a [Label](https://developer.apple.com/documentation/swiftui/label) view for buttons with icons.
 
 Evaluate the example below to see the SwiftUI [Button](https://developer.apple.com/documentation/swiftui/button) element.
 
