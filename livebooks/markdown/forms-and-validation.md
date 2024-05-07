@@ -339,7 +339,6 @@ end
 ```
 
 
-
 ### Input
 
 The `type` attribute on the `input/1` component determines which View to render. Here's the same `input/1` definition.
@@ -418,7 +417,6 @@ Here's a list of valid options with links to their documentation:
 For more on the form compatible views see the [Interactive SwiftUI Views](https://hexdocs.pm/liveview-client-swiftui/interactive-swiftui-views.html) guide.
 
 
-
 ### Core Components vs Views
 
 SwiftUI Core Components attempts to make the API consistent and easy to remember between platforms. For that reason, we deviate somewhat from the interface used by SwiftUI.
@@ -440,7 +438,6 @@ Let's take the Slider view as an example. The Slider view accepts the `min` and 
     """
   end
 ```
-
 
 
 ### Labels with Form Data
@@ -607,7 +604,6 @@ Typically, you won't need to use these views directly and will instead rely upon
 ## Mini Project: User Form
 
 Taking everything you've learned, you're going to create a more complex user form with data validation and error displaying.
-
 
 
 ### User Changeset

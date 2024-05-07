@@ -65,7 +65,6 @@ end
 In a Phoenix application, these two modules would traditionally be in separate files.
 
 
-
 ### Embedding Templates
 
 Instead of defining a `render/1` callback function, you may instead define a `.neex` (Native + Embedded Elixir) template.
@@ -380,7 +379,6 @@ The SwiftUI [ScrollView](https://developer.apple.com/documentation/swiftui/scrol
 While `ScrollView` also works with typical `VStack` and `HStack` views, they are not optimal for large amounts of data.
 
 
-
 ### ScrollView with VStack
 
 Here's an example using a `ScrollView` and a `HStack` to create scrollable text arranged horizontally.
@@ -625,7 +623,6 @@ Then evaluate the following example and you should see this image in your simula
 ![LiveView Native Logo](https://github.com/liveview-native/documentation_assets/blob/main/logo.png?raw=true)
 
 Make sure to **rebuild the native application** to build the app with the updated asset catalog.
-
 
 
 ### Enter Your Solution Below
