@@ -228,7 +228,6 @@ Click the run button <i class="ri-play-fill"></i> to build the project and run i
 After you start the active scheme, the simulator should open the iOS application and display `Hello from LiveView Native!` If you encounter any issues, see the Troubleshooting section below.
 
 
-
 <div style="height: 800; width: 100%; display: flex; height: 800px; justify-content: center; align-items: center;">
 <img style="width: 100%; height: 100%; object-fit: contain" src="https://github.com/liveview-native/documentation_assets/blob/main/xcode-hello-from-liveview-native.png?raw=true"/>
 </div>
