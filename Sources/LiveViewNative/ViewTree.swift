@@ -172,7 +172,7 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     private func resolveModifiers(for `class`: String) -> ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
         let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
         return `class`
-            .components(separatedBy: .whitespaces)
+            .components(separatedBy: .whitespacesAndNewlines)
             .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
                 guard let modifiers = sheet.classes[$1] else { return }
                 $0.append(contentsOf: modifiers)

@@ -9,6 +9,18 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+/// See [`SwiftUI.IndexViewStyle`](https://developer.apple.com/documentation/swiftui/IndexViewStyle) for more details.
+///
+/// Possible values:
+/// - `.page`
+///
+/// Pass a ``SwiftUI/PageIndexViewStyle/BackgroundDisplayMode`` to customize this style.
+///
+/// ```swift
+/// .page(backgroundDisplayMode: .always)
+/// .page(backgroundDisplayMode: .interactive)
+/// ```
+@_documentation(visibility: public)
 enum AnyIndexViewStyle: ParseableModifierValue {
     case page(backgroundDisplayMode: PageIndexViewStyle.BackgroundDisplayMode?)
     
@@ -46,6 +58,14 @@ extension View {
     }
 }
 
+/// See [`SwiftUI.PageIndexViewStyle.BackgroundDisplayMode`](https://developer.apple.com/documentation/swiftui/PageIndexViewStyle/BackgroundDisplayMode) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.always`
+/// - `.interactive`
+/// - `.never`
+@_documentation(visibility: public)
 extension PageIndexViewStyle.BackgroundDisplayMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         #if os(watchOS)

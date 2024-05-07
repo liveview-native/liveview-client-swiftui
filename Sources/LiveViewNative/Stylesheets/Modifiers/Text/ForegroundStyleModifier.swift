@@ -8,6 +8,51 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/foregroundStyle(_:)`](https://developer.apple.com/documentation/swiftui/view/foregroundStyle(_:)) for more details on this ViewModifier.
+///
+/// ### foregroundStyle(_:)
+/// - `style`: ``SwiftUI/AnyShapeStyle`` (required)
+///
+/// See [`SwiftUI.View/foregroundStyle(_:)`](https://developer.apple.com/documentation/swiftui/view/foregroundStyle(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   foregroundStyle(AnyShapeStyle)
+/// end
+/// ```
+///
+/// ### foregroundStyle(_:_:)
+/// - `primary`: ``SwiftUI/AnyShapeStyle`` (required)
+/// - `secondary`: ``SwiftUI/AnyShapeStyle`` (required)
+///
+/// See [`SwiftUI.View/foregroundStyle(_:_:)`](https://developer.apple.com/documentation/swiftui/view/foregroundStyle(_:_:)) for more details on this ViewModifier.
+///
+/// Example:
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   foregroundStyle(AnyShapeStyle, AnyShapeStyle)
+/// end
+/// ```
+///
+/// ### foregroundStyle(_:_:_:)
+/// - `primary`: ``SwiftUI/AnyShapeStyle`` (required)
+/// - `secondary`: ``SwiftUI/AnyShapeStyle`` (required)
+/// - `tertiary`: ``SwiftUI/AnyShapeStyle`` (required)
+///
+/// See [`SwiftUI.View/foregroundStyle(_:_:)`](https://developer.apple.com/documentation/swiftui/view/foregroundStyle(_:_:_:)) for more details on this ViewModifier.
+///
+/// Example:
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   foregroundStyle(AnyShapeStyle, AnyShapeStyle, AnyShapeStyle)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _ForegroundStyleModifier<R: RootRegistry>: TextModifier {
     static var name: String { "foregroundStyle" }

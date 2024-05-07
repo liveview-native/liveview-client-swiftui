@@ -8,6 +8,23 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Shape/fill(_:style:)`](https://developer.apple.com/documentation/swiftui/shape/fill(_:style:)) for more details on this ViewModifier.
+///
+/// ### fill(_:style:)
+/// - `content`: ``SwiftUI/AnyShapeStyle``
+/// - `style`: ``SwiftUI/FillStyle``
+///
+/// See [`SwiftUI.Shape/fill(_:style:)`](https://developer.apple.com/documentation/swiftui/shape/fill(_:style:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   fill(AnyShapeStyle, style: FillStyle)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _FillModifier: ShapeFinalizerModifier {
     static let name = "fill"

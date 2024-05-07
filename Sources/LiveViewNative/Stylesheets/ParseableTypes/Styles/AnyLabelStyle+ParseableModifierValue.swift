@@ -8,6 +8,14 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.LabelStyle`](https://developer.apple.com/documentation/swiftui/LabelStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.iconOnly`
+/// - `.titleAndIcon`
+/// - `.titleOnly`
+@_documentation(visibility: public)
 enum AnyLabelStyle: String, CaseIterable, ParseableModifierValue, LabelStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

@@ -7,6 +7,22 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.DynamicTypeSize`](https://developer.apple.com/documentation/swiftui/DynamicTypeSize) for more details.
+///
+/// Possible values:
+/// - `.xSmall`
+/// - `.small`
+/// - `.medium`
+/// - `.large`
+/// - `.xLarge`
+/// - `.xxLarge`
+/// - `.xxxLarge`
+/// - `.accessibility1`
+/// - `.accessibility2`
+/// - `.accessibility3`
+/// - `.accessibility4`
+/// - `.accessibility5`
+@_documentation(visibility: public)
 extension DynamicTypeSize: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

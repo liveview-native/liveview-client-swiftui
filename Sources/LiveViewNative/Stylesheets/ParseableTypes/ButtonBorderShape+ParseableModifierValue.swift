@@ -8,6 +8,20 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ButtonBorderShape`](https://developer.apple.com/documentation/swiftui/ButtonBorderShape) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.capsule`
+/// - `.circle`
+/// - `.roundedRectangle`
+///
+/// Provide a radius to customize the `roundedRectangle` shape.
+///
+/// ```swift
+/// .roundedRectangle(radius: 8)
+/// ```
+@_documentation(visibility: public)
 extension ButtonBorderShape: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

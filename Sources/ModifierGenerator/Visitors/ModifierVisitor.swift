@@ -16,23 +16,30 @@ final class ModifierVisitor: SyntaxVisitor {
     ]
 
     static func availability(_ base: AttributeListSyntax, _ decl: AttributeListSyntax) -> (AvailabilityArgumentListSyntax, Set<String>) {
+        /// Platforms that have no constraint on them (covered by the wildcard)
+        var unconstrainedPlatforms = Set(Self.minimumAvailability.keys)
+        
         var availability = [String:PlatformVersionSyntax]()
         var unavailable = Set<String>()
 
-        for attribute in base.lazy.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }) {
-            for argument in attribute.lazy.compactMap({ $0.argument.as(PlatformVersionSyntax.self) }) {
-                availability[argument.platform.text] = argument
-            }
-        }
-        for attribute in decl.lazy.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) }) {
+        let baseAttributes = base.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })
+        let declAttributes = decl.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })
+        for attribute in baseAttributes + declAttributes {
             for argument in attribute {
                 if let platformVersion = argument.argument.as(PlatformVersionSyntax.self) {
                     availability[platformVersion.platform.text] = platformVersion
+                    unconstrainedPlatforms.remove(platformVersion.platform.text)
                 } else if argument.argument.as(TokenSyntax.self)?.tokenKind == .keyword(.unavailable),
                           let platform = attribute.first?.argument.as(TokenSyntax.self)?.text {
                     unavailable.insert(platform)
+                    unconstrainedPlatforms.remove(platform)
                 }
             }
+        }
+        
+        // Add back in platforms with no constraints
+        for platform in unconstrainedPlatforms {
+            availability[platform] = PlatformVersionSyntax(platform: .identifier(platform).with(\.trailingTrivia, .space), version: minimumAvailability[platform])
         }
 
         if unavailable.isEmpty && availability.values.allSatisfy({
@@ -43,7 +50,7 @@ final class ModifierVisitor: SyntaxVisitor {
             } else {
                 return true
             }
-        }) && Set(["iOS", "macOS", "watchOS", "tvOS"]).isSubset(of: Set(availability.values.map(\.platform.text))) {
+        }) && Set(["iOS", "macOS", "watchOS", "tvOS", "visionOS"]).isSubset(of: Set(availability.values.map(\.platform.text))) {
             return (
                 AvailabilityArgumentListSyntax([]),
                 unavailable

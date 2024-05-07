@@ -9,6 +9,13 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(macOS) || os(visionOS)
+/// See [`SwiftUI.TableStyle`](https://developer.apple.com/documentation/swiftui/TableStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.inset`
+/// - `.bordered`
+@_documentation(visibility: public)
 enum AnyTableStyle: String, CaseIterable, ParseableModifierValue, TableStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

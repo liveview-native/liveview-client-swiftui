@@ -304,9 +304,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// Returns the dead render HTML and the HTTP response information (including the final URL after redirects).
     func deadRender(for request: URLRequest) async throws -> (String, HTTPURLResponse) {
         var request = request
-        request.url = request.url!.appending(queryItems: [
-            .init(name: "_format", value: "swiftui")
-        ])
+        request.url = request.url!.appendingLiveViewItems(R.self)
         if domValues != nil {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
         }
@@ -514,24 +512,20 @@ class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDe
         guard let url = request.url else {
             return request
         }
-        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         
         var newRequest = request
-        if !(components?.queryItems?.contains(where: { $0.name == "_format" }) ?? false) {
-            newRequest.url = url.appending(queryItems: [.init(name: "_format", value: await LiveSessionCoordinator<R>.platform)])
-        }
+        newRequest.url = await url.appendingLiveViewItems(R.self)
         return newRequest
     }
 }
 
 extension LiveSessionCoordinator {
     static var platform: String { "swiftui" }
-    static var platformParams: Payload {
+    static var platformParams: [String:String] {
         [
             "app_version": getAppVersion(),
             "app_build": getAppBuild(),
             "bundle_id": getBundleID(),
-            "format": "swiftui",
             "os": getOSName(),
             "os_version": getOSVersion(),
             "target": getTarget()
@@ -563,8 +557,12 @@ extension LiveSessionCoordinator {
         return "tvOS"
         #elseif os(watchOS)
         return "watchOS"
-        #else
+        #elseif os(visionOS)
+        return "visionOS"
+        #elseif os(iOS)
         return "iOS"
+        #else
+        return "unknown"
         #endif
     }
 
@@ -585,22 +583,50 @@ extension LiveSessionCoordinator {
 
     private static func getTarget() -> String {
         #if os(watchOS)
-        return "watch"
+        return "watchos"
         #elseif os(macOS)
-        return "mac"
+        return "macos"
+        #elseif os(visionOS)
+        return "visionos"
+        #elseif os(tvOS)
+        return "tvos"
         #else
         switch UIDevice.current.userInterfaceIdiom {
         case .phone:
-            return "phone"
+            return "ios"
         case .pad:
-            return "pad"
+            return "ipados"
         case .mac:
-            return "mac"
+            return "maccatalyst"
         case .tv:
-            return "tv"
+            return "tvos"
+        case .vision:
+            return "visionos"
         default:
-            return "unspecified"
+            return "unknown"
         }
         #endif
+    }
+}
+
+fileprivate extension URL {
+    @MainActor
+    func appendingLiveViewItems<R: RootRegistry>(_: R.Type = R.self) -> Self {
+        var result = self
+        let components = URLComponents(url: self, resolvingAgainstBaseURL: false)
+        if !(components?.queryItems?.contains(where: { $0.name == "_format" }) ?? false) {
+            result.append(queryItems: [
+                .init(name: "_format", value: LiveSessionCoordinator<R>.platform)
+            ])
+        }
+        for (key, value) in LiveSessionCoordinator<R>.platformParams {
+            let name = "_interface[\(key)]"
+            if !(components?.queryItems?.contains(where: { $0.name == name }) ?? false) {
+                result.append(queryItems: [
+                    .init(name: name, value: value)
+                ])
+            }
+        }
+        return result
     }
 }

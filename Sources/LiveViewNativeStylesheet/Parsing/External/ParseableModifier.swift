@@ -231,6 +231,16 @@ extension CoreFoundation.CGSize: ParseableModifierValue {
     }
 }
 
+/// The dimensions of a rectangle.
+///
+/// Can be created with an `origin` and `size`, or individual components.
+/// ```swift
+/// CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: 50, height: 50))
+/// CGRect(x: 0, y: 0, width: 50, height: 50)
+/// ```
+///
+/// See [`CoreFoundation.CGRect`](https://developer.apple.com/documentation/corefoundation/CGRect) for more details.
+@_documentation(visibility: public)
 extension CoreFoundation.CGRect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableCGRect.parser(in: context)

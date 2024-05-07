@@ -8,6 +8,36 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ShadowStyle`](https://developer.apple.com/documentation/swiftui/ShadowStyle) for more details.
+///
+/// A `drop` or `inner` shadow applied to a ``SwiftUI/AnyShapeStyle``.
+///
+/// ### drop
+/// Parameters:
+/// - `color`: ``SwiftUI/Color``
+/// - `radius`: ``CoreFoundation/CGFloat`` (required)
+/// - `x`: ``CoreFoundation/CGFloat``
+/// - `y`: ``CoreFoundation/CGFloat``
+///
+/// Example:
+/// ```swift
+/// .drop(radius: 10)
+/// .drop(color: .red, radius: 8, x: 10, y: -8)
+/// ```
+///
+/// ### inner
+/// Parameters:
+/// - `color`: ``SwiftUI/Color``
+/// - `radius`: ``CoreFoundation/CGFloat`` (required)
+/// - `x`: ``CoreFoundation/CGFloat``
+/// - `y`: ``CoreFoundation/CGFloat``
+///
+/// Example:
+/// ```swift
+/// .inner(radius: 10)
+/// .inner(color: .red, radius: 8, x: 10, y: -8)
+/// ```
+@_documentation(visibility: public)
 extension ShadowStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

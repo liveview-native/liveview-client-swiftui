@@ -12,6 +12,28 @@ import AsyncAlgorithms
 
 /// A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.
 ///
+/// ## Stylesheets
+/// Use the `event` helper to reference an event from a modifier.
+///
+/// ```swift
+/// event("my-event-name")
+/// ```
+///
+/// Handle this event from your LiveView.
+///
+/// ```elixir
+/// def handle_event("my-event-name", _params, socket), do: ...
+/// ```
+///
+/// You can also provide options for `debounce` and `throttle` (in milliseconds).
+///
+/// ```swift
+/// event("my-event-name", debounce: 1000)
+/// event("my-event-name", throttle: 500)
+/// ```
+///
+/// ## Custom Elements
+///
 /// Specify the attribute that contains the event name and an event type to create the wrapper.
 /// Then, call the wrapped value with a payload and optionally a completion handler.
 ///

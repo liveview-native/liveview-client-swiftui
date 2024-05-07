@@ -9,6 +9,12 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
+/// See [`SwiftUI.MenuStyle`](https://developer.apple.com/documentation/swiftui/MenuStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.button`
+@_documentation(visibility: public)
 enum AnyMenuStyle: String, CaseIterable, ParseableModifierValue, MenuStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

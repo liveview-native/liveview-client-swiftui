@@ -8,6 +8,28 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.PresentationDetent`](https://developer.apple.com/documentation/swiftui/PresentationDetent) for more details.
+///
+/// Standard Detents:
+/// - `.large`
+/// - `.medium`
+///
+/// ### Fractional Detents
+/// Use `.fraction(_:)` to create a detent that covers a percentage of the screen.
+///
+/// ```swift
+/// .fraction(0.5)
+/// .fraction(0.75)
+/// ```
+///
+/// ### Fixed Height Detents
+/// Use `.height(_:)` to create a detent with a fixed height.
+///
+/// ```swift
+/// .height(100)
+/// .height(50)
+/// ```
+@_documentation(visibility: public)
 extension PresentationDetent: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

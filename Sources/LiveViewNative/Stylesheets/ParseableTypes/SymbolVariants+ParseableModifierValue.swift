@@ -8,6 +8,23 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.SymbolVariants`](https://developer.apple.com/documentation/swiftui/SymbolVariants) for more details.
+///
+/// Possible values:
+/// - `.none`
+/// - `.circle`
+/// - `.square`
+/// - `.rectangle`
+/// - `.fill`
+/// - `.slash`
+///
+/// Variants can be chained to build more complex variants.
+///
+/// ```swift
+/// .circle.fill
+/// .fill.slash
+/// ```
+@_documentation(visibility: public)
 extension SymbolVariants: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {

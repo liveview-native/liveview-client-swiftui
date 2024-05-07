@@ -8,6 +8,53 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Font`](https://developer.apple.com/documentation/swiftui/Font) for more details.
+///
+/// Standard Fonts:
+/// - `.largeTitle`
+/// - `.title`
+/// - `.title2`
+/// - `.title3`
+/// - `.headline`
+/// - `.subheadline`
+/// - `.body`
+/// - `.callout`
+/// - `.footnote`
+/// - `.caption`
+/// - `.caption2`
+///
+/// ### System Fonts
+/// Create a system font with a custom `size`, ``SwiftUI/Font/Weight``, ``SwiftUI/Font/Design``, and ``SwiftUI/Font/TextStyle``.
+///
+/// ```swift
+/// .system(size: 13)
+/// .system(size: 17, weight: .heavy, design: .serif)
+/// .system(.title2, design: .serif, weight: .heavy)
+/// ```
+///
+/// ### Custom Fonts
+/// Use a custom font name, with a `size` that is optionally relative to a ``SwiftUI/TextStyle``.
+///
+/// ```swift
+/// .custom("MyFont", size: 10)
+/// .custom("MyFont", size: 13, relativeTo: .title2)
+/// .custom("MyFont", fixedSize: 17)
+/// ```
+///
+/// ### Font Modifiers
+/// Apply modifiers to a font to customize its appearance.
+///
+/// - `italic()`
+/// - `smallCaps()`
+/// - `lowercaseSmallCaps()`
+/// - `uppercaseSmallCaps()`
+/// - `monospacedDigit()`
+/// - `weight(Font.Weight)`, with a ``SwiftUI/Weight``
+/// - `width(Font.Width)`, with a ``SwiftUI/Width``
+/// - `bold()`
+/// - `monospaced()`
+/// - `leading(Font.Leading)`, with a ``SwiftUI/Leading``
+@_documentation(visibility: public)
 extension Font: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {
@@ -157,6 +204,14 @@ extension Font: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Font.Design`](https://developer.apple.com/documentation/swiftui/Font/Design) for more details.
+///
+/// Possible values:
+/// - `.default`
+/// - `.serif`
+/// - `.rounded`
+/// - `.monospaced`
+@_documentation(visibility: public)
 extension Font.Design: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -168,6 +223,21 @@ extension Font.Design: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Font.TextStyle`](https://developer.apple.com/documentation/swiftui/Font/TextStyle) for more details.
+///
+/// Possible values:
+/// - `.largeTitle`
+/// - `.title`
+/// - `.title2`
+/// - `.title3`
+/// - `.headline`
+/// - `.subheadline`
+/// - `.body`
+/// - `.callout`
+/// - `.footnote`
+/// - `.caption`
+/// - `.caption2`
+@_documentation(visibility: public)
 extension Font.TextStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -186,6 +256,19 @@ extension Font.TextStyle: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Font.Weight`](https://developer.apple.com/documentation/swiftui/Font/Weight) for more details.
+///
+/// Possible values:
+/// - `.ultraLight`
+/// - `.thin`
+/// - `.light`
+/// - `.regular`
+/// - `.medium`
+/// - `.semibold`
+/// - `.bold`
+/// - `.heavy`
+/// - `.black`
+@_documentation(visibility: public)
 extension Font.Weight: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -202,6 +285,14 @@ extension Font.Weight: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Font.Width`](https://developer.apple.com/documentation/swiftui/Font/Width) for more details.
+///
+/// Possible values:
+/// - `.compressed`
+/// - `.condensed`
+/// - `.standard`
+/// - `.expanded`
+@_documentation(visibility: public)
 extension Font.Width: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
@@ -216,6 +307,13 @@ extension Font.Width: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Font.Leading`](https://developer.apple.com/documentation/swiftui/Font/Leading) for more details.
+///
+/// Possible values:
+/// - `.standard`
+/// - `.tight`
+/// - `.loose`
+@_documentation(visibility: public)
 extension Font.Leading: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

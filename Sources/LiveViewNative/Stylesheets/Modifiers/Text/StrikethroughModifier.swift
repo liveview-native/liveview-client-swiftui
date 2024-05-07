@@ -8,6 +8,29 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/strikethrough(_:pattern:color:)`](https://developer.apple.com/documentation/swiftui/view/strikethrough(_:pattern:color:)) for more details on this ViewModifier.
+///
+/// ### strikethrough(_:pattern:color:)
+/// - `isActive`: `attr("...")` or ``Swift/Bool``
+/// - `pattern`: ``SwiftUI/Text/LineStyle/Pattern``
+/// - `color`: `attr("...")` or ``SwiftUI/Color`` or `nil`
+///
+/// See [`SwiftUI.View/strikethrough(_:pattern:color:)`](https://developer.apple.com/documentation/swiftui/view/strikethrough(_:pattern:color:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   strikethrough(attr("isActive"), pattern: .solid, color: attr("color"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" isActive={@isActive} color={@color} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _StrikethroughModifier<R: RootRegistry>: TextModifier {
     static var name: String { "strikethrough" }

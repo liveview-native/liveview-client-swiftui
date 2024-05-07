@@ -1,7 +1,57 @@
 defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.module_suffix %> do
-  use LiveViewNative.Component
+  @moduledoc """
+  Provides core UI components built for SwiftUI.<%= unless @live_form? do %>
+  > #### No LiveForm Installed! {: .warning}
+  >
+  > You will not get access to any of the form related inputs without LiveForm. After it is installed regenerate
+  > this file with `mix lvn.swiftui.gen --no-xcodegen`<% end %>
+
+  This file contains feature parity components to your applications's CoreComponent module.
+  The goal is to retain a common API for fast prototyping. Leveraging your existing knowledge
+  of the `<%= inspect context.web_module %>.CoreComponents` functions you should expect identical functionality for similarly named
+  components between web and native. That means utilizing your existing `handle_event/3` functions to manage state
+  and stay focused on adding new templates for your native applications.
+
+  The default components use `LiveViewNative.SwiftUI.UtilityStyles`, a generated styling syntax
+  that allows you to call nearly any modifier. Refer to the documentation in `LiveViewNative.SwiftUI` for more information.
+
+  Icons are referenced by a system name. Read more about the [Xcode Asset Manager](https://developer.apple.com/documentation/xcode/asset-management)
+  to learn how to include different assets in your LiveView Native applications. In addition, you can also use [SF Symbols](https://developer.apple.com/sf-symbols/).
+  On any MacOS open Spotlight and search `SF Symbols`. The catalog application will provide a reference name that can be used. All SF Symbols
+  are incuded with all SwiftUI applications.
+
+  Most of this documentation was "borrowed" from the analog Phoenix generated file to ensure this project is expressing the same behavior.
+  """
+
+  use LiveViewNative.Component<%= if @live_form? do %>
 
   import LiveViewNative.LiveForm.Component
+
+  @doc """
+  Renders an input with label and error messages.
+
+  A `Phoenix.HTML.FormField` may be passed as argument,
+  which is used to retrieve the input name, id, and values.
+  Otherwise all attributes may be passed explicitly.
+
+  ## Types
+
+  This function accepts all SwiftUI input types, considering that:
+
+    * You may also set `type="Picker"` to render a `<Picker>` tag
+
+    * `type="Toggle"` is used exclusively to render boolean values
+
+  ## Examples
+
+      <Group class="keyboardType(.emailAddress)">
+        <.input field={@form[:email]} type="TextField" />
+        <.input name="my-input" errors={["oh no!"]} />
+      </Group>
+
+  [INSERT LVATTRDOCS]
+  """
+  @doc type: :component
 
   attr :id, :any, default: nil
   attr :name, :any
@@ -13,12 +63,12 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     values: ~w(TextFieldLink DatePicker MultiDatePicker Picker SecureField Slider Stepper TextEditor TextField Toggle hidden)
 
   attr :field, Phoenix.HTML.FormField,
-    doc: "a form field struct retrieved from the form, for example: @form[:email]"
+    doc: "a form field struct retrieved from the form, for example: `@form[:email]`"
 
   attr :errors, :list, default: []
   attr :checked, :boolean, doc: "the checked flag for checkbox inputs"
   attr :prompt, :string, default: nil, doc: "the prompt for select inputs"
-  attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
+  attr :options, :list, doc: "the options to pass to `Phoenix.HTML.Form.options_for_select/2`"
   attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
 
   attr :min, :any, default: nil
@@ -180,6 +230,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
+  @doc """
+  Generates a generic error message.
+  """
+  @doc type: :component
   slot :inner_block, required: true
 
   def error(assigns) do
@@ -188,7 +242,14 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       <%%= render_slot(@inner_block) %>
     </Group>
     """
-  end
+  end<% end %>
+
+  @doc """
+  Renders a header with title.
+
+  [INSERT LVATTRDOCS]
+  """
+  @doc type: :component
 
   attr :class, :string, default: nil
 
@@ -198,7 +259,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   def header(assigns) do
     ~LVN"""
-    <VStack class={"navigation-title-:title navigation-subtitle-:subtitle toolbar--toolbar #{@class}"}>
+    <VStack class={[
+      "navigation-title-:title navigation-subtitle-:subtitle toolbar--toolbar",
+      @class
+      ]}>
       <Text template="title">
         <%%= render_slot(@inner_block) %>
       </Text>
@@ -210,14 +274,31 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       </ToolbarItemGroup>
     </VStack>
     """
-  end
+  end<%= if @live_form? do %>
+
+  @doc """
+  Renders a simple form.
+
+  ## Examples
+
+      <.simple_form for={@form} phx-change="validate" phx-submit="save">
+        <.input field={@form[:email]} label="Email"/>
+        <.input field={@form[:username]} label="Username" />
+        <:actions>
+          <.button>Save</.button>
+        </:actions>
+      </.simple_form>
+
+  [INSERT LVATTRDOCS]
+  """
+  @doc type: :component
 
   attr :for, :any, required: true, doc: "the datastructure for the form"
   attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
 
   attr :rest, :global,
     include: ~w(autocomplete name rel action enctype method novalidate target multipart),
-    doc: "the arbitrary HTML attributes to apply to the form tag"
+    doc: "the arbitrary attributes to apply to the form tag"
 
   slot :inner_block, required: true
   slot :actions, doc: "the slot for form actions, such as a submit button"
@@ -237,52 +318,144 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   end
 
+  @doc """
+  Renders a button.
+
+  ## Examples
+
+      <.button>Send!</.button>
+      <.button phx-click="go">Send!</.button>
+  """
+  @doc type: :component
+
   attr :type, :string, default: nil
   attr :class, :string, default: nil
   attr :rest, :global, include: ~w(disabled form name value)
 
   slot :inner_block, required: true
-  def button(%{ type: "submit" } = assigns) do
+
+  def button(%{phx_click: _phx_click} = assigns) do
     ~LVN"""
-    <Section>
-      <LiveSubmitButton class="button-style-borderedProminent control-size-large list-row-insets-EdgeInsets() list-row-background-:empty">
-        <Group class="max-w-infinity bold">
-          <%%= render_slot(@inner_block) %>
-        </Group>
-      </LiveSubmitButton>
-    </Section>
-    """
-  end
-  def button(assigns) do
-    ~LVN"""
-    <Button>
+    <Button class={@class} {@rest}>
       <%%= render_slot(@inner_block) %>
     </Button>
     """
   end
 
+  def button(assigns) do
+    ~LVN"""
+    <Section>
+      <LiveSubmitButton class={[
+        "button-style-borderedProminent control-size-large",
+        "list-row-insets-EdgeInsets() list-row-background-:empty",
+        @class]}>
+        <Group class="max-w-infinity bold @class">
+          <%%= render_slot(@inner_block) %>
+        </Group>
+      </LiveSubmitButton>
+    </Section>
+    """
+  end<% end %>
+
+  @doc ~S"""
+  Renders a table with generic styling.
+
+  ## Examples
+
+      <.table id="users" rows={@users}>
+        <:col :let={user} label="id"><%%= user.id %></:col>
+        <:col :let={user} label="username"><%%= user.username %></:col>
+      </.table>
+  """
+  @doc type: :component
+
+  attr :id, :string, required: true
+  attr :rows, :list, required: true
+  attr :row_id, :any, default: nil, doc: "the function for generating the row id"
+  attr :row_click, :any, default: nil, doc: "the function for handling phx-click on each row"
+
+  attr :row_item, :any,
+    default: &Function.identity/1,
+    doc: "the function for mapping each row before calling the :col and :action slots"
+
+  slot :col, required: true do
+    attr :label, :string
+  end
+
+  slot :action, doc: "the slot for showing user actions in the last table column"
+
   def table(assigns) do
+    assigns =
+      with %{rows: %Phoenix.LiveView.LiveStream{}} <- assigns do
+        assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)
+      end
+
     ~LVN"""
     <Table></Table>
     """
   end
 
+  @doc """
+  Renders a system image from the Asset Manager in Xcode
+  or from SF Symbols.
+
+  ## Examples
+
+      <.icon name="xmark.diamond" />
+  """
+  @doc type: :component
+
   attr :name, :string, required: true
   attr :class, :string, default: nil
-
   def icon(assigns) do
     ~LVN"""
     <Image systemName={@name} class={@class} />
     """
   end
 
+  @doc """
+  Renders an image from a url
+
+  Will render an [`AsyncImage`](https://developer.apple.com/documentation/swiftui/asyncimage)
+  You can customize the lifecycle states of with the slots.
+  """
+
   attr :url, :string, required: true
   attr :rest, :global
-  slot :empty
-  slot :success do
+  slot :empty, doc: """
+    The empty state that will render before has successfully been downloaded.
+
+        <.image url={~p"/assets/images/logo.png"}>
+          <:empty>
+            <Image systemName="myloading.spinner" />
+          </:empty>
+        </.image>
+
+    [See SwiftUI docs](https://developer.apple.com/documentation/swiftui/asyncimagephase/success(_:))
+    """
+  slot :success, doc: """
+    The success state that will render when the image has successfully been downloaded.
+
+        <.image url={~p"/assets/images/logo.png"}>
+          <:success class="main-logo"/>
+        </.image>
+
+    [See SwiftUI docs](https://developer.apple.com/documentation/swiftui/asyncimagephase/success(_:))
+    """
+  do
     attr :class, :string
   end
-  slot :failure do
+  slot :failure, doc: """
+    The failure state that will render when the image fails to downloaded.
+
+        <.image url={~p"/assets/images/logo.png"}>
+          <:failure class="image-fail"/>
+        </.image>
+
+    [See SwiftUI docs](https://developer.apple.com/documentation/swiftui/asyncimagephase/failure(_:))
+
+  """
+  do
     attr :class, :string
   end
 
@@ -324,7 +497,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       <%%= render_slot(@slot) %>
     </Group>
     """
-  end
+  end<%= if @live_form? do %>
 
   @doc """
   Translates an error message using gettext.
@@ -366,5 +539,5 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
-  end
+  end<% end %>
 end

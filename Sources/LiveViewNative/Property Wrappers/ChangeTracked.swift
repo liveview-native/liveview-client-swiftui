@@ -10,6 +10,25 @@ import LiveViewNativeCore
 import Combine
 
 /// Allows client-side state changes, which send `phx-change` events to the server.
+///
+/// ## Stylesheets
+/// When passing a value to a `ChangeTracked` type in a stylesheet, use the `attr` helper to reference a value from the element.
+///
+/// ```elixir
+/// attr("my-changing-value")
+/// ```
+///
+/// Then provide the value to the referenced attribute and a `phx-change` event.
+///
+/// ```html
+/// <Element my-changing-value={@value} phx-change="update-value" />
+/// ```
+///
+/// Whenever the modifier updates the value, the event passed to `phx-change` will be called.
+///
+/// ```elixir
+/// def handle_event("update-value", new_value, socket), do: ...
+/// ```
 @propertyWrapper
 public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
     @StateObject private var localValue: LocalValue

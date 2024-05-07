@@ -8,6 +8,29 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.TabViewStyle`](https://developer.apple.com/documentation/swiftui/TabViewStyle) for more details.
+///
+/// Standard ``TabView`` Styles:
+/// - `.automatic`
+/// - `.page`
+/// - `.verticalPage`
+///
+/// ### Page Style
+/// Pass an ``SwiftUI/IndexDisplayMode`` to customize this style.
+///
+/// ```swift
+/// .page(indexDisplayMode: .always)
+/// .page(indexDisplayMode: .never)
+/// ```
+///
+/// ### Vertical Page Style
+/// Pass an ``SwiftUI/TransitionStyle`` to customize this style.
+///
+/// ```swift
+/// .verticalPage(transitionStyle: .blur)
+/// .verticalPage(transitionStyle: .identity)
+/// ```
+@_documentation(visibility: public)
 enum AnyTabViewStyle: ParseableModifierValue {
     case automatic
     #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
@@ -105,6 +128,13 @@ extension View {
 }
 
 #if os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+/// See [`SwiftUI.PageTabViewStyle.IndexDisplayMode`](https://developer.apple.com/documentation/swiftui/PageTabViewStyle/IndexDisplayMode) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.always`
+/// - `.never`
+@_documentation(visibility: public)
 extension PageTabViewStyle.IndexDisplayMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -117,6 +147,13 @@ extension PageTabViewStyle.IndexDisplayMode: ParseableModifierValue {
 #endif
 
 #if os(watchOS)
+/// See [`SwiftUI.VerticalPageTabViewStyle.TransitionStyle`](https://developer.apple.com/documentation/swiftui/VerticalPageTabViewStyle/TransitionStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.blur`
+/// - `.identity`
+@_documentation(visibility: public)
 @available(watchOS 10.0, *)
 extension VerticalPageTabViewStyle.TransitionStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

@@ -8,6 +8,29 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Shape/scale(x:y:anchor:)`](https://developer.apple.com/documentation/swiftui/shape/scale(x:y:anchor:)) for more details on this ViewModifier.
+///
+/// ### scale(x:y:anchor:)
+/// - `x`: `attr("...")` or ``CoreFoundation/CGFloat``
+/// - `y`: `attr("...")` or ``CoreFoundation/CGFloat``
+/// - `anchor`: ``SwiftUI/UnitPoint``
+///
+/// See [`SwiftUI.Shape/scale(x:y:anchor:)`](https://developer.apple.com/documentation/swiftui/shape/scale(x:y:anchor:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   scale(x: attr("x"), y: attr("y"), anchor: .center)
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" x={@x} y={@y} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _ScaleModifier<R: RootRegistry>: ShapeModifier {
     static var name: String { "scale" }
