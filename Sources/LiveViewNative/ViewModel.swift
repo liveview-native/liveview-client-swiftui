@@ -39,7 +39,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     let elementID: String
     @_spi(LiveForm) public var pushEventImpl: ((String, String, Any, Int?) async throws -> Void)!
     
-    var changeEvent: String?
+    var changeEvent: ((Any) -> ())?
     var submitEvent: String?
     /// An action called when no `phx-submit` event is present.
     ///
@@ -55,7 +55,11 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     }
     
     @_spi(LiveForm) public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
-        self.changeEvent = element.attributeValue(for: .init(name: "phx-change"))
+        self.changeEvent = element.attributeValue(for: .init(name: "phx-change")).flatMap({ event in
+            { value in
+                Task { [weak self] in try await self?.pushEventImpl("form", event, value, nil) }
+            }
+        })
         self.submitEvent = element.attributeValue(for: .init(name: "phx-submit"))
         self.submitAction = submitAction
     }
@@ -66,10 +70,23 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     ///
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
     @MainActor
-    public func sendChangeEvent() async throws {
-        if let changeEvent = changeEvent {
-            try await pushFormEvent(changeEvent)
+    public func sendChangeEvent(_ value: any FormValue, for name: String, event: Event?) async throws {
+        guard let event = event?.wrappedValue.callAsFunction ?? changeEvent else { return }
+        
+        // LiveView expects all values to be strings.
+        let encodedValue: String = if let value = value as? String {
+            value
+        } else {
+            try value.formQueryEncoded()
         }
+        
+        var components = URLComponents()
+        components.queryItems = [
+            .init(name: name, value: encodedValue),
+            .init(name: "_target", value: name)
+        ]
+        
+        try await event(components.query!)
     }
     
     /// Sends a phx-submit event (if configured) to the server with the current form data.
@@ -125,7 +142,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
     }
     
-    public func setValue(_ value: (some FormValue)?, forName name: String, changeEvent: String?) {
+    public func setValue(_ value: (some FormValue)?, forName name: String, changeEvent: Event?) {
         let existing = data[name]
         if let existing,
            let value,
@@ -140,19 +157,11 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             return
         }
         data[name] = value
-        if let changeEvent = changeEvent ?? self.changeEvent {
+        if changeEvent?.debounceAttribute != .blur,
+           let value
+        {
             Task {
-                let data = if let value = value as? String {
-                    value
-                } else {
-                    try value.formQueryEncoded()
-                }
-                var components = URLComponents()
-                components.queryItems = [
-                    .init(name: name, value: data),
-                    .init(name: "_target", value: name)
-                ]
-                try await pushEventImpl("form", changeEvent, components.query!, nil)
+                try await sendChangeEvent(value, for: name, event: changeEvent)
             }
         }
     }

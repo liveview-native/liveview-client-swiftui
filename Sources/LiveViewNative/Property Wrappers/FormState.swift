@@ -66,6 +66,8 @@ public struct FormState<Value: FormValue> {
     @Environment(\.formModel) private var formModel: FormModel?
     @Environment(\.coordinatorEnvironment) private var coordinator
     
+    @Event("phx-change", type: "form") private var changeEvent
+    
     /// Creates a `FormState` property wrapper with a default value that will be used when no other value is present.
     ///
     /// - Parameter bindingName: The name of the optional live binding storage value.
@@ -147,7 +149,9 @@ public struct FormState<Value: FormValue> {
                 formModel.setValue(
                     newValue,
                     forName: elementName,
-                    changeEvent: sendChangeEvents ? element.attributeValue(for: "phx-change") : nil
+                    changeEvent: sendChangeEvents
+                        ? (element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil)
+                        : nil
                 )
             }
         }
@@ -184,6 +188,25 @@ public struct FormState<Value: FormValue> {
                 logger.warning("Form element used outside of a <LiveForm>. This may not behave as expected.")
                 data.mode = .local
             }
+        }
+    }
+    
+    /// Call this function when the form control loses focus.
+    public func handleBlur() async throws {
+        switch data.mode {
+        case .unknown:
+            break
+        case .local:
+            break
+        case .form(let formModel):
+            guard let elementName = element.attributeValue(for: "name"),
+                  let value = formModel[elementName]
+            else { return }
+            try await formModel.sendChangeEvent(
+                value,
+                for: elementName,
+                event: element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil
+            )
         }
     }
 }
