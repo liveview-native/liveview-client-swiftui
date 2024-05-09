@@ -48,11 +48,11 @@ struct DatePicker<Root: RootRegistry>: View {
     ///- `hourAndMinute`
     ///- `date`
     @_documentation(visibility: public)
-    private var components: String?
+    private var displayedComponents: String?
     
     #if os(iOS) || os(macOS)
     private var datePickerComponents: DatePickerComponents {
-        components.flatMap({ DatePickerComponents.init(from: $0) }) ?? [.hourAndMinute, .date]
+        displayedComponents.flatMap({ DatePickerComponents.init(from: $0) }) ?? [.hourAndMinute, .date]
     }
     #endif
     
