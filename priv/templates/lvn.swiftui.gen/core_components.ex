@@ -274,6 +274,100 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       </ToolbarItemGroup>
     </VStack>
     """
+  end
+
+  @doc """
+  Renders a modal.
+
+  ## Examples
+
+      <.modal show={@show} id="confirm-modal">
+        This is a modal.
+      </.modal>
+
+  An event name may be passed to the `:on_cancel` to configure
+  the closing/cancel event, for example:
+
+      <.modal show={@show} id="confirm" on_cancel="toggle-show">
+        This is another modal.
+      </.modal>
+
+  """
+  attr :id, :string, required: true
+  attr :show, :boolean, default: false
+  attr :on_cancel, :string
+  slot :inner_block, required: true
+
+  def modal(assigns) do
+    ~LVN"""
+    <VStack
+      id={@id}
+      :if={@show}
+      class="sheet-isPresented:[attr(presented)]-content::content"
+      presented={@show}
+      phx-change={@on_cancel}
+    >
+      <VStack template="content">
+        <%%= render_slot(@inner_block) %>
+      </VStack>
+    </VStack>
+    """
+  end
+
+  @doc """
+  Renders flash notices.
+
+  ## Examples
+
+      <.flash kind={:info} flash={@flash} />
+      <.flash kind={:info} phx-mounted={show("#flash")}>Welcome Back!</.flash>
+  """
+  attr :id, :string, doc: "the optional id of flash container"
+  attr :flash, :map, default: %{}, doc: "the map of flash messages to display"
+  attr :title, :string, default: nil
+  attr :kind, :atom, values: [:info, :error], doc: "used for styling and flash lookup"
+  attr :rest, :global, doc: "the arbitrary attributes to add to the flash container"
+
+  slot :inner_block, doc: "the optional inner block that renders the flash message"
+
+  def flash(assigns) do
+    assigns = assign_new(assigns, :id, fn -> "flash-#{assigns.kind}" end)
+
+    ~LVN"""
+    <%% msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind) %>
+    <VStack
+      :if={msg != nil}
+      class="hidden alert-[attr(title)]-isPresented:[attr(presented)]-actions::actions-message::message"
+      title={@title}
+      presented={msg != nil}
+      id={@id}
+      {@rest}
+      phx-change="lv:clear-flash"
+      phx-value-key={@kind}
+    >
+      <Text template="message"><%%= msg %></Text>
+      <Button template="actions">Ok</Button>
+    </VStack>
+    """
+  end
+
+  @doc """
+  Shows the flash group with standard titles and content.
+
+  ## Examples
+
+      <.flash_group flash={@flash} />
+  """
+  attr :flash, :map, required: true, doc: "the map of flash messages"
+  attr :id, :string, default: "flash-group", doc: "the optional id of flash container"
+
+  def flash_group(assigns) do
+    ~LVN"""
+    <Group id={@id}>
+      <.flash kind={:info} title={"Success!"} flash={@flash} />
+      <.flash kind={:error} title={"Error!"} flash={@flash} />
+    </Group>
+    """
   end<%= if @live_form? do %>
 
   @doc """
@@ -334,15 +428,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   slot :inner_block, required: true
 
-  def button(%{phx_click: _phx_click} = assigns) do
-    ~LVN"""
-    <Button class={@class} {@rest}>
-      <%%= render_slot(@inner_block) %>
-    </Button>
-    """
-  end
-
-  def button(assigns) do
+  def button(%{ type: "submit" } = assigns) do
     ~LVN"""
     <Section>
       <LiveSubmitButton class={[
@@ -354,6 +440,14 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
         </Group>
       </LiveSubmitButton>
     </Section>
+    """
+  end
+
+  def button(assigns) do
+    ~LVN"""
+    <Button class={@class} {@rest}>
+      <%%= render_slot(@inner_block) %>
+    </Button>
     """
   end<% end %>
 
@@ -372,7 +466,6 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   attr :id, :string, required: true
   attr :rows, :list, required: true
   attr :row_id, :any, default: nil, doc: "the function for generating the row id"
-  attr :row_click, :any, default: nil, doc: "the function for handling phx-click on each row"
 
   attr :row_item, :any,
     default: &Function.identity/1,
@@ -385,13 +478,53 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   slot :action, doc: "the slot for showing user actions in the last table column"
 
   def table(assigns) do
-    assigns =
-      with %{rows: %Phoenix.LiveView.LiveStream{}} <- assigns do
-        assign(assigns, row_id: assigns.row_id || fn {id, _item} -> id end)
-      end
-
     ~LVN"""
-    <Table></Table>
+    <Table id={@id}>
+      <Group template="columns">
+        <TableColumn :for={col <- @col}><%%= col[:label] %></TableColumn>
+        <TableColumn :if={@action != []} />
+      </Group>
+      <Group template="rows">
+        <TableRow
+          :for={{row, i} <- Enum.with_index(@rows)}
+          id={(@row_id && @row_id.(row)) || i}
+        >
+          <VStack :for={col <- @col}>
+            <%%= render_slot(col, @row_item.(row)) %>
+          </VStack>
+          <HStack :if={@action != []}>
+            <%%= for action <- @action do %>
+              <%%= render_slot(action, @row_item.(row)) %>
+            <%% end %>
+          </HStack>
+        </TableRow>
+      </Group>
+    </Table>
+    """
+  end
+
+  @doc """
+  Renders a data list.
+
+  ## Examples
+
+      <.list>
+        <:item title="Title"><%%= @post.title %></:item>
+        <:item title="Views"><%%= @post.views %></:item>
+      </.list>
+  """
+  slot :item, required: true do
+    attr :title, :string, required: true
+  end
+
+  def list(assigns) do
+    ~LVN"""
+    <List>
+      <LabeledContent :for={item <- @item}>
+        <Text template="label"><%%= item.title %></Text>
+        <%%= render_slot(item) %>
+      </LabeledContent>
+    </List>
     """
   end
 
