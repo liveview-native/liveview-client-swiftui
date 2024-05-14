@@ -123,6 +123,7 @@ extension CodingUserInfoKey {
 @LiveElement
 struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     @LiveAttribute(.init(name: "class")) private var `class`: String?
+    @LiveAttribute(.init(name: "style")) private var style: String?
     
     @LiveElementIgnored
     @Environment(\.stylesheet)
@@ -144,13 +145,19 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     @LiveElementIgnored
     var wrappedValue: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
         if _liveElement.isConstant {
+            let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
+            var result = ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()
+            if let style,
+               !style.isEmpty
+            {
+                result += resolveModifiers(forStyle: style, sheet: sheet)
+            }
             if let `class`,
                !`class`.isEmpty
             {
-                return resolveModifiers(for: `class`)
-            } else {
-                return .init()
+                result += resolveModifiers(forClass: `class`, sheet: sheet)
             }
+            return result
         } else {
             return resolvedModifiers
         }
@@ -160,21 +167,40 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     var resolvedModifiers: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> = .init()
     
     mutating func update() {
+        let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
+        resolvedModifiers.removeAll()
+        if let style,
+           !style.isEmpty
+        {
+            resolvedModifiers += resolveModifiers(forStyle: style, sheet: sheet)
+        }
         if let `class`,
            !`class`.isEmpty
         {
-            resolvedModifiers = resolveModifiers(for: `class`)
-        } else {
-            resolvedModifiers.removeAll()
+            resolvedModifiers += resolveModifiers(forClass: `class`, sheet: sheet)
         }
     }
     
-    private func resolveModifiers(for `class`: String) -> ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
-        let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
+    private func resolveModifiers(
+        forClass `class`: String,
+        sheet: Stylesheet<Root>
+    ) -> ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
         return `class`
             .components(separatedBy: .whitespacesAndNewlines)
             .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
                 guard let modifiers = sheet.classes[$1] else { return }
+                $0.append(contentsOf: modifiers)
+            }
+    }
+    
+    private func resolveModifiers(
+        forStyle style: String,
+        sheet: Stylesheet<Root>
+    ) -> ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
+        return style
+            .split(separator: ";" as Character)
+            .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
+                guard let modifiers = sheet.classes[String($1)] else { return }
                 $0.append(contentsOf: modifiers)
             }
     }
