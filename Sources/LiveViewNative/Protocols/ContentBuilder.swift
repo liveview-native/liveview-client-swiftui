@@ -441,7 +441,8 @@ public extension ContentBuilder {
         
         let result = lookup(tag, element: element, context: context)
         
-        let classNames = element.attributeValue(for: "class")?.split(separator: " ") ?? []
+        let classNames = (element.attributeValue(for: "class")?.components(separatedBy: .whitespacesAndNewlines) ?? [])
+        + (element.attributeValue(for: "style")?.split(separator: ";" as Character) ?? []).map({ $0.trimmingCharacters(in: .whitespacesAndNewlines) })
         
         return classNames.reduce(result) {
             (context.resolvedStylesheet[String($1)] ?? []).reduce($0) {

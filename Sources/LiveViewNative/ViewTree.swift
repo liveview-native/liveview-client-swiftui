@@ -200,7 +200,7 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
         return style
             .split(separator: ";" as Character)
             .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
-                guard let modifiers = sheet.classes[String($1)] else { return }
+                guard let modifiers = sheet.classes[String($1).trimmingCharacters(in: .whitespacesAndNewlines)] else { return }
                 $0.append(contentsOf: modifiers)
             }
     }
