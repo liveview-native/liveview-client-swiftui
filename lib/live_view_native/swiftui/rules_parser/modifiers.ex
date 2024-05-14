@@ -223,7 +223,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       {
         parsec(:gesture_state),
         nil
-        # ~s'an event eg ‘event("search-event", throttle: 10_000)’'
       },
       {
         parsec(:attr),
