@@ -647,9 +647,9 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     # with our gettext backend as first argument. Translations are
     # available in the errors.po file (as we use the "errors" domain).
     if count = opts[:count] do
-      Gettext.dngettext(<%= @web_namespace %>.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(<%= inspect context.web_module %>.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(<%= @web_namespace %>.Gettext, "errors", msg, opts)
+      Gettext.dgettext(<%= inspect context.web_module %>.Gettext, "errors", msg, opts)
     end
   end<% else %>
   def translate_error({msg, opts}) do
@@ -657,9 +657,9 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     # uncommenting and adjusting the following code:
 
     # if count = opts[:count] do
-    #   Gettext.dngettext(<%= @web_namespace %>.Gettext, "errors", msg, msg, count, opts)
+    #   Gettext.dngettext(<%= inspect context.web_module %>.Gettext, "errors", msg, msg, count, opts)
     # else
-    #   Gettext.dgettext(<%= @web_namespace %>.Gettext, "errors", msg, opts)
+    #   Gettext.dgettext(<%= inspect context.web_module %>.Gettext, "errors", msg, opts)
     # end
 
     Enum.reduce(opts, msg, fn {key, value}, acc ->
