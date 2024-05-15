@@ -8,14 +8,6 @@ The [LiveView Native Live Form](https://github.com/liveview-native/liveview-nati
 
 Getting the most out of this material requires some understanding of the [Ecto](https://hexdocs.pm/ecto/Ecto.html) project and in particular a reasonably deep understanding of [Ecto.Changeset](https://hexdocs.pm/ecto/Ecto.Changeset.html). Review the Ecto documentation if you find any of the examples difficult to follow.
 
-## Installing LiveView Native Live Form
-
-To install LiveView Native Form, we need to add the `liveview-native-live-form` SwiftUI package to our iOS application.
-
-Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#liveviewnativeliveform) on that project's README to add the `liveview-native-live-form` package to the SwiftUI application you created in the [Create a SwiftUI Application](https://hexdocs.pm/live_view_native_swiftui/create-a-swiftui-application.html) guide.
-
-Come back to this guide and continue after you have finished the installation process.
-
 ## Creating a Basic Form
 
 The LiveView Native `mix lvn.install` task generates a [core_components.swiftui.ex](https://github.com/liveview-native/liveview-client-swiftui/blob/main/priv/templates/lvn.swiftui.gen/core_components.ex) for native SwiftUI function components similar to the [core_components.ex](https://github.com/phoenixframework/phoenix/blob/main/priv/templates/phx.gen.live/core_components.ex) file generated in a traditional phoenix application for web function components.
@@ -175,7 +167,7 @@ Here's an example of how we can use Ecto changesets with the LiveView Native Liv
 
 Evaluate the cell below and open your iOS application. Submit the form with an invalid email. You should notice a `has invalid format` error appear.
 
-<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCIgcGh4LXN1Ym1pdD1cInN1Ym1pdFwiIHBoeC1jaGFuZ2U9XCJ2YWxpZGF0ZVwiPlxuICAgICAgPC5pbnB1dCBmaWVsZD17QGZvcm1bOmVtYWlsXX0gdHlwZT1cIlRleHRGaWVsZFwiIHBsYWNlaG9sZGVyPVwiRW1haWxcIiAvPlxuICAgICAgPDphY3Rpb25zPlxuICAgICAgICA8LmJ1dHRvbiB0eXBlPVwic3VibWl0XCI+XG4gICAgICAgICAgU3VibWl0XG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kXG5cbmRlZm1vZHVsZSBTZXJ2ZXJXZWIuRXhhbXBsZUxpdmUgZG9cbiAgdXNlIFNlcnZlcldlYiwgOmxpdmVfdmlld1xuICB1c2UgU2VydmVyTmF0aXZlLCA6bGl2ZV92aWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgbW91bnQoX3BhcmFtcywgX3Nlc3Npb24sIHNvY2tldCkgZG9cbiAgICBjaGFuZ2VzZXQgPSBVc2VyLmNoYW5nZXNldCglVXNlcnt9LCAle30pXG4gICAgezpvaywgYXNzaWduKHNvY2tldCwgZm9ybTogdG9fZm9ybShjaGFuZ2VzZXQpLCBjaGVja19lcnJvcnM6IGZhbHNlKX1cbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkhcIlwiXCJcbiAgICA8LnNpbXBsZV9mb3JtIGZvcj17QGZvcm19IGlkPVwiZm9ybVwiIHBoeC1zdWJtaXQ9XCJzdWJtaXRcIiBwaHgtY2hhbmdlPVwidmFsaWRhdGVcIj5cbiAgICAgIDwuaW5wdXQgZmllbGQ9e0Bmb3JtWzplbWFpbF19IHBsYWNlaG9sZGVyPVwiRW1haWxcIiAvPlxuICAgICAgPDphY3Rpb25zPlxuICAgICAgICA8LmJ1dHRvbiB0eXBlPVwic3VibWl0XCI+XG4gICAgICAgICAgU3VibWl0XG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInN1Ym1pdFwiLCAle1widXNlclwiID0+IHBhcmFtc30sIHNvY2tldCkgZG9cbiAgICBjaGFuZ2VzZXQgPVxuICAgICAgVXNlci5jaGFuZ2VzZXQoJVVzZXJ7fSwgcGFyYW1zKVxuICAgICAgIyBGYWtpbmcgYSBEYXRhYmFzZSBpbnNlcnQgYWN0aW9uXG4gICAgICB8PiBNYXAucHV0KDphY3Rpb24sIDppbnNlcnQpXG4gICAgICB8PiBJTy5pbnNwZWN0KGxhYmVsOiBcIkZvcm0gRmllbGQgVmFsdWVzXCIpXG5cbiAgICB7Om5vcmVwbHksIGFzc2lnbihzb2NrZXQsIGZvcm06IHRvX2Zvcm0oY2hhbmdlc2V0KSl9XG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInZhbGlkYXRlXCIsICV7XCJ1c2VyXCIgPT4gcGFyYW1zfSwgc29ja2V0KSBkb1xuICAgIGNoYW5nZXNldCA9XG4gICAgICBVc2VyLmNoYW5nZXNldCglVXNlcnt9LCBwYXJhbXMpXG4gICAgICB8PiBNYXAucHV0KDphY3Rpb24sIDp2YWxpZGF0ZSlcblxuICAgIHs6bm9yZXBseSwgYXNzaWduKHNvY2tldCwgZm9ybTogdG9fZm9ybShjaGFuZ2VzZXQpKX1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,85],[87,1593],[1682,49],[1733,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCIgcGh4LXN1Ym1pdD1cInN1Ym1pdFwiIHBoeC1jaGFuZ2U9XCJ2YWxpZGF0ZVwiPlxuICAgICAgPC5pbnB1dCBmaWVsZD17QGZvcm1bOmVtYWlsXX0gdHlwZT1cIlRleHRGaWVsZFwiIHBsYWNlaG9sZGVyPVwiRW1haWxcIiAvPlxuICAgICAgPDphY3Rpb25zPlxuICAgICAgICA8LmJ1dHRvbiB0eXBlPVwic3VibWl0XCI+XG4gICAgICAgICAgU3VibWl0XG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kXG5cbmRlZm1vZHVsZSBTZXJ2ZXJXZWIuRXhhbXBsZUxpdmUgZG9cbiAgdXNlIFNlcnZlcldlYiwgOmxpdmVfdmlld1xuICB1c2UgU2VydmVyTmF0aXZlLCA6bGl2ZV92aWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgbW91bnQoX3BhcmFtcywgX3Nlc3Npb24sIHNvY2tldCkgZG9cbiAgICBjaGFuZ2VzZXQgPSBVc2VyLmNoYW5nZXNldCglVXNlcnt9LCAle30pXG4gICAgezpvaywgYXNzaWduKHNvY2tldCwgZm9ybTogdG9fZm9ybShjaGFuZ2VzZXQpKX1cbiAgZW5kXG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkhcIlwiXCJcbiAgICA8LnNpbXBsZV9mb3JtIGZvcj17QGZvcm19IGlkPVwiZm9ybVwiIHBoeC1zdWJtaXQ9XCJzdWJtaXRcIiBwaHgtY2hhbmdlPVwidmFsaWRhdGVcIj5cbiAgICAgIDwuaW5wdXQgZmllbGQ9e0Bmb3JtWzplbWFpbF19IHBsYWNlaG9sZGVyPVwiRW1haWxcIiAvPlxuICAgICAgPDphY3Rpb25zPlxuICAgICAgICA8LmJ1dHRvbiB0eXBlPVwic3VibWl0XCI+XG4gICAgICAgICAgU3VibWl0XG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInN1Ym1pdFwiLCAle1widXNlclwiID0+IHBhcmFtc30sIHNvY2tldCkgZG9cbiAgICBjaGFuZ2VzZXQgPVxuICAgICAgVXNlci5jaGFuZ2VzZXQoJVVzZXJ7fSwgcGFyYW1zKVxuICAgICAgIyBGYWtpbmcgYSBEYXRhYmFzZSBpbnNlcnQgYWN0aW9uXG4gICAgICB8PiBNYXAucHV0KDphY3Rpb24sIDppbnNlcnQpXG4gICAgICB8PiBJTy5pbnNwZWN0KGxhYmVsOiBcIkZvcm0gRmllbGQgVmFsdWVzXCIpXG5cbiAgICB7Om5vcmVwbHksIGFzc2lnbihzb2NrZXQsIGZvcm06IHRvX2Zvcm0oY2hhbmdlc2V0KSl9XG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInZhbGlkYXRlXCIsICV7XCJ1c2VyXCIgPT4gcGFyYW1zfSwgc29ja2V0KSBkb1xuICAgIGNoYW5nZXNldCA9XG4gICAgICBVc2VyLmNoYW5nZXNldCglVXNlcnt9LCBwYXJhbXMpXG4gICAgICB8PiBNYXAucHV0KDphY3Rpb24sIDp2YWxpZGF0ZSlcblxuICAgIHs6bm9yZXBseSwgYXNzaWduKHNvY2tldCwgZm9ybTogdG9fZm9ybShjaGFuZ2VzZXQpKX1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,85],[87,1572],[1661,49],[1712,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
 
 ```elixir
 defmodule ServerWeb.ExampleLive.SwiftUI do
@@ -202,7 +194,7 @@ defmodule ServerWeb.ExampleLive do
   @impl true
   def mount(_params, _session, socket) do
     changeset = User.changeset(%User{}, %{})
-    {:ok, assign(socket, form: to_form(changeset), check_errors: false)}
+    {:ok, assign(socket, form: to_form(changeset))}
   end
 
   @impl true
@@ -247,7 +239,7 @@ The [keyboardType](https://developer.apple.com/documentation/swiftui/view/keyboa
 
 Evaluate the example below to see the different keyboards as you focus on each input. If you don't see the keyboard, go to `I/O` -> `Keyboard` -> `Toggle Software Keyboard` to enable the software keyboard in your simulator.
 
-<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCI+XG4gICAgICA8LmlucHV0IGZpZWxkPXtAZm9ybVs6bnVtYmVyX3BhZF19IHR5cGU9XCJUZXh0RmllbGRcIiBjbGFzcz1cImtleWJvYXJkVHlwZSgubnVtYmVyUGFkKVwiLz5cbiAgICAgIDwuaW5wdXQgZmllbGQ9e0Bmb3JtWzplbWFpbF9hZGRyZXNzXX0gdHlwZT1cIlRleHRGaWVsZFwiIGNsYXNzPVwia2V5Ym9hcmRUeXBlKC5lbWFpbEFkZHJlc3MpXCIvPlxuICAgICAgPC5pbnB1dCBmaWVsZD17QGZvcm1bOnBob25lUGFkXX0gdHlwZT1cIlRleHRGaWVsZFwiIGNsYXNzPVwia2V5Ym9hcmRUeXBlKC5waG9uZVBhZClcIi8+XG4gICAgICA8OmFjdGlvbnM+XG4gICAgICAgIDwuYnV0dG9uIHR5cGU9XCJzdWJtaXRcIj5cbiAgICAgICAgICBTdWJtaXRcbiAgICAgICAgPC8uYnV0dG9uPlxuICAgICAgPC86YWN0aW9ucz5cbiAgICA8Ly5zaW1wbGVfZm9ybT5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmQifQ","chunks":[[0,85],[87,602],[691,47],[740,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCI+XG4gICAgICA8LmlucHV0IGZpZWxkPXtAZm9ybVs6bnVtYmVyX3BhZF19IHR5cGU9XCJUZXh0RmllbGRcIiBzdHlsZT1cImtleWJvYXJkVHlwZSgubnVtYmVyUGFkKVwiLz5cbiAgICAgIDwuaW5wdXQgZmllbGQ9e0Bmb3JtWzplbWFpbF9hZGRyZXNzXX0gdHlwZT1cIlRleHRGaWVsZFwiIHN0eWxlPVwia2V5Ym9hcmRUeXBlKC5lbWFpbEFkZHJlc3MpXCIvPlxuICAgICAgPC5pbnB1dCBmaWVsZD17QGZvcm1bOnBob25lUGFkXX0gdHlwZT1cIlRleHRGaWVsZFwiIHN0eWxlPVwia2V5Ym9hcmRUeXBlKC5waG9uZVBhZClcIi8+XG4gICAgICA8OmFjdGlvbnM+XG4gICAgICAgIDwuYnV0dG9uIHR5cGU9XCJzdWJtaXRcIj5cbiAgICAgICAgICBTdWJtaXRcbiAgICAgICAgPC8uYnV0dG9uPlxuICAgICAgPC86YWN0aW9ucz5cbiAgICA8Ly5zaW1wbGVfZm9ybT5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmQifQ","chunks":[[0,85],[87,602],[691,47],[740,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
 
 ```elixir
 defmodule ServerWeb.ExampleLive.SwiftUI do
@@ -256,9 +248,9 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
   def render(assigns) do
     ~LVN"""
     <.simple_form for={@form} id="form">
-      <.input field={@form[:number_pad]} type="TextField" class="keyboardType(.numberPad)"/>
-      <.input field={@form[:email_address]} type="TextField" class="keyboardType(.emailAddress)"/>
-      <.input field={@form[:phonePad]} type="TextField" class="keyboardType(.phonePad)"/>
+      <.input field={@form[:number_pad]} type="TextField" style="keyboardType(.numberPad)"/>
+      <.input field={@form[:email_address]} type="TextField" style="keyboardType(.emailAddress)"/>
+      <.input field={@form[:phonePad]} type="TextField" style="keyboardType(.phonePad)"/>
       <:actions>
         <.button type="submit">
           Submit
@@ -335,9 +327,9 @@ slot :actions, doc: "the slot for form actions, such as a submit button"
 def simple_form(assigns) do
   ~H"""
   <.form :let={f} for={@for} as={@as} {@rest}>
-    <div class="mt-10 space-y-8 bg-white">
+    <div style="mt-10 space-y-8 bg-white">
       <%= render_slot(@inner_block, f) %>
-      <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
+      <div :for={action <- @actions} style="mt-2 flex items-center justify-between gap-6">
         <%= render_slot(action, f) %>
       </div>
     </div>
@@ -390,20 +382,7 @@ attr :rest, :global,
 slot :inner_block
 
 def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
-  assigns
-  |> assign(field: nil, id: assigns.id || field.id)
-  |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
-  |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
-  |> assign_new(:value, fn -> field.value end)
-  |> assign(
-    :rest,
-    Map.put(assigns.rest, :class, [
-      Map.get(assigns.rest, :class, ""),
-      (if assigns.readonly or Map.get(assigns.rest, :disabled, false), do: "disabled-true", else: ""),
-      (if assigns.autocomplete == "off", do: "text-input-autocapitalization-never autocorrection-disabled", else: "")
-    ] |> Enum.join(" "))
-  )
-  |> input()
+  # Input Definition
 end
 ```
 
@@ -715,7 +694,7 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
       <.input field={@form[:name]} type="TextField" placeholder="name" />
       <.input field={@form[:email]} type="TextField" placeholder="email" />
       <.input field={@form[:password]} type="SecureField" placeholder="password" />
-      <.input field={@form[:age]} type="TextField" placeholder="age" class="keyboardType(.numberPad)" />
+      <.input field={@form[:age]} type="TextField" placeholder="age" style="keyboardType(.numberPad)" />
       <.input field={@form[:accepted_terms]} type="Toggle"/>
       <.input field={@form[:birthdate]} type="DatePicker"/>
       
