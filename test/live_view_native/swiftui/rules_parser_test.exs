@@ -366,6 +366,13 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert parse(input) == output
     end
+
+    test "event with no arguments" do
+      input = ~s{searchable(change: event("search-event"))}
+      output = {:searchable, [], [[change: {:__event__, [], ["search-event"]}]]}
+
+      assert parse(input) == output
+    end
   end
 
   describe "Sheet test" do
