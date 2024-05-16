@@ -31,7 +31,7 @@ struct NavStackEntryView<R: RootRegistry>: View {
     private var phase: LiveViewPhase<R> {
         switch coordinator.state {
         case .notConnected:
-            return .disconnected
+            return .connecting // `disconnected` phase only applies to the socket connection, not the channel.
         case .connecting:
             return .connecting
         case .connectionFailed(let error):
