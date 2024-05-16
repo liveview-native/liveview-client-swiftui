@@ -33,7 +33,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 @MainActor
 public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// The current state of the live view connection.
-    @Published public private(set) var state = LiveSessionState.notConnected
+    @Published public private(set) var state = LiveSessionState.setup
     
     /// The current URL this live view is connected to.
     public private(set) var url: URL
@@ -103,11 +103,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
-            let isDisconnected: Bool
-            if case .notConnected = next.last!.coordinator.state {
-                isDisconnected = true
-            } else {
-                isDisconnected = false
+            let isDisconnected = switch next.last!.coordinator.state {
+            case .setup, .disconnected:
+                true
+            default:
+                false
             }
             if next.last!.coordinator.url != next.last!.url || isDisconnected {
                 Task {
@@ -151,7 +151,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// You generally do not call this function yourself. It is called automatically when the ``LiveView`` appears.
     ///
-    /// This function is a no-op unless ``state`` is ``LiveSessionState/notConnected``.
+    /// This function is a no-op unless ``state`` is ``LiveSessionState/setup`` or ``LiveSessionState/disconnected`` or ``LiveSessionState/connectionFailed(_:)``.
     ///
     /// This is an async function which completes when the connection has been established or failed.
     ///
@@ -159,7 +159,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter httpBody: The HTTP body to send when requesting the dead render.
     public func connect(httpMethod: String? = nil, httpBody: Data? = nil) async {
         switch state {
-        case .notConnected, .connectionFailed:
+        case .setup, .disconnected, .connectionFailed:
             break
         default:
             return
@@ -252,7 +252,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
         self.socket?.disconnect()
         self.socket = nil
-        self.state = .notConnected
+        self.state = .disconnected
     }
     
     /// Forces the session to disconnect then connect.

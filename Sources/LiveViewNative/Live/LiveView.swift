@@ -201,7 +201,9 @@ public struct LiveView<
             return .connecting
         case let .connectionFailed(error):
             return .error(error)
-        case .notConnected:
+        case .setup:
+            return .connecting
+        case .disconnected:
             return .disconnected
         case .reconnecting:
             return .reconnecting(_ConnectedContent<R>(session: session))
