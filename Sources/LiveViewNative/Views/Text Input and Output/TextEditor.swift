@@ -20,7 +20,7 @@ import SwiftUI
 @available(iOS 16.0, macOS 13.0, *)
 @LiveElement
 struct TextEditor<Root: RootRegistry>: TextFieldProtocol {
-    @FormState("text") var text: String?
+    @FormState("text", default: "") var text: String?
     @LiveElementIgnored
     @FocusState private var isFocused: Bool
     
@@ -55,6 +55,7 @@ struct TextEditor<Root: RootRegistry>: TextFieldProtocol {
                 $liveElement.element.buildPhxValuePayload()
                     .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
             )
+            Task { try await _text.handleBlur() }
         }
     }
 }
