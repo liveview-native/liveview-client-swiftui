@@ -58,7 +58,7 @@ defmodule LiveViewNative.SwiftUI.MixProject do
       # {:live_view_native, "~> 0.3.0-rc.1"},
       {:live_view_native, github: "liveview-native/live_view_native", override: true},
       {:live_view_native_stylesheet, "~> 0.3.0-rc.1", only: :test},
-      {:live_view_native_test, github: "liveview-native/live_view_native_test", tag: "v0.3.0", only: :test},
+      {:live_view_native_test, github: "liveview-native/live_view_native_test", branch: "main", only: :test},
       {:nimble_parsec, "~> 1.3"}
     ]
   end
