@@ -418,7 +418,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 socket.off(refs)
                 continuation.resume(returning: socket)
             })
-            refs.append(socket.onError { [weak self, weak socket] (error) in
+            refs.append(socket.onError { [weak self, weak socket] (error, response) in
                 guard let socket else { return }
                 guard self != nil else {
                     socket.disconnect()
