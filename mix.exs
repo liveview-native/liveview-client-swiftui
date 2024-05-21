@@ -122,13 +122,13 @@ defmodule LiveViewNative.SwiftUI.MixProject do
           "livebooks/markdown/forms-and-validation.md"
         ]
 
-    ["README.md"] ++ guides ++ generated_docs ++ livebooks
+    ["README.md", "guides/syntax_conversion.cheatmd"] ++ guides ++ generated_docs ++ livebooks
   end
 
   defp groups_for_extras do
     guide_groups = [
       Architecture: Path.wildcard("guides/architecture/*.md"),
-      Livebooks: ~r/markdown_livebooks/
+      Livebooks: Path.wildcard("livebooks/markdown/*.md")
     ]
 
     generated_groups =
