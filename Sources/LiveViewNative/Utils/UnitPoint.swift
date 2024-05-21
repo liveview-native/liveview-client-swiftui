@@ -87,3 +87,23 @@ extension UnitPoint {
         }
     }
 }
+
+extension UnitPoint: Decodable {
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let named = try container.decodeIfPresent(String.self, forKey: .named) {
+            try self.init(from: named)
+        } else {
+            self.init(
+                x: try container.decode(Double.self, forKey: .x),
+                y: try container.decode(Double.self, forKey: .y)
+            )
+        }
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case x
+        case y
+        case named
+    }
+}

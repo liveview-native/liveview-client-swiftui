@@ -41,6 +41,16 @@ struct AsyncImage<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     private var scale: Double = 1
     
+    /// The transaction to use when transitioning between async image phases.
+    ///
+    /// Typically, you would provide an `animation` to the transaction
+    ///
+    /// ```elixir
+    /// %{ animation: :default }
+    /// ```
+    @_documentation(visibility: public)
+    private var transaction: SwiftUI.Transaction = Transaction()
+    
     private var image: Bool = false
     private var error: Bool = false
     
@@ -62,7 +72,7 @@ struct AsyncImage<Root: RootRegistry>: View {
         SwiftUI.AsyncImage(
             url: url.flatMap({ URL(string: $0, relativeTo: context.url) }),
             scale: scale,
-            transaction: Transaction(animation: .default)
+            transaction: transaction
         ) { phase in
             SwiftUI.Group {
                 switch phase {

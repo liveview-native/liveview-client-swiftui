@@ -30,7 +30,7 @@ import SwiftUI
 @_documentation(visibility: public)
 @LiveElement
 struct SecureField<Root: RootRegistry>: TextFieldProtocol {
-    @FormState("text") var text: String?
+    @FormState("text", default: "") var text: String?
     @LiveElementIgnored
     @FocusState private var isFocused: Bool
     
@@ -68,6 +68,7 @@ struct SecureField<Root: RootRegistry>: TextFieldProtocol {
                 $liveElement.element.buildPhxValuePayload()
                     .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
             )
+            Task { try await _text.handleBlur() }
         }
     }
 }

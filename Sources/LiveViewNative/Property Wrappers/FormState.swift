@@ -59,14 +59,14 @@ public struct FormState<Value: FormValue> {
     private let defaultValue: Value
     private let sendChangeEvents: Bool
     @StateObject private var data = FormStateData<Value>()
-    // non-nil iff data.mode == .bound
-    @ChangeTracked private var boundValue: Value
     
     let valueAttribute: AttributeName
     
     @ObservedElement private var element: ElementNode
     @Environment(\.formModel) private var formModel: FormModel?
     @Environment(\.coordinatorEnvironment) private var coordinator
+    
+    @Event("phx-change", type: "form") private var changeEvent
     
     /// Creates a `FormState` property wrapper with a default value that will be used when no other value is present.
     ///
@@ -88,7 +88,6 @@ public struct FormState<Value: FormValue> {
     /// ```
     public init(_ valueAttribute: AttributeName, default: Value, sendChangeEvents: Bool = true) {
         self.valueAttribute = valueAttribute
-        self._boundValue = .init(wrappedValue: `default`, form: valueAttribute, sendChangeEvent: sendChangeEvents)
         self.defaultValue = `default`
         self.sendChangeEvents = sendChangeEvents
     }
@@ -121,7 +120,7 @@ public struct FormState<Value: FormValue> {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .local:
-                return boundValue
+                return defaultValue
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
@@ -137,22 +136,23 @@ public struct FormState<Value: FormValue> {
         }
         nonmutating set {
             resolveMode()
-            let oldValue = wrappedValue
             switch data.mode {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .local:
-                boundValue = newValue
+                break
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
                     return
                 }
-                formModel[elementName] = newValue
-                // todo: this will send a change event for both the form and the input if the input has one, check if that matches web
-            }
-            if oldValue != newValue {
-                sendChangeEventIfNecessary()
+                formModel.setValue(
+                    newValue,
+                    forName: elementName,
+                    changeEvent: sendChangeEvents
+                        ? (element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil)
+                        : nil
+                )
             }
         }
     }
@@ -181,38 +181,34 @@ public struct FormState<Value: FormValue> {
                     formModel.setInitialValue(initialValue, forName: elementName)
                     data.mode = .form(formModel)
                 } else {
-                    print("Warning: @FormState used on a name-less element inside of a <LiveForm>. This may not behave as expected.")
+                    logger.warning("@FormState used on a name-less element inside of a <LiveForm>. This may not behave as expected.")
                     data.mode = .local
                 }
             } else {
+                logger.warning("Form element used outside of a <LiveForm>. This may not behave as expected.")
                 data.mode = .local
             }
         }
     }
     
-    private func sendChangeEventIfNecessary() {
+    /// Call this function when the form control loses focus.
+    public func handleBlur() async throws {
         switch data.mode {
+        case .unknown:
+            break
         case .local:
-            return
-        default:
-            guard sendChangeEvents,
-                  let changeEvent = element.attributeValue(for: "phx-change") else {
-                return
-            }
-            let name = element.attributeValue(for: "name") ?? "value"
-            let value: String
-            if let wrappedValue = wrappedValue as? String {
-                value = wrappedValue
-            } else {
-                let encoder = JSONEncoder()
-                value = try! String(data: encoder.encode(wrappedValue), encoding: .utf8)!
-            }
-            Task {
-                try? await coordinator!.pushEvent("native-form", changeEvent, [name: value], nil)
-            }
+            break
+        case .form(let formModel):
+            guard let elementName = element.attributeValue(for: "name"),
+                  let value = formModel[elementName]
+            else { return }
+            try await formModel.sendChangeEvent(
+                value,
+                for: elementName,
+                event: element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil
+            )
         }
     }
-    
 }
 
 extension FormState: DynamicProperty {
