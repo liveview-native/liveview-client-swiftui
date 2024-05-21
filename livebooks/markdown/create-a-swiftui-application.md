@@ -58,17 +58,19 @@ To create an iOS application, select the **iOS** and **App** options and click *
 
 Choose options for your new project that match the following image, then click **Next**.
 
+![Xcode Choose Options For Your New Project](https://github.com/liveview-native/documentation_assets/blob/main/xcode-choose-options-for-your-new-project.png?raw=true)
+
 ### What do these options mean?
 
-* **Product Name:** The name of the application. This can be any valid name. We've chosen **Guides`.
+* **Product Name:** The name of the application. This can be any valid name. We've chosen **Guides**.
 * **Organization Identifier:** A reverse DNS string that uniquely identifies your organization. If you don't have a company identifier, [Apple recommends](https://developer.apple.com/documentation/xcode/creating-an-xcode-project-for-an-app) using **com.example.your_name** where **your_name** is your organization or personal name.
 * **Interface:**: The Xcode user interface to use. Select **SwiftUI** to create an app that uses the SwiftUI app lifecycle.
 * **Language:** Determines which language Xcode should use for the project. Select **Swift**.
 
 
+
 <!-- livebook:{"break_markdown":true} -->
 
-![Xcode Choose Options For Your New Project](https://github.com/liveview-native/documentation_assets/blob/main/xcode-choose-options-for-your-new-project.png?raw=true)
 
 <!-- livebook:{"break_markdown":true} -->
 
