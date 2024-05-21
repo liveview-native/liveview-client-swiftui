@@ -1,0 +1,227 @@
+# SwiftUI to LiveView Native Conversion Cheat Sheet
+
+In this short guide, we'll cover the fundamental SwiftUI syntax you'll encounter in SwiftUI guides and documentation and how to convert that syntax into LiveView Native templates and stylesheets. We've omitted deeper explanations of each concept to keep this guide brief for use as a convenient cheat sheet.
+
+You may wish to bookmark this guide and return to it as needed. In the interest of quick reference, we've kept explanations short. We hope to provide more guides in the future that will help explain these concepts deeper. Stay tuned to the DockYard blog for more guides and subscribe to the [LiveView Native Newsletter](https://dockyard.com/newsletter) for the latest updates on LiveView Native development
+
+You can also find more documentation and guides on the [LiveView Native Hexdocs](https://hexdocs.pm/live_view_native/overview.html).
+
+## Views
+
+SwiftUI Views are the building blocks of user interfaces in Swift applications. They represent the visual elements of an app, such as buttons, text fields, and images, and are structured hierarchically to compose complex interfaces. In LiveView Native, we represent views using syntax similar to HTML tags.
+
+## 
+
+{: .col-2}
+
+### SwiftUI
+
+```swift
+Text("Hello, SwiftUI")
+```
+
+### LiveView Native
+
+```heex
+<Text>Hello, SwiftUI</Text>
+```
+
+## Modifiers
+
+SwiftUI modifiers are functions used to modify the appearance, behavior, or layout of views declaratively. They enable developers to apply various transformations and adjustments to views, such as changing colors, fonts, sizes, and alignments or adding animations and gestures. These modifiers are chainable, allowing for complex and dynamic interfaces through multiple modifiers applied to a single view.
+
+In LiveView Native, we use stylesheets with the `class` attribute or the inline `style` attribute. To be more similar to CSS stylesheets, LiveView Native uses semi-colons `;` to split modifiers rather than the `.` used by SwiftUI.
+
+## 
+
+{: .col-2}
+
+### SwiftUI
+
+```swift
+Text("Hello, SwiftUI")
+    .font(.title)
+    .foregroundStyle(.blue)
+```
+
+### LiveView Native
+
+```elixir
+<Text style={"font(.title); foregroundStyle(.blue);"}>Hello, SwiftUI</Text>
+```
+
+Spaces and using newline characters are optional to improve organization.
+
+```elixir
+<Text style={
+    "
+    font(.title); 
+    foregroundStyle(.blue);
+    "
+}>Hello, SwiftUI</Text>
+```
+
+## Attributes
+
+In SwiftUI, attributes are properties that define the appearance and behavior of views. Unlike modifiers, attributes set the initial properties of views, while modifiers dynamically modify or augment a view after it's created. Also, modifiers typically affect child views, whereas attributes only affect one view. In practice, attributes are more similar to parameters in a function, whereas modifiers are chainable functions that modify a view. 
+
+## 
+
+{: .col-2}
+
+### SwiftUI
+
+```swift
+VStack(alignment: .leading)
+```
+
+### LiveView Native
+
+```heex
+<VStack alignment="leading"></VStack>
+```
+
+## Unnamed Attributes
+
+In many SwiftUI Views, the first argument to the function is often an unnamed attribute. SwiftUI uses an underscore `_` to indicate the attribute is unnamed. Unnamed attributes are just optional syntax sugar to avoid passing in the name.
+
+In these cases, in LiveView Native, we use the attribute's name to provide the value.
+
+## 
+
+{: .col-2}
+
+### SwiftUI
+
+Unnamed version
+
+```swift
+Image("turtlerock")
+```
+
+Named version (equivalent to the above)
+
+```swift
+Image(name: "turtlerock")
+```
+
+### LiveView Native
+
+```heex
+<Image name="turtlerock"></Image>
+```
+
+## 
+
+### Finding the Attribute Name
+
+You can find the attributes to a view within the Topics section of the views documentation in the corresponding `init` definition. For example, here's the [Image Topics section](https://developer.apple.com/documentation/swiftui/image#creating-an-image) where you can find the [Image's init](https://developer.apple.com/documentation/swiftui/image/init(_:bundle:)) function definition.
+
+The init definition includes a `_ name` unnamed attribute whose value is a `String`. Here's the same snippet you can find in the documentation above.
+
+```swift
+init(
+    _ name: String,
+    bundle: Bundle? = nil
+)
+```
+
+## Views as Arguments
+
+SwiftUI Modifiers can accept views as arguments. Supporting views as arguments presents a challenge for LiveView Native as there's no equivalent in a CSS-inspired paradigm. It would be like having a CSS property accept HTML elements as a value.
+
+To support this pattern, LiveView Native represents SwiftUI Views using dot notation within a stylesheet.
+
+## 
+
+{: .col-2}
+
+### SwiftUI
+
+```swift
+Image(name: "turtlerock")
+    .clipShape(Circle())
+```
+
+### LiveView Native
+
+Stylesheet
+
+```elixir
+defmodule MyAppWeb.Styles.SwiftUI do
+  use LiveViewNative.Stylesheet, :swiftui
+
+  ~SHEET"""
+  "clipShape:circle" do
+    clipShape(.circle)
+  end
+  """
+end
+```
+
+Template
+
+```heex
+<Image class="clipShape:circle" name="turtlerock"></Image>
+```
+
+## Named Content Areas
+
+SwiftUI Views can have content area modifiers that accept one or more views inside a closure (the curly `{}` brackets). Views within the named content area can even have their own modifiers.
+
+LiveView Native supports named content areas through the `template` attribute. The stylesheet specifies a name for the content area using an atom. The view's `template` attribute should match the atom used.
+
+## 
+
+{: .col-2}
+
+### SwiftUI
+
+Unnamed version
+
+```swift
+Image("turtlerock")
+    .overlay {
+        Circle().stroke(.white, lineWidth: 4)
+    }
+```
+
+Named version (equivalent to the above)
+
+```swift
+Image("turtlerock")
+    .overlay {
+        content: Circle().stroke(.white, lineWidth: 4)
+    }
+```
+
+### LiveView Native
+
+Stylesheet
+
+```elixir
+defmodule MyAppWeb.Styles.SwiftUI do
+  use LiveViewNative.Stylesheet, :swiftui
+
+  ~SHEET"""
+  "overlay-circle" do
+    overlay(content: :circle)
+  end
+  "white-border" do
+    stroke(.white, lineWidth: 4)
+  end
+  """
+end
+```
+
+Template
+
+```heex
+<Image class="overlay-circle" name="turtlerock">
+  <Circle class="white-border" template="circle">
+</Image>
+```
+
+## Conclusion
+
+Use this cheatsheet for reference whenever you're converting SwiftUI examples into LiveView Native code and you should have the tools you need to build Native UIs from SwiftUI examples. We strongly encourage you to bookmark this page as it will likely be helpful in the future.
