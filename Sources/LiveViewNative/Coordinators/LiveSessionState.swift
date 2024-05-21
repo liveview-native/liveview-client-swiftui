@@ -10,21 +10,23 @@ import Foundation
 /// The live view connection state.
 public enum LiveSessionState {
     /// The coordinator has not yet connected to the live view.
-    case notConnected
+    case setup
     /// The coordinator is attempting to connect.
     case connecting
     /// The coordinator is attempting to reconnect.
     case reconnecting
     /// The coordinator has connected and the view tree can be rendered.
     case connected
-    // todo: disconnected state?
+    /// The coordinator is disconnected.
+    case disconnected
     /// The coordinator failed to connect and produced the given error.
     case connectionFailed(Error)
     
-    /// Either `notConnected` or `connecting`
+    /// Either `setup` or `connecting`
     var isPending: Bool {
         switch self {
-        case .notConnected,
+        case .setup,
+             .disconnected,
              .connecting,
              .reconnecting:
             return true
