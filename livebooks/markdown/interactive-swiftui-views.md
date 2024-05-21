@@ -356,7 +356,7 @@ The `LiveForm` view must wrap views to capture events from the `phx-change` or `
 
 Here's some example boilerplate for a `LiveForm`. The `id` attribute is required.
 
-```html
+```heex
 <LiveForm id="some-id" phx-change="change" phx-submit="submit">
   <!-- inputs go here -->
   <LiveSubmitButton>Button Text</LiveSubmitButton>

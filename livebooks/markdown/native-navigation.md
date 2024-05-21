@@ -50,7 +50,7 @@ end
 
 Visit http://localhost:4000/?_format=swiftui. The `?_format` query parameter specifies the Phoenix server should respond with the swiftui template rather than the web template. You should see source code similar to the example below. We've replaced long tokens with `"some token"` for the sake of readability.
 
-```html
+```heex
 <csrf-token value="sometoken"></csrf-token>
 <Style url="/assets/app.swiftui.styles"></Style>
 <NavigationStack>

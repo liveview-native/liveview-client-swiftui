@@ -109,13 +109,13 @@ end
 
 You can write multiple modifiers separated by a semi-color `;`.
 
-```html
+```heex
 <Text style="foregroundStyle(.blue);font(.title)">Hello, from LiveView Native!</Text>
 ```
 
 To include newline characters in your string wrap the string in curly brackets `{}`. Using multiple lines can better organize larger amounts of modifiers.
 
-```html
+```heex
 <Text style={
   "
   foregroundStyle(.blue);
@@ -130,7 +130,7 @@ Hello, from LiveView Native!
 
 LiveView Native parses styles in your project to define a single stylesheet. You can find the AST representation of this stylesheet at http://localhost:4000/assets/app.swiftui.styles. This stylesheet is compiled on the server and then sent to the client. For this reason, class names must be fully-formed. For example, the following style using string interpolation is **invalid**.
 
-```html
+```heex
 <Text style={"foregroundStyle(.#{Enum.random(["red", "blue"])})"}>
 Invalid Example
 </Text>
@@ -138,7 +138,7 @@ Invalid Example
 
 However, we can still use dynamic styles so long as the modifiers are fully formed.
 
-```html
+```heex
 <Text style={"#{Enum.random(["foregroundStyle(.red)", "foregroundStyle(.blue)]")}"}>
 Red or Blue Text
 </Text>
@@ -373,7 +373,7 @@ end
 
 You can apply these classes through the `class` attribute.
 
-```html
+```heex
 <Text class="red-title">Red Title Text</Text>
 ```
 
@@ -445,7 +445,7 @@ end
 
 Then use the `template` attribute on the view to be injected into the stylesheet.
 
-```html
+```heex
 <Image style="overlay-circle">
   <Circle template="circle" style="stroke(.red, lineWidth: 4)" >
 </Image>
