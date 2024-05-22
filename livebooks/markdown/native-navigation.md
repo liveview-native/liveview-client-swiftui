@@ -215,7 +215,7 @@ You can see this for yourself using the following example. Click each of the but
 
 ```elixir
 # This module built for example purposes to persist logs between mounting LiveViews.
-defmodule PersistantLogs do
+defmodule PersistentLogs do
   def get do
     :persistent_term.get(:logs)
   end
@@ -229,7 +229,7 @@ defmodule PersistantLogs do
   end
 end
 
-PersistantLogs.reset()
+PersistentLogs.reset()
 
 defmodule ServerWeb.ExampleLive.SwiftUI do
   use ServerNative, [:render_component, format: :swiftui]
@@ -261,22 +261,22 @@ defmodule ServerWeb.ExampleLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    PersistantLogs.put("MOUNT")
+    PersistentLogs.put("MOUNT")
 
     {:ok,
      assign(socket,
        socket_id: socket.id,
        connected: connected?(socket),
-       logs: PersistantLogs.get(),
+       logs: PersistentLogs.get(),
        live_view_pid: inspect(self())
      )}
   end
 
   @impl true
   def handle_params(_params, _url, socket) do
-    PersistantLogs.put("HANDLE PARAMS")
+    PersistentLogs.put("HANDLE PARAMS")
 
-    {:noreply, assign(socket, :logs, PersistantLogs.get())}
+    {:noreply, assign(socket, :logs, PersistentLogs.get())}
   end
 
   @impl true
@@ -285,18 +285,18 @@ defmodule ServerWeb.ExampleLive do
 
   @impl true
   def handle_event("redirect", _params, socket) do
-    PersistantLogs.reset()
-    PersistantLogs.put("--REDIRECTING--")
+    PersistentLogs.reset()
+    PersistentLogs.put("--REDIRECTING--")
     {:noreply, redirect(socket, to: "/")}
   end
 
   def handle_event("navigate", _params, socket) do
-    PersistantLogs.put("---NAVIGATING---")
+    PersistentLogs.put("---NAVIGATING---")
     {:noreply, push_navigate(socket, to: "/")}
   end
 
   def handle_event("patch", _params, socket) do
-    PersistantLogs.put("----PATCHING----")
+    PersistentLogs.put("----PATCHING----")
     {:noreply, push_patch(socket, to: "/")}
   end
 end

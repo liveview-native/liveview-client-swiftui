@@ -90,7 +90,7 @@ First, we'll see how to use this abstraction at a basic level, then later we'll 
 
 ### A Basic Form
 
-This code below demonstrates how the basic skeleton of a native and web form that share event handlers for the `phx-submit` and `phx-change` handlers.
+The code below demonstrates a basic form that uses the same event handlers for the `phx-change` and `phx-submit` events on both the web and native versions of the form. 
 
 We'll break down and understand the individual parts of this form in a moment.
 
@@ -178,7 +178,7 @@ The interface for the native `simple_form/1` and web `simple_form/1` is intentio
 </.simple_form>
 ```
 
-We'll go into the internal implementation details later on, but for now you can treat these components as functionally identical. Both require a unique `id` and accept the `for` attribute that contains the [Phoenix.HTML.Form] datastructure containing form fields, error messages, and other form data.
+We'll go into the internal implementation details later on, but for now you can treat these components as functionally identical. Both require a unique `id` and accept the `for` attribute that contains the [Phoenix.HTML.Form](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html) datastructure containing form fields, error messages, and other form data.
 
 If you need a refresher on forms in Phoenix, see the [Form Bindings](https://hexdocs.pm/phoenix_live_view/form-bindings.html) HexDoc documentation.
 
