@@ -16,7 +16,7 @@ extension ModifierGenerator {
         static let configuration = CommandConfiguration(abstract: "Output a list of the names of all available modifiers.")
         
         @Option(
-            help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface`",
+            help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface`",
             transform: { URL(filePath: $0) }
         )
         var interface: URL
@@ -156,25 +156,19 @@ extension ModifierGenerator {
             }
             
             var result = ""
+            let style: String
             
             if parameters.isEmpty {
-                result.append(#"""
-                ```elixir
-                # stylesheet
-                "example" do
-                  \#(name)()
-                end
-                ```
-                """#)
+                style = #"\#(name)()"#
             } else {
-                result.append(#"""
-                ```elixir
-                # stylesheet
-                "example" do
-                  \#(name)(\#(parameters.joined(separator: ", ")))
-                end
-                ```
-                """#)
+                style = #"\#(name)(\#(parameters.joined(separator: ", ")))"#
+            }
+            
+            let quotedStyle: String
+            if style.contains(#"""# as Character) {
+                quotedStyle = #"'\#(style)'"#
+            } else {
+                quotedStyle = #""\#(style)""#
             }
             
             let changeEvent: String? = switch changeTracked.count {
@@ -196,7 +190,7 @@ extension ModifierGenerator {
                     
                     ```html
                     <%!-- template --%>
-                    <Element class="example" \#(resolvedAttributes.joined(separator: " ")) />
+                    <Element style=\#(quotedStyle) \#(resolvedAttributes.joined(separator: " ")) />
                     ```
                     """#)
                 } else {
@@ -204,7 +198,7 @@ extension ModifierGenerator {
                     
                     ```html
                     <%!-- template --%>
-                    <Element class="example" \#(resolvedAttributes.joined(separator: " "))>
+                    <Element style=\#(quotedStyle) \#(resolvedAttributes.joined(separator: " "))>
                     \#(templates.map({ "  \($0)" }).joined(separator: "\n"))
                     </Element>
                     ```
@@ -215,7 +209,7 @@ extension ModifierGenerator {
                 
                 ```html
                 <%!-- template --%>
-                <Element class="example">
+                <Element style=\#(quotedStyle)>
                 \#(templates.map({ "  \($0)" }).joined(separator: "\n"))
                 </Element>
                 ```
