@@ -237,6 +237,30 @@ struct ContentView: View {
 
 <!-- livebook:{"break_markdown":true} -->
 
+<details style="background-color: lightgreen; padding: 1rem; margin: 1rem 0;">
+<summary>(Optional) configuration for using a physical device</summary>
+
+You may wish to use a physical device instead of a simulator. If so, you'll need to change the `development` configuration to use your machine's IP address instead of localhost as seen in the example below.
+
+```elixir
+#LiveView(
+  .automatic(
+    development: URL(string: "http://192.168.1.xxx:4000")!,
+    production: URL(string: "https://example.com")!
+  )
+)
+```
+
+Make sure to replace `192.168.1.xxx` with your IP address. You can run the following command in the IEx shell to find your machine's IP address:
+
+```elixir
+iex> IO.puts :os.cmd(~c[ipconfig getifaddr en0])
+```
+
+</details>
+
+<!-- livebook:{"break_markdown":true} -->
+
 The code above sets up the SwiftUI LiveView. By default, the SwiftUI LiveView connects to any Phoenix app running on http://localhost:4000.
 
 <!-- livebook:{"break_markdown":true} -->
