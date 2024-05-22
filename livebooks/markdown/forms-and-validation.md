@@ -18,7 +18,7 @@ In the `core_components.swiftui.ex` file there's a `simple_form/1` component tha
 
 First, we'll see how to use this abstraction at a basic level, then later we'll dive deeper into how forms work under the hood in LiveView Native.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### A Basic Form
 
@@ -105,7 +105,7 @@ We'll go into the internal implementation details later on, but for now you can 
 
 If you need a refresher on forms in Phoenix, see the [Form Bindings](https://hexdocs.pm/phoenix_live_view/form-bindings.html) HexDoc documentation.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Inputs
 
@@ -274,7 +274,7 @@ We've already been using the two main functions, `simple_form/1` and `input/1`. 
 
 in this section, we'll dive deeper into these abstractions so that you can build your own custom forms.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Simple Form
 
@@ -338,7 +338,7 @@ def simple_form(assigns) do
 end
 ```
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Input
 
@@ -417,7 +417,7 @@ Here's a list of valid options with links to their documentation:
 
 For more on the form compatible views see the [Interactive SwiftUI Views](https://hexdocs.pm/liveview-client-swiftui/interactive-swiftui-views.html) guide.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Core Components vs Views
 
@@ -441,7 +441,7 @@ Let's take the Slider view as an example. The Slider view accepts the `min` and 
   end
 ```
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Labels with Form Data
 
@@ -608,7 +608,7 @@ Typically, you won't need to use these views directly and will instead rely upon
 
 Taking everything you've learned, you're going to create a more complex user form with data validation and error displaying.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### User Changeset
 

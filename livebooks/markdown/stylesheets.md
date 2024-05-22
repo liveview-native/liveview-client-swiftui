@@ -31,7 +31,7 @@ SwiftUI employs **modifiers** to style and customize views. In SwiftUI syntax, e
 
 Modifers can be applied through a LiveView Native Stylesheet and applying them through inline styles as described in the [LiveView Native Stylesheets](#liveview-native-stylesheets) section, or can be applied directly through the `style` attribute as described in the [Utility Styles](#utility-styles) section.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### SwiftUI Modifiers
 
@@ -50,7 +50,7 @@ Text("Some Red Text")
   .font(.title)
 ```
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Implicit Member Expression
 
@@ -61,7 +61,7 @@ Text("Some Red Text")
   .foregroundStyle(Color.red)
 ```
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### LiveView Native Modifiers
 
@@ -288,7 +288,7 @@ foregroundStyle(Color("MyColor"))
 
 Generally using the asset catalog is more performant and customizable than using custom RGB colors with the [Color](https://developer.apple.com/documentation/swiftui/color) struct.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Your Turn: Custom Colors in the Asset Catalog
 
@@ -296,19 +296,19 @@ Custom colors can be defined in the asset catalog (https://developer.apple.com/d
 
 To create a new color go to the `Assets` folder in your iOS app and create a new color set.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ![](https://github.com/liveview-native/documentation_assets/blob/main/asset-catalogue-create-new-color-set.png?raw=true)
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 To create a color set, enter the RGB values or a hexcode as shown in the image below. If you don't see the sidebar with color options, click the icon in the top-right of your Xcode app and click the **Show attributes inspector** icon shown highlighted in blue.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ![](https://github.com/liveview-native/documentation_assets/blob/main/asset-catalogue-modify-my-color.png?raw=true)
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 The defined color is now available for use within LiveView Native styles. However, the app needs to be re-compiled to pick up a new color set.
 
@@ -388,7 +388,7 @@ Image("logo")
 
 However, LiveView Native does not support using SwiftUI views directly within a stylesheet. Instead, we have a few alternative options in cases like this where we want to use a view within a modifier.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Using Members on a Given Type
 
@@ -418,7 +418,7 @@ Which is simple to convert to the LiveView Native DSL using the rules we've alre
 end
 ```
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Injecting a View
 
@@ -455,7 +455,7 @@ Then use the `template` attribute on the view to be injected into the stylesheet
 
 You can find documentation and examples of modifiers on [Apple's SwiftUI documentation](https://developer.apple.com/documentation/swiftui) which is comprehensive and thorough, though it may feel unfamiliar at first for Elixir Developers when compared to HexDocs.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Finding Modifiers
 

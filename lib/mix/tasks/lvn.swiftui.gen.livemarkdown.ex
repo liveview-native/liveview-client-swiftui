@@ -39,6 +39,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Livemarkdown do
     """, "")
     |> String.replace(~r/\|\> Server\.SmartCells\.LiveViewNative\.register\(\".+\"\)\n\nimport Server\.Livebook, only: \[\]\nimport Kernel\n:ok\n/, "")
     |> String.replace(~r/\|\> Server\.SmartCells\.RenderComponent\.register\(\)\n\nimport Server\.Livebook, only: \[\]\nimport Kernel\n:ok\n/, "")
+    |> String.replace(~s[<!-- livebook:{"break_markdown":true} -->], "")
   end
 
   defp convert_details_sections(content) do
