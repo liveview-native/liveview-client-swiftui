@@ -9,7 +9,7 @@ extension ModifierGenerator {
         static let configuration = CommandConfiguration(abstract: "Generate a `stylesheet-language.json` file compatible with the VS Code extension.")
         
         @Option(
-            help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface`",
+            help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface`",
             transform: { URL(filePath: $0) }
         )
         var interface: URL?
