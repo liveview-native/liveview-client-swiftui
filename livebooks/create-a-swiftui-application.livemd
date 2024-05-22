@@ -182,7 +182,7 @@ At this point, you'll need to enable permissions for plugins used by LiveView Na
 
 <!-- livebook:{"break_markdown":true} -->
 
-You'll also need to manually navigate to the error tab (shown below) to trust and enable packages. Click on each error to trigger a prompt. Select **Trust & Enable All** to enable the plugin.
+You'll also need to manually navigate to the error tab (shown below) to trust and enable packages. Click on each error to trigger a prompt. Select **Trust & Enable** to enable the plugin.
 
 The specific plugins are subject to change. At the time of writing you need to enable `LiveViewNativeStylesheetMacros`, `LiveViewNativeMacros`, and `CasePathMacros` as shown in the images below.
 
