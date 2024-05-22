@@ -492,16 +492,16 @@ However, LiveView Native does not support using SwiftUI views directly within a 
 
 ### Using Members on a Given Type
 
-We can't use the [Circle](https://developer.apple.com/documentation/swiftui/circle) view directly. However, if you look at the [clipShape](https://developer.apple.com/documentation/swiftui/view/clipshape(_:style:)) documentation you'll notice it accepts the [Shape](https://developer.apple.com/documentation/swiftui/shape) type. This type defines the [circle](https://developer.apple.com/documentation/swiftui/shape/circle) property which we can use since it's equivalent to the [Circle](https://developer.apple.com/documentation/swiftui/circle) view for our purposes.
+We can't use the [Circle](https://developer.apple.com/documentation/swiftui/circle) view directly. However, the [Getting standard shapes](https://developer.apple.com/documentation/swiftui/shape#getting-standard-shapes) documentation describes methods for accessing standard shapes. For example, we can use `Circle.circle` for the circle shape.
 
-We can use `Shape.circle` instead of the `Circle` view. So, the following code is equivalent to the example above.
+We can use `Circle.circle` instead of the `Circle` view. So, the following code is equivalent to the example above.
 
 ```swift
 Image("logo")
-  .clipShape(Shape.circle)
+  .clipShape(Circle.circle)
 ```
 
-Using implicit member expression, we can simplify this code to the following:
+However, in LiveView Native we only support using implicit member expression syntax, so instead of `Circle.circle`, we only write `.circle`.
 
 ```swift
 Image("logo")
@@ -576,27 +576,23 @@ You're going to convert the following SwiftUI code into a LiveView Native templa
 <!-- livebook:{"force_markdown":true} -->
 
 ```elixir
- VStack {
-    VStack(alignment: .leading) {
-        Text("Turtle Rock")
-            .font(.title)
-        HStack {
-            Text("Joshua Tree National Park")
-            Spacer()
-            Text("California")
-        }
-        .font(.subheadline)
-
-        Divider()
-
-        Text("About Turtle Rock")
-            .font(.title2)
-        Text("Descriptive text goes here")
+VStack(alignment: .leading) {
+    Text("Turtle Rock")
+        .font(.title)
+    HStack {
+        Text("Joshua Tree National Park")
+        Spacer()
+        Text("California")
     }
-    .padding()
+    .font(.subheadline)
 
-    Spacer()
+    Divider()
+
+    Text("About Turtle Rock")
+        .font(.title2)
+    Text("Descriptive text goes here")
 }
+.padding()
 ```
 
 <details style="background-color: lightgreen; padding: 1rem; margin: 1rem 0;">
@@ -608,6 +604,7 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
 
   def render(assigns) do
     ~LVN"""
+    <VStack>
     <VStack alignment="leading" style="padding()">
       <Text style="font(.title)">Turtle Rock</Text>
       <HStack style="font(.subheadline)">
