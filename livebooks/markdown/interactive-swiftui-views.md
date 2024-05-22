@@ -171,7 +171,7 @@ end
 
 
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Enter Your Solution Below
 
@@ -348,7 +348,7 @@ In Phoenix, form elements must be inside of a form. Phoenix only captures events
 
 Phoenix Applications setup with LiveView native include a `core_components.ex` file. This file contains several components for building forms. Generally, We recommend using core components rather than the views. We're going to cover the views directly so you understand how to build forms from scratch and how we built the core components. However, in the [Forms and Validations](https://hexdocs.pm/live_view_native/forms-and-validation.html) reading we'll cover using core components.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### LiveForm
 
@@ -363,7 +363,7 @@ Here's some example boilerplate for a `LiveForm`. The `id` attribute is required
 </LiveForm>
 ```
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Basic Example using TextField
 
@@ -428,7 +428,7 @@ SwiftUI organizes interactive views in the [Controls and Indicators](https://dev
 
 We'll demonstrate how to work with a few common control and indicator views.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Slider
 
@@ -733,7 +733,7 @@ end
 
 
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Enter Your Solution Below
 

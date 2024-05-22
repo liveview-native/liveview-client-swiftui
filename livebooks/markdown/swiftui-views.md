@@ -64,7 +64,7 @@ end
 
 In a Phoenix application, these two modules would traditionally be in separate files.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Embedding Templates
 
@@ -234,7 +234,7 @@ end
 
 
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Enter Your Solution Below
 
@@ -379,7 +379,7 @@ The SwiftUI [ScrollView](https://developer.apple.com/documentation/swiftui/scrol
 
 While `ScrollView` also works with typical `VStack` and `HStack` views, they are not optimal for large amounts of data.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### ScrollView with VStack
 
@@ -524,7 +524,7 @@ end
 
 
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Enter Your Solution Below
 
@@ -610,7 +610,7 @@ end
 
 The `Image` element is best for system images such as the built in [SF Symbols](https://developer.apple.com/design/human-interface-guidelines/sf-symbols) or images placed into the SwiftUI [asset catalogue](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs).
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### System Images
 
@@ -647,7 +647,7 @@ Then evaluate the following example and you should see this image in your simula
 
 Make sure to **rebuild the native application** to build the app with the updated asset catalog.
 
-<!-- livebook:{"break_markdown":true} -->
+
 
 ### Enter Your Solution Below
 
