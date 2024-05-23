@@ -6,7 +6,7 @@
 
 LiveView Native aims to use minimal SwiftUI code and instead rely on the same patterns used in traditional Phoenix LiveView development as much as possible. We'll primarily use The LiveView Naive SwiftUI DSL (Domain Specific Language) to build the native template.
 
-This lesson will teach you how to build SwiftUI templates using common SwiftUI views. We'll cover common use cases and provide practical examples of how to build native UIs. This lesson is like a recipe book you can refer to whenever you need an example of a particular SwiftUI view. 
+This lesson will teach you how to build SwiftUI templates using common SwiftUI views. We'll cover common use cases and provide practical examples of how to build native UIs. This lesson is like a recipe book you can refer to whenever you need an example of a particular SwiftUI view.
 
 In addition, we'll cover the LiveView Native DSL and teach you how to convert SwiftUI examples into the LiveView Native DSL. Once you understand how to convert SwiftUI code into the LiveView Native DSL, you'll have the knowledge you need to learn from the plethora of [SwiftUI resources available](https://developer.apple.com/tutorials/swiftui/creating-and-combining-views).
 
@@ -429,32 +429,11 @@ end
 
 ### Optimized ScrollView with LazyHStack and LazyVStack
 
-`VStack` and `HStack` are inefficient for large amounts of data because they render every child view. To demonstrate this, evaluate the example below. You should experience lag when you attempt to scroll.
-
-<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBMaXZlVmlld05hdGl2ZS5Db21wb25lbnQsXG4gICAgZm9ybWF0OiA6c3dpZnR1aVxuXG4gIGRlZiByZW5kZXIoYXNzaWducywgX2ludGVyZmFjZSkgZG9cbiAgICB+TFZOXCJcIlwiXG4gICAgPFNjcm9sbFZpZXc+XG4gICAgICA8VlN0YWNrPlxuICAgICAgICA8VGV4dCA6Zm9yPXtuIDwtIDEuLjEwMDAwfT5JdGVtIDwlPSBuICU+PC9UZXh0PlxuICAgICAgPC9WU3RhY2s+XG4gICAgPC9TY3JvbGxWaWV3PlxuICAgIFwiXCJcIlxuICBlbmRcbmVuZCJ9","chunks":[[0,85],[87,285],[374,47],[423,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
-
-```elixir
-defmodule ServerWeb.ExampleLive.SwiftUI do
-  use LiveViewNative.Component,
-    format: :swiftui
-
-  def render(assigns, _interface) do
-    ~LVN"""
-    <ScrollView>
-      <VStack>
-        <Text :for={n <- 1..10000}>Item <%= n %></Text>
-      </VStack>
-    </ScrollView>
-    """
-  end
-end
-```
-
-You can use the Lazy views to resolve the performance problem for large amounts of data. Lazy views only create items as needed, meaning the client won't render them until they are on the screen.
+`VStack` and `HStack` are inefficient for large amounts of data because they render every child view. You can use the Lazy views to resolve the performance problem for large amounts of data. Lazy views only create items as needed, meaning the client won't render them until they are on the screen.
 
 The following example demonstrates how using `LazyVStack` instead of `VStack` resolves the performance issue. Evaluate the cell and notice the improved performance in your simulator.
 
-<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBMaXZlVmlld05hdGl2ZS5Db21wb25lbnQsXG4gICAgZm9ybWF0OiA6c3dpZnR1aVxuXG4gIGRlZiByZW5kZXIoYXNzaWducywgX2ludGVyZmFjZSkgZG9cbiAgICB+TFZOXCJcIlwiXG4gICAgPFNjcm9sbFZpZXc+XG4gICAgICA8TGF6eVZTdGFjaz5cbiAgICAgICAgPFRleHQgOmZvcj17biA8LSAxLi4xMDAwMH0+SXRlbSA8JT0gbiAlPjwvVGV4dD5cbiAgICAgIDwvTGF6eVZTdGFjaz5cbiAgICA8L1Njcm9sbFZpZXc+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kIn0","chunks":[[0,85],[87,293],[382,47],[431,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
+<!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBMaXZlVmlld05hdGl2ZS5Db21wb25lbnQsXG4gICAgZm9ybWF0OiA6c3dpZnR1aVxuXG4gIGRlZiByZW5kZXIoYXNzaWducywgX2ludGVyZmFjZSkgZG9cbiAgICB+TFZOXCJcIlwiXG4gICAgPFNjcm9sbFZpZXc+XG4gICAgICA8TGF6eVZTdGFjaz5cbiAgICAgICAgPFRleHQgOmZvcj17biA8LSAxLi4xMDAwMDAwfT5JdGVtIDwlPSBuICU+PC9UZXh0PlxuICAgICAgPC9MYXp5VlN0YWNrPlxuICAgIDwvU2Nyb2xsVmlldz5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmQifQ","chunks":[[0,85],[87,295],[384,47],[433,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
 
 ```elixir
 defmodule ServerWeb.ExampleLive.SwiftUI do
@@ -465,7 +444,7 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
     ~LVN"""
     <ScrollView>
       <LazyVStack>
-        <Text :for={n <- 1..10000}>Item <%= n %></Text>
+        <Text :for={n <- 1..1000000}>Item <%= n %></Text>
       </LazyVStack>
     </ScrollView>
     """

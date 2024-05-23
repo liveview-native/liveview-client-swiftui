@@ -64,11 +64,8 @@ Choose options for your new project that match the following image, then click *
 
 * **Product Name:** The name of the application. This can be any valid name. We've chosen **Guides**.
 * **Organization Identifier:** A reverse DNS string that uniquely identifies your organization. If you don't have a company identifier, [Apple recommends](https://developer.apple.com/documentation/xcode/creating-an-xcode-project-for-an-app) using **com.example.your_name** where **your_name** is your organization or personal name.
-* **Interface:**: The Xcode user interface to use. Select **SwiftUI** to create an app that uses the SwiftUI app lifecycle.
+* **Interface:** The Xcode user interface to use. Select **SwiftUI** to create an app that uses the SwiftUI app lifecycle.
 * **Language:** Determines which language Xcode should use for the project. Select **Swift**.
-
-
-
 
 
 
@@ -118,7 +115,7 @@ At this point, you'll need to enable permissions for plugins used by LiveView Na
 
 
 
-You'll also need to manually navigate to the error tab (shown below) to trust and enable packages. Click on each error to trigger a prompt. Select **Trust & Enable All** to enable the plugin.
+You'll also need to manually navigate to the error tab (shown below) to trust and enable packages. Click on each error to trigger a prompt. Select **Trust & Enable** to enable the plugin.
 
 The specific plugins are subject to change. At the time of writing you need to enable `LiveViewNativeStylesheetMacros`, `LiveViewNativeMacros`, and `CasePathMacros` as shown in the images below.
 
@@ -140,7 +137,7 @@ The [LiveView Native Live Form](https://github.com/liveview-native/liveview-nati
 
 To install LiveView Native Form, we need to add the [liveview-native-live-form](https://github.com/liveview-native/liveview-native-live-form) SwiftUI package to our iOS application. The steps will be mostly similar to what you have already setup with the `liveview-client-swiftui` package.
 
-Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#liveviewnativeliveform) on that project's README to add the `liveview-native-live-form` package to the SwiftUI application you created in the [Create a SwiftUI Application](https://hexdocs.pm/live_view_native_swiftui/create-a-swiftui-application.html) guide.
+Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#liveviewnativeliveform) on that project's README to add the `liveview-native-live-form` package to the SwiftUI application.
 
 Come back to this guide and continue after you have finished the installation process.
 
@@ -159,9 +156,9 @@ import LiveViewNative
 struct ContentView: View {
 
     var body: some View {
-        LiveView(.automatic(
-            development: .localhost(path: "/"),
-            production: .custom(URL(string: "https://example.com/")!)
+        #LiveView(.automatic(
+            development: .localhost,
+            production: URL(string: "https://example.com/")!
         ))
     }
 }
@@ -172,6 +169,29 @@ struct ContentView: View {
     ContentView()
 }
 ```
+
+
+
+### (Optional) configuration for using a physical device
+
+You may wish to use a physical device instead of a simulator. If so, you'll need to change the `development` configuration to use your machine's IP address instead of localhost as seen in the example below.
+
+```elixir
+#LiveView(
+  .automatic(
+    development: URL(string: "http://192.168.1.xxx:4000")!,
+    production: URL(string: "https://example.com")!
+  )
+)
+```
+
+Make sure to replace `192.168.1.xxx` with your IP address. You can run the following command in the IEx shell to find your machine's IP address:
+
+```elixir
+iex> IO.puts :os.cmd(~c[ipconfig getifaddr en0])
+```
+
+
 
 
 
@@ -199,7 +219,7 @@ graph LR;
 
 ## Start the Active Scheme
 
-Click the `start active scheme` button <i class="ri-play-fill"></i> to build the project and run it on the iOS simulator.
+Click the run button <i class="ri-play-fill"></i> to build the project and run it on the iOS simulator. Alternatively you may go to `Product` in the top menu then press `Run`.
 
 > A [build scheme](https://developer.apple.com/documentation/xcode/build-system) contains a list of targets to build and any configuration and environment details that affect the selected action. When you build and run an app, the scheme tells Xcode what launch arguments to pass to the app.
 > 
