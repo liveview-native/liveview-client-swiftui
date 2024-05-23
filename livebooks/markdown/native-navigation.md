@@ -205,8 +205,8 @@ LiveView Native navigation mirrors the same navigation behavior you'll find on t
 
 Evaluate the example below and press each button. Notice that:
 
-1. `redirect/2` triggers the `mount/3` callback re-establishes a socket connection.
-2. `push_navigate/2` triggers the `mount/3` callbcak and re-uses the existing socket connection.
+1. `redirect/2` triggers the `mount/3` callback and re-establishes a socket connection.
+2. `push_navigate/2` triggers the `mount/3` callback and re-uses the existing socket connection.
 3. `push_patch/2` does not trigger the `mount/3` callback, but does trigger the `handle_params/3` callback. This is often useful when using navigation to trigger page changes such as displaying a modal or overlay.
 
 You can see this for yourself using the following example. Click each of the buttons for redirect, navigate, and patch behavior.
@@ -215,7 +215,7 @@ You can see this for yourself using the following example. Click each of the but
 
 ```elixir
 # This module built for example purposes to persist logs between mounting LiveViews.
-defmodule PersistentLogs do
+defmodule PersistantLogs do
   def get do
     :persistent_term.get(:logs)
   end
@@ -229,7 +229,7 @@ defmodule PersistentLogs do
   end
 end
 
-PersistentLogs.reset()
+PersistantLogs.reset()
 
 defmodule ServerWeb.ExampleLive.SwiftUI do
   use ServerNative, [:render_component, format: :swiftui]
@@ -261,22 +261,22 @@ defmodule ServerWeb.ExampleLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    PersistentLogs.put("MOUNT")
+    PersistantLogs.put("MOUNT")
 
     {:ok,
      assign(socket,
        socket_id: socket.id,
        connected: connected?(socket),
-       logs: PersistentLogs.get(),
+       logs: PersistantLogs.get(),
        live_view_pid: inspect(self())
      )}
   end
 
   @impl true
   def handle_params(_params, _url, socket) do
-    PersistentLogs.put("HANDLE PARAMS")
+    PersistantLogs.put("HANDLE PARAMS")
 
-    {:noreply, assign(socket, :logs, PersistentLogs.get())}
+    {:noreply, assign(socket, :logs, PersistantLogs.get())}
   end
 
   @impl true
@@ -285,18 +285,18 @@ defmodule ServerWeb.ExampleLive do
 
   @impl true
   def handle_event("redirect", _params, socket) do
-    PersistentLogs.reset()
-    PersistentLogs.put("--REDIRECTING--")
+    PersistantLogs.reset()
+    PersistantLogs.put("--REDIRECTING--")
     {:noreply, redirect(socket, to: "/")}
   end
 
   def handle_event("navigate", _params, socket) do
-    PersistentLogs.put("---NAVIGATING---")
+    PersistantLogs.put("---NAVIGATING---")
     {:noreply, push_navigate(socket, to: "/")}
   end
 
   def handle_event("patch", _params, socket) do
-    PersistentLogs.put("----PATCHING----")
+    PersistantLogs.put("----PATCHING----")
     {:noreply, push_patch(socket, to: "/")}
   end
 end

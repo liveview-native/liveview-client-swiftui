@@ -10,7 +10,7 @@ Getting the most out of this material requires some understanding of the [Ecto](
 
 ## Creating a Basic Form
 
-The LiveView Native `mix lvn.install` task generates a [core_components.swiftui.ex](https://github.com/liveview-native/liveview-client-swiftui/blob/main/priv/templates/lvn.swiftui.gen/core_components.ex) for native SwiftUI function components similar to the [core_components.ex](https://github.com/phoenixframework/phoenix/blob/main/priv/templates/phx.gen.live/core_components.ex) file generated in a traditional phoenix application for web function components.
+The LiveView Native `mix lvn.install` task generates a [core_components.swiftui.ex](https://github.com/liveview-native/liveview-client-swiftui/blob/main/priv/templates/lvn.swiftui.gen/core_components.ex) file for native SwiftUI function components similar to the [core_components.ex](https://github.com/phoenixframework/phoenix/blob/main/priv/templates/phx.gen.live/core_components.ex) file generated in a traditional phoenix application for web function components.
 
 See Phoenix's [Components and HEEx](https://hexdocs.pm/phoenix/components.html) HexDoc documentation if you need a primer on function components.
 
@@ -22,11 +22,11 @@ First, we'll see how to use this abstraction at a basic level, then later we'll 
 
 ### A Basic Form
 
-This code below demonstrates how the basic skeleton of a native and web form that share event handlers for the `phx-submit` and `phx-change` handlers.
+The code below demonstrates a basic form that uses the same event handlers for the `phx-change` and `phx-submit` events on both the web and native versions of the form. 
 
 We'll break down and understand the individual parts of this form in a moment.
 
-For now, evaluate the following example. Open the native form in your simulator, and open the web form on http://localhost:4000/. Enter some text into both forms, then submit them. Watch the logs in the cell below to see the printed params.'
+For now, evaluate the following example. Open the native form in your simulator, and open the web form on http://localhost:4000/. Enter some text into both forms, then submit them. Watch the logs in the cell below to see the printed params.
 
 <!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBTZXJ2ZXJOYXRpdmUsIFs6cmVuZGVyX2NvbXBvbmVudCwgZm9ybWF0OiA6c3dpZnR1aV1cblxuICBkZWYgcmVuZGVyKGFzc2lnbnMpIGRvXG4gICAgfkxWTlwiXCJcIlxuICAgIDwuc2ltcGxlX2Zvcm0gZm9yPXtAZm9ybX0gaWQ9XCJmb3JtXCIgcGh4LXN1Ym1pdD1cInN1Ym1pdFwiIHBoeC1jaGFuZ2U9XCJ2YWxpZGF0ZVwiPlxuICAgICAgPC5pbnB1dCBmaWVsZD17QGZvcm1bOnZhbHVlXX0gdHlwZT1cIlRleHRGaWVsZFwiIHBsYWNlaG9sZGVyPVwiRW50ZXIgYSB2YWx1ZVwiIC8+XG4gICAgICA8OmFjdGlvbnM+XG4gICAgICAgIDwuYnV0dG9uIHR5cGU9XCJzdWJtaXRcIj5cbiAgICAgICAgICBQaW5nXG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuZW5kXG5cbmRlZm1vZHVsZSBTZXJ2ZXJXZWIuRXhhbXBsZUxpdmUgZG9cbiAgdXNlIFNlcnZlcldlYiwgOmxpdmVfdmlld1xuICB1c2UgU2VydmVyTmF0aXZlLCA6bGl2ZV92aWV3XG5cbiAgQGltcGwgdHJ1ZVxuICBkZWYgbW91bnQoX3BhcmFtcywgX3Nlc3Npb24sIHNvY2tldCkgZG9cbiAgICB7Om9rLCBhc3NpZ24oc29ja2V0LCBmb3JtOiB0b19mb3JtKCV7fSwgYXM6IFwibXlfZm9ybVwiKSl9XG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIHJlbmRlcihhc3NpZ25zKSBkb1xuICAgIH5IXCJcIlwiXG4gICAgICA8LnNpbXBsZV9mb3JtIGZvcj17QGZvcm19IGlkPVwiZm9ybVwiIHBoeC1zdWJtaXQ9XCJzdWJtaXRcIiBwaHgtY2hhbmdlPVwidmFsaWRhdGVcIj5cbiAgICAgIDwuaW5wdXQgZmllbGQ9e0Bmb3JtWzp2YWx1ZV19IHBsYWNlaG9sZGVyPVwiRW50ZXIgYSB2YWx1ZVwiIC8+XG4gICAgICA8OmFjdGlvbnM+XG4gICAgICAgIDwuYnV0dG9uIHR5cGU9XCJzdWJtaXRcIj5cbiAgICAgICAgICBQaW5nXG4gICAgICAgIDwvLmJ1dHRvbj5cbiAgICAgIDwvOmFjdGlvbnM+XG4gICAgPC8uc2ltcGxlX2Zvcm0+XG4gICAgXCJcIlwiXG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInN1Ym1pdFwiLCBwYXJhbXMsIHNvY2tldCkgZG9cbiAgICBJTy5pbnNwZWN0KHBhcmFtcywgbGFiZWw6IFwiU3VibWl0dGVkXCIpXG4gICAgezpub3JlcGx5LCBzb2NrZXR9XG4gIGVuZFxuXG4gIEBpbXBsIHRydWVcbiAgZGVmIGhhbmRsZV9ldmVudChcInZhbGlkYXRlXCIsIHBhcmFtcywgc29ja2V0KSBkb1xuICAgIElPLmluc3BlY3QocGFyYW1zLGxhYmVsOiBcIlZhbGlkYXRpbmdcIilcbiAgICB7Om5vcmVwbHksIHNvY2tldH1cbiAgZW5kXG5lbmQiLCJwYXRoIjoiLyJ9","chunks":[[0,85],[87,1272],[1361,49],[1412,51]],"kind":"Elixir.Server.SmartCells.LiveViewNative","livebook_object":"smart_cell"} -->
 
@@ -60,7 +60,7 @@ defmodule ServerWeb.ExampleLive do
   @impl true
   def render(assigns) do
     ~H"""
-      <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
+    <.simple_form for={@form} id="form" phx-submit="submit" phx-change="validate">
       <.input field={@form[:value]} placeholder="Enter a value" />
       <:actions>
         <.button type="submit">
@@ -101,7 +101,7 @@ The interface for the native `simple_form/1` and web `simple_form/1` is intentio
 </.simple_form>
 ```
 
-We'll go into the internal implementation details later on, but for now you can treat these components as functionally identical. Both require a unique `id` and accept the `for` attribute that contains the [Phoenix.HTML.Form] datastructure containing form fields, error messages, and other form data.
+We'll go into the internal implementation details later on, but for now you can treat these components as functionally identical. Both require a unique `id` and accept the `for` attribute that contains the [Phoenix.HTML.Form](https://hexdocs.pm/phoenix_html/Phoenix.HTML.Form.html) datastructure containing form fields, error messages, and other form data.
 
 If you need a refresher on forms in Phoenix, see the [Form Bindings](https://hexdocs.pm/phoenix_live_view/form-bindings.html) HexDoc documentation.
 
