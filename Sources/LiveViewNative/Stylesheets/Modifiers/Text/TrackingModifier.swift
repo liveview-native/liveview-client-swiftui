@@ -8,6 +8,27 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/tracking(_:)`](https://developer.apple.com/documentation/swiftui/view/tracking(_:)) for more details on this ViewModifier.
+///
+/// ### tracking(_:)
+/// - `tracking`: `attr("...")` or ``CoreFoundation/CGFloat`` (required)
+///
+/// See [`SwiftUI.View/tracking(_:)`](https://developer.apple.com/documentation/swiftui/view/tracking(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   tracking(attr("tracking"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" tracking={@tracking} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _TrackingModifier<R: RootRegistry>: TextModifier {
     static var name: String { "tracking" }

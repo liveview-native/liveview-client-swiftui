@@ -180,8 +180,8 @@ public enum ParseableExpressionMacro: ExtensionMacro {
             // comma separate from wildcard if present
             if !wildcardArguments.isEmpty {
                 "try Whitespace().parse(&input)"
-                #"if input.first == ",".utf8.first {"# // labelled arguments if open
-                #"try ",".utf8.parse(&input)"#
+                #"if input.first == ",".utf8.first || input.first == "[".utf8.first {"# // labelled arguments if open
+                #"if input.first == ",".utf8.first { try ",".utf8.parse(&input) }"#
                 "try Whitespace().parse(&input)"
             } else {
                 #"if input.first == "[".utf8.first {"# // labelled arguments if open

@@ -33,7 +33,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 @MainActor
 public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// The current state of the live view connection.
-    @Published public private(set) var state = LiveSessionState.notConnected
+    @Published public private(set) var state = LiveSessionState.setup
     
     /// The current URL this live view is connected to.
     public private(set) var url: URL
@@ -69,6 +69,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// This session is created using the ``LiveSessionConfiguration/urlSessionConfiguration``.
     private var urlSession: URLSession
     
+    private var reconnectAttempts = 0
+    
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
     }
@@ -101,11 +103,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
-            let isDisconnected: Bool
-            if case .notConnected = next.last!.coordinator.state {
-                isDisconnected = true
-            } else {
-                isDisconnected = false
+            let isDisconnected = switch next.last!.coordinator.state {
+            case .setup, .disconnected:
+                true
+            default:
+                false
             }
             if next.last!.coordinator.url != next.last!.url || isDisconnected {
                 Task {
@@ -149,14 +151,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// You generally do not call this function yourself. It is called automatically when the ``LiveView`` appears.
     ///
-    /// This function is a no-op unless ``state`` is ``LiveSessionState/notConnected``.
+    /// This function is a no-op unless ``state`` is ``LiveSessionState/setup`` or ``LiveSessionState/disconnected`` or ``LiveSessionState/connectionFailed(_:)``.
     ///
     /// This is an async function which completes when the connection has been established or failed.
     ///
     /// - Parameter httpMethod: The HTTP method to use for the dead render. Defaults to `GET`.
     /// - Parameter httpBody: The HTTP body to send when requesting the dead render.
     public func connect(httpMethod: String? = nil, httpBody: Data? = nil) async {
-        guard case .notConnected = state else {
+        switch state {
+        case .setup, .disconnected, .connectionFailed:
+            break
+        default:
             return
         }
         
@@ -215,9 +220,22 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             self.stylesheet = try await stylesheet
             
             try await navigationPath.last!.coordinator.connect(domValues: domValues, redirect: false)
+            
+            reconnectAttempts = 0
         } catch {
             self.state = .connectionFailed(error)
             logger.log(level: .error, "\(error.localizedDescription)")
+            if let delay = configuration.reconnectBehavior.delay?(reconnectAttempts) {
+                logger.log(level: .debug, "Reconnecting in \(delay) seconds")
+                Task { [weak self] in
+                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                    guard let self,
+                          case .connectionFailed = self.state
+                    else { return } // already connected
+                    reconnectAttempts += 1
+                    await self.connect(httpMethod: httpMethod, httpBody: httpBody)
+                }
+            }
             return
         }
     }
@@ -234,7 +252,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
         self.socket?.disconnect()
         self.socket = nil
-        self.state = .notConnected
+        self.state = .disconnected
     }
     
     /// Forces the session to disconnect then connect.
@@ -286,9 +304,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// Returns the dead render HTML and the HTTP response information (including the final URL after redirects).
     func deadRender(for request: URLRequest) async throws -> (String, HTTPURLResponse) {
         var request = request
-        request.url = request.url!.appending(queryItems: [
-            .init(name: "_format", value: "swiftui")
-        ])
+        request.url = request.url!.appendingLiveViewItems(R.self)
         if domValues != nil {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
         }
@@ -402,7 +418,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 socket.off(refs)
                 continuation.resume(returning: socket)
             })
-            refs.append(socket.onError { [weak self, weak socket] (error) in
+            refs.append(socket.onError { [weak self, weak socket] (error, response) in
                 guard let socket else { return }
                 guard self != nil else {
                     socket.disconnect()
@@ -496,24 +512,20 @@ class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDe
         guard let url = request.url else {
             return request
         }
-        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         
         var newRequest = request
-        if !(components?.queryItems?.contains(where: { $0.name == "_format" }) ?? false) {
-            newRequest.url = url.appending(queryItems: [.init(name: "_format", value: await LiveSessionCoordinator<R>.platform)])
-        }
+        newRequest.url = await url.appendingLiveViewItems(R.self)
         return newRequest
     }
 }
 
 extension LiveSessionCoordinator {
     static var platform: String { "swiftui" }
-    static var platformParams: Payload {
+    static var platformParams: [String:String] {
         [
             "app_version": getAppVersion(),
             "app_build": getAppBuild(),
             "bundle_id": getBundleID(),
-            "format": "swiftui",
             "os": getOSName(),
             "os_version": getOSVersion(),
             "target": getTarget()
@@ -545,8 +557,12 @@ extension LiveSessionCoordinator {
         return "tvOS"
         #elseif os(watchOS)
         return "watchOS"
-        #else
+        #elseif os(visionOS)
+        return "visionOS"
+        #elseif os(iOS)
         return "iOS"
+        #else
+        return "unknown"
         #endif
     }
 
@@ -567,22 +583,50 @@ extension LiveSessionCoordinator {
 
     private static func getTarget() -> String {
         #if os(watchOS)
-        return "watch"
+        return "watchos"
         #elseif os(macOS)
-        return "mac"
+        return "macos"
+        #elseif os(visionOS)
+        return "visionos"
+        #elseif os(tvOS)
+        return "tvos"
         #else
         switch UIDevice.current.userInterfaceIdiom {
         case .phone:
-            return "phone"
+            return "ios"
         case .pad:
-            return "pad"
+            return "ipados"
         case .mac:
-            return "mac"
+            return "maccatalyst"
         case .tv:
-            return "tv"
+            return "tvos"
+        case .vision:
+            return "visionos"
         default:
-            return "unspecified"
+            return "unknown"
         }
         #endif
+    }
+}
+
+fileprivate extension URL {
+    @MainActor
+    func appendingLiveViewItems<R: RootRegistry>(_: R.Type = R.self) -> Self {
+        var result = self
+        let components = URLComponents(url: self, resolvingAgainstBaseURL: false)
+        if !(components?.queryItems?.contains(where: { $0.name == "_format" }) ?? false) {
+            result.append(queryItems: [
+                .init(name: "_format", value: LiveSessionCoordinator<R>.platform)
+            ])
+        }
+        for (key, value) in LiveSessionCoordinator<R>.platformParams {
+            let name = "_interface[\(key)]"
+            if !(components?.queryItems?.contains(where: { $0.name == name }) ?? false) {
+                result.append(queryItems: [
+                    .init(name: name, value: value)
+                ])
+            }
+        }
+        return result
     }
 }

@@ -30,12 +30,14 @@ struct NavStackEntryView<R: RootRegistry>: View {
     
     private var phase: LiveViewPhase<R> {
         switch coordinator.state {
-        case .notConnected:
-            return .disconnected
+        case .setup:
+            return .connecting
         case .connecting:
             return .connecting
         case .connectionFailed(let error):
             return .error(error)
+        case .disconnected:
+            return .disconnected
         case .reconnecting, .connected: // these phases should always be handled internally
             fatalError()
         }

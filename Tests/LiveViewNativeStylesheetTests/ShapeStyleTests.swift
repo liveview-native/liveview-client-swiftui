@@ -70,6 +70,10 @@ final class ShapeStyleTests: XCTestCase {
             #"{:Color, [], [[hue: 1, saturation: 0.5, brightness: 0.25, opacity: 0.75]]}"#,
             Color(hue: 1, saturation: 0.5, brightness: 0.25, opacity: 0.75)
         )
+        testParserShapeStyle(
+            #"{:Color, [], [[red: 0.852, green: 0.646, blue: 0.847]]}"#,
+            Color(red: 0.852, green: 0.646, blue: 0.847)
+        )
         // modifiers
         testParserShapeStyle(
             #"{:., [], [nil, {:., [], [:pink, {:opacity, [], [0.5]}]}]}"#,

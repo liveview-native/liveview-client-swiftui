@@ -30,63 +30,49 @@ import LiveViewNativeCore
 /// - ``components``
 @_documentation(visibility: public)
 @available(iOS 16.0, macOS 13.0, *)
-struct DatePicker<R: RootRegistry>: View {
-    @LiveContext<R> private var context
-    @ObservedElement private var element
+@LiveElement
+struct DatePicker<Root: RootRegistry>: View {
     @FormState("selection", default: CodableDate()) private var selection: CodableDate
     
     ///The start date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
     @_documentation(visibility: public)
-    @Attribute("start") private var start: Date?
+    private var start: Date?
     
     ///The end date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
     @_documentation(visibility: public)
-    @Attribute("end") private var end: Date?
+    private var end: Date?
     
     ///Which components of the date to display in the picker. Defaults to all.
     ///
     ///Possible values:
-    ///- `hour-and-minute`
+    ///- `hourAndMinute`
     ///- `date`
     @_documentation(visibility: public)
-    @Attribute(
-        "displayed-components",
-        transform: {
-            #if os(iOS) || os(macOS)
-            switch $0?.value {
-            case "hour-and-minute":
-                return .hourAndMinute
-            case "date":
-                return .date
-            default:
-                return [.hourAndMinute, .date]
-            }
-            #else
-            fatalError()
-            #endif
-        }
-    ) private var components: DatePickerComponents
-    #if !os(iOS) && !os(macOS)
-    typealias DatePickerComponents = Never
+    private var displayedComponents: String?
+    
+    #if os(iOS) || os(macOS)
+    private var datePickerComponents: DatePickerComponents {
+        displayedComponents.flatMap({ DatePickerComponents.init(from: $0) }) ?? [.hourAndMinute, .date]
+    }
     #endif
     
     var body: some View {
 #if os(iOS) || os(macOS)
         if let start, let end {
-            SwiftUI.DatePicker(selection: $selection.date, in: start...end, displayedComponents: components) {
-                context.buildChildren(of: element)
+            SwiftUI.DatePicker(selection: $selection.date, in: start...end, displayedComponents: datePickerComponents) {
+                $liveElement.children()
             }
         } else if let start {
-            SwiftUI.DatePicker(selection: $selection.date, in: start..., displayedComponents: components) {
-                context.buildChildren(of: element)
+            SwiftUI.DatePicker(selection: $selection.date, in: start..., displayedComponents: datePickerComponents) {
+                $liveElement.children()
             }
         } else if let end {
-            SwiftUI.DatePicker(selection: $selection.date, in: ...end, displayedComponents: components) {
-                context.buildChildren(of: element)
+            SwiftUI.DatePicker(selection: $selection.date, in: ...end, displayedComponents: datePickerComponents) {
+                $liveElement.children()
             }
         } else {
-            SwiftUI.DatePicker(selection: $selection.date, displayedComponents: components) {
-                context.buildChildren(of: element)
+            SwiftUI.DatePicker(selection: $selection.date, displayedComponents: datePickerComponents) {
+                $liveElement.children()
             }
         }
 #endif
@@ -118,5 +104,29 @@ private struct CodableDate: FormValue, AttributeDecodable {
         var container = encoder.singleValueContainer()
         try container.encode(date.formatted(.elixirDateTime))
     }
+    
+    func formQueryEncoded() throws -> String {
+        ElixirDateTimeFormat().format(self.date)
+    }
 }
 
+#if !os(iOS) && !os(macOS)
+typealias DatePickerComponents = Never
+#else
+extension DatePickerComponents {
+    public init(from string: String) {
+        #if os(iOS) || os(macOS)
+        switch string {
+        case "hourAndMinute":
+            self = .hourAndMinute
+        case "date":
+            self = .date
+        default:
+            self = [.hourAndMinute, .date]
+        }
+        #else
+        fatalError()
+        #endif
+    }
+}
+#endif

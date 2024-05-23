@@ -8,6 +8,27 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/bold(_:)`](https://developer.apple.com/documentation/swiftui/view/bold(_:)) for more details on this ViewModifier.
+///
+/// ### bold(_:)
+/// - `isActive`: `attr("...")` or ``Swift/Bool``
+///
+/// See [`SwiftUI.View/bold(_:)`](https://developer.apple.com/documentation/swiftui/view/bold(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   bold(attr("isActive"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" isActive={@isActive} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _BoldModifier<R: RootRegistry>: TextModifier {
     static var name: String { "bold" }

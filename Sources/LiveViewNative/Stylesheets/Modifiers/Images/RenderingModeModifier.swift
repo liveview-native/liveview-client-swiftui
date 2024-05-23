@@ -8,6 +8,22 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Image/renderingMode(_:)`](https://developer.apple.com/documentation/swiftui/image/renderingMode(_:)) for more details on this ViewModifier.
+///
+/// ### renderingMode(_:)
+/// - `renderingMode`: ``SwiftUI/Image/TemplateRenderingMode`` or `nil` (required)
+///
+/// See [`SwiftUI.Image/renderingMode(_:)`](https://developer.apple.com/documentation/swiftui/image/renderingMode(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   renderingMode(.template)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _RenderingModeModifier: ImageModifier {
     static let name = "renderingMode"
@@ -27,6 +43,12 @@ struct _RenderingModeModifier: ImageModifier {
     }
 }
 
+/// See [`SwiftUI.Image.TemplateRenderingMode`](https://developer.apple.com/documentation/swiftui/Image/TemplateRenderingMode) for more details.
+///
+/// Possible values:
+/// - `.template`
+/// - `.original`
+@_documentation(visibility: public)
 extension SwiftUI.Image.TemplateRenderingMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -36,6 +58,14 @@ extension SwiftUI.Image.TemplateRenderingMode: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.SymbolRenderingMode`](https://developer.apple.com/documentation/swiftui/SymbolRenderingMode) for more details.
+///
+/// Possible values:
+/// - `.monochrome`
+/// - `.multicolor`
+/// - `.hierarchical`
+/// - `.palette`
+@_documentation(visibility: public)
 extension SwiftUI.SymbolRenderingMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

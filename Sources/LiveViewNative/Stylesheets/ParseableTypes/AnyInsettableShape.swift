@@ -8,6 +8,31 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Shape`](https://developer.apple.com/documentation/swiftui/Shape) for more details.
+///
+/// Possible values:
+/// - `.rect`
+/// - `.capsule`
+/// - `.ellipse`
+/// - `.circle`
+/// - `.containerRelative`
+///
+/// The `rect` and `capsule` styles can also be customized with a ``SwiftUI/RoundedCornerStyle`` and radii.
+///
+/// ```swift
+/// .rect(cornerSize: CGSize(width: 5, height: 0), style: .circular)
+/// .rect(cornerRadius: 8)
+///
+/// .capsule(style: .circular)
+/// ```
+///
+/// Use ``SwiftUI/RectangleCornerRadii`` or the individual arguments to specify individual rounding for each corner.
+///
+/// ```swift
+/// .rect(cornerRadii: RectangleCornerRadii(topLeading: 8, bottomTrailing: 8))
+/// .rect(topLeadingRadius: 8, bottomTrailingRadius: 8)
+/// ```
+@_documentation(visibility: public)
 extension AnyShape: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -58,6 +83,14 @@ extension AnyShape: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.RectangleCornerRadii`](https://developer.apple.com/documentation/swiftui/RectangleCornerRadii) for more details.
+///
+/// Create with a set of edge radii.
+///
+/// ```swift
+/// RectangleCornerRadii(topLeading: 5, bottomLeading: 5, bottomTrailing: 10, topTrailing: 10)
+/// RectangleCornerRadii(topLeading: 8, bottomTrailing: 8)
+/// ```
 extension RectangleCornerRadii: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableRectangleCornerRadii.parser(in: context).map({
@@ -88,6 +121,13 @@ extension RectangleCornerRadii: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.InsettableShape`](https://developer.apple.com/documentation/swiftui/InsettableShape) for more details.
+///
+/// Possible values:
+/// - `.rectangle`
+/// - `.circle`
+/// - `.capsule`
+@_documentation(visibility: public)
 struct AnyInsettableShape: InsettableShape, ParseableModifierValue {
     let _path: @Sendable (CGRect) -> Path
     let _inset: @Sendable (CGFloat) -> any InsettableShape

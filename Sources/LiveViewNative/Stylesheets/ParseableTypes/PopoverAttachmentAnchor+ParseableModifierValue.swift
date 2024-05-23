@@ -8,6 +8,24 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.PopoverAttachmentAnchor`](https://developer.apple.com/documentation/swiftui/PopoverAttachmentAnchor) for more details.
+///
+/// ### Point Attachment
+/// Use a ``SwiftUI/UnitPoint`` to specify an anchor point relative to the element.
+///
+/// ```swift
+/// .point(.topLeading)
+/// .point(.bottomTrailing)
+/// ```
+///
+/// ### Rect Attachment
+/// Use a ``SwiftUI/Anchor/Source`` to specify an anchor point relative to a frame.
+///
+/// ```swift
+/// .rect(.bounds)
+/// .rect(.rect(CGRect(x: 0, y: 0, width: 50, height: 50)))
+/// ```
+@_documentation(visibility: public)
 extension PopoverAttachmentAnchor: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

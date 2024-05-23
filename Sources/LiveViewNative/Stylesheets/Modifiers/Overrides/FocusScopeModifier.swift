@@ -8,6 +8,27 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/focusScope(_:)`](https://developer.apple.com/documentation/swiftui/view/focusScope(_:)) for more details on this ViewModifier.
+///
+/// ### focusScope(_:)
+/// - `namespace`: `attr("...")` or ``Swift/String`` (required)
+///
+/// See [`SwiftUI.View/focusScope(_:)`](https://developer.apple.com/documentation/swiftui/view/focusScope(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   focusScope(attr("namespace"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" namespace={@namespace} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _FocusScopeModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "focusScope" }

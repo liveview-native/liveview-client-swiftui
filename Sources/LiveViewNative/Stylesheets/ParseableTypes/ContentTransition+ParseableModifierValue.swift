@@ -9,6 +9,31 @@ import SwiftUI
 import Symbols
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ContentTransition`](https://developer.apple.com/documentation/swiftui/ContentTransition) for more details.
+///
+/// Standard Content Transitions:
+/// - `.identity`
+/// - `.interpolate`
+/// - `.opacity`
+/// - `.numericText()`
+/// - `.symbolEffect`
+///
+/// ### Numeric Text
+/// Provide a `value` or `countsDown` to customize the transition applied to numeric text.
+///
+/// ```swift
+/// .numericText(countsDown: true)
+/// .numericText(value: 10)
+/// ```
+///
+/// ### Symbol Effect
+/// Use a specific ``AnySymbolEffect`` for this content.
+///
+/// ```swift
+/// .symbolEffect(.bounce)
+/// .symbolEffect(.pulse, options: .repeating)
+/// ```
+@_documentation(visibility: public)
 extension ContentTransition: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

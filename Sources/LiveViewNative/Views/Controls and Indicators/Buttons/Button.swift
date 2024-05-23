@@ -28,9 +28,8 @@ import SwiftUI
 /// * ``click``
 @_documentation(visibility: public)
 @_spi(LiveForm)
-public struct Button<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
+@LiveElement
+public struct Button<Root: RootRegistry>: View {
     // used internaly by PhxSubmitButton
     private let action: (() -> Void)?
     
@@ -44,7 +43,7 @@ public struct Button<R: RootRegistry>: View {
     /// * `destructive`
     /// * `cancel`
     @_documentation(visibility: public)
-    @Attribute("role") private var role: ButtonRole?
+    private var role: ButtonRole?
     
     @_spi(LiveForm) public init(action: (() -> Void)? = nil) {
         self.action = action
@@ -52,9 +51,9 @@ public struct Button<R: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Button(role: role, action: self.handleClick) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
-        .preference(key: _ProvidedBindingsKey.self, value: ["phx-click"])
+        .preference(key: _ProvidedBindingsKey.self, value: [.click])
     }
     
     private func handleClick() {
@@ -62,6 +61,6 @@ public struct Button<R: RootRegistry>: View {
             action()
             return
         }
-        click(value: element.buildPhxValuePayload()) {}
+        click(value: $liveElement.element.buildPhxValuePayload()) {}
     }
 }

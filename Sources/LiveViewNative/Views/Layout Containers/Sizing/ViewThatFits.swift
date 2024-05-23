@@ -23,21 +23,19 @@ import SwiftUI
 /// ## Attributes
 /// * ``axes``
 @_documentation(visibility: public)
-struct ViewThatFits<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ViewThatFits<Root: RootRegistry>: View {
     /// The axes to check each child's size along. Defaults to `all`.
     ///
     /// See ``LiveViewNative/SwiftUI/Axis/Set``
     @_documentation(visibility: public)
-    @Attribute("axes") private var axes: Axis.Set = [.horizontal, .vertical]
+    private var axes: Axis.Set = [.horizontal, .vertical]
     
     public var body: some View {
         SwiftUI.ViewThatFits(
             in: axes
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

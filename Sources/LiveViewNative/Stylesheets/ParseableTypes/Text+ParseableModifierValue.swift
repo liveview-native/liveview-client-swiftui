@@ -8,6 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Text.TruncationMode`](https://developer.apple.com/documentation/swiftui/Text/TruncationMode) for more details.
+///
+/// Possible values:
+/// - `.head`
+/// - `.tail`
+/// - `.middle`
+@_documentation(visibility: public)
 extension SwiftUI.Text.TruncationMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -18,6 +25,13 @@ extension SwiftUI.Text.TruncationMode: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.TextAlignment`](https://developer.apple.com/documentation/swiftui/TextAlignment) for more details.
+///
+/// Possible values:
+/// - `.leading`
+/// - `.center`
+/// - `.trailing`
+@_documentation(visibility: public)
 extension TextAlignment: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -28,6 +42,12 @@ extension TextAlignment: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Text.Case`](https://developer.apple.com/documentation/swiftui/Text/Case) for more details.
+///
+/// Possible values:
+/// - `.uppercase`
+/// - `.lowercase`
+@_documentation(visibility: public)
 extension SwiftUI.Text.Case: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -37,6 +57,12 @@ extension SwiftUI.Text.Case: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Text.Scale`](https://developer.apple.com/documentation/swiftui/Text/Scale) for more details.
+///
+/// Possible values:
+/// - `.default`
+/// - `.secondary`
+@_documentation(visibility: public)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 extension SwiftUI.Text.Scale: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
@@ -47,6 +73,19 @@ extension SwiftUI.Text.Scale: ParseableModifierValue {
     }
 }
 
+/// See [`SwiftUI.Text.LineStyle`](https://developer.apple.com/documentation/swiftui/Text/LineStyle) for more details.
+///
+/// Standard Line Styles:
+/// - `.single`
+///
+/// Create a custom `LineStyle` with a ``SwiftUI/Text/LineStyle/Pattern`` and ``SwiftUI/Color``.
+///
+/// ```swift
+/// LineStyle(pattern: .dashDotDot, color: .red)
+/// LineStyle(pattern: .dash)
+/// LineStyle(pattern: .solid, color: .blue)
+/// ```
+@_documentation(visibility: public)
 extension SwiftUI.Text.LineStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
@@ -66,6 +105,15 @@ struct _TextLineStyle {
     }
 }
 
+/// See [`SwiftUI.Text.LineStyle.Pattern`](https://developer.apple.com/documentation/swiftui/Text/LineStyle/Pattern) for more details.
+///
+/// Possible values:
+/// - `.solid`
+/// - `.dot`
+/// - `.dash`
+/// - `.dashDot`
+/// - `.dashDotDot`
+@_documentation(visibility: public)
 extension SwiftUI.Text.LineStyle.Pattern: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

@@ -8,6 +8,29 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/underline(_:pattern:color:)`](https://developer.apple.com/documentation/swiftui/view/underline(_:pattern:color:)) for more details on this ViewModifier.
+///
+/// ### underline(_:pattern:color:)
+/// - `isActive`: `attr("...")` or ``Swift/Bool``
+/// - `pattern`: ``SwiftUI/Text/LineStyle/Pattern``
+/// - `color`: `attr("...")` or ``SwiftUI/Color`` or `nil`
+///
+/// See [`SwiftUI.View/underline(_:pattern:color:)`](https://developer.apple.com/documentation/swiftui/view/underline(_:pattern:color:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   underline(attr("isActive"), pattern: .solid, color: attr("color"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" isActive={@isActive} color={@color} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _UnderlineModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "underline" }

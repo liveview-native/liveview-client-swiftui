@@ -9,7 +9,7 @@ extension ModifierGenerator {
         static let configuration = CommandConfiguration(abstract: "Generate Swift source code for modifiers and enums in a `swiftinterface` file.")
         
         @Argument(
-            help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface`",
+            help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface`",
             transform: { URL(filePath: $0) }
         )
         var interface: URL
@@ -17,7 +17,7 @@ extension ModifierGenerator {
         @Option(
             help: "The number of modifiers included in each chunk. Chunks are used to reduce the size of switch statements in SwiftUI. Only applicable when using `--generate-source`"
         )
-        private var chunkSize: Int = 10
+        private var chunkSize: Int = 14
 
         func run() throws {
             let source = try String(contentsOf: interface, encoding: .utf8)
@@ -25,7 +25,7 @@ extension ModifierGenerator {
             
             FileHandle.standardOutput.write(Data(
                 #"""
-                // File generated with `swift run ModifierGenerator "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
+                // File generated with `swift run ModifierGenerator source "/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
                 
                 import SwiftUI
                 import Symbols
@@ -39,6 +39,7 @@ extension ModifierGenerator {
             for (modifier, signatures) in modifiers.sorted(by: { $0.key < $1.key }) {
                 FileHandle.standardOutput.write(Data(
                     #"""
+                    @_documentation(visibility: public)
                     @ParseableExpression
                     struct _\#(modifier)Modifier<R: RootRegistry>: ViewModifier {
                         static var name: String { "\#(modifier)" }
@@ -80,7 +81,7 @@ extension ModifierGenerator {
                 
                 extension BuiltinRegistry {
                     enum _BuiltinModifierChunk\#(i): ViewModifier {
-                        \#(chunk.map({ "case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
+                        \#(chunk.map({ "indirect case \($0)(_\($0)Modifier<R>)" }).joined(separator: "\n"))
                         
                         func body(content: Content) -> some View {
                             switch self {
@@ -101,11 +102,13 @@ extension ModifierGenerator {
             
             extension BuiltinRegistry {
                 enum BuiltinModifier: ViewModifier, ParseableModifierValue {
-                    \#(chunks.indices.map({ i in "case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
-                    \#(ModifierGenerator.extraModifierTypes.map({ "case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
-                    case _customRegistryModifier(R.CustomModifier)
-                    case _anyTextModifier(_AnyTextModifier<R>)
-                    case _anyImageModifier(_AnyImageModifier<R>)
+                    \#(chunks.indices.map({ i in "indirect case chunk\(i)(_BuiltinModifierChunk\(i))" }).joined(separator: "\n"))
+                    \#(ModifierGenerator.extraModifierTypes.map({ "indirect case \($0.split(separator: "<").first!)(LiveViewNative.\($0))" }).joined(separator: "\n"))
+                    indirect case _customRegistryModifier(R.CustomModifier)
+                    indirect case _anyTextModifier(_AnyTextModifier<R>)
+                    indirect case _anyImageModifier(_AnyImageModifier<R>)
+                    indirect case _anyShapeModifier(_AnyShapeModifier<R>)
+                    indirect case _anyShapeFinalizerModifier(_AnyShapeFinalizerModifier<R>)
                     
                     func body(content: Content) -> some View {
                         switch self {
@@ -126,6 +129,10 @@ extension ModifierGenerator {
                         case let ._anyTextModifier(modifier):
                             content.modifier(modifier)
                         case let ._anyImageModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyShapeModifier(modifier):
+                            content.modifier(modifier)
+                        case let ._anyShapeFinalizerModifier(modifier):
                             content.modifier(modifier)
                         }
                     }
@@ -204,21 +211,31 @@ extension ModifierGenerator {
                                     if let imageModifier = try? _AnyImageModifier<R>.parser(in: context).parse(&input) {
                                         return ._anyImageModifier(imageModifier)
                                     } else {
-                                        // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
                                         input = copy
-                                        do {
-                                            return try ._customRegistryModifier(R.parseModifier(&input, in: context))
-                                        } catch let error as ModifierParseError {
-                                            if let deprecation = deprecations[modifierName] {
-                                                throw ModifierParseError(
-                                                    error: .deprecatedModifier(modifierName, message: deprecation),
-                                                    metadata: metadata
-                                                )
+                                        if let shapeModifier = try? _AnyShapeModifier<R>.parser(in: context).parse(&input) {
+                                            return ._anyShapeModifier(shapeModifier)
+                                        } else {
+                                            input = copy
+                                            if let shapeFinalizerModifier = try? _AnyShapeFinalizerModifier<R>.parser(in: context).parse(&input) {
+                                                return ._anyShapeFinalizerModifier(shapeFinalizerModifier)
                                             } else {
-                                                throw error
+                                                // if the modifier name is not a known built-in, backtrack and try to parse as a custom modifier
+                                                input = copy
+                                                do {
+                                                    return try ._customRegistryModifier(R.parseModifier(&input, in: context))
+                                                } catch let error as ModifierParseError {
+                                                    if let deprecation = deprecations[modifierName] {
+                                                        throw ModifierParseError(
+                                                            error: .deprecatedModifier(modifierName, message: deprecation),
+                                                            metadata: metadata
+                                                        )
+                                                    } else {
+                                                        throw error
+                                                    }
+                                                } catch {
+                                                    throw builtinError
+                                                }
                                             }
-                                        } catch {
-                                            throw builtinError
                                         }
                                     }
                                 }
@@ -235,6 +252,8 @@ extension ModifierGenerator {
             
             for (type, cases) in typeVisitor.types.sorted(by: { $0.key < $1.key }) {
                 let (availability, unavailable) = typeVisitor.availability[type]!
+                let appleDocs = URL(string: "https://developer.apple.com/documentation/swiftui/")!
+                    .appending(path: type)
                 FileHandle.standardOutput.write(Data(
                     """
                     \(
@@ -251,6 +270,11 @@ extension ModifierGenerator {
                         )
                         """
                     )
+                    /// See [`SwiftUI.\(type)`](\(appleDocs.absoluteString)) for more details.
+                    ///
+                    /// Possible values:
+                    \(cases.map({ "/// * `.\($0.0)`" }).joined(separator: "\n"))
+                    @_documentation(visibility: public)
                     \(availability.isEmpty ? "" : "@available(\(availability), *)")
                     extension \(type): ParseableModifierValue {
                         public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

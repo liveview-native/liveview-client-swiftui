@@ -21,14 +21,12 @@ import SwiftUI
 /// ```
 @_documentation(visibility: public)
 @available(macOS 13.0, *)
-struct VSplitView<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct VSplitView<Root: RootRegistry>: View {
     var body: some View {
 #if os(macOS)
         SwiftUI.VSplitView {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
 #endif
     }

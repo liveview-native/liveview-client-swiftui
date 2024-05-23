@@ -8,6 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ListItemTint`](https://developer.apple.com/documentation/swiftui/ListItemTint) for more details.
+///
+/// Possible values:
+/// - `.monochrome`
+/// - `.fixed(Color)`, with a ``SwiftUI/Color``
+/// - `.preferred(Color)`, with a ``SwiftUI/Color``
+@_documentation(visibility: public)
 extension ListItemTint: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

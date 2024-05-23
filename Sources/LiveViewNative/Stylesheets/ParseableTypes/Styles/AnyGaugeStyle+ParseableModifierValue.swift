@@ -9,6 +9,18 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
+/// See [`SwiftUI.GaugeStyle`](https://developer.apple.com/documentation/swiftui/GaugeStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.accessoryCircular`
+/// - `.accessoryCircularCapacity`
+/// - `.linearCapacity`
+/// - `.accessoryLinear`
+/// - `.accessoryLinearCapacity`
+/// - `.circular`
+/// - `.linear`
+@_documentation(visibility: public)
 enum AnyGaugeStyle: String, CaseIterable, ParseableModifierValue, GaugeStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

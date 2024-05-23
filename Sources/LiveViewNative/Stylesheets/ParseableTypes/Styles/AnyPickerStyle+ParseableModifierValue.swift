@@ -8,6 +8,17 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.PickerStyle`](https://developer.apple.com/documentation/swiftui/PickerStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.menu`
+/// - `.segmented`
+/// - `.navigationLink`
+/// - `.palette`
+/// - `.radioGroup`
+/// - `.wheel`
+@_documentation(visibility: public)
 enum AnyPickerStyle: String, CaseIterable, ParseableModifierValue {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

@@ -8,6 +8,23 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Shape/intersection(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/intersection(_:eoFill:)) for more details on this ViewModifier.
+///
+/// ### intersection(_:eoFill:)
+/// - `other`: ``SwiftUI/AnyShape`` (required)
+/// - `eoFill`: ``Swift/Bool``
+///
+/// See [`SwiftUI.Shape/intersection(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/intersection(_:eoFill:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   intersection(.rect, eoFill: false)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _IntersectionModifier: ShapeModifier {
     static let name = "intersection"
@@ -20,7 +37,7 @@ struct _IntersectionModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.intersection(other, eoFill: eoFill))
         } else {
@@ -29,6 +46,23 @@ struct _IntersectionModifier: ShapeModifier {
     }
 }
 
+/// See [`SwiftUI.Shape/union(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/union(_:eoFill:)) for more details on this ViewModifier.
+///
+/// ### union(_:eoFill:)
+/// - `other`: ``SwiftUI/AnyShape`` (required)
+/// - `eoFill`: ``Swift/Bool``
+///
+/// See [`SwiftUI.Shape/union(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/union(_:eoFill:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   union(.rect, eoFill: false)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _UnionModifier: ShapeModifier {
     static let name = "union"
@@ -41,7 +75,7 @@ struct _UnionModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.union(other, eoFill: eoFill))
         } else {
@@ -50,6 +84,23 @@ struct _UnionModifier: ShapeModifier {
     }
 }
 
+/// See [`SwiftUI.Shape/subtracting(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/subtracting(_:eoFill:)) for more details on this ViewModifier.
+///
+/// ### subtracting(_:eoFill:)
+/// - `other`: ``SwiftUI/AnyShape`` (required)
+/// - `eoFill`: ``Swift/Bool``
+///
+/// See [`SwiftUI.Shape/subtracting(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/subtracting(_:eoFill:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   subtracting(.rect, eoFill: false)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _SubtractingModifier: ShapeModifier {
     static let name = "subtracting"
@@ -62,7 +113,7 @@ struct _SubtractingModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.subtracting(other, eoFill: eoFill))
         } else {
@@ -71,6 +122,23 @@ struct _SubtractingModifier: ShapeModifier {
     }
 }
 
+/// See [`SwiftUI.Shape/symmetricDifference(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/symmetricDifference(_:eoFill:)) for more details on this ViewModifier.
+///
+/// ### symmetricDifference(_:eoFill:)
+/// - `other`: ``SwiftUI/AnyShape`` (required)
+/// - `eoFill`: ``Swift/Bool``
+///
+/// See [`SwiftUI.Shape/symmetricDifference(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/symmetricDifference(_:eoFill:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   symmetricDifference(.rect, eoFill: false)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _SymmetricDifferenceModifier: ShapeModifier {
     static let name = "symmetricDifference"
@@ -83,7 +151,7 @@ struct _SymmetricDifferenceModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.symmetricDifference(other, eoFill: eoFill))
         } else {
@@ -92,6 +160,23 @@ struct _SymmetricDifferenceModifier: ShapeModifier {
     }
 }
 
+/// See [`SwiftUI.Shape/lineIntersection(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/lineIntersection(_:eoFill:)) for more details on this ViewModifier.
+///
+/// ### lineIntersection(_:eoFill:)
+/// - `other`: ``SwiftUI/AnyShape`` (required)
+/// - `eoFill`: ``Swift/Bool``
+///
+/// See [`SwiftUI.Shape/lineIntersection(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/lineIntersection(_:eoFill:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   lineIntersection(.rect, eoFill: false)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _LineIntersectionModifier: ShapeModifier {
     static let name = "lineIntersection"
@@ -104,7 +189,7 @@ struct _LineIntersectionModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.lineIntersection(other, eoFill: eoFill))
         } else {
@@ -113,6 +198,23 @@ struct _LineIntersectionModifier: ShapeModifier {
     }
 }
 
+/// See [`SwiftUI.Shape/lineSubtraction(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/lineSubtraction(_:eoFill:)) for more details on this ViewModifier.
+///
+/// ### lineSubtraction(_:eoFill:)
+/// - `other`: ``SwiftUI/AnyShape`` (required)
+/// - `eoFill`: ``Swift/Bool``
+///
+/// See [`SwiftUI.Shape/lineSubtraction(_:eoFill:)`](https://developer.apple.com/documentation/swiftui/shape/lineSubtraction(_:eoFill:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   lineSubtraction(.rect, eoFill: false)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _LineSubtractionModifier: ShapeModifier {
     static let name = "lineSubtraction"
@@ -125,7 +227,7 @@ struct _LineSubtractionModifier: ShapeModifier {
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.lineSubtraction(other, eoFill: eoFill))
         } else {

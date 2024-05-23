@@ -8,6 +8,8 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// A string that represents an error message.
+@_documentation(visibility: public)
 struct AnyLocalizedError: LocalizedError, ParseableModifierValue {
     var errorDescription: String?
     

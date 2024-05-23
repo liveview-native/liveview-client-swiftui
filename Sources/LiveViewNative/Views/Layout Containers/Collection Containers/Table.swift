@@ -90,10 +90,11 @@ import LiveViewNativeCore
 /// * ``selection``
 @_documentation(visibility: public)
 @available(iOS 16.0, macOS 13.0, *)
-struct Table<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
+@LiveElement
+struct Table<Root: RootRegistry>: View {
+    @LiveElementIgnored
+    @Environment(\.coordinatorEnvironment)
+    private var coordinatorEnvironment
     
     /// Synchronizes the selected rows with the server.
     ///
@@ -218,19 +219,21 @@ struct Table<R: RootRegistry>: View {
                 columns[9]
             }
         default:
-            AnyErrorView<R>(TableError.badColumnCount(columns.count))
+            AnyErrorView<Root>(TableError.badColumnCount(columns.count))
         }
     }
     
     private var rows: [TableRow] {
-        element.elementChildren()
+        $liveElement.childNodes
+            .compactMap { $0.asElement() }
             .filter { $0.attributeValue(for: "template") == "rows" }
             .flatMap { $0.elementChildren() }
             .compactMap { $0.tag == "TableRow" && $0.attribute(named: "id") != nil ? TableRow(element: $0) : nil }
     }
     
     private var columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>] {
-        let columnElements = element.elementChildren()
+        let columnElements = $liveElement.childNodes
+            .compactMap { $0.asElement() }
             .filter { $0.attributeValue(for: "template") == "columns" }
             .flatMap { $0.elementChildren() }
             .filter { $0.tag == "TableColumn" }
@@ -238,9 +241,9 @@ struct Table<R: RootRegistry>: View {
             TableColumn(item.element.innerText(), sortUsing: TableColumnSort(id: item.element.attributeValue(for: "id") ?? String(item.offset), order: .forward)) { (row: TableRow) in
                 let rowChildren = row.element.children()
                 if rowChildren.indices.contains(item.offset) {
-                    context.coordinator.builder.fromNodes(
+                    $liveElement.context.coordinator.builder.fromNodes(
                         [rowChildren[item.offset]],
-                        context: context.storage
+                        context: $liveElement.context.storage
                     )
                     .environment(\.coordinatorEnvironment, coordinatorEnvironment)
                 }

@@ -20,15 +20,13 @@ import SwiftUI
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 @_documentation(visibility: public)
-struct Toggle<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Toggle<Root: RootRegistry>: View {
     @FormState("isOn", default: false) var value: Bool
     
     public var body: some View {
         SwiftUI.Toggle(isOn: $value) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

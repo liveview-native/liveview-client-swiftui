@@ -16,7 +16,7 @@ import SwiftUI
 ///     rows={[
 ///         %{ size: %{ fixed: 100 } },
 ///         %{ size: :flexible },
-///         %{ size: %{ adaptive: %{ minimum: 50 } }
+///         %{ size: %{ adaptive: %{ minimum: 50 } } }
 ///     ]}
 /// >
 ///     <%= for i <- 1..50 do %>
@@ -36,33 +36,31 @@ import SwiftUI
 /// * ``spacing``
 /// * ``pinnedViews``
 @_documentation(visibility: public)
-struct LazyHGrid<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct LazyHGrid<Root: RootRegistry>: View {
     /// Configured rows to fill with the child elements.
     @_documentation(visibility: public)
-    @Attribute("rows") private var rows: [GridItem]
+    private var rows: [GridItem] = []
     /// The alignment between rows.
     @_documentation(visibility: public)
-    @Attribute("alignment") private var alignment: VerticalAlignment = .center
+    private var alignment: VerticalAlignment = .center
     /// The spacing between rows.
     @_documentation(visibility: public)
-    @Attribute("spacing") private var spacing: Double?
+    private var spacing: CGFloat?
     /// Pins section headers/footers.
     ///
     /// See ``LiveViewNative/SwiftUI/PinnedScrollableViews``.
     @_documentation(visibility: public)
-    @Attribute("pinnedViews") private var pinnedViews: PinnedScrollableViews = []
+    private var pinnedViews: PinnedScrollableViews = []
 
     public var body: some View {
         SwiftUI.LazyHGrid(
             rows: rows,
             alignment: alignment,
-            spacing: spacing.flatMap(CGFloat.init),
+            spacing: spacing,
             pinnedViews: pinnedViews
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

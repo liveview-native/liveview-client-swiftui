@@ -1,7 +1,7 @@
 defmodule LiveViewNative.SwiftUI.MixProject do
   use Mix.Project
 
-  @version "0.3.0-alpha.4"
+  @version "0.3.0-rc.1"
   @source_url "https://github.com/liveview-native/liveview-client-swiftui"
 
   def project do
@@ -25,58 +25,94 @@ defmodule LiveViewNative.SwiftUI.MixProject do
     ]
   end
 
-  defp aliases do
+  def cli do
     [
-      docs: ["lvn.swift_ui.generate_documentation", "docs"]
+      preferred_envs: [docs: :docs, "hex.publish": :docs]
     ]
   end
 
+  defp aliases do
+    [
+      docs: ["lvn.swiftui.gen.docs", "docs"]
+    ]
+  end
+
+  defp elixirc_paths(:docs), do: ["lib"]
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  defp elixirc_paths(_), do: ignore_docs_task(["lib"])
+
+  defp ignore_docs_task(paths) do
+    Enum.flat_map(paths, fn(path) ->
+      Path.wildcard("#{path}/**/*.ex")
+    end)
+    |> Enum.filter(&(!(&1 =~ "lvn.swiftui.gen.docs")))
+  end
 
   defp deps do
     [
-      {:ex_doc, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:makeup_swift, "~> 0.0.1"},
-      {:makeup_json, "~> 0.1.0"},
+      {:ex_doc, ">= 0.0.0", only: [:docs, :test]},
+      {:makeup_swift, "~> 0.0.1", only: [:docs, :test]},
+      {:makeup_json, "~> 0.1.0", only: [:docs, :test]},
       {:makeup_eex, ">= 0.1.1"},
       {:floki, ">= 0.30.0", only: :test},
-      # {:live_view_native, path: "../live_view_native", override: true},
-      {:live_view_native, github: "liveview-native/live_view_native", branch: "main", override: true},
-      # {:live_view_native_stylesheet, path: "../live_view_native_stylesheet", override: true},
-      {:live_view_native_stylesheet, github: "liveview-native/live_view_native_stylesheet", branch: "main", override: true},
-      # {:live_view_native_test, path: "../live_view_native_test", only: :test, override: true},
+      # {:live_view_native, "~> 0.3.0-rc.1"},
+      {:live_view_native, github: "liveview-native/live_view_native", override: true},
+      {:live_view_native_stylesheet, "~> 0.3.0-rc.1", only: :test},
       {:live_view_native_test, github: "liveview-native/live_view_native_test", branch: "main", only: :test},
-      {:jason, "~> 1.2"},
       {:nimble_parsec, "~> 1.3"}
     ]
   end
 
   defp docs do
-    # Feature Flagging Docs
-    include_generated_docs = System.get_env("INCLUDE_GENERATED_DOCS")
-    extras =
-      if include_generated_docs do
-        ["README.md"] ++ Path.wildcard("generated_docs/**/*.{md,cheatmd}")
-      else
-        ["README.md"]
-      end
+    guides = Path.wildcard("guides/**/*.md")
+    generated_docs = Path.wildcard("generated_docs/**/*.{md,cheatmd}")
 
-    groups_for_extras =
-      if include_generated_docs do
-        Path.wildcard("generated_docs/*")
-        |> Enum.map(fn p -> {Path.basename(p), Path.wildcard("#{p}/*.md")} end)
-        |> Map.new()
-      else
-        []
-      end
+    extras = ["README.md"] ++ guides ++ generated_docs
+
+    guide_groups = [
+      "Architecture": Path.wildcard("guides/architecture/*.md")
+    ]
+
+    generated_groups =
+      Path.wildcard("generated_docs/*")
+      |> Enum.map(&({Path.basename(&1) |> String.to_atom(), Path.wildcard("#{&1}/*.md")}))
 
     [
       extras: extras,
-      groups_for_extras: groups_for_extras,
+      groups_for_extras: guide_groups ++ generated_groups,
+      groups_for_functions: [
+        Components: &(&1[:type] == :component),
+        Macros: &(&1[:type] == :macro)
+      ],
       main: "readme",
       source_url: @source_url,
-      source_ref: "v#{@version}"
+      source_ref: "v#{@version}",
+      before_closing_body_tag: %{
+        html: """
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.3/dist/mermaid.min.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            mermaid.initialize({
+              startOnLoad: false,
+              theme: document.body.className.includes("dark") ? "dark" : "default"
+            });
+            let id = 0;
+            for (const codeEl of document.querySelectorAll("pre code.mermaid")) {
+              const preEl = codeEl.parentElement;
+              const graphDefinition = codeEl.textContent;
+              const graphEl = document.createElement("div");
+              const graphId = "mermaid-graph-" + id++;
+              mermaid.render(graphId, graphDefinition).then(({svg, bindFunctions}) => {
+                graphEl.innerHTML = svg;
+                bindFunctions?.(graphEl);
+                preEl.insertAdjacentElement("afterend", graphEl);
+                preEl.remove();
+              });
+            }
+          });
+        </script>
+        """
+      }
     ]
   end
 

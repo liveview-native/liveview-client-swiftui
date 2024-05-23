@@ -8,6 +8,136 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.ShapeStyle`](https://developer.apple.com/documentation/swiftui/ShapeStyle) for more details.
+///
+/// A color/pattern used to render content.
+///
+/// ### Colors
+/// See ``SwiftUI/Color`` for more details on available color styles.
+///
+/// ### Hierarchical Styles
+/// A level of the foreground style.
+///
+/// Possible values:
+/// - `.primary`
+/// - `.secondary`
+/// - `.tertiary`
+/// - `.quaternary`
+/// - `.quinary`
+///
+/// Hierarchical styles can also be applied to another style to modify it.
+///
+/// ```swift
+/// .blue.secondary
+/// .tint.tertiary
+/// ```
+///
+/// ### Materials
+/// A background blur effect.
+///
+/// Possible values:
+/// - `.ultraThinMaterial`
+/// - `.thinMaterial`
+/// - `.regularMaterial`
+/// - `.thickMaterial`
+/// - `.ultraThickMaterial`
+/// - `.bar`
+///
+/// ### Semantic Styles
+/// Styles with a semantic meaning.
+/// These styles can typically be set with a modifier, such as ``_tintModifier`` or ``ForegroundStyleModifier``.
+///
+/// Possible values:
+/// - `.foreground`
+/// - `.background`
+/// - `.selection`
+/// - `.tint`
+/// - `.separator`
+/// - `.placeholder`
+/// - `.link`
+/// - `.fill`
+/// - `.windowBackground`
+///
+/// ### Image Paint
+/// Use an ``SwiftUI/Image`` as a style.
+///
+/// ```swift
+/// .image(Image("MyImage"))
+/// .image(Image(systemName: "circle.fill"), sourceRect: CGRect(x: 10, y: 10, width: 50, height: 50), scale: 0.5)
+/// ```
+///
+/// ### Gradients
+/// See ``SwiftUI/Gradient`` for more details on creating gradient styles.
+///
+/// ### Angular Gradients
+/// Create a gradient with a ``SwiftUI/UnitPoint`` `center`, a `start`/`end` ``SwiftUI/Angle``, and a set of ``SwiftUI/Color`` values or gradient ``SwiftUI/Gradient/Stop`` points.
+///
+/// ```swift
+/// .angularGradient(colors: [.red, .blue], startAngle: .zero, endAngle: .degrees(180))
+/// .angularGradient(stops: [Gradient.Stop(color: .red, location: 0), Gradient.Stop(color: .red, location: 1)], center: .bottom, startAngle: .radians(0), endPoint: .radians(3.14))
+/// .angularGradient(Gradient(colors: [.red, .blue]), startAngle: .degrees(-180), endPoint: .degrees(90))
+/// ```
+///
+/// ### Conic Gradients
+/// Create a gradient with a ``SwiftUI/UnitPoint`` `center`, an ``SwiftUI/Angle``, and a set of ``SwiftUI/Color`` values or gradient ``SwiftUI/Gradient/Stop`` points.
+///
+/// ```swift
+/// .conicGradient(colors: [.red, .blue], center: .center)
+/// .conicGradient(stops: [Gradient.Stop(color: .red, location: 0), Gradient.Stop(color: .red, location: 1)], center: .bottom)
+/// .conicGradient(Gradient(colors: [.red, .blue]), center: .top, angle: .degrees(90))
+/// ```
+///
+/// ### Elliptical Gradients
+/// Create a gradient with a ``SwiftUI/UnitPoint`` `center`, a start/end radius fraction, and a set of ``SwiftUI/Color`` values or gradient ``SwiftUI/Gradient/Stop`` points.
+///
+/// ```swift
+/// .ellipticalGradient(colors: [.red, .blue])
+/// .ellipticalGradient(stops: [Gradient.Stop(color: .red, location: 0), Gradient.Stop(color: .red, location: 1)], endRadiusFraction: 1)
+/// .ellipticalGradient(Gradient(colors: [.red, .blue]), center: .bottom, startRadiusFraction: 0.5, endRadiusFraction: 0.75)
+/// ```
+///
+/// ### Linear Gradients
+/// Create a gradient with ``SwiftUI/UnitPoint`` start/end points, and a set of ``SwiftUI/Color`` values or gradient ``SwiftUI/Gradient/Stop`` points.
+///
+/// ```swift
+/// .linearGradient(colors: [.red, .blue], startPoint: .leading, endPoint: .trailing)
+/// .linearGradient(stops: [Gradient.Stop(color: .red, location: 0), Gradient.Stop(color: .red, location: 1)], startPoint: .topLeading, endPoint: .bottomTrailing)
+/// .linearGradient(Gradient(colors: [.red, .blue]), startPoint: .top, endPoint: .bottom)
+/// ```
+///
+/// ### Radial Gradients
+/// Create a gradient with a ``SwiftUI/UnitPoint`` `center`, a start/end radius, and a set of ``SwiftUI/Color`` values or gradient ``SwiftUI/Gradient/Stop`` points.
+///
+/// ```swift
+/// .radialGradient(colors: [.red, .blue], center: .bottom, startRadius: 0, endRadius: 50)
+/// .radialGradient(stops: [Gradient.Stop(color: .red, location: 0), Gradient.Stop(color: .red, location: 1)], center: .center, startRadius: 25, endRadius: 75)
+/// .radialGradient(Gradient(colors: [.red, .blue]), center: .bottom, startRadiusFraction: 0.5, endRadiusFraction: 0.75, center: .top, startRadius: 0, endRadius: 50)
+/// ```
+///
+/// ### Blend Mode
+/// Pass a ``SwiftUI/BlendMode`` to be used as a style, or applied to another style.
+///
+/// ```swift
+/// .blendMode(.multiply)
+/// .blue.blendMode(.softLight)
+/// ```
+///
+/// ### Opacity
+/// Pass an opacity amount to be used as a style, or applied to another style.
+///
+/// ```swift
+/// .opacity(0.5)
+/// .blue.opacity(0.8)
+/// ```
+///
+/// ### Shadow
+/// Pass a ``SwiftUI/ShadowStyle`` to be used as a style, or applied to another style.
+///
+/// ```swift
+/// .shadow(.drop(radius: 10))
+/// .blue.shadow(.inner(radius: 8, y: 8))
+/// ```
+@_documentation(visibility: public)
 extension AnyShapeStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
@@ -53,9 +183,11 @@ extension AnyShapeStyle: ParseableModifierValue {
                 ConstantAtomLiteral("link").map({ LinkShapeStyle() as any ShapeStyle })
                 ConstantAtomLiteral("fill").map({ FillShapeStyle() as any ShapeStyle })
             }
+            #if !os(visionOS)
             if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
                 ConstantAtomLiteral("windowBackground").map({ WindowBackgroundShapeStyle() as any ShapeStyle })
             }
+            #endif
             
             ImagePaint.parser(in: context).map({ $0 as any ShapeStyle })
             _image.parser(in: context).map(\.value)

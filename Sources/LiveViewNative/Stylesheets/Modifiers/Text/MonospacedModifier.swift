@@ -8,6 +8,27 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/monospaced(_:)`](https://developer.apple.com/documentation/swiftui/view/monospaced(_:)) for more details on this ViewModifier.
+///
+/// ### monospaced(_:)
+/// - `isActive`: `attr("...")` or ``Swift/Bool``
+/// 
+/// See [`SwiftUI.View/monospaced(_:)`](https://developer.apple.com/documentation/swiftui/view/monospaced(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   monospaced(attr("isActive"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" isActive={@isActive} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _MonospacedModifier<R: RootRegistry>: TextModifier {
     static var name: String { "monospaced" }

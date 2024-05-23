@@ -10,6 +10,41 @@ import LiveViewNativeStylesheet
 
 // manual implementation
 // The `token` method requires a type conforming to `Identifiable`, which becomes ambiguous with `String`.
+/// See [`SwiftUI.View/searchCompletion(_:)`](https://developer.apple.com/documentation/swiftui/view/searchCompletion(_:)-e0pr) for more details on this ViewModifier.
+///
+/// ### searchCompletion(_:)
+/// - `token`: atom (required)
+///
+/// See [`SwiftUI.View/searchCompletion(_:)`](https://developer.apple.com/documentation/swiftui/view/searchCompletion(_:)-e0pr) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   searchCompletion(:token)
+/// end
+/// ```
+///
+/// ### searchCompletion(_:)
+/// - `completion`: `attr("...")` or ``Swift/String`` (required)
+///
+/// See [`SwiftUI.View/searchCompletion(_:)`](https://developer.apple.com/documentation/swiftui/view/searchCompletion(_:)-2uaf3) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   searchCompletion(attr("completion"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" completion={@completion} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _SearchCompletionModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "searchCompletion" }

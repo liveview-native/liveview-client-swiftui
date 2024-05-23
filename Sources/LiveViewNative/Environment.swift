@@ -50,15 +50,32 @@ private struct LiveContextStorageKey: EnvironmentKey {
 /// Provides access to ``LiveViewCoordinator`` properties via the environment.
 /// This exists to type-erase the coordinator, since environment properties can't be generic.
 struct CoordinatorEnvironment {
-    let pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void
-    let elementChanged: (NodeRef) -> ObservableObjectPublisher
-    let document: Document
+    private final class Storage {
+        let pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void
+        let elementChanged: @MainActor (NodeRef) -> ObservableObjectPublisher
+        let document: Document
+        
+        init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>, document: Document) {
+            self.pushEvent = coordinator.pushEvent
+            self.document = document
+            self.elementChanged = coordinator.elementChanged(_:)
+        }
+    }
+    private let storage: Storage
+    
+    var pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void {
+        storage.pushEvent
+    }
+    var elementChanged: @MainActor (NodeRef) -> ObservableObjectPublisher {
+        storage.elementChanged
+    }
+    var document: Document {
+        storage.document
+    }
     
     @MainActor
     init<R: CustomRegistry>(_ coordinator: LiveViewCoordinator<R>, document: Document) {
-        self.pushEvent = coordinator.pushEvent
-        self.document = document
-        self.elementChanged = coordinator.elementChanged(_:)
+        self.storage = .init(coordinator, document: document)
     }
     
     fileprivate struct Key: EnvironmentKey {

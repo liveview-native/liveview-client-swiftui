@@ -9,6 +9,32 @@ import SwiftUI
 import Symbols
 import LiveViewNativeStylesheet
 
+/// See [`Symbols.SymbolEffect`](https://developer.apple.com/documentation/symbols/SymbolEffect) for more details.
+///
+/// Possible values:
+/// - `.appear`
+/// - `.automatic`
+/// - `.bounce`
+/// - `.disappear`
+/// - `.pulse`
+/// - `.replace`
+/// - `.scale`
+/// - `.variableColor`
+///
+/// Apply modifiers to the symbol effect to customize it.
+///
+/// Possible modifiers:
+/// - `.down`
+/// - `.up`
+/// - `.byLayer`
+/// - `.wholeSymbol`
+///
+/// ```swift
+/// .appear.down
+/// .variableColor.cumulative.reversing.dimInactiveLayers
+/// .variableColor.hideInactiveLayers
+/// ```
+@_documentation(visibility: public)
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
 struct AnySymbolEffect: SymbolEffect, ContentTransitionSymbolEffect, ParseableModifierValue, IndefiniteSymbolEffect, DiscreteSymbolEffect {
     let configuration: SymbolEffectConfiguration
@@ -301,6 +327,14 @@ extension VariableColorSymbolEffect: ParseableModifierValue {
     }
 }
 
+/// See [`Symbols.SymbolEffectOptions`](https://developer.apple.com/documentation/symbols/SymbolEffectOptions) for more details.
+///
+/// Possible values:
+/// - `.repeating`
+/// - `.nonRepeating`
+/// - `.speed(Double)`
+/// - `.repeat(Int)`
+@_documentation(visibility: public)
 @available(iOS 17.0, macOS 14, tvOS 17, watchOS 10, *)
 extension SymbolEffectOptions: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

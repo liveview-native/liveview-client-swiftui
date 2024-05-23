@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// Toolbar element for placing items.
 ///
@@ -61,41 +62,32 @@ import SwiftUI
 /// ### Toolbars Modifiers
 /// * ``ToolbarModifier`` 
 @_documentation(visibility: public)
-struct ToolbarItem<R: RootRegistry>: ToolbarContent {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ToolbarItem<Root: RootRegistry>: ToolbarContent {
     /// The position of this item in the toolbar.
     @_documentation(visibility: public)
-    @Attribute("placement", transform: { _ in fatalError() }) private var placement: SwiftUI.ToolbarItemPlacement
+    private var placement: ToolbarItemPlacement = .automatic
     
     init(element: ElementNode) {
-        self._element = .init(element: element)
-        self._placement = .init("placement", transform: {
-            (try? ToolbarItemPlacement(from: $0, on: $1))?.placement ?? .automatic
-        }, element: element)
+        self._liveElement = .init(element: element)
     }
     
     var body: some ToolbarContent {
-        SwiftUI.ToolbarItem(placement: placement) {
-            context.buildChildren(of: element)
+        SwiftUI.ToolbarItem(placement: placement.placement) {
+            $liveElement.children()
         }
     }
 }
 
 /// See ``ToolbarItem``
 @_documentation(visibility: public)
-struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
-    private var placement: SwiftUI.ToolbarItemPlacement {
-        (try? ToolbarItemPlacement(from: element.attribute(named: "placement"), on: element))?.placement ?? .automatic
-    }
+@LiveElement
+struct CustomizableToolbarItem<Root: RootRegistry>: CustomizableToolbarContent {
+    var placement: ToolbarItemPlacement = .automatic
     
     /// The unique ID for this customizable item.
     @_documentation(visibility: public)
-    @Attribute("id") private var id: String
+    private var id: String?
     
     /// The visibility of the item when the toolbar is not customized.
     ///
@@ -105,11 +97,11 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     ///
     /// When set to `hidden`, the item must be added to the toolbar by the user to be visible.
     @_documentation(visibility: public)
-    @Attribute("defaultVisibility", transform: { _ in fatalError() }) private var defaultVisibility: Visibility
+    private var defaultVisibility: Visibility = .automatic
     
     /// Ensures the item is available in the overflow menu if removed from the toolbar.
     @_documentation(visibility: public)
-    @Attribute("alwaysAvailable") private var alwaysAvailable: Bool = false
+    private var alwaysAvailable: Bool = false
     
     /// Changes the level of customization for this item.
     ///
@@ -118,34 +110,22 @@ struct CustomizableToolbarItem<R: RootRegistry>: CustomizableToolbarContent {
     /// * `disabled` - The item is not customizable.
     /// * `reorderable` - The item can be reordered, but not removed.
     @_documentation(visibility: public)
-    @Attribute("customizationBehavior", transform: { _ in fatalError() }) private var customizationBehavior: ToolbarCustomizationBehavior
+    private var customizationBehavior: ToolbarCustomizationBehavior = .default
     
     init(element: ElementNode) {
-        self._element = .init(element: element)
-        self._id = .init("id", element: element)
-        self._defaultVisibility = .init(wrappedValue: .automatic, "visibility", transform: {
-            switch $0?.value {
-            case "visible": return .visible
-            case "hidden": return .hidden
-            default: return .automatic
-            }
-        }, element: element)
-        self._alwaysAvailable = .init(wrappedValue: false, "alwaysAvailable", element: element)
-        self._customizationBehavior = .init(wrappedValue: .default, "customizationBehavior", transform: {
-            switch $0?.value {
-            case "disabled": return .disabled
-            case "reorderable": return .reorderable
-            default: return .default
-            }
-        }, element: element)
+        self._liveElement = .init(element: element)
     }
     
     var body: some CustomizableToolbarContent {
-        SwiftUI.ToolbarItem(id: id, placement: placement) {
-            context.buildChildren(of: element)
+        if let id {
+            SwiftUI.ToolbarItem(id: id, placement: placement.placement) {
+                $liveElement.children()
+            }
+            .defaultCustomization(defaultVisibility, options: alwaysAvailable ? .alwaysAvailable : [])
+            .customizationBehavior(customizationBehavior)
+        } else {
+            fatalError("Missing `id` attribute on customizable `ToolbarItem`")
         }
-        .defaultCustomization(defaultVisibility, options: alwaysAvailable ? .alwaysAvailable : [])
-        .customizationBehavior(customizationBehavior)
     }
 }
 
@@ -178,6 +158,8 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
     case topBarTrailing
     @_documentation(visibility: public)
     case bottomBar
+    @_documentation(visibility: public)
+    case bottomOrnament
     
     var placement: SwiftUI.ToolbarItemPlacement {
         switch self {
@@ -211,7 +193,7 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
         case .cancellationAction: return .cancellationAction
         case .destructiveAction: return .destructiveAction
         case .keyboard:
-            #if os(watchOS) || os(tvOS)
+            #if os(watchOS) || os(tvOS) || os(visionOS)
             return .automatic
             #else
             return .keyboard
@@ -246,6 +228,29 @@ enum ToolbarItemPlacement: String, AttributeDecodable {
                 return .automatic
             }
             #endif
+        case .bottomOrnament:
+            #if os(visionOS)
+            return .bottomOrnament
+            #else
+            return .automatic
+            #endif
+        }
+    }
+}
+
+extension ToolbarCustomizationBehavior: AttributeDecodable {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        switch value {
+        case "default":
+            self = .default
+        case "disabled":
+            self = .disabled
+        case "reorderable":
+            self = .reorderable
+        default:
+            throw AttributeDecodingError.badValue(Self.self)
         }
     }
 }

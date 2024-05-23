@@ -8,6 +8,14 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.PresentationBackgroundInteraction`](https://developer.apple.com/documentation/swiftui/PresentationBackgroundInteraction) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.enabled`
+/// - `.enabled(upThrough: PresentationDetent)`, with a ``SwiftUI/PresentationDetent``
+/// - `.disabled`
+@_documentation(visibility: public)
 @available(iOS 16.4, macOS 13.3, tvOS 16.4, watchOS 9.4, *)
 extension PresentationBackgroundInteraction: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {

@@ -34,3 +34,22 @@ extension Axis.Set: AttributeDecodable {
         self = result
     }
 }
+
+extension Axis: AttributeDecodable {
+    init?(string: String) {
+        switch string {
+        case "horizontal":
+            self = .horizontal
+        case "vertical":
+            self = .vertical
+        default:
+            return nil
+        }
+    }
+    
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
+    }
+}

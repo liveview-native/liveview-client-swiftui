@@ -20,26 +20,24 @@ import SwiftUI
 /// - ``alignment``
 /// - ``spacing``
 @_documentation(visibility: public)
-struct VStack<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct VStack<Root: RootRegistry>: View {
     /// The horizontal alignment of views within the stack. Defaults to center-aligned.
     ///
     /// See ``LiveViewNative/SwiftUI/HorizontalAlignment``
     @_documentation(visibility: public)
-    @Attribute("alignment") private var alignment: HorizontalAlignment = .center
+    private var alignment: HorizontalAlignment = .center
     
     /// The spacing between views in the stack. If not provided, the stack uses the system spacing.
     @_documentation(visibility: public)
-    @Attribute("spacing") private var spacing: Double?
+    private var spacing: CGFloat?
     
     public var body: some View {
         SwiftUI.VStack(
             alignment: alignment,
-            spacing: spacing.flatMap(CGFloat.init)
+            spacing: spacing
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

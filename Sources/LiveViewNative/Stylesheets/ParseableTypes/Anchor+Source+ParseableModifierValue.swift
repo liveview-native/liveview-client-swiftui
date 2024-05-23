@@ -8,6 +8,18 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Anchor`](https://developer.apple.com/documentation/swiftui/Anchor) for more details.
+///
+/// Possible values:
+/// - `bounds`
+/// - `.rect(_:)`
+///
+/// See ``CoreGraphics/CGRect`` for information on specifying rectangular dimensions.
+///
+/// ```swift
+/// .rect(CGRect(x: 0, y: 0, width: 50, height: 50))
+/// ```
+@_documentation(visibility: public)
 extension Anchor<CGRect>.Source: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {

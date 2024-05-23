@@ -28,26 +28,21 @@ import SwiftUI
 /// ### Toolbars Modifiers
 /// * ``ToolbarModifier``
 @_documentation(visibility: public)
-struct ToolbarItemGroup<R: RootRegistry>: ToolbarContent {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ToolbarItemGroup<Root: RootRegistry>: ToolbarContent {
     /// The position of this group in the toolbar.
     @_documentation(visibility: public)
-    @Attribute("placement", transform: { _ in fatalError() }) private var placement: SwiftUI.ToolbarItemPlacement
+    private var placement: ToolbarItemPlacement = .automatic
     
     init(element: ElementNode) {
-        self._element = .init(element: element)
-        self._placement = .init("placement", transform: {
-            (try? ToolbarItemPlacement(from: $0, on: $1))?.placement ?? .automatic
-        }, element: element)
+        self._liveElement = .init(element: element)
     }
     
     var body: some ToolbarContent {
-        SwiftUI.ToolbarItemGroup(placement: placement) {
-            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+        SwiftUI.ToolbarItemGroup(placement: placement.placement) {
+            $liveElement.children(in: "content", default: true)
         } label: {
-            context.buildChildren(of: element, forTemplate: "label")
+            $liveElement.children(in: "label")
         }
     }
 }

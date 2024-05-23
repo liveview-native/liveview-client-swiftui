@@ -8,6 +8,23 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Shape/rotation(_:anchor:)`](https://developer.apple.com/documentation/swiftui/shape/rotation(_:anchor:)) for more details on this ViewModifier.
+///
+/// ### rotation(_:anchor:)
+/// - `angle`: ``SwiftUI/Angle`` (required)
+/// - `anchor`: ``SwiftUI/UnitPoint``
+///
+/// See [`SwiftUI.Shape/rotation(_:anchor:)`](https://developer.apple.com/documentation/swiftui/shape/rotation(_:anchor:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   rotation(.zero, style: .center)
+/// end
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _RotationModifier: ShapeModifier {
     static let name = "rotation"
@@ -23,7 +40,7 @@ struct _RotationModifier: ShapeModifier {
         self.anchor = anchor
     }
 
-    func apply(to shape: AnyShape) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
         return shape.rotation(angle, anchor: anchor)
     }
 }

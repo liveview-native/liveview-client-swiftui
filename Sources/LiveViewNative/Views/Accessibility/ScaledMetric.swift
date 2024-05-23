@@ -37,28 +37,26 @@ import SwiftUI
 /// ## Bindings
 /// * ``scaledValue``
 @_documentation(visibility: public)
-struct ScaledMetric<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ScaledMetric<Root: RootRegistry>: View {
     /// The event to update with the scaled ``value``.
     @_documentation(visibility: public)
     @Event("phx-change", type: "click") private var onChange
     
     /// The initial value to scale.
     @_documentation(visibility: public)
-    @Attribute("value") private var value: Double
+    private var value: Double = 0
     
     /// The ``LiveViewNative/SwiftUI/Font/TextStyle`` to scale with.
     /// Defaults to `body`.
     @_documentation(visibility: public)
-    @Attribute("relativeTo") private var relativeStyle: Font.TextStyle = .body
+    @LiveAttribute(.init(name: "relativeTo")) private var relativeStyle: Font.TextStyle = .body
     
     var body: some View {
         ScaledMetricObserver(
             scaledMetric: .init(wrappedValue: value, relativeTo: relativeStyle),
             onChange: onChange,
-            content: context.buildChildren(of: element)
+            content: $liveElement.children()
         )
     }
     

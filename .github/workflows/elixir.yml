@@ -1,0 +1,51 @@
+name: Elixir CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  MIX_ENV: test
+
+steps:
+- name: Update Homebrew
+  run: |
+    brew update --preinstall
+    cat "$(brew --repository)/Library/Taps/homebrew/homebrew-core/Formula/foo.rb" > .github/brew-formulae
+- name: Configure Homebrew cache
+  uses: actions/cache@v2
+  with:
+    path: |
+      ~/Library/Caches/Homebrew/foo--*
+      ~/Library/Caches/Homebrew/downloads/*--foo-*
+    key: brew-${{ hashFiles('.github/brew-formulae') }}
+    restore-keys: brew-
+- name: Install Homebrew dependencies
+  run: |
+    env HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: '1.15.0' # Define the elixir version [required]
+        otp-version: '25.0' # Define the OTP version [required]
+    - name: Restore dependencies cache
+      uses: actions/cache@v3
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+    - name: Install dependencies
+      run: mix deps.get
+    - name: Run tests
+      run: mix test

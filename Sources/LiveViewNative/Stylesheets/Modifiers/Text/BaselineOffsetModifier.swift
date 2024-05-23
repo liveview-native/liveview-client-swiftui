@@ -8,6 +8,27 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/baselineOffset(_:)`](https://developer.apple.com/documentation/swiftui/view/baselineOffset(_:)) for more details on this ViewModifier.
+///
+/// ### baselineOffset(_:)
+/// - `baselineOffset`: `attr("...")` or ``CoreFoundation/CGFloat`` (required)
+///
+/// See [`SwiftUI.View/baselineOffset(_:)`](https://developer.apple.com/documentation/swiftui/view/baselineOffset(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   baselineOffset(attr("baselineOffset"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" baselineOffset={@baselineOffset} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _BaselineOffsetModifier<R: RootRegistry>: TextModifier {
     static var name: String { "baselineOffset" }

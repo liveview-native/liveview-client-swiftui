@@ -24,19 +24,22 @@ import SwiftUI
 /// ## Bindings
 /// * ``selection``
 @_documentation(visibility: public)
-struct TabView<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct TabView<Root: RootRegistry>: View {
     /// Synchronizes the selected tab with the server.
     ///
     /// Use the ``TagModifier`` modifier to set the selection value for a given tab.
     @_documentation(visibility: public)
     @ChangeTracked(attribute: "selection") private var selection: String? = nil
     
+    @LiveAttribute(.init(name: "selection")) var selectionAttribute: String?
+    @LiveAttribute(.init(name: "phx-change")) var changeAttribute: String?
+    
     var body: some View {
-        SwiftUI.TabView(selection: $selection) {
-            context.buildChildren(of: element)
+        SwiftUI.TabView(
+            selection: (selectionAttribute != nil || changeAttribute != nil) ? $selection : nil
+        ) {
+            $liveElement.children()
         }
     }
 }

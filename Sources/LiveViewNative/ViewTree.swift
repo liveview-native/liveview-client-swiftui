@@ -43,20 +43,21 @@ struct ViewTreeBuilder<R: RootRegistry> {
     func fromElement(_ element: ElementNode, context: LiveContextStorage<R>) -> some View {
         let view = createView(element, context: context)
 
-        let modified = view.applyModifiers(R.self)
+        let modified = ModifierObserver<_, R>(parent: view)
         let bound = applyBindings(to: modified, element: element, context: context)
         let withID = applyID(element: element, to: bound)
         let withIDAndTag = applyTag(element: element, to: withID)
 
-        return withIDAndTag
-            .environment(\.element, element)
-            .environmentObject(ObservedElement.Observer(element.node.id))
+        return ObservedElement.Observer.Applicator(element.node.id) {
+            withIDAndTag
+                .environment(\.element, element)
+        }
             .preference(key: _ProvidedBindingsKey.self, value: []) // reset for the next View.
     }
 
     @ViewBuilder
     private func applyID(element: ElementNode, to view: some View) -> some View {
-        if let id = element.attributeValue(for: "id") {
+        if let id = element.attributeValue(for: .init(name: "id")) {
             view.id(id)
         } else {
             view
@@ -65,7 +66,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
 
     @ViewBuilder
     private func applyTag(element: ElementNode, to view: some View) -> some View {
-        if let tag = element.attributeValue(for: "tag") {
+        if let tag = element.attributeValue(for: .init(name: "tag")) {
             view.tag(Optional<String>.some(tag))
         } else {
             view
@@ -78,7 +79,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
             R.lookup(tagName, element: element)
         } else {
             BuiltinRegistry<R>.lookup(element.tag, element)
-        } 
+        }
     }
     
     @ViewBuilder
@@ -88,8 +89,12 @@ struct ViewTreeBuilder<R: RootRegistry> {
         context: LiveContextStorage<R>
     ) -> some View {
         view.applyBindings(
-            element.attributes.filter({
-                $0.name.rawValue.starts(with: "phx-") && $0.value != nil
+            element.attributes.compactMap({
+                guard $0.name.namespace == nil,
+                      $0.value != nil,
+                      let name = _EventBinding(rawValue: $0.name.name)
+                else { return nil }
+                return (name, $0)
             })[...],
             element: element,
             context: context
@@ -115,40 +120,89 @@ extension CodingUserInfoKey {
 }
 
 @propertyWrapper
-struct ClassModifiers<R: RootRegistry>: DynamicProperty {
-    @Attribute("class", transform: { attribute in
-        guard let classNames = attribute?.value else { return [] }
-        return classNames.split(separator: " ")
-    }) private var classNames: [Substring]
-    @Environment(\.stylesheets) private var stylesheets
-    let overrideStylesheet: (any StylesheetProtocol)?
+@LiveElement
+struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
+    @LiveAttribute(.init(name: "class")) private var `class`: String?
+    @LiveAttribute(.init(name: "style")) private var style: String?
     
-    init(overrideStylesheet: (any StylesheetProtocol)?) {
+    @LiveElementIgnored
+    @Environment(\.stylesheet)
+    var stylesheet
+    
+    @LiveElementIgnored
+    let overrideStylesheet: Stylesheet<Root>?
+    
+    init(element: ElementNode, overrideStylesheet: Stylesheet<Root>?) {
+        self._liveElement = .init(element: element)
         self.overrideStylesheet = overrideStylesheet
     }
     
-    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?) {
-        self._classNames = .init(
-            wrappedValue: nil,
-            "class",
-            transform: { attribute in
-                guard let classNames = attribute?.value else { return [] }
-                return classNames.split(separator: " ")
-            },
-            element: element
-        )
+    init(overrideStylesheet: Stylesheet<Root>? = nil) {
+        self._liveElement = .init(wrappedValue: .init())
         self.overrideStylesheet = overrideStylesheet
     }
     
-    init() {
-        self.overrideStylesheet = nil
-    }
-    
-    var wrappedValue: ArraySlice<BuiltinRegistry<R>.BuiltinModifier> {
-        let sheet = overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]
-        return classNames.reduce(into: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>()) {
-            $0.append(contentsOf: (sheet?.classModifiers(String($1)) ?? []) as! [BuiltinRegistry<R>.BuiltinModifier])
+    @LiveElementIgnored
+    var wrappedValue: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
+        if _liveElement.isConstant {
+            let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
+            var result = ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()
+            if let style,
+               !style.isEmpty
+            {
+                result += resolveModifiers(forStyle: style, sheet: sheet)
+            }
+            if let `class`,
+               !`class`.isEmpty
+            {
+                result += resolveModifiers(forClass: `class`, sheet: sheet)
+            }
+            return result
+        } else {
+            return resolvedModifiers
         }
+    }
+    
+    @LiveElementIgnored
+    var resolvedModifiers: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> = .init()
+    
+    mutating func update() {
+        let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
+        resolvedModifiers.removeAll()
+        if let style,
+           !style.isEmpty
+        {
+            resolvedModifiers += resolveModifiers(forStyle: style, sheet: sheet)
+        }
+        if let `class`,
+           !`class`.isEmpty
+        {
+            resolvedModifiers += resolveModifiers(forClass: `class`, sheet: sheet)
+        }
+    }
+    
+    private func resolveModifiers(
+        forClass `class`: String,
+        sheet: Stylesheet<Root>
+    ) -> ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
+        return `class`
+            .components(separatedBy: .whitespacesAndNewlines)
+            .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
+                guard let modifiers = sheet.classes[$1] else { return }
+                $0.append(contentsOf: modifiers)
+            }
+    }
+    
+    private func resolveModifiers(
+        forStyle style: String,
+        sheet: Stylesheet<Root>
+    ) -> ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
+        return style
+            .split(separator: ";" as Character)
+            .reduce(into: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()) {
+                guard let modifiers = sheet.classes[String($1).trimmingCharacters(in: .whitespacesAndNewlines)] else { return }
+                $0.append(contentsOf: modifiers)
+            }
     }
 }
 
@@ -157,26 +211,24 @@ private struct ModifierObserver<Parent: View, R: RootRegistry>: View {
     @ClassModifiers<R> private var modifiers
     
     var body: some View {
-        parent.applyModifiers(modifiers)
+        ModifierApplicator(parent: parent, modifiers: modifiers)
     }
 }
 
 extension EnvironmentValues {
-    private enum StylesheetsKey: EnvironmentKey {
-        static var defaultValue: [ObjectIdentifier:any StylesheetProtocol] {
-            [:]
-        }
+    private enum StylesheetKey: EnvironmentKey {
+        static let defaultValue: Any = Stylesheet<EmptyRegistry>(content: [], classes: [:])
     }
     
-    var stylesheets: [ObjectIdentifier:any StylesheetProtocol] {
-        get { self[StylesheetsKey.self] }
-        set { self[StylesheetsKey.self] = newValue }
+    var stylesheet: Any {
+        get { self[StylesheetKey.self] }
+        set { self[StylesheetKey.self] = newValue }
     }
 }
 
 private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
     let parent: Parent
-    let bindings: ArraySlice<LiveViewNativeCore.Attribute>
+    let bindings: ArraySlice<(_EventBinding, LiveViewNativeCore.Attribute)>
     let element: ElementNode
     let context: LiveContextStorage<R>
 
@@ -185,8 +237,8 @@ private struct BindingApplicator<Parent: View, R: RootRegistry>: View {
         // force-unwrap is okay, this view is never constructed with an empty slice
         let binding = bindings.first!
         BuiltinRegistry<R>.applyBinding(
-            binding.name,
-            event: binding.value!,
+            binding.0,
+            event: binding.1.value!,
             value: element.buildPhxValuePayload(),
             to: parent,
             element: element
@@ -200,28 +252,25 @@ private struct ModifierApplicator<Parent: View, R: RootRegistry>: View {
     let modifiers: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>
     
     var body: some View {
-        parent
-            .modifier(modifiers.first!)
-            .applyModifiers(modifiers.dropFirst())
+        if modifiers.isEmpty {
+            parent
+        } else {
+            var modifiers = modifiers
+            ModifierApplicator<_, R>(
+                parent: parent.modifier(modifiers.removeFirst()),
+                modifiers: modifiers
+            )
+        }
     }
 }
 
 extension View {
-    func applyModifiers<R: RootRegistry>(_: R.Type = R.self) -> some View {
-        ModifierObserver<Self, R>(parent: self)
-    }
-    
     @ViewBuilder
-    func applyModifiers<R: RootRegistry>(_ modifiers: ArraySlice<BuiltinRegistry<R>.BuiltinModifier>) -> some View {
-        if modifiers.isEmpty {
-            self
-        } else {
-            ModifierApplicator(parent: self, modifiers: modifiers)
-        }
-    }
-    
-    @ViewBuilder
-    func applyBindings<R: RootRegistry>(_ bindings: ArraySlice<LiveViewNativeCore.Attribute>, element: ElementNode, context: LiveContextStorage<R>) -> some View {
+    func applyBindings<R: RootRegistry>(
+        _ bindings: ArraySlice<(_EventBinding, LiveViewNativeCore.Attribute)>,
+        element: ElementNode,
+        context: LiveContextStorage<R>
+    ) -> some View {
         if bindings.isEmpty {
             self
         } else {
@@ -255,7 +304,7 @@ private enum ForEachElement: Identifiable {
 func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContextStorage<R>) -> some DynamicViewContent {
     let elements = nodes.map { (node) -> ForEachElement in
         if let element = node.asElement(),
-           let id = element.attributeValue(for: "id")
+           let id = element.attributeValue(for: .init(name: "id"))
         {
             return .keyed(node, id: id)
         } else {

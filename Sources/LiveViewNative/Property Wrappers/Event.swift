@@ -12,6 +12,28 @@ import AsyncAlgorithms
 
 /// A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.
 ///
+/// ## Stylesheets
+/// Use the `event` helper to reference an event from a modifier.
+///
+/// ```swift
+/// event("my-event-name")
+/// ```
+///
+/// Handle this event from your LiveView.
+///
+/// ```elixir
+/// def handle_event("my-event-name", _params, socket), do: ...
+/// ```
+///
+/// You can also provide options for `debounce` and `throttle` (in milliseconds).
+///
+/// ```swift
+/// event("my-event-name", debounce: 1000)
+/// event("my-event-name", throttle: 500)
+/// ```
+///
+/// ## Custom Elements
+///
 /// Specify the attribute that contains the event name and an event type to create the wrapper.
 /// Then, call the wrapped value with a payload and optionally a completion handler.
 ///
@@ -74,8 +96,32 @@ public struct Event: DynamicProperty, Decodable {
     @_documentation(visibility: public)
     private let params: Any?
     
-    @Attribute("phx-debounce") private var debounceAttribute: Double?
-    @Attribute("phx-throttle") private var throttleAttribute: Double?
+    var debounceAttribute: Debounce? {
+        try? element.attributeValue(Debounce.self, for: "phx-debounce")
+    }
+    private var throttleAttribute: Double? {
+        try? element.attributeValue(Double.self, for: "phx-throttle")
+    }
+    
+    enum Debounce: AttributeDecodable, Equatable {
+        /// Only send when the input loses focus.
+        /// Handled by `@FormState` and `@ChangeTracked`, with the individual form controls indicating when they lose focus.
+        case blur
+        case milliseconds(Double)
+        
+        init(from attribute: Attribute?, on element: ElementNode) throws {
+            if attribute?.value == "blur" {
+                self = .blur
+            } else {
+                self = .milliseconds(try Double(from: attribute, on: element))
+            }
+        }
+        
+        var milliseconds: Double? {
+            guard case let .milliseconds(milliseconds) = self else { return nil }
+            return milliseconds
+        }
+    }
     
     final class Handler: ObservableObject {
         let channel = AsyncChannel<(String, String, Any, Int?)>()
@@ -147,14 +193,15 @@ public struct Event: DynamicProperty, Decodable {
     /// @Event(event: "my_event_name", type: "click") private var click
     /// ```
     /// The event name is no longer defined by the client, but instead uses the value passed in here.
-    public init(event: String, type: String, debounce: Double? = nil, throttle: Double? = nil) {
+    public init(event: String, type: String, debounce: Double? = nil, throttle: Double? = nil, element: ElementNode? = nil) {
         self.event = event
         self.name = nil
         self.type = type
         self.target = nil
-        self.debounce = nil
-        self.throttle = nil
+        self.debounce = debounce
+        self.throttle = throttle
         self.params = nil
+        self._element = element.flatMap({ .init(element: $0) }) ?? .init()
     }
     
     /// Create a `nil` event.
@@ -257,7 +304,7 @@ public struct Event: DynamicProperty, Decodable {
     }
     
     public func update() {
-        handler.update(coordinator: coordinatorEnvironment, debounce: debounce ?? debounceAttribute, throttle: throttle ?? throttleAttribute)
+        handler.update(coordinator: coordinatorEnvironment, debounce: debounce ?? debounceAttribute?.milliseconds, throttle: throttle ?? throttleAttribute)
     }
     
     /// An action that you invoke to send an event to the server.

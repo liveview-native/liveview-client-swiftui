@@ -16,44 +16,32 @@ import LiveViewNativeCore
 /// - ``fillColor``
 /// - ``strokeColor``
 @_documentation(visibility: public)
-struct Shape<S: SwiftUI.InsettableShape>: View {
-    @ObservedElement private var element: ElementNode
+@LiveElement
+struct Shape<Root: RootRegistry, S: SwiftUI.InsettableShape>: View {
     private let shape: S
-
-    /// The ``LiveViewNative/SwiftUI/Color`` the shape is filled with.
-    ///
-    /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
-    @_documentation(visibility: public)
-    @Attribute("fillColor") private var fillColor: SwiftUI.Color? = nil
-    /// The ``LiveViewNative/SwiftUI/Color`` the shape stroke is drawn with.
-    ///
-    /// See ``LiveViewNative/SwiftUI/Color/init?(fromNamedOrCSSHex:)`` for more details.
-    @_documentation(visibility: public)
-    @Attribute("strokeColor") private var strokeColor: SwiftUI.Color? = nil
     
-    @Environment(\.shapeModifiers) private var shapeModifiers: [any ShapeModifier]
-    @Environment(\.shapeFinalizerModifier) private var shapeFinalizerModifier: (any ShapeFinalizerModifier)?
+    @LiveElementIgnored
+    @ClassModifiers<Root>
+    private var modifiers
     
     init(shape: S) {
         self.shape = shape
     }
     
     var body: some View {
-        let shape = shapeModifiers.reduce(into: shape as (any SwiftUI.Shape)) { result, modifier in
-            func _unbox(_ shape: some SwiftUI.Shape) -> any SwiftUI.Shape {
-                return modifier.apply(to: AnyShape(shape))
-            }
-            result = _unbox(result)
-        }.erasedToAnyShape()
+        var modifiers = modifiers
+        var shape = shape.erasedToAnyShape()
+        while case let ._anyShapeModifier(modifier) = modifiers.first {
+            shape = modifier.apply(to: shape, on: $liveElement.element).erasedToAnyShape()
+            modifiers.removeFirst()
+        }
         
-        if let shapeFinalizerModifier {
-            AnyView(shapeFinalizerModifier.apply(to: shape))
-        } else if let fillColor {
-            shape.fill(fillColor)
-        } else if let strokeColor {
-            shape.stroke(strokeColor)
-        } else {
-            shape
+        return SwiftUI.Group {
+            if case let ._anyShapeFinalizerModifier(modifier) = modifiers.first {
+                modifier.apply(to: shape, on: $liveElement.element)
+            } else {
+                shape
+            }
         }
     }
 }

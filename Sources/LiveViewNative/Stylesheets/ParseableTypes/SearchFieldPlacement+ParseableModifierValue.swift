@@ -8,6 +8,15 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.SearchFieldPlacement`](https://developer.apple.com/documentation/swiftui/SearchFieldPlacement) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.toolbar`
+/// - `.sidebar`
+/// - `.navigationBarDrawer`
+/// - `.navigationBarDrawer(NavigationBarDrawerDisplayMode)` with a ``SwiftUI/SearchFieldPlacement/NavigationBarDrawerDisplayMode``
+@_documentation(visibility: public)
 extension SearchFieldPlacement: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -42,6 +51,12 @@ extension SearchFieldPlacement: ParseableModifierValue {
 }
 
 #if os(iOS) || os(visionOS)
+/// See [`SwiftUI.SearchFieldPlacement.NavigationBarDrawerDisplayMode`](https://developer.apple.com/documentation/swiftui/SearchFieldPlacement/NavigationBarDrawerDisplayMode) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.always`
+@_documentation(visibility: public)
 extension SearchFieldPlacement.NavigationBarDrawerDisplayMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

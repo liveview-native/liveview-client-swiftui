@@ -9,6 +9,15 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 #if !os(watchOS)
+/// See [`SwiftUI.ControlGroupStyle`](https://developer.apple.com/documentation/swiftui/ControlGroupStyle) for more details.
+///
+/// Possible values:
+/// - `.automatic`
+/// - `.compactMenu`
+/// - `.navigation`
+/// - `.palette`
+/// - `.menu`
+@_documentation(visibility: public)
 enum AnyControlGroupStyle: String, CaseIterable, ParseableModifierValue, ControlGroupStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     

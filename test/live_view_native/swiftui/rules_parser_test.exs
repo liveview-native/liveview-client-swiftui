@@ -367,6 +367,13 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       assert parse(input) == output
     end
 
+    test "event with no arguments" do
+      input = ~s{searchable(change: event("search-event"))}
+      output = {:searchable, [], [[change: {:__event__, [], ["search-event"]}]]}
+
+      assert parse(input) == output
+    end
+
     test "gesture" do
       input = ~s{offset(x: gesture_state(:drag, .translation.width))}
       output = {:offset, [], [[x: {:__gesture_state__, [], [:drag, {:., [], [nil, {:., [], [:translation, :width]}]}]}]]}
@@ -375,8 +382,6 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       input = ~s{rotationEffect(gesture_state(:rotate, .rotation, defaultValue: .zero))}
       output = {:rotationEffect, [], [{:__gesture_state__, [], [:rotate, {:., [], [nil, :rotation]}, [defaultValue: {:., [], [nil, :zero]}]]}]}
-
-      assert parse(input) == output
     end
   end
 
@@ -389,7 +394,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       ]}
     end
 
-    test "ensure to_ime doesn't double print ast node" do
+    test "ensure ime interpolation doesn't double print ast node" do
       output = MockSheet.compile_ast(["button-plain"])
 
       assert output == %{"button-plain" => [

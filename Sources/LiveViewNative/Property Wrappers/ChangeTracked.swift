@@ -10,6 +10,25 @@ import LiveViewNativeCore
 import Combine
 
 /// Allows client-side state changes, which send `phx-change` events to the server.
+///
+/// ## Stylesheets
+/// When passing a value to a `ChangeTracked` type in a stylesheet, use the `attr` helper to reference a value from the element.
+///
+/// ```elixir
+/// attr("my-changing-value")
+/// ```
+///
+/// Then provide the value to the referenced attribute and a `phx-change` event.
+///
+/// ```html
+/// <Element my-changing-value={@value} phx-change="update-value" />
+/// ```
+///
+/// Whenever the modifier updates the value, the event passed to `phx-change` will be called.
+///
+/// ```elixir
+/// def handle_event("update-value", new_value, socket), do: ...
+/// ```
 @propertyWrapper
 public struct ChangeTracked<Value: Encodable & Equatable>: DynamicProperty {
     @StateObject private var localValue: LocalValue
@@ -156,18 +175,13 @@ extension ChangeTracked where Value: FormValue {
                 .sink(receiveValue: { [weak self] localValue in
                     self?.objectWillChange.send()
                     self?.value = localValue
-                    Task { [weak self] in
-                        guard let self,
-                              self.sendChangeEvent
-                        else { return }
-                        // LiveView expects all values to be strings.
-                        let encodedValue: String
-                        if let localValue = localValue as? String {
-                            encodedValue = localValue
-                        } else {
-                            encodedValue = try String(data: JSONEncoder().encode(localValue), encoding: .utf8) ?? ""
+                    if changeTracked._event.debounceAttribute != .blur { // the input element should call `pushChangeEvent` when it loses focus.
+                        Task { [weak self] in
+                            guard let self,
+                                  self.sendChangeEvent
+                            else { return }
+                            try await pushChangeEvent(to: changeTracked)
                         }
-                        try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: encodedValue]), options: .fragmentsAllowed))
                     }
                 })
             
@@ -182,6 +196,24 @@ extension ChangeTracked where Value: FormValue {
                     self.objectWillChange.send()
                 }
         }
+        
+        func pushChangeEvent(
+            to changeTracked: ChangeTracked<Value>
+        ) async throws {
+            guard let localValue = self.value else { return }
+            // LiveView expects all values to be strings.
+            let encodedValue: String
+            if let localValue = localValue as? String {
+                encodedValue = localValue
+            } else {
+                encodedValue = try String(data: JSONEncoder().encode(localValue), encoding: .utf8) ?? ""
+            }
+            try await changeTracked.event(value: JSONSerialization.jsonObject(with: JSONEncoder().encode([self.attribute.rawValue: encodedValue]), options: .fragmentsAllowed))
+        }
+    }
+    
+    func pushChangeEvent() async throws {
+        try await (self.localValue as? FormLocalValue)?.pushChangeEvent(to: self)
     }
 }
 

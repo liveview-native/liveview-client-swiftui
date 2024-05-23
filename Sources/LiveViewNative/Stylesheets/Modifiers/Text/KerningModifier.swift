@@ -8,6 +8,27 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/kerning(_:)`](https://developer.apple.com/documentation/swiftui/view/kerning(_:)) for more details on this ViewModifier.
+///
+/// ### kerning(_:)
+/// - `kerning`: `attr("...")` or ``CoreFoundation/CGFloat`` (required)
+///
+/// See [`SwiftUI.View/kerning(_:)`](https://developer.apple.com/documentation/swiftui/view/kerning(_:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   kerning(attr("kerning"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" kerning={@kerning} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _KerningModifier<R: RootRegistry>: TextModifier {
     static var name: String { "kerning" }

@@ -8,6 +8,13 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Axis.Set`](https://developer.apple.com/documentation/swiftui/Axis/Set) for more details.
+///
+/// Possible values:
+/// - `.horizontal`
+/// - `.vertical`
+/// - Array of these values
+@_documentation(visibility: public)
 extension Axis.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {

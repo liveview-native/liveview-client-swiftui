@@ -10,24 +10,12 @@ struct ModifierGenerator: ParsableCommand {
         subcommands: [
             ModifierGenerator.Source.self,
             ModifierGenerator.Schema.self,
-            ModifierGenerator.List.self
+            ModifierGenerator.List.self,
+            ModifierGenerator.DocumentationExtensions.self,
         ]
     )
 
     static let extraModifierTypes: Set<String> = [
-        // Shape modifiers
-        "_FillModifier",
-        "_RotationModifier",
-        "_ScaleModifier<R>",
-        "_StrokeModifier<R>",
-        "_TransformModifier",
-        "_IntersectionModifier",
-        "_UnionModifier",
-        "_SubtractingModifier",
-        "_SymmetricDifferenceModifier",
-        "_LineIntersectionModifier",
-        "_LineSubtractionModifier",
-        
         // Override modifiers
         "_SearchScopesModifier<R>",
         "_SearchCompletionModifier<R>",
@@ -35,6 +23,7 @@ struct ModifierGenerator: ParsableCommand {
         "_MaskModifier<R>",
         "_MatchedGeometryEffectModifier<R>",
         "_Rotation3DEffectModifier<R>",
+        "_PerspectiveRotationEffectModifier<R>",
         "_PresentationDetentsModifier",
         "_FocusScopeModifier<R>",
         "_PrefersDefaultFocusModifier<R>",
@@ -90,6 +79,8 @@ struct ModifierGenerator: ParsableCommand {
         "SearchScopeActivation",
         "SearchSuggestionsPlacement",
         "RoundedCornerStyle",
+        "GlassBackgroundDisplayMode",
+        "Edge3D",
     ]
 
     static let denylist: Set<String> = [
@@ -135,6 +126,7 @@ struct ModifierGenerator: ParsableCommand {
         "mask",
         "matchedGeometryEffect",
         "rotation3DEffect",
+        "perspectiveRotationEffect",
         "presentationDetents",
         "focusScope",
         "prefersDefaultFocus",
@@ -199,7 +191,6 @@ struct ModifierGenerator: ParsableCommand {
         "layerEffect",
         "layoutDirectionBehavior",
         "menuActionDismissBehavior",
-        "ornament",
         "paletteSelectionEffect",
         "springLoadingBehavior",
         "touchBar",

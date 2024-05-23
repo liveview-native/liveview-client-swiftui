@@ -26,7 +26,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 /// - ``handleEvent(_:handler:)``
 @MainActor
 public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
-    @Published internal private(set) var internalState: LiveSessionState = .notConnected
+    @Published internal private(set) var internalState: LiveSessionState = .setup
     
     var state: LiveSessionState {
         internalState
@@ -231,7 +231,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         connectParams["_mounts"] = 0
         connectParams["_format"] = "swiftui"
         connectParams["_csrf_token"] = domValues.phxCSRFToken
-        connectParams["_lvn"] = LiveSessionCoordinator<R>.platformParams
+        connectParams["_interface"] = LiveSessionCoordinator<R>.platformParams
 
         let params: Payload = [
             "session": domValues.phxSession,
@@ -283,7 +283,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         channel.on("phx_close") { [weak self, weak channel] message in
             Task { @MainActor in
                 guard channel === self?.channel else { return }
-                self?.internalState = .notConnected
+                self?.internalState = .disconnected
             }
         }
         
@@ -320,7 +320,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
         await MainActor.run { [weak self] in
             self?.channel = nil
-            self?.internalState = .notConnected
+            self?.internalState = .disconnected
         }
     }
     

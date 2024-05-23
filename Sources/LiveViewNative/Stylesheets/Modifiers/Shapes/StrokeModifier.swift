@@ -8,6 +8,50 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Shape/stroke(_:style:antialiased:)`](https://developer.apple.com/documentation/swiftui/shape/stroke(_:style:antialiased:)) for more details on this ViewModifier.
+///
+/// ### stroke(_:style:antialiased:)
+/// - `content`: ``SwiftUI/AnyShapeStyle`` (required)
+/// - `style`: ``SwiftUI/StrokeStyle`` (required)
+/// - `antialiased`: `attr("...")` or ``Swift/Bool``
+///
+/// See [`SwiftUI.Shape/stroke(_:style:antialiased:)`](https://developer.apple.com/documentation/swiftui/shape/stroke(_:style:antialiased:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   stroke(AnyShapeStyle, style: StrokeStyle, antialiased: attr("antialiased"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" antialiased={@antialiased} />
+/// ```
+///
+/// ### stroke(_:lineWidth:antialiased:)
+/// - `content`: ``SwiftUI/AnyShapeStyle`` (required)
+/// - `lineWidth`: `attr("...")` or ``CoreFoundation/CGFloat``
+/// - `antialiased`: `attr("...")` or ``Swift/Bool``
+///
+/// See [`SwiftUI.Shape/stroke(_:lineWidth:antialiased:)`](https://developer.apple.com/documentation/swiftui/shape/stroke(_:lineWidth:antialiased:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   stroke(AnyShapeStyle, lineWidth: attr("lineWidth"), antialiased: attr("antialiased"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" lineWidth={@lineWidth} antialiased={@antialiased} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _StrokeModifier<R: RootRegistry>: ShapeFinalizerModifier {
     static var name: String { "stroke" }
@@ -31,7 +75,7 @@ struct _StrokeModifier<R: RootRegistry>: ShapeFinalizerModifier {
     }
     
     @ViewBuilder
-    func apply(to shape: AnyShape) -> some View {
+    func apply(to shape: AnyShape, on element: ElementNode) -> some View {
         switch storage {
         case ._0(let content, let style, let antialiased):
             if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
@@ -49,6 +93,20 @@ struct _StrokeModifier<R: RootRegistry>: ShapeFinalizerModifier {
     }
 }
 
+/// See [`SwiftUI.StrokeStyle`](https://developer.apple.com/documentation/swiftui/StrokeStyle) for more details.
+///
+/// - `lineWidth`: ``CoreFoundation/CGFloat``
+/// - `lineCap`: ``CoreGraphics/CGLineCap``
+/// - `lineJoin`: ``CoreGraphics/CGLineJoin``
+/// - `miterLimit`: ``CoreFoundation/CGFloat``
+/// - `dash`: Array of ``CoreFoundation/CGFloat``
+/// - `dashPhase`: ``CoreFoundation/CGFloat``
+///
+/// ```swift
+/// StrokeStyle(lineWidth: 5)
+/// StrokeStyle(lineCap: .round, lineJoin: .round, dash: [5, 10])
+/// ```
+@_documentation(visibility: public)
 extension StrokeStyle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ParseableStrokeStyle.parser(in: context).map(\.value)
@@ -66,6 +124,13 @@ extension StrokeStyle: ParseableModifierValue {
     }
 }
 
+/// See [`CoreGraphics.CGLineCap`](https://developer.apple.com/documentation/coregraphics/CGLineCap) for more details.
+///
+/// Possible values:
+/// - `.butt`
+/// - `.round`
+/// - `.square`
+@_documentation(visibility: public)
 extension CGLineCap: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([
@@ -76,6 +141,13 @@ extension CGLineCap: ParseableModifierValue {
     }
 }
 
+/// See [`CoreGraphics.CGLineJoin`](https://developer.apple.com/documentation/coregraphics/CGLineJoin) for more details on this ViewModifier.
+///
+/// Possible values:
+/// - `.miter`
+/// - `.round`
+/// - `.bevel`
+@_documentation(visibility: public)
 extension CGLineJoin: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember([

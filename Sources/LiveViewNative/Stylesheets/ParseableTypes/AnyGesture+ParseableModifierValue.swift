@@ -8,6 +8,104 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Gesture`](https://developer.apple.com/documentation/swiftui/Gesture) for more details.
+///
+/// ## Gestures
+/// ### Drag
+/// Detect swipes or drags across on an element.
+/// 
+/// Optionally provide a `minimumDistance` and `coordinateSpace` as an ``AnyCoordinateSpaceProtocol``.
+///
+/// ```swift
+/// DragGesture()
+/// DragGesture(minimumDistance: 0, coordinateSpace: .global)
+/// ```
+///
+/// ### Long Press
+/// Detect tap/click and hold on an element.
+///
+/// Optionally provide a `minimumDuration` and `maximumDistance`.
+///
+/// ```swift
+/// LongPressGesture()
+/// LongPressGesture(minimumDuration: 1, maximumDistance: 30)
+/// ```
+///
+/// ### Magnify
+/// Detect pinch and zoom gestures on an element.
+///
+/// Optionally provide a `minimumScaleDelta`.
+///
+/// ```swift
+/// MagnifyGesture()
+/// MagnifyGesture(minimumScaleDelta: 0.1)
+/// ```
+///
+/// ### Rotate
+/// Detect two finger rotation gestures on an element.
+///
+/// Optionally provide a `minimumAngleDelta` as a ``SwiftUI/Angle``.
+///
+/// ```swift
+/// RotateGesture()
+/// RotateGesture(minimumAngleDelta: .degrees(10))
+/// ```
+///
+/// ### Spatial Tap
+/// A tap/click gesture that reports the position of the tap.
+///
+/// Optionally provide a `count` and `coordinateSpace` as an ``AnyCoordinateSpaceProtocol``.
+///
+/// ```swift
+/// SpatialTapGesture()
+/// SpatialTapGesture(count: 2, coordinateSpace: .global)
+/// ```
+///
+/// ### Tap
+/// A tap/click gesture.
+///
+/// Optionally provide a `count`.
+///
+/// ```swift
+/// TapGesture()
+/// TapGesture(count: 2)
+/// ```
+///
+/// ## Gesture Modifiers
+/// Modify and receive events from gestures by applying modifiers to them.
+///
+/// ### Sequencing Gestures
+/// Only receive events after the first gesture succeeds.
+///
+/// ```swift
+/// DragGesture().sequenced(before: TapGesture())
+/// ```
+///
+/// ### Simultaneous Gestures
+/// Combine gestures where both can receive events at the same time.
+///
+/// ```swift
+/// RotateGesture().simultaneously(with: MagnifyGesture())
+/// ```
+///
+/// ### Exclusive Gestures
+/// Combine gestures where only one can receive events at time. Priority is given to the first gesture.
+///
+/// ```swift
+/// RotateGesture().exclusively(before: MagnifyGesture())
+/// ```
+///
+/// ### Receiving Events
+/// Use `onEnded` to receive an event when the gesture ends.
+///
+/// ```swift
+/// SpatialTapGesture().onEnded(event("tapped"))
+/// ```
+///
+/// ```elixir
+/// def handle_event("tapped", gesture_value, socket), do: ...
+/// ```
+@_documentation(visibility: public)
 extension AnyGesture: ParseableModifierValue where Value == Any {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ChainedMemberExpression {

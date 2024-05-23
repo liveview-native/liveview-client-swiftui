@@ -34,6 +34,7 @@ Menus can be nested by including another [`<Menu>`](menu.html#Menu/1) in the `co
 ## Children
 * `label` - Describes the content of the menu.
 * `content` - Elements displayed when expanded.
+
 ## SwiftUI Documentation
 See [`SwiftUI.Menu`](https://developer.apple.com/documentation/swiftui/Menu) for more details on this View.
 

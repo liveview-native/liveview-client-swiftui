@@ -25,22 +25,20 @@ import SwiftUI
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
 @_documentation(visibility: public)
 @available(watchOS 9.0, *)
-struct TextFieldLink<R: RootRegistry>: View {
-    @ObservedElement var element: ElementNode
-    @LiveContext<R> private var context
-    @FormState("value") var value: String?
+@LiveElement
+struct TextFieldLink<Root: RootRegistry>: View {
+    @FormState("value") private var value: String?
     
     /// Describes the reason for requesting text input.
     @_documentation(visibility: public)
-    @Attribute("prompt", transform: { $0?.value.flatMap(SwiftUI.Text.init) })
-    private var prompt: SwiftUI.Text?
+    private var prompt: String?
     
     var body: some View {
 #if os(watchOS)
         SwiftUI.TextFieldLink(
-            prompt: prompt
+            prompt: prompt.flatMap(SwiftUI.Text.init)
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         } onSubmit: { newValue in
             value = newValue
         }

@@ -27,19 +27,17 @@ import SwiftUI
 /// - ``end``
 @_documentation(visibility: public)
 @available(iOS 16.0, *)
-struct MultiDatePicker<R: RootRegistry>: View {
-    @LiveContext<R> private var context
-    @ObservedElement private var element
-    
+@LiveElement
+struct MultiDatePicker<Root: RootRegistry>: View {
     /// The start date (inclusive) of the picker's range.
     @_documentation(visibility: public)
-    @Attribute("start") private var start: Date?
+    private var start: Date?
     
     /// The end date (**exclusive**) of the picker's range.
     @_documentation(visibility: public)
-    @Attribute("end") private var end: Date?
+    private var end: Date?
     
-    @FormState("selection", default: []) private var selection: Set<SelectedDate>
+    @FormState(.init(name: "selection"), default: []) private var selection: Set<SelectedDate>
     
     private var dateComponents: Binding<Set<DateComponents>> {
         Binding {
@@ -53,19 +51,19 @@ struct MultiDatePicker<R: RootRegistry>: View {
         #if os(iOS)
         if let start, let end {
             SwiftUI.MultiDatePicker(selection: dateComponents, in: start..<end) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         } else if let start {
             SwiftUI.MultiDatePicker(selection: dateComponents, in: start...) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         } else if let end {
             SwiftUI.MultiDatePicker(selection: dateComponents, in: ..<end) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         } else {
             SwiftUI.MultiDatePicker(selection: dateComponents) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         }
         #endif

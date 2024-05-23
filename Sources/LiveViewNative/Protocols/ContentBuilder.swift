@@ -313,7 +313,7 @@ public extension ContentBuilder {
 public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: DynamicProperty {
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
     @LiveContext<R> private var context
-    @Environment(\.stylesheets) private var stylesheets
+    @Environment(\.stylesheet) private var stylesheet
     
     @StateObject private var stylesheetResolver = StylesheetResolver()
     
@@ -328,7 +328,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         Value(
             coordinatorEnvironment: coordinatorEnvironment,
             context: context.storage,
-            stylesheet: stylesheets[ObjectIdentifier(R.self)] as? Stylesheet<R>,
+            stylesheet: stylesheet as! Stylesheet<R>,
             resolvedStylesheet: stylesheetResolver.resolvedStylesheet
         )
     }
@@ -353,7 +353,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
     }
     
     public func update() {
-        let stylesheet = stylesheets[ObjectIdentifier(R.self)] as? Stylesheet<R>
+        let stylesheet = stylesheet as? Stylesheet<R>
         guard stylesheet?.content != stylesheetResolver.previousStylesheetContent
         else { return }
         stylesheetResolver.previousStylesheetContent = stylesheet?.content ?? []
@@ -441,7 +441,8 @@ public extension ContentBuilder {
         
         let result = lookup(tag, element: element, context: context)
         
-        let classNames = element.attributeValue(for: "class")?.split(separator: " ") ?? []
+        let classNames = (element.attributeValue(for: "class")?.components(separatedBy: .whitespacesAndNewlines) ?? [])
+        + (element.attributeValue(for: "style")?.split(separator: ";" as Character) ?? []).map({ $0.trimmingCharacters(in: .whitespacesAndNewlines) })
         
         return classNames.reduce(result) {
             (context.resolvedStylesheet[String($1)] ?? []).reduce($0) {

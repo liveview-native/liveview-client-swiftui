@@ -96,176 +96,55 @@ import LiveViewNativeCore
 /// * ``nameStyle``
 /// * ``dateStyle``
 @_documentation(visibility: public)
-struct Text<R: RootRegistry>: View {
-    @LiveContext<R> private var context
+@LiveElement
+struct Text<Root: RootRegistry>: View {
+    @LiveElementIgnored
+    @ClassModifiers<Root>
+    private var modifiers
     
-    @ObservedElement private var element: ElementNode
+    private let overrideText: SwiftUI.Text?
     
-    /// A string value to use as the text content.
-    ///
-    /// In most cases, you should provide the content as a child of the element.
-    /// 
-    /// ```html
-    /// <Text>Hello, world!</Text>
-    /// ```
-    @_documentation(visibility: public)
-    @Attribute("content") private var content: String?
+    private var content: String?
     
-    /// A string value to use as the text content without modification.
-    ///
-    /// In some cases, whitespaces and newlines in the text content are trimmed.
-    /// Use this attribute to avoid trimming.
-    ///
-    /// ```html
-    /// <Text verbatim=" Hello, world! " />
-    /// <Text verbatim={"\n"} />
-    /// ```
-    @_documentation(visibility: public)
-    @Attribute("verbatim") private var verbatim: String?
+    private var verbatim: String?
     
-    /// The value of this attribute is parsed as markdown.
-    ///
-    /// - Note: Only inline markdown is rendered.
-    ///
-    /// ```html
-    /// <Text markdown="Hello, *world*!" />
-    /// ```
-    @_documentation(visibility: public)
-    @Attribute("markdown") private var markdown: String?
+    private var markdown: String?
     
-    /// Render an Elixir date.
-    ///
-    /// Use the ``dateStyle`` attribute to customize how the date is drawn.
-    ///
-    /// - Note: The value is expected to be in ISO 8601 format (with optional time)
-    ///
-    /// ```html
-    /// <Text date={DateTime.utc_now()} dateStyle="date" />
-    /// ```
-    @_documentation(visibility: public)
-    @Attribute("date", transform: Self.formatDate(_:)) private var date: Date?
-    /// The lower bound of a date range.
-    ///
-    /// Use this attribute with the ``dateEnd`` attribute to display a date range.
-    ///
-    /// - Note: The value is expected to be in ISO 8601 format (with optional time)
-    ///
-    /// ```html
-    /// <Text date:start={DateTime.utc_now()} date:end={DateTime.add(DateTime.utc_now(), 3, :day)} />
-    /// ```
-    @_documentation(visibility: public)
-    @Attribute("date:start", transform: Self.formatDate(_:)) private var dateStart: Date?
-    /// The upper bound of a date range.
-    ///
-    /// Use this attribute with the ``dateStart`` attribute to display a date range.
-    ///
-    /// - Note: The value is expected to be in ISO 8601 format (with optional time)
-    ///
-    /// ```html
-    /// <Text date:start={DateTime.utc_now()} date:end={DateTime.add(DateTime.utc_now(), 3, :day)} />
-    /// ```
-    @_documentation(visibility: public)
-    @Attribute("date:end", transform: Self.formatDate(_:)) private var dateEnd: Date?
+    private var date: Date?
+    @LiveAttribute(.init(namespace: "date", name: "start"))
+    private var dateStart: Date?
+    @LiveAttribute(.init(namespace: "date", name: "end"))
+    private var dateEnd: Date?
     
-    /// A value to format.
-    ///
-    /// Use the ``format`` attribute to choose how this value should be formatted.
-    @_documentation(visibility: public)
-    @Attribute("value") private var value: String?
-    /// The format of ``value``.
-    ///
-    /// Possible values:
-    /// - `date-time`: The ``value`` is an ISO 8601 date (with optional time).
-    /// - `url`: The value is a URL.
-    /// - `iso8601`: The ``value`` is an ISO 8601 date (with optional time).
-    /// - `number`: The value is a `Double`. Shown in a localized number format.
-    /// - `percent`: The value is a `Double`.
-    /// - `currency`: The value is a `Double` and is shown as a localized currency value using the currency specified in the ``currencyCode`` attribute.
-    /// - `name`: The value is a string interpreted as a person's name. The ``nameStyle`` attribute determines the format of the name and may be `short`, `medium` (default), `long`, or `abbreviated`.
-    @_documentation(visibility: public)
-    @Attribute("format") private var format: String?
-    /// The currency code to use with the `currency` format.
-    @_documentation(visibility: public)
-    @Attribute("currencyCode") private var currencyCode: String?
-    /// The style for a `name` format.
-    ///
-    /// See ``LiveViewNative/Foundation/PersonNameComponents/FormatStyle/Style`` for a list of possible values.
-    @_documentation(visibility: public)
-    @Attribute("nameStyle") private var nameStyle: PersonNameComponents.FormatStyle.Style = .medium
-    /// The style for a ``date`` value.
-    ///
-    /// See ``LiveViewNative/SwiftUI/Text/DateStyle`` for a list of possible values.
-    @_documentation(visibility: public)
-    @Attribute("dateStyle") private var dateStyle: SwiftUI.Text.DateStyle = .date
+    private var value: String?
+    private var format: String?
+    private var currencyCode: String?
+    private var nameStyle: PersonNameComponents.FormatStyle.Style = .medium
+    private var dateStyle: SwiftUI.Text.DateStyle = .date
     
-    @ClassModifiers<R> private var modifiers
-    let overrideStylesheet: (any StylesheetProtocol)?
-    @Environment(\.stylesheets) private var stylesheets
-    var stylesheet: (any StylesheetProtocol)? {
-        overrideStylesheet ?? stylesheets[ObjectIdentifier(R.self)]
+    init(text: SwiftUI.Text? = nil, overrideStylesheet: Stylesheet<Root>? = nil) {
+        self.overrideText = text
+        self._modifiers = .init(overrideStylesheet: overrideStylesheet)
     }
     
-    let overrideText: SwiftUI.Text?
-    
-    init() {
-        self.overrideStylesheet = nil
+    init(element: ElementNode, overrideStylesheet: Stylesheet<Root>? = nil) {
+        self._liveElement = .init(element: element)
+        self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
         self.overrideText = nil
     }
     
-    init(text: SwiftUI.Text? = nil) {
-        self.overrideStylesheet = nil
-        self.overrideText = text
-    }
-    
-    init(element: ElementNode, overrideStylesheet: (any StylesheetProtocol)?, overrideText: SwiftUI.Text? = nil) {
-        self._element = .init(element: element)
-        self._content = .init(wrappedValue: nil, "content", element: element)
-        self._verbatim = .init(wrappedValue: nil, "verbatim", element: element)
-        self._date = .init(
-            wrappedValue: nil,
-            "date",
-            transform: Self.formatDate(_:),
-            element: element
-        )
-        self._dateStart = .init(
-            wrappedValue: nil,
-            "date:start",
-            transform: Self.formatDate(_:),
-            element: element
-        )
-        self._dateEnd = .init(
-            wrappedValue: nil,
-            "date:end",
-            transform: Self.formatDate(_:),
-            element: element
-        )
-        self._markdown = .init(wrappedValue: nil, "markdown", element: element)
-        self._format = .init(wrappedValue: nil, "format", element: element)
-        self._value = .init(wrappedValue: nil, "value", element: element)
-        self._currencyCode = .init(wrappedValue: nil, "currencyCode", element: element)
-        self._nameStyle = .init(wrappedValue: .medium, "nameStyle", element: element)
-        self._dateStyle = .init(wrappedValue: .date, "dateStyle", element: element)
-        self._modifiers = .init(element: element, overrideStylesheet: overrideStylesheet)
-        self.overrideStylesheet = overrideStylesheet
-        self.overrideText = overrideText
-    }
-    
-    public var body: SwiftUI.Text {
-        return modifiers.reduce(text) { result, modifier in
-            if case let ._anyTextModifier(textModifier) = modifier {
-                return textModifier.apply(to: result, on: element)
-            } else {
-                return result
+    var body: SwiftUI.Text {
+        if _liveElement.isConstant {
+            return modifiers.reduce(text) { result, modifier in
+                if case let ._anyTextModifier(textModifier) = modifier {
+                    return textModifier.apply(to: result, on: $liveElement.element)
+                } else {
+                    return result
+                }
             }
+        } else {
+            return text
         }
-    }
-    
-    private static func formatDate(_ value: LiveViewNativeCore.Attribute?) throws -> Date? {
-        try value.flatMap(\.value).flatMap(formatDate(_:))
-    }
-    
-    private static func formatDate(_ value: String) throws -> Date {
-        try Date(value, strategy: .elixirDateTimeOrDate)
     }
     
     private var text: SwiftUI.Text {
@@ -284,10 +163,10 @@ struct Text<R: RootRegistry>: View {
         } else if let markdown {
             return SwiftUI.Text(.init(markdown))
         } else if let format {
-            let innerText = value ?? element.innerText()
+            let innerText = value ?? $liveElement.element.innerText()
             switch format {
             case "dateTime":
-                if let date = try? Self.formatDate(innerText) {
+                if let date = try? Date(innerText, strategy: .elixirDateTimeOrDate) {
                     return SwiftUI.Text(date, format: .dateTime)
                 } else {
                     return SwiftUI.Text(innerText)
@@ -299,7 +178,7 @@ struct Text<R: RootRegistry>: View {
                     return SwiftUI.Text(innerText)
                 }
             case "iso8601":
-                if let date = try? Self.formatDate(innerText) {
+                if let date = try? Date(innerText, strategy: .elixirDateTimeOrDate) {
                     return SwiftUI.Text(date, format: .iso8601)
                 } else {
                     return SwiftUI.Text(innerText)
@@ -333,26 +212,35 @@ struct Text<R: RootRegistry>: View {
                 return SwiftUI.Text(innerText)
             }
         } else {
-            return element.children().reduce(into: SwiftUI.Text("")) { prev, next in
-                if let element = next.asElement() {
-                    guard !element.attributes.contains(where: { $0.name == "template" })
+            return $liveElement.childNodes.reduce(into: SwiftUI.Text("")) { prev, next in
+                switch next.data {
+                case let .element(data):
+                    guard !data.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
                     else { return }
-                    switch element.tag {
+                    
+                    let element = ElementNode(node: next, data: data)
+                    
+                    switch data.tag {
                     case "Text":
-                        prev = prev + Self(element: element, overrideStylesheet: stylesheet).body
+                        prev = prev + Self(
+                            element: element,
+                            overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<Root>)
+                        ).body
                     case "Link":
                         prev = prev + SwiftUI.Text(
                             .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
                         )
                     case "Image":
-                        if let image = ImageView<R>(element: element, overrideStylesheet: stylesheet).body {
+                        if let image = ImageView<Root>(element: element, overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<Root>)).body {
                             prev = prev + SwiftUI.Text(image)
                         }
                     default:
                         break
                     }
-                } else {
-                    prev = prev + SwiftUI.Text(next.toString())
+                case let .leaf(text):
+                    prev = prev + SwiftUI.Text(text)
+                case .root:
+                    break
                 }
             }
         }

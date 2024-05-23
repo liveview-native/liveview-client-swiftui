@@ -8,6 +8,28 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.View/prefersDefaultFocus(_:in:)`](https://developer.apple.com/documentation/swiftui/view/prefersDefaultFocus(_:in:)) for more details on this ViewModifier.
+///
+/// ### prefersDefaultFocus(_:in:)
+/// - `prefersDefaultFocus`: `attr("...")` or ``Swift/Bool`` (required)
+/// - `in`: `attr("...")` or ``Swift/String`` (required)
+///
+/// See [`SwiftUI.View/prefersDefaultFocus(_:in:)`](https://developer.apple.com/documentation/swiftui/view/prefersDefaultFocus(_:in:)) for more details on this ViewModifier.
+///
+/// Example:
+///
+/// ```elixir
+/// # stylesheet
+/// "example" do
+///   prefersDefaultFocus(attr("prefersDefaultFocus"), in: attr("namespace"))
+/// end
+/// ```
+///
+/// ```heex
+/// <%!-- template --%>
+/// <Element class="example" prefersDefaultFocus={@prefersDefaultFocus} namespace={@namespace} />
+/// ```
+@_documentation(visibility: public)
 @ParseableExpression
 struct _PrefersDefaultFocusModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "prefersDefaultFocus" }

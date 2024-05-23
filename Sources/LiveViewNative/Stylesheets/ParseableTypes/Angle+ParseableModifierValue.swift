@@ -8,6 +8,18 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
+/// See [`SwiftUI.Angle`](https://developer.apple.com/documentation/swiftui/Angle) for more details.
+///
+/// Possible values:
+/// - `zero`
+/// - `.radians(_:)`
+/// - `.degrees(_:)`
+///
+/// ```swift
+/// .radians(3.14)
+/// .degrees(180)
+/// ```
+@_documentation(visibility: public)
 extension Angle: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
