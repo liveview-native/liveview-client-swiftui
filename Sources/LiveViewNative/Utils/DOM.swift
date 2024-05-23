@@ -23,14 +23,16 @@ import LiveViewNativeCore
 /// - ``depthFirstChildren()``
 /// - ``elementChildren()``
 /// - ``innerText()``
-public struct ElementNode {
-    let node: Node
-    let data: ElementData
+public struct ElementNode: Identifiable {
+    public let node: Node
+    public let data: ElementData
     
     init(node: Node, data: ElementData) {
         self.node = node
         self.data = data
     }
+    
+    public var id: NodeRef { node.id }
     
     /// A sequence representing this element's direct children.
     public func children() -> NodeChildrenSequence { node.children() }
@@ -112,7 +114,7 @@ public struct ElementNode {
 }
 
 extension Node {
-    func asElement() -> ElementNode? {
+    public func asElement() -> ElementNode? {
         if case .element(let data) = self.data {
             return ElementNode(node: self, data: data)
         } else {
