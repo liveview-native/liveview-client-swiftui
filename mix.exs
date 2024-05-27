@@ -155,10 +155,10 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   defp various_docs(args) do
     {opts, _, _} =
       OptionParser.parse(args,
-        strict: [skip_gen_doc: :boolean, skip_livebooks: :boolean]
+        strict: [skip_gen_docs: :boolean, skip_livebooks: :boolean]
       )
 
-    unless opts[:skip_gen_doc], do: Mix.Task.run("lvn.swiftui.gen.docs")
+    unless opts[:skip_gen_docs], do: Mix.Task.run("lvn.swiftui.gen.docs")
     unless opts[:skip_livebooks], do: Mix.Task.run("lvn.swiftui.gen.livemarkdown")
     Mix.Task.run("docs")
   end
