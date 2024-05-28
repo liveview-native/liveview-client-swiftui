@@ -19,16 +19,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   underline(attr("isActive"), pattern: .solid, color: attr("color"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" isActive={@isActive} color={@color} />
+/// <Element style='underline(attr("isActive"), pattern: .solid, color: attr("color"))' isActive={@isActive} color={@color} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

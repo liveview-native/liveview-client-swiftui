@@ -23,16 +23,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   rotation3DEffect(.zero, axis: (x: 1, y: 0, z: 0), anchor: .center, anchorZ: attr("anchorZ"), perspective: attr("perspective"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" anchorZ={@anchorZ} perspective={@perspective} />
+/// <Element style='rotation3DEffect(.zero, axis: (x: 1, y: 0, z: 0), anchor: .center, anchorZ: attr("anchorZ"), perspective: attr("perspective"))' anchorZ={@anchorZ} perspective={@perspective} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

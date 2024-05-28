@@ -17,16 +17,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   tracking(attr("tracking"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" tracking={@tracking} />
+/// <Element style='tracking(attr("tracking"))' tracking={@tracking} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

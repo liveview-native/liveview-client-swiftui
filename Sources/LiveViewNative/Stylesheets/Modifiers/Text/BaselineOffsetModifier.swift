@@ -17,16 +17,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   baselineOffset(attr("baselineOffset"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" baselineOffset={@baselineOffset} />
+/// <Element style='baselineOffset(attr("baselineOffset"))' baselineOffset={@baselineOffset} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

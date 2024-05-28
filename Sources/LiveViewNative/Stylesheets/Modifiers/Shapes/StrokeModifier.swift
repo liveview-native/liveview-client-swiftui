@@ -19,16 +19,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   stroke(AnyShapeStyle, style: StrokeStyle, antialiased: attr("antialiased"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" antialiased={@antialiased} />
+/// <Element style='stroke(AnyShapeStyle, style: StrokeStyle, antialiased: attr("antialiased"))' antialiased={@antialiased} />
 /// ```
 ///
 /// ### stroke(_:lineWidth:antialiased:)
@@ -40,16 +32,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   stroke(AnyShapeStyle, lineWidth: attr("lineWidth"), antialiased: attr("antialiased"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" lineWidth={@lineWidth} antialiased={@antialiased} />
+/// <Element style='stroke(AnyShapeStyle, lineWidth: attr("lineWidth"), antialiased: attr("antialiased"))' lineWidth={@lineWidth} antialiased={@antialiased} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
