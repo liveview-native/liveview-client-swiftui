@@ -17,16 +17,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   kerning(attr("kerning"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" kerning={@kerning} />
+/// <Element style='kerning(attr("kerning"))' kerning={@kerning} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

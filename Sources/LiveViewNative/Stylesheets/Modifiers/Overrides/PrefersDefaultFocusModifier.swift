@@ -18,16 +18,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   prefersDefaultFocus(attr("prefersDefaultFocus"), in: attr("namespace"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" prefersDefaultFocus={@prefersDefaultFocus} namespace={@namespace} />
+/// <Element style='prefersDefaultFocus(attr("prefersDefaultFocus"), in: attr("namespace"))' prefersDefaultFocus={@prefersDefaultFocus} namespace={@namespace} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

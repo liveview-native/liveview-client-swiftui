@@ -189,7 +189,6 @@ extension ModifierGenerator {
                     result.append(#"""
                     
                     ```html
-                    <%!-- template --%>
                     <Element style=\#(quotedStyle) \#(resolvedAttributes.joined(separator: " ")) />
                     ```
                     """#)
@@ -197,7 +196,6 @@ extension ModifierGenerator {
                     result.append(#"""
                     
                     ```html
-                    <%!-- template --%>
                     <Element style=\#(quotedStyle) \#(resolvedAttributes.joined(separator: " "))>
                     \#(templates.map({ "  \($0)" }).joined(separator: "\n"))
                     </Element>
@@ -208,7 +206,6 @@ extension ModifierGenerator {
                 result.append(#"""
                 
                 ```html
-                <%!-- template --%>
                 <Element style=\#(quotedStyle)>
                 \#(templates.map({ "  \($0)" }).joined(separator: "\n"))
                 </Element>
@@ -221,7 +218,6 @@ extension ModifierGenerator {
                 result.append(#"""
                 
                 ```elixir
-                # LiveView
                 \#(resolvedEvents.map({ #"def handle_event("\#($0)", params, socket)"# }).joined(separator: "\n"))
                 ```
                 """#)

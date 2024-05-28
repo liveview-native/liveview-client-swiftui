@@ -17,16 +17,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   focusScope(attr("namespace"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" namespace={@namespace} />
+/// <Element style='focusScope(attr("namespace"))' namespace={@namespace} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

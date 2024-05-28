@@ -19,16 +19,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   scale(x: attr("x"), y: attr("y"), anchor: .center)
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" x={@x} y={@y} />
+/// <Element class='scale(x: attr("x"), y: attr("y"), anchor: .center)' x={@x} y={@y} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

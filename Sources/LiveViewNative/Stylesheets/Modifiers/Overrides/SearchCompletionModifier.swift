@@ -19,11 +19,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   searchCompletion(:token)
-/// end
+/// ```html
+/// <Element style="searchCompletion(:token)" />
 /// ```
 ///
 /// ### searchCompletion(_:)
@@ -33,16 +30,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   searchCompletion(attr("completion"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" completion={@completion} />
+/// <Element style='searchCompletion(attr("completion"))' completion={@completion} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

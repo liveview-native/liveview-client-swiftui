@@ -17,16 +17,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   bold(attr("isActive"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" isActive={@isActive} />
+/// <Element style='bold(attr("isActive"))' isActive={@isActive} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
