@@ -22,12 +22,20 @@ import LiveViewNativeCore
 ///
 /// The attribute will be automatically decoded to the correct type using the conformance to ``AttributeDecodable``.
 public struct AttributeReference<Value: ParseableModifierValue & AttributeDecodable>: ParseableModifierValue {
-    enum Storage {
+    public enum Storage {
         case constant(Value)
         case reference(AttributeName)
     }
     
     let storage: Storage
+    
+    public init(_ constant: Value) {
+        self.storage = .constant(constant)
+    }
+    
+    init(storage: Storage) {
+        self.storage = storage
+    }
     
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
@@ -47,6 +55,15 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
             return value
         case .reference(let name):
             return try! element.attributeValue(Value.self, for: name)
+        }
+    }
+    
+    public func constant(default: Value) -> Value {
+        switch storage {
+        case .constant(let value):
+            return value
+        case .reference:
+            return `default`
         }
     }
 }

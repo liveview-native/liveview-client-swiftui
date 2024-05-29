@@ -86,11 +86,26 @@ extension SwiftUI.Text.Scale: ParseableModifierValue {
 /// LineStyle(pattern: .solid, color: .blue)
 /// ```
 @_documentation(visibility: public)
-extension SwiftUI.Text.LineStyle: ParseableModifierValue {
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+enum _AnyTextLineStyle: ParseableModifierValue {
+    case single
+    case value(_TextLineStyle)
+    
+    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             ImplicitStaticMember(["single": .single])
-            _TextLineStyle.parser(in: context).map(\.value)
+            _TextLineStyle.parser(in: context).map(Self.value)
+        }
+    }
+    
+    func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text.LineStyle {
+        switch self {
+        case .single:
+            .single
+        case .value(let style):
+            .init(
+                pattern: style.pattern,
+                color: style.color?.resolve(on: element, in: context)
+            )
         }
     }
 }
@@ -98,10 +113,12 @@ extension SwiftUI.Text.LineStyle: ParseableModifierValue {
 @ParseableExpression
 struct _TextLineStyle {
     static let name = "LineStyle"
-    let value: SwiftUI.Text.LineStyle
+    let pattern: SwiftUI.Text.LineStyle.Pattern
+    let color: Color.Resolvable?
     
-    init(pattern: SwiftUI.Text.LineStyle.Pattern = .solid, color: Color? = nil) {
-        self.value = .init(pattern: pattern, color: color)
+    init(pattern: SwiftUI.Text.LineStyle.Pattern = .solid, color: Color.Resolvable? = nil) {
+        self.pattern = pattern
+        self.color = color
     }
 }
 

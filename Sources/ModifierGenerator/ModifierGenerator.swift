@@ -290,9 +290,12 @@ struct ModifierGenerator: ParsableCommand {
                 })
             let requiresContext = signatures.contains(where: {
                 $0.parameters.contains(where: {
-                    ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference"].contains(
+                    ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference", "AnyShapeStyle", "Color", "ListItemTint"].contains(
                         $0.type.as(IdentifierTypeSyntax.self)?.name.text
-                         ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
+                            ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
+                            ?? $0.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
+                            ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType
+                                .as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
                     )
                 })
             })

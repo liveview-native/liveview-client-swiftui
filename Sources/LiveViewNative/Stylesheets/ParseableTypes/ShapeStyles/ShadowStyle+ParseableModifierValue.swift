@@ -38,13 +38,35 @@ import LiveViewNativeStylesheet
 /// .inner(color: .red, radius: 8, x: 10, y: -8)
 /// ```
 @_documentation(visibility: public)
-extension ShadowStyle: ParseableModifierValue {
+enum _ShadowStyle: ParseableModifierValue {
+    case drop(_drop)
+    case inner(_inner)
+    
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
-                _drop.parser(in: context).map(\.value)
-                _inner.parser(in: context).map(\.value)
+                _drop.parser(in: context).map(Self.drop)
+                _inner.parser(in: context).map(Self.inner)
             }
+        }
+    }
+    
+    func resolve(on element: ElementNode) -> ShadowStyle {
+        switch self {
+        case .drop(let drop):
+            .drop(
+                color: drop.color.resolve(on: element),
+                radius: drop.radius.resolve(on: element),
+                x: drop.x.resolve(on: element),
+                y: drop.y.resolve(on: element)
+            )
+        case .inner(let inner):
+            .inner(
+                color: inner.color.resolve(on: element),
+                radius: inner.radius.resolve(on: element),
+                x: inner.x.resolve(on: element),
+                y: inner.y.resolve(on: element)
+            )
         }
     }
     
@@ -52,10 +74,21 @@ extension ShadowStyle: ParseableModifierValue {
     struct _drop {
         static let name = "drop"
         
-        let value: ShadowStyle
+        let color: Color.Resolvable
+        let radius: AttributeReference<CGFloat>
+        let x: AttributeReference<CGFloat>
+        let y: AttributeReference<CGFloat>
         
-        init(color: Color = .init(.sRGBLinear, white: 0, opacity: 0.33), radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) {
-            self.value = .drop(color: color, radius: radius, x: x, y: y)
+        init(
+            color: Color.Resolvable = .init(.init(.sRGBLinear, white: 0, opacity: 0.33)),
+            radius: AttributeReference<CGFloat>,
+            x: AttributeReference<CGFloat> = .init(0),
+            y: AttributeReference<CGFloat> = .init(0)
+        ) {
+            self.color = color
+            self.radius = radius
+            self.x = x
+            self.y = y
         }
     }
     
@@ -63,10 +96,21 @@ extension ShadowStyle: ParseableModifierValue {
     struct _inner {
         static let name = "inner"
         
-        let value: ShadowStyle
+        let color: Color.Resolvable
+        let radius: AttributeReference<CGFloat>
+        let x: AttributeReference<CGFloat>
+        let y: AttributeReference<CGFloat>
         
-        init(color: Color = .init(.sRGBLinear, white: 0, opacity: 0.55), radius: CGFloat, x: CGFloat = 0, y: CGFloat = 0) {
-            self.value = .inner(color: color, radius: radius, x: x, y: y)
+        init(
+            color: Color.Resolvable = .init(.init(.sRGBLinear, white: 0, opacity: 0.55)),
+            radius: AttributeReference<CGFloat>,
+            x: AttributeReference<CGFloat> = .init(0),
+            y: AttributeReference<CGFloat> = .init(0)
+        ) {
+            self.color = color
+            self.radius = radius
+            self.x = x
+            self.y = y
         }
     }
 }
