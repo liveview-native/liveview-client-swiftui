@@ -211,14 +211,22 @@ public extension AnyShapeStyle {
         }
         
         public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-            ChainedMemberExpression {
-                baseParser(in: context)
-            } member: {
-                StyleModifier.parser(in: context)
+            OneOf {
+                _ColorParser(context: context) {
+                    StyleModifier.parser(in: context)
+                }
+                .map({ (base: Color.Resolvable, members: [StyleModifier]) in
+                    Self(storage: .color(base), modifiers: members)
+                })
+                ChainedMemberExpression {
+                    baseParser(in: context)
+                } member: {
+                    StyleModifier.parser(in: context)
+                }
+                .map({ (base: Storage, members: [StyleModifier]) in
+                    Self(storage: base, modifiers: members)
+                })
             }
-            .map({ (base: Storage, members: [StyleModifier]) in
-                Self(storage: base, modifiers: members)
-            })
         }
         
         static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Storage> {
