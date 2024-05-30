@@ -340,6 +340,14 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         
         let resolvedStylesheet: [String:[BuilderModifierContainer<Builder>]]
         
+        public var coordinator: LiveViewCoordinator<R> {
+            context.coordinator
+        }
+        
+        public var url: URL {
+            context.url
+        }
+        
         func value<OtherBuilder: ContentBuilder>(for _: OtherBuilder.Type = OtherBuilder.self) -> ContentBuilderContext<R, OtherBuilder>.Value {
             return .init(
                 coordinatorEnvironment: coordinatorEnvironment,
