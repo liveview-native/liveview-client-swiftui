@@ -17,16 +17,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   monospaced(attr("isActive"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" isActive={@isActive} />
+/// <Element style='monospaced(attr("isActive"))' isActive={@isActive} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
