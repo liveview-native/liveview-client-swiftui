@@ -138,316 +138,536 @@ import LiveViewNativeStylesheet
 /// .blue.shadow(.inner(radius: 8, y: 8))
 /// ```
 @_documentation(visibility: public)
-extension AnyShapeStyle: ParseableModifierValue {
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            ChainedMemberExpression {
-                baseParser(in: context)
-            } member: {
-                StyleModifier.parser(in: context)
+public extension AnyShapeStyle {
+    struct Resolvable: ParseableModifierValue {
+        enum Storage {
+            case value(AnyShapeStyle)
+            case color(Color.Resolvable)
+            
+            case gradient(Gradient.Resolvable)
+            case anyGradient(AnyGradient.Resolvable)
+            
+            case angularGradient(_angularGradient)
+            case conicGradient(_conicGradient)
+            case ellipticalGradient(_ellipticalGradient)
+            case linearGradient(_linearGradient)
+            case radialGradient(_radialGradient)
+            
+            case modifier(StyleModifier)
+            
+            init(_ style: some ShapeStyle) {
+                self = .value(AnyShapeStyle(style))
             }
-            .map({ (base: any ShapeStyle, members: [StyleModifier]) in
-                (base: base, members: members)
-            })
-            _ColorParser(context: context) {
-                StyleModifier.parser(in: context)
+        }
+        
+        let storage: Storage
+        let modifiers: [StyleModifier]
+        
+        public func resolve(on element: ElementNode) -> AnyShapeStyle {
+            let base: any ShapeStyle = switch storage {
+            case .value(let value):
+                value
+            case .color(let color):
+                color.resolve(on: element)
+            case let .gradient(gradient):
+                gradient.resolve(on: element)
+            case let .anyGradient(gradient):
+                gradient.resolve(on: element)
+            case let .angularGradient(gradient):
+                gradient.resolve(on: element)
+            case let .conicGradient(gradient):
+                gradient.resolve(on: element)
+            case let .ellipticalGradient(gradient):
+                gradient.resolve(on: element)
+            case let .linearGradient(gradient):
+                gradient.resolve(on: element)
+            case let .radialGradient(gradient):
+                gradient.resolve(on: element)
+            case let .modifier(modifier):
+                modifier.resolve(on: element)
             }
-            .map({ (base: SwiftUI.Color, members: [StyleModifier]) in
-                (base: base as any ShapeStyle, members: members)
-            })
-        }
-        .map({ (base: any ShapeStyle, modifiers: [StyleModifier]) in
-            var result = base
-            for modifier in modifiers {
-                result = modifier.apply(to: result)
+            return modifiers.reduce(AnyShapeStyle(base)) {
+                AnyShapeStyle($1.apply(to: $0, on: element))
             }
-            return AnyShapeStyle(result)
-        })
-    }
-    
-    static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, any ShapeStyle> {
-        OneOf {
-            HierarchicalShapeStyle.parser(in: context).map({ $0 as any ShapeStyle })
-            
-            Material.parser(in: context).map({ $0 as any ShapeStyle })
-            
-            ConstantAtomLiteral("foreground").map({ ForegroundStyle() as any ShapeStyle })
-            ConstantAtomLiteral("background").map({ BackgroundStyle() as any ShapeStyle })
-            #if !os(watchOS) && !os(tvOS)
-            ConstantAtomLiteral("selection").map({ SelectionShapeStyle() as any ShapeStyle })
-            #endif
-            ConstantAtomLiteral("tint").map({ TintShapeStyle() as any ShapeStyle })
-            if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
-                ConstantAtomLiteral("separator").map({ SeparatorShapeStyle() as any ShapeStyle })
-                ConstantAtomLiteral("placeholder").map({ PlaceholderTextShapeStyle() as any ShapeStyle })
-                ConstantAtomLiteral("link").map({ LinkShapeStyle() as any ShapeStyle })
-                ConstantAtomLiteral("fill").map({ FillShapeStyle() as any ShapeStyle })
-            }
-            #if !os(visionOS)
-            if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
-                ConstantAtomLiteral("windowBackground").map({ WindowBackgroundShapeStyle() as any ShapeStyle })
-            }
-            #endif
-            
-            ImagePaint.parser(in: context).map({ $0 as any ShapeStyle })
-            _image.parser(in: context).map(\.value)
-            
-            Gradient.parser(in: context).map({ $0 as any ShapeStyle })
-            AnyGradient.parser(in: context).map({ $0 as any ShapeStyle })
-            
-            AngularGradient.parser(in: context).map({ $0 as any ShapeStyle })
-            _angularGradient.parser(in: context).map(\.value)
-            _conicGradient.parser(in: context).map(\.value)
-            
-            EllipticalGradient.parser(in: context).map({ $0 as any ShapeStyle })
-            _ellipticalGradient.parser(in: context).map(\.value)
-            
-            LinearGradient.parser(in: context).map({ $0 as any ShapeStyle })
-            _linearGradient.parser(in: context).map(\.value)
-            
-            RadialGradient.parser(in: context).map({ $0 as any ShapeStyle })
-            _radialGradient.parser(in: context).map(\.value)
-            
-            StyleModifier.parser(in: context).map(\.value)
-        }
-    }
-    
-    @ParseableExpression
-    struct _angularGradient {
-        static let name = "angularGradient"
-        
-        let value: any ShapeStyle
-        
-        init(_ gradient: AnyGradient, center: UnitPoint = .center, startAngle: Angle, endAngle: Angle) {
-            self.value = AngularGradient.angularGradient(gradient, center: center, startAngle: startAngle, endAngle: endAngle)
         }
         
-        init(_ gradient: Gradient, center: UnitPoint = .center, startAngle: Angle, endAngle: Angle) {
-            self.value = AngularGradient.angularGradient(gradient, center: center, startAngle: startAngle, endAngle: endAngle)
+        public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyShapeStyle {
+            resolve(on: element)
         }
         
-        init(colors: [Color], center: UnitPoint, startAngle: Angle, endAngle: Angle) {
-            self.value = AngularGradient.angularGradient(colors: colors, center: center, startAngle: startAngle, endAngle: endAngle)
+        public init(_ constant: AnyShapeStyle) {
+            self.storage = .value(constant)
+            self.modifiers = []
         }
         
-        init(stops: [Gradient.Stop], center: UnitPoint, startAngle: Angle, endAngle: Angle) {
-            self.value = AngularGradient.angularGradient(stops: stops, center: center, startAngle: startAngle, endAngle: endAngle)
-        }
-    }
-    
-    @ParseableExpression
-    struct _conicGradient {
-        static let name = "conicGradient"
-        
-        let value: any ShapeStyle
-        
-        init(_ gradient: AnyGradient, center: UnitPoint = .center, angle: Angle = .zero) {
-            self.value = AngularGradient.conicGradient(gradient, center: center, angle: angle)
+        public init(_ constant: some ShapeStyle) {
+            self.storage = .value(AnyShapeStyle(constant))
+            self.modifiers = []
         }
         
-        init(_ gradient: Gradient, center: UnitPoint, angle: Angle = .zero) {
-            self.value = AngularGradient.conicGradient(gradient, center: center, angle: angle)
+        init(storage: Storage, modifiers: [StyleModifier]) {
+            self.storage = storage
+            self.modifiers = modifiers
         }
         
-        init(colors: [Color], center: UnitPoint, angle: Angle = .zero) {
-            self.value = AngularGradient.conicGradient(colors: colors, center: center, angle: angle)
-        }
-        
-        init(stops: [Gradient.Stop], center: UnitPoint, angle: Angle = .zero) {
-            self.value = AngularGradient.conicGradient(stops: stops, center: center, angle: angle)
-        }
-    }
-    
-    @ParseableExpression
-    struct _ellipticalGradient {
-        static let name = "ellipticalGradient"
-        
-        let value: any ShapeStyle
-        
-        init(_ gradient: Gradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) {
-            self.value = EllipticalGradient.ellipticalGradient(gradient, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
-        }
-        
-        init(colors: [Color], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) {
-            self.value = EllipticalGradient.ellipticalGradient(colors: colors, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
-        }
-        
-        init(stops: [Gradient.Stop], center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) {
-            self.value = EllipticalGradient.ellipticalGradient(stops: stops, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
-        }
-        
-        init(_ gradient: AnyGradient, center: UnitPoint = .center, startRadiusFraction: CGFloat = 0, endRadiusFraction: CGFloat = 0.5) {
-            self.value = EllipticalGradient.ellipticalGradient(gradient, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
-        }
-    }
-    
-    @ParseableExpression
-    struct _linearGradient {
-        static let name = "linearGradient"
-        
-        let value: any ShapeStyle
-        
-        init(_ gradient: Gradient, startPoint: UnitPoint, endPoint: UnitPoint) {
-            self.value = LinearGradient.linearGradient(gradient, startPoint: startPoint, endPoint: endPoint)
-        }
-        
-        init(colors: [Color], startPoint: UnitPoint, endPoint: UnitPoint) {
-            self.value = LinearGradient.linearGradient(colors: colors, startPoint: startPoint, endPoint: endPoint)
-        }
-        
-        init(stops: [Gradient.Stop], startPoint: UnitPoint, endPoint: UnitPoint) {
-            self.value = LinearGradient.linearGradient(stops: stops, startPoint: startPoint, endPoint: endPoint)
-        }
-        
-        init(_ gradient: AnyGradient, startPoint: UnitPoint, endPoint: UnitPoint) {
-            self.value = LinearGradient.linearGradient(gradient, startPoint: startPoint, endPoint: endPoint)
-        }
-    }
-    
-    @ParseableExpression
-    struct _radialGradient {
-        static let name = "radialGradient"
-        
-        let value: any ShapeStyle
-        
-        init(_ gradient: Gradient, center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) {
-            self.value = RadialGradient.radialGradient(gradient, center: center, startRadius: startRadius, endRadius: endRadius)
-        }
-        
-        init(colors: [Color], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) {
-            self.value = RadialGradient.radialGradient(colors: colors, center: center, startRadius: startRadius, endRadius: endRadius)
-        }
-        
-        init(stops: [Gradient.Stop], center: UnitPoint, startRadius: CGFloat, endRadius: CGFloat) {
-            self.value = RadialGradient.radialGradient(stops: stops, center: center, startRadius: startRadius, endRadius: endRadius)
-        }
-        
-        init(_ gradient: AnyGradient, center: UnitPoint = .center, startRadius: CGFloat = 0, endRadius: CGFloat) {
-            self.value = RadialGradient.radialGradient(gradient, center: center, startRadius: startRadius, endRadius: endRadius)
-        }
-    }
-    
-    @ParseableExpression
-    struct _image {
-        static let name = "image"
-        
-        let value: any ShapeStyle
-        
-        init(_ image: Image, sourceRect: CGRect = .init(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) {
-            self.value = ImagePaint.image(image, sourceRect: sourceRect, scale: scale)
-        }
-    }
-    
-    enum StyleModifier: ParseableModifierValue {
-        case blendMode(_blendMode)
-        case opacity(_opacity)
-        case shadow(_shadow)
-        case hierarchical(HierarchicalLevel)
-        
-        static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+        public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
             OneOf {
-                _blendMode.parser(in: context).map(Self.blendMode)
-                _opacity.parser(in: context).map(Self.opacity)
-                _shadow.parser(in: context).map(Self.shadow)
-                HierarchicalLevel.parser(in: context).map(Self.hierarchical)
+                _ColorParser(context: context) {
+                    StyleModifier.parser(in: context)
+                }
+                .map({ (base: Color.Resolvable, members: [StyleModifier]) in
+                    Self(storage: .color(base), modifiers: members)
+                })
+                ChainedMemberExpression {
+                    baseParser(in: context)
+                } member: {
+                    StyleModifier.parser(in: context)
+                }
+                .map({ (base: Storage, members: [StyleModifier]) in
+                    Self(storage: base, modifiers: members)
+                })
             }
         }
         
-        @ParseableExpression
-        struct _blendMode {
-            static let name = "blendMode"
-            
-            let value: BlendMode
-            
-            init(_ value: BlendMode) {
-                self.value = value
-            }
+        static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Storage> {
+            BaseParser(context: context)
         }
         
-        @ParseableExpression
-        struct _opacity {
-            static let name = "opacity"
+        private struct BaseParser: Parser {
+            let context: ParseableModifierContext
             
-            let value: Double
-            
-            init(_ value: Double) {
-                self.value = value
-            }
-        }
-        
-        @ParseableExpression
-        struct _shadow {
-            static let name = "shadow"
-            
-            let value: ShadowStyle
-            
-            init(_ value: ShadowStyle) {
-                self.value = value
-            }
-        }
-        
-        enum HierarchicalLevel: String, CaseIterable, ParseableModifierValue {
-            typealias _ParserType = EnumParser<Self>
-            
-            static func parser(in context: ParseableModifierContext) -> EnumParser<Self> {
-                .init(Dictionary(uniqueKeysWithValues: Self.allCases.map({ ($0.rawValue, $0) })))
-            }
-            
-            case secondary
-            case tertiary
-            case quaternary
-            case quinary
-        }
-        
-        /// Apply this modifier to an existing `ShapeStyle`.
-        func apply(to style: some ShapeStyle) -> any ShapeStyle {
-            switch self {
-            case let .blendMode(blendMode):
-                return style.blendMode(blendMode.value)
-            case let .opacity(opacity):
-                return style.opacity(opacity.value)
-            case let .shadow(shadow):
-                return style.shadow(shadow.value)
-            case let .hierarchical(level):
+            func parse(_ input: inout Substring.UTF8View) throws -> Storage {
+                var parsers: [AnyParser<Substring.UTF8View, Storage>] = [
+                    Color.Resolvable.parser(in: context).map(Storage.color).eraseToAnyParser(),
+                    HierarchicalShapeStyle.parser(in: context).map({ Storage($0) }).eraseToAnyParser(),
+                    
+                    Material.parser(in: context).map({ Storage($0) }).eraseToAnyParser(),
+                    
+                    ConstantAtomLiteral("foreground").map({ Storage(ForegroundStyle()) }).eraseToAnyParser(),
+                    ConstantAtomLiteral("background").map({ Storage(BackgroundStyle()) }).eraseToAnyParser(),
+                    
+                    ImagePaint.parser(in: context).map({ Storage($0) }).eraseToAnyParser(),
+                    _image.parser(in: context).map({ Storage($0.value) }).eraseToAnyParser(),
+                    
+                    Gradient.Resolvable.parser(in: context).map({ Storage.gradient($0) }).eraseToAnyParser(),
+                    AnyGradient.Resolvable.parser(in: context).map({ Storage.anyGradient($0) }).eraseToAnyParser(),
+                    
+                    _angularGradient.parser(in: context).map({ Storage.angularGradient($0) }).eraseToAnyParser(),
+                    _conicGradient.parser(in: context).map({ Storage.conicGradient($0) }).eraseToAnyParser(),
+                    
+                    _ellipticalGradient.parser(in: context).map({ Storage.ellipticalGradient($0) }).eraseToAnyParser(),
+                    
+                    _linearGradient.parser(in: context).map({ Storage.linearGradient($0) }).eraseToAnyParser(),
+                    
+                    _radialGradient.parser(in: context).map({ Storage.radialGradient($0) }).eraseToAnyParser(),
+                    
+                    StyleModifier.parser(in: context).map({ Storage.modifier($0) }).eraseToAnyParser(),
+                ]
+#if !os(watchOS) && !os(tvOS)
+                parsers.append(ConstantAtomLiteral("selection").map({ Storage(SelectionShapeStyle()) }).eraseToAnyParser())
+#endif
+                parsers.append(ConstantAtomLiteral("tint").map({ Storage(TintShapeStyle()) }).eraseToAnyParser())
                 if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
-                    switch level {
-                    case .secondary:
-                        return style.secondary
-                    case .tertiary:
-                        return style.tertiary
-                    case .quaternary:
-                        return style.quaternary
-                    case .quinary:
-                        return style.quinary
+                    parsers.append(ConstantAtomLiteral("separator").map({ Storage(SeparatorShapeStyle()) }).eraseToAnyParser())
+                    parsers.append(ConstantAtomLiteral("placeholder").map({ Storage(PlaceholderTextShapeStyle()) }).eraseToAnyParser())
+                    parsers.append(ConstantAtomLiteral("link").map({ Storage(LinkShapeStyle()) }).eraseToAnyParser())
+                    parsers.append(ConstantAtomLiteral("fill").map({ Storage(FillShapeStyle()) }).eraseToAnyParser())
+                }
+#if !os(visionOS)
+                if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, *) {
+                    parsers.append(ConstantAtomLiteral("windowBackground").map({ Storage(WindowBackgroundShapeStyle()) }).eraseToAnyParser())
+                }
+#endif
+                
+                let copy = input
+                for parser in parsers {
+                    if let value = try? parser.parse(&input) {
+                        return value
+                    } else {
+                        input = copy
                     }
-                } else {
-                    return style
+                }
+                throw ArgumentParseError.unknownArgument("AnyShapeStyle")
+            }
+        }
+        
+        @ParseableExpression
+        enum _angularGradient {
+            static let name = "angularGradient"
+            
+            case anyGradient(gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
+            case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
+            case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
+            case stops(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
+            
+            init(
+                _ gradient: AnyGradient.Resolvable,
+                center: AttributeReference<UnitPoint> = .init(.center),
+                startAngle: AttributeReference<Angle>,
+                endAngle: AttributeReference<Angle>
+            ) {
+                self = .anyGradient(gradient: gradient, center: center, startAngle: startAngle, endAngle: endAngle)
+            }
+            
+            init(
+                _ gradient: Gradient.Resolvable,
+                center: AttributeReference<UnitPoint> = .init(.center),
+                startAngle: AttributeReference<Angle>,
+                endAngle: AttributeReference<Angle>
+            ) {
+                self = .gradient(gradient: gradient, center: center, startAngle: startAngle, endAngle: endAngle)
+            }
+            
+            init(
+                colors: [Color.Resolvable],
+                center: AttributeReference<UnitPoint>,
+                startAngle: AttributeReference<Angle>,
+                endAngle: AttributeReference<Angle>
+            ) {
+                self = .colors(colors: colors, center: center, startAngle: startAngle, endAngle: endAngle)
+            }
+            
+            init(
+                stops: [Gradient.Stop.Resolvable],
+                center: AttributeReference<UnitPoint> = .init(.center),
+                startAngle: AttributeReference<Angle>,
+                endAngle: AttributeReference<Angle>
+            ) {
+                self = .stops(stops: stops, center: center, startAngle: startAngle, endAngle: endAngle)
+            }
+            
+            func resolve(on element: ElementNode) -> any ShapeStyle {
+                switch self {
+                case .anyGradient(let gradient, let center, let startAngle, let endAngle):
+                    AngularGradient.angularGradient(gradient.resolve(on: element), center: center.resolve(on: element), startAngle: startAngle.resolve(on: element), endAngle: endAngle.resolve(on: element))
+                case .gradient(let gradient, let center, let startAngle, let endAngle):
+                    AngularGradient.angularGradient(gradient.resolve(on: element), center: center.resolve(on: element), startAngle: startAngle.resolve(on: element), endAngle: endAngle.resolve(on: element))
+                case .colors(let colors, let center, let startAngle, let endAngle):
+                    AngularGradient.angularGradient(colors: colors.map({ $0.resolve(on: element) }), center: center.resolve(on: element), startAngle: startAngle.resolve(on: element), endAngle: endAngle.resolve(on: element))
+                case .stops(let stops, let center, let startAngle, let endAngle):
+                    AngularGradient.angularGradient(stops: stops.map({ $0.resolve(on: element) }), center: center.resolve(on: element), startAngle: startAngle.resolve(on: element), endAngle: endAngle.resolve(on: element))
                 }
             }
         }
         
-        /// Use this modifier itself as a `ShapeStyle`. SwiftUI will apply it to the foreground style.
-        var value: any ShapeStyle {
-            switch self {
-            case let .blendMode(blendMode):
-                return AnyShapeStyle(.blendMode(blendMode.value))
-            case let .opacity(opacity):
-                return AnyShapeStyle(.opacity(opacity.value))
-            case let .shadow(shadow):
-                return AnyShapeStyle(.shadow(shadow.value))
-            case let .hierarchical(level):
-                switch level {
-                case .secondary:
-                    return AnyShapeStyle(.secondary)
-                case .tertiary:
-                    return AnyShapeStyle(.tertiary)
-                case .quaternary:
-                    return AnyShapeStyle(.quaternary)
-                case .quinary:
-                    if #available(iOS 16, macOS 12, tvOS 17, watchOS 10, visionOS 1, *) {
-                        return AnyShapeStyle(.quinary)
+        @ParseableExpression
+        enum _conicGradient {
+            static let name = "conicGradient"
+            
+            case anyGradient(gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
+            case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
+            case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
+            case stops(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
+            
+            init(_ gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint> = .init(.center), angle: AttributeReference<Angle> = .init(.zero)) {
+                self = .anyGradient(gradient: gradient, center: center, angle: angle)
+            }
+            
+            init(_ gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle> = .init(.zero)) {
+                self = .gradient(gradient: gradient, center: center, angle: angle)
+            }
+            
+            init(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle> = .init(.zero)) {
+                self = .colors(colors: colors, center: center, angle: angle)
+            }
+            
+            init(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle> = .init(.zero)) {
+                self = .stops(stops: stops, center: center, angle: angle)
+            }
+            
+            func resolve(on element: ElementNode) -> any ShapeStyle {
+                switch self {
+                case .anyGradient(let gradient, let center, let angle):
+                    AngularGradient.conicGradient(gradient.resolve(on: element), center: center.resolve(on: element), angle: angle.resolve(on: element))
+                case .gradient(let gradient, let center, let angle):
+                    AngularGradient.conicGradient(gradient.resolve(on: element), center: center.resolve(on: element), angle: angle.resolve(on: element))
+                case .colors(let colors, let center, let angle):
+                    AngularGradient.conicGradient(colors: colors.map({ $0.resolve(on: element) }), center: center.resolve(on: element), angle: angle.resolve(on: element))
+                case .stops(let stops, let center, let angle):
+                    AngularGradient.conicGradient(stops: stops.map({ $0.resolve(on: element) }), center: center.resolve(on: element), angle: angle.resolve(on: element))
+                }
+            }
+        }
+        
+        @ParseableExpression
+        enum _ellipticalGradient {
+            static let name = "ellipticalGradient"
+            
+            case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
+            case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
+            case stops(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
+            case anyGradient(gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
+            
+            init(_ gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint> = .init(.center), startRadiusFraction: AttributeReference<CGFloat> = .init(0), endRadiusFraction: AttributeReference<CGFloat> = .init(0.5)) {
+                self = .gradient(gradient: gradient, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
+            }
+            
+            init(colors: [Color.Resolvable], center: AttributeReference<UnitPoint> = .init(.center), startRadiusFraction: AttributeReference<CGFloat> = .init(0), endRadiusFraction: AttributeReference<CGFloat> = .init(0.5)) {
+                self = .colors(colors: colors, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
+            }
+            
+            init(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint> = .init(.center), startRadiusFraction: AttributeReference<CGFloat> = .init(0), endRadiusFraction: AttributeReference<CGFloat> = .init(0.5)) {
+                self = .stops(stops: stops, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
+            }
+            
+            init(_ gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint> = .init(.center), startRadiusFraction: AttributeReference<CGFloat> = .init(0), endRadiusFraction: AttributeReference<CGFloat> = .init(0.5)) {
+                self = .anyGradient(gradient: gradient, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
+            }
+            
+            func resolve(on element: ElementNode) -> any ShapeStyle {
+                switch self {
+                case .gradient(let gradient, let center, let startRadiusFraction, let endRadiusFraction):
+                    EllipticalGradient.ellipticalGradient(gradient.resolve(on: element), center: center.resolve(on: element), startRadiusFraction: startRadiusFraction.resolve(on: element), endRadiusFraction: endRadiusFraction.resolve(on: element))
+                case .colors(let colors, let center, let startRadiusFraction, let endRadiusFraction):
+                    EllipticalGradient.ellipticalGradient(colors: colors.map({ $0.resolve(on: element) }), center: center.resolve(on: element), startRadiusFraction: startRadiusFraction.resolve(on: element), endRadiusFraction: endRadiusFraction.resolve(on: element))
+                case .stops(let stops, let center, let startRadiusFraction, let endRadiusFraction):
+                    EllipticalGradient.ellipticalGradient(stops: stops.map({ $0.resolve(on: element) }), center: center.resolve(on: element), startRadiusFraction: startRadiusFraction.resolve(on: element), endRadiusFraction: endRadiusFraction.resolve(on: element))
+                case .anyGradient(let gradient, let center, let startRadiusFraction, let endRadiusFraction):
+                    EllipticalGradient.ellipticalGradient(gradient.resolve(on: element), center: center.resolve(on: element), startRadiusFraction: startRadiusFraction.resolve(on: element), endRadiusFraction: endRadiusFraction.resolve(on: element))
+                }
+            }
+        }
+        
+        @ParseableExpression
+        enum _linearGradient {
+            static let name = "linearGradient"
+            
+            case gradient(gradient: Gradient.Resolvable, startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
+            case colors(colors: [Color.Resolvable], startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
+            case stops(stops: [Gradient.Stop.Resolvable], startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
+            case anyGradient(gradient: AnyGradient.Resolvable, startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
+            
+            init(_ gradient: Gradient.Resolvable, startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>) {
+                self = .gradient(gradient: gradient, startPoint: startPoint, endPoint: endPoint)
+            }
+            
+            init(colors: [Color.Resolvable], startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>) {
+                self = .colors(colors: colors, startPoint: startPoint, endPoint: endPoint)
+            }
+            
+            init(stops: [Gradient.Stop.Resolvable], startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>) {
+                self = .stops(stops: stops, startPoint: startPoint, endPoint: endPoint)
+            }
+            
+            init(_ gradient: AnyGradient.Resolvable, startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>) {
+                self = .anyGradient(gradient: gradient, startPoint: startPoint, endPoint: endPoint)
+            }
+            
+            func resolve(on element: ElementNode) -> any ShapeStyle {
+                switch self {
+                case .gradient(let gradient, let startPoint, let endPoint):
+                    LinearGradient.linearGradient(gradient.resolve(on: element), startPoint: startPoint.resolve(on: element), endPoint: endPoint.resolve(on: element))
+                case .colors(let colors, let startPoint, let endPoint):
+                    LinearGradient.linearGradient(colors: colors.map({ $0.resolve(on: element) }), startPoint: startPoint.resolve(on: element), endPoint: endPoint.resolve(on: element))
+                case .stops(let stops, let startPoint, let endPoint):
+                    LinearGradient.linearGradient(stops: stops.map({ $0.resolve(on: element) }), startPoint: startPoint.resolve(on: element), endPoint: endPoint.resolve(on: element))
+                case .anyGradient(let gradient, let startPoint, let endPoint):
+                    LinearGradient.linearGradient(gradient.resolve(on: element), startPoint: startPoint.resolve(on: element), endPoint: endPoint.resolve(on: element))
+                }
+            }
+        }
+        
+        @ParseableExpression
+        enum _radialGradient {
+            static let name = "radialGradient"
+            
+            case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
+            case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
+            case stops(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
+            case anyGradient(gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
+            
+            init(
+                _ gradient: Gradient.Resolvable,
+                center: AttributeReference<UnitPoint>,
+                startRadius: AttributeReference<CGFloat>,
+                endRadius: AttributeReference<CGFloat>
+            ) {
+                self = .gradient(gradient: gradient, center: center, startRadius: startRadius, endRadius: endRadius)
+            }
+            
+            init(
+                colors: [Color.Resolvable],
+                center: AttributeReference<UnitPoint>,
+                startRadius: AttributeReference<CGFloat>,
+                endRadius: AttributeReference<CGFloat>
+            ) {
+                self = .colors(colors: colors, center: center, startRadius: startRadius, endRadius: endRadius)
+            }
+            
+            init(
+                stops: [Gradient.Stop.Resolvable],
+                center: AttributeReference<UnitPoint>,
+                startRadius: AttributeReference<CGFloat>,
+                endRadius: AttributeReference<CGFloat>
+            ) {
+                self = .stops(stops: stops, center: center, startRadius: startRadius, endRadius: endRadius)
+            }
+            
+            init(
+                _ gradient: AnyGradient.Resolvable,
+                center: AttributeReference<UnitPoint> = .init(.center),
+                startRadius: AttributeReference<CGFloat> = .init(0),
+                endRadius: AttributeReference<CGFloat>
+            ) {
+                self = .anyGradient(gradient: gradient, center: center, startRadius: startRadius, endRadius: endRadius)
+            }
+            
+            func resolve(on element: ElementNode) -> any ShapeStyle {
+                switch self {
+                case .gradient(let gradient, let center, let startRadius, let endRadius):
+                    RadialGradient.radialGradient(
+                        gradient.resolve(on: element),
+                        center: center.resolve(on: element),
+                        startRadius: startRadius.resolve(on: element),
+                        endRadius: endRadius.resolve(on: element)
+                    )
+                case .colors(let colors, let center, let startRadius, let endRadius):
+                    RadialGradient.radialGradient(
+                        colors: colors.map({ $0.resolve(on: element) }),
+                        center: center.resolve(on: element),
+                        startRadius: startRadius.resolve(on: element),
+                        endRadius: endRadius.resolve(on: element)
+                    )
+                case .stops(let stops, let center, let startRadius, let endRadius):
+                    RadialGradient.radialGradient(
+                        stops: stops.map({ $0.resolve(on: element) }),
+                        center: center.resolve(on: element),
+                        startRadius: startRadius.resolve(on: element),
+                        endRadius: endRadius.resolve(on: element)
+                    )
+                case .anyGradient(let gradient, let center, let startRadius, let endRadius):
+                    RadialGradient.radialGradient(
+                        gradient.resolve(on: element),
+                        center: center.resolve(on: element),
+                        startRadius: startRadius.resolve(on: element),
+                        endRadius: endRadius.resolve(on: element)
+                    )
+                }
+            }
+        }
+        
+        @ParseableExpression
+        struct _image {
+            static let name = "image"
+            
+            let value: any ShapeStyle
+            
+            init(_ image: Image, sourceRect: CGRect = .init(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) {
+                self.value = ImagePaint.image(image, sourceRect: sourceRect, scale: scale)
+            }
+        }
+        
+        enum StyleModifier: ParseableModifierValue {
+            case blendMode(_blendMode)
+            case opacity(_opacity)
+            case shadow(_shadow)
+            case hierarchical(HierarchicalLevel)
+            
+            static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+                OneOf {
+                    _blendMode.parser(in: context).map(Self.blendMode)
+                    _opacity.parser(in: context).map(Self.opacity)
+                    _shadow.parser(in: context).map(Self.shadow)
+                    HierarchicalLevel.parser(in: context).map(Self.hierarchical)
+                }
+            }
+            
+            @ParseableExpression
+            struct _blendMode {
+                static let name = "blendMode"
+                
+                let value: BlendMode
+                
+                init(_ value: BlendMode) {
+                    self.value = value
+                }
+            }
+            
+            @ParseableExpression
+            struct _opacity {
+                static let name = "opacity"
+                
+                let value: Double
+                
+                init(_ value: Double) {
+                    self.value = value
+                }
+            }
+            
+            @ParseableExpression
+            struct _shadow {
+                static let name = "shadow"
+                
+                let value: _ShadowStyle
+                
+                init(_ value: _ShadowStyle) {
+                    self.value = value
+                }
+            }
+            
+            enum HierarchicalLevel: String, CaseIterable, ParseableModifierValue {
+                typealias _ParserType = EnumParser<Self>
+                
+                static func parser(in context: ParseableModifierContext) -> EnumParser<Self> {
+                    .init(Dictionary(uniqueKeysWithValues: Self.allCases.map({ ($0.rawValue, $0) })))
+                }
+                
+                case secondary
+                case tertiary
+                case quaternary
+                case quinary
+            }
+            
+            /// Apply this modifier to an existing `ShapeStyle`.
+            func apply(to style: some ShapeStyle, on element: ElementNode) -> any ShapeStyle {
+                switch self {
+                case let .blendMode(blendMode):
+                    return style.blendMode(blendMode.value)
+                case let .opacity(opacity):
+                    return style.opacity(opacity.value)
+                case let .shadow(shadow):
+                    return style.shadow(shadow.value.resolve(on: element))
+                case let .hierarchical(level):
+                    if #available(iOS 17, macOS 14, tvOS 17, watchOS 10, visionOS 1, *) {
+                        switch level {
+                        case .secondary:
+                            return style.secondary
+                        case .tertiary:
+                            return style.tertiary
+                        case .quaternary:
+                            return style.quaternary
+                        case .quinary:
+                            return style.quinary
+                        }
                     } else {
+                        return style
+                    }
+                }
+            }
+            
+            /// Use this modifier itself as a `ShapeStyle`. SwiftUI will apply it to the foreground style.
+            func resolve(on element: ElementNode) -> any ShapeStyle {
+                switch self {
+                case let .blendMode(blendMode):
+                    return AnyShapeStyle(.blendMode(blendMode.value))
+                case let .opacity(opacity):
+                    return AnyShapeStyle(.opacity(opacity.value))
+                case let .shadow(shadow):
+                    return AnyShapeStyle(.shadow(shadow.value.resolve(on: element)))
+                case let .hierarchical(level):
+                    switch level {
+                    case .secondary:
+                        return AnyShapeStyle(.secondary)
+                    case .tertiary:
+                        return AnyShapeStyle(.tertiary)
+                    case .quaternary:
                         return AnyShapeStyle(.quaternary)
+                    case .quinary:
+                        if #available(iOS 16, macOS 12, tvOS 17, watchOS 10, visionOS 1, *) {
+                            return AnyShapeStyle(.quinary)
+                        } else {
+                            return AnyShapeStyle(.quaternary)
+                        }
                     }
                 }
             }

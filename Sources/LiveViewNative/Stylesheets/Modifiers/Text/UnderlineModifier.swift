@@ -29,7 +29,7 @@ struct _UnderlineModifier<R: RootRegistry>: ViewModifier {
 
     let isActive: AttributeReference<Bool>
     let pattern: SwiftUI.Text.LineStyle.Pattern
-    let color: AttributeReference<SwiftUI.Color?>?
+    let color: Color.Resolvable?
 
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -37,7 +37,7 @@ struct _UnderlineModifier<R: RootRegistry>: ViewModifier {
     init(
         _ isActive: AttributeReference<Bool> = .init(storage: .constant(true)),
         pattern: SwiftUI.Text.LineStyle.Pattern = .solid,
-        color: AttributeReference<SwiftUI.Color?>? = .init(storage: .constant(nil))
+        color: Color.Resolvable? = nil
     ) {
         self.isActive = isActive
         self.pattern = pattern

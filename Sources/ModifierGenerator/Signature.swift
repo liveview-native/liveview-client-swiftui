@@ -100,12 +100,10 @@ struct Signature {
                     )
                     __content
                         .\#(decl.name.trimmed.text)(\#(parameters.map({
-                            switch $0.type.as(IdentifierTypeSyntax.self)?.name.text {
+                            switch ($0.type.as(IdentifierTypeSyntax.self)?.name ?? $0.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name)?.text {
                             case "ViewReference", "ToolbarContentReference", "CustomizableToolbarContentReference":
                                 return $0.firstName.tokenKind == .wildcard ? "{ \($0.secondName!.text).resolve(on: element, in: context) }" : "\($0.firstName.text): { \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context) }"
-                            case "InlineViewReference":
-                                return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
-                            case "TextReference":
+                            case "InlineViewReference", "TextReference", "AttributeReference", "AnyShapeStyle", "Color", "ListItemTint":
                                 return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
                             case "ChangeTracked":
                                 // These are registered on the View so they get proper DynamicProperty treatment.
@@ -122,14 +120,11 @@ struct Signature {
                                     let arguments = (0..<parameterCount).map({ "$\($0)" }).joined(separator: ", ")
                                     return $0.firstName.tokenKind == .wildcard ? "{ __\(offset)_\($0.secondName!.text).wrappedValue(value: [\(arguments)]) }" : "\($0.firstName.text): { __\(offset)_\(($0.secondName ?? $0.firstName).text).wrappedValue(value: [\(arguments)]) }"
                                 }
-                            case "AttributeReference":
-                                return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text).resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text).resolve(on: element, in: context)"
                             default:
-                                if let optionalType = $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text {
-                                    switch optionalType {
-                                    case "AttributeReference":
-                                        return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text)?.resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)?.resolve(on: element, in: context)"
-                                    case "TextReference":
+                                if let optionalType = $0.type.as(OptionalTypeSyntax.self),
+                                   let wrappedType = (optionalType.wrappedType.as(IdentifierTypeSyntax.self)?.name ?? optionalType.wrappedType.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name)?.text {
+                                    switch wrappedType {
+                                    case "AttributeReference", "TextReference", "AnyShapeStyle", "Color", "ListItemTint":
                                         return $0.firstName.tokenKind == .wildcard ? "\($0.secondName!.text)?.resolve(on: element, in: context)" : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)?.resolve(on: element, in: context)"
                                     default:
                                         break
@@ -178,6 +173,8 @@ extension TypeSyntax {
             return TypeSyntax("AnyGesture<Any>")
         } else if self.as(IdentifierTypeSyntax.self)?.name.text == "View" {
             return TypeSyntax("InlineViewReference")
+        } else if self.as(IdentifierTypeSyntax.self)?.name.text == "ShapeStyle" {
+            return TypeSyntax("AnyShapeStyle.Resolvable")
         } else {
             // add `Any*` prefix to erase
             return TypeSyntax("Any\(self)")
@@ -246,6 +243,37 @@ extension FunctionParameterSyntax {
             self = parameter.with(\.type, genericBaseType.resolveGenericType())
         } else if let memberType = parameter.type.as(MemberTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self),
                   memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
+                    && memberType.name.text == "Color"
+        {
+            self = parameter
+                .with(
+                    \.type,
+                     TypeSyntax("Color.Resolvable\(raw: parameter.type.is(OptionalTypeSyntax.self) ? "? " : "")")
+                        .with(\.leadingTrivia, memberType.leadingTrivia)
+                        .with(\.trailingTrivia, memberType.trailingTrivia)
+                )
+                .with(\.defaultValue, parameter.defaultValue.flatMap({
+                    .init(
+                        leadingTrivia: $0.leadingTrivia,
+                        equal: $0.equal,
+                        value: ExprSyntax(".init(\($0.value))")
+                            .with(\.leadingTrivia, $0.value.leadingTrivia)
+                            .with(\.trailingTrivia, $0.value.trailingTrivia),
+                        trailingTrivia: $0.trailingTrivia
+                    )
+                }))
+        } else if let memberType = parameter.type.as(MemberTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self),
+                  memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
+                    && memberType.name.text == "ListItemTint"
+        {
+            self = parameter.with(
+                \.type,
+                 TypeSyntax("ListItemTint.Resolvable\(raw: parameter.type.is(OptionalTypeSyntax.self) ? "? " : "")")
+                    .with(\.leadingTrivia, memberType.leadingTrivia)
+                    .with(\.trailingTrivia, memberType.trailingTrivia)
+            )
+        } else if let memberType = parameter.type.as(MemberTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self),
+                  memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
                     && memberType.name.text == "Text"
         {
             // nested Text is replaced with a `TextReference`
@@ -289,7 +317,6 @@ extension FunctionParameterSyntax {
                 // SwiftUI types
                 "Alignment",
                 "Angle",
-                "Color",
                 "ColorScheme",
                 "HorizontalAlignment",
                 "RoundedCornerStyle",
