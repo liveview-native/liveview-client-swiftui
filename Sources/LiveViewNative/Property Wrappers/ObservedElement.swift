@@ -85,8 +85,8 @@ public struct ObservedElement {
     }
     
     /// A publisher that publishes when the observed element changes.
-    public var projectedValue: some Publisher<Void, Never> {
-        observer.objectWillChange
+    public var projectedValue: some Publisher<NodeRef, Never> {
+        observer.elementChangedPublisher
     }
     
     var children: [Node] { overrideElement.flatMap({ Array($0.children()) }) ?? observer.resolvedChildren }
@@ -127,6 +127,8 @@ extension ObservedElement {
         
         var objectWillChange = ObjectWillChangePublisher()
         
+        var elementChangedPublisher: AnyPublisher<NodeRef, Never>!
+        
         init(_ id: NodeRef) {
             self.id = id
         }
@@ -141,18 +143,21 @@ extension ObservedElement {
             self.resolvedChildren = Array(self.resolvedElement.children())
             self._resolvedChildIDs = nil
             
-            let publisher: AnyPublisher<(), Never>
+            let id = self.id
+            
             if observeChildren {
-                publisher = Publishers.MergeMany(
-                    [context.elementChanged(id)] + self.resolvedChildIDs.map(context.elementChanged)
+                self.elementChangedPublisher = Publishers.MergeMany(
+                    [context.elementChanged(id).map({ id })] + self.resolvedChildIDs.map({ id in
+                        context.elementChanged(id).map({ id })
+                    })
                 )
                 .eraseToAnyPublisher()
                 self.observedChildIDs = self.resolvedChildIDs
             } else {
-                publisher = context.elementChanged(id).eraseToAnyPublisher()
+                self.elementChangedPublisher = context.elementChanged(id).map({ id }).eraseToAnyPublisher()
             }
             
-            cancellable = publisher
+            cancellable = self.elementChangedPublisher
                 .sink { [weak self] _ in
                     guard let self else { return }
                     self.resolvedElement = context.document[id].asElement()
