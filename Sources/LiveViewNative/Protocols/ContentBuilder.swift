@@ -348,6 +348,11 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
             context.url
         }
         
+        @MainActor
+        public var document: Document? {
+            context.coordinator.document
+        }
+        
         func value<OtherBuilder: ContentBuilder>(for _: OtherBuilder.Type = OtherBuilder.self) -> ContentBuilderContext<R, OtherBuilder>.Value {
             return .init(
                 coordinatorEnvironment: coordinatorEnvironment,
