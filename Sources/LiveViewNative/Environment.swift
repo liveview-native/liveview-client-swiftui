@@ -51,7 +51,7 @@ private struct LiveContextStorageKey: EnvironmentKey {
 /// This exists to type-erase the coordinator, since environment properties can't be generic.
 struct CoordinatorEnvironment {
     private final class Storage {
-        let pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void
+        let pushEvent: @MainActor (String, String, Any, Int?) async throws -> [String:Any]?
         let elementChanged: @MainActor (NodeRef) -> ObservableObjectPublisher
         let document: Document
         
@@ -63,7 +63,7 @@ struct CoordinatorEnvironment {
     }
     private let storage: Storage
     
-    var pushEvent: @MainActor (String, String, Any, Int?) async throws -> Void {
+    var pushEvent: @MainActor (String, String, Any, Int?) async throws -> [String:Any]? {
         storage.pushEvent
     }
     var elementChanged: @MainActor (NodeRef) -> ObservableObjectPublisher {
