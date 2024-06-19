@@ -86,6 +86,11 @@ struct ModifierGenerator: ParsableCommand {
         "TextSelectionAffinity",
         "AdaptableTabBarPlacement",
         "ScrollAnchorRole",
+        "WindowInteractionBehavior",
+        "HorizontalDirection",
+        "VerticalDirection",
+        "FrameResizePosition",
+        "FrameResizeDirection",
     ]
 
     static let denylist: Set<String> = [
