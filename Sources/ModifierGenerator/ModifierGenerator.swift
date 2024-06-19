@@ -27,6 +27,8 @@ struct ModifierGenerator: ParsableCommand {
         "_PresentationDetentsModifier",
         "_FocusScopeModifier<R>",
         "_PrefersDefaultFocusModifier<R>",
+        "_MatchedTransitionSourceModifier<R>",
+        "_NavigationTransitionModifier<R>",
     ]
 
     static let requiredTypes: Set<String> = [
@@ -81,6 +83,9 @@ struct ModifierGenerator: ParsableCommand {
         "RoundedCornerStyle",
         "GlassBackgroundDisplayMode",
         "Edge3D",
+        "TextSelectionAffinity",
+        "AdaptableTabBarPlacement",
+        "ScrollAnchorRole",
     ]
 
     static let denylist: Set<String> = [
@@ -118,6 +123,12 @@ struct ModifierGenerator: ParsableCommand {
         "task",
         
         "fileDialogURLEnabled",
+        
+        "containerValue",
+        
+        "textRenderer",
+        
+        "tabViewCustomization",
 
         // manually implemented due to argument order edge cases
         "searchScopes",
@@ -130,6 +141,8 @@ struct ModifierGenerator: ParsableCommand {
         "presentationDetents",
         "focusScope",
         "prefersDefaultFocus",
+        "navigationTransition",
+        "matchedTransitionSource",
         
         // manually implemented for `Text`
         "font",
@@ -212,6 +225,8 @@ struct ModifierGenerator: ParsableCommand {
         "accessibilityElement",
         "presentedWindowStyle",
         "presentedWindowToolbarStyle",
+        "onScrollTargetVisibilityChange",
+        "matchedTransitionSource",
     ]
 
     static func isValid(_ signature: FunctionDeclSyntax) -> Bool {
@@ -233,6 +248,14 @@ struct ModifierGenerator: ParsableCommand {
 
             // FocusState cannot be used
             if parameter.isFocusState {
+                return false
+            }
+            
+            if parameter.isCustomHoverEffect {
+                return false
+            }
+            
+            if parameter.isScrollPositionBinding {
                 return false
             }
         }
