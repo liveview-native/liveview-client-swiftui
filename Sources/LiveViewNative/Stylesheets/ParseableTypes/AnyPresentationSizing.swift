@@ -20,7 +20,7 @@ import LiveViewNativeStylesheet
 /// - `fitted(horizontal: Bool, vertical: Bool)`
 /// - `sticky(horizontal: Bool, vertical: Bool)`
 @_documentation(visibility: public)
-@available(iOS 18.0, watchOS 11.0, tvOS 18.0, macOS 15.0, visionOS 1.0, *)
+@available(iOS 18.0, watchOS 11.0, tvOS 18.0, macOS 15.0, visionOS 2.0, *)
 struct AnyPresentationSizing: PresentationSizing, ParseableModifierValue {
     let value: any PresentationSizing
     

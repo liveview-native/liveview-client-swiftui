@@ -14,16 +14,21 @@ extension PointerStyle: @retroactive ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
+                #if os(macOS)
                 ColumnResize.parser(in: context).map(\.value)
                 FrameResize.parser(in: context).map(\.value)
                 Image.parser(in: context).map(\.value)
                 RowResize.parser(in: context).map(\.value)
+                #endif
+                
                 #if os(visionOS)
                 Shape.parser(in: context).map(\.value)
                 #endif
                 
-                ConstantAtomLiteral("columnResize").map({ Self.columnResize })
                 ConstantAtomLiteral("default").map({ Self.`default` })
+                
+                #if os(macOS)
+                ConstantAtomLiteral("columnResize").map({ Self.columnResize })
                 ConstantAtomLiteral("grabActive").map({ Self.grabActive })
                 ConstantAtomLiteral("grabIdle").map({ Self.grabIdle })
                 ConstantAtomLiteral("horizontalText").map({ Self.horizontalText })
@@ -33,10 +38,12 @@ extension PointerStyle: @retroactive ParseableModifierValue {
                 ConstantAtomLiteral("verticalText").map({ Self.verticalText })
                 ConstantAtomLiteral("zoomIn").map({ Self.zoomIn })
                 ConstantAtomLiteral("zoomOut").map({ Self.zoomOut })
+                #endif
             }
         }
     }
     
+    #if os(macOS)
     @ParseableExpression
     struct ColumnResize {
         static let name = "columnResize"
@@ -86,6 +93,7 @@ extension PointerStyle: @retroactive ParseableModifierValue {
             self.value = .rowResize(directions: directions)
         }
     }
+    #endif
     
     #if os(visionOS)
     @ParseableExpression
