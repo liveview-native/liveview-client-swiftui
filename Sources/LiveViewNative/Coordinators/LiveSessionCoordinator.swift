@@ -521,14 +521,16 @@ class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDe
 
 extension LiveSessionCoordinator {
     static var platform: String { "swiftui" }
-    static var platformParams: [String:String] {
+    static var platformParams: [String:Any] {
         [
             "app_version": getAppVersion(),
             "app_build": getAppBuild(),
             "bundle_id": getBundleID(),
             "os": getOSName(),
             "os_version": getOSVersion(),
-            "target": getTarget()
+            "target": getTarget(),
+            "localization": getLocalization(),
+            "internationalization": getInternationalization()
         ]
     }
     
@@ -607,6 +609,18 @@ extension LiveSessionCoordinator {
         }
         #endif
     }
+    
+    private static func getLocalization() -> [String:Any] {
+        [
+            "locale": Locale.autoupdatingCurrent.identifier,
+        ]
+    }
+    
+    private static func getInternationalization() -> [String:Any] {
+        [
+            "time_zone": TimeZone.autoupdatingCurrent.identifier,
+        ]
+    }
 }
 
 fileprivate extension URL {
@@ -619,12 +633,24 @@ fileprivate extension URL {
                 .init(name: "_format", value: LiveSessionCoordinator<R>.platform)
             ])
         }
-        for (key, value) in LiveSessionCoordinator<R>.platformParams {
-            let name = "_interface[\(key)]"
+        /// Create a nested structure of query items.
+        ///
+        /// `_root[key][nested_key]=value`
+        func queryParameters(for object: [String:Any]) -> [(name: String, value: String?)] {
+            object.reduce(into: [(name: String, value: String?)]()) { (result, pair) in
+                if let value = pair.value as? String {
+                    result.append((name: "[\(pair.key)]", value: value))
+                } else if let nested = pair.value as? [String:Any] {
+                    result.append(contentsOf: queryParameters(for: nested).map {
+                        return (name: "[\(pair.key)]\($0.name)", value: $0.value)
+                    })
+                }
+            }
+        }
+        for queryItem in queryParameters(for: LiveSessionCoordinator<R>.platformParams) {
+            let name = "_interface\(queryItem.name)"
             if !(components?.queryItems?.contains(where: { $0.name == name }) ?? false) {
-                result.append(queryItems: [
-                    .init(name: name, value: value)
-                ])
+                result.append(queryItems: [.init(name: name, value: queryItem.value)])
             }
         }
         return result
