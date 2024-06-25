@@ -271,6 +271,14 @@ struct ModifierGenerator: ParsableCommand {
             if parameter.isUIGestureRecognizerRepresentable {
                 return false
             }
+            
+            if parameter.isContextMenu {
+                return false
+            }
+            
+            if parameter.isCoordinateSpace {
+                return false
+            }
         }
         return true
     }
