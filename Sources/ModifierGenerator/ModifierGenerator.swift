@@ -267,6 +267,14 @@ struct ModifierGenerator: ParsableCommand {
             if parameter.isScrollPositionBinding {
                 return false
             }
+            
+            if parameter.isContextMenu {
+                return false
+            }
+            
+            if parameter.isCoordinateSpace {
+                return false
+            }
         }
         return true
     }

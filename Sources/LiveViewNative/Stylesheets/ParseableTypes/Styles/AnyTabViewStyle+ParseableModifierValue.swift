@@ -14,6 +14,7 @@ import LiveViewNativeStylesheet
 /// - `.automatic`
 /// - `.page`
 /// - `.verticalPage`
+/// - `.sidebarAdaptable`
 ///
 /// ### Page Style
 /// Pass an ``SwiftUI/IndexDisplayMode`` to customize this style.
@@ -39,6 +40,9 @@ enum AnyTabViewStyle: ParseableModifierValue {
     #if os(watchOS)
     case verticalPage(transitionStyle: Any?)
     #endif
+    #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
+    case sidebarAdaptable
+    #endif
     
     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -63,6 +67,9 @@ enum AnyTabViewStyle: ParseableModifierValue {
                         return Self.automatic
                     }
                 })
+                #endif
+                #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
+                ConstantAtomLiteral("sidebarAdaptable").map({ Self.sidebarAdaptable })
                 #endif
             }
         }
@@ -119,6 +126,14 @@ extension View {
         case let .verticalPage(.some(transitionStyle)):
             if #available(watchOS 10, *) {
                 self.tabViewStyle(.verticalPage(transitionStyle: transitionStyle))
+            } else {
+                self
+            }
+        #endif
+        #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
+        case .sidebarAdaptable:
+            if #available(iOS 18.0, macOS 15.0, tvOS 18.0, visionOS 2.0, *) {
+                self.tabViewStyle(.sidebarAdaptable)
             } else {
                 self
             }

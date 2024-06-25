@@ -47,4 +47,12 @@ extension FunctionParameterSyntax {
         self.type.as(MemberTypeSyntax.self)?.name.text == "Binding"
             && self.type.as(MemberTypeSyntax.self)?.genericArgumentClause?.arguments.first?.argument.as(MemberTypeSyntax.self)?.name.text == "ScrollPosition"
     }
+    
+    var isContextMenu: Bool {
+        (self.type.as(OptionalTypeSyntax.self)?.wrappedType ?? self.type).as(MemberTypeSyntax.self)?.name.text == "ContextMenu"
+    }
+    
+    var isCoordinateSpace: Bool {
+        (self.type.as(OptionalTypeSyntax.self)?.wrappedType ?? self.type).as(MemberTypeSyntax.self)?.name.text == "CoordinateSpace"
+    }
 }

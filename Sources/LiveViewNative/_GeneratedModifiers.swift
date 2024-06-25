@@ -6,6 +6,49 @@ import LiveViewNativeStylesheet
 
 @_documentation(visibility: public)
 @ParseableExpression
+struct _accentColorModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "accentColor" }
+
+    enum Value {
+        case _never
+        
+        indirect case _0(accentColor: Color.Resolvable?)
+        
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    
+    
+    init(_ accentColor: Color.Resolvable?) {
+        self.value = ._0(accentColor: accentColor)
+        
+    }
+    
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        
+        case let ._0(accentColor):
+            
+            
+            __content
+                .accentColor(accentColor?.resolve(on: element, in: context))
+            
+        
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
 struct _accessibilityActionModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "accessibilityAction" }
 
@@ -584,6 +627,9 @@ struct _animationModifier<R: RootRegistry>: ViewModifier {
         
         indirect case _0(animation: SwiftUICore.Animation?,value: AttributeReference<String>)
         
+        
+        indirect case _2(animation: SwiftUICore.Animation?)
+        
     }
 
     let value: Value
@@ -594,10 +640,19 @@ struct _animationModifier<R: RootRegistry>: ViewModifier {
 
 
 
+
+
     
     
     init(_ animation: SwiftUICore.Animation?,value: AttributeReference<String>) {
         self.value = ._0(animation: animation, value: value)
+        
+    }
+    
+    
+    
+    init(_ animation: SwiftUICore.Animation?) {
+        self.value = ._2(animation: animation)
         
     }
     
@@ -612,6 +667,14 @@ struct _animationModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .animation(animation, value: value.resolve(on: element, in: context))
+            
+        
+        
+        case let ._2(animation):
+            
+            
+            __content
+                .animation(animation)
             
         
         }
@@ -682,6 +745,49 @@ struct _aspectRatioModifier<R: RootRegistry>: ViewModifier {
 }
 @_documentation(visibility: public)
 @ParseableExpression
+struct _autocapitalizationModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "autocapitalization" }
+
+    enum Value {
+        case _never
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        indirect case _0(style: Any)
+        #endif
+    }
+
+    let value: Value
+
+    
+    
+
+
+
+
+    #if os(iOS) || os(tvOS) || os(visionOS)
+    @available(visionOS 1.0,tvOS 16.0,iOS 16.0, *)
+    init(_ style: UIKit.UITextAutocapitalizationType) {
+        self.value = ._0(style: style)
+        
+    }
+    #endif
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        case let ._0(style):
+            if #available(visionOS 1.0,tvOS 16.0,iOS 16.0, *) {
+            let style = style as! UIKit.UITextAutocapitalizationType
+            __content
+                .autocapitalization(style)
+            } else { __content }
+        #endif
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
 struct _autocorrectionDisabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "autocorrectionDisabled" }
 
@@ -731,25 +837,28 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
     enum Value {
         case _never
         
-        indirect case _0(alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)), content: ViewReference=ViewReference(value: []))
+        indirect case _0(background: InlineViewReference,alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)) )
         
         
-        indirect case _1(edges: SwiftUICore.Edge.Set = .all )
+        indirect case _1(alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)), content: ViewReference=ViewReference(value: []))
         
         
-        indirect case _2(style: AnyShapeStyle.Resolvable,edges: SwiftUICore.Edge.Set = .all )
+        indirect case _2(edges: SwiftUICore.Edge.Set = .all )
         
         
-        indirect case _3(shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
+        indirect case _3(style: AnyShapeStyle.Resolvable,edges: SwiftUICore.Edge.Set = .all )
         
         
-        indirect case _4(style: AnyShapeStyle.Resolvable,shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
+        indirect case _4(shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
         
         
-        indirect case _5(shape: AnyInsettableShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
+        indirect case _5(style: AnyShapeStyle.Resolvable,shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
         
         
-        indirect case _6(style: AnyShapeStyle.Resolvable,shape: AnyInsettableShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
+        indirect case _6(shape: AnyInsettableShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
+        
+        
+        indirect case _7(style: AnyShapeStyle.Resolvable,shape: AnyInsettableShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
         
     }
 
@@ -773,52 +882,61 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
 
 
 
+
+
+    
+    
+    init(_ background: InlineViewReference,alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)) ) {
+        self.value = ._0(background: background, alignment: alignment)
+        
+    }
+    
     
     
     init(alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)), content: ViewReference=ViewReference(value: [])) {
-        self.value = ._0(alignment: alignment, content: content)
+        self.value = ._1(alignment: alignment, content: content)
         
     }
     
     
     
     init(ignoresSafeAreaEdges edges: SwiftUICore.Edge.Set = .all ) {
-        self.value = ._1(edges: edges)
+        self.value = ._2(edges: edges)
         
     }
     
     
     
     init(_ style: AnyShapeStyle.Resolvable,ignoresSafeAreaEdges edges: SwiftUICore.Edge.Set = .all ) {
-        self.value = ._2(style: style, edges: edges)
+        self.value = ._3(style: style, edges: edges)
         
     }
     
     
     
     init(in shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() ) {
-        self.value = ._3(shape: shape, fillStyle: fillStyle)
+        self.value = ._4(shape: shape, fillStyle: fillStyle)
         
     }
     
     
     
     init(_ style: AnyShapeStyle.Resolvable,in shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() ) {
-        self.value = ._4(style: style, shape: shape, fillStyle: fillStyle)
+        self.value = ._5(style: style, shape: shape, fillStyle: fillStyle)
         
     }
     
     
     
     init(in shape: AnyInsettableShape,fillStyle: SwiftUICore.FillStyle = FillStyle() ) {
-        self.value = ._5(shape: shape, fillStyle: fillStyle)
+        self.value = ._6(shape: shape, fillStyle: fillStyle)
         
     }
     
     
     
     init(_ style: AnyShapeStyle.Resolvable,in shape: AnyInsettableShape,fillStyle: SwiftUICore.FillStyle = FillStyle() ) {
-        self.value = ._6(style: style, shape: shape, fillStyle: fillStyle)
+        self.value = ._7(style: style, shape: shape, fillStyle: fillStyle)
         
     }
     
@@ -828,7 +946,15 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
         case ._never:
             fatalError("unreachable")
         
-        case let ._0(alignment, content):
+        case let ._0(background, alignment):
+            
+            
+            __content
+                .background(background.resolve(on: element, in: context), alignment: alignment.resolve(on: element, in: context))
+            
+        
+        
+        case let ._1(alignment, content):
             
             
             __content
@@ -836,7 +962,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._1(edges):
+        case let ._2(edges):
             
             
             __content
@@ -844,7 +970,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._2(style, edges):
+        case let ._3(style, edges):
             
             
             __content
@@ -852,7 +978,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._3(shape, fillStyle):
+        case let ._4(shape, fillStyle):
             
             
             __content
@@ -860,7 +986,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._4(style, shape, fillStyle):
+        case let ._5(style, shape, fillStyle):
             
             
             __content
@@ -868,7 +994,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._5(shape, fillStyle):
+        case let ._6(shape, fillStyle):
             
             
             __content
@@ -876,7 +1002,7 @@ struct _backgroundModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._6(style, shape, fillStyle):
+        case let ._7(style, shape, fillStyle):
             
             
             __content
@@ -965,28 +1091,28 @@ struct _badgeModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 15.0,macOS 12.0, *)
+    @available(iOS 15.0,macOS 12.0,visionOS 1.0, *)
     init(_ count: AttributeReference<Swift.Int>) {
         self.value = ._0(count: count)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 12.0,iOS 15.0,visionOS 1.0, *)
+    @available(iOS 15.0,macOS 12.0,visionOS 1.0, *)
     init(_ label: TextReference?) {
         self.value = ._1(label: label)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 15.0,macOS 12.0, *)
+    @available(iOS 15.0,visionOS 1.0,macOS 12.0, *)
     init(_ key: SwiftUICore.LocalizedStringKey?) {
         self.value = ._3(key: key)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 12.0,iOS 15.0,visionOS 1.0, *)
+    @available(visionOS 1.0,iOS 15.0,macOS 12.0, *)
     init(_ label: AttributeReference<String>) {
         self.value = ._5(label: label)
         
@@ -999,7 +1125,7 @@ struct _badgeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(count):
-            if #available(visionOS 1.0,iOS 15.0,macOS 12.0, *) {
+            if #available(iOS 15.0,macOS 12.0,visionOS 1.0, *) {
             let count = count as! AttributeReference<Swift.Int>
             __content
                 .badge(count.resolve(on: element, in: context))
@@ -1007,7 +1133,7 @@ struct _badgeModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._1(label):
-            if #available(macOS 12.0,iOS 15.0,visionOS 1.0, *) {
+            if #available(iOS 15.0,macOS 12.0,visionOS 1.0, *) {
             let label = label as? TextReference
             __content
                 .badge(label?.resolve(on: element, in: context))
@@ -1015,7 +1141,7 @@ struct _badgeModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._3(key):
-            if #available(visionOS 1.0,iOS 15.0,macOS 12.0, *) {
+            if #available(iOS 15.0,visionOS 1.0,macOS 12.0, *) {
             let key = key as? SwiftUICore.LocalizedStringKey
             __content
                 .badge(key)
@@ -1023,7 +1149,7 @@ struct _badgeModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._5(label):
-            if #available(macOS 12.0,iOS 15.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,iOS 15.0,macOS 12.0, *) {
             let label = label as! AttributeReference<String>
             __content
                 .badge(label.resolve(on: element, in: context))
@@ -1484,6 +1610,49 @@ struct _colorMultiplyModifier<R: RootRegistry>: ViewModifier {
 }
 @_documentation(visibility: public)
 @ParseableExpression
+struct _colorSchemeModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "colorScheme" }
+
+    enum Value {
+        case _never
+        
+        indirect case _0(colorScheme: AttributeReference<SwiftUICore.ColorScheme>)
+        
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    
+    
+    init(_ colorScheme: AttributeReference<SwiftUICore.ColorScheme>) {
+        self.value = ._0(colorScheme: colorScheme)
+        
+    }
+    
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        
+        case let ._0(colorScheme):
+            
+            
+            __content
+                .colorScheme(colorScheme.resolve(on: element, in: context))
+            
+        
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
 struct _compositingGroupModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "compositingGroup" }
 
@@ -1694,14 +1863,14 @@ struct _containerRelativeFrameModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(watchOS 10.0,visionOS 1.0,macOS 14.0,iOS 17.0,tvOS 17.0, *)
+    @available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0,visionOS 1.0, *)
     init(_ axes: SwiftUICore.Axis.Set,alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)) ) {
         self.value = ._0(axes: axes, alignment: alignment)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(watchOS 10.0,visionOS 1.0,macOS 14.0,iOS 17.0,tvOS 17.0, *)
+    @available(tvOS 17.0,visionOS 1.0,watchOS 10.0,iOS 17.0,macOS 14.0, *)
     init(_ axes: SwiftUICore.Axis.Set,count: AttributeReference<Swift.Int>,span: AttributeReference<Swift.Int> = .init(storage: .constant(1)), spacing: AttributeReference<CoreFoundation.CGFloat>,alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)) ) {
         self.value = ._1(axes: axes, count: count, span: span, spacing: spacing, alignment: alignment)
         
@@ -1714,7 +1883,7 @@ struct _containerRelativeFrameModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(axes, alignment):
-            if #available(watchOS 10.0,visionOS 1.0,macOS 14.0,iOS 17.0,tvOS 17.0, *) {
+            if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0,visionOS 1.0, *) {
             let axes = axes as! SwiftUICore.Axis.Set
 let alignment = alignment as! AttributeReference<SwiftUICore.Alignment>
             __content
@@ -1723,7 +1892,7 @@ let alignment = alignment as! AttributeReference<SwiftUICore.Alignment>
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._1(axes, count, span, spacing, alignment):
-            if #available(watchOS 10.0,visionOS 1.0,macOS 14.0,iOS 17.0,tvOS 17.0, *) {
+            if #available(tvOS 17.0,visionOS 1.0,watchOS 10.0,iOS 17.0,macOS 14.0, *) {
             let axes = axes as! SwiftUICore.Axis.Set
 let count = count as! AttributeReference<Swift.Int>
 let span = span as! AttributeReference<Swift.Int>
@@ -1918,7 +2087,7 @@ struct _contextMenuModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
-    @available(iOS 16.0,tvOS 16.0,macOS 13.0,visionOS 1.0, *)
+    @available(tvOS 16.0,macOS 13.0,visionOS 1.0,iOS 16.0, *)
     init(menuItems: ViewReference=ViewReference(value: []),preview: ViewReference=ViewReference(value: [])) {
         self.value = ._1(menuItems: menuItems, preview: preview)
         
@@ -1939,7 +2108,7 @@ struct _contextMenuModifier<R: RootRegistry>: ViewModifier {
         
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
         case let ._1(menuItems, preview):
-            if #available(iOS 16.0,tvOS 16.0,macOS 13.0,visionOS 1.0, *) {
+            if #available(tvOS 16.0,macOS 13.0,visionOS 1.0,iOS 16.0, *) {
             let menuItems = menuItems as! ViewReference
 let preview = preview as! ViewReference
             __content
@@ -2013,7 +2182,7 @@ struct _controlGroupStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
-    @available(tvOS 17.0,iOS 15.0,macOS 12.0,visionOS 1.0, *)
+    @available(macOS 12.0,tvOS 17.0,iOS 15.0,visionOS 1.0, *)
     init(_ style: AnyControlGroupStyle) {
         self.value = ._0(style: style)
         
@@ -2026,7 +2195,7 @@ struct _controlGroupStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
         case let ._0(style):
-            if #available(tvOS 17.0,iOS 15.0,macOS 12.0,visionOS 1.0, *) {
+            if #available(macOS 12.0,tvOS 17.0,iOS 15.0,visionOS 1.0, *) {
             let style = style as! AnyControlGroupStyle
             __content
                 .controlGroupStyle(style)
@@ -2056,7 +2225,7 @@ struct _controlSizeModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-    @available(iOS 15.0,watchOS 9.0,macOS 10.15,visionOS 1.0, *)
+    @available(watchOS 9.0,iOS 15.0,visionOS 1.0,macOS 10.15, *)
     init(_ controlSize: SwiftUI.ControlSize) {
         self.value = ._0(controlSize: controlSize)
         
@@ -2069,7 +2238,7 @@ struct _controlSizeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
         case let ._0(controlSize):
-            if #available(iOS 15.0,watchOS 9.0,macOS 10.15,visionOS 1.0, *) {
+            if #available(watchOS 9.0,iOS 15.0,visionOS 1.0,macOS 10.15, *) {
             let controlSize = controlSize as! SwiftUI.ControlSize
             __content
                 .controlSize(controlSize)
@@ -2085,23 +2254,35 @@ struct _coordinateSpaceModifier<R: RootRegistry>: ViewModifier {
 
     enum Value {
         case _never
+        
+        indirect case _0(name: AttributeReference<String>)
+        
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-        indirect case _0(name: Any)
+        indirect case _1(name: Any)
         #endif
     }
 
     let value: Value
 
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+
+
     
     
-
-
-
-
-    #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *)
-    init(_ name: SwiftUICore.NamedCoordinateSpace) {
+    init(name: AttributeReference<String>) {
         self.value = ._0(name: name)
+        
+    }
+    
+    #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
+    @available(macOS 14.0,visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
+    init(_ name: SwiftUICore.NamedCoordinateSpace) {
+        self.value = ._1(name: name)
         
     }
     #endif
@@ -2110,14 +2291,65 @@ struct _coordinateSpaceModifier<R: RootRegistry>: ViewModifier {
         switch value {
         case ._never:
             fatalError("unreachable")
-        #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        
         case let ._0(name):
-            if #available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+            
+            
+            __content
+                .coordinateSpace(name: name.resolve(on: element, in: context))
+            
+        
+        #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        case let ._1(name):
+            if #available(macOS 14.0,visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
             let name = name as! SwiftUICore.NamedCoordinateSpace
             __content
                 .coordinateSpace(name)
             } else { __content }
         #endif
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
+struct _cornerRadiusModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "cornerRadius" }
+
+    enum Value {
+        case _never
+        
+        indirect case _0(radius: AttributeReference<CoreFoundation.CGFloat>,antialiased: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) )
+        
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    
+    
+    init(_ radius: AttributeReference<CoreFoundation.CGFloat>,antialiased: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
+        self.value = ._0(radius: radius, antialiased: antialiased)
+        
+    }
+    
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        
+        case let ._0(radius, antialiased):
+            
+            
+            __content
+                .cornerRadius(radius.resolve(on: element, in: context), antialiased: antialiased.resolve(on: element, in: context))
+            
+        
         }
     }
 }
@@ -2142,7 +2374,7 @@ struct _datePickerStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-    @available(iOS 13.0,watchOS 10.0,macOS 10.15,visionOS 1.0, *)
+    @available(iOS 13.0,watchOS 10.0,visionOS 1.0,macOS 10.15, *)
     init(_ style: AnyDatePickerStyle) {
         self.value = ._0(style: style)
         
@@ -2155,7 +2387,7 @@ struct _datePickerStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
         case let ._0(style):
-            if #available(iOS 13.0,watchOS 10.0,macOS 10.15,visionOS 1.0, *) {
+            if #available(iOS 13.0,watchOS 10.0,visionOS 1.0,macOS 10.15, *) {
             let style = style as! AnyDatePickerStyle
             __content
                 .datePickerStyle(style)
@@ -2233,14 +2465,14 @@ struct _defaultScrollAnchorModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *)
+    @available(visionOS 1.0,iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *)
     init(_ anchor: AttributeReference<SwiftUICore.UnitPoint?>?) {
         self.value = ._0(anchor: anchor)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 2.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *)
+    @available(macOS 15.0,tvOS 18.0,visionOS 2.0,watchOS 11.0,iOS 18.0, *)
     init(_ anchor: AttributeReference<SwiftUICore.UnitPoint?>?,for role: SwiftUI.ScrollAnchorRole) {
         self.value = ._2(anchor: anchor, role: role)
         
@@ -2253,7 +2485,7 @@ struct _defaultScrollAnchorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(anchor):
-            if #available(visionOS 1.0,tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(visionOS 1.0,iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0, *) {
             let anchor = anchor as? AttributeReference<SwiftUICore.UnitPoint?>
             __content
                 .defaultScrollAnchor(anchor?.resolve(on: element, in: context))
@@ -2261,7 +2493,7 @@ struct _defaultScrollAnchorModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._2(anchor, role):
-            if #available(visionOS 2.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *) {
+            if #available(macOS 15.0,tvOS 18.0,visionOS 2.0,watchOS 11.0,iOS 18.0, *) {
             let anchor = anchor as? AttributeReference<SwiftUICore.UnitPoint?>
 let role = role as! SwiftUI.ScrollAnchorRole
             __content
@@ -2292,7 +2524,7 @@ struct _defaultWheelPickerItemHeightModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,watchOS 6.0, *)
+    @available(watchOS 6.0,visionOS 1.0, *)
     init(_ height: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._0(height: height)
         
@@ -2305,7 +2537,7 @@ struct _defaultWheelPickerItemHeightModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(visionOS) || os(watchOS)
         case let ._0(height):
-            if #available(visionOS 1.0,watchOS 6.0, *) {
+            if #available(watchOS 6.0,visionOS 1.0, *) {
             let height = height as! AttributeReference<CoreFoundation.CGFloat>
             __content
                 .defaultWheelPickerItemHeight(height.resolve(on: element, in: context))
@@ -2436,28 +2668,28 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *)
+    @available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *)
     init(_ titleKey: SwiftUICore.LocalizedStringKey,isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._0(titleKey: titleKey)
         self.__0_isSuppressed = isSuppressed
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *)
+    @available(tvOS 17.0,watchOS 10.0,iOS 17.0,visionOS 1.0,macOS 14.0, *)
     init(_ title: AttributeReference<String>,isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._1(title: title)
         self.__1_isSuppressed = isSuppressed
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *)
+    @available(tvOS 17.0,visionOS 1.0,watchOS 10.0,iOS 17.0,macOS 14.0, *)
     init(_ label: TextReference,isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._2(label: label)
         self.__2_isSuppressed = isSuppressed
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *)
+    @available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *)
     init(isSuppressed: ChangeTracked<Swift.Bool>) {
         self.value = ._3
         self.__3_isSuppressed = isSuppressed
@@ -2470,7 +2702,7 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(titleKey):
-            if #available(visionOS 1.0,iOS 17.0,watchOS 10.0,macOS 14.0,tvOS 17.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *) {
             let titleKey = titleKey as! SwiftUICore.LocalizedStringKey
             __content
                 .dialogSuppressionToggle(titleKey, isSuppressed: __0_isSuppressed.projectedValue)
@@ -2478,7 +2710,7 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._1(title):
-            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *) {
+            if #available(tvOS 17.0,watchOS 10.0,iOS 17.0,visionOS 1.0,macOS 14.0, *) {
             let title = title as! AttributeReference<String>
             __content
                 .dialogSuppressionToggle(title.resolve(on: element, in: context), isSuppressed: __1_isSuppressed.projectedValue)
@@ -2486,7 +2718,7 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._2(label):
-            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *) {
+            if #available(tvOS 17.0,visionOS 1.0,watchOS 10.0,iOS 17.0,macOS 14.0, *) {
             let label = label as! TextReference
             __content
                 .dialogSuppressionToggle(label.resolve(on: element, in: context), isSuppressed: __2_isSuppressed.projectedValue)
@@ -2494,7 +2726,7 @@ struct _dialogSuppressionToggleModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case ._3:
-            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *) {
             
             __content
                 .dialogSuppressionToggle(isSuppressed: __3_isSuppressed.projectedValue)
@@ -2568,6 +2800,49 @@ struct _digitalCrownAccessoryModifier<R: RootRegistry>: ViewModifier {
 }
 @_documentation(visibility: public)
 @ParseableExpression
+struct _disableAutocorrectionModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "disableAutocorrection" }
+
+    enum Value {
+        case _never
+        
+        indirect case _0(disable: AttributeReference<Swift.Bool?>?)
+        
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    
+    
+    init(_ disable: AttributeReference<Swift.Bool?>?) {
+        self.value = ._0(disable: disable)
+        
+    }
+    
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        
+        case let ._0(disable):
+            
+            
+            __content
+                .disableAutocorrection(disable?.resolve(on: element, in: context))
+            
+        
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
 struct _disabledModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "disabled" }
 
@@ -2606,6 +2881,49 @@ struct _disabledModifier<R: RootRegistry>: ViewModifier {
                 .disabled(disabled.resolve(on: element, in: context))
             
         
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
+struct _disclosureGroupStyleModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "disclosureGroupStyle" }
+
+    enum Value {
+        case _never
+        #if os(iOS) || os(macOS) || os(visionOS)
+        indirect case _0(style: Any)
+        #endif
+    }
+
+    let value: Value
+
+    
+    
+
+
+
+
+    #if os(iOS) || os(macOS) || os(visionOS)
+    @available(iOS 16.0,macOS 13.0,visionOS 1.0, *)
+    init(_ style: AnyDisclosureGroupStyle) {
+        self.value = ._0(style: style)
+        
+    }
+    #endif
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        #if os(iOS) || os(macOS) || os(visionOS)
+        case let ._0(style):
+            if #available(iOS 16.0,macOS 13.0,visionOS 1.0, *) {
+            let style = style as! AnyDisclosureGroupStyle
+            __content
+                .disclosureGroupStyle(style)
+            } else { __content }
+        #endif
         }
     }
 }
@@ -2875,6 +3193,49 @@ struct _dynamicTypeSizeModifier<R: RootRegistry>: ViewModifier {
 }
 @_documentation(visibility: public)
 @ParseableExpression
+struct _edgesIgnoringSafeAreaModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "edgesIgnoringSafeArea" }
+
+    enum Value {
+        case _never
+        
+        indirect case _0(edges: SwiftUICore.Edge.Set)
+        
+    }
+
+    let value: Value
+
+    
+    
+
+
+
+
+    
+    
+    init(_ edges: SwiftUICore.Edge.Set) {
+        self.value = ._0(edges: edges)
+        
+    }
+    
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        
+        case let ._0(edges):
+            
+            
+            __content
+                .edgesIgnoringSafeArea(edges)
+            
+        
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
 struct _fileDialogCustomizationIDModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "fileDialogCustomizationID" }
 
@@ -2894,7 +3255,7 @@ struct _fileDialogCustomizationIDModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 14.0,iOS 17.0,visionOS 1.0, *)
+    @available(visionOS 1.0,iOS 17.0,macOS 14.0, *)
     init(_ id: AttributeReference<Swift.String>) {
         self.value = ._0(id: id)
         
@@ -2907,7 +3268,7 @@ struct _fileDialogCustomizationIDModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(id):
-            if #available(macOS 14.0,iOS 17.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,iOS 17.0,macOS 14.0, *) {
             let id = id as! AttributeReference<Swift.String>
             __content
                 .fileDialogCustomizationID(id.resolve(on: element, in: context))
@@ -2937,7 +3298,7 @@ struct _fileDialogImportsUnresolvedAliasesModifier<R: RootRegistry>: ViewModifie
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 14.0,iOS 17.0,visionOS 1.0, *)
+    @available(iOS 17.0,macOS 14.0,visionOS 1.0, *)
     init(_ imports: AttributeReference<Swift.Bool>) {
         self.value = ._0(imports: imports)
         
@@ -2950,7 +3311,7 @@ struct _fileDialogImportsUnresolvedAliasesModifier<R: RootRegistry>: ViewModifie
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(imports):
-            if #available(macOS 14.0,iOS 17.0,visionOS 1.0, *) {
+            if #available(iOS 17.0,macOS 14.0,visionOS 1.0, *) {
             let imports = imports as! AttributeReference<Swift.Bool>
             __content
                 .fileDialogImportsUnresolvedAliases(imports.resolve(on: element, in: context))
@@ -2980,7 +3341,7 @@ struct _findDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(visionOS)
-    @available(iOS 16.0,visionOS 1.0, *)
+    @available(visionOS 1.0,iOS 16.0, *)
     init(_ isDisabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isDisabled: isDisabled)
         
@@ -2993,7 +3354,7 @@ struct _findDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(visionOS)
         case let ._0(isDisabled):
-            if #available(iOS 16.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,iOS 16.0, *) {
             let isDisabled = isDisabled as! AttributeReference<Swift.Bool>
             __content
                 .findDisabled(isDisabled.resolve(on: element, in: context))
@@ -3023,7 +3384,7 @@ struct _findNavigatorModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(visionOS)
-    @available(iOS 16.0,visionOS 1.0, *)
+    @available(visionOS 1.0,iOS 16.0, *)
     init(isPresented: ChangeTracked<Swift.Bool>) {
         self.value = ._0
         self.__0_isPresented = isPresented
@@ -3036,7 +3397,7 @@ struct _findNavigatorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(visionOS)
         case ._0:
-            if #available(iOS 16.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,iOS 16.0, *) {
             
             __content
                 .findNavigator(isPresented: __0_isPresented.projectedValue)
@@ -3172,7 +3533,7 @@ struct _focusEffectDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0,iOS 17.0, *)
+    @available(iOS 17.0,watchOS 10.0,visionOS 1.0,macOS 14.0,tvOS 17.0, *)
     init(_ disabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(disabled: disabled)
         
@@ -3185,7 +3546,7 @@ struct _focusEffectDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(disabled):
-            if #available(macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0,iOS 17.0, *) {
+            if #available(iOS 17.0,watchOS 10.0,visionOS 1.0,macOS 14.0,tvOS 17.0, *) {
             let disabled = disabled as! AttributeReference<Swift.Bool>
             __content
                 .focusEffectDisabled(disabled.resolve(on: element, in: context))
@@ -3215,7 +3576,7 @@ struct _focusSectionModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(macOS) || os(tvOS)
-    @available(macOS 13.0,tvOS 15.0, *)
+    @available(tvOS 15.0,macOS 13.0, *)
     init() {
         self.value = ._0
         
@@ -3228,7 +3589,7 @@ struct _focusSectionModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(macOS) || os(tvOS)
         case ._0:
-            if #available(macOS 13.0,tvOS 15.0, *) {
+            if #available(tvOS 15.0,macOS 13.0, *) {
             
             __content
                 .focusSection()
@@ -3250,6 +3611,9 @@ struct _focusableModifier<R: RootRegistry>: ViewModifier {
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         indirect case _1(isFocusable: Any, interactions: Any)
         #endif
+        #if os(macOS) || os(tvOS) || os(watchOS)
+        indirect case _2(isFocusable: Any)
+        #endif
     }
 
     let value: Value
@@ -3262,18 +3626,27 @@ struct _focusableModifier<R: RootRegistry>: ViewModifier {
 
 
 
+@Event private var _2_onFocusChange__1: Event.EventHandler
+
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 12.0,tvOS 15.0,watchOS 8.0,visionOS 1.0,iOS 17.0, *)
+    @available(iOS 17.0,watchOS 8.0,visionOS 1.0,macOS 12.0,tvOS 15.0, *)
     init(_ isFocusable: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isFocusable: isFocusable)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0,iOS 17.0, *)
+    @available(iOS 17.0,watchOS 10.0,visionOS 1.0,macOS 14.0,tvOS 17.0, *)
     init(_ isFocusable: AttributeReference<Swift.Bool> = .init(storage: .constant(true)), interactions: SwiftUI.FocusInteractions) {
         self.value = ._1(isFocusable: isFocusable, interactions: interactions)
         
+    }
+    #endif
+    #if os(macOS) || os(tvOS) || os(watchOS)
+    @available(watchOS 9.0,tvOS 16.0,macOS 13.0, *)
+    init(_ isFocusable: AttributeReference<Swift.Bool> = .init(storage: .constant(true)), onFocusChange onFocusChange__1: Event ) {
+        self.value = ._2(isFocusable: isFocusable)
+        self.__2_onFocusChange__1 = onFocusChange__1
     }
     #endif
 
@@ -3283,7 +3656,7 @@ struct _focusableModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(isFocusable):
-            if #available(macOS 12.0,tvOS 15.0,watchOS 8.0,visionOS 1.0,iOS 17.0, *) {
+            if #available(iOS 17.0,watchOS 8.0,visionOS 1.0,macOS 12.0,tvOS 15.0, *) {
             let isFocusable = isFocusable as! AttributeReference<Swift.Bool>
             __content
                 .focusable(isFocusable.resolve(on: element, in: context))
@@ -3291,13 +3664,64 @@ struct _focusableModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._1(isFocusable, interactions):
-            if #available(macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0,iOS 17.0, *) {
+            if #available(iOS 17.0,watchOS 10.0,visionOS 1.0,macOS 14.0,tvOS 17.0, *) {
             let isFocusable = isFocusable as! AttributeReference<Swift.Bool>
 let interactions = interactions as! SwiftUI.FocusInteractions
             __content
                 .focusable(isFocusable.resolve(on: element, in: context), interactions: interactions)
             } else { __content }
         #endif
+        #if os(macOS) || os(tvOS) || os(watchOS)
+        case let ._2(isFocusable):
+            if #available(watchOS 9.0,tvOS 16.0,macOS 13.0, *) {
+            let isFocusable = isFocusable as! AttributeReference<Swift.Bool>
+            __content
+                .focusable(isFocusable.resolve(on: element, in: context), onFocusChange: { __2_onFocusChange__1.wrappedValue(value: $0) })
+            } else { __content }
+        #endif
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
+struct _foregroundColorModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "foregroundColor" }
+
+    enum Value {
+        case _never
+        
+        indirect case _0(color: Color.Resolvable?)
+        
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    
+    
+    init(_ color: Color.Resolvable?) {
+        self.value = ._0(color: color)
+        
+    }
+    
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        
+        case let ._0(color):
+            
+            
+            __content
+                .foregroundColor(color?.resolve(on: element, in: context))
+            
+        
         }
     }
 }
@@ -3492,7 +3916,7 @@ struct _fullScreenCoverModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_onDismiss__0: Event.EventHandler
 
     #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(tvOS 14.0,iOS 14.0,visionOS 1.0,watchOS 7.0, *)
+    @available(tvOS 14.0,visionOS 1.0,watchOS 7.0,iOS 14.0, *)
     init(isPresented: ChangeTracked<Swift.Bool>,onDismiss onDismiss__0: Event=Event(), content: ViewReference=ViewReference(value: [])) {
         self.value = ._0(content: content)
         self.__0_isPresented = isPresented
@@ -3506,7 +3930,7 @@ self.__0_onDismiss__0 = onDismiss__0
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(content):
-            if #available(tvOS 14.0,iOS 14.0,visionOS 1.0,watchOS 7.0, *) {
+            if #available(tvOS 14.0,visionOS 1.0,watchOS 7.0,iOS 14.0, *) {
             let content = content as! ViewReference
             __content
                 .fullScreenCover(isPresented: __0_isPresented.projectedValue, onDismiss: { __0_onDismiss__0.wrappedValue() }, content: { content.resolve(on: element, in: context) })
@@ -3536,7 +3960,7 @@ struct _gaugeStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-    @available(macOS 13.0,visionOS 1.0,iOS 16.0,watchOS 7.0, *)
+    @available(macOS 13.0,iOS 16.0,watchOS 7.0,visionOS 1.0, *)
     init(_ style: AnyGaugeStyle) {
         self.value = ._0(style: style)
         
@@ -3549,7 +3973,7 @@ struct _gaugeStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
         case let ._0(style):
-            if #available(macOS 13.0,visionOS 1.0,iOS 16.0,watchOS 7.0, *) {
+            if #available(macOS 13.0,iOS 16.0,watchOS 7.0,visionOS 1.0, *) {
             let style = style as! AnyGaugeStyle
             __content
                 .gaugeStyle(style)
@@ -3579,7 +4003,7 @@ struct _geometryGroupModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0,iOS 17.0, *)
+    @available(visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *)
     init() {
         self.value = ._0
         
@@ -3592,7 +4016,7 @@ struct _geometryGroupModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case ._0:
-            if #available(macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0,iOS 17.0, *) {
+            if #available(visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *) {
             
             __content
                 .geometryGroup()
@@ -3658,7 +4082,7 @@ struct _gestureModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 18.0,macOS 15.0,tvOS 18.0,visionOS 2.0,watchOS 11.0, *)
+    @available(visionOS 2.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *)
     init(_ gesture: AnyGesture<Any>,name: AttributeReference<Swift.String>,isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._3(gesture: gesture, name: name, isEnabled: isEnabled)
         
@@ -3695,7 +4119,7 @@ struct _gestureModifier<R: RootRegistry>: ViewModifier {
         
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._3(gesture, name, isEnabled):
-            if #available(iOS 18.0,macOS 15.0,tvOS 18.0,visionOS 2.0,watchOS 11.0, *) {
+            if #available(visionOS 2.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *) {
             let gesture = gesture as! AnyGesture<Any>
 let name = name as! AttributeReference<Swift.String>
 let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
@@ -4006,7 +4430,7 @@ struct _groupBoxStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 11.0,iOS 14.0,visionOS 1.0, *)
+    @available(visionOS 1.0,iOS 14.0,macOS 11.0, *)
     init(_ style: AnyGroupBoxStyle) {
         self.value = ._0(style: style)
         
@@ -4019,7 +4443,7 @@ struct _groupBoxStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(style):
-            if #available(macOS 11.0,iOS 14.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,iOS 14.0,macOS 11.0, *) {
             let style = style as! AnyGroupBoxStyle
             __content
                 .groupBoxStyle(style)
@@ -4049,7 +4473,7 @@ struct _handGestureShortcutModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(macOS 15.0,tvOS 18.0,iOS 18.0,watchOS 11.0, *)
+    @available(iOS 18.0,macOS 15.0,tvOS 18.0,watchOS 11.0, *)
     init(_ shortcut: SwiftUI.HandGestureShortcut,isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(shortcut: shortcut, isEnabled: isEnabled)
         
@@ -4062,7 +4486,7 @@ struct _handGestureShortcutModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(shortcut, isEnabled):
-            if #available(macOS 15.0,tvOS 18.0,iOS 18.0,watchOS 11.0, *) {
+            if #available(iOS 18.0,macOS 15.0,tvOS 18.0,watchOS 11.0, *) {
             let shortcut = shortcut as! SwiftUI.HandGestureShortcut
 let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
             __content
@@ -4329,7 +4753,7 @@ struct _highPriorityGestureModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 18.0,macOS 15.0,tvOS 18.0,visionOS 2.0,watchOS 11.0, *)
+    @available(visionOS 2.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *)
     init(_ gesture: AnyGesture<Any>,name: AttributeReference<Swift.String>,isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._2(gesture: gesture, name: name, isEnabled: isEnabled)
         
@@ -4358,7 +4782,7 @@ struct _highPriorityGestureModifier<R: RootRegistry>: ViewModifier {
         
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._2(gesture, name, isEnabled):
-            if #available(iOS 18.0,macOS 15.0,tvOS 18.0,visionOS 2.0,watchOS 11.0, *) {
+            if #available(visionOS 2.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *) {
             let gesture = gesture as! AnyGesture<Any>
 let name = name as! AttributeReference<Swift.String>
 let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
@@ -4438,14 +4862,14 @@ struct _hoverEffectModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(tvOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 13.4,tvOS 16.0, *)
+    @available(iOS 13.4,visionOS 1.0,tvOS 16.0, *)
     init(_ effect: SwiftUI.HoverEffect = .automatic ) {
         self.value = ._0(effect: effect)
         
     }
     #endif
     #if os(iOS) || os(tvOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 17.0,tvOS 17.0, *)
+    @available(iOS 17.0,visionOS 1.0,tvOS 17.0, *)
     init(_ effect: SwiftUI.HoverEffect = .automatic, isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._1(effect: effect, isEnabled: isEnabled)
         
@@ -4458,7 +4882,7 @@ struct _hoverEffectModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS)
         case let ._0(effect):
-            if #available(visionOS 1.0,iOS 13.4,tvOS 16.0, *) {
+            if #available(iOS 13.4,visionOS 1.0,tvOS 16.0, *) {
             let effect = effect as! SwiftUI.HoverEffect 
             __content
                 .hoverEffect(effect)
@@ -4466,7 +4890,7 @@ struct _hoverEffectModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(tvOS) || os(visionOS)
         case let ._1(effect, isEnabled):
-            if #available(visionOS 1.0,iOS 17.0,tvOS 17.0, *) {
+            if #available(iOS 17.0,visionOS 1.0,tvOS 17.0, *) {
             let effect = effect as! SwiftUI.HoverEffect 
 let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
             __content
@@ -4497,7 +4921,7 @@ struct _hoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(tvOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 17.0,tvOS 17.0, *)
+    @available(iOS 17.0,tvOS 17.0,visionOS 1.0, *)
     init(_ disabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(disabled: disabled)
         
@@ -4510,7 +4934,7 @@ struct _hoverEffectDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS)
         case let ._0(disabled):
-            if #available(visionOS 1.0,iOS 17.0,tvOS 17.0, *) {
+            if #available(iOS 17.0,tvOS 17.0,visionOS 1.0, *) {
             let disabled = disabled as! AttributeReference<Swift.Bool>
             __content
                 .hoverEffectDisabled(disabled.resolve(on: element, in: context))
@@ -4797,7 +5221,7 @@ struct _indexViewStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(tvOS 14.0,visionOS 1.0,watchOS 8.0,iOS 14.0, *)
+    @available(visionOS 1.0,tvOS 14.0,iOS 14.0,watchOS 8.0, *)
     init(_ style: AnyIndexViewStyle) {
         self.value = ._0(style: style)
         
@@ -4810,7 +5234,7 @@ struct _indexViewStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(style):
-            if #available(tvOS 14.0,visionOS 1.0,watchOS 8.0,iOS 14.0, *) {
+            if #available(visionOS 1.0,tvOS 14.0,iOS 14.0,watchOS 8.0, *) {
             let style = style as! AnyIndexViewStyle
             __content
                 .indexViewStyle(style)
@@ -5034,7 +5458,7 @@ struct _invalidatableContentModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0,visionOS 1.0, *)
+    @available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *)
     init(_ invalidatable: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(invalidatable: invalidatable)
         
@@ -5047,7 +5471,7 @@ struct _invalidatableContentModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(invalidatable):
-            if #available(iOS 17.0,tvOS 17.0,macOS 14.0,watchOS 10.0,visionOS 1.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *) {
             let invalidatable = invalidatable as! AttributeReference<Swift.Bool>
             __content
                 .invalidatableContent(invalidatable.resolve(on: element, in: context))
@@ -5092,28 +5516,28 @@ struct _keyboardShortcutModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 11.0,iOS 14.0,visionOS 1.0, *)
+    @available(iOS 14.0,macOS 11.0,visionOS 1.0, *)
     init(_ key: SwiftUI.KeyEquivalent,modifiers: SwiftUICore.EventModifiers = .command ) {
         self.value = ._0(key: key, modifiers: modifiers)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 11.0,iOS 14.0,visionOS 1.0, *)
+    @available(iOS 14.0,visionOS 1.0,macOS 11.0, *)
     init(_ shortcut: SwiftUI.KeyboardShortcut) {
         self.value = ._1(shortcut: shortcut)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 12.3,iOS 15.4,visionOS 1.0, *)
+    @available(iOS 15.4,visionOS 1.0,macOS 12.3, *)
     init(_ shortcut: SwiftUI.KeyboardShortcut?) {
         self.value = ._2(shortcut: shortcut)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 12.0,iOS 15.0,visionOS 1.0, *)
+    @available(iOS 15.0,visionOS 1.0,macOS 12.0, *)
     init(_ key: SwiftUI.KeyEquivalent,modifiers: SwiftUICore.EventModifiers = .command, localization: SwiftUI.KeyboardShortcut.Localization) {
         self.value = ._4(key: key, modifiers: modifiers, localization: localization)
         
@@ -5126,7 +5550,7 @@ struct _keyboardShortcutModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(key, modifiers):
-            if #available(macOS 11.0,iOS 14.0,visionOS 1.0, *) {
+            if #available(iOS 14.0,macOS 11.0,visionOS 1.0, *) {
             let key = key as! SwiftUI.KeyEquivalent
 let modifiers = modifiers as! SwiftUICore.EventModifiers 
             __content
@@ -5135,7 +5559,7 @@ let modifiers = modifiers as! SwiftUICore.EventModifiers
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._1(shortcut):
-            if #available(macOS 11.0,iOS 14.0,visionOS 1.0, *) {
+            if #available(iOS 14.0,visionOS 1.0,macOS 11.0, *) {
             let shortcut = shortcut as! SwiftUI.KeyboardShortcut
             __content
                 .keyboardShortcut(shortcut)
@@ -5143,7 +5567,7 @@ let modifiers = modifiers as! SwiftUICore.EventModifiers
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._2(shortcut):
-            if #available(macOS 12.3,iOS 15.4,visionOS 1.0, *) {
+            if #available(iOS 15.4,visionOS 1.0,macOS 12.3, *) {
             let shortcut = shortcut as? SwiftUI.KeyboardShortcut
             __content
                 .keyboardShortcut(shortcut)
@@ -5151,7 +5575,7 @@ let modifiers = modifiers as! SwiftUICore.EventModifiers
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._4(key, modifiers, localization):
-            if #available(macOS 12.0,iOS 15.0,visionOS 1.0, *) {
+            if #available(iOS 15.0,visionOS 1.0,macOS 12.0, *) {
             let key = key as! SwiftUI.KeyEquivalent
 let modifiers = modifiers as! SwiftUICore.EventModifiers 
 let localization = localization as! SwiftUI.KeyboardShortcut.Localization
@@ -5183,7 +5607,7 @@ struct _keyboardTypeModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(tvOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 13.0,tvOS 13.0, *)
+    @available(tvOS 13.0,iOS 13.0,visionOS 1.0, *)
     init(_ type: UIKit.UIKeyboardType) {
         self.value = ._0(type: type)
         
@@ -5196,7 +5620,7 @@ struct _keyboardTypeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS)
         case let ._0(type):
-            if #available(visionOS 1.0,iOS 13.0,tvOS 13.0, *) {
+            if #available(tvOS 13.0,iOS 13.0,visionOS 1.0, *) {
             let type = type as! UIKit.UIKeyboardType
             __content
                 .keyboardType(type)
@@ -5355,7 +5779,7 @@ struct _labelsVisibilityModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 15.0,tvOS 18.0,watchOS 11.0,visionOS 2.0,iOS 18.0, *)
+    @available(watchOS 11.0,visionOS 2.0,macOS 15.0,tvOS 18.0,iOS 18.0, *)
     init(_ visibility: AttributeReference<SwiftUI.Visibility>) {
         self.value = ._0(visibility: visibility)
         
@@ -5368,7 +5792,7 @@ struct _labelsVisibilityModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(visibility):
-            if #available(macOS 15.0,tvOS 18.0,watchOS 11.0,visionOS 2.0,iOS 18.0, *) {
+            if #available(watchOS 11.0,visionOS 2.0,macOS 15.0,tvOS 18.0,iOS 18.0, *) {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
             __content
                 .labelsVisibility(visibility.resolve(on: element, in: context))
@@ -5823,6 +6247,49 @@ struct _listRowInsetsModifier<R: RootRegistry>: ViewModifier {
 }
 @_documentation(visibility: public)
 @ParseableExpression
+struct _listRowPlatterColorModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "listRowPlatterColor" }
+
+    enum Value {
+        case _never
+        #if os(watchOS)
+        indirect case _0(color: Any?)
+        #endif
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    #if os(watchOS)
+    @available(watchOS 6.0, *)
+    init(_ color: Color.Resolvable?) {
+        self.value = ._0(color: color)
+        
+    }
+    #endif
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        #if os(watchOS)
+        case let ._0(color):
+            if #available(watchOS 6.0, *) {
+            let color = color as? Color.Resolvable
+            __content
+                .listRowPlatterColor(color?.resolve(on: element, in: context))
+            } else { __content }
+        #endif
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
 struct _listRowSeparatorModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "listRowSeparator" }
 
@@ -5886,7 +6353,7 @@ struct _listRowSeparatorTintModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 15.0,macOS 13.0, *)
+    @available(iOS 15.0,visionOS 1.0,macOS 13.0, *)
     init(_ color: Color.Resolvable?,edges: SwiftUICore.VerticalEdge.Set = .all ) {
         self.value = ._0(color: color, edges: edges)
         
@@ -5899,7 +6366,7 @@ struct _listRowSeparatorTintModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(color, edges):
-            if #available(visionOS 1.0,iOS 15.0,macOS 13.0, *) {
+            if #available(iOS 15.0,visionOS 1.0,macOS 13.0, *) {
             let color = color as? Color.Resolvable
 let edges = edges as! SwiftUICore.VerticalEdge.Set 
             __content
@@ -6066,14 +6533,14 @@ struct _listSectionSpacingModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,iOS 17.0,watchOS 10.0, *)
+    @available(watchOS 10.0,visionOS 1.0,iOS 17.0, *)
     init(_ spacing: SwiftUI.ListSectionSpacing) {
         self.value = ._0(spacing: spacing)
         
     }
     #endif
     #if os(iOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,iOS 17.0,watchOS 10.0, *)
+    @available(watchOS 10.0,visionOS 1.0,iOS 17.0, *)
     init(_ spacing: AttributeReference<CoreFoundation.CGFloat>) {
         self.value = ._1(spacing: spacing)
         
@@ -6086,7 +6553,7 @@ struct _listSectionSpacingModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(visionOS) || os(watchOS)
         case let ._0(spacing):
-            if #available(visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(watchOS 10.0,visionOS 1.0,iOS 17.0, *) {
             let spacing = spacing as! SwiftUI.ListSectionSpacing
             __content
                 .listSectionSpacing(spacing)
@@ -6094,7 +6561,7 @@ struct _listSectionSpacingModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(visionOS) || os(watchOS)
         case let ._1(spacing):
-            if #available(visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(watchOS 10.0,visionOS 1.0,iOS 17.0, *) {
             let spacing = spacing as! AttributeReference<CoreFoundation.CGFloat>
             __content
                 .listSectionSpacing(spacing.resolve(on: element, in: context))
@@ -6210,7 +6677,7 @@ struct _materialActiveAppearanceModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 15.0,tvOS 18.0,watchOS 11.0,visionOS 2.0,iOS 18.0, *)
+    @available(visionOS 2.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *)
     init(_ appearance: SwiftUICore.MaterialActiveAppearance) {
         self.value = ._0(appearance: appearance)
         
@@ -6223,10 +6690,53 @@ struct _materialActiveAppearanceModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(appearance):
-            if #available(macOS 15.0,tvOS 18.0,watchOS 11.0,visionOS 2.0,iOS 18.0, *) {
+            if #available(visionOS 2.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *) {
             let appearance = appearance as! SwiftUICore.MaterialActiveAppearance
             __content
                 .materialActiveAppearance(appearance)
+            } else { __content }
+        #endif
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
+struct _menuButtonStyleModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "menuButtonStyle" }
+
+    enum Value {
+        case _never
+        #if os(macOS)
+        indirect case _0(style: Any)
+        #endif
+    }
+
+    let value: Value
+
+    
+    
+
+
+
+
+    #if os(macOS)
+    @available(macOS 13.0, *)
+    init(_ style: AnyMenuButtonStyle) {
+        self.value = ._0(style: style)
+        
+    }
+    #endif
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        #if os(macOS)
+        case let ._0(style):
+            if #available(macOS 13.0, *) {
+            let style = style as! AnyMenuButtonStyle
+            __content
+                .menuButtonStyle(style)
             } else { __content }
         #endif
         }
@@ -6253,7 +6763,7 @@ struct _menuIndicatorModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
-    @available(tvOS 17.0,visionOS 1.0,iOS 15.0,macOS 12.0, *)
+    @available(iOS 15.0,visionOS 1.0,macOS 12.0,tvOS 17.0, *)
     init(_ visibility: AttributeReference<SwiftUI.Visibility>) {
         self.value = ._0(visibility: visibility)
         
@@ -6266,7 +6776,7 @@ struct _menuIndicatorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
         case let ._0(visibility):
-            if #available(tvOS 17.0,visionOS 1.0,iOS 15.0,macOS 12.0, *) {
+            if #available(iOS 15.0,visionOS 1.0,macOS 12.0,tvOS 17.0, *) {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
             __content
                 .menuIndicator(visibility.resolve(on: element, in: context))
@@ -6339,7 +6849,7 @@ struct _menuStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
-    @available(iOS 14.0,tvOS 17.0,macOS 11.0,visionOS 1.0, *)
+    @available(tvOS 17.0,macOS 11.0,iOS 14.0,visionOS 1.0, *)
     init(_ style: AnyMenuStyle) {
         self.value = ._0(style: style)
         
@@ -6352,7 +6862,7 @@ struct _menuStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS)
         case let ._0(style):
-            if #available(iOS 14.0,tvOS 17.0,macOS 11.0,visionOS 1.0, *) {
+            if #available(tvOS 17.0,macOS 11.0,iOS 14.0,visionOS 1.0, *) {
             let style = style as! AnyMenuStyle
             __content
                 .menuStyle(style)
@@ -6425,7 +6935,7 @@ struct _modifierKeyAlternateModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(macOS) || os(visionOS)
-    @available(visionOS 1.0,macOS 15.0, *)
+    @available(macOS 15.0,visionOS 1.0, *)
     init(_ modifiers: SwiftUICore.EventModifiers,_ alternate: ViewReference=ViewReference(value: [])) {
         self.value = ._0(modifiers: modifiers, alternate: alternate)
         
@@ -6438,7 +6948,7 @@ struct _modifierKeyAlternateModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(macOS) || os(visionOS)
         case let ._0(modifiers, alternate):
-            if #available(visionOS 1.0,macOS 15.0, *) {
+            if #available(macOS 15.0,visionOS 1.0, *) {
             let modifiers = modifiers as! SwiftUICore.EventModifiers
 let alternate = alternate as! ViewReference
             __content
@@ -6579,6 +7089,279 @@ struct _navigationBarBackButtonHiddenModifier<R: RootRegistry>: ViewModifier {
 }
 @_documentation(visibility: public)
 @ParseableExpression
+struct _navigationBarHiddenModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "navigationBarHidden" }
+
+    enum Value {
+        case _never
+        #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        indirect case _0(hidden: Any)
+        #endif
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+    @available(watchOS 6.0,tvOS 13.0,macOS 13.0,visionOS 1.0,iOS 13.0, *)
+    init(_ hidden: AttributeReference<Swift.Bool>) {
+        self.value = ._0(hidden: hidden)
+        
+    }
+    #endif
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        case let ._0(hidden):
+            if #available(watchOS 6.0,tvOS 13.0,macOS 13.0,visionOS 1.0,iOS 13.0, *) {
+            let hidden = hidden as! AttributeReference<Swift.Bool>
+            __content
+                .navigationBarHidden(hidden.resolve(on: element, in: context))
+            } else { __content }
+        #endif
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
+struct _navigationBarItemsModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "navigationBarItems" }
+
+    enum Value {
+        case _never
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        indirect case _0(leading: Any,trailing: Any)
+        #endif
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        indirect case _1(leading: Any)
+        #endif
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        indirect case _2(trailing: Any)
+        #endif
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+
+
+
+
+    #if os(iOS) || os(tvOS) || os(visionOS)
+    @available(iOS 16.0,visionOS 1.0,tvOS 16.0, *)
+    init(leading: InlineViewReference,trailing: InlineViewReference) {
+        self.value = ._0(leading: leading, trailing: trailing)
+        
+    }
+    #endif
+    #if os(iOS) || os(tvOS) || os(visionOS)
+    @available(iOS 16.0,tvOS 16.0,visionOS 1.0, *)
+    init(leading: InlineViewReference) {
+        self.value = ._1(leading: leading)
+        
+    }
+    #endif
+    #if os(iOS) || os(tvOS) || os(visionOS)
+    @available(tvOS 16.0,visionOS 1.0,iOS 16.0, *)
+    init(trailing: InlineViewReference) {
+        self.value = ._2(trailing: trailing)
+        
+    }
+    #endif
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        case let ._0(leading, trailing):
+            if #available(iOS 16.0,visionOS 1.0,tvOS 16.0, *) {
+            let leading = leading as! InlineViewReference
+let trailing = trailing as! InlineViewReference
+            __content
+                .navigationBarItems(leading: leading.resolve(on: element, in: context), trailing: trailing.resolve(on: element, in: context))
+            } else { __content }
+        #endif
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        case let ._1(leading):
+            if #available(iOS 16.0,tvOS 16.0,visionOS 1.0, *) {
+            let leading = leading as! InlineViewReference
+            __content
+                .navigationBarItems(leading: leading.resolve(on: element, in: context))
+            } else { __content }
+        #endif
+        #if os(iOS) || os(tvOS) || os(visionOS)
+        case let ._2(trailing):
+            if #available(tvOS 16.0,visionOS 1.0,iOS 16.0, *) {
+            let trailing = trailing as! InlineViewReference
+            __content
+                .navigationBarItems(trailing: trailing.resolve(on: element, in: context))
+            } else { __content }
+        #endif
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
+struct _navigationBarTitleModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "navigationBarTitle" }
+
+    enum Value {
+        case _never
+        #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        indirect case _0(title: Any)
+        #endif
+        #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        indirect case _1(titleKey: Any)
+        #endif
+        #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        indirect case _2(title: Any)
+        #endif
+        #if os(iOS) || os(visionOS)
+        indirect case _3(title: Any,displayMode: Any)
+        #endif
+        #if os(iOS) || os(visionOS)
+        indirect case _4(titleKey: Any,displayMode: Any)
+        #endif
+        #if os(iOS) || os(visionOS)
+        indirect case _5(title: Any,displayMode: Any)
+        #endif
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+    @available(watchOS 6.0,tvOS 13.0,macOS 13.0,visionOS 1.0,iOS 13.0, *)
+    init(_ title: TextReference) {
+        self.value = ._0(title: title)
+        
+    }
+    #endif
+    #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+    @available(watchOS 6.0,tvOS 13.0,macOS 13.0,visionOS 1.0,iOS 13.0, *)
+    init(_ titleKey: SwiftUICore.LocalizedStringKey) {
+        self.value = ._1(titleKey: titleKey)
+        
+    }
+    #endif
+    #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+    @available(watchOS 6.0,tvOS 13.0,macOS 13.0,visionOS 1.0,iOS 13.0, *)
+    init(_ title: AttributeReference<String>) {
+        self.value = ._2(title: title)
+        
+    }
+    #endif
+    #if os(iOS) || os(visionOS)
+    @available(macOS 13.0,tvOS 13.0,iOS 13.0,watchOS 6.0,visionOS 1.0, *)
+    init(_ title: TextReference,displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode) {
+        self.value = ._3(title: title, displayMode: displayMode)
+        
+    }
+    #endif
+    #if os(iOS) || os(visionOS)
+    @available(macOS 13.0,tvOS 13.0,iOS 13.0,watchOS 6.0,visionOS 1.0, *)
+    init(_ titleKey: SwiftUICore.LocalizedStringKey,displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode) {
+        self.value = ._4(titleKey: titleKey, displayMode: displayMode)
+        
+    }
+    #endif
+    #if os(iOS) || os(visionOS)
+    @available(watchOS 6.0,iOS 13.0,macOS 13.0,tvOS 13.0,visionOS 1.0, *)
+    init(_ title: AttributeReference<String>,displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode) {
+        self.value = ._5(title: title, displayMode: displayMode)
+        
+    }
+    #endif
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        case let ._0(title):
+            if #available(watchOS 6.0,tvOS 13.0,macOS 13.0,visionOS 1.0,iOS 13.0, *) {
+            let title = title as! TextReference
+            __content
+                .navigationBarTitle(title.resolve(on: element, in: context))
+            } else { __content }
+        #endif
+        #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        case let ._1(titleKey):
+            if #available(watchOS 6.0,tvOS 13.0,macOS 13.0,visionOS 1.0,iOS 13.0, *) {
+            let titleKey = titleKey as! SwiftUICore.LocalizedStringKey
+            __content
+                .navigationBarTitle(titleKey)
+            } else { __content }
+        #endif
+        #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
+        case let ._2(title):
+            if #available(watchOS 6.0,tvOS 13.0,macOS 13.0,visionOS 1.0,iOS 13.0, *) {
+            let title = title as! AttributeReference<String>
+            __content
+                .navigationBarTitle(title.resolve(on: element, in: context))
+            } else { __content }
+        #endif
+        #if os(iOS) || os(visionOS)
+        case let ._3(title, displayMode):
+            if #available(macOS 13.0,tvOS 13.0,iOS 13.0,watchOS 6.0,visionOS 1.0, *) {
+            let title = title as! TextReference
+let displayMode = displayMode as! SwiftUI.NavigationBarItem.TitleDisplayMode
+            __content
+                .navigationBarTitle(title.resolve(on: element, in: context), displayMode: displayMode)
+            } else { __content }
+        #endif
+        #if os(iOS) || os(visionOS)
+        case let ._4(titleKey, displayMode):
+            if #available(macOS 13.0,tvOS 13.0,iOS 13.0,watchOS 6.0,visionOS 1.0, *) {
+            let titleKey = titleKey as! SwiftUICore.LocalizedStringKey
+let displayMode = displayMode as! SwiftUI.NavigationBarItem.TitleDisplayMode
+            __content
+                .navigationBarTitle(titleKey, displayMode: displayMode)
+            } else { __content }
+        #endif
+        #if os(iOS) || os(visionOS)
+        case let ._5(title, displayMode):
+            if #available(watchOS 6.0,iOS 13.0,macOS 13.0,tvOS 13.0,visionOS 1.0, *) {
+            let title = title as! AttributeReference<String>
+let displayMode = displayMode as! SwiftUI.NavigationBarItem.TitleDisplayMode
+            __content
+                .navigationBarTitle(title.resolve(on: element, in: context), displayMode: displayMode)
+            } else { __content }
+        #endif
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
 struct _navigationBarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "navigationBarTitleDisplayMode" }
 
@@ -6598,7 +7381,7 @@ struct _navigationBarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,iOS 14.0,watchOS 8.0, *)
+    @available(iOS 14.0,watchOS 8.0,visionOS 1.0, *)
     init(_ displayMode: SwiftUI.NavigationBarItem.TitleDisplayMode) {
         self.value = ._0(displayMode: displayMode)
         
@@ -6611,7 +7394,7 @@ struct _navigationBarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(visionOS) || os(watchOS)
         case let ._0(displayMode):
-            if #available(visionOS 1.0,iOS 14.0,watchOS 8.0, *) {
+            if #available(iOS 14.0,watchOS 8.0,visionOS 1.0, *) {
             let displayMode = displayMode as! SwiftUI.NavigationBarItem.TitleDisplayMode
             __content
                 .navigationBarTitleDisplayMode(displayMode)
@@ -6914,7 +7697,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(watchOS)
-    @available(macOS 11.0,tvOS 14.0,iOS 14.0,watchOS 7.0, *)
+    @available(iOS 14.0,tvOS 14.0,watchOS 7.0,macOS 11.0, *)
     init(_ title: ViewReference=ViewReference(value: [])) {
         self.value = ._3(title: title)
         
@@ -6958,7 +7741,7 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
         
         #if os(watchOS)
         case let ._3(title):
-            if #available(macOS 11.0,tvOS 14.0,iOS 14.0,watchOS 7.0, *) {
+            if #available(iOS 14.0,tvOS 14.0,watchOS 7.0,macOS 11.0, *) {
             let title = title as! ViewReference
             __content
                 .navigationTitle({ title.resolve(on: element, in: context) })
@@ -6970,6 +7753,49 @@ struct _navigationTitleModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .navigationTitle(__4_title.projectedValue)
+            
+        
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
+struct _navigationViewStyleModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "navigationViewStyle" }
+
+    enum Value {
+        case _never
+        
+        indirect case _0(style: AnyNavigationViewStyle)
+        
+    }
+
+    let value: Value
+
+    
+    
+
+
+
+
+    
+    
+    init(_ style: AnyNavigationViewStyle) {
+        self.value = ._0(style: style)
+        
+    }
+    
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        
+        case let ._0(style):
+            
+            
+            __content
+                .navigationViewStyle(style)
             
         
         }
@@ -7122,7 +7948,7 @@ struct _onDeleteCommandModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__0: Event.EventHandler
 
     #if os(macOS)
-    @available(macOS 10.15,tvOS 13.0, *)
+    @available(tvOS 13.0,macOS 10.15, *)
     init(perform action__0: Event=Event()) {
         self.value = ._0
         self.__0_action__0 = action__0
@@ -7135,7 +7961,7 @@ struct _onDeleteCommandModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(macOS)
         case ._0:
-            if #available(macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15, *) {
             
             __content
                 .onDeleteCommand(perform: { __0_action__0.wrappedValue() })
@@ -7208,7 +8034,7 @@ struct _onExitCommandModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__0: Event.EventHandler
 
     #if os(macOS) || os(tvOS)
-    @available(macOS 10.15,tvOS 13.0, *)
+    @available(tvOS 13.0,macOS 10.15, *)
     init(perform action__0: Event=Event()) {
         self.value = ._0
         self.__0_action__0 = action__0
@@ -7221,7 +8047,7 @@ struct _onExitCommandModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(macOS) || os(tvOS)
         case ._0:
-            if #available(macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15, *) {
             
             __content
                 .onExitCommand(perform: { __0_action__0.wrappedValue() })
@@ -7329,6 +8155,12 @@ struct _onLongPressGestureModifier<R: RootRegistry>: ViewModifier {
         #if os(tvOS)
         indirect case _2(minimumDuration: Any)
         #endif
+        #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
+        indirect case _4(minimumDuration: Any, maximumDistance: Any)
+        #endif
+        #if os(tvOS)
+        indirect case _6(minimumDuration: Any)
+        #endif
     }
 
     let value: Value
@@ -7343,8 +8175,14 @@ struct _onLongPressGestureModifier<R: RootRegistry>: ViewModifier {
 @Event private var _2_action__0: Event.EventHandler
 @Event private var _2_onPressingChanged__1: Event.EventHandler
 
+@Event private var _4_pressing__1: Event.EventHandler
+@Event private var _4_action__0: Event.EventHandler
+
+@Event private var _6_pressing__1: Event.EventHandler
+@Event private var _6_action__0: Event.EventHandler
+
     #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-    @available(tvOS 14.0,iOS 13.0,macOS 10.15,visionOS 1.0,watchOS 6.0, *)
+    @available(macOS 10.15,iOS 13.0,watchOS 6.0,tvOS 14.0,visionOS 1.0, *)
     init(minimumDuration: AttributeReference<Swift.Double> = .init(storage: .constant(0.5)), maximumDistance: AttributeReference<CoreFoundation.CGFloat> = .init(storage: .constant(10)), perform action__0: Event,onPressingChanged onPressingChanged__1: Event=Event() ) {
         self.value = ._0(minimumDuration: minimumDuration, maximumDistance: maximumDistance)
         self.__0_action__0 = action__0
@@ -7359,6 +8197,22 @@ self.__0_onPressingChanged__1 = onPressingChanged__1
 self.__2_onPressingChanged__1 = onPressingChanged__1
     }
     #endif
+    #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
+    @available(iOS 13.0,tvOS 14.0,macOS 10.15,visionOS 1.0,watchOS 6.0, *)
+    init(minimumDuration: AttributeReference<Swift.Double> = .init(storage: .constant(0.5)), maximumDistance: AttributeReference<CoreFoundation.CGFloat> = .init(storage: .constant(10)), pressing pressing__1: Event=Event(), perform action__0: Event) {
+        self.value = ._4(minimumDuration: minimumDuration, maximumDistance: maximumDistance)
+        self.__4_pressing__1 = pressing__1
+self.__4_action__0 = action__0
+    }
+    #endif
+    #if os(tvOS)
+    @available(macOS 10.15,tvOS 14.0,iOS 13.0,watchOS 6.0, *)
+    init(minimumDuration: AttributeReference<Swift.Double> = .init(storage: .constant(0.5)), pressing pressing__1: Event=Event(), perform action__0: Event) {
+        self.value = ._6(minimumDuration: minimumDuration)
+        self.__6_pressing__1 = pressing__1
+self.__6_action__0 = action__0
+    }
+    #endif
 
     func body(content __content: Content) -> some View {
         switch value {
@@ -7366,7 +8220,7 @@ self.__2_onPressingChanged__1 = onPressingChanged__1
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
         case let ._0(minimumDuration, maximumDistance):
-            if #available(tvOS 14.0,iOS 13.0,macOS 10.15,visionOS 1.0,watchOS 6.0, *) {
+            if #available(macOS 10.15,iOS 13.0,watchOS 6.0,tvOS 14.0,visionOS 1.0, *) {
             let minimumDuration = minimumDuration as! AttributeReference<Swift.Double>
 let maximumDistance = maximumDistance as! AttributeReference<CoreFoundation.CGFloat>
             __content
@@ -7379,6 +8233,23 @@ let maximumDistance = maximumDistance as! AttributeReference<CoreFoundation.CGFl
             let minimumDuration = minimumDuration as! AttributeReference<Swift.Double>
             __content
                 .onLongPressGesture(minimumDuration: minimumDuration.resolve(on: element, in: context), perform: { __2_action__0.wrappedValue() }, onPressingChanged: { __2_onPressingChanged__1.wrappedValue(value: $0) })
+            } else { __content }
+        #endif
+        #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
+        case let ._4(minimumDuration, maximumDistance):
+            if #available(iOS 13.0,tvOS 14.0,macOS 10.15,visionOS 1.0,watchOS 6.0, *) {
+            let minimumDuration = minimumDuration as! AttributeReference<Swift.Double>
+let maximumDistance = maximumDistance as! AttributeReference<CoreFoundation.CGFloat>
+            __content
+                .onLongPressGesture(minimumDuration: minimumDuration.resolve(on: element, in: context), maximumDistance: maximumDistance.resolve(on: element, in: context), pressing: { __4_pressing__1.wrappedValue(value: $0) }, perform: { __4_action__0.wrappedValue() })
+            } else { __content }
+        #endif
+        #if os(tvOS)
+        case let ._6(minimumDuration):
+            if #available(macOS 10.15,tvOS 14.0,iOS 13.0,watchOS 6.0, *) {
+            let minimumDuration = minimumDuration as! AttributeReference<Swift.Double>
+            __content
+                .onLongPressGesture(minimumDuration: minimumDuration.resolve(on: element, in: context), pressing: { __6_pressing__1.wrappedValue(value: $0) }, perform: { __6_action__0.wrappedValue() })
             } else { __content }
         #endif
         }
@@ -7450,7 +8321,7 @@ struct _onModifierKeysChangedModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__2: Event.EventHandler
 
     #if os(macOS) || os(visionOS)
-    @available(macOS 15.0,visionOS 1.0, *)
+    @available(visionOS 1.0,macOS 15.0, *)
     init(mask: SwiftUICore.EventModifiers = .all, initial: AttributeReference<Swift.Bool> = .init(storage: .constant(true)), action action__2: Event) {
         self.value = ._0(mask: mask, initial: initial)
         self.__0_action__2 = action__2
@@ -7463,7 +8334,7 @@ struct _onModifierKeysChangedModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(macOS) || os(visionOS)
         case let ._0(mask, initial):
-            if #available(macOS 15.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,macOS 15.0, *) {
             let mask = mask as! SwiftUICore.EventModifiers 
 let initial = initial as! AttributeReference<Swift.Bool>
             __content
@@ -7494,7 +8365,7 @@ struct _onMoveCommandModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__1: Event.EventHandler
 
     #if os(macOS) || os(tvOS)
-    @available(macOS 10.15,tvOS 13.0, *)
+    @available(tvOS 13.0,macOS 10.15, *)
     init(perform action__1: Event=Event()) {
         self.value = ._0
         self.__0_action__1 = action__1
@@ -7507,7 +8378,7 @@ struct _onMoveCommandModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(macOS) || os(tvOS)
         case ._0:
-            if #available(macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15, *) {
             
             __content
                 .onMoveCommand(perform: { __0_action__1.wrappedValue(value: $0) })
@@ -7537,7 +8408,7 @@ struct _onPencilDoubleTapModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__1: Event.EventHandler
 
     #if os(iOS) || os(macOS)
-    @available(macOS 14.5,iOS 17.5, *)
+    @available(iOS 17.5,macOS 14.5, *)
     init(perform action__1: Event) {
         self.value = ._0
         self.__0_action__1 = action__1
@@ -7550,7 +8421,7 @@ struct _onPencilDoubleTapModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case ._0:
-            if #available(macOS 14.5,iOS 17.5, *) {
+            if #available(iOS 17.5,macOS 14.5, *) {
             
             __content
                 .onPencilDoubleTap(perform: { __0_action__1.wrappedValue(value: $0) })
@@ -7580,7 +8451,7 @@ struct _onPencilSqueezeModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__1: Event.EventHandler
 
     #if os(iOS) || os(macOS)
-    @available(macOS 14.5,iOS 17.5, *)
+    @available(iOS 17.5,macOS 14.5, *)
     init(perform action__1: Event) {
         self.value = ._0
         self.__0_action__1 = action__1
@@ -7593,7 +8464,7 @@ struct _onPencilSqueezeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS)
         case ._0:
-            if #available(macOS 14.5,iOS 17.5, *) {
+            if #available(iOS 17.5,macOS 14.5, *) {
             
             __content
                 .onPencilSqueeze(perform: { __0_action__1.wrappedValue(value: $0) })
@@ -7623,7 +8494,7 @@ struct _onPlayPauseCommandModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__0: Event.EventHandler
 
     #if os(tvOS)
-    @available(macOS 10.15,tvOS 13.0, *)
+    @available(tvOS 13.0,macOS 10.15, *)
     init(perform action__0: Event=Event()) {
         self.value = ._0
         self.__0_action__0 = action__0
@@ -7636,7 +8507,7 @@ struct _onPlayPauseCommandModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(tvOS)
         case ._0:
-            if #available(macOS 10.15,tvOS 13.0, *) {
+            if #available(tvOS 13.0,macOS 10.15, *) {
             
             __content
                 .onPlayPauseCommand(perform: { __0_action__0.wrappedValue() })
@@ -7666,7 +8537,7 @@ struct _onScrollPhaseChangeModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__2: Event.EventHandler
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 15.0,tvOS 18.0,visionOS 1.0,iOS 18.0,watchOS 11.0, *)
+    @available(tvOS 18.0,iOS 18.0,macOS 15.0,visionOS 1.0,watchOS 11.0, *)
     init(_ action__2: Event) {
         self.value = ._0
         self.__0_action__2 = action__2
@@ -7679,7 +8550,7 @@ struct _onScrollPhaseChangeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case ._0:
-            if #available(macOS 15.0,tvOS 18.0,visionOS 1.0,iOS 18.0,watchOS 11.0, *) {
+            if #available(tvOS 18.0,iOS 18.0,macOS 15.0,visionOS 1.0,watchOS 11.0, *) {
             
             __content
                 .onScrollPhaseChange({ __0_action__2.wrappedValue(value: [$0, $1]) })
@@ -7709,7 +8580,7 @@ struct _onScrollVisibilityChangeModifier<R: RootRegistry>: ViewModifier {
 @Event private var _0_action__1: Event.EventHandler
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 18.0,tvOS 18.0,watchOS 11.0,macOS 15.0,visionOS 2.0, *)
+    @available(tvOS 18.0,macOS 15.0,watchOS 11.0,iOS 18.0,visionOS 2.0, *)
     init(threshold: AttributeReference<Swift.Double> = .init(storage: .constant(0.5)), action action__1: Event) {
         self.value = ._0(threshold: threshold)
         self.__0_action__1 = action__1
@@ -7722,7 +8593,7 @@ struct _onScrollVisibilityChangeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(threshold):
-            if #available(iOS 18.0,tvOS 18.0,watchOS 11.0,macOS 15.0,visionOS 2.0, *) {
+            if #available(tvOS 18.0,macOS 15.0,watchOS 11.0,iOS 18.0,visionOS 2.0, *) {
             let threshold = threshold as! AttributeReference<Swift.Double>
             __content
                 .onScrollVisibilityChange(threshold: threshold.resolve(on: element, in: context), { __0_action__1.wrappedValue(value: $0) })
@@ -7757,7 +8628,7 @@ struct _onTapGestureModifier<R: RootRegistry>: ViewModifier {
 @Event private var _1_action__0: Event.EventHandler
 
     #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,iOS 17.0,macOS 14.0,watchOS 10.0, *)
+    @available(iOS 17.0,watchOS 10.0,visionOS 1.0,macOS 14.0, *)
     init(count: AttributeReference<Swift.Int> = .init(storage: .constant(1)), coordinateSpace: AnyCoordinateSpaceProtocol = .local, perform action__1: Event) {
         self.value = ._0(count: count, coordinateSpace: coordinateSpace)
         self.__0_action__1 = action__1
@@ -7777,7 +8648,7 @@ struct _onTapGestureModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
         case let ._0(count, coordinateSpace):
-            if #available(visionOS 1.0,iOS 17.0,macOS 14.0,watchOS 10.0, *) {
+            if #available(iOS 17.0,watchOS 10.0,visionOS 1.0,macOS 14.0, *) {
             let count = count as! AttributeReference<Swift.Int>
 let coordinateSpace = coordinateSpace as! AnyCoordinateSpaceProtocol 
             __content
@@ -7936,13 +8807,16 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
     enum Value {
         case _never
         
-        indirect case _0(alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)), content: ViewReference=ViewReference(value: []))
+        indirect case _0(overlay: InlineViewReference,alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)) )
         
         
-        indirect case _1(style: AnyShapeStyle.Resolvable,edges: SwiftUICore.Edge.Set = .all )
+        indirect case _1(alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)), content: ViewReference=ViewReference(value: []))
         
         
-        indirect case _2(style: AnyShapeStyle.Resolvable,shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
+        indirect case _2(style: AnyShapeStyle.Resolvable,edges: SwiftUICore.Edge.Set = .all )
+        
+        
+        indirect case _3(style: AnyShapeStyle.Resolvable,shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() )
         
     }
 
@@ -7958,24 +8832,33 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
 
 
 
+
+
+    
+    
+    init(_ overlay: InlineViewReference,alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)) ) {
+        self.value = ._0(overlay: overlay, alignment: alignment)
+        
+    }
+    
     
     
     init(alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)), content: ViewReference=ViewReference(value: [])) {
-        self.value = ._0(alignment: alignment, content: content)
+        self.value = ._1(alignment: alignment, content: content)
         
     }
     
     
     
     init(_ style: AnyShapeStyle.Resolvable,ignoresSafeAreaEdges edges: SwiftUICore.Edge.Set = .all ) {
-        self.value = ._1(style: style, edges: edges)
+        self.value = ._2(style: style, edges: edges)
         
     }
     
     
     
     init(_ style: AnyShapeStyle.Resolvable,in shape: AnyShape,fillStyle: SwiftUICore.FillStyle = FillStyle() ) {
-        self.value = ._2(style: style, shape: shape, fillStyle: fillStyle)
+        self.value = ._3(style: style, shape: shape, fillStyle: fillStyle)
         
     }
     
@@ -7985,7 +8868,15 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
         case ._never:
             fatalError("unreachable")
         
-        case let ._0(alignment, content):
+        case let ._0(overlay, alignment):
+            
+            
+            __content
+                .overlay(overlay.resolve(on: element, in: context), alignment: alignment.resolve(on: element, in: context))
+            
+        
+        
+        case let ._1(alignment, content):
             
             
             __content
@@ -7993,7 +8884,7 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._1(style, edges):
+        case let ._2(style, edges):
             
             
             __content
@@ -8001,7 +8892,7 @@ struct _overlayModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._2(style, shape, fillStyle):
+        case let ._3(style, shape, fillStyle):
             
             
             __content
@@ -8285,7 +9176,7 @@ struct _pointerStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(macOS) || os(visionOS)
-    @available(visionOS 2.0,macOS 15.0, *)
+    @available(macOS 15.0,visionOS 2.0, *)
     init(_ style: SwiftUI.PointerStyle?) {
         self.value = ._0(style: style)
         
@@ -8298,7 +9189,7 @@ struct _pointerStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(macOS) || os(visionOS)
         case let ._0(style):
-            if #available(visionOS 2.0,macOS 15.0, *) {
+            if #available(macOS 15.0,visionOS 2.0, *) {
             let style = style as? SwiftUI.PointerStyle
             __content
                 .pointerStyle(style)
@@ -8376,14 +9267,14 @@ struct _popoverModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(iOS 13.0,visionOS 1.0,macOS 10.15, *)
+    @available(macOS 10.15,visionOS 1.0,iOS 13.0, *)
     init(isPresented: ChangeTracked<Swift.Bool>,attachmentAnchor: SwiftUI.PopoverAttachmentAnchor = .rect(.bounds), arrowEdge: SwiftUICore.Edge = .top, content: ViewReference=ViewReference(value: [])) {
         self.value = ._0(attachmentAnchor: attachmentAnchor, arrowEdge: arrowEdge, content: content)
         self.__0_isPresented = isPresented
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(iOS 18.0,visionOS 2.0,macOS 15.0, *)
+    @available(macOS 15.0,visionOS 2.0,iOS 18.0, *)
     init(isPresented: ChangeTracked<Swift.Bool>,attachmentAnchor: SwiftUI.PopoverAttachmentAnchor = .rect(.bounds), content: ViewReference=ViewReference(value: [])) {
         self.value = ._1(attachmentAnchor: attachmentAnchor, content: content)
         self.__1_isPresented = isPresented
@@ -8396,7 +9287,7 @@ struct _popoverModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(attachmentAnchor, arrowEdge, content):
-            if #available(iOS 13.0,visionOS 1.0,macOS 10.15, *) {
+            if #available(macOS 10.15,visionOS 1.0,iOS 13.0, *) {
             let attachmentAnchor = attachmentAnchor as! SwiftUI.PopoverAttachmentAnchor 
 let arrowEdge = arrowEdge as! SwiftUICore.Edge 
 let content = content as! ViewReference
@@ -8406,7 +9297,7 @@ let content = content as! ViewReference
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._1(attachmentAnchor, content):
-            if #available(iOS 18.0,visionOS 2.0,macOS 15.0, *) {
+            if #available(macOS 15.0,visionOS 2.0,iOS 18.0, *) {
             let attachmentAnchor = attachmentAnchor as! SwiftUI.PopoverAttachmentAnchor 
 let content = content as! ViewReference
             __content
@@ -8591,14 +9482,14 @@ struct _presentationBackgroundModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,tvOS 16.4,iOS 16.4,macOS 13.3,watchOS 9.4, *)
+    @available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ style: AnyShapeStyle.Resolvable) {
         self.value = ._0(style: style)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,tvOS 16.4,iOS 16.4,macOS 13.3,watchOS 9.4, *)
+    @available(macOS 13.3,iOS 16.4,tvOS 16.4,visionOS 1.0,watchOS 9.4, *)
     init(alignment: AttributeReference<SwiftUICore.Alignment> = .init(storage: .constant(.center)), content: ViewReference=ViewReference(value: [])) {
         self.value = ._1(alignment: alignment, content: content)
         
@@ -8611,7 +9502,7 @@ struct _presentationBackgroundModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(style):
-            if #available(visionOS 1.0,tvOS 16.4,iOS 16.4,macOS 13.3,watchOS 9.4, *) {
+            if #available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let style = style as! AnyShapeStyle.Resolvable
             __content
                 .presentationBackground(style.resolve(on: element, in: context))
@@ -8619,7 +9510,7 @@ struct _presentationBackgroundModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._1(alignment, content):
-            if #available(visionOS 1.0,tvOS 16.4,iOS 16.4,macOS 13.3,watchOS 9.4, *) {
+            if #available(macOS 13.3,iOS 16.4,tvOS 16.4,visionOS 1.0,watchOS 9.4, *) {
             let alignment = alignment as! AttributeReference<SwiftUICore.Alignment>
 let content = content as! ViewReference
             __content
@@ -8650,7 +9541,7 @@ struct _presentationBackgroundInteractionModifier<R: RootRegistry>: ViewModifier
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4,visionOS 1.0, *)
+    @available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ interaction: SwiftUI.PresentationBackgroundInteraction) {
         self.value = ._0(interaction: interaction)
         
@@ -8663,7 +9554,7 @@ struct _presentationBackgroundInteractionModifier<R: RootRegistry>: ViewModifier
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(interaction):
-            if #available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4,visionOS 1.0, *) {
+            if #available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let interaction = interaction as! SwiftUI.PresentationBackgroundInteraction
             __content
                 .presentationBackgroundInteraction(interaction)
@@ -8698,14 +9589,14 @@ struct _presentationCompactAdaptationModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4,visionOS 1.0, *)
+    @available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ adaptation: SwiftUI.PresentationAdaptation) {
         self.value = ._0(adaptation: adaptation)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4,visionOS 1.0, *)
+    @available(watchOS 9.4,iOS 16.4,visionOS 1.0,tvOS 16.4,macOS 13.3, *)
     init(horizontal horizontalAdaptation: SwiftUI.PresentationAdaptation,vertical verticalAdaptation: SwiftUI.PresentationAdaptation) {
         self.value = ._1(horizontalAdaptation: horizontalAdaptation, verticalAdaptation: verticalAdaptation)
         
@@ -8718,7 +9609,7 @@ struct _presentationCompactAdaptationModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(adaptation):
-            if #available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4,visionOS 1.0, *) {
+            if #available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let adaptation = adaptation as! SwiftUI.PresentationAdaptation
             __content
                 .presentationCompactAdaptation(adaptation)
@@ -8726,7 +9617,7 @@ struct _presentationCompactAdaptationModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._1(horizontalAdaptation, verticalAdaptation):
-            if #available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4,visionOS 1.0, *) {
+            if #available(watchOS 9.4,iOS 16.4,visionOS 1.0,tvOS 16.4,macOS 13.3, *) {
             let horizontalAdaptation = horizontalAdaptation as! SwiftUI.PresentationAdaptation
 let verticalAdaptation = verticalAdaptation as! SwiftUI.PresentationAdaptation
             __content
@@ -8757,7 +9648,7 @@ struct _presentationContentInteractionModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4,visionOS 1.0, *)
+    @available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ behavior: SwiftUI.PresentationContentInteraction) {
         self.value = ._0(behavior: behavior)
         
@@ -8770,7 +9661,7 @@ struct _presentationContentInteractionModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(behavior):
-            if #available(macOS 13.3,iOS 16.4,tvOS 16.4,watchOS 9.4,visionOS 1.0, *) {
+            if #available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let behavior = behavior as! SwiftUI.PresentationContentInteraction
             __content
                 .presentationContentInteraction(behavior)
@@ -8800,7 +9691,7 @@ struct _presentationCornerRadiusModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *)
+    @available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *)
     init(_ cornerRadius: AttributeReference<CoreFoundation.CGFloat?>?) {
         self.value = ._0(cornerRadius: cornerRadius)
         
@@ -8813,7 +9704,7 @@ struct _presentationCornerRadiusModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(cornerRadius):
-            if #available(visionOS 1.0,iOS 16.4,watchOS 9.4,tvOS 16.4,macOS 13.3, *) {
+            if #available(watchOS 9.4,visionOS 1.0,macOS 13.3,tvOS 16.4,iOS 16.4, *) {
             let cornerRadius = cornerRadius as? AttributeReference<CoreFoundation.CGFloat?>
             __content
                 .presentationCornerRadius(cornerRadius?.resolve(on: element, in: context))
@@ -8886,7 +9777,7 @@ struct _presentationSizingModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(watchOS 11.0,tvOS 18.0,iOS 18.0,macOS 15.0,visionOS 2.0, *)
+    @available(watchOS 11.0,tvOS 18.0,macOS 15.0,visionOS 2.0,iOS 18.0, *)
     init(_ sizing: AnyPresentationSizing) {
         self.value = ._0(sizing: sizing)
         
@@ -8899,7 +9790,7 @@ struct _presentationSizingModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(sizing):
-            if #available(watchOS 11.0,tvOS 18.0,iOS 18.0,macOS 15.0,visionOS 2.0, *) {
+            if #available(watchOS 11.0,tvOS 18.0,macOS 15.0,visionOS 2.0,iOS 18.0, *) {
             let sizing = sizing as! AnyPresentationSizing
             __content
                 .presentationSizing(sizing)
@@ -9230,7 +10121,7 @@ struct _replaceDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(visionOS)
-    @available(iOS 16.0,visionOS 1.0, *)
+    @available(visionOS 1.0,iOS 16.0, *)
     init(_ isDisabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isDisabled: isDisabled)
         
@@ -9243,7 +10134,7 @@ struct _replaceDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(visionOS)
         case let ._0(isDisabled):
-            if #available(iOS 16.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,iOS 16.0, *) {
             let isDisabled = isDisabled as! AttributeReference<Swift.Bool>
             __content
                 .replaceDisabled(isDisabled.resolve(on: element, in: context))
@@ -9719,7 +10610,7 @@ struct _scrollBounceBehaviorModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 13.3,tvOS 16.4,visionOS 1.0,iOS 16.4,watchOS 9.4, *)
+    @available(tvOS 16.4,iOS 16.4,visionOS 1.0,watchOS 9.4,macOS 13.3, *)
     init(_ behavior: SwiftUI.ScrollBounceBehavior,axes: SwiftUICore.Axis.Set = [.vertical] ) {
         self.value = ._0(behavior: behavior, axes: axes)
         
@@ -9732,7 +10623,7 @@ struct _scrollBounceBehaviorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(behavior, axes):
-            if #available(macOS 13.3,tvOS 16.4,visionOS 1.0,iOS 16.4,watchOS 9.4, *) {
+            if #available(tvOS 16.4,iOS 16.4,visionOS 1.0,watchOS 9.4,macOS 13.3, *) {
             let behavior = behavior as! SwiftUI.ScrollBounceBehavior
 let axes = axes as! SwiftUICore.Axis.Set 
             __content
@@ -9763,7 +10654,7 @@ struct _scrollClipDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *)
+    @available(macOS 14.0,visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
     init(_ disabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(disabled: disabled)
         
@@ -9776,7 +10667,7 @@ struct _scrollClipDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(disabled):
-            if #available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(macOS 14.0,visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
             let disabled = disabled as! AttributeReference<Swift.Bool>
             __content
                 .scrollClipDisabled(disabled.resolve(on: element, in: context))
@@ -9806,7 +10697,7 @@ struct _scrollContentBackgroundModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,iOS 16.0,macOS 13.0,watchOS 9.0, *)
+    @available(macOS 13.0,visionOS 1.0,watchOS 9.0,iOS 16.0, *)
     init(_ visibility: AttributeReference<SwiftUI.Visibility>) {
         self.value = ._0(visibility: visibility)
         
@@ -9819,7 +10710,7 @@ struct _scrollContentBackgroundModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
         case let ._0(visibility):
-            if #available(visionOS 1.0,iOS 16.0,macOS 13.0,watchOS 9.0, *) {
+            if #available(macOS 13.0,visionOS 1.0,watchOS 9.0,iOS 16.0, *) {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
             __content
                 .scrollContentBackground(visibility.resolve(on: element, in: context))
@@ -9892,7 +10783,7 @@ struct _scrollDismissesKeyboardModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-    @available(macOS 13.0,tvOS 16.0,iOS 16.0,watchOS 9.0, *)
+    @available(watchOS 9.0,tvOS 16.0,macOS 13.0,iOS 16.0, *)
     init(_ mode: SwiftUI.ScrollDismissesKeyboardMode) {
         self.value = ._0(mode: mode)
         
@@ -9905,7 +10796,7 @@ struct _scrollDismissesKeyboardModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         case let ._0(mode):
-            if #available(macOS 13.0,tvOS 16.0,iOS 16.0,watchOS 9.0, *) {
+            if #available(watchOS 9.0,tvOS 16.0,macOS 13.0,iOS 16.0, *) {
             let mode = mode as! SwiftUI.ScrollDismissesKeyboardMode
             __content
                 .scrollDismissesKeyboard(mode)
@@ -9983,14 +10874,14 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *)
+    @available(macOS 14.0,visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
     init(trigger value: AttributeReference<String>) {
         self.value = ._0(value: value)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *)
+    @available(macOS 14.0,visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *)
     init(onAppear: AttributeReference<Swift.Bool>) {
         self.value = ._1(onAppear: onAppear)
         
@@ -10003,7 +10894,7 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(value):
-            if #available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(macOS 14.0,visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
             let value = value as! AttributeReference<String>
             __content
                 .scrollIndicatorsFlash(trigger: value.resolve(on: element, in: context))
@@ -10011,7 +10902,7 @@ struct _scrollIndicatorsFlashModifier<R: RootRegistry>: ViewModifier {
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._1(onAppear):
-            if #available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(macOS 14.0,visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0, *) {
             let onAppear = onAppear as! AttributeReference<Swift.Bool>
             __content
                 .scrollIndicatorsFlash(onAppear: onAppear.resolve(on: element, in: context))
@@ -10041,7 +10932,7 @@ struct _scrollPositionModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0,iOS 17.0, *)
+    @available(visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *)
     init(id: ChangeTracked<String?>,anchor: AttributeReference<SwiftUICore.UnitPoint?>? = .init(storage: .constant(nil)) ) {
         self.value = ._0(anchor: anchor)
         self.__0_id = id
@@ -10054,7 +10945,7 @@ struct _scrollPositionModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(anchor):
-            if #available(macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0,iOS 17.0, *) {
+            if #available(visionOS 1.0,tvOS 17.0,iOS 17.0,watchOS 10.0,macOS 14.0, *) {
             let anchor = anchor as? AttributeReference<SwiftUICore.UnitPoint?>
             __content
                 .scrollPosition(id: __0_id.projectedValue, anchor: anchor?.resolve(on: element, in: context))
@@ -10084,7 +10975,7 @@ struct _scrollTargetBehaviorModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,macOS 14.0,tvOS 17.0,visionOS 1.0,watchOS 10.0, *)
+    @available(tvOS 17.0,visionOS 1.0,watchOS 10.0,iOS 17.0,macOS 14.0, *)
     init(_ behavior: AnyScrollTargetBehavior) {
         self.value = ._0(behavior: behavior)
         
@@ -10097,7 +10988,7 @@ struct _scrollTargetBehaviorModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(behavior):
-            if #available(iOS 17.0,macOS 14.0,tvOS 17.0,visionOS 1.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,visionOS 1.0,watchOS 10.0,iOS 17.0,macOS 14.0, *) {
             let behavior = behavior as! AnyScrollTargetBehavior
             __content
                 .scrollTargetBehavior(behavior)
@@ -10127,7 +11018,7 @@ struct _scrollTargetLayoutModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *)
+    @available(visionOS 1.0,tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *)
     init(isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isEnabled: isEnabled)
         
@@ -10140,7 +11031,7 @@ struct _scrollTargetLayoutModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(isEnabled):
-            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *) {
             let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
             __content
                 .scrollTargetLayout(isEnabled: isEnabled.resolve(on: element, in: context))
@@ -10213,7 +11104,7 @@ struct _searchPresentationToolbarBehaviorModifier<R: RootRegistry>: ViewModifier
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,tvOS 17.1,iOS 17.1,macOS 14.1,watchOS 10.1, *)
+    @available(macOS 14.1,visionOS 1.0,tvOS 17.1,iOS 17.1,watchOS 10.1, *)
     init(_ behavior: SwiftUI.SearchPresentationToolbarBehavior) {
         self.value = ._0(behavior: behavior)
         
@@ -10226,7 +11117,7 @@ struct _searchPresentationToolbarBehaviorModifier<R: RootRegistry>: ViewModifier
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(behavior):
-            if #available(visionOS 1.0,tvOS 17.1,iOS 17.1,macOS 14.1,watchOS 10.1, *) {
+            if #available(macOS 14.1,visionOS 1.0,tvOS 17.1,iOS 17.1,watchOS 10.1, *) {
             let behavior = behavior as! SwiftUI.SearchPresentationToolbarBehavior
             __content
                 .searchPresentationToolbarBehavior(behavior)
@@ -10323,6 +11214,15 @@ struct _searchableModifier<R: RootRegistry>: ViewModifier {
         #if os(iOS) || os(macOS) || os(visionOS)
         indirect case _6(placement: Any, prompt: Any?)
         #endif
+        
+        indirect case _8(placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: SwiftUICore.LocalizedStringKey,suggestions: ViewReference=ViewReference(value: []))
+        
+        
+        indirect case _9(placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: AttributeReference<String>,suggestions: ViewReference=ViewReference(value: []))
+        
+        
+        indirect case _10(placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: TextReference? = nil, suggestions: ViewReference=ViewReference(value: []))
+        
     }
 
     let value: Value
@@ -10344,6 +11244,12 @@ struct _searchableModifier<R: RootRegistry>: ViewModifier {
 
 @ChangeTracked private var _6_text: Swift.String
 @ChangeTracked private var _6_isPresented: Swift.Bool
+
+@ChangeTracked private var _8_text: Swift.String
+
+@ChangeTracked private var _9_text: Swift.String
+
+@ChangeTracked private var _10_text: Swift.String
 
 
     
@@ -10368,7 +11274,7 @@ struct _searchableModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 14.0,iOS 17.0,visionOS 1.0, *)
+    @available(iOS 17.0,visionOS 1.0,macOS 14.0, *)
     init(text: ChangeTracked<Swift.String>,isPresented: ChangeTracked<Swift.Bool>,placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: SwiftUICore.LocalizedStringKey) {
         self.value = ._4(placement: placement, prompt: prompt)
         self.__4_text = text
@@ -10376,7 +11282,7 @@ self.__4_isPresented = isPresented
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 14.0,iOS 17.0,visionOS 1.0, *)
+    @available(iOS 17.0,macOS 14.0,visionOS 1.0, *)
     init(text: ChangeTracked<Swift.String>,isPresented: ChangeTracked<Swift.Bool>,placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: AttributeReference<String>) {
         self.value = ._5(placement: placement, prompt: prompt)
         self.__5_text = text
@@ -10384,13 +11290,34 @@ self.__5_isPresented = isPresented
     }
     #endif
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 14.0,iOS 17.0,visionOS 1.0, *)
+    @available(iOS 17.0,visionOS 1.0,macOS 14.0, *)
     init(text: ChangeTracked<Swift.String>,isPresented: ChangeTracked<Swift.Bool>,placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: TextReference? = nil ) {
         self.value = ._6(placement: placement, prompt: prompt)
         self.__6_text = text
 self.__6_isPresented = isPresented
     }
     #endif
+    
+    
+    init(text: ChangeTracked<Swift.String>,placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: SwiftUICore.LocalizedStringKey,suggestions: ViewReference=ViewReference(value: [])) {
+        self.value = ._8(placement: placement, prompt: prompt, suggestions: suggestions)
+        self.__8_text = text
+    }
+    
+    
+    
+    init(text: ChangeTracked<Swift.String>,placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: AttributeReference<String>,suggestions: ViewReference=ViewReference(value: [])) {
+        self.value = ._9(placement: placement, prompt: prompt, suggestions: suggestions)
+        self.__9_text = text
+    }
+    
+    
+    
+    init(text: ChangeTracked<Swift.String>,placement: SwiftUI.SearchFieldPlacement = .automatic, prompt: TextReference? = nil, suggestions: ViewReference=ViewReference(value: [])) {
+        self.value = ._10(placement: placement, prompt: prompt, suggestions: suggestions)
+        self.__10_text = text
+    }
+    
 
     func body(content __content: Content) -> some View {
         switch value {
@@ -10422,7 +11349,7 @@ self.__6_isPresented = isPresented
         
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._4(placement, prompt):
-            if #available(macOS 14.0,iOS 17.0,visionOS 1.0, *) {
+            if #available(iOS 17.0,visionOS 1.0,macOS 14.0, *) {
             let placement = placement as! SwiftUI.SearchFieldPlacement 
 let prompt = prompt as! SwiftUICore.LocalizedStringKey
             __content
@@ -10431,7 +11358,7 @@ let prompt = prompt as! SwiftUICore.LocalizedStringKey
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._5(placement, prompt):
-            if #available(macOS 14.0,iOS 17.0,visionOS 1.0, *) {
+            if #available(iOS 17.0,macOS 14.0,visionOS 1.0, *) {
             let placement = placement as! SwiftUI.SearchFieldPlacement 
 let prompt = prompt as! AttributeReference<String>
             __content
@@ -10440,13 +11367,37 @@ let prompt = prompt as! AttributeReference<String>
         #endif
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._6(placement, prompt):
-            if #available(macOS 14.0,iOS 17.0,visionOS 1.0, *) {
+            if #available(iOS 17.0,visionOS 1.0,macOS 14.0, *) {
             let placement = placement as! SwiftUI.SearchFieldPlacement 
 let prompt = prompt as? TextReference
             __content
                 .searchable(text: __6_text.projectedValue, isPresented: __6_isPresented.projectedValue, placement: placement, prompt: prompt?.resolve(on: element, in: context))
             } else { __content }
         #endif
+        
+        case let ._8(placement, prompt, suggestions):
+            
+            
+            __content
+                .searchable(text: __8_text.projectedValue, placement: placement, prompt: prompt, suggestions: { suggestions.resolve(on: element, in: context) })
+            
+        
+        
+        case let ._9(placement, prompt, suggestions):
+            
+            
+            __content
+                .searchable(text: __9_text.projectedValue, placement: placement, prompt: prompt.resolve(on: element, in: context), suggestions: { suggestions.resolve(on: element, in: context) })
+            
+        
+        
+        case let ._10(placement, prompt, suggestions):
+            
+            
+            __content
+                .searchable(text: __10_text.projectedValue, placement: placement, prompt: prompt?.resolve(on: element, in: context), suggestions: { suggestions.resolve(on: element, in: context) })
+            
+        
         }
     }
 }
@@ -10514,7 +11465,7 @@ struct _selectionDisabledModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *)
+    @available(visionOS 1.0,tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *)
     init(_ isDisabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isDisabled: isDisabled)
         
@@ -10527,7 +11478,7 @@ struct _selectionDisabledModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(isDisabled):
-            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, *) {
             let isDisabled = isDisabled as! AttributeReference<Swift.Bool>
             __content
                 .selectionDisabled(isDisabled.resolve(on: element, in: context))
@@ -10668,7 +11619,7 @@ struct _simultaneousGestureModifier<R: RootRegistry>: ViewModifier {
     }
     
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 18.0,macOS 15.0,tvOS 18.0,visionOS 2.0,watchOS 11.0, *)
+    @available(iOS 18.0,watchOS 11.0,visionOS 2.0,macOS 15.0,tvOS 18.0, *)
     init(_ gesture: AnyGesture<Any>,name: AttributeReference<Swift.String>,isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._2(gesture: gesture, name: name, isEnabled: isEnabled)
         
@@ -10697,7 +11648,7 @@ struct _simultaneousGestureModifier<R: RootRegistry>: ViewModifier {
         
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._2(gesture, name, isEnabled):
-            if #available(iOS 18.0,macOS 15.0,tvOS 18.0,visionOS 2.0,watchOS 11.0, *) {
+            if #available(iOS 18.0,watchOS 11.0,visionOS 2.0,macOS 15.0,tvOS 18.0, *) {
             let gesture = gesture as! AnyGesture<Any>
 let name = name as! AttributeReference<Swift.String>
 let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
@@ -10877,6 +11828,49 @@ struct _speechSpellsOutCharactersModifier<R: RootRegistry>: ViewModifier {
                 .speechSpellsOutCharacters(value.resolve(on: element, in: context))
             
         
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
+struct _statusBarModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "statusBar" }
+
+    enum Value {
+        case _never
+        #if os(iOS) || os(visionOS)
+        indirect case _0(hidden: Any)
+        #endif
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    #if os(iOS) || os(visionOS)
+    @available(iOS 16.0,visionOS 1.0, *)
+    init(hidden: AttributeReference<Swift.Bool>) {
+        self.value = ._0(hidden: hidden)
+        
+    }
+    #endif
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        #if os(iOS) || os(visionOS)
+        case let ._0(hidden):
+            if #available(iOS 16.0,visionOS 1.0, *) {
+            let hidden = hidden as! AttributeReference<Swift.Bool>
+            __content
+                .statusBar(hidden: hidden.resolve(on: element, in: context))
+            } else { __content }
+        #endif
         }
     }
 }
@@ -11073,7 +12067,7 @@ struct _swipeActionsModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-    @available(macOS 12.0,visionOS 1.0,watchOS 8.0,iOS 15.0, *)
+    @available(watchOS 8.0,visionOS 1.0,macOS 12.0,iOS 15.0, *)
     init(edge: SwiftUICore.HorizontalEdge = .trailing, allowsFullSwipe: AttributeReference<Swift.Bool> = .init(storage: .constant(true)), content: ViewReference=ViewReference(value: [])) {
         self.value = ._0(edge: edge, allowsFullSwipe: allowsFullSwipe, content: content)
         
@@ -11086,7 +12080,7 @@ struct _swipeActionsModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
         case let ._0(edge, allowsFullSwipe, content):
-            if #available(macOS 12.0,visionOS 1.0,watchOS 8.0,iOS 15.0, *) {
+            if #available(watchOS 8.0,visionOS 1.0,macOS 12.0,iOS 15.0, *) {
             let edge = edge as! SwiftUICore.HorizontalEdge 
 let allowsFullSwipe = allowsFullSwipe as! AttributeReference<Swift.Bool>
 let content = content as! ViewReference
@@ -11123,14 +12117,14 @@ struct _symbolEffectModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *)
+    @available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *)
     init(_ effect: AnyIndefiniteSymbolEffect,options: Symbols.SymbolEffectOptions = .default, isActive: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(effect: effect, options: options, isActive: isActive)
         
     }
     #endif
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *)
+    @available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *)
     init(_ effect: AnyDiscreteSymbolEffect,options: Symbols.SymbolEffectOptions = .default, value: AttributeReference<String>) {
         self.value = ._1(effect: effect, options: options, value: value)
         
@@ -11143,7 +12137,7 @@ struct _symbolEffectModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(effect, options, isActive):
-            if #available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *) {
             let effect = effect as! AnyIndefiniteSymbolEffect
 let options = options as! Symbols.SymbolEffectOptions 
 let isActive = isActive as! AttributeReference<Swift.Bool>
@@ -11153,7 +12147,7 @@ let isActive = isActive as! AttributeReference<Swift.Bool>
         #endif
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._1(effect, options, value):
-            if #available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,watchOS 10.0,iOS 17.0,visionOS 1.0, *) {
             let effect = effect as! AnyDiscreteSymbolEffect
 let options = options as! Symbols.SymbolEffectOptions 
 let value = value as! AttributeReference<String>
@@ -11185,7 +12179,7 @@ struct _symbolEffectsRemovedModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *)
+    @available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0,visionOS 1.0, *)
     init(_ isEnabled: AttributeReference<Swift.Bool> = .init(storage: .constant(true)) ) {
         self.value = ._0(isEnabled: isEnabled)
         
@@ -11198,7 +12192,7 @@ struct _symbolEffectsRemovedModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(isEnabled):
-            if #available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *) {
+            if #available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0,visionOS 1.0, *) {
             let isEnabled = isEnabled as! AttributeReference<Swift.Bool>
             __content
                 .symbolEffectsRemoved(isEnabled.resolve(on: element, in: context))
@@ -11295,6 +12289,49 @@ struct _symbolVariantModifier<R: RootRegistry>: ViewModifier {
 }
 @_documentation(visibility: public)
 @ParseableExpression
+struct _tabItemModifier<R: RootRegistry>: ViewModifier {
+    static var name: String { "tabItem" }
+
+    enum Value {
+        case _never
+        
+        indirect case _0(label: ViewReference=ViewReference(value: []))
+        
+    }
+
+    let value: Value
+
+    @ObservedElement private var element
+    @LiveContext<R> private var context
+
+
+
+
+    
+    
+    init(_ label: ViewReference=ViewReference(value: [])) {
+        self.value = ._0(label: label)
+        
+    }
+    
+
+    func body(content __content: Content) -> some View {
+        switch value {
+        case ._never:
+            fatalError("unreachable")
+        
+        case let ._0(label):
+            
+            
+            __content
+                .tabItem({ label.resolve(on: element, in: context) })
+            
+        
+        }
+    }
+}
+@_documentation(visibility: public)
+@ParseableExpression
 struct _tabViewSidebarBottomBarModifier<R: RootRegistry>: ViewModifier {
     static var name: String { "tabViewSidebarBottomBar" }
 
@@ -11314,7 +12351,7 @@ struct _tabViewSidebarBottomBarModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(iOS 18.0,visionOS 2.0,macOS 15.0, *)
+    @available(macOS 15.0,visionOS 2.0,iOS 18.0, *)
     init(content: ViewReference=ViewReference(value: [])) {
         self.value = ._0(content: content)
         
@@ -11327,7 +12364,7 @@ struct _tabViewSidebarBottomBarModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(content):
-            if #available(iOS 18.0,visionOS 2.0,macOS 15.0, *) {
+            if #available(macOS 15.0,visionOS 2.0,iOS 18.0, *) {
             let content = content as! ViewReference
             __content
                 .tabViewSidebarBottomBar(content: { content.resolve(on: element, in: context) })
@@ -11357,7 +12394,7 @@ struct _tabViewSidebarFooterModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(iOS 18.0,visionOS 2.0,macOS 15.0, *)
+    @available(macOS 15.0,visionOS 2.0,iOS 18.0, *)
     init(content: ViewReference=ViewReference(value: [])) {
         self.value = ._0(content: content)
         
@@ -11370,7 +12407,7 @@ struct _tabViewSidebarFooterModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(content):
-            if #available(iOS 18.0,visionOS 2.0,macOS 15.0, *) {
+            if #available(macOS 15.0,visionOS 2.0,iOS 18.0, *) {
             let content = content as! ViewReference
             __content
                 .tabViewSidebarFooter(content: { content.resolve(on: element, in: context) })
@@ -11400,7 +12437,7 @@ struct _tabViewSidebarHeaderModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(iOS 18.0,visionOS 2.0,macOS 15.0, *)
+    @available(visionOS 2.0,iOS 18.0,macOS 15.0, *)
     init(content: ViewReference=ViewReference(value: [])) {
         self.value = ._0(content: content)
         
@@ -11413,7 +12450,7 @@ struct _tabViewSidebarHeaderModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(content):
-            if #available(iOS 18.0,visionOS 2.0,macOS 15.0, *) {
+            if #available(visionOS 2.0,iOS 18.0,macOS 15.0, *) {
             let content = content as! ViewReference
             __content
                 .tabViewSidebarHeader(content: { content.resolve(on: element, in: context) })
@@ -11486,7 +12523,7 @@ struct _tableStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 16.0,macOS 12.0, *)
+    @available(iOS 16.0,macOS 12.0,visionOS 1.0, *)
     init(_ style: AnyTableStyle) {
         self.value = ._0(style: style)
         
@@ -11499,7 +12536,7 @@ struct _tableStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(style):
-            if #available(visionOS 1.0,iOS 16.0,macOS 12.0, *) {
+            if #available(iOS 16.0,macOS 12.0,visionOS 1.0, *) {
             let style = style as! AnyTableStyle
             __content
                 .tableStyle(style)
@@ -11572,7 +12609,7 @@ struct _textContentTypeModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(tvOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 13.0,tvOS 13.0, *)
+    @available(iOS 13.0,tvOS 13.0,visionOS 1.0, *)
     init(_ textContentType: UIKit.UITextContentType?) {
         self.value = ._0(textContentType: textContentType)
         
@@ -11585,7 +12622,7 @@ struct _textContentTypeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS)
         case let ._0(textContentType):
-            if #available(visionOS 1.0,iOS 13.0,tvOS 13.0, *) {
+            if #available(iOS 13.0,tvOS 13.0,visionOS 1.0, *) {
             let textContentType = textContentType as? UIKit.UITextContentType
             __content
                 .textContentType(textContentType)
@@ -11615,7 +12652,7 @@ struct _textEditorStyleModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(macOS 14.0,iOS 17.0,visionOS 1.0, *)
+    @available(visionOS 1.0,iOS 17.0,macOS 14.0, *)
     init(_ style: AnyTextEditorStyle) {
         self.value = ._0(style: style)
         
@@ -11628,7 +12665,7 @@ struct _textEditorStyleModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(style):
-            if #available(macOS 14.0,iOS 17.0,visionOS 1.0, *) {
+            if #available(visionOS 1.0,iOS 17.0,macOS 14.0, *) {
             let style = style as! AnyTextEditorStyle
             __content
                 .textEditorStyle(style)
@@ -11701,7 +12738,7 @@ struct _textInputAutocapitalizationModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(tvOS 15.0,visionOS 1.0,watchOS 8.0,iOS 15.0, *)
+    @available(tvOS 15.0,watchOS 8.0,iOS 15.0,visionOS 1.0, *)
     init(_ autocapitalization: SwiftUI.TextInputAutocapitalization?) {
         self.value = ._0(autocapitalization: autocapitalization)
         
@@ -11714,7 +12751,7 @@ struct _textInputAutocapitalizationModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(autocapitalization):
-            if #available(tvOS 15.0,visionOS 1.0,watchOS 8.0,iOS 15.0, *) {
+            if #available(tvOS 15.0,watchOS 8.0,iOS 15.0,visionOS 1.0, *) {
             let autocapitalization = autocapitalization as? SwiftUI.TextInputAutocapitalization
             __content
                 .textInputAutocapitalization(autocapitalization)
@@ -11830,7 +12867,7 @@ struct _textSelectionModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(visionOS)
-    @available(visionOS 1.0,iOS 15.0,macOS 12.0, *)
+    @available(iOS 15.0,macOS 12.0,visionOS 1.0, *)
     init(_ selectability: AnyTextSelectability) {
         self.value = ._0(selectability: selectability)
         
@@ -11843,7 +12880,7 @@ struct _textSelectionModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(visionOS)
         case let ._0(selectability):
-            if #available(visionOS 1.0,iOS 15.0,macOS 12.0, *) {
+            if #available(iOS 15.0,macOS 12.0,visionOS 1.0, *) {
             let selectability = selectability as! AnyTextSelectability
             __content
                 .textSelection(selectability)
@@ -11873,7 +12910,7 @@ struct _textSelectionAffinityModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(macOS 15.0,tvOS 18.0,visionOS 2.0,iOS 18.0,watchOS 11.0, *)
+    @available(iOS 18.0,watchOS 11.0,visionOS 2.0,macOS 15.0,tvOS 18.0, *)
     init(_ affinity: SwiftUI.TextSelectionAffinity) {
         self.value = ._0(affinity: affinity)
         
@@ -11886,7 +12923,7 @@ struct _textSelectionAffinityModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(affinity):
-            if #available(macOS 15.0,tvOS 18.0,visionOS 2.0,iOS 18.0,watchOS 11.0, *) {
+            if #available(iOS 18.0,watchOS 11.0,visionOS 2.0,macOS 15.0,tvOS 18.0, *) {
             let affinity = affinity as! SwiftUI.TextSelectionAffinity
             __content
                 .textSelectionAffinity(affinity)
@@ -12008,14 +13045,17 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
 
     enum Value {
         case _never
+        
+        indirect case _0(visibility: AttributeReference<SwiftUI.Visibility>,bars: SwiftUI.ToolbarPlacement)
+        
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-        indirect case _0(defaultItemKind: Any?)
+        indirect case _1(defaultItemKind: Any?)
         #endif
         
-        indirect case _3(content: ToolbarContentReference=ToolbarContentReference(value: []))
+        indirect case _4(content: ToolbarContentReference=ToolbarContentReference(value: []))
         
         
-        indirect case _4(id: AttributeReference<Swift.String>,content: CustomizableToolbarContentReference=CustomizableToolbarContentReference(value: []))
+        indirect case _5(id: AttributeReference<Swift.String>,content: CustomizableToolbarContentReference=CustomizableToolbarContentReference(value: []))
         
     }
 
@@ -12031,24 +13071,33 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
 
 
 
+
+
+    
+    
+    init(_ visibility: AttributeReference<SwiftUI.Visibility>,for bars: SwiftUI.ToolbarPlacement) {
+        self.value = ._0(visibility: visibility, bars: bars)
+        
+    }
+    
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(watchOS 10.0,iOS 17.0,macOS 14.0,visionOS 1.0,tvOS 17.0, *)
+    @available(tvOS 17.0,iOS 17.0,macOS 14.0,visionOS 1.0,watchOS 10.0, *)
     init(removing defaultItemKind: SwiftUI.ToolbarDefaultItemKind?) {
-        self.value = ._0(defaultItemKind: defaultItemKind)
+        self.value = ._1(defaultItemKind: defaultItemKind)
         
     }
     #endif
     
     
     init(content: ToolbarContentReference=ToolbarContentReference(value: [])) {
-        self.value = ._3(content: content)
+        self.value = ._4(content: content)
         
     }
     
     
     
     init(id: AttributeReference<Swift.String>,content: CustomizableToolbarContentReference=CustomizableToolbarContentReference(value: [])) {
-        self.value = ._4(id: id, content: content)
+        self.value = ._5(id: id, content: content)
         
     }
     
@@ -12057,16 +13106,24 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
         switch value {
         case ._never:
             fatalError("unreachable")
+        
+        case let ._0(visibility, bars):
+            
+            
+            __content
+                .toolbar(visibility.resolve(on: element, in: context), for: bars)
+            
+        
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-        case let ._0(defaultItemKind):
-            if #available(watchOS 10.0,iOS 17.0,macOS 14.0,visionOS 1.0,tvOS 17.0, *) {
+        case let ._1(defaultItemKind):
+            if #available(tvOS 17.0,iOS 17.0,macOS 14.0,visionOS 1.0,watchOS 10.0, *) {
             let defaultItemKind = defaultItemKind as? SwiftUI.ToolbarDefaultItemKind
             __content
                 .toolbar(removing: defaultItemKind)
             } else { __content }
         #endif
         
-        case let ._3(content):
+        case let ._4(content):
             
             
             __content
@@ -12074,7 +13131,7 @@ struct _toolbarModifier<R: RootRegistry>: ViewModifier {
             
         
         
-        case let ._4(id, content):
+        case let ._5(id, content):
             
             
             __content
@@ -12094,6 +13151,9 @@ struct _toolbarBackgroundModifier<R: RootRegistry>: ViewModifier {
         
         indirect case _0(style: AnyShapeStyle.Resolvable,bars: SwiftUI.ToolbarPlacement)
         
+        
+        indirect case _1(visibility: AttributeReference<SwiftUI.Visibility>,bars: SwiftUI.ToolbarPlacement)
+        
     }
 
     let value: Value
@@ -12104,10 +13164,19 @@ struct _toolbarBackgroundModifier<R: RootRegistry>: ViewModifier {
 
 
 
+
+
     
     
     init(_ style: AnyShapeStyle.Resolvable,for bars: SwiftUI.ToolbarPlacement) {
         self.value = ._0(style: style, bars: bars)
+        
+    }
+    
+    
+    
+    init(_ visibility: AttributeReference<SwiftUI.Visibility>,for bars: SwiftUI.ToolbarPlacement) {
+        self.value = ._1(visibility: visibility, bars: bars)
         
     }
     
@@ -12122,6 +13191,14 @@ struct _toolbarBackgroundModifier<R: RootRegistry>: ViewModifier {
             
             __content
                 .toolbarBackground(style.resolve(on: element, in: context), for: bars)
+            
+        
+        
+        case let ._1(visibility, bars):
+            
+            
+            __content
+                .toolbarBackground(visibility.resolve(on: element, in: context), for: bars)
             
         
         }
@@ -12148,7 +13225,7 @@ struct _toolbarBackgroundVisibilityModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *)
+    @available(visionOS 1.0,iOS 18.0,tvOS 18.0,watchOS 11.0,macOS 15.0, *)
     init(_ visibility: AttributeReference<SwiftUI.Visibility>,for bars: SwiftUI.ToolbarPlacement) {
         self.value = ._0(visibility: visibility, bars: bars)
         
@@ -12161,7 +13238,7 @@ struct _toolbarBackgroundVisibilityModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(visibility, bars):
-            if #available(visionOS 1.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *) {
+            if #available(visionOS 1.0,iOS 18.0,tvOS 18.0,watchOS 11.0,macOS 15.0, *) {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
 let bars = bars as! SwiftUI.ToolbarPlacement
             __content
@@ -12278,7 +13355,7 @@ struct _toolbarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(iOS 17.0,macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0, *)
+    @available(tvOS 17.0,macOS 14.0,visionOS 1.0,watchOS 10.0,iOS 17.0, *)
     init(_ mode: SwiftUI.ToolbarTitleDisplayMode) {
         self.value = ._0(mode: mode)
         
@@ -12291,7 +13368,7 @@ struct _toolbarTitleDisplayModeModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(mode):
-            if #available(iOS 17.0,macOS 14.0,tvOS 17.0,watchOS 10.0,visionOS 1.0, *) {
+            if #available(tvOS 17.0,macOS 14.0,visionOS 1.0,watchOS 10.0,iOS 17.0, *) {
             let mode = mode as! SwiftUI.ToolbarTitleDisplayMode
             __content
                 .toolbarTitleDisplayMode(mode)
@@ -12364,7 +13441,7 @@ struct _toolbarVisibilityModifier<R: RootRegistry>: ViewModifier {
 
 
     #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-    @available(visionOS 1.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *)
+    @available(watchOS 11.0,tvOS 18.0,macOS 15.0,visionOS 1.0,iOS 18.0, *)
     init(_ visibility: AttributeReference<SwiftUI.Visibility>,for bars: SwiftUI.ToolbarPlacement) {
         self.value = ._0(visibility: visibility, bars: bars)
         
@@ -12377,7 +13454,7 @@ struct _toolbarVisibilityModifier<R: RootRegistry>: ViewModifier {
             fatalError("unreachable")
         #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
         case let ._0(visibility, bars):
-            if #available(visionOS 1.0,tvOS 18.0,iOS 18.0,macOS 15.0,watchOS 11.0, *) {
+            if #available(watchOS 11.0,tvOS 18.0,macOS 15.0,visionOS 1.0,iOS 18.0, *) {
             let visibility = visibility as! AttributeReference<SwiftUI.Visibility>
 let bars = bars as! SwiftUI.ToolbarPlacement
             __content
@@ -12992,7 +14069,8 @@ struct _zIndexModifier<R: RootRegistry>: ViewModifier {
 
 extension BuiltinRegistry {
     enum _BuiltinModifierChunk0: ViewModifier {
-        indirect case accessibilityAction(_accessibilityActionModifier<R>)
+        indirect case accentColor(_accentColorModifier<R>)
+indirect case accessibilityAction(_accessibilityActionModifier<R>)
 indirect case accessibilityActions(_accessibilityActionsModifier<R>)
 indirect case accessibilityChildren(_accessibilityChildrenModifier<R>)
 indirect case accessibilityIgnoresInvertColors(_accessibilityIgnoresInvertColorsModifier<R>)
@@ -13004,12 +14082,13 @@ indirect case allowsTightening(_allowsTighteningModifier<R>)
 indirect case allowsWindowActivationEvents(_allowsWindowActivationEventsModifier<R>)
 indirect case animation(_animationModifier<R>)
 indirect case aspectRatio(_aspectRatioModifier<R>)
-indirect case autocorrectionDisabled(_autocorrectionDisabledModifier<R>)
-indirect case background(_backgroundModifier<R>)
+indirect case autocapitalization(_autocapitalizationModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
-            case let .accessibilityAction(modifier):
+            case let .accentColor(modifier):
+    content.modifier(modifier)
+case let .accessibilityAction(modifier):
     content.modifier(modifier)
 case let .accessibilityActions(modifier):
     content.modifier(modifier)
@@ -13033,9 +14112,7 @@ case let .animation(modifier):
     content.modifier(modifier)
 case let .aspectRatio(modifier):
     content.modifier(modifier)
-case let .autocorrectionDisabled(modifier):
-    content.modifier(modifier)
-case let .background(modifier):
+case let .autocapitalization(modifier):
     content.modifier(modifier)
             }
         }
@@ -13043,7 +14120,9 @@ case let .background(modifier):
 }
 extension BuiltinRegistry {
     enum _BuiltinModifierChunk1: ViewModifier {
-        indirect case backgroundStyle(_backgroundStyleModifier<R>)
+        indirect case autocorrectionDisabled(_autocorrectionDisabledModifier<R>)
+indirect case background(_backgroundModifier<R>)
+indirect case backgroundStyle(_backgroundStyleModifier<R>)
 indirect case badge(_badgeModifier<R>)
 indirect case blendMode(_blendModeModifier<R>)
 indirect case blur(_blurModifier<R>)
@@ -13055,12 +14134,14 @@ indirect case clipShape(_clipShapeModifier<R>)
 indirect case clipped(_clippedModifier<R>)
 indirect case colorInvert(_colorInvertModifier<R>)
 indirect case colorMultiply(_colorMultiplyModifier<R>)
-indirect case compositingGroup(_compositingGroupModifier<R>)
-indirect case confirmationDialog(_confirmationDialogModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
-            case let .backgroundStyle(modifier):
+            case let .autocorrectionDisabled(modifier):
+    content.modifier(modifier)
+case let .background(modifier):
+    content.modifier(modifier)
+case let .backgroundStyle(modifier):
     content.modifier(modifier)
 case let .badge(modifier):
     content.modifier(modifier)
@@ -13084,17 +14165,16 @@ case let .colorInvert(modifier):
     content.modifier(modifier)
 case let .colorMultiply(modifier):
     content.modifier(modifier)
-case let .compositingGroup(modifier):
-    content.modifier(modifier)
-case let .confirmationDialog(modifier):
-    content.modifier(modifier)
             }
         }
     }
 }
 extension BuiltinRegistry {
     enum _BuiltinModifierChunk2: ViewModifier {
-        indirect case containerRelativeFrame(_containerRelativeFrameModifier<R>)
+        indirect case colorScheme(_colorSchemeModifier<R>)
+indirect case compositingGroup(_compositingGroupModifier<R>)
+indirect case confirmationDialog(_confirmationDialogModifier<R>)
+indirect case containerRelativeFrame(_containerRelativeFrameModifier<R>)
 indirect case containerShape(_containerShapeModifier<R>)
 indirect case contentShape(_contentShapeModifier<R>)
 indirect case contentTransition(_contentTransitionModifier<R>)
@@ -13103,15 +14183,18 @@ indirect case contrast(_contrastModifier<R>)
 indirect case controlGroupStyle(_controlGroupStyleModifier<R>)
 indirect case controlSize(_controlSizeModifier<R>)
 indirect case coordinateSpace(_coordinateSpaceModifier<R>)
+indirect case cornerRadius(_cornerRadiusModifier<R>)
 indirect case datePickerStyle(_datePickerStyleModifier<R>)
-indirect case defaultAdaptableTabBarPlacement(_defaultAdaptableTabBarPlacementModifier<R>)
-indirect case defaultScrollAnchor(_defaultScrollAnchorModifier<R>)
-indirect case defaultWheelPickerItemHeight(_defaultWheelPickerItemHeightModifier<R>)
-indirect case defersSystemGestures(_defersSystemGesturesModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
-            case let .containerRelativeFrame(modifier):
+            case let .colorScheme(modifier):
+    content.modifier(modifier)
+case let .compositingGroup(modifier):
+    content.modifier(modifier)
+case let .confirmationDialog(modifier):
+    content.modifier(modifier)
+case let .containerRelativeFrame(modifier):
     content.modifier(modifier)
 case let .containerShape(modifier):
     content.modifier(modifier)
@@ -13129,15 +14212,9 @@ case let .controlSize(modifier):
     content.modifier(modifier)
 case let .coordinateSpace(modifier):
     content.modifier(modifier)
+case let .cornerRadius(modifier):
+    content.modifier(modifier)
 case let .datePickerStyle(modifier):
-    content.modifier(modifier)
-case let .defaultAdaptableTabBarPlacement(modifier):
-    content.modifier(modifier)
-case let .defaultScrollAnchor(modifier):
-    content.modifier(modifier)
-case let .defaultWheelPickerItemHeight(modifier):
-    content.modifier(modifier)
-case let .defersSystemGestures(modifier):
     content.modifier(modifier)
             }
         }
@@ -13145,30 +14222,42 @@ case let .defersSystemGestures(modifier):
 }
 extension BuiltinRegistry {
     enum _BuiltinModifierChunk3: ViewModifier {
-        indirect case deleteDisabled(_deleteDisabledModifier<R>)
+        indirect case defaultAdaptableTabBarPlacement(_defaultAdaptableTabBarPlacementModifier<R>)
+indirect case defaultScrollAnchor(_defaultScrollAnchorModifier<R>)
+indirect case defaultWheelPickerItemHeight(_defaultWheelPickerItemHeightModifier<R>)
+indirect case defersSystemGestures(_defersSystemGesturesModifier<R>)
+indirect case deleteDisabled(_deleteDisabledModifier<R>)
 indirect case dialogSuppressionToggle(_dialogSuppressionToggleModifier<R>)
 indirect case digitalCrownAccessory(_digitalCrownAccessoryModifier<R>)
+indirect case disableAutocorrection(_disableAutocorrectionModifier<R>)
 indirect case disabled(_disabledModifier<R>)
+indirect case disclosureGroupStyle(_disclosureGroupStyleModifier<R>)
 indirect case dismissalConfirmationDialog(_dismissalConfirmationDialogModifier<R>)
 indirect case drawingGroup(_drawingGroupModifier<R>)
 indirect case dynamicTypeSize(_dynamicTypeSizeModifier<R>)
-indirect case fileDialogCustomizationID(_fileDialogCustomizationIDModifier<R>)
-indirect case fileDialogImportsUnresolvedAliases(_fileDialogImportsUnresolvedAliasesModifier<R>)
-indirect case findDisabled(_findDisabledModifier<R>)
-indirect case findNavigator(_findNavigatorModifier<R>)
-indirect case fixedSize(_fixedSizeModifier<R>)
-indirect case flipsForRightToLeftLayoutDirection(_flipsForRightToLeftLayoutDirectionModifier<R>)
-indirect case focusEffectDisabled(_focusEffectDisabledModifier<R>)
+indirect case edgesIgnoringSafeArea(_edgesIgnoringSafeAreaModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
-            case let .deleteDisabled(modifier):
+            case let .defaultAdaptableTabBarPlacement(modifier):
+    content.modifier(modifier)
+case let .defaultScrollAnchor(modifier):
+    content.modifier(modifier)
+case let .defaultWheelPickerItemHeight(modifier):
+    content.modifier(modifier)
+case let .defersSystemGestures(modifier):
+    content.modifier(modifier)
+case let .deleteDisabled(modifier):
     content.modifier(modifier)
 case let .dialogSuppressionToggle(modifier):
     content.modifier(modifier)
 case let .digitalCrownAccessory(modifier):
     content.modifier(modifier)
+case let .disableAutocorrection(modifier):
+    content.modifier(modifier)
 case let .disabled(modifier):
+    content.modifier(modifier)
+case let .disclosureGroupStyle(modifier):
     content.modifier(modifier)
 case let .dismissalConfirmationDialog(modifier):
     content.modifier(modifier)
@@ -13176,7 +14265,32 @@ case let .drawingGroup(modifier):
     content.modifier(modifier)
 case let .dynamicTypeSize(modifier):
     content.modifier(modifier)
-case let .fileDialogCustomizationID(modifier):
+case let .edgesIgnoringSafeArea(modifier):
+    content.modifier(modifier)
+            }
+        }
+    }
+}
+extension BuiltinRegistry {
+    enum _BuiltinModifierChunk4: ViewModifier {
+        indirect case fileDialogCustomizationID(_fileDialogCustomizationIDModifier<R>)
+indirect case fileDialogImportsUnresolvedAliases(_fileDialogImportsUnresolvedAliasesModifier<R>)
+indirect case findDisabled(_findDisabledModifier<R>)
+indirect case findNavigator(_findNavigatorModifier<R>)
+indirect case fixedSize(_fixedSizeModifier<R>)
+indirect case flipsForRightToLeftLayoutDirection(_flipsForRightToLeftLayoutDirectionModifier<R>)
+indirect case focusEffectDisabled(_focusEffectDisabledModifier<R>)
+indirect case focusSection(_focusSectionModifier<R>)
+indirect case focusable(_focusableModifier<R>)
+indirect case foregroundColor(_foregroundColorModifier<R>)
+indirect case formStyle(_formStyleModifier<R>)
+indirect case frame(_frameModifier<R>)
+indirect case fullScreenCover(_fullScreenCoverModifier<R>)
+indirect case gaugeStyle(_gaugeStyleModifier<R>)
+        
+        func body(content: Content) -> some View {
+            switch self {
+            case let .fileDialogCustomizationID(modifier):
     content.modifier(modifier)
 case let .fileDialogImportsUnresolvedAliases(modifier):
     content.modifier(modifier)
@@ -13190,32 +14304,11 @@ case let .flipsForRightToLeftLayoutDirection(modifier):
     content.modifier(modifier)
 case let .focusEffectDisabled(modifier):
     content.modifier(modifier)
-            }
-        }
-    }
-}
-extension BuiltinRegistry {
-    enum _BuiltinModifierChunk4: ViewModifier {
-        indirect case focusSection(_focusSectionModifier<R>)
-indirect case focusable(_focusableModifier<R>)
-indirect case formStyle(_formStyleModifier<R>)
-indirect case frame(_frameModifier<R>)
-indirect case fullScreenCover(_fullScreenCoverModifier<R>)
-indirect case gaugeStyle(_gaugeStyleModifier<R>)
-indirect case geometryGroup(_geometryGroupModifier<R>)
-indirect case gesture(_gestureModifier<R>)
-indirect case glassBackgroundEffect(_glassBackgroundEffectModifier<R>)
-indirect case grayscale(_grayscaleModifier<R>)
-indirect case gridCellAnchor(_gridCellAnchorModifier<R>)
-indirect case gridCellColumns(_gridCellColumnsModifier<R>)
-indirect case gridCellUnsizedAxes(_gridCellUnsizedAxesModifier<R>)
-indirect case gridColumnAlignment(_gridColumnAlignmentModifier<R>)
-        
-        func body(content: Content) -> some View {
-            switch self {
-            case let .focusSection(modifier):
+case let .focusSection(modifier):
     content.modifier(modifier)
 case let .focusable(modifier):
+    content.modifier(modifier)
+case let .foregroundColor(modifier):
     content.modifier(modifier)
 case let .formStyle(modifier):
     content.modifier(modifier)
@@ -13225,7 +14318,30 @@ case let .fullScreenCover(modifier):
     content.modifier(modifier)
 case let .gaugeStyle(modifier):
     content.modifier(modifier)
-case let .geometryGroup(modifier):
+            }
+        }
+    }
+}
+extension BuiltinRegistry {
+    enum _BuiltinModifierChunk5: ViewModifier {
+        indirect case geometryGroup(_geometryGroupModifier<R>)
+indirect case gesture(_gestureModifier<R>)
+indirect case glassBackgroundEffect(_glassBackgroundEffectModifier<R>)
+indirect case grayscale(_grayscaleModifier<R>)
+indirect case gridCellAnchor(_gridCellAnchorModifier<R>)
+indirect case gridCellColumns(_gridCellColumnsModifier<R>)
+indirect case gridCellUnsizedAxes(_gridCellUnsizedAxesModifier<R>)
+indirect case gridColumnAlignment(_gridColumnAlignmentModifier<R>)
+indirect case groupBoxStyle(_groupBoxStyleModifier<R>)
+indirect case handGestureShortcut(_handGestureShortcutModifier<R>)
+indirect case handPointerBehavior(_handPointerBehaviorModifier<R>)
+indirect case headerProminence(_headerProminenceModifier<R>)
+indirect case help(_helpModifier<R>)
+indirect case hidden(_hiddenModifier<R>)
+        
+        func body(content: Content) -> some View {
+            switch self {
+            case let .geometryGroup(modifier):
     content.modifier(modifier)
 case let .gesture(modifier):
     content.modifier(modifier)
@@ -13241,30 +14357,7 @@ case let .gridCellUnsizedAxes(modifier):
     content.modifier(modifier)
 case let .gridColumnAlignment(modifier):
     content.modifier(modifier)
-            }
-        }
-    }
-}
-extension BuiltinRegistry {
-    enum _BuiltinModifierChunk5: ViewModifier {
-        indirect case groupBoxStyle(_groupBoxStyleModifier<R>)
-indirect case handGestureShortcut(_handGestureShortcutModifier<R>)
-indirect case handPointerBehavior(_handPointerBehaviorModifier<R>)
-indirect case headerProminence(_headerProminenceModifier<R>)
-indirect case help(_helpModifier<R>)
-indirect case hidden(_hiddenModifier<R>)
-indirect case highPriorityGesture(_highPriorityGestureModifier<R>)
-indirect case horizontalRadioGroupLayout(_horizontalRadioGroupLayoutModifier<R>)
-indirect case hoverEffect(_hoverEffectModifier<R>)
-indirect case hoverEffectDisabled(_hoverEffectDisabledModifier<R>)
-indirect case hoverEffectGroup(_hoverEffectGroupModifier<R>)
-indirect case hueRotation(_hueRotationModifier<R>)
-indirect case ignoresSafeArea(_ignoresSafeAreaModifier<R>)
-indirect case imageScale(_imageScaleModifier<R>)
-        
-        func body(content: Content) -> some View {
-            switch self {
-            case let .groupBoxStyle(modifier):
+case let .groupBoxStyle(modifier):
     content.modifier(modifier)
 case let .handGestureShortcut(modifier):
     content.modifier(modifier)
@@ -13276,7 +14369,30 @@ case let .help(modifier):
     content.modifier(modifier)
 case let .hidden(modifier):
     content.modifier(modifier)
-case let .highPriorityGesture(modifier):
+            }
+        }
+    }
+}
+extension BuiltinRegistry {
+    enum _BuiltinModifierChunk6: ViewModifier {
+        indirect case highPriorityGesture(_highPriorityGestureModifier<R>)
+indirect case horizontalRadioGroupLayout(_horizontalRadioGroupLayoutModifier<R>)
+indirect case hoverEffect(_hoverEffectModifier<R>)
+indirect case hoverEffectDisabled(_hoverEffectDisabledModifier<R>)
+indirect case hoverEffectGroup(_hoverEffectGroupModifier<R>)
+indirect case hueRotation(_hueRotationModifier<R>)
+indirect case ignoresSafeArea(_ignoresSafeAreaModifier<R>)
+indirect case imageScale(_imageScaleModifier<R>)
+indirect case immersiveEnvironmentPicker(_immersiveEnvironmentPickerModifier<R>)
+indirect case indexViewStyle(_indexViewStyleModifier<R>)
+indirect case inspector(_inspectorModifier<R>)
+indirect case inspectorColumnWidth(_inspectorColumnWidthModifier<R>)
+indirect case interactionActivityTrackingTag(_interactionActivityTrackingTagModifier<R>)
+indirect case interactiveDismissDisabled(_interactiveDismissDisabledModifier<R>)
+        
+        func body(content: Content) -> some View {
+            switch self {
+            case let .highPriorityGesture(modifier):
     content.modifier(modifier)
 case let .horizontalRadioGroupLayout(modifier):
     content.modifier(modifier)
@@ -13292,30 +14408,7 @@ case let .ignoresSafeArea(modifier):
     content.modifier(modifier)
 case let .imageScale(modifier):
     content.modifier(modifier)
-            }
-        }
-    }
-}
-extension BuiltinRegistry {
-    enum _BuiltinModifierChunk6: ViewModifier {
-        indirect case immersiveEnvironmentPicker(_immersiveEnvironmentPickerModifier<R>)
-indirect case indexViewStyle(_indexViewStyleModifier<R>)
-indirect case inspector(_inspectorModifier<R>)
-indirect case inspectorColumnWidth(_inspectorColumnWidthModifier<R>)
-indirect case interactionActivityTrackingTag(_interactionActivityTrackingTagModifier<R>)
-indirect case interactiveDismissDisabled(_interactiveDismissDisabledModifier<R>)
-indirect case invalidatableContent(_invalidatableContentModifier<R>)
-indirect case keyboardShortcut(_keyboardShortcutModifier<R>)
-indirect case keyboardType(_keyboardTypeModifier<R>)
-indirect case labelStyle(_labelStyleModifier<R>)
-indirect case labeledContentStyle(_labeledContentStyleModifier<R>)
-indirect case labelsHidden(_labelsHiddenModifier<R>)
-indirect case labelsVisibility(_labelsVisibilityModifier<R>)
-indirect case layoutPriority(_layoutPriorityModifier<R>)
-        
-        func body(content: Content) -> some View {
-            switch self {
-            case let .immersiveEnvironmentPicker(modifier):
+case let .immersiveEnvironmentPicker(modifier):
     content.modifier(modifier)
 case let .indexViewStyle(modifier):
     content.modifier(modifier)
@@ -13327,7 +14420,30 @@ case let .interactionActivityTrackingTag(modifier):
     content.modifier(modifier)
 case let .interactiveDismissDisabled(modifier):
     content.modifier(modifier)
-case let .invalidatableContent(modifier):
+            }
+        }
+    }
+}
+extension BuiltinRegistry {
+    enum _BuiltinModifierChunk7: ViewModifier {
+        indirect case invalidatableContent(_invalidatableContentModifier<R>)
+indirect case keyboardShortcut(_keyboardShortcutModifier<R>)
+indirect case keyboardType(_keyboardTypeModifier<R>)
+indirect case labelStyle(_labelStyleModifier<R>)
+indirect case labeledContentStyle(_labeledContentStyleModifier<R>)
+indirect case labelsHidden(_labelsHiddenModifier<R>)
+indirect case labelsVisibility(_labelsVisibilityModifier<R>)
+indirect case layoutPriority(_layoutPriorityModifier<R>)
+indirect case lineLimit(_lineLimitModifier<R>)
+indirect case lineSpacing(_lineSpacingModifier<R>)
+indirect case listItemTint(_listItemTintModifier<R>)
+indirect case listRowBackground(_listRowBackgroundModifier<R>)
+indirect case listRowHoverEffect(_listRowHoverEffectModifier<R>)
+indirect case listRowHoverEffectDisabled(_listRowHoverEffectDisabledModifier<R>)
+        
+        func body(content: Content) -> some View {
+            switch self {
+            case let .invalidatableContent(modifier):
     content.modifier(modifier)
 case let .keyboardShortcut(modifier):
     content.modifier(modifier)
@@ -13343,30 +14459,7 @@ case let .labelsVisibility(modifier):
     content.modifier(modifier)
 case let .layoutPriority(modifier):
     content.modifier(modifier)
-            }
-        }
-    }
-}
-extension BuiltinRegistry {
-    enum _BuiltinModifierChunk7: ViewModifier {
-        indirect case lineLimit(_lineLimitModifier<R>)
-indirect case lineSpacing(_lineSpacingModifier<R>)
-indirect case listItemTint(_listItemTintModifier<R>)
-indirect case listRowBackground(_listRowBackgroundModifier<R>)
-indirect case listRowHoverEffect(_listRowHoverEffectModifier<R>)
-indirect case listRowHoverEffectDisabled(_listRowHoverEffectDisabledModifier<R>)
-indirect case listRowInsets(_listRowInsetsModifier<R>)
-indirect case listRowSeparator(_listRowSeparatorModifier<R>)
-indirect case listRowSeparatorTint(_listRowSeparatorTintModifier<R>)
-indirect case listRowSpacing(_listRowSpacingModifier<R>)
-indirect case listSectionSeparator(_listSectionSeparatorModifier<R>)
-indirect case listSectionSeparatorTint(_listSectionSeparatorTintModifier<R>)
-indirect case listSectionSpacing(_listSectionSpacingModifier<R>)
-indirect case listStyle(_listStyleModifier<R>)
-        
-        func body(content: Content) -> some View {
-            switch self {
-            case let .lineLimit(modifier):
+case let .lineLimit(modifier):
     content.modifier(modifier)
 case let .lineSpacing(modifier):
     content.modifier(modifier)
@@ -13378,7 +14471,32 @@ case let .listRowHoverEffect(modifier):
     content.modifier(modifier)
 case let .listRowHoverEffectDisabled(modifier):
     content.modifier(modifier)
-case let .listRowInsets(modifier):
+            }
+        }
+    }
+}
+extension BuiltinRegistry {
+    enum _BuiltinModifierChunk8: ViewModifier {
+        indirect case listRowInsets(_listRowInsetsModifier<R>)
+indirect case listRowPlatterColor(_listRowPlatterColorModifier<R>)
+indirect case listRowSeparator(_listRowSeparatorModifier<R>)
+indirect case listRowSeparatorTint(_listRowSeparatorTintModifier<R>)
+indirect case listRowSpacing(_listRowSpacingModifier<R>)
+indirect case listSectionSeparator(_listSectionSeparatorModifier<R>)
+indirect case listSectionSeparatorTint(_listSectionSeparatorTintModifier<R>)
+indirect case listSectionSpacing(_listSectionSpacingModifier<R>)
+indirect case listStyle(_listStyleModifier<R>)
+indirect case luminanceToAlpha(_luminanceToAlphaModifier<R>)
+indirect case materialActiveAppearance(_materialActiveAppearanceModifier<R>)
+indirect case menuButtonStyle(_menuButtonStyleModifier<R>)
+indirect case menuIndicator(_menuIndicatorModifier<R>)
+indirect case menuOrder(_menuOrderModifier<R>)
+        
+        func body(content: Content) -> some View {
+            switch self {
+            case let .listRowInsets(modifier):
+    content.modifier(modifier)
+case let .listRowPlatterColor(modifier):
     content.modifier(modifier)
 case let .listRowSeparator(modifier):
     content.modifier(modifier)
@@ -13394,38 +14512,40 @@ case let .listSectionSpacing(modifier):
     content.modifier(modifier)
 case let .listStyle(modifier):
     content.modifier(modifier)
-            }
-        }
-    }
-}
-extension BuiltinRegistry {
-    enum _BuiltinModifierChunk8: ViewModifier {
-        indirect case luminanceToAlpha(_luminanceToAlphaModifier<R>)
-indirect case materialActiveAppearance(_materialActiveAppearanceModifier<R>)
-indirect case menuIndicator(_menuIndicatorModifier<R>)
-indirect case menuOrder(_menuOrderModifier<R>)
-indirect case menuStyle(_menuStyleModifier<R>)
-indirect case minimumScaleFactor(_minimumScaleFactorModifier<R>)
-indirect case modifierKeyAlternate(_modifierKeyAlternateModifier<R>)
-indirect case moveDisabled(_moveDisabledModifier<R>)
-indirect case multilineTextAlignment(_multilineTextAlignmentModifier<R>)
-indirect case navigationBarBackButtonHidden(_navigationBarBackButtonHiddenModifier<R>)
-indirect case navigationBarTitleDisplayMode(_navigationBarTitleDisplayModeModifier<R>)
-indirect case navigationDestination(_navigationDestinationModifier<R>)
-indirect case navigationSplitViewColumnWidth(_navigationSplitViewColumnWidthModifier<R>)
-indirect case navigationSplitViewStyle(_navigationSplitViewStyleModifier<R>)
-        
-        func body(content: Content) -> some View {
-            switch self {
-            case let .luminanceToAlpha(modifier):
+case let .luminanceToAlpha(modifier):
     content.modifier(modifier)
 case let .materialActiveAppearance(modifier):
+    content.modifier(modifier)
+case let .menuButtonStyle(modifier):
     content.modifier(modifier)
 case let .menuIndicator(modifier):
     content.modifier(modifier)
 case let .menuOrder(modifier):
     content.modifier(modifier)
-case let .menuStyle(modifier):
+            }
+        }
+    }
+}
+extension BuiltinRegistry {
+    enum _BuiltinModifierChunk9: ViewModifier {
+        indirect case menuStyle(_menuStyleModifier<R>)
+indirect case minimumScaleFactor(_minimumScaleFactorModifier<R>)
+indirect case modifierKeyAlternate(_modifierKeyAlternateModifier<R>)
+indirect case moveDisabled(_moveDisabledModifier<R>)
+indirect case multilineTextAlignment(_multilineTextAlignmentModifier<R>)
+indirect case navigationBarBackButtonHidden(_navigationBarBackButtonHiddenModifier<R>)
+indirect case navigationBarHidden(_navigationBarHiddenModifier<R>)
+indirect case navigationBarItems(_navigationBarItemsModifier<R>)
+indirect case navigationBarTitle(_navigationBarTitleModifier<R>)
+indirect case navigationBarTitleDisplayMode(_navigationBarTitleDisplayModeModifier<R>)
+indirect case navigationDestination(_navigationDestinationModifier<R>)
+indirect case navigationSplitViewColumnWidth(_navigationSplitViewColumnWidthModifier<R>)
+indirect case navigationSplitViewStyle(_navigationSplitViewStyleModifier<R>)
+indirect case navigationSubtitle(_navigationSubtitleModifier<R>)
+        
+        func body(content: Content) -> some View {
+            switch self {
+            case let .menuStyle(modifier):
     content.modifier(modifier)
 case let .minimumScaleFactor(modifier):
     content.modifier(modifier)
@@ -13437,6 +14557,12 @@ case let .multilineTextAlignment(modifier):
     content.modifier(modifier)
 case let .navigationBarBackButtonHidden(modifier):
     content.modifier(modifier)
+case let .navigationBarHidden(modifier):
+    content.modifier(modifier)
+case let .navigationBarItems(modifier):
+    content.modifier(modifier)
+case let .navigationBarTitle(modifier):
+    content.modifier(modifier)
 case let .navigationBarTitleDisplayMode(modifier):
     content.modifier(modifier)
 case let .navigationDestination(modifier):
@@ -13445,14 +14571,16 @@ case let .navigationSplitViewColumnWidth(modifier):
     content.modifier(modifier)
 case let .navigationSplitViewStyle(modifier):
     content.modifier(modifier)
+case let .navigationSubtitle(modifier):
+    content.modifier(modifier)
             }
         }
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk9: ViewModifier {
-        indirect case navigationSubtitle(_navigationSubtitleModifier<R>)
-indirect case navigationTitle(_navigationTitleModifier<R>)
+    enum _BuiltinModifierChunk10: ViewModifier {
+        indirect case navigationTitle(_navigationTitleModifier<R>)
+indirect case navigationViewStyle(_navigationViewStyleModifier<R>)
 indirect case offset(_offsetModifier<R>)
 indirect case onAppear(_onAppearModifier<R>)
 indirect case onDeleteCommand(_onDeleteCommandModifier<R>)
@@ -13468,9 +14596,9 @@ indirect case onPencilDoubleTap(_onPencilDoubleTapModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
-            case let .navigationSubtitle(modifier):
+            case let .navigationTitle(modifier):
     content.modifier(modifier)
-case let .navigationTitle(modifier):
+case let .navigationViewStyle(modifier):
     content.modifier(modifier)
 case let .offset(modifier):
     content.modifier(modifier)
@@ -13501,7 +14629,7 @@ case let .onPencilDoubleTap(modifier):
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk10: ViewModifier {
+    enum _BuiltinModifierChunk11: ViewModifier {
         indirect case onPencilSqueeze(_onPencilSqueezeModifier<R>)
 indirect case onPlayPauseCommand(_onPlayPauseCommandModifier<R>)
 indirect case onScrollPhaseChange(_onScrollPhaseChangeModifier<R>)
@@ -13552,7 +14680,7 @@ case let .pointerStyle(modifier):
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk11: ViewModifier {
+    enum _BuiltinModifierChunk12: ViewModifier {
         indirect case pointerVisibility(_pointerVisibilityModifier<R>)
 indirect case popover(_popoverModifier<R>)
 indirect case position(_positionModifier<R>)
@@ -13603,7 +14731,7 @@ case let .privacySensitive(modifier):
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk12: ViewModifier {
+    enum _BuiltinModifierChunk13: ViewModifier {
         indirect case progressViewStyle(_progressViewStyleModifier<R>)
 indirect case projectionEffect(_projectionEffectModifier<R>)
 indirect case redacted(_redactedModifier<R>)
@@ -13654,7 +14782,7 @@ case let .scrollBounceBehavior(modifier):
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk13: ViewModifier {
+    enum _BuiltinModifierChunk14: ViewModifier {
         indirect case scrollClipDisabled(_scrollClipDisabledModifier<R>)
 indirect case scrollContentBackground(_scrollContentBackgroundModifier<R>)
 indirect case scrollDisabled(_scrollDisabledModifier<R>)
@@ -13705,7 +14833,7 @@ case let .sectionActions(modifier):
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk14: ViewModifier {
+    enum _BuiltinModifierChunk15: ViewModifier {
         indirect case selectionDisabled(_selectionDisabledModifier<R>)
 indirect case shadow(_shadowModifier<R>)
 indirect case sheet(_sheetModifier<R>)
@@ -13714,12 +14842,12 @@ indirect case speechAdjustedPitch(_speechAdjustedPitchModifier<R>)
 indirect case speechAlwaysIncludesPunctuation(_speechAlwaysIncludesPunctuationModifier<R>)
 indirect case speechAnnouncementsQueued(_speechAnnouncementsQueuedModifier<R>)
 indirect case speechSpellsOutCharacters(_speechSpellsOutCharactersModifier<R>)
+indirect case statusBar(_statusBarModifier<R>)
 indirect case statusBarHidden(_statusBarHiddenModifier<R>)
 indirect case submitLabel(_submitLabelModifier<R>)
 indirect case submitScope(_submitScopeModifier<R>)
 indirect case supportedVolumeViewpoints(_supportedVolumeViewpointsModifier<R>)
 indirect case swipeActions(_swipeActionsModifier<R>)
-indirect case symbolEffect(_symbolEffectModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
@@ -13739,6 +14867,8 @@ case let .speechAnnouncementsQueued(modifier):
     content.modifier(modifier)
 case let .speechSpellsOutCharacters(modifier):
     content.modifier(modifier)
+case let .statusBar(modifier):
+    content.modifier(modifier)
 case let .statusBarHidden(modifier):
     content.modifier(modifier)
 case let .submitLabel(modifier):
@@ -13749,17 +14879,17 @@ case let .supportedVolumeViewpoints(modifier):
     content.modifier(modifier)
 case let .swipeActions(modifier):
     content.modifier(modifier)
-case let .symbolEffect(modifier):
-    content.modifier(modifier)
             }
         }
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk15: ViewModifier {
-        indirect case symbolEffectsRemoved(_symbolEffectsRemovedModifier<R>)
+    enum _BuiltinModifierChunk16: ViewModifier {
+        indirect case symbolEffect(_symbolEffectModifier<R>)
+indirect case symbolEffectsRemoved(_symbolEffectsRemovedModifier<R>)
 indirect case symbolRenderingMode(_symbolRenderingModeModifier<R>)
 indirect case symbolVariant(_symbolVariantModifier<R>)
+indirect case tabItem(_tabItemModifier<R>)
 indirect case tabViewSidebarBottomBar(_tabViewSidebarBottomBarModifier<R>)
 indirect case tabViewSidebarFooter(_tabViewSidebarFooterModifier<R>)
 indirect case tabViewSidebarHeader(_tabViewSidebarHeaderModifier<R>)
@@ -13769,16 +14899,18 @@ indirect case textCase(_textCaseModifier<R>)
 indirect case textContentType(_textContentTypeModifier<R>)
 indirect case textEditorStyle(_textEditorStyleModifier<R>)
 indirect case textFieldStyle(_textFieldStyleModifier<R>)
-indirect case textInputAutocapitalization(_textInputAutocapitalizationModifier<R>)
-indirect case textInputCompletion(_textInputCompletionModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
-            case let .symbolEffectsRemoved(modifier):
+            case let .symbolEffect(modifier):
+    content.modifier(modifier)
+case let .symbolEffectsRemoved(modifier):
     content.modifier(modifier)
 case let .symbolRenderingMode(modifier):
     content.modifier(modifier)
 case let .symbolVariant(modifier):
+    content.modifier(modifier)
+case let .tabItem(modifier):
     content.modifier(modifier)
 case let .tabViewSidebarBottomBar(modifier):
     content.modifier(modifier)
@@ -13798,17 +14930,15 @@ case let .textEditorStyle(modifier):
     content.modifier(modifier)
 case let .textFieldStyle(modifier):
     content.modifier(modifier)
-case let .textInputAutocapitalization(modifier):
-    content.modifier(modifier)
-case let .textInputCompletion(modifier):
-    content.modifier(modifier)
             }
         }
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk16: ViewModifier {
-        indirect case textInputSuggestions(_textInputSuggestionsModifier<R>)
+    enum _BuiltinModifierChunk17: ViewModifier {
+        indirect case textInputAutocapitalization(_textInputAutocapitalizationModifier<R>)
+indirect case textInputCompletion(_textInputCompletionModifier<R>)
+indirect case textInputSuggestions(_textInputSuggestionsModifier<R>)
 indirect case textSelection(_textSelectionModifier<R>)
 indirect case textSelectionAffinity(_textSelectionAffinityModifier<R>)
 indirect case tint(_tintModifier<R>)
@@ -13820,12 +14950,14 @@ indirect case toolbarColorScheme(_toolbarColorSchemeModifier<R>)
 indirect case toolbarRole(_toolbarRoleModifier<R>)
 indirect case toolbarTitleDisplayMode(_toolbarTitleDisplayModeModifier<R>)
 indirect case toolbarTitleMenu(_toolbarTitleMenuModifier<R>)
-indirect case toolbarVisibility(_toolbarVisibilityModifier<R>)
-indirect case touchBarCustomizationLabel(_touchBarCustomizationLabelModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
-            case let .textInputSuggestions(modifier):
+            case let .textInputAutocapitalization(modifier):
+    content.modifier(modifier)
+case let .textInputCompletion(modifier):
+    content.modifier(modifier)
+case let .textInputSuggestions(modifier):
     content.modifier(modifier)
 case let .textSelection(modifier):
     content.modifier(modifier)
@@ -13849,17 +14981,15 @@ case let .toolbarTitleDisplayMode(modifier):
     content.modifier(modifier)
 case let .toolbarTitleMenu(modifier):
     content.modifier(modifier)
-case let .toolbarVisibility(modifier):
-    content.modifier(modifier)
-case let .touchBarCustomizationLabel(modifier):
-    content.modifier(modifier)
             }
         }
     }
 }
 extension BuiltinRegistry {
-    enum _BuiltinModifierChunk17: ViewModifier {
-        indirect case touchBarItemPrincipal(_touchBarItemPrincipalModifier<R>)
+    enum _BuiltinModifierChunk18: ViewModifier {
+        indirect case toolbarVisibility(_toolbarVisibilityModifier<R>)
+indirect case touchBarCustomizationLabel(_touchBarCustomizationLabelModifier<R>)
+indirect case touchBarItemPrincipal(_touchBarItemPrincipalModifier<R>)
 indirect case transform3DEffect(_transform3DEffectModifier<R>)
 indirect case transformEffect(_transformEffectModifier<R>)
 indirect case transition(_transitionModifier<R>)
@@ -13871,11 +15001,14 @@ indirect case windowDismissBehavior(_windowDismissBehaviorModifier<R>)
 indirect case windowFullScreenBehavior(_windowFullScreenBehaviorModifier<R>)
 indirect case windowMinimizeBehavior(_windowMinimizeBehaviorModifier<R>)
 indirect case windowResizeBehavior(_windowResizeBehaviorModifier<R>)
-indirect case zIndex(_zIndexModifier<R>)
         
         func body(content: Content) -> some View {
             switch self {
-            case let .touchBarItemPrincipal(modifier):
+            case let .toolbarVisibility(modifier):
+    content.modifier(modifier)
+case let .touchBarCustomizationLabel(modifier):
+    content.modifier(modifier)
+case let .touchBarItemPrincipal(modifier):
     content.modifier(modifier)
 case let .transform3DEffect(modifier):
     content.modifier(modifier)
@@ -13899,7 +15032,17 @@ case let .windowMinimizeBehavior(modifier):
     content.modifier(modifier)
 case let .windowResizeBehavior(modifier):
     content.modifier(modifier)
-case let .zIndex(modifier):
+            }
+        }
+    }
+}
+extension BuiltinRegistry {
+    enum _BuiltinModifierChunk19: ViewModifier {
+        indirect case zIndex(_zIndexModifier<R>)
+        
+        func body(content: Content) -> some View {
+            switch self {
+            case let .zIndex(modifier):
     content.modifier(modifier)
             }
         }
@@ -13925,18 +15068,20 @@ indirect case chunk14(_BuiltinModifierChunk14)
 indirect case chunk15(_BuiltinModifierChunk15)
 indirect case chunk16(_BuiltinModifierChunk16)
 indirect case chunk17(_BuiltinModifierChunk17)
-        indirect case _MatchedGeometryEffectModifier(LiveViewNative._MatchedGeometryEffectModifier<R>)
-indirect case _OnSubmitModifier(LiveViewNative._OnSubmitModifier)
-indirect case _PrefersDefaultFocusModifier(LiveViewNative._PrefersDefaultFocusModifier<R>)
-indirect case _NavigationTransitionModifier(LiveViewNative._NavigationTransitionModifier<R>)
-indirect case _Rotation3DEffectModifier(LiveViewNative._Rotation3DEffectModifier<R>)
-indirect case _FocusScopeModifier(LiveViewNative._FocusScopeModifier<R>)
-indirect case _SearchCompletionModifier(LiveViewNative._SearchCompletionModifier<R>)
-indirect case _PerspectiveRotationEffectModifier(LiveViewNative._PerspectiveRotationEffectModifier<R>)
+indirect case chunk18(_BuiltinModifierChunk18)
+indirect case chunk19(_BuiltinModifierChunk19)
+        indirect case _OnSubmitModifier(LiveViewNative._OnSubmitModifier)
+indirect case _MatchedGeometryEffectModifier(LiveViewNative._MatchedGeometryEffectModifier<R>)
 indirect case _PresentationDetentsModifier(LiveViewNative._PresentationDetentsModifier)
-indirect case _SearchScopesModifier(LiveViewNative._SearchScopesModifier<R>)
 indirect case _MatchedTransitionSourceModifier(LiveViewNative._MatchedTransitionSourceModifier<R>)
+indirect case _SearchScopesModifier(LiveViewNative._SearchScopesModifier<R>)
+indirect case _Rotation3DEffectModifier(LiveViewNative._Rotation3DEffectModifier<R>)
+indirect case _PerspectiveRotationEffectModifier(LiveViewNative._PerspectiveRotationEffectModifier<R>)
+indirect case _FocusScopeModifier(LiveViewNative._FocusScopeModifier<R>)
+indirect case _PrefersDefaultFocusModifier(LiveViewNative._PrefersDefaultFocusModifier<R>)
+indirect case _SearchCompletionModifier(LiveViewNative._SearchCompletionModifier<R>)
 indirect case _MaskModifier(LiveViewNative._MaskModifier<R>)
+indirect case _NavigationTransitionModifier(LiveViewNative._NavigationTransitionModifier<R>)
         indirect case _customRegistryModifier(R.CustomModifier)
         indirect case _anyTextModifier(_AnyTextModifier<R>)
         indirect case _anyImageModifier(_AnyImageModifier<R>)
@@ -13981,29 +15126,33 @@ case let .chunk16(chunk):
     content.modifier(chunk)
 case let .chunk17(chunk):
     content.modifier(chunk)
-            case let ._MatchedGeometryEffectModifier(modifier):
+case let .chunk18(chunk):
+    content.modifier(chunk)
+case let .chunk19(chunk):
+    content.modifier(chunk)
+            case let ._OnSubmitModifier(modifier):
     content.modifier(modifier)
-case let ._OnSubmitModifier(modifier):
-    content.modifier(modifier)
-case let ._PrefersDefaultFocusModifier(modifier):
-    content.modifier(modifier)
-case let ._NavigationTransitionModifier(modifier):
-    content.modifier(modifier)
-case let ._Rotation3DEffectModifier(modifier):
-    content.modifier(modifier)
-case let ._FocusScopeModifier(modifier):
-    content.modifier(modifier)
-case let ._SearchCompletionModifier(modifier):
-    content.modifier(modifier)
-case let ._PerspectiveRotationEffectModifier(modifier):
+case let ._MatchedGeometryEffectModifier(modifier):
     content.modifier(modifier)
 case let ._PresentationDetentsModifier(modifier):
     content.modifier(modifier)
-case let ._SearchScopesModifier(modifier):
-    content.modifier(modifier)
 case let ._MatchedTransitionSourceModifier(modifier):
     content.modifier(modifier)
+case let ._SearchScopesModifier(modifier):
+    content.modifier(modifier)
+case let ._Rotation3DEffectModifier(modifier):
+    content.modifier(modifier)
+case let ._PerspectiveRotationEffectModifier(modifier):
+    content.modifier(modifier)
+case let ._FocusScopeModifier(modifier):
+    content.modifier(modifier)
+case let ._PrefersDefaultFocusModifier(modifier):
+    content.modifier(modifier)
+case let ._SearchCompletionModifier(modifier):
+    content.modifier(modifier)
 case let ._MaskModifier(modifier):
+    content.modifier(modifier)
+case let ._NavigationTransitionModifier(modifier):
     content.modifier(modifier)
             case let ._customRegistryModifier(modifier):
                 content.modifier(modifier)
@@ -14030,7 +15179,8 @@ case let ._MaskModifier(modifier):
             
             func parse(_ input: inout Substring.UTF8View) throws -> Output {
                 let parsers = [
-                    _accessibilityActionModifier<R>.name: _accessibilityActionModifier<R>.parser(in: context).map({ Output.chunk0(.accessibilityAction($0)) }).eraseToAnyParser(),
+                    _accentColorModifier<R>.name: _accentColorModifier<R>.parser(in: context).map({ Output.chunk0(.accentColor($0)) }).eraseToAnyParser(),
+_accessibilityActionModifier<R>.name: _accessibilityActionModifier<R>.parser(in: context).map({ Output.chunk0(.accessibilityAction($0)) }).eraseToAnyParser(),
 _accessibilityActionsModifier<R>.name: _accessibilityActionsModifier<R>.parser(in: context).map({ Output.chunk0(.accessibilityActions($0)) }).eraseToAnyParser(),
 _accessibilityChildrenModifier<R>.name: _accessibilityChildrenModifier<R>.parser(in: context).map({ Output.chunk0(.accessibilityChildren($0)) }).eraseToAnyParser(),
 _accessibilityIgnoresInvertColorsModifier<R>.name: _accessibilityIgnoresInvertColorsModifier<R>.parser(in: context).map({ Output.chunk0(.accessibilityIgnoresInvertColors($0)) }).eraseToAnyParser(),
@@ -14042,8 +15192,9 @@ _allowsTighteningModifier<R>.name: _allowsTighteningModifier<R>.parser(in: conte
 _allowsWindowActivationEventsModifier<R>.name: _allowsWindowActivationEventsModifier<R>.parser(in: context).map({ Output.chunk0(.allowsWindowActivationEvents($0)) }).eraseToAnyParser(),
 _animationModifier<R>.name: _animationModifier<R>.parser(in: context).map({ Output.chunk0(.animation($0)) }).eraseToAnyParser(),
 _aspectRatioModifier<R>.name: _aspectRatioModifier<R>.parser(in: context).map({ Output.chunk0(.aspectRatio($0)) }).eraseToAnyParser(),
-_autocorrectionDisabledModifier<R>.name: _autocorrectionDisabledModifier<R>.parser(in: context).map({ Output.chunk0(.autocorrectionDisabled($0)) }).eraseToAnyParser(),
-_backgroundModifier<R>.name: _backgroundModifier<R>.parser(in: context).map({ Output.chunk0(.background($0)) }).eraseToAnyParser(),
+_autocapitalizationModifier<R>.name: _autocapitalizationModifier<R>.parser(in: context).map({ Output.chunk0(.autocapitalization($0)) }).eraseToAnyParser(),
+_autocorrectionDisabledModifier<R>.name: _autocorrectionDisabledModifier<R>.parser(in: context).map({ Output.chunk1(.autocorrectionDisabled($0)) }).eraseToAnyParser(),
+_backgroundModifier<R>.name: _backgroundModifier<R>.parser(in: context).map({ Output.chunk1(.background($0)) }).eraseToAnyParser(),
 _backgroundStyleModifier<R>.name: _backgroundStyleModifier<R>.parser(in: context).map({ Output.chunk1(.backgroundStyle($0)) }).eraseToAnyParser(),
 _badgeModifier<R>.name: _badgeModifier<R>.parser(in: context).map({ Output.chunk1(.badge($0)) }).eraseToAnyParser(),
 _blendModeModifier<R>.name: _blendModeModifier<R>.parser(in: context).map({ Output.chunk1(.blendMode($0)) }).eraseToAnyParser(),
@@ -14056,8 +15207,9 @@ _clipShapeModifier<R>.name: _clipShapeModifier<R>.parser(in: context).map({ Outp
 _clippedModifier<R>.name: _clippedModifier<R>.parser(in: context).map({ Output.chunk1(.clipped($0)) }).eraseToAnyParser(),
 _colorInvertModifier<R>.name: _colorInvertModifier<R>.parser(in: context).map({ Output.chunk1(.colorInvert($0)) }).eraseToAnyParser(),
 _colorMultiplyModifier<R>.name: _colorMultiplyModifier<R>.parser(in: context).map({ Output.chunk1(.colorMultiply($0)) }).eraseToAnyParser(),
-_compositingGroupModifier<R>.name: _compositingGroupModifier<R>.parser(in: context).map({ Output.chunk1(.compositingGroup($0)) }).eraseToAnyParser(),
-_confirmationDialogModifier<R>.name: _confirmationDialogModifier<R>.parser(in: context).map({ Output.chunk1(.confirmationDialog($0)) }).eraseToAnyParser(),
+_colorSchemeModifier<R>.name: _colorSchemeModifier<R>.parser(in: context).map({ Output.chunk2(.colorScheme($0)) }).eraseToAnyParser(),
+_compositingGroupModifier<R>.name: _compositingGroupModifier<R>.parser(in: context).map({ Output.chunk2(.compositingGroup($0)) }).eraseToAnyParser(),
+_confirmationDialogModifier<R>.name: _confirmationDialogModifier<R>.parser(in: context).map({ Output.chunk2(.confirmationDialog($0)) }).eraseToAnyParser(),
 _containerRelativeFrameModifier<R>.name: _containerRelativeFrameModifier<R>.parser(in: context).map({ Output.chunk2(.containerRelativeFrame($0)) }).eraseToAnyParser(),
 _containerShapeModifier<R>.name: _containerShapeModifier<R>.parser(in: context).map({ Output.chunk2(.containerShape($0)) }).eraseToAnyParser(),
 _contentShapeModifier<R>.name: _contentShapeModifier<R>.parser(in: context).map({ Output.chunk2(.contentShape($0)) }).eraseToAnyParser(),
@@ -14067,232 +15219,245 @@ _contrastModifier<R>.name: _contrastModifier<R>.parser(in: context).map({ Output
 _controlGroupStyleModifier<R>.name: _controlGroupStyleModifier<R>.parser(in: context).map({ Output.chunk2(.controlGroupStyle($0)) }).eraseToAnyParser(),
 _controlSizeModifier<R>.name: _controlSizeModifier<R>.parser(in: context).map({ Output.chunk2(.controlSize($0)) }).eraseToAnyParser(),
 _coordinateSpaceModifier<R>.name: _coordinateSpaceModifier<R>.parser(in: context).map({ Output.chunk2(.coordinateSpace($0)) }).eraseToAnyParser(),
+_cornerRadiusModifier<R>.name: _cornerRadiusModifier<R>.parser(in: context).map({ Output.chunk2(.cornerRadius($0)) }).eraseToAnyParser(),
 _datePickerStyleModifier<R>.name: _datePickerStyleModifier<R>.parser(in: context).map({ Output.chunk2(.datePickerStyle($0)) }).eraseToAnyParser(),
-_defaultAdaptableTabBarPlacementModifier<R>.name: _defaultAdaptableTabBarPlacementModifier<R>.parser(in: context).map({ Output.chunk2(.defaultAdaptableTabBarPlacement($0)) }).eraseToAnyParser(),
-_defaultScrollAnchorModifier<R>.name: _defaultScrollAnchorModifier<R>.parser(in: context).map({ Output.chunk2(.defaultScrollAnchor($0)) }).eraseToAnyParser(),
-_defaultWheelPickerItemHeightModifier<R>.name: _defaultWheelPickerItemHeightModifier<R>.parser(in: context).map({ Output.chunk2(.defaultWheelPickerItemHeight($0)) }).eraseToAnyParser(),
-_defersSystemGesturesModifier<R>.name: _defersSystemGesturesModifier<R>.parser(in: context).map({ Output.chunk2(.defersSystemGestures($0)) }).eraseToAnyParser(),
+_defaultAdaptableTabBarPlacementModifier<R>.name: _defaultAdaptableTabBarPlacementModifier<R>.parser(in: context).map({ Output.chunk3(.defaultAdaptableTabBarPlacement($0)) }).eraseToAnyParser(),
+_defaultScrollAnchorModifier<R>.name: _defaultScrollAnchorModifier<R>.parser(in: context).map({ Output.chunk3(.defaultScrollAnchor($0)) }).eraseToAnyParser(),
+_defaultWheelPickerItemHeightModifier<R>.name: _defaultWheelPickerItemHeightModifier<R>.parser(in: context).map({ Output.chunk3(.defaultWheelPickerItemHeight($0)) }).eraseToAnyParser(),
+_defersSystemGesturesModifier<R>.name: _defersSystemGesturesModifier<R>.parser(in: context).map({ Output.chunk3(.defersSystemGestures($0)) }).eraseToAnyParser(),
 _deleteDisabledModifier<R>.name: _deleteDisabledModifier<R>.parser(in: context).map({ Output.chunk3(.deleteDisabled($0)) }).eraseToAnyParser(),
 _dialogSuppressionToggleModifier<R>.name: _dialogSuppressionToggleModifier<R>.parser(in: context).map({ Output.chunk3(.dialogSuppressionToggle($0)) }).eraseToAnyParser(),
 _digitalCrownAccessoryModifier<R>.name: _digitalCrownAccessoryModifier<R>.parser(in: context).map({ Output.chunk3(.digitalCrownAccessory($0)) }).eraseToAnyParser(),
+_disableAutocorrectionModifier<R>.name: _disableAutocorrectionModifier<R>.parser(in: context).map({ Output.chunk3(.disableAutocorrection($0)) }).eraseToAnyParser(),
 _disabledModifier<R>.name: _disabledModifier<R>.parser(in: context).map({ Output.chunk3(.disabled($0)) }).eraseToAnyParser(),
+_disclosureGroupStyleModifier<R>.name: _disclosureGroupStyleModifier<R>.parser(in: context).map({ Output.chunk3(.disclosureGroupStyle($0)) }).eraseToAnyParser(),
 _dismissalConfirmationDialogModifier<R>.name: _dismissalConfirmationDialogModifier<R>.parser(in: context).map({ Output.chunk3(.dismissalConfirmationDialog($0)) }).eraseToAnyParser(),
 _drawingGroupModifier<R>.name: _drawingGroupModifier<R>.parser(in: context).map({ Output.chunk3(.drawingGroup($0)) }).eraseToAnyParser(),
 _dynamicTypeSizeModifier<R>.name: _dynamicTypeSizeModifier<R>.parser(in: context).map({ Output.chunk3(.dynamicTypeSize($0)) }).eraseToAnyParser(),
-_fileDialogCustomizationIDModifier<R>.name: _fileDialogCustomizationIDModifier<R>.parser(in: context).map({ Output.chunk3(.fileDialogCustomizationID($0)) }).eraseToAnyParser(),
-_fileDialogImportsUnresolvedAliasesModifier<R>.name: _fileDialogImportsUnresolvedAliasesModifier<R>.parser(in: context).map({ Output.chunk3(.fileDialogImportsUnresolvedAliases($0)) }).eraseToAnyParser(),
-_findDisabledModifier<R>.name: _findDisabledModifier<R>.parser(in: context).map({ Output.chunk3(.findDisabled($0)) }).eraseToAnyParser(),
-_findNavigatorModifier<R>.name: _findNavigatorModifier<R>.parser(in: context).map({ Output.chunk3(.findNavigator($0)) }).eraseToAnyParser(),
-_fixedSizeModifier<R>.name: _fixedSizeModifier<R>.parser(in: context).map({ Output.chunk3(.fixedSize($0)) }).eraseToAnyParser(),
-_flipsForRightToLeftLayoutDirectionModifier<R>.name: _flipsForRightToLeftLayoutDirectionModifier<R>.parser(in: context).map({ Output.chunk3(.flipsForRightToLeftLayoutDirection($0)) }).eraseToAnyParser(),
-_focusEffectDisabledModifier<R>.name: _focusEffectDisabledModifier<R>.parser(in: context).map({ Output.chunk3(.focusEffectDisabled($0)) }).eraseToAnyParser(),
+_edgesIgnoringSafeAreaModifier<R>.name: _edgesIgnoringSafeAreaModifier<R>.parser(in: context).map({ Output.chunk3(.edgesIgnoringSafeArea($0)) }).eraseToAnyParser(),
+_fileDialogCustomizationIDModifier<R>.name: _fileDialogCustomizationIDModifier<R>.parser(in: context).map({ Output.chunk4(.fileDialogCustomizationID($0)) }).eraseToAnyParser(),
+_fileDialogImportsUnresolvedAliasesModifier<R>.name: _fileDialogImportsUnresolvedAliasesModifier<R>.parser(in: context).map({ Output.chunk4(.fileDialogImportsUnresolvedAliases($0)) }).eraseToAnyParser(),
+_findDisabledModifier<R>.name: _findDisabledModifier<R>.parser(in: context).map({ Output.chunk4(.findDisabled($0)) }).eraseToAnyParser(),
+_findNavigatorModifier<R>.name: _findNavigatorModifier<R>.parser(in: context).map({ Output.chunk4(.findNavigator($0)) }).eraseToAnyParser(),
+_fixedSizeModifier<R>.name: _fixedSizeModifier<R>.parser(in: context).map({ Output.chunk4(.fixedSize($0)) }).eraseToAnyParser(),
+_flipsForRightToLeftLayoutDirectionModifier<R>.name: _flipsForRightToLeftLayoutDirectionModifier<R>.parser(in: context).map({ Output.chunk4(.flipsForRightToLeftLayoutDirection($0)) }).eraseToAnyParser(),
+_focusEffectDisabledModifier<R>.name: _focusEffectDisabledModifier<R>.parser(in: context).map({ Output.chunk4(.focusEffectDisabled($0)) }).eraseToAnyParser(),
 _focusSectionModifier<R>.name: _focusSectionModifier<R>.parser(in: context).map({ Output.chunk4(.focusSection($0)) }).eraseToAnyParser(),
 _focusableModifier<R>.name: _focusableModifier<R>.parser(in: context).map({ Output.chunk4(.focusable($0)) }).eraseToAnyParser(),
+_foregroundColorModifier<R>.name: _foregroundColorModifier<R>.parser(in: context).map({ Output.chunk4(.foregroundColor($0)) }).eraseToAnyParser(),
 _formStyleModifier<R>.name: _formStyleModifier<R>.parser(in: context).map({ Output.chunk4(.formStyle($0)) }).eraseToAnyParser(),
 _frameModifier<R>.name: _frameModifier<R>.parser(in: context).map({ Output.chunk4(.frame($0)) }).eraseToAnyParser(),
 _fullScreenCoverModifier<R>.name: _fullScreenCoverModifier<R>.parser(in: context).map({ Output.chunk4(.fullScreenCover($0)) }).eraseToAnyParser(),
 _gaugeStyleModifier<R>.name: _gaugeStyleModifier<R>.parser(in: context).map({ Output.chunk4(.gaugeStyle($0)) }).eraseToAnyParser(),
-_geometryGroupModifier<R>.name: _geometryGroupModifier<R>.parser(in: context).map({ Output.chunk4(.geometryGroup($0)) }).eraseToAnyParser(),
-_gestureModifier<R>.name: _gestureModifier<R>.parser(in: context).map({ Output.chunk4(.gesture($0)) }).eraseToAnyParser(),
-_glassBackgroundEffectModifier<R>.name: _glassBackgroundEffectModifier<R>.parser(in: context).map({ Output.chunk4(.glassBackgroundEffect($0)) }).eraseToAnyParser(),
-_grayscaleModifier<R>.name: _grayscaleModifier<R>.parser(in: context).map({ Output.chunk4(.grayscale($0)) }).eraseToAnyParser(),
-_gridCellAnchorModifier<R>.name: _gridCellAnchorModifier<R>.parser(in: context).map({ Output.chunk4(.gridCellAnchor($0)) }).eraseToAnyParser(),
-_gridCellColumnsModifier<R>.name: _gridCellColumnsModifier<R>.parser(in: context).map({ Output.chunk4(.gridCellColumns($0)) }).eraseToAnyParser(),
-_gridCellUnsizedAxesModifier<R>.name: _gridCellUnsizedAxesModifier<R>.parser(in: context).map({ Output.chunk4(.gridCellUnsizedAxes($0)) }).eraseToAnyParser(),
-_gridColumnAlignmentModifier<R>.name: _gridColumnAlignmentModifier<R>.parser(in: context).map({ Output.chunk4(.gridColumnAlignment($0)) }).eraseToAnyParser(),
+_geometryGroupModifier<R>.name: _geometryGroupModifier<R>.parser(in: context).map({ Output.chunk5(.geometryGroup($0)) }).eraseToAnyParser(),
+_gestureModifier<R>.name: _gestureModifier<R>.parser(in: context).map({ Output.chunk5(.gesture($0)) }).eraseToAnyParser(),
+_glassBackgroundEffectModifier<R>.name: _glassBackgroundEffectModifier<R>.parser(in: context).map({ Output.chunk5(.glassBackgroundEffect($0)) }).eraseToAnyParser(),
+_grayscaleModifier<R>.name: _grayscaleModifier<R>.parser(in: context).map({ Output.chunk5(.grayscale($0)) }).eraseToAnyParser(),
+_gridCellAnchorModifier<R>.name: _gridCellAnchorModifier<R>.parser(in: context).map({ Output.chunk5(.gridCellAnchor($0)) }).eraseToAnyParser(),
+_gridCellColumnsModifier<R>.name: _gridCellColumnsModifier<R>.parser(in: context).map({ Output.chunk5(.gridCellColumns($0)) }).eraseToAnyParser(),
+_gridCellUnsizedAxesModifier<R>.name: _gridCellUnsizedAxesModifier<R>.parser(in: context).map({ Output.chunk5(.gridCellUnsizedAxes($0)) }).eraseToAnyParser(),
+_gridColumnAlignmentModifier<R>.name: _gridColumnAlignmentModifier<R>.parser(in: context).map({ Output.chunk5(.gridColumnAlignment($0)) }).eraseToAnyParser(),
 _groupBoxStyleModifier<R>.name: _groupBoxStyleModifier<R>.parser(in: context).map({ Output.chunk5(.groupBoxStyle($0)) }).eraseToAnyParser(),
 _handGestureShortcutModifier<R>.name: _handGestureShortcutModifier<R>.parser(in: context).map({ Output.chunk5(.handGestureShortcut($0)) }).eraseToAnyParser(),
 _handPointerBehaviorModifier<R>.name: _handPointerBehaviorModifier<R>.parser(in: context).map({ Output.chunk5(.handPointerBehavior($0)) }).eraseToAnyParser(),
 _headerProminenceModifier<R>.name: _headerProminenceModifier<R>.parser(in: context).map({ Output.chunk5(.headerProminence($0)) }).eraseToAnyParser(),
 _helpModifier<R>.name: _helpModifier<R>.parser(in: context).map({ Output.chunk5(.help($0)) }).eraseToAnyParser(),
 _hiddenModifier<R>.name: _hiddenModifier<R>.parser(in: context).map({ Output.chunk5(.hidden($0)) }).eraseToAnyParser(),
-_highPriorityGestureModifier<R>.name: _highPriorityGestureModifier<R>.parser(in: context).map({ Output.chunk5(.highPriorityGesture($0)) }).eraseToAnyParser(),
-_horizontalRadioGroupLayoutModifier<R>.name: _horizontalRadioGroupLayoutModifier<R>.parser(in: context).map({ Output.chunk5(.horizontalRadioGroupLayout($0)) }).eraseToAnyParser(),
-_hoverEffectModifier<R>.name: _hoverEffectModifier<R>.parser(in: context).map({ Output.chunk5(.hoverEffect($0)) }).eraseToAnyParser(),
-_hoverEffectDisabledModifier<R>.name: _hoverEffectDisabledModifier<R>.parser(in: context).map({ Output.chunk5(.hoverEffectDisabled($0)) }).eraseToAnyParser(),
-_hoverEffectGroupModifier<R>.name: _hoverEffectGroupModifier<R>.parser(in: context).map({ Output.chunk5(.hoverEffectGroup($0)) }).eraseToAnyParser(),
-_hueRotationModifier<R>.name: _hueRotationModifier<R>.parser(in: context).map({ Output.chunk5(.hueRotation($0)) }).eraseToAnyParser(),
-_ignoresSafeAreaModifier<R>.name: _ignoresSafeAreaModifier<R>.parser(in: context).map({ Output.chunk5(.ignoresSafeArea($0)) }).eraseToAnyParser(),
-_imageScaleModifier<R>.name: _imageScaleModifier<R>.parser(in: context).map({ Output.chunk5(.imageScale($0)) }).eraseToAnyParser(),
+_highPriorityGestureModifier<R>.name: _highPriorityGestureModifier<R>.parser(in: context).map({ Output.chunk6(.highPriorityGesture($0)) }).eraseToAnyParser(),
+_horizontalRadioGroupLayoutModifier<R>.name: _horizontalRadioGroupLayoutModifier<R>.parser(in: context).map({ Output.chunk6(.horizontalRadioGroupLayout($0)) }).eraseToAnyParser(),
+_hoverEffectModifier<R>.name: _hoverEffectModifier<R>.parser(in: context).map({ Output.chunk6(.hoverEffect($0)) }).eraseToAnyParser(),
+_hoverEffectDisabledModifier<R>.name: _hoverEffectDisabledModifier<R>.parser(in: context).map({ Output.chunk6(.hoverEffectDisabled($0)) }).eraseToAnyParser(),
+_hoverEffectGroupModifier<R>.name: _hoverEffectGroupModifier<R>.parser(in: context).map({ Output.chunk6(.hoverEffectGroup($0)) }).eraseToAnyParser(),
+_hueRotationModifier<R>.name: _hueRotationModifier<R>.parser(in: context).map({ Output.chunk6(.hueRotation($0)) }).eraseToAnyParser(),
+_ignoresSafeAreaModifier<R>.name: _ignoresSafeAreaModifier<R>.parser(in: context).map({ Output.chunk6(.ignoresSafeArea($0)) }).eraseToAnyParser(),
+_imageScaleModifier<R>.name: _imageScaleModifier<R>.parser(in: context).map({ Output.chunk6(.imageScale($0)) }).eraseToAnyParser(),
 _immersiveEnvironmentPickerModifier<R>.name: _immersiveEnvironmentPickerModifier<R>.parser(in: context).map({ Output.chunk6(.immersiveEnvironmentPicker($0)) }).eraseToAnyParser(),
 _indexViewStyleModifier<R>.name: _indexViewStyleModifier<R>.parser(in: context).map({ Output.chunk6(.indexViewStyle($0)) }).eraseToAnyParser(),
 _inspectorModifier<R>.name: _inspectorModifier<R>.parser(in: context).map({ Output.chunk6(.inspector($0)) }).eraseToAnyParser(),
 _inspectorColumnWidthModifier<R>.name: _inspectorColumnWidthModifier<R>.parser(in: context).map({ Output.chunk6(.inspectorColumnWidth($0)) }).eraseToAnyParser(),
 _interactionActivityTrackingTagModifier<R>.name: _interactionActivityTrackingTagModifier<R>.parser(in: context).map({ Output.chunk6(.interactionActivityTrackingTag($0)) }).eraseToAnyParser(),
 _interactiveDismissDisabledModifier<R>.name: _interactiveDismissDisabledModifier<R>.parser(in: context).map({ Output.chunk6(.interactiveDismissDisabled($0)) }).eraseToAnyParser(),
-_invalidatableContentModifier<R>.name: _invalidatableContentModifier<R>.parser(in: context).map({ Output.chunk6(.invalidatableContent($0)) }).eraseToAnyParser(),
-_keyboardShortcutModifier<R>.name: _keyboardShortcutModifier<R>.parser(in: context).map({ Output.chunk6(.keyboardShortcut($0)) }).eraseToAnyParser(),
-_keyboardTypeModifier<R>.name: _keyboardTypeModifier<R>.parser(in: context).map({ Output.chunk6(.keyboardType($0)) }).eraseToAnyParser(),
-_labelStyleModifier<R>.name: _labelStyleModifier<R>.parser(in: context).map({ Output.chunk6(.labelStyle($0)) }).eraseToAnyParser(),
-_labeledContentStyleModifier<R>.name: _labeledContentStyleModifier<R>.parser(in: context).map({ Output.chunk6(.labeledContentStyle($0)) }).eraseToAnyParser(),
-_labelsHiddenModifier<R>.name: _labelsHiddenModifier<R>.parser(in: context).map({ Output.chunk6(.labelsHidden($0)) }).eraseToAnyParser(),
-_labelsVisibilityModifier<R>.name: _labelsVisibilityModifier<R>.parser(in: context).map({ Output.chunk6(.labelsVisibility($0)) }).eraseToAnyParser(),
-_layoutPriorityModifier<R>.name: _layoutPriorityModifier<R>.parser(in: context).map({ Output.chunk6(.layoutPriority($0)) }).eraseToAnyParser(),
+_invalidatableContentModifier<R>.name: _invalidatableContentModifier<R>.parser(in: context).map({ Output.chunk7(.invalidatableContent($0)) }).eraseToAnyParser(),
+_keyboardShortcutModifier<R>.name: _keyboardShortcutModifier<R>.parser(in: context).map({ Output.chunk7(.keyboardShortcut($0)) }).eraseToAnyParser(),
+_keyboardTypeModifier<R>.name: _keyboardTypeModifier<R>.parser(in: context).map({ Output.chunk7(.keyboardType($0)) }).eraseToAnyParser(),
+_labelStyleModifier<R>.name: _labelStyleModifier<R>.parser(in: context).map({ Output.chunk7(.labelStyle($0)) }).eraseToAnyParser(),
+_labeledContentStyleModifier<R>.name: _labeledContentStyleModifier<R>.parser(in: context).map({ Output.chunk7(.labeledContentStyle($0)) }).eraseToAnyParser(),
+_labelsHiddenModifier<R>.name: _labelsHiddenModifier<R>.parser(in: context).map({ Output.chunk7(.labelsHidden($0)) }).eraseToAnyParser(),
+_labelsVisibilityModifier<R>.name: _labelsVisibilityModifier<R>.parser(in: context).map({ Output.chunk7(.labelsVisibility($0)) }).eraseToAnyParser(),
+_layoutPriorityModifier<R>.name: _layoutPriorityModifier<R>.parser(in: context).map({ Output.chunk7(.layoutPriority($0)) }).eraseToAnyParser(),
 _lineLimitModifier<R>.name: _lineLimitModifier<R>.parser(in: context).map({ Output.chunk7(.lineLimit($0)) }).eraseToAnyParser(),
 _lineSpacingModifier<R>.name: _lineSpacingModifier<R>.parser(in: context).map({ Output.chunk7(.lineSpacing($0)) }).eraseToAnyParser(),
 _listItemTintModifier<R>.name: _listItemTintModifier<R>.parser(in: context).map({ Output.chunk7(.listItemTint($0)) }).eraseToAnyParser(),
 _listRowBackgroundModifier<R>.name: _listRowBackgroundModifier<R>.parser(in: context).map({ Output.chunk7(.listRowBackground($0)) }).eraseToAnyParser(),
 _listRowHoverEffectModifier<R>.name: _listRowHoverEffectModifier<R>.parser(in: context).map({ Output.chunk7(.listRowHoverEffect($0)) }).eraseToAnyParser(),
 _listRowHoverEffectDisabledModifier<R>.name: _listRowHoverEffectDisabledModifier<R>.parser(in: context).map({ Output.chunk7(.listRowHoverEffectDisabled($0)) }).eraseToAnyParser(),
-_listRowInsetsModifier<R>.name: _listRowInsetsModifier<R>.parser(in: context).map({ Output.chunk7(.listRowInsets($0)) }).eraseToAnyParser(),
-_listRowSeparatorModifier<R>.name: _listRowSeparatorModifier<R>.parser(in: context).map({ Output.chunk7(.listRowSeparator($0)) }).eraseToAnyParser(),
-_listRowSeparatorTintModifier<R>.name: _listRowSeparatorTintModifier<R>.parser(in: context).map({ Output.chunk7(.listRowSeparatorTint($0)) }).eraseToAnyParser(),
-_listRowSpacingModifier<R>.name: _listRowSpacingModifier<R>.parser(in: context).map({ Output.chunk7(.listRowSpacing($0)) }).eraseToAnyParser(),
-_listSectionSeparatorModifier<R>.name: _listSectionSeparatorModifier<R>.parser(in: context).map({ Output.chunk7(.listSectionSeparator($0)) }).eraseToAnyParser(),
-_listSectionSeparatorTintModifier<R>.name: _listSectionSeparatorTintModifier<R>.parser(in: context).map({ Output.chunk7(.listSectionSeparatorTint($0)) }).eraseToAnyParser(),
-_listSectionSpacingModifier<R>.name: _listSectionSpacingModifier<R>.parser(in: context).map({ Output.chunk7(.listSectionSpacing($0)) }).eraseToAnyParser(),
-_listStyleModifier<R>.name: _listStyleModifier<R>.parser(in: context).map({ Output.chunk7(.listStyle($0)) }).eraseToAnyParser(),
+_listRowInsetsModifier<R>.name: _listRowInsetsModifier<R>.parser(in: context).map({ Output.chunk8(.listRowInsets($0)) }).eraseToAnyParser(),
+_listRowPlatterColorModifier<R>.name: _listRowPlatterColorModifier<R>.parser(in: context).map({ Output.chunk8(.listRowPlatterColor($0)) }).eraseToAnyParser(),
+_listRowSeparatorModifier<R>.name: _listRowSeparatorModifier<R>.parser(in: context).map({ Output.chunk8(.listRowSeparator($0)) }).eraseToAnyParser(),
+_listRowSeparatorTintModifier<R>.name: _listRowSeparatorTintModifier<R>.parser(in: context).map({ Output.chunk8(.listRowSeparatorTint($0)) }).eraseToAnyParser(),
+_listRowSpacingModifier<R>.name: _listRowSpacingModifier<R>.parser(in: context).map({ Output.chunk8(.listRowSpacing($0)) }).eraseToAnyParser(),
+_listSectionSeparatorModifier<R>.name: _listSectionSeparatorModifier<R>.parser(in: context).map({ Output.chunk8(.listSectionSeparator($0)) }).eraseToAnyParser(),
+_listSectionSeparatorTintModifier<R>.name: _listSectionSeparatorTintModifier<R>.parser(in: context).map({ Output.chunk8(.listSectionSeparatorTint($0)) }).eraseToAnyParser(),
+_listSectionSpacingModifier<R>.name: _listSectionSpacingModifier<R>.parser(in: context).map({ Output.chunk8(.listSectionSpacing($0)) }).eraseToAnyParser(),
+_listStyleModifier<R>.name: _listStyleModifier<R>.parser(in: context).map({ Output.chunk8(.listStyle($0)) }).eraseToAnyParser(),
 _luminanceToAlphaModifier<R>.name: _luminanceToAlphaModifier<R>.parser(in: context).map({ Output.chunk8(.luminanceToAlpha($0)) }).eraseToAnyParser(),
 _materialActiveAppearanceModifier<R>.name: _materialActiveAppearanceModifier<R>.parser(in: context).map({ Output.chunk8(.materialActiveAppearance($0)) }).eraseToAnyParser(),
+_menuButtonStyleModifier<R>.name: _menuButtonStyleModifier<R>.parser(in: context).map({ Output.chunk8(.menuButtonStyle($0)) }).eraseToAnyParser(),
 _menuIndicatorModifier<R>.name: _menuIndicatorModifier<R>.parser(in: context).map({ Output.chunk8(.menuIndicator($0)) }).eraseToAnyParser(),
 _menuOrderModifier<R>.name: _menuOrderModifier<R>.parser(in: context).map({ Output.chunk8(.menuOrder($0)) }).eraseToAnyParser(),
-_menuStyleModifier<R>.name: _menuStyleModifier<R>.parser(in: context).map({ Output.chunk8(.menuStyle($0)) }).eraseToAnyParser(),
-_minimumScaleFactorModifier<R>.name: _minimumScaleFactorModifier<R>.parser(in: context).map({ Output.chunk8(.minimumScaleFactor($0)) }).eraseToAnyParser(),
-_modifierKeyAlternateModifier<R>.name: _modifierKeyAlternateModifier<R>.parser(in: context).map({ Output.chunk8(.modifierKeyAlternate($0)) }).eraseToAnyParser(),
-_moveDisabledModifier<R>.name: _moveDisabledModifier<R>.parser(in: context).map({ Output.chunk8(.moveDisabled($0)) }).eraseToAnyParser(),
-_multilineTextAlignmentModifier<R>.name: _multilineTextAlignmentModifier<R>.parser(in: context).map({ Output.chunk8(.multilineTextAlignment($0)) }).eraseToAnyParser(),
-_navigationBarBackButtonHiddenModifier<R>.name: _navigationBarBackButtonHiddenModifier<R>.parser(in: context).map({ Output.chunk8(.navigationBarBackButtonHidden($0)) }).eraseToAnyParser(),
-_navigationBarTitleDisplayModeModifier<R>.name: _navigationBarTitleDisplayModeModifier<R>.parser(in: context).map({ Output.chunk8(.navigationBarTitleDisplayMode($0)) }).eraseToAnyParser(),
-_navigationDestinationModifier<R>.name: _navigationDestinationModifier<R>.parser(in: context).map({ Output.chunk8(.navigationDestination($0)) }).eraseToAnyParser(),
-_navigationSplitViewColumnWidthModifier<R>.name: _navigationSplitViewColumnWidthModifier<R>.parser(in: context).map({ Output.chunk8(.navigationSplitViewColumnWidth($0)) }).eraseToAnyParser(),
-_navigationSplitViewStyleModifier<R>.name: _navigationSplitViewStyleModifier<R>.parser(in: context).map({ Output.chunk8(.navigationSplitViewStyle($0)) }).eraseToAnyParser(),
+_menuStyleModifier<R>.name: _menuStyleModifier<R>.parser(in: context).map({ Output.chunk9(.menuStyle($0)) }).eraseToAnyParser(),
+_minimumScaleFactorModifier<R>.name: _minimumScaleFactorModifier<R>.parser(in: context).map({ Output.chunk9(.minimumScaleFactor($0)) }).eraseToAnyParser(),
+_modifierKeyAlternateModifier<R>.name: _modifierKeyAlternateModifier<R>.parser(in: context).map({ Output.chunk9(.modifierKeyAlternate($0)) }).eraseToAnyParser(),
+_moveDisabledModifier<R>.name: _moveDisabledModifier<R>.parser(in: context).map({ Output.chunk9(.moveDisabled($0)) }).eraseToAnyParser(),
+_multilineTextAlignmentModifier<R>.name: _multilineTextAlignmentModifier<R>.parser(in: context).map({ Output.chunk9(.multilineTextAlignment($0)) }).eraseToAnyParser(),
+_navigationBarBackButtonHiddenModifier<R>.name: _navigationBarBackButtonHiddenModifier<R>.parser(in: context).map({ Output.chunk9(.navigationBarBackButtonHidden($0)) }).eraseToAnyParser(),
+_navigationBarHiddenModifier<R>.name: _navigationBarHiddenModifier<R>.parser(in: context).map({ Output.chunk9(.navigationBarHidden($0)) }).eraseToAnyParser(),
+_navigationBarItemsModifier<R>.name: _navigationBarItemsModifier<R>.parser(in: context).map({ Output.chunk9(.navigationBarItems($0)) }).eraseToAnyParser(),
+_navigationBarTitleModifier<R>.name: _navigationBarTitleModifier<R>.parser(in: context).map({ Output.chunk9(.navigationBarTitle($0)) }).eraseToAnyParser(),
+_navigationBarTitleDisplayModeModifier<R>.name: _navigationBarTitleDisplayModeModifier<R>.parser(in: context).map({ Output.chunk9(.navigationBarTitleDisplayMode($0)) }).eraseToAnyParser(),
+_navigationDestinationModifier<R>.name: _navigationDestinationModifier<R>.parser(in: context).map({ Output.chunk9(.navigationDestination($0)) }).eraseToAnyParser(),
+_navigationSplitViewColumnWidthModifier<R>.name: _navigationSplitViewColumnWidthModifier<R>.parser(in: context).map({ Output.chunk9(.navigationSplitViewColumnWidth($0)) }).eraseToAnyParser(),
+_navigationSplitViewStyleModifier<R>.name: _navigationSplitViewStyleModifier<R>.parser(in: context).map({ Output.chunk9(.navigationSplitViewStyle($0)) }).eraseToAnyParser(),
 _navigationSubtitleModifier<R>.name: _navigationSubtitleModifier<R>.parser(in: context).map({ Output.chunk9(.navigationSubtitle($0)) }).eraseToAnyParser(),
-_navigationTitleModifier<R>.name: _navigationTitleModifier<R>.parser(in: context).map({ Output.chunk9(.navigationTitle($0)) }).eraseToAnyParser(),
-_offsetModifier<R>.name: _offsetModifier<R>.parser(in: context).map({ Output.chunk9(.offset($0)) }).eraseToAnyParser(),
-_onAppearModifier<R>.name: _onAppearModifier<R>.parser(in: context).map({ Output.chunk9(.onAppear($0)) }).eraseToAnyParser(),
-_onDeleteCommandModifier<R>.name: _onDeleteCommandModifier<R>.parser(in: context).map({ Output.chunk9(.onDeleteCommand($0)) }).eraseToAnyParser(),
-_onDisappearModifier<R>.name: _onDisappearModifier<R>.parser(in: context).map({ Output.chunk9(.onDisappear($0)) }).eraseToAnyParser(),
-_onExitCommandModifier<R>.name: _onExitCommandModifier<R>.parser(in: context).map({ Output.chunk9(.onExitCommand($0)) }).eraseToAnyParser(),
-_onHoverModifier<R>.name: _onHoverModifier<R>.parser(in: context).map({ Output.chunk9(.onHover($0)) }).eraseToAnyParser(),
-_onImmersionChangeModifier<R>.name: _onImmersionChangeModifier<R>.parser(in: context).map({ Output.chunk9(.onImmersionChange($0)) }).eraseToAnyParser(),
-_onLongPressGestureModifier<R>.name: _onLongPressGestureModifier<R>.parser(in: context).map({ Output.chunk9(.onLongPressGesture($0)) }).eraseToAnyParser(),
-_onLongTouchGestureModifier<R>.name: _onLongTouchGestureModifier<R>.parser(in: context).map({ Output.chunk9(.onLongTouchGesture($0)) }).eraseToAnyParser(),
-_onModifierKeysChangedModifier<R>.name: _onModifierKeysChangedModifier<R>.parser(in: context).map({ Output.chunk9(.onModifierKeysChanged($0)) }).eraseToAnyParser(),
-_onMoveCommandModifier<R>.name: _onMoveCommandModifier<R>.parser(in: context).map({ Output.chunk9(.onMoveCommand($0)) }).eraseToAnyParser(),
-_onPencilDoubleTapModifier<R>.name: _onPencilDoubleTapModifier<R>.parser(in: context).map({ Output.chunk9(.onPencilDoubleTap($0)) }).eraseToAnyParser(),
-_onPencilSqueezeModifier<R>.name: _onPencilSqueezeModifier<R>.parser(in: context).map({ Output.chunk10(.onPencilSqueeze($0)) }).eraseToAnyParser(),
-_onPlayPauseCommandModifier<R>.name: _onPlayPauseCommandModifier<R>.parser(in: context).map({ Output.chunk10(.onPlayPauseCommand($0)) }).eraseToAnyParser(),
-_onScrollPhaseChangeModifier<R>.name: _onScrollPhaseChangeModifier<R>.parser(in: context).map({ Output.chunk10(.onScrollPhaseChange($0)) }).eraseToAnyParser(),
-_onScrollVisibilityChangeModifier<R>.name: _onScrollVisibilityChangeModifier<R>.parser(in: context).map({ Output.chunk10(.onScrollVisibilityChange($0)) }).eraseToAnyParser(),
-_onTapGestureModifier<R>.name: _onTapGestureModifier<R>.parser(in: context).map({ Output.chunk10(.onTapGesture($0)) }).eraseToAnyParser(),
-_onVolumeViewpointChangeModifier<R>.name: _onVolumeViewpointChangeModifier<R>.parser(in: context).map({ Output.chunk10(.onVolumeViewpointChange($0)) }).eraseToAnyParser(),
-_opacityModifier<R>.name: _opacityModifier<R>.parser(in: context).map({ Output.chunk10(.opacity($0)) }).eraseToAnyParser(),
-_ornamentModifier<R>.name: _ornamentModifier<R>.parser(in: context).map({ Output.chunk10(.ornament($0)) }).eraseToAnyParser(),
-_overlayModifier<R>.name: _overlayModifier<R>.parser(in: context).map({ Output.chunk10(.overlay($0)) }).eraseToAnyParser(),
-_paddingModifier<R>.name: _paddingModifier<R>.parser(in: context).map({ Output.chunk10(.padding($0)) }).eraseToAnyParser(),
-_padding3DModifier<R>.name: _padding3DModifier<R>.parser(in: context).map({ Output.chunk10(.padding3D($0)) }).eraseToAnyParser(),
-_persistentSystemOverlaysModifier<R>.name: _persistentSystemOverlaysModifier<R>.parser(in: context).map({ Output.chunk10(.persistentSystemOverlays($0)) }).eraseToAnyParser(),
-_pickerStyleModifier<R>.name: _pickerStyleModifier<R>.parser(in: context).map({ Output.chunk10(.pickerStyle($0)) }).eraseToAnyParser(),
-_pointerStyleModifier<R>.name: _pointerStyleModifier<R>.parser(in: context).map({ Output.chunk10(.pointerStyle($0)) }).eraseToAnyParser(),
-_pointerVisibilityModifier<R>.name: _pointerVisibilityModifier<R>.parser(in: context).map({ Output.chunk11(.pointerVisibility($0)) }).eraseToAnyParser(),
-_popoverModifier<R>.name: _popoverModifier<R>.parser(in: context).map({ Output.chunk11(.popover($0)) }).eraseToAnyParser(),
-_positionModifier<R>.name: _positionModifier<R>.parser(in: context).map({ Output.chunk11(.position($0)) }).eraseToAnyParser(),
-_preferredColorSchemeModifier<R>.name: _preferredColorSchemeModifier<R>.parser(in: context).map({ Output.chunk11(.preferredColorScheme($0)) }).eraseToAnyParser(),
-_preferredSurroundingsEffectModifier<R>.name: _preferredSurroundingsEffectModifier<R>.parser(in: context).map({ Output.chunk11(.preferredSurroundingsEffect($0)) }).eraseToAnyParser(),
-_presentationBackgroundModifier<R>.name: _presentationBackgroundModifier<R>.parser(in: context).map({ Output.chunk11(.presentationBackground($0)) }).eraseToAnyParser(),
-_presentationBackgroundInteractionModifier<R>.name: _presentationBackgroundInteractionModifier<R>.parser(in: context).map({ Output.chunk11(.presentationBackgroundInteraction($0)) }).eraseToAnyParser(),
-_presentationCompactAdaptationModifier<R>.name: _presentationCompactAdaptationModifier<R>.parser(in: context).map({ Output.chunk11(.presentationCompactAdaptation($0)) }).eraseToAnyParser(),
-_presentationContentInteractionModifier<R>.name: _presentationContentInteractionModifier<R>.parser(in: context).map({ Output.chunk11(.presentationContentInteraction($0)) }).eraseToAnyParser(),
-_presentationCornerRadiusModifier<R>.name: _presentationCornerRadiusModifier<R>.parser(in: context).map({ Output.chunk11(.presentationCornerRadius($0)) }).eraseToAnyParser(),
-_presentationDragIndicatorModifier<R>.name: _presentationDragIndicatorModifier<R>.parser(in: context).map({ Output.chunk11(.presentationDragIndicator($0)) }).eraseToAnyParser(),
-_presentationSizingModifier<R>.name: _presentationSizingModifier<R>.parser(in: context).map({ Output.chunk11(.presentationSizing($0)) }).eraseToAnyParser(),
-_previewDisplayNameModifier<R>.name: _previewDisplayNameModifier<R>.parser(in: context).map({ Output.chunk11(.previewDisplayName($0)) }).eraseToAnyParser(),
-_privacySensitiveModifier<R>.name: _privacySensitiveModifier<R>.parser(in: context).map({ Output.chunk11(.privacySensitive($0)) }).eraseToAnyParser(),
-_progressViewStyleModifier<R>.name: _progressViewStyleModifier<R>.parser(in: context).map({ Output.chunk12(.progressViewStyle($0)) }).eraseToAnyParser(),
-_projectionEffectModifier<R>.name: _projectionEffectModifier<R>.parser(in: context).map({ Output.chunk12(.projectionEffect($0)) }).eraseToAnyParser(),
-_redactedModifier<R>.name: _redactedModifier<R>.parser(in: context).map({ Output.chunk12(.redacted($0)) }).eraseToAnyParser(),
-_refreshableModifier<R>.name: _refreshableModifier<R>.parser(in: context).map({ Output.chunk12(.refreshable($0)) }).eraseToAnyParser(),
-_renameActionModifier<R>.name: _renameActionModifier<R>.parser(in: context).map({ Output.chunk12(.renameAction($0)) }).eraseToAnyParser(),
-_replaceDisabledModifier<R>.name: _replaceDisabledModifier<R>.parser(in: context).map({ Output.chunk12(.replaceDisabled($0)) }).eraseToAnyParser(),
-_rotationEffectModifier<R>.name: _rotationEffectModifier<R>.parser(in: context).map({ Output.chunk12(.rotationEffect($0)) }).eraseToAnyParser(),
-_safeAreaInsetModifier<R>.name: _safeAreaInsetModifier<R>.parser(in: context).map({ Output.chunk12(.safeAreaInset($0)) }).eraseToAnyParser(),
-_saturationModifier<R>.name: _saturationModifier<R>.parser(in: context).map({ Output.chunk12(.saturation($0)) }).eraseToAnyParser(),
-_scaleEffectModifier<R>.name: _scaleEffectModifier<R>.parser(in: context).map({ Output.chunk12(.scaleEffect($0)) }).eraseToAnyParser(),
-_scaledToFillModifier<R>.name: _scaledToFillModifier<R>.parser(in: context).map({ Output.chunk12(.scaledToFill($0)) }).eraseToAnyParser(),
-_scaledToFitModifier<R>.name: _scaledToFitModifier<R>.parser(in: context).map({ Output.chunk12(.scaledToFit($0)) }).eraseToAnyParser(),
-_scenePaddingModifier<R>.name: _scenePaddingModifier<R>.parser(in: context).map({ Output.chunk12(.scenePadding($0)) }).eraseToAnyParser(),
-_scrollBounceBehaviorModifier<R>.name: _scrollBounceBehaviorModifier<R>.parser(in: context).map({ Output.chunk12(.scrollBounceBehavior($0)) }).eraseToAnyParser(),
-_scrollClipDisabledModifier<R>.name: _scrollClipDisabledModifier<R>.parser(in: context).map({ Output.chunk13(.scrollClipDisabled($0)) }).eraseToAnyParser(),
-_scrollContentBackgroundModifier<R>.name: _scrollContentBackgroundModifier<R>.parser(in: context).map({ Output.chunk13(.scrollContentBackground($0)) }).eraseToAnyParser(),
-_scrollDisabledModifier<R>.name: _scrollDisabledModifier<R>.parser(in: context).map({ Output.chunk13(.scrollDisabled($0)) }).eraseToAnyParser(),
-_scrollDismissesKeyboardModifier<R>.name: _scrollDismissesKeyboardModifier<R>.parser(in: context).map({ Output.chunk13(.scrollDismissesKeyboard($0)) }).eraseToAnyParser(),
-_scrollIndicatorsModifier<R>.name: _scrollIndicatorsModifier<R>.parser(in: context).map({ Output.chunk13(.scrollIndicators($0)) }).eraseToAnyParser(),
-_scrollIndicatorsFlashModifier<R>.name: _scrollIndicatorsFlashModifier<R>.parser(in: context).map({ Output.chunk13(.scrollIndicatorsFlash($0)) }).eraseToAnyParser(),
-_scrollPositionModifier<R>.name: _scrollPositionModifier<R>.parser(in: context).map({ Output.chunk13(.scrollPosition($0)) }).eraseToAnyParser(),
-_scrollTargetBehaviorModifier<R>.name: _scrollTargetBehaviorModifier<R>.parser(in: context).map({ Output.chunk13(.scrollTargetBehavior($0)) }).eraseToAnyParser(),
-_scrollTargetLayoutModifier<R>.name: _scrollTargetLayoutModifier<R>.parser(in: context).map({ Output.chunk13(.scrollTargetLayout($0)) }).eraseToAnyParser(),
-_searchDictationBehaviorModifier<R>.name: _searchDictationBehaviorModifier<R>.parser(in: context).map({ Output.chunk13(.searchDictationBehavior($0)) }).eraseToAnyParser(),
-_searchPresentationToolbarBehaviorModifier<R>.name: _searchPresentationToolbarBehaviorModifier<R>.parser(in: context).map({ Output.chunk13(.searchPresentationToolbarBehavior($0)) }).eraseToAnyParser(),
-_searchSuggestionsModifier<R>.name: _searchSuggestionsModifier<R>.parser(in: context).map({ Output.chunk13(.searchSuggestions($0)) }).eraseToAnyParser(),
-_searchableModifier<R>.name: _searchableModifier<R>.parser(in: context).map({ Output.chunk13(.searchable($0)) }).eraseToAnyParser(),
-_sectionActionsModifier<R>.name: _sectionActionsModifier<R>.parser(in: context).map({ Output.chunk13(.sectionActions($0)) }).eraseToAnyParser(),
-_selectionDisabledModifier<R>.name: _selectionDisabledModifier<R>.parser(in: context).map({ Output.chunk14(.selectionDisabled($0)) }).eraseToAnyParser(),
-_shadowModifier<R>.name: _shadowModifier<R>.parser(in: context).map({ Output.chunk14(.shadow($0)) }).eraseToAnyParser(),
-_sheetModifier<R>.name: _sheetModifier<R>.parser(in: context).map({ Output.chunk14(.sheet($0)) }).eraseToAnyParser(),
-_simultaneousGestureModifier<R>.name: _simultaneousGestureModifier<R>.parser(in: context).map({ Output.chunk14(.simultaneousGesture($0)) }).eraseToAnyParser(),
-_speechAdjustedPitchModifier<R>.name: _speechAdjustedPitchModifier<R>.parser(in: context).map({ Output.chunk14(.speechAdjustedPitch($0)) }).eraseToAnyParser(),
-_speechAlwaysIncludesPunctuationModifier<R>.name: _speechAlwaysIncludesPunctuationModifier<R>.parser(in: context).map({ Output.chunk14(.speechAlwaysIncludesPunctuation($0)) }).eraseToAnyParser(),
-_speechAnnouncementsQueuedModifier<R>.name: _speechAnnouncementsQueuedModifier<R>.parser(in: context).map({ Output.chunk14(.speechAnnouncementsQueued($0)) }).eraseToAnyParser(),
-_speechSpellsOutCharactersModifier<R>.name: _speechSpellsOutCharactersModifier<R>.parser(in: context).map({ Output.chunk14(.speechSpellsOutCharacters($0)) }).eraseToAnyParser(),
-_statusBarHiddenModifier<R>.name: _statusBarHiddenModifier<R>.parser(in: context).map({ Output.chunk14(.statusBarHidden($0)) }).eraseToAnyParser(),
-_submitLabelModifier<R>.name: _submitLabelModifier<R>.parser(in: context).map({ Output.chunk14(.submitLabel($0)) }).eraseToAnyParser(),
-_submitScopeModifier<R>.name: _submitScopeModifier<R>.parser(in: context).map({ Output.chunk14(.submitScope($0)) }).eraseToAnyParser(),
-_supportedVolumeViewpointsModifier<R>.name: _supportedVolumeViewpointsModifier<R>.parser(in: context).map({ Output.chunk14(.supportedVolumeViewpoints($0)) }).eraseToAnyParser(),
-_swipeActionsModifier<R>.name: _swipeActionsModifier<R>.parser(in: context).map({ Output.chunk14(.swipeActions($0)) }).eraseToAnyParser(),
-_symbolEffectModifier<R>.name: _symbolEffectModifier<R>.parser(in: context).map({ Output.chunk14(.symbolEffect($0)) }).eraseToAnyParser(),
-_symbolEffectsRemovedModifier<R>.name: _symbolEffectsRemovedModifier<R>.parser(in: context).map({ Output.chunk15(.symbolEffectsRemoved($0)) }).eraseToAnyParser(),
-_symbolRenderingModeModifier<R>.name: _symbolRenderingModeModifier<R>.parser(in: context).map({ Output.chunk15(.symbolRenderingMode($0)) }).eraseToAnyParser(),
-_symbolVariantModifier<R>.name: _symbolVariantModifier<R>.parser(in: context).map({ Output.chunk15(.symbolVariant($0)) }).eraseToAnyParser(),
-_tabViewSidebarBottomBarModifier<R>.name: _tabViewSidebarBottomBarModifier<R>.parser(in: context).map({ Output.chunk15(.tabViewSidebarBottomBar($0)) }).eraseToAnyParser(),
-_tabViewSidebarFooterModifier<R>.name: _tabViewSidebarFooterModifier<R>.parser(in: context).map({ Output.chunk15(.tabViewSidebarFooter($0)) }).eraseToAnyParser(),
-_tabViewSidebarHeaderModifier<R>.name: _tabViewSidebarHeaderModifier<R>.parser(in: context).map({ Output.chunk15(.tabViewSidebarHeader($0)) }).eraseToAnyParser(),
-_tabViewStyleModifier<R>.name: _tabViewStyleModifier<R>.parser(in: context).map({ Output.chunk15(.tabViewStyle($0)) }).eraseToAnyParser(),
-_tableStyleModifier<R>.name: _tableStyleModifier<R>.parser(in: context).map({ Output.chunk15(.tableStyle($0)) }).eraseToAnyParser(),
-_textCaseModifier<R>.name: _textCaseModifier<R>.parser(in: context).map({ Output.chunk15(.textCase($0)) }).eraseToAnyParser(),
-_textContentTypeModifier<R>.name: _textContentTypeModifier<R>.parser(in: context).map({ Output.chunk15(.textContentType($0)) }).eraseToAnyParser(),
-_textEditorStyleModifier<R>.name: _textEditorStyleModifier<R>.parser(in: context).map({ Output.chunk15(.textEditorStyle($0)) }).eraseToAnyParser(),
-_textFieldStyleModifier<R>.name: _textFieldStyleModifier<R>.parser(in: context).map({ Output.chunk15(.textFieldStyle($0)) }).eraseToAnyParser(),
-_textInputAutocapitalizationModifier<R>.name: _textInputAutocapitalizationModifier<R>.parser(in: context).map({ Output.chunk15(.textInputAutocapitalization($0)) }).eraseToAnyParser(),
-_textInputCompletionModifier<R>.name: _textInputCompletionModifier<R>.parser(in: context).map({ Output.chunk15(.textInputCompletion($0)) }).eraseToAnyParser(),
-_textInputSuggestionsModifier<R>.name: _textInputSuggestionsModifier<R>.parser(in: context).map({ Output.chunk16(.textInputSuggestions($0)) }).eraseToAnyParser(),
-_textSelectionModifier<R>.name: _textSelectionModifier<R>.parser(in: context).map({ Output.chunk16(.textSelection($0)) }).eraseToAnyParser(),
-_textSelectionAffinityModifier<R>.name: _textSelectionAffinityModifier<R>.parser(in: context).map({ Output.chunk16(.textSelectionAffinity($0)) }).eraseToAnyParser(),
-_tintModifier<R>.name: _tintModifier<R>.parser(in: context).map({ Output.chunk16(.tint($0)) }).eraseToAnyParser(),
-_toggleStyleModifier<R>.name: _toggleStyleModifier<R>.parser(in: context).map({ Output.chunk16(.toggleStyle($0)) }).eraseToAnyParser(),
-_toolbarModifier<R>.name: _toolbarModifier<R>.parser(in: context).map({ Output.chunk16(.toolbar($0)) }).eraseToAnyParser(),
-_toolbarBackgroundModifier<R>.name: _toolbarBackgroundModifier<R>.parser(in: context).map({ Output.chunk16(.toolbarBackground($0)) }).eraseToAnyParser(),
-_toolbarBackgroundVisibilityModifier<R>.name: _toolbarBackgroundVisibilityModifier<R>.parser(in: context).map({ Output.chunk16(.toolbarBackgroundVisibility($0)) }).eraseToAnyParser(),
-_toolbarColorSchemeModifier<R>.name: _toolbarColorSchemeModifier<R>.parser(in: context).map({ Output.chunk16(.toolbarColorScheme($0)) }).eraseToAnyParser(),
-_toolbarRoleModifier<R>.name: _toolbarRoleModifier<R>.parser(in: context).map({ Output.chunk16(.toolbarRole($0)) }).eraseToAnyParser(),
-_toolbarTitleDisplayModeModifier<R>.name: _toolbarTitleDisplayModeModifier<R>.parser(in: context).map({ Output.chunk16(.toolbarTitleDisplayMode($0)) }).eraseToAnyParser(),
-_toolbarTitleMenuModifier<R>.name: _toolbarTitleMenuModifier<R>.parser(in: context).map({ Output.chunk16(.toolbarTitleMenu($0)) }).eraseToAnyParser(),
-_toolbarVisibilityModifier<R>.name: _toolbarVisibilityModifier<R>.parser(in: context).map({ Output.chunk16(.toolbarVisibility($0)) }).eraseToAnyParser(),
-_touchBarCustomizationLabelModifier<R>.name: _touchBarCustomizationLabelModifier<R>.parser(in: context).map({ Output.chunk16(.touchBarCustomizationLabel($0)) }).eraseToAnyParser(),
-_touchBarItemPrincipalModifier<R>.name: _touchBarItemPrincipalModifier<R>.parser(in: context).map({ Output.chunk17(.touchBarItemPrincipal($0)) }).eraseToAnyParser(),
-_transform3DEffectModifier<R>.name: _transform3DEffectModifier<R>.parser(in: context).map({ Output.chunk17(.transform3DEffect($0)) }).eraseToAnyParser(),
-_transformEffectModifier<R>.name: _transformEffectModifier<R>.parser(in: context).map({ Output.chunk17(.transformEffect($0)) }).eraseToAnyParser(),
-_transitionModifier<R>.name: _transitionModifier<R>.parser(in: context).map({ Output.chunk17(.transition($0)) }).eraseToAnyParser(),
-_truncationModeModifier<R>.name: _truncationModeModifier<R>.parser(in: context).map({ Output.chunk17(.truncationMode($0)) }).eraseToAnyParser(),
-_unredactedModifier<R>.name: _unredactedModifier<R>.parser(in: context).map({ Output.chunk17(.unredacted($0)) }).eraseToAnyParser(),
-_upperLimbVisibilityModifier<R>.name: _upperLimbVisibilityModifier<R>.parser(in: context).map({ Output.chunk17(.upperLimbVisibility($0)) }).eraseToAnyParser(),
-_volumeBaseplateVisibilityModifier<R>.name: _volumeBaseplateVisibilityModifier<R>.parser(in: context).map({ Output.chunk17(.volumeBaseplateVisibility($0)) }).eraseToAnyParser(),
-_windowDismissBehaviorModifier<R>.name: _windowDismissBehaviorModifier<R>.parser(in: context).map({ Output.chunk17(.windowDismissBehavior($0)) }).eraseToAnyParser(),
-_windowFullScreenBehaviorModifier<R>.name: _windowFullScreenBehaviorModifier<R>.parser(in: context).map({ Output.chunk17(.windowFullScreenBehavior($0)) }).eraseToAnyParser(),
-_windowMinimizeBehaviorModifier<R>.name: _windowMinimizeBehaviorModifier<R>.parser(in: context).map({ Output.chunk17(.windowMinimizeBehavior($0)) }).eraseToAnyParser(),
-_windowResizeBehaviorModifier<R>.name: _windowResizeBehaviorModifier<R>.parser(in: context).map({ Output.chunk17(.windowResizeBehavior($0)) }).eraseToAnyParser(),
-_zIndexModifier<R>.name: _zIndexModifier<R>.parser(in: context).map({ Output.chunk17(.zIndex($0)) }).eraseToAnyParser(),
-                    LiveViewNative._MatchedGeometryEffectModifier<R>.name: LiveViewNative._MatchedGeometryEffectModifier<R>.parser(in: context).map(Output._MatchedGeometryEffectModifier).eraseToAnyParser(),
-LiveViewNative._OnSubmitModifier.name: LiveViewNative._OnSubmitModifier.parser(in: context).map(Output._OnSubmitModifier).eraseToAnyParser(),
-LiveViewNative._PrefersDefaultFocusModifier<R>.name: LiveViewNative._PrefersDefaultFocusModifier<R>.parser(in: context).map(Output._PrefersDefaultFocusModifier).eraseToAnyParser(),
-LiveViewNative._NavigationTransitionModifier<R>.name: LiveViewNative._NavigationTransitionModifier<R>.parser(in: context).map(Output._NavigationTransitionModifier).eraseToAnyParser(),
-LiveViewNative._Rotation3DEffectModifier<R>.name: LiveViewNative._Rotation3DEffectModifier<R>.parser(in: context).map(Output._Rotation3DEffectModifier).eraseToAnyParser(),
-LiveViewNative._FocusScopeModifier<R>.name: LiveViewNative._FocusScopeModifier<R>.parser(in: context).map(Output._FocusScopeModifier).eraseToAnyParser(),
-LiveViewNative._SearchCompletionModifier<R>.name: LiveViewNative._SearchCompletionModifier<R>.parser(in: context).map(Output._SearchCompletionModifier).eraseToAnyParser(),
-LiveViewNative._PerspectiveRotationEffectModifier<R>.name: LiveViewNative._PerspectiveRotationEffectModifier<R>.parser(in: context).map(Output._PerspectiveRotationEffectModifier).eraseToAnyParser(),
+_navigationTitleModifier<R>.name: _navigationTitleModifier<R>.parser(in: context).map({ Output.chunk10(.navigationTitle($0)) }).eraseToAnyParser(),
+_navigationViewStyleModifier<R>.name: _navigationViewStyleModifier<R>.parser(in: context).map({ Output.chunk10(.navigationViewStyle($0)) }).eraseToAnyParser(),
+_offsetModifier<R>.name: _offsetModifier<R>.parser(in: context).map({ Output.chunk10(.offset($0)) }).eraseToAnyParser(),
+_onAppearModifier<R>.name: _onAppearModifier<R>.parser(in: context).map({ Output.chunk10(.onAppear($0)) }).eraseToAnyParser(),
+_onDeleteCommandModifier<R>.name: _onDeleteCommandModifier<R>.parser(in: context).map({ Output.chunk10(.onDeleteCommand($0)) }).eraseToAnyParser(),
+_onDisappearModifier<R>.name: _onDisappearModifier<R>.parser(in: context).map({ Output.chunk10(.onDisappear($0)) }).eraseToAnyParser(),
+_onExitCommandModifier<R>.name: _onExitCommandModifier<R>.parser(in: context).map({ Output.chunk10(.onExitCommand($0)) }).eraseToAnyParser(),
+_onHoverModifier<R>.name: _onHoverModifier<R>.parser(in: context).map({ Output.chunk10(.onHover($0)) }).eraseToAnyParser(),
+_onImmersionChangeModifier<R>.name: _onImmersionChangeModifier<R>.parser(in: context).map({ Output.chunk10(.onImmersionChange($0)) }).eraseToAnyParser(),
+_onLongPressGestureModifier<R>.name: _onLongPressGestureModifier<R>.parser(in: context).map({ Output.chunk10(.onLongPressGesture($0)) }).eraseToAnyParser(),
+_onLongTouchGestureModifier<R>.name: _onLongTouchGestureModifier<R>.parser(in: context).map({ Output.chunk10(.onLongTouchGesture($0)) }).eraseToAnyParser(),
+_onModifierKeysChangedModifier<R>.name: _onModifierKeysChangedModifier<R>.parser(in: context).map({ Output.chunk10(.onModifierKeysChanged($0)) }).eraseToAnyParser(),
+_onMoveCommandModifier<R>.name: _onMoveCommandModifier<R>.parser(in: context).map({ Output.chunk10(.onMoveCommand($0)) }).eraseToAnyParser(),
+_onPencilDoubleTapModifier<R>.name: _onPencilDoubleTapModifier<R>.parser(in: context).map({ Output.chunk10(.onPencilDoubleTap($0)) }).eraseToAnyParser(),
+_onPencilSqueezeModifier<R>.name: _onPencilSqueezeModifier<R>.parser(in: context).map({ Output.chunk11(.onPencilSqueeze($0)) }).eraseToAnyParser(),
+_onPlayPauseCommandModifier<R>.name: _onPlayPauseCommandModifier<R>.parser(in: context).map({ Output.chunk11(.onPlayPauseCommand($0)) }).eraseToAnyParser(),
+_onScrollPhaseChangeModifier<R>.name: _onScrollPhaseChangeModifier<R>.parser(in: context).map({ Output.chunk11(.onScrollPhaseChange($0)) }).eraseToAnyParser(),
+_onScrollVisibilityChangeModifier<R>.name: _onScrollVisibilityChangeModifier<R>.parser(in: context).map({ Output.chunk11(.onScrollVisibilityChange($0)) }).eraseToAnyParser(),
+_onTapGestureModifier<R>.name: _onTapGestureModifier<R>.parser(in: context).map({ Output.chunk11(.onTapGesture($0)) }).eraseToAnyParser(),
+_onVolumeViewpointChangeModifier<R>.name: _onVolumeViewpointChangeModifier<R>.parser(in: context).map({ Output.chunk11(.onVolumeViewpointChange($0)) }).eraseToAnyParser(),
+_opacityModifier<R>.name: _opacityModifier<R>.parser(in: context).map({ Output.chunk11(.opacity($0)) }).eraseToAnyParser(),
+_ornamentModifier<R>.name: _ornamentModifier<R>.parser(in: context).map({ Output.chunk11(.ornament($0)) }).eraseToAnyParser(),
+_overlayModifier<R>.name: _overlayModifier<R>.parser(in: context).map({ Output.chunk11(.overlay($0)) }).eraseToAnyParser(),
+_paddingModifier<R>.name: _paddingModifier<R>.parser(in: context).map({ Output.chunk11(.padding($0)) }).eraseToAnyParser(),
+_padding3DModifier<R>.name: _padding3DModifier<R>.parser(in: context).map({ Output.chunk11(.padding3D($0)) }).eraseToAnyParser(),
+_persistentSystemOverlaysModifier<R>.name: _persistentSystemOverlaysModifier<R>.parser(in: context).map({ Output.chunk11(.persistentSystemOverlays($0)) }).eraseToAnyParser(),
+_pickerStyleModifier<R>.name: _pickerStyleModifier<R>.parser(in: context).map({ Output.chunk11(.pickerStyle($0)) }).eraseToAnyParser(),
+_pointerStyleModifier<R>.name: _pointerStyleModifier<R>.parser(in: context).map({ Output.chunk11(.pointerStyle($0)) }).eraseToAnyParser(),
+_pointerVisibilityModifier<R>.name: _pointerVisibilityModifier<R>.parser(in: context).map({ Output.chunk12(.pointerVisibility($0)) }).eraseToAnyParser(),
+_popoverModifier<R>.name: _popoverModifier<R>.parser(in: context).map({ Output.chunk12(.popover($0)) }).eraseToAnyParser(),
+_positionModifier<R>.name: _positionModifier<R>.parser(in: context).map({ Output.chunk12(.position($0)) }).eraseToAnyParser(),
+_preferredColorSchemeModifier<R>.name: _preferredColorSchemeModifier<R>.parser(in: context).map({ Output.chunk12(.preferredColorScheme($0)) }).eraseToAnyParser(),
+_preferredSurroundingsEffectModifier<R>.name: _preferredSurroundingsEffectModifier<R>.parser(in: context).map({ Output.chunk12(.preferredSurroundingsEffect($0)) }).eraseToAnyParser(),
+_presentationBackgroundModifier<R>.name: _presentationBackgroundModifier<R>.parser(in: context).map({ Output.chunk12(.presentationBackground($0)) }).eraseToAnyParser(),
+_presentationBackgroundInteractionModifier<R>.name: _presentationBackgroundInteractionModifier<R>.parser(in: context).map({ Output.chunk12(.presentationBackgroundInteraction($0)) }).eraseToAnyParser(),
+_presentationCompactAdaptationModifier<R>.name: _presentationCompactAdaptationModifier<R>.parser(in: context).map({ Output.chunk12(.presentationCompactAdaptation($0)) }).eraseToAnyParser(),
+_presentationContentInteractionModifier<R>.name: _presentationContentInteractionModifier<R>.parser(in: context).map({ Output.chunk12(.presentationContentInteraction($0)) }).eraseToAnyParser(),
+_presentationCornerRadiusModifier<R>.name: _presentationCornerRadiusModifier<R>.parser(in: context).map({ Output.chunk12(.presentationCornerRadius($0)) }).eraseToAnyParser(),
+_presentationDragIndicatorModifier<R>.name: _presentationDragIndicatorModifier<R>.parser(in: context).map({ Output.chunk12(.presentationDragIndicator($0)) }).eraseToAnyParser(),
+_presentationSizingModifier<R>.name: _presentationSizingModifier<R>.parser(in: context).map({ Output.chunk12(.presentationSizing($0)) }).eraseToAnyParser(),
+_previewDisplayNameModifier<R>.name: _previewDisplayNameModifier<R>.parser(in: context).map({ Output.chunk12(.previewDisplayName($0)) }).eraseToAnyParser(),
+_privacySensitiveModifier<R>.name: _privacySensitiveModifier<R>.parser(in: context).map({ Output.chunk12(.privacySensitive($0)) }).eraseToAnyParser(),
+_progressViewStyleModifier<R>.name: _progressViewStyleModifier<R>.parser(in: context).map({ Output.chunk13(.progressViewStyle($0)) }).eraseToAnyParser(),
+_projectionEffectModifier<R>.name: _projectionEffectModifier<R>.parser(in: context).map({ Output.chunk13(.projectionEffect($0)) }).eraseToAnyParser(),
+_redactedModifier<R>.name: _redactedModifier<R>.parser(in: context).map({ Output.chunk13(.redacted($0)) }).eraseToAnyParser(),
+_refreshableModifier<R>.name: _refreshableModifier<R>.parser(in: context).map({ Output.chunk13(.refreshable($0)) }).eraseToAnyParser(),
+_renameActionModifier<R>.name: _renameActionModifier<R>.parser(in: context).map({ Output.chunk13(.renameAction($0)) }).eraseToAnyParser(),
+_replaceDisabledModifier<R>.name: _replaceDisabledModifier<R>.parser(in: context).map({ Output.chunk13(.replaceDisabled($0)) }).eraseToAnyParser(),
+_rotationEffectModifier<R>.name: _rotationEffectModifier<R>.parser(in: context).map({ Output.chunk13(.rotationEffect($0)) }).eraseToAnyParser(),
+_safeAreaInsetModifier<R>.name: _safeAreaInsetModifier<R>.parser(in: context).map({ Output.chunk13(.safeAreaInset($0)) }).eraseToAnyParser(),
+_saturationModifier<R>.name: _saturationModifier<R>.parser(in: context).map({ Output.chunk13(.saturation($0)) }).eraseToAnyParser(),
+_scaleEffectModifier<R>.name: _scaleEffectModifier<R>.parser(in: context).map({ Output.chunk13(.scaleEffect($0)) }).eraseToAnyParser(),
+_scaledToFillModifier<R>.name: _scaledToFillModifier<R>.parser(in: context).map({ Output.chunk13(.scaledToFill($0)) }).eraseToAnyParser(),
+_scaledToFitModifier<R>.name: _scaledToFitModifier<R>.parser(in: context).map({ Output.chunk13(.scaledToFit($0)) }).eraseToAnyParser(),
+_scenePaddingModifier<R>.name: _scenePaddingModifier<R>.parser(in: context).map({ Output.chunk13(.scenePadding($0)) }).eraseToAnyParser(),
+_scrollBounceBehaviorModifier<R>.name: _scrollBounceBehaviorModifier<R>.parser(in: context).map({ Output.chunk13(.scrollBounceBehavior($0)) }).eraseToAnyParser(),
+_scrollClipDisabledModifier<R>.name: _scrollClipDisabledModifier<R>.parser(in: context).map({ Output.chunk14(.scrollClipDisabled($0)) }).eraseToAnyParser(),
+_scrollContentBackgroundModifier<R>.name: _scrollContentBackgroundModifier<R>.parser(in: context).map({ Output.chunk14(.scrollContentBackground($0)) }).eraseToAnyParser(),
+_scrollDisabledModifier<R>.name: _scrollDisabledModifier<R>.parser(in: context).map({ Output.chunk14(.scrollDisabled($0)) }).eraseToAnyParser(),
+_scrollDismissesKeyboardModifier<R>.name: _scrollDismissesKeyboardModifier<R>.parser(in: context).map({ Output.chunk14(.scrollDismissesKeyboard($0)) }).eraseToAnyParser(),
+_scrollIndicatorsModifier<R>.name: _scrollIndicatorsModifier<R>.parser(in: context).map({ Output.chunk14(.scrollIndicators($0)) }).eraseToAnyParser(),
+_scrollIndicatorsFlashModifier<R>.name: _scrollIndicatorsFlashModifier<R>.parser(in: context).map({ Output.chunk14(.scrollIndicatorsFlash($0)) }).eraseToAnyParser(),
+_scrollPositionModifier<R>.name: _scrollPositionModifier<R>.parser(in: context).map({ Output.chunk14(.scrollPosition($0)) }).eraseToAnyParser(),
+_scrollTargetBehaviorModifier<R>.name: _scrollTargetBehaviorModifier<R>.parser(in: context).map({ Output.chunk14(.scrollTargetBehavior($0)) }).eraseToAnyParser(),
+_scrollTargetLayoutModifier<R>.name: _scrollTargetLayoutModifier<R>.parser(in: context).map({ Output.chunk14(.scrollTargetLayout($0)) }).eraseToAnyParser(),
+_searchDictationBehaviorModifier<R>.name: _searchDictationBehaviorModifier<R>.parser(in: context).map({ Output.chunk14(.searchDictationBehavior($0)) }).eraseToAnyParser(),
+_searchPresentationToolbarBehaviorModifier<R>.name: _searchPresentationToolbarBehaviorModifier<R>.parser(in: context).map({ Output.chunk14(.searchPresentationToolbarBehavior($0)) }).eraseToAnyParser(),
+_searchSuggestionsModifier<R>.name: _searchSuggestionsModifier<R>.parser(in: context).map({ Output.chunk14(.searchSuggestions($0)) }).eraseToAnyParser(),
+_searchableModifier<R>.name: _searchableModifier<R>.parser(in: context).map({ Output.chunk14(.searchable($0)) }).eraseToAnyParser(),
+_sectionActionsModifier<R>.name: _sectionActionsModifier<R>.parser(in: context).map({ Output.chunk14(.sectionActions($0)) }).eraseToAnyParser(),
+_selectionDisabledModifier<R>.name: _selectionDisabledModifier<R>.parser(in: context).map({ Output.chunk15(.selectionDisabled($0)) }).eraseToAnyParser(),
+_shadowModifier<R>.name: _shadowModifier<R>.parser(in: context).map({ Output.chunk15(.shadow($0)) }).eraseToAnyParser(),
+_sheetModifier<R>.name: _sheetModifier<R>.parser(in: context).map({ Output.chunk15(.sheet($0)) }).eraseToAnyParser(),
+_simultaneousGestureModifier<R>.name: _simultaneousGestureModifier<R>.parser(in: context).map({ Output.chunk15(.simultaneousGesture($0)) }).eraseToAnyParser(),
+_speechAdjustedPitchModifier<R>.name: _speechAdjustedPitchModifier<R>.parser(in: context).map({ Output.chunk15(.speechAdjustedPitch($0)) }).eraseToAnyParser(),
+_speechAlwaysIncludesPunctuationModifier<R>.name: _speechAlwaysIncludesPunctuationModifier<R>.parser(in: context).map({ Output.chunk15(.speechAlwaysIncludesPunctuation($0)) }).eraseToAnyParser(),
+_speechAnnouncementsQueuedModifier<R>.name: _speechAnnouncementsQueuedModifier<R>.parser(in: context).map({ Output.chunk15(.speechAnnouncementsQueued($0)) }).eraseToAnyParser(),
+_speechSpellsOutCharactersModifier<R>.name: _speechSpellsOutCharactersModifier<R>.parser(in: context).map({ Output.chunk15(.speechSpellsOutCharacters($0)) }).eraseToAnyParser(),
+_statusBarModifier<R>.name: _statusBarModifier<R>.parser(in: context).map({ Output.chunk15(.statusBar($0)) }).eraseToAnyParser(),
+_statusBarHiddenModifier<R>.name: _statusBarHiddenModifier<R>.parser(in: context).map({ Output.chunk15(.statusBarHidden($0)) }).eraseToAnyParser(),
+_submitLabelModifier<R>.name: _submitLabelModifier<R>.parser(in: context).map({ Output.chunk15(.submitLabel($0)) }).eraseToAnyParser(),
+_submitScopeModifier<R>.name: _submitScopeModifier<R>.parser(in: context).map({ Output.chunk15(.submitScope($0)) }).eraseToAnyParser(),
+_supportedVolumeViewpointsModifier<R>.name: _supportedVolumeViewpointsModifier<R>.parser(in: context).map({ Output.chunk15(.supportedVolumeViewpoints($0)) }).eraseToAnyParser(),
+_swipeActionsModifier<R>.name: _swipeActionsModifier<R>.parser(in: context).map({ Output.chunk15(.swipeActions($0)) }).eraseToAnyParser(),
+_symbolEffectModifier<R>.name: _symbolEffectModifier<R>.parser(in: context).map({ Output.chunk16(.symbolEffect($0)) }).eraseToAnyParser(),
+_symbolEffectsRemovedModifier<R>.name: _symbolEffectsRemovedModifier<R>.parser(in: context).map({ Output.chunk16(.symbolEffectsRemoved($0)) }).eraseToAnyParser(),
+_symbolRenderingModeModifier<R>.name: _symbolRenderingModeModifier<R>.parser(in: context).map({ Output.chunk16(.symbolRenderingMode($0)) }).eraseToAnyParser(),
+_symbolVariantModifier<R>.name: _symbolVariantModifier<R>.parser(in: context).map({ Output.chunk16(.symbolVariant($0)) }).eraseToAnyParser(),
+_tabItemModifier<R>.name: _tabItemModifier<R>.parser(in: context).map({ Output.chunk16(.tabItem($0)) }).eraseToAnyParser(),
+_tabViewSidebarBottomBarModifier<R>.name: _tabViewSidebarBottomBarModifier<R>.parser(in: context).map({ Output.chunk16(.tabViewSidebarBottomBar($0)) }).eraseToAnyParser(),
+_tabViewSidebarFooterModifier<R>.name: _tabViewSidebarFooterModifier<R>.parser(in: context).map({ Output.chunk16(.tabViewSidebarFooter($0)) }).eraseToAnyParser(),
+_tabViewSidebarHeaderModifier<R>.name: _tabViewSidebarHeaderModifier<R>.parser(in: context).map({ Output.chunk16(.tabViewSidebarHeader($0)) }).eraseToAnyParser(),
+_tabViewStyleModifier<R>.name: _tabViewStyleModifier<R>.parser(in: context).map({ Output.chunk16(.tabViewStyle($0)) }).eraseToAnyParser(),
+_tableStyleModifier<R>.name: _tableStyleModifier<R>.parser(in: context).map({ Output.chunk16(.tableStyle($0)) }).eraseToAnyParser(),
+_textCaseModifier<R>.name: _textCaseModifier<R>.parser(in: context).map({ Output.chunk16(.textCase($0)) }).eraseToAnyParser(),
+_textContentTypeModifier<R>.name: _textContentTypeModifier<R>.parser(in: context).map({ Output.chunk16(.textContentType($0)) }).eraseToAnyParser(),
+_textEditorStyleModifier<R>.name: _textEditorStyleModifier<R>.parser(in: context).map({ Output.chunk16(.textEditorStyle($0)) }).eraseToAnyParser(),
+_textFieldStyleModifier<R>.name: _textFieldStyleModifier<R>.parser(in: context).map({ Output.chunk16(.textFieldStyle($0)) }).eraseToAnyParser(),
+_textInputAutocapitalizationModifier<R>.name: _textInputAutocapitalizationModifier<R>.parser(in: context).map({ Output.chunk17(.textInputAutocapitalization($0)) }).eraseToAnyParser(),
+_textInputCompletionModifier<R>.name: _textInputCompletionModifier<R>.parser(in: context).map({ Output.chunk17(.textInputCompletion($0)) }).eraseToAnyParser(),
+_textInputSuggestionsModifier<R>.name: _textInputSuggestionsModifier<R>.parser(in: context).map({ Output.chunk17(.textInputSuggestions($0)) }).eraseToAnyParser(),
+_textSelectionModifier<R>.name: _textSelectionModifier<R>.parser(in: context).map({ Output.chunk17(.textSelection($0)) }).eraseToAnyParser(),
+_textSelectionAffinityModifier<R>.name: _textSelectionAffinityModifier<R>.parser(in: context).map({ Output.chunk17(.textSelectionAffinity($0)) }).eraseToAnyParser(),
+_tintModifier<R>.name: _tintModifier<R>.parser(in: context).map({ Output.chunk17(.tint($0)) }).eraseToAnyParser(),
+_toggleStyleModifier<R>.name: _toggleStyleModifier<R>.parser(in: context).map({ Output.chunk17(.toggleStyle($0)) }).eraseToAnyParser(),
+_toolbarModifier<R>.name: _toolbarModifier<R>.parser(in: context).map({ Output.chunk17(.toolbar($0)) }).eraseToAnyParser(),
+_toolbarBackgroundModifier<R>.name: _toolbarBackgroundModifier<R>.parser(in: context).map({ Output.chunk17(.toolbarBackground($0)) }).eraseToAnyParser(),
+_toolbarBackgroundVisibilityModifier<R>.name: _toolbarBackgroundVisibilityModifier<R>.parser(in: context).map({ Output.chunk17(.toolbarBackgroundVisibility($0)) }).eraseToAnyParser(),
+_toolbarColorSchemeModifier<R>.name: _toolbarColorSchemeModifier<R>.parser(in: context).map({ Output.chunk17(.toolbarColorScheme($0)) }).eraseToAnyParser(),
+_toolbarRoleModifier<R>.name: _toolbarRoleModifier<R>.parser(in: context).map({ Output.chunk17(.toolbarRole($0)) }).eraseToAnyParser(),
+_toolbarTitleDisplayModeModifier<R>.name: _toolbarTitleDisplayModeModifier<R>.parser(in: context).map({ Output.chunk17(.toolbarTitleDisplayMode($0)) }).eraseToAnyParser(),
+_toolbarTitleMenuModifier<R>.name: _toolbarTitleMenuModifier<R>.parser(in: context).map({ Output.chunk17(.toolbarTitleMenu($0)) }).eraseToAnyParser(),
+_toolbarVisibilityModifier<R>.name: _toolbarVisibilityModifier<R>.parser(in: context).map({ Output.chunk18(.toolbarVisibility($0)) }).eraseToAnyParser(),
+_touchBarCustomizationLabelModifier<R>.name: _touchBarCustomizationLabelModifier<R>.parser(in: context).map({ Output.chunk18(.touchBarCustomizationLabel($0)) }).eraseToAnyParser(),
+_touchBarItemPrincipalModifier<R>.name: _touchBarItemPrincipalModifier<R>.parser(in: context).map({ Output.chunk18(.touchBarItemPrincipal($0)) }).eraseToAnyParser(),
+_transform3DEffectModifier<R>.name: _transform3DEffectModifier<R>.parser(in: context).map({ Output.chunk18(.transform3DEffect($0)) }).eraseToAnyParser(),
+_transformEffectModifier<R>.name: _transformEffectModifier<R>.parser(in: context).map({ Output.chunk18(.transformEffect($0)) }).eraseToAnyParser(),
+_transitionModifier<R>.name: _transitionModifier<R>.parser(in: context).map({ Output.chunk18(.transition($0)) }).eraseToAnyParser(),
+_truncationModeModifier<R>.name: _truncationModeModifier<R>.parser(in: context).map({ Output.chunk18(.truncationMode($0)) }).eraseToAnyParser(),
+_unredactedModifier<R>.name: _unredactedModifier<R>.parser(in: context).map({ Output.chunk18(.unredacted($0)) }).eraseToAnyParser(),
+_upperLimbVisibilityModifier<R>.name: _upperLimbVisibilityModifier<R>.parser(in: context).map({ Output.chunk18(.upperLimbVisibility($0)) }).eraseToAnyParser(),
+_volumeBaseplateVisibilityModifier<R>.name: _volumeBaseplateVisibilityModifier<R>.parser(in: context).map({ Output.chunk18(.volumeBaseplateVisibility($0)) }).eraseToAnyParser(),
+_windowDismissBehaviorModifier<R>.name: _windowDismissBehaviorModifier<R>.parser(in: context).map({ Output.chunk18(.windowDismissBehavior($0)) }).eraseToAnyParser(),
+_windowFullScreenBehaviorModifier<R>.name: _windowFullScreenBehaviorModifier<R>.parser(in: context).map({ Output.chunk18(.windowFullScreenBehavior($0)) }).eraseToAnyParser(),
+_windowMinimizeBehaviorModifier<R>.name: _windowMinimizeBehaviorModifier<R>.parser(in: context).map({ Output.chunk18(.windowMinimizeBehavior($0)) }).eraseToAnyParser(),
+_windowResizeBehaviorModifier<R>.name: _windowResizeBehaviorModifier<R>.parser(in: context).map({ Output.chunk18(.windowResizeBehavior($0)) }).eraseToAnyParser(),
+_zIndexModifier<R>.name: _zIndexModifier<R>.parser(in: context).map({ Output.chunk19(.zIndex($0)) }).eraseToAnyParser(),
+                    LiveViewNative._OnSubmitModifier.name: LiveViewNative._OnSubmitModifier.parser(in: context).map(Output._OnSubmitModifier).eraseToAnyParser(),
+LiveViewNative._MatchedGeometryEffectModifier<R>.name: LiveViewNative._MatchedGeometryEffectModifier<R>.parser(in: context).map(Output._MatchedGeometryEffectModifier).eraseToAnyParser(),
 LiveViewNative._PresentationDetentsModifier.name: LiveViewNative._PresentationDetentsModifier.parser(in: context).map(Output._PresentationDetentsModifier).eraseToAnyParser(),
-LiveViewNative._SearchScopesModifier<R>.name: LiveViewNative._SearchScopesModifier<R>.parser(in: context).map(Output._SearchScopesModifier).eraseToAnyParser(),
 LiveViewNative._MatchedTransitionSourceModifier<R>.name: LiveViewNative._MatchedTransitionSourceModifier<R>.parser(in: context).map(Output._MatchedTransitionSourceModifier).eraseToAnyParser(),
+LiveViewNative._SearchScopesModifier<R>.name: LiveViewNative._SearchScopesModifier<R>.parser(in: context).map(Output._SearchScopesModifier).eraseToAnyParser(),
+LiveViewNative._Rotation3DEffectModifier<R>.name: LiveViewNative._Rotation3DEffectModifier<R>.parser(in: context).map(Output._Rotation3DEffectModifier).eraseToAnyParser(),
+LiveViewNative._PerspectiveRotationEffectModifier<R>.name: LiveViewNative._PerspectiveRotationEffectModifier<R>.parser(in: context).map(Output._PerspectiveRotationEffectModifier).eraseToAnyParser(),
+LiveViewNative._FocusScopeModifier<R>.name: LiveViewNative._FocusScopeModifier<R>.parser(in: context).map(Output._FocusScopeModifier).eraseToAnyParser(),
+LiveViewNative._PrefersDefaultFocusModifier<R>.name: LiveViewNative._PrefersDefaultFocusModifier<R>.parser(in: context).map(Output._PrefersDefaultFocusModifier).eraseToAnyParser(),
+LiveViewNative._SearchCompletionModifier<R>.name: LiveViewNative._SearchCompletionModifier<R>.parser(in: context).map(Output._SearchCompletionModifier).eraseToAnyParser(),
 LiveViewNative._MaskModifier<R>.name: LiveViewNative._MaskModifier<R>.parser(in: context).map(Output._MaskModifier).eraseToAnyParser(),
+LiveViewNative._NavigationTransitionModifier<R>.name: LiveViewNative._NavigationTransitionModifier<R>.parser(in: context).map(Output._NavigationTransitionModifier).eraseToAnyParser(),
                 ]
 
                 let deprecations = [
@@ -14492,7 +15657,7 @@ ConstantAtomLiteral("content").map({ () -> Self in
 /// * `.tabBar`
 /// * `.sidebar`
 @_documentation(visibility: public)
-@available(watchOS 11.0,iOS 18.0,visionOS 2.0,macOS 15.0,tvOS 18.0, *)
+@available(iOS 18.0,watchOS 11.0,macOS 15.0,visionOS 2.0,tvOS 18.0, *)
 extension AdaptableTabBarPlacement: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -14617,7 +15782,7 @@ ConstantAtomLiteral("vertical").map({ () -> Self in
 /// * `.standard`
 /// * `.increased`
 @_documentation(visibility: public)
-@available(iOS 17.0,visionOS 1.0,macOS 14.0, *)
+@available(visionOS 1.0,iOS 17.0,macOS 14.0, *)
 extension BadgeProminence: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -14887,7 +16052,7 @@ ConstantAtomLiteral("plusLighter").map({ () -> Self in
 /// * `.enabled`
 /// * `.disabled`
 @_documentation(visibility: public)
-@available(watchOS 10.0,iOS 17.0,visionOS 1.0,macOS 14.0,tvOS 17.0, *)
+@available(iOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0,tvOS 17.0, *)
 extension ButtonRepeatBehavior: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15013,14 +16178,14 @@ ConstantAtomLiteral("dark").map({ () -> Self in
 /// * `.navigationSplitView`
 /// * `.window`
 @_documentation(visibility: public)
-@available(macOS 14.0,iOS 17.0,tvOS 17.0,visionOS 1.0,watchOS 10.0, *)
+@available(watchOS 10.0,macOS 14.0,visionOS 1.0,iOS 17.0,tvOS 17.0, *)
 extension ContainerBackgroundPlacement: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {
             ConstantAtomLiteral("tabView").map({ () -> Self in
 #if os(watchOS)
-if #available(macOS 14.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *) {
+if #available(watchOS 10.0,macOS 14.0,iOS 17.0,tvOS 17.0, *) {
     return Self.tabView
 } else { fatalError("'tabView' is not available in this OS version") }
 #else
@@ -15029,7 +16194,7 @@ fatalError("'tabView' is not available on this OS")
 })
 ConstantAtomLiteral("navigation").map({ () -> Self in
 #if os(iOS) || os(watchOS)
-if #available(macOS 14.0,iOS 18.0,tvOS 17.0,watchOS 10.0, *) {
+if #available(watchOS 10.0,macOS 14.0,iOS 18.0,tvOS 17.0, *) {
     return Self.navigation
 } else { fatalError("'navigation' is not available in this OS version") }
 #else
@@ -15038,7 +16203,7 @@ fatalError("'navigation' is not available on this OS")
 })
 ConstantAtomLiteral("navigationSplitView").map({ () -> Self in
 #if os(iOS) || os(watchOS)
-if #available(macOS 14.0,iOS 18.0,tvOS 17.0,watchOS 11.0, *) {
+if #available(tvOS 17.0,watchOS 11.0,iOS 18.0,macOS 14.0, *) {
     return Self.navigationSplitView
 } else { fatalError("'navigationSplitView' is not available in this OS version") }
 #else
@@ -15047,7 +16212,7 @@ fatalError("'navigationSplitView' is not available on this OS")
 })
 ConstantAtomLiteral("window").map({ () -> Self in
 #if os(macOS)
-if #available(macOS 15.0,iOS 17.0,tvOS 17.0,watchOS 10.0, *) {
+if #available(watchOS 10.0,macOS 15.0,iOS 17.0,tvOS 17.0, *) {
     return Self.window
 } else { fatalError("'window' is not available in this OS version") }
 #else
@@ -15067,7 +16232,7 @@ fatalError("'window' is not available on this OS")
 /// * `.scrollContent`
 /// * `.scrollIndicators`
 @_documentation(visibility: public)
-@available(tvOS 17.0,iOS 17.0,macOS 14.0,visionOS 1.0,watchOS 10.0, *)
+@available(tvOS 17.0,iOS 17.0,visionOS 1.0,watchOS 10.0,macOS 14.0, *)
 extension ContentMarginPlacement: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15131,7 +16296,7 @@ extension ContentShapeKinds: ParseableModifierValue {
 })
 ConstantAtomLiteral("dragPreview").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(visionOS)
-if #available(visionOS 1.0,iOS 15.0,tvOS 15.0,watchOS 8.0,macOS 12.0, *) {
+if #available(visionOS 1.0,iOS 15.0,watchOS 8.0,tvOS 15.0,macOS 12.0, *) {
     return Self.dragPreview
 } else { fatalError("'dragPreview' is not available in this OS version") }
 #else
@@ -15140,7 +16305,7 @@ fatalError("'dragPreview' is not available on this OS")
 })
 ConstantAtomLiteral("contextMenuPreview").map({ () -> Self in
 #if os(iOS) || os(tvOS) || os(visionOS)
-if #available(visionOS 1.0,iOS 15.0,tvOS 17.0,watchOS 8.0,macOS 12.0, *) {
+if #available(visionOS 1.0,iOS 15.0,watchOS 8.0,tvOS 17.0,macOS 12.0, *) {
     return Self.contextMenuPreview
 } else { fatalError("'contextMenuPreview' is not available in this OS version") }
 #else
@@ -15149,7 +16314,7 @@ fatalError("'contextMenuPreview' is not available on this OS")
 })
 ConstantAtomLiteral("hoverEffect").map({ () -> Self in
 #if os(iOS) || os(visionOS)
-if #available(visionOS 1.0,iOS 15.0,tvOS 15.0,watchOS 8.0,macOS 12.0, *) {
+if #available(visionOS 1.0,iOS 15.0,watchOS 8.0,tvOS 15.0,macOS 12.0, *) {
     return Self.hoverEffect
 } else { fatalError("'hoverEffect' is not available in this OS version") }
 #else
@@ -15158,7 +16323,7 @@ fatalError("'hoverEffect' is not available on this OS")
 })
 ConstantAtomLiteral("focusEffect").map({ () -> Self in
 #if os(macOS) || os(watchOS)
-if #available(iOS 15.0,tvOS 15.0,watchOS 8.0,macOS 12.0, *) {
+if #available(iOS 15.0,watchOS 8.0,tvOS 15.0,macOS 12.0, *) {
     return Self.focusEffect
 } else { fatalError("'focusEffect' is not available in this OS version") }
 #else
@@ -15167,7 +16332,7 @@ fatalError("'focusEffect' is not available on this OS")
 })
 ConstantAtomLiteral("accessibility").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-if #available(macOS 14.0,visionOS 1.0,iOS 17.0,watchOS 10.0,tvOS 17.0, *) {
+if #available(watchOS 10.0,iOS 17.0,visionOS 1.0,macOS 14.0,tvOS 17.0, *) {
     return Self.accessibility
 } else { fatalError("'accessibility' is not available in this OS version") }
 #else
@@ -15189,7 +16354,7 @@ fatalError("'accessibility' is not available on this OS")
 /// * `.large`
 /// * `.extraLarge`
 @_documentation(visibility: public)
-@available(iOS 15.0,watchOS 9.0,macOS 10.15,visionOS 1.0, *)
+@available(iOS 15.0,macOS 10.15,watchOS 9.0,visionOS 1.0, *)
 extension ControlSize: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15223,7 +16388,7 @@ fatalError("'regular' is not available on this OS")
 })
 ConstantAtomLiteral("large").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-if #available(iOS 15.0,watchOS 9.0,macOS 11.0,visionOS 1.0, *) {
+if #available(iOS 15.0,macOS 11.0,watchOS 9.0,visionOS 1.0, *) {
     return Self.large
 } else { fatalError("'large' is not available in this OS version") }
 #else
@@ -15232,7 +16397,7 @@ fatalError("'large' is not available on this OS")
 })
 ConstantAtomLiteral("extraLarge").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(visionOS) || os(watchOS)
-if #available(iOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *) {
+if #available(iOS 17.0,macOS 14.0,watchOS 10.0,visionOS 1.0, *) {
     return Self.extraLarge
 } else { fatalError("'extraLarge' is not available in this OS version") }
 #else
@@ -15287,7 +16452,7 @@ ConstantAtomLiteral("userInitiated").map({ () -> Self in
 /// * `.critical`
 /// * `.standard`
 @_documentation(visibility: public)
-@available(tvOS 17.0,iOS 17.0,macOS 13.0,visionOS 1.0,watchOS 10.0, *)
+@available(iOS 17.0,watchOS 10.0,macOS 13.0,visionOS 1.0,tvOS 17.0, *)
 extension DialogSeverity: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15312,7 +16477,7 @@ fatalError("'critical' is not available on this OS")
 })
 ConstantAtomLiteral("standard").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-if #available(tvOS 17.0,iOS 17.0,macOS 14.0,visionOS 1.0,watchOS 10.0, *) {
+if #available(iOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0,tvOS 17.0, *) {
     return Self.standard
 } else { fatalError("'standard' is not available in this OS version") }
 #else
@@ -15497,7 +16662,7 @@ ConstantAtomLiteral("all").map({ () -> Self in
 /// * `.includeHiddenFiles`
 /// * `.displayFileExtensions`
 @_documentation(visibility: public)
-@available(iOS 17.0,visionOS 1.0,macOS 14.0, *)
+@available(iOS 17.0,macOS 14.0,visionOS 1.0, *)
 extension FileDialogBrowserOptions: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15542,7 +16707,7 @@ fatalError("'displayFileExtensions' is not available on this OS")
 /// * `.edit`
 /// * `.automatic`
 @_documentation(visibility: public)
-@available(watchOS 10.0,iOS 17.0,visionOS 1.0,macOS 14.0,tvOS 17.0, *)
+@available(iOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0,tvOS 17.0, *)
 extension FocusInteractions: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15819,7 +16984,7 @@ fatalError("'never' is not available on this OS")
 /// * `.center`
 /// * `.trailing`
 @_documentation(visibility: public)
-@available(iOS 16.0,visionOS 1.0,macOS 13.0, *)
+@available(visionOS 1.0,macOS 13.0,iOS 16.0, *)
 extension HorizontalAlignment: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15881,7 +17046,7 @@ ConstantAtomLiteral("trailing").map({ () -> Self in
 /// * `.leading`
 /// * `.trailing`
 @_documentation(visibility: public)
-@available(visionOS 2.0,iOS 18.0,tvOS 18.0,watchOS 11.0,macOS 15.0, *)
+@available(visionOS 2.0,iOS 18.0,watchOS 11.0,tvOS 18.0,macOS 15.0, *)
 extension HorizontalDirection: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15952,7 +17117,7 @@ ConstantAtomLiteral("trailing").map({ () -> Self in
 /// * `.highlight`
 /// * `.lift`
 @_documentation(visibility: public)
-@available(iOS 13.4,visionOS 1.0,tvOS 16.0, *)
+@available(tvOS 16.0,visionOS 1.0,iOS 13.4, *)
 extension HoverEffect: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -15968,7 +17133,7 @@ fatalError("'automatic' is not available on this OS")
 })
 ConstantAtomLiteral("highlight").map({ () -> Self in
 #if os(iOS) || os(tvOS) || os(visionOS)
-if #available(iOS 13.4,visionOS 1.0,tvOS 17.0, *) {
+if #available(tvOS 17.0,iOS 13.4,visionOS 1.0, *) {
     return Self.highlight
 } else { fatalError("'highlight' is not available in this OS version") }
 #else
@@ -15996,7 +17161,7 @@ fatalError("'lift' is not available on this OS")
 /// * `.defaultAction`
 /// * `.cancelAction`
 @_documentation(visibility: public)
-@available(iOS 14.0,visionOS 1.0,macOS 11.0, *)
+@available(visionOS 1.0,macOS 11.0,iOS 14.0, *)
 extension KeyboardShortcut: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16093,7 +17258,7 @@ extension MenuOrder: ParseableModifierValue {
 })
 ConstantAtomLiteral("priority").map({ () -> Self in
 #if os(iOS) || os(visionOS)
-if #available(iOS 16.0,macOS 13.0,tvOS 16.0,visionOS 1.0,watchOS 9.0, *) {
+if #available(tvOS 16.0,visionOS 1.0,watchOS 9.0,iOS 16.0,macOS 13.0, *) {
     return Self.priority
 } else { fatalError("'priority' is not available in this OS version") }
 #else
@@ -16124,7 +17289,7 @@ ConstantAtomLiteral("fixed").map({ () -> Self in
 /// * `.sheet`
 /// * `.fullScreenCover`
 @_documentation(visibility: public)
-@available(tvOS 16.4,iOS 16.4,macOS 13.3,visionOS 1.0,watchOS 9.4, *)
+@available(macOS 13.3,tvOS 16.4,iOS 16.4,watchOS 9.4,visionOS 1.0, *)
 extension PresentationAdaptation: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16187,7 +17352,7 @@ fatalError("'fullScreenCover' is not available on this OS")
 /// * `.resizes`
 /// * `.scrolls`
 @_documentation(visibility: public)
-@available(watchOS 9.4,iOS 16.4,visionOS 1.0,macOS 13.3,tvOS 16.4, *)
+@available(watchOS 9.4,iOS 16.4,visionOS 1.0,tvOS 16.4,macOS 13.3, *)
 extension PresentationContentInteraction: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16292,7 +17457,7 @@ ConstantAtomLiteral("privacy").map({ () -> Self in
 })
 ConstantAtomLiteral("invalidated").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(tvOS) || os(visionOS) || os(watchOS)
-if #available(macOS 14.0,tvOS 17.0,visionOS 1.0,iOS 17.0,watchOS 10.0, *) {
+if #available(watchOS 10.0,iOS 17.0,visionOS 1.0,tvOS 17.0,macOS 14.0, *) {
     return Self.invalidated
 } else { fatalError("'invalidated' is not available in this OS version") }
 #else
@@ -16407,7 +17572,7 @@ extension ScenePadding: ParseableModifierValue {
 })
 ConstantAtomLiteral("navigationBar").map({ () -> Self in
 #if os(watchOS)
-if #available(iOS 16.0,macOS 13.0,watchOS 9.0,tvOS 16.0, *) {
+if #available(watchOS 9.0,macOS 13.0,tvOS 16.0,iOS 16.0, *) {
     return Self.navigationBar
 } else { fatalError("'navigationBar' is not available in this OS version") }
 #else
@@ -16427,7 +17592,7 @@ fatalError("'navigationBar' is not available on this OS")
 /// * `.sizeChanges`
 /// * `.alignment`
 @_documentation(visibility: public)
-@available(tvOS 18.0,iOS 18.0,macOS 15.0,visionOS 2.0,watchOS 11.0, *)
+@available(macOS 15.0,tvOS 18.0,iOS 18.0,watchOS 11.0,visionOS 2.0, *)
 extension ScrollAnchorRole: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16472,7 +17637,7 @@ fatalError("'alignment' is not available on this OS")
 /// * `.always`
 /// * `.basedOnSize`
 @_documentation(visibility: public)
-@available(tvOS 16.4,iOS 16.4,macOS 13.3,visionOS 1.0,watchOS 9.4, *)
+@available(tvOS 16.4,visionOS 1.0,watchOS 9.4,iOS 16.4,macOS 13.3, *)
 extension ScrollBounceBehavior: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16518,7 +17683,7 @@ fatalError("'basedOnSize' is not available on this OS")
 /// * `.interactively`
 /// * `.never`
 @_documentation(visibility: public)
-@available(tvOS 16.0,iOS 16.0,macOS 13.0,watchOS 9.0, *)
+@available(macOS 13.0,tvOS 16.0,iOS 16.0,watchOS 9.0, *)
 extension ScrollDismissesKeyboardMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16627,7 +17792,7 @@ ConstantAtomLiteral("never").map({ () -> Self in
 /// * `.onTextEntry`
 /// * `.onSearchPresentation`
 @_documentation(visibility: public)
-@available(iOS 16.4,macOS 13.3,visionOS 1.0,watchOS 9.4,tvOS 16.4, *)
+@available(tvOS 16.4,iOS 16.4,visionOS 1.0,watchOS 9.4,macOS 13.3, *)
 extension SearchScopeActivation: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16717,7 +17882,7 @@ ConstantAtomLiteral("content").map({ () -> Self in
 /// * `.enabled`
 /// * `.disabled`
 @_documentation(visibility: public)
-@available(iOS 17.0,tvOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0, *)
+@available(tvOS 17.0,visionOS 1.0,watchOS 10.0,iOS 17.0,macOS 14.0, *)
 extension SpringLoadingBehavior: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16902,7 +18067,7 @@ ConstantAtomLiteral("search").map({ () -> Self in
 /// * `.upstream`
 /// * `.downstream`
 @_documentation(visibility: public)
-@available(tvOS 18.0,iOS 18.0,macOS 15.0,visionOS 2.0,watchOS 11.0, *)
+@available(tvOS 18.0,visionOS 2.0,watchOS 11.0,iOS 18.0,macOS 15.0, *)
 extension TextSelectionAffinity: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16946,7 +18111,7 @@ fatalError("'downstream' is not available on this OS")
 /// * `.sidebarToggle`
 /// * `.title`
 @_documentation(visibility: public)
-@available(tvOS 17.0,iOS 17.0,macOS 14.0,visionOS 1.0,watchOS 10.0, *)
+@available(iOS 17.0,watchOS 10.0,macOS 14.0,visionOS 1.0,tvOS 17.0, *)
 extension ToolbarDefaultItemKind: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -16962,7 +18127,7 @@ fatalError("'sidebarToggle' is not available on this OS")
 })
 ConstantAtomLiteral("title").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(visionOS)
-if #available(tvOS 17.0,iOS 18.0,macOS 15.0,visionOS 2.0,watchOS 10.0, *) {
+if #available(iOS 18.0,watchOS 10.0,macOS 15.0,visionOS 2.0,tvOS 17.0, *) {
     return Self.title
 } else { fatalError("'title' is not available in this OS version") }
 #else
@@ -16999,7 +18164,7 @@ extension ToolbarRole: ParseableModifierValue {
 })
 ConstantAtomLiteral("navigationStack").map({ () -> Self in
 #if os(iOS) || os(tvOS) || os(visionOS) || os(watchOS)
-if #available(watchOS 9.0,iOS 16.0,visionOS 1.0,macOS 13.0,tvOS 16.0, *) {
+if #available(iOS 16.0,watchOS 9.0,macOS 13.0,visionOS 1.0,tvOS 16.0, *) {
     return Self.navigationStack
 } else { fatalError("'navigationStack' is not available in this OS version") }
 #else
@@ -17008,7 +18173,7 @@ fatalError("'navigationStack' is not available on this OS")
 })
 ConstantAtomLiteral("browser").map({ () -> Self in
 #if os(iOS) || os(visionOS)
-if #available(watchOS 9.0,iOS 16.0,visionOS 1.0,macOS 13.0,tvOS 16.0, *) {
+if #available(iOS 16.0,watchOS 9.0,macOS 13.0,visionOS 1.0,tvOS 16.0, *) {
     return Self.browser
 } else { fatalError("'browser' is not available in this OS version") }
 #else
@@ -17017,7 +18182,7 @@ fatalError("'browser' is not available on this OS")
 })
 ConstantAtomLiteral("editor").map({ () -> Self in
 #if os(iOS) || os(macOS) || os(visionOS)
-if #available(watchOS 9.0,iOS 16.0,visionOS 1.0,macOS 13.0,tvOS 16.0, *) {
+if #available(iOS 16.0,watchOS 9.0,macOS 13.0,visionOS 1.0,tvOS 16.0, *) {
     return Self.editor
 } else { fatalError("'editor' is not available in this OS version") }
 #else
@@ -17038,7 +18203,7 @@ fatalError("'editor' is not available on this OS")
 /// * `.inlineLarge`
 /// * `.inline`
 @_documentation(visibility: public)
-@available(tvOS 17.0,iOS 17.0,macOS 14.0,visionOS 1.0,watchOS 10.0, *)
+@available(macOS 14.0,tvOS 17.0,iOS 17.0,watchOS 10.0,visionOS 1.0, *)
 extension ToolbarTitleDisplayMode: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
@@ -17156,7 +18321,7 @@ ConstantAtomLiteral("lastTextBaseline").map({ () -> Self in
 /// * `.up`
 /// * `.down`
 @_documentation(visibility: public)
-@available(visionOS 2.0,iOS 18.0,tvOS 18.0,watchOS 11.0,macOS 15.0, *)
+@available(tvOS 18.0,iOS 18.0,visionOS 2.0,watchOS 11.0,macOS 15.0, *)
 extension VerticalDirection: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
