@@ -76,6 +76,7 @@ public struct TextReference: ParseableModifierValue {
 
 extension View {
     /// Sets up an observer for a `Text` element used in a `TextReference`
+    @MainActor
     func _observeTextReference(
         _ reference: TextReference?,
         on element: ElementNode,
