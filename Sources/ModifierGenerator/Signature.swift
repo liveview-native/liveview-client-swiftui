@@ -84,6 +84,8 @@ struct Signature {
                 })).description)\#(boundParameters.isEmpty ? "" : ")")
                 \#(platformAvailability.isEmpty ? "" : "#endif")
         """#
+        
+        let textReferenceArgument = boundParameters.first(where: \.isTextReference)
 
         self.content = #"""
                 \#(platformAvailability)
@@ -98,6 +100,7 @@ struct Signature {
                             })
                             .joined(separator: "\n")
                     )
+                    \#(textReferenceArgument.flatMap({ "__content._observeTextReference(\($0.firstName.trimmedDescription), on: element, in: context) { __content in" }) ?? "")
                     __content
                         .\#(decl.name.trimmed.text)(\#(parameters.map({
                             switch ($0.type.as(IdentifierTypeSyntax.self)?.name ?? $0.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name)?.text {
@@ -133,6 +136,7 @@ struct Signature {
                                 return $0.firstName.tokenKind == .wildcard ? $0.secondName!.text : "\($0.firstName.text): \(($0.secondName ?? $0.firstName).text)"
                             }
                         }).joined(separator: ", ")))
+                    \#(textReferenceArgument.flatMap({ _ in "}" }) ?? "")
                     \#(availability.isEmpty ? "" : "} else { __content }")
                 \#(platformAvailability.isEmpty ? "" : "#endif")
         """#
