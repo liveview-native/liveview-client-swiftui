@@ -5,6 +5,8 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
 
   alias Mix.Tasks.Lvn.Swiftui.Gen
 
+  @macos? :os.type() == {:unix, :darwin}
+
   setup do
     Mix.Task.clear()
     :ok
@@ -18,7 +20,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
           assert file =~ "LiveViewNativeSwiftuiWeb.CoreComponents.SwiftUI"
           assert file =~ "import LiveViewNative.LiveForm.Component"
         end
-        assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+        if @macos? do
+          assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+        end
       end
     end
 
@@ -29,7 +33,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
           assert file =~ "LiveViewNativeSwiftuiWeb.CoreComponents.SwiftUI"
           refute file =~ "import LiveViewNative.LiveForm.Component"
         end
-        assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+        if @macos? do
+          assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+        end
       end
     end
 
@@ -37,7 +43,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
       in_tmp_live_project config.test, fn ->
         Gen.run(["--no-copy"])
         refute_file "lib/live_view_native_swiftui_web/components/core_components.swiftui.ex"
-        assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+        if @macos? do
+          assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+        end
       end
     end
 
@@ -45,7 +53,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
       in_tmp_live_project config.test, fn ->
         Gen.run(["--no-xcodegen"])
         assert_file "lib/live_view_native_swiftui_web/components/core_components.swiftui.ex"
-        refute_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+        if @macos? do
+          refute_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+        end
       end
     end
 
@@ -60,7 +70,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
             assert file =~ "LiveViewNativeSwiftuiWeb.CoreComponents.SwiftUI"
             assert file =~ "import LiveViewNative.LiveForm.Component"
           end
-          assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+          if @macos? do
+            assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+          end
         end)
       end
     end
@@ -73,7 +85,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
             assert file =~ "LiveViewNativeSwiftuiWeb.CoreComponents.SwiftUI"
             refute file =~ "import LiveViewNative.LiveForm.Component"
           end
-          assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+          if @macos? do
+            assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+          end
         end)
       end
     end
@@ -83,7 +97,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
         File.cd!("live_view_native_swiftui_web", fn ->
           Gen.run(["--no-copy"])
           refute_file "lib/live_view_native_swiftui_web/components/core_components.swiftui.ex"
-          assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+          if @macos? do
+            assert_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+          end
         end)
       end
     end
@@ -93,7 +109,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.GenTest do
         File.cd!("live_view_native_swiftui_web", fn ->
           Gen.run(["--no-xcodegen"])
           assert_file "lib/live_view_native_swiftui_web/components/core_components.swiftui.ex"
-          refute_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+          if @macos? do
+            refute_file "native/swiftui/LiveViewNativeSwiftui/LiveViewNativeSwiftui.swift"
+          end
         end)
       end
     end
