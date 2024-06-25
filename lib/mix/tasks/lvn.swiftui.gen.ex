@@ -3,6 +3,8 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
   alias Mix.LiveViewNative.Context
 
+  @macos? :os.type() == {:unix, :darwin}
+
   @shortdoc "Generates the SwiftUI Project for LiveView Native"
   @moduledoc """
   #{@shortdoc}
@@ -32,10 +34,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     copy_new_files(context, files)
 
     if Keyword.get(context.opts, :xcodegen, true) do
-      context
-      |> install_xcodegen()
-      |> run_xcodegen()
-      |> remove_xcodegen_files()
+      run_xcodegen(context, @macos?)
     end
 
     :ok
@@ -62,30 +61,6 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     """)
   end
 
-  defp install_xcodegen(context) do
-    unless System.find_executable("xcodegen") do
-      cond do
-        # Install with Mint
-        System.find_executable("mint") ->
-          status_message("running", "mint install yonaskolb/xcodegen")
-          System.cmd("mint", ["install", "yonaskolb/xcodegen"])
-
-        # Install with Homebrew
-        System.find_executable("brew") ->
-          status_message("running", "brew install xcodegen")
-          System.cmd("brew", ["install", "xcodegen"])
-
-        # Clone from GitHub (fallback)
-        true ->
-          File.mkdir_p("_build/tmp/xcodegen")
-          status_message("running", "git clone https://github.com/yonaskolb/XcodeGen.git")
-          System.cmd("git", ["clone", "https://github.com/yonaskolb/XcodeGen.git", "_build/tmp/xcodegen"])
-      end
-    end
-
-    context
-  end
-
   def files_to_be_generated(context) do
     root =
       Application.app_dir(:live_view_native_swiftui)
@@ -94,7 +69,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     web_prefix = Mix.Phoenix.web_path(context.context_app)
 
     copy_files? = Keyword.get(context.opts, :copy, true)
-    xcodegen? = Keyword.get(context.opts, :xcodegen, true)
+    xcodegen? = Keyword.get(context.opts, :xcodegen, true) && @macos?
 
     components_path = Path.join(web_prefix, "components")
 
@@ -155,22 +130,25 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
     context
   end
 
-  defp run_xcodegen(%{base_module: base_module, native_path: native_path} = context) do
+  defp run_xcodegen(%{base_module: base_module, native_path: native_path} = context, true) do
     xcodegen_env = [
       {"LVN_APP_NAME", inspect(base_module)},
       {"LVN_BUNDLE_IDENTIFIER", "com.example.#{inspect(base_module)}"}
     ]
 
-    if File.exists?("_build/tmp/xcodegen") do
-      xcodegen_spec_path = Path.join([native_path, "project.yml"])
+    spec_path = Path.join([native_path, "project.yml"])
+    bin_path =
+      :code.priv_dir(:live_view_native_swiftui)
+      |> IO.iodata_to_binary()
+      |> Path.join("bin/xcodegen")
 
-      System.cmd("swift", ["run", "xcodegen", "generate", "-s", xcodegen_spec_path], cd: "_build/tmp/xcodegen", env: xcodegen_env)
-    else
-      System.cmd("xcodegen", ["generate"], cd: native_path, env: xcodegen_env)
-    end
+    System.cmd(bin_path, ["generate", "-s", spec_path], env: xcodegen_env)
 
-    context
+    remove_xcodegen_files(context)
   end
+
+  defp run_xcodegen(_context, false),
+    do: Mix.shell().info("You must run this task from MacOS to use xcodegen")
 
   defp remove_xcodegen_files(%{native_path: native_path} = context) do
     ["base_spec.yml", "project_watchos.yml", "project.yml"]
