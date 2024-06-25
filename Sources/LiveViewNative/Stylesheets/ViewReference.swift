@@ -75,7 +75,28 @@ public struct TextReference: ParseableModifierValue {
 }
 
 extension View {
-    /// Sets up an observer for a `Text` element used in a `TextReference`
+    /// Sets up an observer for a `Text` element used in a `TextReference`.
+    ///
+    /// When a modifier uses a `TextReference` type,
+    /// changes to the content of the `Text` may not update properly
+    /// without setting up an observer for the `Text` element.
+    ///
+    /// This modifier will create an observer that updates the modifiers
+    /// provided to `content` whenever the `Text` element receives an update.
+    ///
+    /// ```swift
+    /// struct MyCustomModifier<R: RootRegistry>: ViewModifier {
+    ///     let reference: TextReference
+    ///     @ObservedElement private var element
+    ///     @LiveContext<R> private var context
+    ///
+    ///     func body(content: Content) -> some View {
+    ///         content._observeTextReference(reference, on: element, in: context) { content in
+    ///             content.badge(reference.resolve(on: element, in: context))
+    ///         }
+    ///     }
+    /// }
+    /// ```
     @MainActor
     func _observeTextReference(
         _ reference: TextReference?,
