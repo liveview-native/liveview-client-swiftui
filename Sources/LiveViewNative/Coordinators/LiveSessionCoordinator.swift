@@ -529,8 +529,8 @@ extension LiveSessionCoordinator {
             "os": getOSName(),
             "os_version": getOSVersion(),
             "target": getTarget(),
-            "localization": getLocalization(),
-            "internationalization": getInternationalization()
+            "l10n": getLocalization(),
+            "i18n": getInternationalization()
         ]
     }
     
