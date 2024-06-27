@@ -80,10 +80,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter value: The event value to provide to the backend event handler. The value _must_ be  serializable using `JSONSerialization`.
     /// - Parameter target: The value of the `phx-target` attribute.
     /// - Throws: ``LiveConnectionError/eventError(_:)`` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
-    public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws {
+    @discardableResult
+    public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> [String:Any]? {
         // isValidJSONObject only accepts objects, but we want to check that the value can be serialized as a field of an object
         precondition(JSONSerialization.isValidJSONObject(["a": value]))
-        try await doPushEvent("event", payload: [
+        return try await doPushEvent("event", payload: [
             "type": type,
             "event": event,
             "value": value,
@@ -91,7 +92,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         ])
     }
     
-    public func pushEvent(type: String, event: String, value: some Encodable, target: Int? = nil) async throws {
+    @discardableResult
+    public func pushEvent(type: String, event: String, value: some Encodable, target: Int? = nil) async throws -> [String:Any]? {
         try await pushEvent(
             type: type,
             event: event,
@@ -100,9 +102,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         )
     }
     
-    internal func doPushEvent(_ event: String, payload: Payload) async throws {
+    @discardableResult
+    internal func doPushEvent(_ event: String, payload: Payload) async throws -> [String:Any]? {
         guard let channel = channel else {
-            return
+            return nil
         }
         
         let token = self.currentConnectionToken
@@ -127,6 +130,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         if let diffPayload = replyPayload["diff"] as? Payload {
             try self.handleDiff(payload: diffPayload, baseURL: self.url)
+            if let reply = diffPayload["r"] as? [String:Any] {
+                return reply
+            }
         } else if let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
             try await session.redirect(redirect)
         } else if let redirect = (replyPayload["redirect"] as? Payload),
@@ -134,6 +140,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         {
             try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
         }
+        return nil
     }
     
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
