@@ -38,4 +38,14 @@ extension FunctionParameterSyntax {
     var isFocusState: Bool {
         self.type.as(MemberTypeSyntax.self)?.baseType.as(MemberTypeSyntax.self)?.name.text == "FocusState"
     }
+    
+    var isTextReference: Bool {
+        if let optionalType = self.type.as(OptionalTypeSyntax.self) {
+            return optionalType.wrappedType.as(IdentifierTypeSyntax.self)?.name.text == "TextReference"
+        } else if let identifierType = self.type.as(IdentifierTypeSyntax.self) {
+            return identifierType.name.text == "TextReference"
+        } else {
+            return false
+        }
+    }
 }
