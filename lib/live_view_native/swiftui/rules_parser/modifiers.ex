@@ -155,6 +155,15 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> post_traverse({PostProcessors, :event_to_ast, []})
   )
 
+  defparsecp(
+    :gesture_state,
+    string("gesture_state")
+    |> replace(:__gesture_state__)
+    |> post_traverse({PostProcessors, :add_annotations, []})
+    |> concat(wrap(modifier_brackets.(nested: true)))
+    |> post_traverse({PostProcessors, :wrap_in_tuple, []})
+  )
+
   @modifier_arguments fn inside_key_value_pair? ->
     [
       {
@@ -177,6 +186,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       {
         parsec(:event),
         ~s'an event eg ‘event("search-event", throttle: 10_000)’'
+      },
+      {
+        parsec(:gesture_state),
+        nil
       },
       {
         parsec(:attr),

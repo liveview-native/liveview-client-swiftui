@@ -13,6 +13,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser do
     {_, names} = Enum.unzip(named_choices)
 
     names
+    |> Enum.filter(& &1)
     |> Enum.map(&(" - " <> &1))
     |> Enum.join("\n")
   end
