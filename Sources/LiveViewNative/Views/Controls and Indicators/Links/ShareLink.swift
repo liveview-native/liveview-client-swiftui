@@ -106,8 +106,8 @@ struct ShareLink<Root: RootRegistry>: View {
     public var body: some View {
         #if !os(tvOS)
         let useDefaultLabel = $liveElement.childNodes.filter({
-            guard case let .element(data) = $0.data else { return true }
-            return data.tag != "SharePreview"
+            guard case let .nodeElement(data) = $0.data() else { return true }
+            return data.name.name != "SharePreview"
         }).isEmpty
         
         let subject = self.subject.flatMap(SwiftUI.Text.init)

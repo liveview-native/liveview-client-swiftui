@@ -24,10 +24,10 @@ import LiveViewNativeCore
 /// - ``elementChildren()``
 /// - ``innerText()``
 public struct ElementNode: Identifiable {
-    public let node: Node
-    public let data: ElementData
+    let node: Node
+    let data: Element
     
-    init(node: Node, data: ElementData) {
+    init(node: Node, data: Element) {
         self.node = node
         self.data = data
     }
@@ -42,9 +42,9 @@ public struct ElementNode: Identifiable {
     public func elementChildren() -> [ElementNode] { node.children().compactMap({ $0.asElement() }) }
     
     /// The namespace of the element.
-    public var namespace: String? { data.namespace }
+    public var namespace: String? { data.name.namespace }
     /// The tag name of the element.
-    public var tag: String { data.tag }
+    public var tag: String { data.name.name }
     /// The list of attributes present on this element.
     public var attributes: [LiveViewNativeCore.Attribute] { data.attributes }
     /// The attribute with the given name, or `nil` if there is no such attribute.
@@ -93,7 +93,7 @@ public struct ElementNode: Identifiable {
     public func innerText() -> String {
         // TODO: should follow the spec and insert/collapse whitespace around elements
         self.children().compactMap { node in
-            if case .leaf(let content) = node.data {
+            if case .leaf(let content) = node.data() {
                 return content
             } else {
                 return nil
@@ -115,7 +115,7 @@ public struct ElementNode: Identifiable {
 
 extension Node {
     public func asElement() -> ElementNode? {
-        if case .element(let data) = self.data {
+        if case .nodeElement(let data) = self.data() {
             return ElementNode(node: self, data: data)
         } else {
             return nil

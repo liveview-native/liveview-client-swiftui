@@ -201,7 +201,7 @@ struct ToolbarTreeBuilder<R: RootRegistry> {
         // ToolbarTreeBuilder.fromNode may not be called with a root or leaf node
         switch node {
         case let .n(node):
-            if case .element(let element) = node.data {
+            if case .nodeElement(let element) = node.data() {
                 Self.lookup(ElementNode(node: node, data: element))
             }
         case let .e(error):
@@ -271,7 +271,7 @@ struct CustomizableToolbarTreeBuilder<R: RootRegistry> {
         // CustomizableToolbarTreeBuilder.fromNode may not be called with a root or leaf node
         switch node {
         case let .n(node):
-            if case .element(let element) = node.data {
+            if case .nodeElement(let element) = node.data() {
                 Self.lookup(ElementNode(node: node, data: element))
             }
         case let .e(error):

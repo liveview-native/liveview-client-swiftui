@@ -29,12 +29,12 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let context: LiveContextStorage<R>
         
         var body: some View {
-            switch node.data {
+            switch node.data() {
             case .root:
                 fatalError("ViewTreeBuilder.fromNode may not be called with the root node")
             case .leaf(let content):
                 SwiftUI.Text(content)
-            case .element(let element):
+            case .nodeElement(let element):
                 context.coordinator.builder.fromElement(ElementNode(node: node, data: element), context: context)
             }
         }
@@ -48,7 +48,7 @@ struct ViewTreeBuilder<R: RootRegistry> {
         let withID = applyID(element: element, to: bound)
         let withIDAndTag = applyTag(element: element, to: withID)
 
-        return ObservedElement.Observer.Applicator(element.node.id) {
+        return ObservedElement.Observer.Applicator(element.node.id()) {
             withIDAndTag
                 .environment(\.element, element)
         }
@@ -288,7 +288,7 @@ private enum ForEachElement: Identifiable {
         case let .keyed(_, id):
             return id
         case let .unkeyed(node):
-            return "\(node.id)"
+            return "\(node.id().ref())"
         }
     }
     
