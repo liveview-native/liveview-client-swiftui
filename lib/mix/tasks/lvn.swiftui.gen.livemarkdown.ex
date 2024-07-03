@@ -1,6 +1,7 @@
 defmodule Mix.Tasks.Lvn.Swiftui.Gen.Livemarkdown do
   @moduledoc "Generates ex_doc friendly markdown guides from Livebook notebooks"
-  @destination "guides/markdown_livebooks"
+  @source "livebooks"
+  @destination "livebooks/markdown"
   use Mix.Task
   require Logger
   def run(_args) do
@@ -9,9 +10,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Livemarkdown do
     File.rm_rf(@destination)
     File.mkdir(@destination)
 
-    File.ls!("guides/livebooks") |> Enum.filter(fn file_name -> file_name =~ ".livemd" end)
+    File.ls!(@source) |> Enum.filter(fn file_name -> file_name =~ ".livemd" end)
     |> Enum.each(fn file_name ->
-      ex_doc_friendly_content = make_ex_doc_friendly(File.read!("guides/livebooks/#{file_name}"), file_name)
+      ex_doc_friendly_content = make_ex_doc_friendly(File.read!("#{@source}/#{file_name}"), file_name)
       File.write!("#{@destination}/#{Path.basename(file_name, ".livemd")}.md", ex_doc_friendly_content)
     end)
   end
@@ -24,7 +25,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Livemarkdown do
   end
 
   defp replace_setup_section_with_badge(content, file_name) do
-    badge = "[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fliveview-native%liveview-client-swiftui%2Fmain%2Fguides%livebooks%#{file_name})"
+    badge = "[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fliveview-native%liveview-client-swiftui%2Fmain%2Flivebooks%#{file_name})"
     String.replace(content, ~r/```elixir(.|\n)+?```/, badge, global: false)
   end
 
