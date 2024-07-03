@@ -64,7 +64,7 @@ In this guide, you'll learn how to use stylesheets to customize the appearance o
 
 ## Test for Brian
 
-Hey Brian, I made this quick test to make it easier to jump in to debugging this i
+Hey Brian, I made this quick test to make it easier to jump in to debugging this
 
 <!-- livebook:{"break_markdown":true} -->
 
