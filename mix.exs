@@ -71,6 +71,8 @@ defmodule LiveViewNative.SwiftUI.MixProject do
         Components: &(&1[:type] == :component),
         Macros: &(&1[:type] == :macro)
       ],
+      extras: extras(),
+      groups_for_extras: groups_for_extras(),
       main: "readme",
       source_url: @source_url,
       source_ref: "v#{@version}",
