@@ -20,16 +20,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   mask(alignment: .center, mask: :mask)
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example">
+/// <Element style='mask(alignment: .center, mask: :mask)'>
 ///   <Child template="mask" />
 /// </Element>
 /// ```

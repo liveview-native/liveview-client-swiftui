@@ -23,16 +23,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   matchedGeometryEffect(id: attr("id"), in: attr("namespace"), properties: .frame, anchor: .center, isSource: attr("isSource"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" id={@id} namespace={@namespace} isSource={@isSource} />
+/// <Element style='matchedGeometryEffect(id: attr("id"), in: attr("namespace"), properties: .frame, anchor: .center, isSource: attr("isSource"))' id={@id} namespace={@namespace} isSource={@isSource} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

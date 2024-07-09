@@ -58,33 +58,35 @@ struct _ForegroundStyleModifier<R: RootRegistry>: TextModifier {
     static var name: String { "foregroundStyle" }
 
     enum Value {
-        case _0(style: AnyShapeStyle)
-        case _1(primary: AnyShapeStyle, secondary: AnyShapeStyle)
-        case _2(primary: AnyShapeStyle, secondary: AnyShapeStyle, tertiary: AnyShapeStyle)
+        case _0(style: AnyShapeStyle.Resolvable)
+        case _1(primary: AnyShapeStyle.Resolvable, secondary: AnyShapeStyle.Resolvable)
+        case _2(primary: AnyShapeStyle.Resolvable, secondary: AnyShapeStyle.Resolvable, tertiary: AnyShapeStyle.Resolvable)
     }
 
     let value: Value
     
-    init(_ style: AnyShapeStyle) {
+    @ObservedElement private var element
+    
+    init(_ style: AnyShapeStyle.Resolvable) {
         self.value = ._0(style: style)
     }
     
-    init(_ primary: AnyShapeStyle, _ secondary: AnyShapeStyle) {
+    init(_ primary: AnyShapeStyle.Resolvable, _ secondary: AnyShapeStyle.Resolvable) {
         self.value = ._1(primary: primary, secondary: secondary)
     }
     
-    init(_ primary: AnyShapeStyle, _ secondary: AnyShapeStyle, _ tertiary: AnyShapeStyle) {
+    init(_ primary: AnyShapeStyle.Resolvable, _ secondary: AnyShapeStyle.Resolvable, _ tertiary: AnyShapeStyle.Resolvable) {
         self.value = ._2(primary: primary, secondary: secondary, tertiary: tertiary)
     }
 
     func body(content: Content) -> some View {
         switch value {
         case let ._0(style):
-            content.foregroundStyle(style)
+            content.foregroundStyle(style.resolve(on: element))
         case let ._1(primary, secondary):
-            content.foregroundStyle(primary, secondary)
+            content.foregroundStyle(primary.resolve(on: element), secondary.resolve(on: element))
         case let ._2(primary, secondary, tertiary):
-            content.foregroundStyle(primary, secondary, tertiary)
+            content.foregroundStyle(primary.resolve(on: element), secondary.resolve(on: element), tertiary.resolve(on: element))
         }
     }
     
@@ -92,7 +94,7 @@ struct _ForegroundStyleModifier<R: RootRegistry>: TextModifier {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *),
            case let ._0(style) = value
         {
-            return text.foregroundStyle(style)
+            return text.foregroundStyle(style.resolve(on: element))
         } else {
             return text
         }

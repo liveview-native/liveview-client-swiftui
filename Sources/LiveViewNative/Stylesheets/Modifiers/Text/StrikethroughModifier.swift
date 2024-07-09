@@ -19,16 +19,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   strikethrough(attr("isActive"), pattern: .solid, color: attr("color"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" isActive={@isActive} color={@color} />
+/// <Element style='strikethrough(attr("isActive"), pattern: .solid, color: attr("color"))' isActive={@isActive} color={@color} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
@@ -37,7 +29,7 @@ struct _StrikethroughModifier<R: RootRegistry>: TextModifier {
 
     let isActive: AttributeReference<Bool>
     let pattern: SwiftUI.Text.LineStyle.Pattern
-    let color: AttributeReference<SwiftUI.Color?>?
+    let color: Color.Resolvable?
 
     @ObservedElement private var element
     @LiveContext<R> private var context
@@ -45,7 +37,7 @@ struct _StrikethroughModifier<R: RootRegistry>: TextModifier {
     init(
         _ isActive: AttributeReference<Bool> = .init(storage: .constant(true)),
         pattern: SwiftUI.Text.LineStyle.Pattern = .solid,
-        color: AttributeReference<SwiftUI.Color?>? = .init(storage: .constant(nil))
+        color: Color.Resolvable? = nil
     ) {
         self.isActive = isActive
         self.pattern = pattern

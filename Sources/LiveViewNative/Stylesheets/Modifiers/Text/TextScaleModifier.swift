@@ -18,16 +18,8 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   textScale(.default, isEnabled: attr("isEnabled"))
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" isEnabled={@isEnabled} />
+/// <Element style='textScale(.default, isEnabled: attr("isEnabled"))' isEnabled={@isEnabled} />
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression

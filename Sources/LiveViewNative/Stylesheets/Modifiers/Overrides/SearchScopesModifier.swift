@@ -21,22 +21,13 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   searchScopes(attr("scope"), activation: .automatic, scopes: :scopes)
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" scope={@scope} phx-change="scope">
+/// <Element style='searchScopes(attr("scope"), activation: .automatic, scopes: :scopes)' scope={@scope} phx-change="scope">
 ///   <Child template="scopes" />
 /// </Element>
 /// ```
 ///
 /// ```elixir
-/// # LiveView
 /// def handle_event("scope", params, socket)
 /// ```
 ///
@@ -48,22 +39,13 @@ import LiveViewNativeStylesheet
 ///
 /// Example:
 ///
-/// ```elixir
-/// # stylesheet
-/// "example" do
-///   searchScopes(attr("scope"), scopes: :scopes)
-/// end
-/// ```
-///
 /// ```heex
-/// <%!-- template --%>
-/// <Element class="example" scope={@scope} phx-change="scope">
+/// <Element style='searchScopes(attr("scope"), scopes: :scopes)' scope={@scope} phx-change="scope">
 ///   <Child template="scopes" />
 /// </Element>
 /// ```
 ///
 /// ```elixir
-/// # LiveView
 /// def handle_event("scope", params, socket)
 /// ```
 @_documentation(visibility: public)

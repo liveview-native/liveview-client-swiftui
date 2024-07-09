@@ -132,21 +132,24 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             // [platform] [version], ...
             let platform = Reference(Substring.self)
             let version = Reference(Double?.self)
-            let expression = Regex {
-                Capture(as: platform) {
-                    OneOrMore(.word)
+            let platformExpr = Capture(as: platform) {
+                OneOrMore(.word)
+            }
+            let versionExpr = Capture(as: version) {
+                OneOrMore(.digit)
+                Optionally {
+                    "."
+                    OneOrMore(.digit)
                 }
+            } transform: {
+                Double($0)
+            }
+            
+            let expression = Regex {
+                platformExpr
                 Optionally {
                     OneOrMore(.whitespace)
-                    Capture(as: version) {
-                        OneOrMore(.digit)
-                        Optionally {
-                            "."
-                            OneOrMore(.digit)
-                        }
-                    } transform: {
-                        Double($0)
-                    }
+                    versionExpr
                 }
             }
             let availability = String(match[availability])

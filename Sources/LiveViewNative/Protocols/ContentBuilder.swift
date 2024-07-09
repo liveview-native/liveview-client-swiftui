@@ -340,6 +340,19 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         
         let resolvedStylesheet: [String:[BuilderModifierContainer<Builder>]]
         
+        public var coordinator: LiveViewCoordinator<R> {
+            context.coordinator
+        }
+        
+        public var url: URL {
+            context.url
+        }
+        
+        @MainActor
+        public var document: Document? {
+            context.coordinator.document
+        }
+        
         func value<OtherBuilder: ContentBuilder>(for _: OtherBuilder.Type = OtherBuilder.self) -> ContentBuilderContext<R, OtherBuilder>.Value {
             return .init(
                 coordinatorEnvironment: coordinatorEnvironment,
@@ -363,9 +376,13 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
     static func resolveStylesheet(
         _ stylesheet: Stylesheet<R>
     ) throws -> [String:[BuilderModifierContainer<Builder>]] {
-        return try stylesheet.content.reduce(into: [:], {
-            $0.merge(try StylesheetParser<BuilderModifierContainer<Builder>>(context: .init()).parse($1.utf8), uniquingKeysWith: { $1 })
-        })
+        if Builder.ModifierType.self == EmptyContentModifier<Builder>.self {
+            return [:]
+        } else {
+            return try stylesheet.content.reduce(into: [:], {
+                $0.merge(try StylesheetParser<BuilderModifierContainer<Builder>>(context: .init()).parse($1.utf8), uniquingKeysWith: { $1 })
+            })
+        }
     }
 }
 

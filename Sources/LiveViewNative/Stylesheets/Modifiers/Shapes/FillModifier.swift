@@ -29,16 +29,16 @@ import LiveViewNativeStylesheet
 struct _FillModifier: ShapeFinalizerModifier {
     static let name = "fill"
     
-    let content: AnyShapeStyle
+    let content: AnyShapeStyle.Resolvable
     let style: FillStyle
     
-    init(_ content: AnyShapeStyle = .init(.foreground), style: FillStyle = .init()) {
+    init(_ content: AnyShapeStyle.Resolvable = .init(.foreground), style: FillStyle = .init()) {
         self.content = content
         self.style = style
     }
     
     @ViewBuilder
     func apply(to shape: AnyShape, on element: ElementNode) -> some View {
-        shape.fill(content, style: style)
+        shape.fill(content.resolve(on: element), style: style)
     }
 }

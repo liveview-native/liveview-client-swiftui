@@ -44,7 +44,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   ## Examples
 
-      <Group class="keyboardType(.emailAddress)">
+      <Group style="keyboardType(.emailAddress)">
         <.input field={@form[:email]} type="TextField" />
         <.input name="my-input" errors={["oh no!"]} />
       </Group>
@@ -95,10 +95,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     |> assign_new(:value, fn -> field.value end)
     |> assign(
       :rest,
-      Map.put(assigns.rest, :class, [
-        Map.get(assigns.rest, :class, ""),
-        (if assigns.readonly or Map.get(assigns.rest, :disabled, false), do: "disabled-true", else: ""),
-        (if assigns.autocomplete == "off", do: "text-input-autocapitalization-never autocorrection-disabled", else: "")
+      Map.put(assigns.rest, :style, [
+        Map.get(assigns.rest, :style, ""),
+        (if assigns.readonly or Map.get(assigns.rest, :disabled, false), do: "disabled(true)", else: ""),
+        (if assigns.autocomplete == "off", do: "textInputAutocapitalization(.never) autocorrectionDisabled()", else: "")
       ] |> Enum.join(" "))
     )
     |> input()
@@ -238,7 +238,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   def error(assigns) do
     ~LVN"""
-    <Group class="font-caption fg-red">
+    <Group style="font(.caption); foregroundStyle(.red)">
       <%%= render_slot(@inner_block) %>
     </Group>
     """
@@ -251,18 +251,17 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   """
   @doc type: :component
 
-  attr :class, :string, default: nil
-
   slot :inner_block, required: true
   slot :subtitle
   slot :actions
 
   def header(assigns) do
     ~LVN"""
-    <VStack class={[
-      "navigation-title-:title navigation-subtitle-:subtitle toolbar--toolbar",
-      @class
-      ]}>
+    <VStack style={[
+      "navigationTitle(:title)",
+      "navigationSubtitle(:subtitle)",
+      "toolbar(content: :toolbar)"
+    ]}>
       <Text template="title">
         <%%= render_slot(@inner_block) %>
       </Text>
@@ -295,7 +294,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   """
   attr :id, :string, required: true
   attr :show, :boolean, default: false
-  attr :on_cancel, :string
+  attr :on_cancel, :string, default: nil
   slot :inner_block, required: true
 
   def modal(assigns) do
@@ -303,7 +302,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     <VStack
       id={@id}
       :if={@show}
-      class="sheet-isPresented:[attr(presented)]-content::content"
+      style='sheet(isPresented: attr("presented"), content: :content)'
       presented={@show}
       phx-change={@on_cancel}
     >
@@ -337,7 +336,10 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     <%% msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind) %>
     <VStack
       :if={msg != nil}
-      class="hidden alert-[attr(title)]-isPresented:[attr(presented)]-actions::actions-message::message"
+      style={[
+        "hidden()",
+        ~s[alert(attr("title"), isPresented: attr("presented"), actions: :actions, message: :message)]
+      ]}
       title={@title}
       presented={msg != nil}
       id={@id}
@@ -379,7 +381,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
         <.input field={@form[:email]} label="Email"/>
         <.input field={@form[:username]} label="Username" />
         <:actions>
-          <.button>Save</.button>
+          <.button type="submit">Save</.button>
         </:actions>
       </.simple_form>
 
@@ -417,25 +419,29 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   ## Examples
 
-      <.button>Send!</.button>
+      <.button type="submit">Send!</.button>
       <.button phx-click="go">Send!</.button>
   """
   @doc type: :component
 
   attr :type, :string, default: nil
-  attr :class, :string, default: nil
-  attr :rest, :global, include: ~w(disabled form name value)
+  attr :rest, :global
 
   slot :inner_block, required: true
 
   def button(%{ type: "submit" } = assigns) do
     ~LVN"""
     <Section>
-      <LiveSubmitButton class={[
-        "button-style-borderedProminent control-size-large",
-        "list-row-insets-EdgeInsets() list-row-background-:empty",
-        @class]}>
-        <Group class="max-w-infinity bold @class">
+      <LiveSubmitButton style={[
+        "buttonStyle(.borderedProminent)",
+        "controlSize(.large)",
+        "listRowInsets(EdgeInsets())",
+        "listRowBackground(:empty)"
+      ]} {@rest}>
+        <Group style={[
+          "frame(maxWidth: .infinity)",
+          "bold(true)"
+        ]}>
           <%%= render_slot(@inner_block) %>
         </Group>
       </LiveSubmitButton>
@@ -445,7 +451,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   def button(assigns) do
     ~LVN"""
-    <Button class={@class} {@rest}>
+    <Button {@rest}>
       <%%= render_slot(@inner_block) %>
     </Button>
     """
@@ -539,10 +545,11 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   @doc type: :component
 
   attr :name, :string, required: true
-  attr :class, :string, default: nil
+  attr :rest, :global
+
   def icon(assigns) do
     ~LVN"""
-    <Image systemName={@name} class={@class} />
+    <Image systemName={@name} {@rest} />
     """
   end
 
@@ -577,6 +584,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
     """
   do
     attr :class, :string
+    attr :style, :string
   end
   slot :failure, doc: """
     The failure state that will render when the image fails to downloaded.
@@ -590,6 +598,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   """
   do
     attr :class, :string
+    attr :style, :string
   end
 
   def image(assigns) do
@@ -606,7 +615,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   defp image_success(%{ slot: [%{ inner_block: nil }] } = assigns) do
     ~LVN"""
-    <AsyncImage image template="phase.success" :for={slot <- @slot} class={slot.class} />
+    <AsyncImage image template="phase.success" :for={slot <- @slot} class={Map.get(slot, :class)} {%{ style: Map.get(slot, :style) }} />
     """
   end
 
@@ -620,7 +629,7 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
 
   defp image_failure(%{ slot: [%{ inner_block: nil }] } = assigns) do
     ~LVN"""
-    <AsyncImage error template="phase.failure" :for={slot <- @slot} class={slot.class} />
+    <AsyncImage error template="phase.failure" :for={slot <- @slot} class={Map.get(slot, :class)} {%{ style: Map.get(slot, :style) }} />
     """
   end
 

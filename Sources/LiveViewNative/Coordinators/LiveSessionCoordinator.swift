@@ -33,7 +33,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionC
 @MainActor
 public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// The current state of the live view connection.
-    @Published public private(set) var state = LiveSessionState.notConnected
+    @Published public private(set) var state = LiveSessionState.setup
     
     /// The current URL this live view is connected to.
     public private(set) var url: URL
@@ -103,11 +103,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         
         $navigationPath.scan(([LiveNavigationEntry<R>](), [LiveNavigationEntry<R>]()), { ($0.1, $1) }).sink { [weak self] prev, next in
             guard let self else { return }
-            let isDisconnected: Bool
-            if case .notConnected = next.last!.coordinator.state {
-                isDisconnected = true
-            } else {
-                isDisconnected = false
+            let isDisconnected = switch next.last!.coordinator.state {
+            case .setup, .disconnected:
+                true
+            default:
+                false
             }
             if next.last!.coordinator.url != next.last!.url || isDisconnected {
                 Task {
@@ -151,7 +151,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// You generally do not call this function yourself. It is called automatically when the ``LiveView`` appears.
     ///
-    /// This function is a no-op unless ``state`` is ``LiveSessionState/notConnected``.
+    /// This function is a no-op unless ``state`` is ``LiveSessionState/setup`` or ``LiveSessionState/disconnected`` or ``LiveSessionState/connectionFailed(_:)``.
     ///
     /// This is an async function which completes when the connection has been established or failed.
     ///
@@ -159,7 +159,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter httpBody: The HTTP body to send when requesting the dead render.
     public func connect(httpMethod: String? = nil, httpBody: Data? = nil) async {
         switch state {
-        case .notConnected, .connectionFailed:
+        case .setup, .disconnected, .connectionFailed:
             break
         default:
             return
@@ -252,7 +252,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }
         self.socket?.disconnect()
         self.socket = nil
-        self.state = .notConnected
+        self.state = .disconnected
     }
     
     /// Forces the session to disconnect then connect.
@@ -418,7 +418,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 socket.off(refs)
                 continuation.resume(returning: socket)
             })
-            refs.append(socket.onError { [weak self, weak socket] (error) in
+            refs.append(socket.onError { [weak self, weak socket] (error, response) in
                 guard let socket else { return }
                 guard self != nil else {
                     socket.disconnect()
@@ -521,14 +521,16 @@ class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDe
 
 extension LiveSessionCoordinator {
     static var platform: String { "swiftui" }
-    static var platformParams: [String:String] {
+    static var platformParams: [String:Any] {
         [
             "app_version": getAppVersion(),
             "app_build": getAppBuild(),
             "bundle_id": getBundleID(),
             "os": getOSName(),
             "os_version": getOSVersion(),
-            "target": getTarget()
+            "target": getTarget(),
+            "l10n": getLocalization(),
+            "i18n": getInternationalization()
         ]
     }
     
@@ -607,6 +609,18 @@ extension LiveSessionCoordinator {
         }
         #endif
     }
+    
+    private static func getLocalization() -> [String:Any] {
+        [
+            "locale": Locale.autoupdatingCurrent.identifier,
+        ]
+    }
+    
+    private static func getInternationalization() -> [String:Any] {
+        [
+            "time_zone": TimeZone.autoupdatingCurrent.identifier,
+        ]
+    }
 }
 
 fileprivate extension URL {
@@ -619,12 +633,24 @@ fileprivate extension URL {
                 .init(name: "_format", value: LiveSessionCoordinator<R>.platform)
             ])
         }
-        for (key, value) in LiveSessionCoordinator<R>.platformParams {
-            let name = "_interface[\(key)]"
+        /// Create a nested structure of query items.
+        ///
+        /// `_root[key][nested_key]=value`
+        func queryParameters(for object: [String:Any]) -> [(name: String, value: String?)] {
+            object.reduce(into: [(name: String, value: String?)]()) { (result, pair) in
+                if let value = pair.value as? String {
+                    result.append((name: "[\(pair.key)]", value: value))
+                } else if let nested = pair.value as? [String:Any] {
+                    result.append(contentsOf: queryParameters(for: nested).map {
+                        return (name: "[\(pair.key)]\($0.name)", value: $0.value)
+                    })
+                }
+            }
+        }
+        for queryItem in queryParameters(for: LiveSessionCoordinator<R>.platformParams) {
+            let name = "_interface\(queryItem.name)"
             if !(components?.queryItems?.contains(where: { $0.name == name }) ?? false) {
-                result.append(queryItems: [
-                    .init(name: name, value: value)
-                ])
+                result.append(queryItems: [.init(name: name, value: queryItem.value)])
             }
         }
         return result

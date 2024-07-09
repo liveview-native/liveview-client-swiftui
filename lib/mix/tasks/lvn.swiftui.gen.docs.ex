@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   # Using a temporary folder outside of the project avoids ElixirLS file watching issues
   defp temp_doc_folder, do: Path.join(System.tmp_dir!(), "temp_swiftui_docs")
   defp generate_swift_lvn_docs_command, do: ~c"xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath #{temp_doc_folder()} -skipMacroValidation -skipPackagePluginValidation"
-  @swiftui_interface_path "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios.swiftinterface"
+  @swiftui_interface_path "Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface"
   defp generate_modifier_documentation_extensions(xcode_path), do: ~c(xcrun swift run ModifierGenerator documentation-extensions --interface "#{Path.join(xcode_path, @swiftui_interface_path)}" --output Sources/LiveViewNative/LiveViewNative.docc/DocumentationExtensions)
   @generate_documentation_extensions ~c(xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions)
   defp modifier_list(xcode_path), do: ~s(xcrun swift run ModifierGenerator list --interface "#{Path.join(xcode_path, @swiftui_interface_path)}" --modifier-search-path Sources/LiveViewNative/Stylesheets/Modifiers)
