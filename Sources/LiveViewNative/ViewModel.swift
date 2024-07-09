@@ -71,22 +71,10 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
     @MainActor
     public func sendChangeEvent(_ value: any FormValue, for name: String, event: Event?) async throws {
-        guard let event = event?.wrappedValue.callAsFunction ?? changeEvent else { return }
+        guard let event = sendChangeEventForFormElement(value, for: name, event?.wrappedValue.callAsFunction)
+                ?? sendChangeEventForForm(for: name, changeEvent) else { return }
         
-        // LiveView expects all values to be strings.
-        let encodedValue: String = if let value = value as? String {
-            value
-        } else {
-            try value.formQueryEncoded()
-        }
-        
-        var components = URLComponents()
-        components.queryItems = [
-            .init(name: name, value: encodedValue),
-            .init(name: "_target", value: name)
-        ]
-        
-        try await event(components.query!)
+        try await event()
     }
     
     /// Sends a phx-submit event (if configured) to the server with the current form data.
@@ -105,6 +93,42 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     /// Create a URL encoded body from the data in the form.
     public func buildFormQuery() throws -> String {
+        return try buildFormURLComponents().query!
+    }
+    
+    private func sendChangeEventForFormElement(_ value: any FormValue, for name: String, _ sendEvent: ((Any) async throws -> ())?) -> (() async throws -> Void)? {
+        guard let event = sendEvent else { return nil }
+                
+        return {
+            // LiveView expects all values to be strings.
+            let encodedValue: String = if let value = value as? String {
+                value
+            } else {
+                try value.formQueryEncoded()
+            }
+            
+            var components = URLComponents()
+            components.queryItems = [
+                .init(name: name, value: encodedValue),
+                .init(name: "_target", value: name)
+            ]
+            
+            try await event(components.query!)
+        }
+    }
+    
+    private func sendChangeEventForForm(for name: String, _ sendEvent: ((String) async throws -> Void)?) -> (() async throws -> Void)? {
+        guard let event = sendEvent else { return nil }
+        
+        return {
+            var components = try self.buildFormURLComponents()
+            components.queryItems?.append(.init(name: "_target", value: name))
+            
+            try await event(components.query!)
+        }
+    }
+    
+    public func buildFormURLComponents() throws -> URLComponents {
         let data = try data.mapValues { value in
             if let value = value as? String {
                 return value
@@ -118,7 +142,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             URLQueryItem(name: $0.key, value: $0.value)
         }
         
-        return components.query!
+        return components
     }
     
     @MainActor
