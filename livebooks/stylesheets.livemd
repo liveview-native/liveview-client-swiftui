@@ -5,8 +5,7 @@ notebook_path = __ENV__.file |> String.split("#") |> hd()
 
 Mix.install(
   [
-    {:kino_live_view_native, path: "../kino_live_view_native"}
-    # {:kino_live_view_native, github: "liveview-native/kino_live_view_native"}
+    {:kino_live_view_native, github: "liveview-native/kino_live_view_native"}
   ],
   config: [
     server: [
@@ -96,7 +95,7 @@ Modifers can be applied through a LiveView Native Stylesheet and applying them t
 
 ### SwiftUI Modifiers
 
-Here's a basic example of making text red using the [foregroundStyle](https://developer.apple.com/documentation/swiftui/text/foregroundstyle(_:)) modifier:
+Here's a basic example of making text red using the [foregroundStyle](https://developer.apple.com/documentation/swiftui/text/foregroundstyle(_:)) modifier.
 
 ```swift
 Text("Some Red Text")
@@ -140,7 +139,7 @@ There are some exceptions where the DSL differs from SwiftUI syntax, which we'll
 
 In addition to introducing stylesheets, LiveView Native `0.3.0` also introduced Utility styles, which will be our prefered method for writing styles in these Livebook guides.
 
-Utility styles are comperable to inline styles in HTML, which have been largely discouraged in the CSS community. We recommend Utility styles for now as the easiest way to prototype applications. But, we hope to replace Utility styles with a more mature styling framework in the future.
+Utility styles are comperable to inline styles in HTML, which have been largely discouraged in the CSS community. We recommend Utility styles for now as the easiest way to prototype applications. However, we hope to replace Utility styles with a more mature styling framework in the future.
 
 The same SwiftUI syntax used inside of a stylesheet can be used directly inside of a `style` attribute. The example below defines the `foregroundStyle(.red)` modifier. Evaluate the example and view it in your simulator.
 
