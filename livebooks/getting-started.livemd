@@ -43,6 +43,11 @@ Mix.install(
     ],
     live_view_native: [plugins: [LiveViewNative.SwiftUI]],
     live_view_native_stylesheet: [
+      attribute_parsers: [
+        style: [
+          livemd: &Server.AttributeParsers.Style.parse/2
+        ]
+      ],
       content: [
         swiftui: [
           "lib/**/*swiftui*",
