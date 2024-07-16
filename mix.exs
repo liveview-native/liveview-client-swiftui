@@ -132,7 +132,8 @@ defmodule LiveViewNative.SwiftUI.MixProject do
   defp groups_for_extras do
     guide_groups = [
       Architecture: Path.wildcard("guides/architecture/*.md"),
-      Livebooks: Path.wildcard("livebooks/markdown/*.md")
+      Livebooks: Path.wildcard("livebooks/markdown/*.md"),
+      Cookbooks: Path.wildcard("livebooks/markdown/*cookbook*.livemd")
     ]
 
     generated_groups =
