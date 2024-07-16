@@ -29,7 +29,7 @@ LiveView Native watches for changes and updates the stylesheet, so those will be
 
 SwiftUI employs **modifiers** to style and customize views. In SwiftUI syntax, each modifier is a function that can be chained onto the view they modify. LiveView Native has a minimal DSL (Domain Specific Language) for writing SwiftUI modifiers.
 
-Modifers can be applied through a LiveView Native Stylesheet and applying them through inline styles as described in the [LiveView Native Stylesheets](#liveview-native-stylesheets) section, or can be applied directly through the `style` attribute as described in the [Utility Styles](#utility-styles) section.
+You can apply modifiers through a class defined in a LiveView Native Stylesheet as described in the [LiveView Native Stylesheets](#liveview-native-stylesheets) section, or through the inline `style` attribute as described in the [Utility Styles](#utility-styles) section.
 
 <!-- livebook:{"break_markdown":true} -->
 
@@ -109,13 +109,13 @@ end
 
 You can write multiple modifiers separated by a semi-color `;`.
 
-```heex
+```html
 <Text style="foregroundStyle(.blue);font(.title)">Hello, from LiveView Native!</Text>
 ```
 
 To include newline characters in your string wrap the string in curly brackets `{}`. Using multiple lines can better organize larger amounts of modifiers.
 
-```heex
+```html
 <Text style={
   "
   foregroundStyle(.blue);
@@ -130,7 +130,7 @@ Hello, from LiveView Native!
 
 LiveView Native parses styles in your project to define a single stylesheet. You can find the AST representation of this stylesheet at http://localhost:4000/assets/app.swiftui.styles. This stylesheet is compiled on the server and then sent to the client. For this reason, class names must be fully-formed. For example, the following style using string interpolation is **invalid**.
 
-```heex
+```html
 <Text style={"foregroundStyle(.#{Enum.random(["red", "blue"])})"}>
 Invalid Example
 </Text>
@@ -138,7 +138,7 @@ Invalid Example
 
 However, we can still use dynamic styles so long as the modifiers are fully formed.
 
-```heex
+```html
 <Text style={"#{Enum.random(["foregroundStyle(.red)", "foregroundStyle(.blue)]")}"}>
 Red or Blue Text
 </Text>
