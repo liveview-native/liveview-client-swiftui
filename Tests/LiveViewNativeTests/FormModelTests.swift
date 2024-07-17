@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  FormModelTests.swift
 //  
 //
 //  Created by Adam Woods on 9/7/2024.
@@ -38,10 +38,9 @@ class FormModelTests: XCTestCase {
         let element = document[document.root()].children().first?.asElement()
         formModel.updateFromElement(element!) { }
         
-        // Emulate a sending a change event from the form itself (no event)
+        // Emulate sending a change event from the form itself (no event)
         try await formModel.sendChangeEvent("2", for: "a", event: nil)
         
         await fulfillment(of: [expectation])
     }
 }
-
