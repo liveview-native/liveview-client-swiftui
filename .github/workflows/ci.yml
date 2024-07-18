@@ -17,6 +17,10 @@ jobs:
     runs-on: macos-14
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Xcode Version
+        shell: bash
+        run: |
+          sudo xcode-select --switch /Applications/Xcode_15.4.app
       - name: Run tests on iOS Simulator
         shell: bash
         run: |
