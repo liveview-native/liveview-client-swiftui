@@ -49,7 +49,7 @@ jobs:
         shell: bash
         run: |
           xcodebuild -scheme LiveViewNative-Package -destination "name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
-    - name: Cleanup Derived Data
-      shell: bash
-      run: |
-        rm -rf /private/var/tmp/derived_data
+      - name: Cleanup Derived Data
+        shell: bash
+        run: |
+          rm -rf /private/var/tmp/derived_data
