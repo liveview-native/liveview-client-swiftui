@@ -21,11 +21,18 @@ jobs:
         shell: bash
         run: |
           sudo xcode-select --switch /Applications/Xcode_15.4.app
+      - name: Cache xcode builds
+        uses: actions/cache@v4
+        id: xcode-build-cache
+        with:
+          path: |
+            xcode-build/
+          key: xcode-build-${{ github.workflow }}-${{ github.job }}-${{ runner.os }}-${{runner.arch}}
       - name: Run tests on iOS Simulator
         shell: bash
         run: |
-          xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS" -derivedDataPath /private/var/tmp/derived_data/
-          xcodebuild test -scheme LiveViewNative-Package -destination "platform=iOS Simulator,name=iPhone 15 Pro" -enableCodeCoverage YES -resultBundlePath TestResults -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
+          xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS" -derivedDataPath xcode-build/
+          xcodebuild test -scheme LiveViewNative-Package -destination "platform=iOS Simulator,name=iPhone 15 Pro" -enableCodeCoverage YES -resultBundlePath TestResults -skipMacroValidation -skipPackagePluginValidation -derivedDataPath xcode-build/
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: TestResults.xcresult
@@ -44,16 +51,12 @@ jobs:
       - name: Build for macOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "platform=macOS" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=macOS" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath xcode-build/
       - name: Build for watchOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath xcode-build/
       - name: Build for tvOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
-      - name: Cleanup Derived Data
-        shell: bash
-        run: |
-          rm -rf /private/var/tmp/derived_data
+          xcodebuild -scheme LiveViewNative-Package -destination "name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath xcode-build/
