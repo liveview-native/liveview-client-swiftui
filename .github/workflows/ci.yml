@@ -20,8 +20,8 @@ jobs:
       - name: Run tests on iOS Simulator
         shell: bash
         run: |
-          xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
-          xcodebuild test -scheme LiveViewNative-Package -destination "platform=iOS Simulator,name=iPhone 15 Pro" -enableCodeCoverage YES -resultBundlePath TestResults -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS" -derivedDataPath /private/var/tmp/derived_data/
+          xcodebuild test -scheme LiveViewNative-Package -destination "platform=iOS Simulator,name=iPhone 15 Pro" -enableCodeCoverage YES -resultBundlePath TestResults -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: TestResults.xcresult
@@ -40,12 +40,16 @@ jobs:
       - name: Build for macOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "platform=macOS" -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=macOS" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
       - name: Build for watchOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)" -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
       - name: Build for tvOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme LiveViewNative-Package -destination "name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation -derivedDataPath /private/var/tmp/derived_data/
+    - name: Cleanup Derived Data
+      shell: bash
+      run: |
+        rm -rf /private/var/tmp/derived_data
