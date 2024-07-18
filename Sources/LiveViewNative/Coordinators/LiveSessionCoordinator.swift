@@ -86,7 +86,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     internal var scrollPositions: [Int:[String:AnyScrollPosition]] = [:]
     enum AnyScrollPosition {
         case id(String)
-        case offset(CGFloat)
+        case offset(CGPoint)
     }
     
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
@@ -140,6 +140,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     }
                     Task(priority: .userInitiated) {
                         try await next.last?.coordinator.connect(domValues: self.domValues, redirect: true)
+                        // reset the scroll positions for a freshly navigated route.
+                        // scroll restoration should only happen on back navigation.
+                        self.scrollPositions[next.count] = [:]
                     }
                 }
             }
