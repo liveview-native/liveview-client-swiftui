@@ -6,7 +6,7 @@
 > format: :swiftui
 > module_suffix: "SwiftUI"
 > template_sigil: ~LVN
-> component: LiveViewNative.SwiftUI.Component 
+> component: LiveViewNative.SwiftUI.Component
 > targets: ~w{ios ipados macos maccatalyst watchos tvos visionos unknown}
 > ```
 
@@ -18,17 +18,20 @@ You can install the client either by running the generator from Elixir or
 you can manually add to an existing Xcode project.
 
 ### Both methods
-1. Add `{:live_view_native_swiftui, "~> 0.3.0-rc.2}` to `mix.exs`
+
+1. Add `{:live_view_native_swiftui, "~> 0.3.0-rc.2"}` to `mix.exs`
 2. Add `LiveViewNative.SwiftUI` to the `plugins:` list of `config :live_view_native` in `config.exs`
 
 <!-- tabs-open -->
 
 ### Generate Project
+
 1. Run `mix help lvn.swiftui.gen` to see the options available for the generator
 2. Run `mix lvn.gen --no-copy` to print the configuration settings to add to support SwiftUI in your application.
 3. Run `mix lvn.swiftui.gen` to ensure you get the properly generated files. Please note this may overwrite an existing Xcode project.
 
 ### Add to existing Xcode project
+
 1. Run `mix lvn.swiftui.gen --no-xcodegen`
 2. In Xcode go to `Package Dependencies`
 3. Select *File → Add Packages...*
