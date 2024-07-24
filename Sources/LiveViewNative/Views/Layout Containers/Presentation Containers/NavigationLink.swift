@@ -32,13 +32,18 @@ struct NavigationLink<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     private var destination: String?
     
+    @LiveElementIgnored
+    @Environment(\._anyNavigationTransition)
+    private var anyNavigationTransition: Any?
+    
     @ViewBuilder
     public var body: some View {
         if let url = destination.flatMap({ URL(string: $0, relativeTo: $liveElement.context.coordinator.url) })?.appending(path: "").absoluteURL {
             SwiftUI.NavigationLink(
                 value: LiveNavigationEntry(
                     url: url,
-                    coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url)
+                    coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url),
+                    navigationTransition: anyNavigationTransition
                 )
             ) {
                 $liveElement.children()
