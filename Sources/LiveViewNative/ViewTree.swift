@@ -279,7 +279,7 @@ extension View {
     }
 }
 
-private enum ForEachElement: Identifiable {
+enum ForEachElement: Identifiable {
     case keyed(Node, id: String)
     case unkeyed(Node)
     

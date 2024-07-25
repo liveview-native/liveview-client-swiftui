@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// Presents rows of elements.
 ///
@@ -144,37 +145,106 @@ struct List<Root: RootRegistry>: View {
     
     @LiveAttribute(.init(name: "phx-change")) var phxChange: String?
     
+    private var id: String?
+    
+    @LiveElementIgnored
+    @State
+    private var didAttemptRestoration = false
+    
     public var body: some View {
-        #if os(watchOS)
-        SwiftUI.List {
-            content
+        ScrollViewReader { scrollProxy in
+            SwiftUI.Group {
+                #if os(watchOS)
+                SwiftUI.List {
+                    content
+                }
+                #else
+                switch selection {
+                case .multiple:
+                    SwiftUI.List(selection: $selection.multiple) {
+                        content
+                    }
+                case .single,
+                    _ where phxChange != nil:
+                    SwiftUI.List(selection: $selection.single) {
+                        content
+                    }
+                case .none:
+                    SwiftUI.List {
+                        content
+                    }
+                }
+                #endif
+            }
+            .backgroundPreferenceValue(ListItemScrollOffsetPreferenceKey.self) { value in
+                GeometryReader { proxy in
+                    Rectangle()
+                        .hidden()
+                        .onChange(of: value) { newValue in
+                            guard let id else { return }
+                            // don't update the value until we first attempt restoring the existing value.
+                            guard didAttemptRestoration else { return }
+                            
+                            let offset = proxy.frame(in: .global).minY
+                            
+                            guard let closestItem = newValue
+                                .sorted(by: { abs($0.value - offset) < abs($1.value - offset) })
+                                .first
+                            else {
+                                $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]].removeValue(forKey: id)
+                                return
+                            }
+                            
+                            if let lowestY = newValue.sorted(by: { $0.value < $1.value }).first?.value,
+                               lowestY > offset
+                            {
+                                // if the element with the lowest Y value is still below the top of the List, we are at the top.
+                                // store nil so we don't restore and stay at the top.
+                                $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]].removeValue(forKey: id)
+                            } else {
+                                // update the stored scrollPosition in the ``LiveSessionCoordinator``
+                                $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]][id] = .id(closestItem.key)
+                            }
+                        }
+                }
+            }
+            .task {
+                defer { didAttemptRestoration = true }
+                
+                guard let id,
+                      case let .id(restoreID) = $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]][id]
+                else { return }
+                
+                scrollProxy.scrollTo(restoreID, anchor: .top)
+            }
         }
-        #else
-        switch selection {
-        case .multiple:
-            SwiftUI.List(selection: $selection.multiple) {
-                content
-            }
-        case .single,
-             _ where phxChange != nil:
-            SwiftUI.List(selection: $selection.single) {
-                content
-            }
-        case .none:
-            SwiftUI.List {
-                content
-            }
-        }
-        #endif
     }
     
     private var content: some View {
-        forEach(
-            nodes: $liveElement.childNodes.filter({
+        let elements = $liveElement.childNodes
+            .filter {
                 !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
-            }),
-            context: $liveElement.context.storage
-        )
+            }
+            .map { (node) -> ForEachElement in
+                if let element = node.asElement(),
+                   let id = element.attributeValue(for: .init(name: "id"))
+                {
+                    return .keyed(node, id: id)
+                } else {
+                    return .unkeyed(node)
+                }
+            }
+        return ForEach(elements) { childNode in
+            if case let .element(element) = childNode.node.data,
+               element.tag == "Section"
+            {
+                // `Section` will apply tracking to its own children
+                ViewTreeBuilder<Root>.NodeView(node: childNode.node, context: $liveElement.context.storage)
+            } else {
+                ViewTreeBuilder<Root>.NodeView(node: childNode.node, context: $liveElement.context.storage)
+                    .trackListItemScrollOffset(id: childNode.id)
+            }
+        }
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }
@@ -197,7 +267,7 @@ struct List<Root: RootRegistry>: View {
             meta["destination"] = index
             move(value: meta) {
                 Task {
-#if os(iOS) || os(tvOS)
+                    #if os(iOS) || os(tvOS)
                     // Workaround to fix items not following the order from the backend when changed during edit mode.
                     // Toggling edit modes forces it to follow the backend ordering.
                     // Toggles between `active`/`transient` instead of `active`/`inactive` so no transitions play.
@@ -207,9 +277,42 @@ struct List<Root: RootRegistry>: View {
                             editMode?.wrappedValue = initial
                         }
                     }
-#endif
+                    #endif
                 }
             }
         }
+    }
+}
+
+private struct ListItemScrollOffsetPreferenceKey: PreferenceKey {
+    typealias Value = [String:CGFloat]
+    
+    static let defaultValue: Value = [:]
+    
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value.merge(nextValue()) { $1 }
+    }
+}
+
+struct TrackListItemScrollOffsetModifier: ViewModifier {
+    let id: String
+    
+    func body(content: Content) -> some View {
+        content
+            .background {
+                GeometryReader { proxy in
+                    Rectangle()
+                        .hidden()
+                        .transformPreference(ListItemScrollOffsetPreferenceKey.self) { value in
+                            value[id] = proxy.frame(in: .global).minY
+                        }
+                }
+            }
+    }
+}
+
+extension View {
+    func trackListItemScrollOffset(id: String) -> some View {
+        self.modifier(TrackListItemScrollOffsetModifier(id: id))
     }
 }

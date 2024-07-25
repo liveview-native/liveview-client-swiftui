@@ -61,7 +61,20 @@ struct Section<Root: RootRegistry>: View {
     
     public var body: some View {
         SwiftUI.Section {
-            $liveElement.children(in: "content", default: true)
+            let elements = $liveElement.childNodes(in: "content", default: true)
+                .map { (node) -> ForEachElement in
+                    if let element = node.asElement(),
+                       let id = element.attributeValue(for: .init(name: "id"))
+                    {
+                        return .keyed(node, id: id)
+                    } else {
+                        return .unkeyed(node)
+                    }
+                }
+            ForEach(elements) { childNode in
+                ViewTreeBuilder<Root>.NodeView(node: childNode.node, context: $liveElement.context.storage)
+                    .trackListItemScrollOffset(id: childNode.id)
+            }
         } header: {
             $liveElement.children(in: "header")
         } footer: {
@@ -70,5 +83,6 @@ struct Section<Root: RootRegistry>: View {
         #if os(macOS)
             .collapsible(collapsible)
         #endif
+        
     }
 }

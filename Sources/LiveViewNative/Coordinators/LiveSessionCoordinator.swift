@@ -71,6 +71,23 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     
     private var reconnectAttempts = 0
     
+    /// Positions for `<ScrollView>` elements with an explicit ID.
+    ///
+    /// These positions are used for scroll restoration on back navigation.
+    ///
+    /// ``ScrollRestorationModifier`` gets and sets the values in this dictionary.
+    ///
+    /// The dictionary has the following structure:
+    ///
+    /// ```
+    /// [<Route Index>: [<ScrollView ID>: <Scroll Offset>]]
+    /// ```
+    internal var scrollPositions: [Int:[String:AnyScrollPosition]] = [:]
+    enum AnyScrollPosition {
+        case id(String)
+        case offset(CGFloat)
+    }
+    
     public convenience init(_ host: some LiveViewHost, config: LiveSessionConfiguration = .init(), customRegistryType: R.Type = R.self) {
         self.init(host.url, config: config, customRegistryType: customRegistryType)
     }
