@@ -142,7 +142,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
       |> IO.iodata_to_binary()
       |> Path.join("bin/xcodegen")
 
-    System.cmd(bin_path, ["generate", "-s", spec_path], env: xcodegen_env)
+    System.cmd(bin_path, ["generate", "-s", spec_path], env: xcodegen_env, into: IO.stream())
 
     remove_xcodegen_files(context)
   end
