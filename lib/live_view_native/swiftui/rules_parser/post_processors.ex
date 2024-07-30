@@ -6,23 +6,21 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   if Mix.env() == :test do
     @doc """
     You can view the input/output of any compinator by doing
-
       empty()
       |> PostProcessors.inspect()
       |> combinator
-      |> PostProcessors.inspect()
-
+      |> PostProcessors.inspect(label: "combinator")
     This function is extremely useful for debugging, do not remove
     """
-    def inspect(combinator) do
+    def inspect(combinator, opts \\ []) do
       NimbleParsec.pre_traverse(
         combinator,
-        {LiveViewNative.SwiftUI.RulesParser.PostProcessors, :do_inspect, []}
+        {__MODULE__, :do_inspect, [opts]}
       )
     end
 
-    def do_inspect(rest, args, context, position, _byte_offset) do
-      IO.inspect({rest, args, context, position})
+    def do_inspect(rest, args, context, position, _byte_offset, opts) do
+      IO.inspect({rest, args, context, position}, opts)
       {rest, args, context}
     end
   end
@@ -157,6 +155,11 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   def event_to_ast(rest, [opts, name], context, {line, _}, _byte_offset) do
     annotations = context_to_annotation(context.context, line)
     {rest, [{:__event__, annotations, [name, opts]}], context}
+  end
+
+  def add_annotations(rest, parts, context, {line, _}, _byte_offset) do
+    annotations = context_to_annotation(context.context, line)
+    {rest, [annotations | parts], context}
   end
 
   def to_scoped_atom(rest, [variable_name, scope], context, {line, _}, _byte_offset) do
