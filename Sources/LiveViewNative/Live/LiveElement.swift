@@ -157,6 +157,14 @@ public extension _LiveElementTracked {
     var childNodes: [LiveViewNativeCore.Node] {
         _element.children
     }
+    
+    func childNodes(in template: Template, default includeDefault: Bool = false) -> [LiveViewNativeCore.Node] {
+        _element.children.filter {
+            $0.attributes.contains(where: {
+                $0 == template
+            }) || (includeDefault && !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" }))
+        }
+    }
 }
 
 /// A value passed to the `template` attribute, used for filtering children.
