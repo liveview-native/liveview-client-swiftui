@@ -157,10 +157,4 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen do
 
     context
   end
-
-  defp status_message(label, message) do
-    formatted_message = IO.ANSI.green() <> "* #{label} " <> IO.ANSI.reset() <> message
-
-    IO.puts(formatted_message)
-  end
 end
