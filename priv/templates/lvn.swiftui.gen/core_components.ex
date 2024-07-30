@@ -12,9 +12,6 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
   components between web and native. That means utilizing your existing `handle_event/3` functions to manage state
   and stay focused on adding new templates for your native applications.
 
-  The default components use `LiveViewNative.SwiftUI.UtilityStyles`, a generated styling syntax
-  that allows you to call nearly any modifier. Refer to the documentation in `LiveViewNative.SwiftUI` for more information.
-
   Icons are referenced by a system name. Read more about the [Xcode Asset Manager](https://developer.apple.com/documentation/xcode/asset-management)
   to learn how to include different assets in your LiveView Native applications. In addition, you can also use [SF Symbols](https://developer.apple.com/sf-symbols/).
   On any MacOS open Spotlight and search `SF Symbols`. The catalog application will provide a reference name that can be used. All SF Symbols
