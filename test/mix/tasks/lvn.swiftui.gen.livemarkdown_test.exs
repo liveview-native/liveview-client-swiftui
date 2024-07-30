@@ -1,6 +1,7 @@
-defmodule Mix.Tasks.LivebooksToMarkdownTest do
+defmodule Mix.Tasks.Lvn.Swiftui.LivemarkdownTest do
   use ExUnit.Case
-  alias Mix.Tasks.LivebooksToMarkdown
+
+  alias Mix.Tasks.Lvn.Swiftui.Gen.Livemarkdown
 
   test "make_ex_doc_friendly/1 removes Mix.install/2 section and adds Run in Livebook badge" do
     content = """
@@ -59,7 +60,7 @@ defmodule Mix.Tasks.LivebooksToMarkdownTest do
     )
     ```
     """
-    assert LivebooksToMarkdown.make_ex_doc_friendly(content, "filename.livemd") =~
+    assert Livemarkdown.make_ex_doc_friendly(content, "filename.livemd") =~
              "[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fliveview-native%liveview-client-swiftui%2Fmain%2Flivebooks%filename.livemd)"
   end
 
@@ -71,7 +72,7 @@ defmodule Mix.Tasks.LivebooksToMarkdownTest do
 
     """
 
-    assert LivebooksToMarkdown.make_ex_doc_friendly(content, "filename.livemd") == """
+    assert Livemarkdown.make_ex_doc_friendly(content, "filename.livemd") == """
            """
   end
 
@@ -86,7 +87,7 @@ defmodule Mix.Tasks.LivebooksToMarkdownTest do
     :ok
     """
 
-    assert LivebooksToMarkdown.make_ex_doc_friendly(content, "filename.livemd") == """
+    assert Livemarkdown.make_ex_doc_friendly(content, "filename.livemd") == """
            """
   end
 
@@ -99,7 +100,7 @@ defmodule Mix.Tasks.LivebooksToMarkdownTest do
     :ok
     """
 
-    assert LivebooksToMarkdown.make_ex_doc_friendly(content, "filename.livemd") == """
+    assert Livemarkdown.make_ex_doc_friendly(content, "filename.livemd") == """
            """
   end
 
@@ -115,7 +116,7 @@ defmodule Mix.Tasks.LivebooksToMarkdownTest do
     * **Language:** Determines which language Xcode should use for the project. Select `Swift`.
     </details>
     """
-    result = LivebooksToMarkdown.make_ex_doc_friendly(content, "filename.livemd")
+    result = Livemarkdown.make_ex_doc_friendly(content, "filename.livemd")
     refute result =~ "details"
     assert result =~ """
             ### What do these options mean?

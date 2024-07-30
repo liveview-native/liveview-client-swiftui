@@ -1,9 +1,12 @@
 defmodule Mix.Tasks.Lvn.Swiftui.Gen.Livemarkdown do
   @moduledoc "Generates ex_doc friendly markdown guides from Livebook notebooks"
-  @source "livebooks"
-  @destination "livebooks/markdown"
+
   use Mix.Task
   require Logger
+
+  @source "livebooks"
+  @destination "livebooks/markdown"
+
   def run(_args) do
     Logger.info("RUNNING LIVEBOOK DOCS")
     # clean up old notebooks
