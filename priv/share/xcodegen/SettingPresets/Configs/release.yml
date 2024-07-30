@@ -1,0 +1,10 @@
+---
+# Settings take from the following file and sorted
+# /Applications/Xcode.app/Contents/Developer/Library/Xcode/Templates/Project Templates/Base/Base_ProjectSettings.xctemplate/TemplateInfo.plist
+DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+ENABLE_NS_ASSERTIONS: NO
+MTL_ENABLE_DEBUG_INFO: NO
+
+# Swift Settings
+SWIFT_COMPILATION_MODE: wholemodule
+SWIFT_OPTIMIZATION_LEVEL: -O
