@@ -156,7 +156,7 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
     
     @ParseableExpression
     struct GestureStateReference {
-        static var name: String { "gesture_state" }
+        static var name: String { "__gesture_state__" }
         
         let value: Storage
         
