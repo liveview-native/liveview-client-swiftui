@@ -55,10 +55,15 @@ typealias InlineViewReference = ViewReference
 /// A ``ViewReference`` that only resolves to `SwiftUI.Text`.
 public struct TextReference: ParseableModifierValue {
     let value: String
+    
+    @MainActor
+    public func resolveTemplate<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> ElementNode? {
+        context.children(of: element, forTemplate: value).first?.asElement()
+    }
 
     @MainActor
     public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
-        context.children(of: element, forTemplate: value).first?.asElement().flatMap({
+        resolveTemplate(on: element, in: context).flatMap({
             Text<R>(element: $0, overrideStylesheet: context.coordinator.session.stylesheet).body
         })
             ?? SwiftUI.Text("")
@@ -66,6 +71,74 @@ public struct TextReference: ParseableModifierValue {
 
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         AtomLiteral().map({ Self.init(value: $0) })
+    }
+}
+
+extension View {
+    /// Sets up an observer for a `Text` element used in a `TextReference`.
+    ///
+    /// When a modifier uses a `TextReference` type,
+    /// changes to the content of the `Text` may not update properly
+    /// without setting up an observer for the `Text` element.
+    ///
+    /// This modifier will create an observer that updates the modifiers
+    /// provided to `content` whenever the `Text` element receives an update.
+    ///
+    /// ```swift
+    /// struct MyCustomModifier<R: RootRegistry>: ViewModifier {
+    ///     let reference: TextReference
+    ///     @ObservedElement private var element
+    ///     @LiveContext<R> private var context
+    ///
+    ///     func body(content: Content) -> some View {
+    ///         content._observeTextReference(reference, on: element, in: context) { content in
+    ///             content.badge(reference.resolve(on: element, in: context))
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    @MainActor
+    func _observeTextReference(
+        _ reference: TextReference?,
+        on element: ElementNode,
+        in context: LiveContext<some RootRegistry>,
+        _ content: @escaping (_TextReferenceObserver.ObservedContentBlock.Content) -> some View
+    ) -> some View {
+        self.modifier(_TextReferenceObserver(element: reference?.resolveTemplate(on: element, in: context) ?? element, content: content))
+    }
+}
+
+struct _TextReferenceObserver: ViewModifier {
+    @EnvironmentObject private var parentObserver: ObservedElement.Observer
+    @StateObject private var observer: ObservedElement.Observer
+    let element: ElementNode
+    let content: (_TextReferenceObserver.ObservedContentBlock.Content) -> any View
+    
+    init(element: ElementNode, content: @escaping (_TextReferenceObserver.ObservedContentBlock.Content) -> any View) {
+        self._observer = .init(wrappedValue: .init(element.id))
+        self.element = element
+        self.content = content
+    }
+    
+    func body(content: Content) -> some View {
+        content
+            .environmentObject(parentObserver)
+            .modifier(ObservedContentBlock(element: element, content: self.content))
+            .environmentObject(observer)
+    }
+    
+    struct ObservedContentBlock: ViewModifier {
+        @ObservedElement private var element
+        let content: (_TextReferenceObserver.ObservedContentBlock.Content) -> any View
+        
+        init(element: ElementNode, content: @escaping (_TextReferenceObserver.ObservedContentBlock.Content) -> any View) {
+            self._element = .init(element: element)
+            self.content = content
+        }
+        
+        func body(content: Content) -> some View {
+            AnyView(self.content(content))
+        }
     }
 }
 
