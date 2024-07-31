@@ -221,7 +221,15 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
             return value
         case .reference:
             return `default`
-        case let .gestureState(_, _, defaultValue):
+        case let .gestureState(
+            _,
+            _,
+            defaultValue,
+            _,
+            _,
+            _,
+            _
+        ):
             return defaultValue ?? `default`
         }
     }
