@@ -13,7 +13,7 @@ class FormModelTests: XCTestCase {
     func testFormChangeEvent() async throws {
         let expectation = XCTestExpectation(description: "Send a form change event.")
         
-        func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> Void {
+        func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> [String:Any]? {
             XCTAssertEqual(type, "form")
             XCTAssertEqual(event, "validate")
             
@@ -23,6 +23,8 @@ class FormModelTests: XCTestCase {
             XCTAssertNil(target)
 
             expectation.fulfill()
+            
+            return nil
         }
         
         let formModel = FormModel(elementID: "test-form")
