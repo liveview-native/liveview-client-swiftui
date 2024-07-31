@@ -37,7 +37,7 @@ public class LiveViewModel: ObservableObject {
 /// To obtain a form model, use ``LiveViewModel/getForm(elementID:)`` or the `\.formModel` environment key.
 public class FormModel: ObservableObject, CustomDebugStringConvertible {
     let elementID: String
-    @_spi(LiveForm) public var pushEventImpl: ((String, String, Any, Int?) async throws -> Void)!
+    @_spi(LiveForm) public var pushEventImpl: ((String, String, Any, Int?) async throws -> [String:Any]?)!
     
     var changeEvent: ((Any) -> ())?
     var submitEvent: String?

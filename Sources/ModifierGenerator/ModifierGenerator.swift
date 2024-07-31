@@ -239,11 +239,11 @@ struct ModifierGenerator: ParsableCommand {
         return true
     }
     
-    static func modifiers(from sourceFile: SourceFileSyntax) -> (modifiers: [String:([Signature], requiresContext: Bool)], deprecations: [String:String]) {
+    static func modifiers(from sourceFile: SourceFileSyntax) -> (modifiers: [String:([Signature], requiresContext: Bool, requiresGestureState: Bool)], deprecations: [String:String]) {
         let visitor = ModifierVisitor(viewMode: SyntaxTreeViewMode.all)
         visitor.walk(sourceFile)
         
-        var modifierList = [String:([Signature], requiresContext: Bool)]()
+        var modifierList = [String:([Signature], requiresContext: Bool, requiresGestureState: Bool)]()
         
         for (modifier, signatures) in visitor.modifiers.sorted(by: { $0.key < $1.key }) {
             guard !modifier.starts(with: "_"),
@@ -286,7 +286,7 @@ struct ModifierGenerator: ParsableCommand {
                 })
             let requiresContext = signatures.contains(where: {
                 $0.parameters.contains(where: {
-                    ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference", "AnyShapeStyle", "Color", "ListItemTint"].contains(
+                    ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference", "AnyShapeStyle", "Color", "ListItemTint", "_AnyGesture"].contains(
                         $0.type.as(IdentifierTypeSyntax.self)?.name.text
                             ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
                             ?? $0.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
@@ -295,7 +295,20 @@ struct ModifierGenerator: ParsableCommand {
                     )
                 })
             })
-            modifierList[modifier] = (signatures, requiresContext: requiresContext)
+            
+            let requiresGestureState = signatures.contains(where: {
+                $0.parameters.contains(where: {
+                    ["_AnyGesture"].contains(
+                        $0.type.as(IdentifierTypeSyntax.self)?.name.text
+                            ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
+                            ?? $0.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
+                            ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType
+                                .as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
+                    )
+                })
+            })
+            
+            modifierList[modifier] = (signatures, requiresContext: requiresContext, requiresGestureState: requiresGestureState)
         }
         return (modifiers: modifierList, deprecations: visitor.deprecations)
     }

@@ -26,8 +26,8 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _FillModifier: ShapeFinalizerModifier {
-    static let name = "fill"
+struct _FillModifier<Root: RootRegistry>: ShapeFinalizerModifier {
+    static var name: String { "fill" }
     
     let content: AnyShapeStyle.Resolvable
     let style: FillStyle
@@ -38,7 +38,7 @@ struct _FillModifier: ShapeFinalizerModifier {
     }
     
     @ViewBuilder
-    func apply(to shape: AnyShape, on element: ElementNode) -> some View {
-        shape.fill(content.resolve(on: element), style: style)
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some View {
+        shape.fill(content.resolve(on: element, in: context), style: style)
     }
 }

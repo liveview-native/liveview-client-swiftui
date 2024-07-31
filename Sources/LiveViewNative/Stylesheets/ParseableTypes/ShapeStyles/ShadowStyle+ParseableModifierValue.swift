@@ -51,21 +51,21 @@ enum _ShadowStyle: ParseableModifierValue {
         }
     }
     
-    func resolve(on element: ElementNode) -> ShadowStyle {
+    func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> ShadowStyle {
         switch self {
         case .drop(let drop):
             .drop(
-                color: drop.color.resolve(on: element),
-                radius: drop.radius.resolve(on: element),
-                x: drop.x.resolve(on: element),
-                y: drop.y.resolve(on: element)
+                color: drop.color.resolve(on: element, in: context),
+                radius: drop.radius.resolve(on: element, in: context),
+                x: drop.x.resolve(on: element, in: context),
+                y: drop.y.resolve(on: element, in: context)
             )
         case .inner(let inner):
             .inner(
-                color: inner.color.resolve(on: element),
-                radius: inner.radius.resolve(on: element),
-                x: inner.x.resolve(on: element),
-                y: inner.y.resolve(on: element)
+                color: inner.color.resolve(on: element, in: context),
+                radius: inner.radius.resolve(on: element, in: context),
+                x: inner.x.resolve(on: element, in: context),
+                y: inner.y.resolve(on: element, in: context)
             )
         }
     }

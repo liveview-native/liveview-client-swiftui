@@ -10,26 +10,26 @@ import LiveViewNativeStylesheet
 
 /// A `ViewModifier` that can be applied directly to `Text`.
 protocol TextModifier: ViewModifier {
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text
 }
 
 /// A type-erased `TextModifier`, which can be applied to a `View` or directly on `Text`.
-enum _AnyTextModifier<R: RootRegistry>: ViewModifier, TextModifier, ParseableModifierValue {
-    case font(_FontModifier<R>)
-    case fontWeight(_FontWeightModifier<R>)
-    case fontDesign(_FontDesignModifier<R>)
-    case fontWidth(_FontWidthModifier<R>)
-    case foregroundStyle(_ForegroundStyleModifier<R>)
-    case bold(_BoldModifier<R>)
-    case italic(_ItalicModifier<R>)
-    case strikethrough(_StrikethroughModifier<R>)
-    case underline(_UnderlineModifier<R>)
-    case monospaced(_MonospacedModifier<R>)
-    case monospacedDigit(_MonospacedDigitModifier<R>)
-    case kerning(_KerningModifier<R>)
-    case tracking(_TrackingModifier<R>)
-    case baselineOffset(_BaselineOffsetModifier<R>)
-    case textScale(_TextScaleModifier<R>)
+enum _AnyTextModifier<Root: RootRegistry>: ViewModifier, TextModifier, ParseableModifierValue {
+    case font(_FontModifier<Root>)
+    case fontWeight(_FontWeightModifier<Root>)
+    case fontDesign(_FontDesignModifier<Root>)
+    case fontWidth(_FontWidthModifier<Root>)
+    case foregroundStyle(_ForegroundStyleModifier<Root>)
+    case bold(_BoldModifier<Root>)
+    case italic(_ItalicModifier<Root>)
+    case strikethrough(_StrikethroughModifier<Root>)
+    case underline(_UnderlineModifier<Root>)
+    case monospaced(_MonospacedModifier<Root>)
+    case monospacedDigit(_MonospacedDigitModifier<Root>)
+    case kerning(_KerningModifier<Root>)
+    case tracking(_TrackingModifier<Root>)
+    case baselineOffset(_BaselineOffsetModifier<Root>)
+    case textScale(_TextScaleModifier<Root>)
     
     func body(content: Content) -> some View {
         switch self {
@@ -66,58 +66,58 @@ enum _AnyTextModifier<R: RootRegistry>: ViewModifier, TextModifier, ParseableMod
         }
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         switch self {
         case let .font(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .fontWeight(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .fontDesign(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .fontWidth(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .foregroundStyle(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .bold(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .italic(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .strikethrough(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .underline(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .monospaced(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .monospacedDigit(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .kerning(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .tracking(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .baselineOffset(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         case let .textScale(modifier):
-            return modifier.apply(to: text, on: element)
+            return modifier.apply(to: text, on: element, in: context)
         }
     }
     
     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
-            _FontModifier<R>.parser(in: context).map(Self.font)
-            _FontWeightModifier<R>.parser(in: context).map(Self.fontWeight)
-            _FontDesignModifier<R>.parser(in: context).map(Self.fontDesign)
-            _FontWidthModifier<R>.parser(in: context).map(Self.fontWidth)
-            _ForegroundStyleModifier<R>.parser(in: context).map(Self.foregroundStyle)
-            _BoldModifier<R>.parser(in: context).map(Self.bold)
-            _ItalicModifier<R>.parser(in: context).map(Self.italic)
-            _StrikethroughModifier<R>.parser(in: context).map(Self.strikethrough)
-            _UnderlineModifier<R>.parser(in: context).map(Self.underline)
-            _MonospacedModifier<R>.parser(in: context).map(Self.monospaced)
-            _MonospacedDigitModifier<R>.parser(in: context).map(Self.monospacedDigit)
-            _KerningModifier<R>.parser(in: context).map(Self.kerning)
-            _TrackingModifier<R>.parser(in: context).map(Self.tracking)
-            _BaselineOffsetModifier<R>.parser(in: context).map(Self.baselineOffset)
-            _TextScaleModifier<R>.parser(in: context).map(Self.textScale)
+            _FontModifier<Root>.parser(in: context).map(Self.font)
+            _FontWeightModifier<Root>.parser(in: context).map(Self.fontWeight)
+            _FontDesignModifier<Root>.parser(in: context).map(Self.fontDesign)
+            _FontWidthModifier<Root>.parser(in: context).map(Self.fontWidth)
+            _ForegroundStyleModifier<Root>.parser(in: context).map(Self.foregroundStyle)
+            _BoldModifier<Root>.parser(in: context).map(Self.bold)
+            _ItalicModifier<Root>.parser(in: context).map(Self.italic)
+            _StrikethroughModifier<Root>.parser(in: context).map(Self.strikethrough)
+            _UnderlineModifier<Root>.parser(in: context).map(Self.underline)
+            _MonospacedModifier<Root>.parser(in: context).map(Self.monospaced)
+            _MonospacedDigitModifier<Root>.parser(in: context).map(Self.monospacedDigit)
+            _KerningModifier<Root>.parser(in: context).map(Self.kerning)
+            _TrackingModifier<Root>.parser(in: context).map(Self.tracking)
+            _BaselineOffsetModifier<Root>.parser(in: context).map(Self.baselineOffset)
+            _TextScaleModifier<Root>.parser(in: context).map(Self.textScale)
         }
     }
 }

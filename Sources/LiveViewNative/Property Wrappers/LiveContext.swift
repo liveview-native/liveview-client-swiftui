@@ -23,6 +23,15 @@ import LiveViewNativeCore
 @propertyWrapper
 public struct LiveContext<R: RootRegistry>: DynamicProperty {
     @Environment(\.anyLiveContextStorage) private var anyStorage
+    
+    @Environment(\.gestureState) private var environmentGestureState
+    internal var overrideGestureState: GestureState<[String:Any]>?
+    /// The `GestureState` value in the environment.
+    /// Uses the ``overrideGestureState`` if present.
+    var gestureState: GestureState<[String:Any]> {
+        overrideGestureState ?? environmentGestureState
+    }
+    
     var storage: LiveContextStorage<R> {
         anyStorage as! LiveContextStorage<R>
     }
@@ -42,6 +51,14 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     }
     
     public init() {
+    }
+    
+    /// Add an ``overrideGestureState`` to the context.
+    /// This will take precedence over the environment value.
+    internal func withGestureState(_ state: GestureState<[String:Any]>) -> Self {
+        var copy = self
+        copy.overrideGestureState = state
+        return copy
     }
     
     /// Builds a view representing the given element in the current context.

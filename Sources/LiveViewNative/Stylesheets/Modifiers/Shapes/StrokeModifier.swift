@@ -37,7 +37,7 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _StrokeModifier<R: RootRegistry>: ShapeFinalizerModifier {
+struct _StrokeModifier<Root: RootRegistry>: ShapeFinalizerModifier {
     static var name: String { "stroke" }
     
     enum Storage {
@@ -56,19 +56,19 @@ struct _StrokeModifier<R: RootRegistry>: ShapeFinalizerModifier {
     }
     
     @ViewBuilder
-    func apply(to shape: AnyShape, on element: ElementNode) -> some View {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some View {
         switch storage {
         case ._0(let content, let style, let antialiased):
             if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-                shape.stroke(content.resolve(on: element), style: style, antialiased: antialiased.resolve(on: element))
+                shape.stroke(content.resolve(on: element, in: context), style: style, antialiased: antialiased.resolve(on: element, in: context))
             } else {
-                shape.stroke(content.resolve(on: element), style: style)
+                shape.stroke(content.resolve(on: element, in: context), style: style)
             }
         case ._1(let content, let lineWidth, let antialiased):
             if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-                shape.stroke(content.resolve(on: element), lineWidth: lineWidth.resolve(on: element), antialiased: antialiased.resolve(on: element))
+                shape.stroke(content.resolve(on: element, in: context), lineWidth: lineWidth.resolve(on: element, in: context), antialiased: antialiased.resolve(on: element, in: context))
             } else {
-                shape.stroke(content.resolve(on: element), lineWidth: lineWidth.resolve(on: element))
+                shape.stroke(content.resolve(on: element, in: context), lineWidth: lineWidth.resolve(on: element, in: context))
             }
         }
     }

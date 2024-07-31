@@ -37,7 +37,7 @@ extension ModifierGenerator {
             
             Self.typeVisitor.walk(sourceFile)
             
-            for (name, (signatures, _)) in modifiers {
+            for (name, (signatures, _, _)) in modifiers {
                 let firstSignatureDescription = signatureDescription(for: signatures.first!, on: name)
                 
                 let appleDocs = URL(string: "https://developer.apple.com/documentation/swiftui/view/")!

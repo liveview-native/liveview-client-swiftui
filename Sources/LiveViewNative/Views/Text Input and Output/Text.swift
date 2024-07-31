@@ -137,7 +137,7 @@ struct Text<Root: RootRegistry>: View {
         if _liveElement.isConstant {
             return modifiers.reduce(text) { result, modifier in
                 if case let ._anyTextModifier(textModifier) = modifier {
-                    return textModifier.apply(to: result, on: $liveElement.element)
+                    return textModifier.apply(to: result, on: $liveElement.element, in: $liveElement.context)
                 } else {
                     return result
                 }

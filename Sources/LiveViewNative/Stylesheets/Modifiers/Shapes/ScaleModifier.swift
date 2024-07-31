@@ -24,7 +24,7 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _ScaleModifier<R: RootRegistry>: ShapeModifier {
+struct _ScaleModifier<Root: RootRegistry>: ShapeModifier {
     static var name: String { "scale" }
 
     enum Value {
@@ -33,9 +33,6 @@ struct _ScaleModifier<R: RootRegistry>: ShapeModifier {
     }
 
     let value: Value
-
-    @ObservedElement private var element
-    @LiveContext<R> private var context
     
     init(
         x: AttributeReference<CGFloat> = .init(storage: .constant(1)),
@@ -49,7 +46,7 @@ struct _ScaleModifier<R: RootRegistry>: ShapeModifier {
         self.value = ._1(scale: scale, anchor: anchor)
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         switch value {
         case let ._0(x, y, anchor):
             return shape.scale(x: x.resolve(on: element, in: context), y: y.resolve(on: element, in: context), anchor: anchor)

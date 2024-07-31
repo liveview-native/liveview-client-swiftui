@@ -26,21 +26,21 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _RotationModifier: ShapeModifier {
-    static let name = "rotation"
+struct _RotationModifier<Root: RootRegistry>: ShapeModifier {
+    static var name: String { "rotation" }
 
-    let angle: Angle
-    let anchor: UnitPoint
+    let angle: AttributeReference<Angle>
+    let anchor: AttributeReference<UnitPoint>
     
     init(
-        _ angle: Angle,
-        anchor: UnitPoint = .center
+        _ angle: AttributeReference<Angle>,
+        anchor: AttributeReference<UnitPoint> = .init(.center)
     ) {
         self.angle = angle
         self.anchor = anchor
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
-        return shape.rotation(angle, anchor: anchor)
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
+        return shape.rotation(angle.resolve(on: element, in: context), anchor: anchor.resolve(on: element, in: context))
     }
 }

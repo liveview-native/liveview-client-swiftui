@@ -22,13 +22,13 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _KerningModifier<R: RootRegistry>: TextModifier {
+struct _KerningModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "kerning" }
 
     let kerning: AttributeReference<CoreFoundation.CGFloat>
 
     @ObservedElement private var element
-    @LiveContext<R> private var context
+    @LiveContext<Root> private var context
     
     init(_ kerning: AttributeReference<CoreFoundation.CGFloat>) {
         self.kerning = kerning
@@ -39,7 +39,7 @@ struct _KerningModifier<R: RootRegistry>: TextModifier {
             .kerning(kerning.resolve(on: element, in: context))
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
-        text.kerning(kerning.resolve(on: element))
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
+        text.kerning(kerning.resolve(on: element, in: context))
     }
 }

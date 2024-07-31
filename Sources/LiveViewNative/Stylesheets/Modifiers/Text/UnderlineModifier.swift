@@ -24,7 +24,7 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _UnderlineModifier<R: RootRegistry>: ViewModifier {
+struct _UnderlineModifier<Root: RootRegistry>: ViewModifier {
     static var name: String { "underline" }
 
     let isActive: AttributeReference<Bool>
@@ -32,7 +32,7 @@ struct _UnderlineModifier<R: RootRegistry>: ViewModifier {
     let color: Color.Resolvable?
 
     @ObservedElement private var element
-    @LiveContext<R> private var context
+    @LiveContext<Root> private var context
     
     init(
         _ isActive: AttributeReference<Bool> = .init(storage: .constant(true)),
@@ -53,12 +53,12 @@ struct _UnderlineModifier<R: RootRegistry>: ViewModifier {
             )
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         text
             .underline(
-                isActive.resolve(on: element),
+                isActive.resolve(on: element, in: context),
                 pattern: pattern,
-                color: color?.resolve(on: element)
+                color: color?.resolve(on: element, in: context)
             )
     }
 }

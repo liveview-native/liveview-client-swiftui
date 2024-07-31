@@ -23,14 +23,14 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _TextScaleModifier<R: RootRegistry>: TextModifier {
+struct _TextScaleModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "textScale" }
 
     let scale: Any
     let isEnabled: AttributeReference<Bool>
 
     @ObservedElement private var element
-    @LiveContext<R> private var context
+    @LiveContext<Root> private var context
 
     @available(tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, visionOS 1, *)
     init(_ scale: SwiftUI.Text.Scale, isEnabled: AttributeReference<Bool> = .init(storage: .constant(true))) {
@@ -47,10 +47,10 @@ struct _TextScaleModifier<R: RootRegistry>: TextModifier {
         }
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         if #available(tvOS 17.0,iOS 17.0,macOS 14.0,watchOS 10.0, visionOS 1, *) {
             return text
-                .textScale(scale as! SwiftUI.Text.Scale, isEnabled: isEnabled.resolve(on: element))
+                .textScale(scale as! SwiftUI.Text.Scale, isEnabled: isEnabled.resolve(on: element, in: context))
         } else {
             return text
         }

@@ -34,8 +34,8 @@ extension AnyGradient {
             }
         }
         
-        func resolve(on element: ElementNode) -> AnyGradient {
-            color.resolve(on: element).gradient
+        func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> AnyGradient {
+            color.resolve(on: element, in: context).gradient
         }
     }
 }
@@ -73,12 +73,12 @@ extension Gradient {
             }
         }
         
-        func resolve(on element: ElementNode) -> Gradient {
+        func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> Gradient {
             switch self {
             case .colors(let colors):
-                Gradient(colors: colors.map({ $0.resolve(on: element) }))
+                Gradient(colors: colors.map({ $0.resolve(on: element, in: context) }))
             case .stops(let stops):
-                Gradient(stops: stops.map({ $0.resolve(on: element) }))
+                Gradient(stops: stops.map({ $0.resolve(on: element, in: context) }))
             }
         }
     }
@@ -120,8 +120,8 @@ extension Gradient.Stop {
             }
         }
         
-        func resolve(on element: ElementNode) -> Gradient.Stop {
-            .init(color: color.resolve(on: element), location: location.resolve(on: element))
+        func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> Gradient.Stop {
+            .init(color: color.resolve(on: element, in: context), location: location.resolve(on: element, in: context))
         }
     }
 }

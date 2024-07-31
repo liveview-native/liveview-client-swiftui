@@ -26,20 +26,20 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _IntersectionModifier: ShapeModifier {
-    static let name = "intersection"
+struct _IntersectionModifier<Root: RootRegistry>: ShapeModifier {
+    static var name: String { "intersection" }
 
     let other: AnyShape
-    let eoFill: Bool
+    let eoFill: AttributeReference<Bool>
     
-    init(_ other: AnyShape, eoFill: Bool = false) {
+    init(_ other: AnyShape, eoFill: AttributeReference<Bool> = .init(false)) {
         self.other = other
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-            return AnyShape(shape.intersection(other, eoFill: eoFill))
+            return AnyShape(shape.intersection(other, eoFill: eoFill.resolve(on: element, in: context)))
         } else {
             return shape
         }
@@ -64,20 +64,20 @@ struct _IntersectionModifier: ShapeModifier {
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _UnionModifier: ShapeModifier {
-    static let name = "union"
+struct _UnionModifier<Root: RootRegistry>: ShapeModifier {
+    static var name: String { "union" }
 
     let other: AnyShape
-    let eoFill: Bool
+    let eoFill: AttributeReference<Bool>
     
-    init(_ other: AnyShape, eoFill: Bool = false) {
+    init(_ other: AnyShape, eoFill: AttributeReference<Bool> = .init(false)) {
         self.other = other
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-            return AnyShape(shape.union(other, eoFill: eoFill))
+            return AnyShape(shape.union(other, eoFill: eoFill.resolve(on: element, in: context)))
         } else {
             return shape
         }
@@ -102,20 +102,20 @@ struct _UnionModifier: ShapeModifier {
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _SubtractingModifier: ShapeModifier {
-    static let name = "subtracting"
+struct _SubtractingModifier<Root: RootRegistry>: ShapeModifier {
+    static var name: String { "subtracting" }
 
     let other: AnyShape
-    let eoFill: Bool
+    let eoFill: AttributeReference<Bool>
     
-    init(_ other: AnyShape, eoFill: Bool = false) {
+    init(_ other: AnyShape, eoFill: AttributeReference<Bool> = .init(false)) {
         self.other = other
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-            return AnyShape(shape.subtracting(other, eoFill: eoFill))
+            return AnyShape(shape.subtracting(other, eoFill: eoFill.resolve(on: element, in: context)))
         } else {
             return shape
         }
@@ -140,20 +140,20 @@ struct _SubtractingModifier: ShapeModifier {
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _SymmetricDifferenceModifier: ShapeModifier {
-    static let name = "symmetricDifference"
+struct _SymmetricDifferenceModifier<Root: RootRegistry>: ShapeModifier {
+    static var name: String { "symmetricDifference" }
 
     let other: AnyShape
-    let eoFill: Bool
+    let eoFill: AttributeReference<Bool>
     
-    init(_ other: AnyShape, eoFill: Bool = false) {
+    init(_ other: AnyShape, eoFill: AttributeReference<Bool> = .init(false)) {
         self.other = other
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-            return AnyShape(shape.symmetricDifference(other, eoFill: eoFill))
+            return AnyShape(shape.symmetricDifference(other, eoFill: eoFill.resolve(on: element, in: context)))
         } else {
             return shape
         }
@@ -178,20 +178,20 @@ struct _SymmetricDifferenceModifier: ShapeModifier {
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _LineIntersectionModifier: ShapeModifier {
-    static let name = "lineIntersection"
+struct _LineIntersectionModifier<Root: RootRegistry>: ShapeModifier {
+    static var name: String { "lineIntersection" }
 
     let other: AnyShape
-    let eoFill: Bool
+    let eoFill: AttributeReference<Bool>
     
-    init(_ other: AnyShape, eoFill: Bool = false) {
+    init(_ other: AnyShape, eoFill: AttributeReference<Bool> = .init(false)) {
         self.other = other
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-            return AnyShape(shape.lineIntersection(other, eoFill: eoFill))
+            return AnyShape(shape.lineIntersection(other, eoFill: eoFill.resolve(on: element, in: context)))
         } else {
             return shape
         }
@@ -216,20 +216,20 @@ struct _LineIntersectionModifier: ShapeModifier {
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _LineSubtractionModifier: ShapeModifier {
-    static let name = "lineSubtraction"
+struct _LineSubtractionModifier<Root: RootRegistry>: ShapeModifier {
+    static var name: String { "lineSubtraction" }
 
     let other: AnyShape
-    let eoFill: Bool
+    let eoFill: AttributeReference<Bool>
     
-    init(_ other: AnyShape, eoFill: Bool = false) {
+    init(_ other: AnyShape, eoFill: AttributeReference<Bool> = .init(false)) {
         self.other = other
         self.eoFill = eoFill
     }
 
-    func apply(to shape: AnyShape, on element: ElementNode) -> some SwiftUI.Shape {
+    func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
-            return AnyShape(shape.lineSubtraction(other, eoFill: eoFill))
+            return AnyShape(shape.lineSubtraction(other, eoFill: eoFill.resolve(on: element, in: context)))
         } else {
             return shape
         }

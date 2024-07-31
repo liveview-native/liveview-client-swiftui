@@ -22,13 +22,13 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _TrackingModifier<R: RootRegistry>: TextModifier {
+struct _TrackingModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "tracking" }
 
     let tracking: AttributeReference<CoreFoundation.CGFloat>
 
     @ObservedElement private var element
-    @LiveContext<R> private var context
+    @LiveContext<Root> private var context
     
     init(_ tracking: AttributeReference<CoreFoundation.CGFloat>) {
         self.tracking = tracking
@@ -39,8 +39,8 @@ struct _TrackingModifier<R: RootRegistry>: TextModifier {
             .tracking(tracking.resolve(on: element, in: context))
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
         text
-            .tracking(tracking.resolve(on: element))
+            .tracking(tracking.resolve(on: element, in: context))
     }
 }

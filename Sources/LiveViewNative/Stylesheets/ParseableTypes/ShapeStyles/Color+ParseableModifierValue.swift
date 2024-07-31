@@ -104,41 +104,37 @@ public extension SwiftUI.Color {
         }
         
         public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Color {
-            resolve(on: element)
-        }
-        
-        public func resolve(on element: ElementNode) -> SwiftUI.Color {
             let base = switch storage {
             case let .reference(name):
                 try! element.attributeValue(SwiftUI.Color.self, for: name)
             case let .constant(constant):
                 constant
             case let .named(name):
-                SwiftUI.Color.init(name.resolve(on: element), bundle: nil)
+                SwiftUI.Color.init(name.resolve(on: element, in: context), bundle: nil)
             case let .components(colorSpace, red, green, blue, opacity):
                 SwiftUI.Color(
-                    colorSpace.resolve(on: element),
-                    red: red.resolve(on: element),
-                    green: green.resolve(on: element),
-                    blue: blue.resolve(on: element),
-                    opacity: opacity.resolve(on: element)
+                    colorSpace.resolve(on: element, in: context),
+                    red: red.resolve(on: element, in: context),
+                    green: green.resolve(on: element, in: context),
+                    blue: blue.resolve(on: element, in: context),
+                    opacity: opacity.resolve(on: element, in: context)
                 )
             case let .monochrome(colorSpace, white, opacity):
                 SwiftUI.Color(
-                    colorSpace.resolve(on: element),
-                    white: white.resolve(on: element),
-                    opacity: opacity.resolve(on: element)
+                    colorSpace.resolve(on: element, in: context),
+                    white: white.resolve(on: element, in: context),
+                    opacity: opacity.resolve(on: element, in: context)
                 )
             case let .hsb(hue, saturation, brightness, opacity):
                 SwiftUI.Color(
-                    hue: hue.resolve(on: element),
-                    saturation: saturation.resolve(on: element),
-                    brightness: brightness.resolve(on: element),
-                    opacity: opacity.resolve(on: element)
+                    hue: hue.resolve(on: element, in: context),
+                    saturation: saturation.resolve(on: element, in: context),
+                    brightness: brightness.resolve(on: element, in: context),
+                    opacity: opacity.resolve(on: element, in: context)
                 )
             }
             return modifiers.reduce(into: base) {
-                $0 = $1.apply(to: $0, on: element)
+                $0 = $1.apply(to: $0, on: element, in: context)
             }
         }
         
@@ -345,10 +341,10 @@ enum ColorModifier {
         }
     }
     
-    func apply(to color: SwiftUI.Color, on element: ElementNode) -> SwiftUI.Color {
+    func apply(to color: SwiftUI.Color, on element: ElementNode, in context: LiveContext<some RootRegistry>) -> SwiftUI.Color {
         switch self {
         case let .opacity(opacity):
-            return color.opacity(opacity.value.resolve(on: element))
+            return color.opacity(opacity.value.resolve(on: element, in: context))
         }
     }
 }

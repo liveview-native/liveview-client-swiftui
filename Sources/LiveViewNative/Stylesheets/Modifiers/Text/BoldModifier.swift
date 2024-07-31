@@ -22,13 +22,13 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 @ParseableExpression
-struct _BoldModifier<R: RootRegistry>: TextModifier {
+struct _BoldModifier<Root: RootRegistry>: TextModifier {
     static var name: String { "bold" }
 
     let isActive: AttributeReference<Bool>
 
     @ObservedElement private var element
-    @LiveContext<R> private var context
+    @LiveContext<Root> private var context
     
     init(_ isActive: AttributeReference<Bool> = .init(storage: .constant(true))) {
         self.isActive = isActive
@@ -38,7 +38,7 @@ struct _BoldModifier<R: RootRegistry>: TextModifier {
         content.bold(isActive.resolve(on: element, in: context))
     }
     
-    func apply(to text: SwiftUI.Text, on element: ElementNode) -> SwiftUI.Text {
-        text.bold(isActive.resolve(on: element))
+    func apply<R: RootRegistry>(to text: SwiftUI.Text, on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text {
+        text.bold(isActive.resolve(on: element, in: context))
     }
 }
