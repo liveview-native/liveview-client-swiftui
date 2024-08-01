@@ -60,8 +60,10 @@ defmodule Mix.Tasks.Lvn.Swiftui.LivemarkdownTest do
     )
     ```
     """
-    assert Livemarkdown.make_ex_doc_friendly(content, "filename.livemd") =~
-             "[![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https%3A%2F%2Fraw.githubusercontent.com%2Fliveview-native%liveview-client-swiftui%2Fmain%2Flivebooks%filename.livemd)"
+    result = Livemarkdown.make_ex_doc_friendly(content, "filename.livemd")
+    refute result =~ "Mix.install"
+    assert result =~
+             "[![Run in Livebook](https://livebook.dev/badge/v1/black.svg)](https://livebook.dev/run?url=https%3A%2F%2Fgithub.com%2Fliveview-native%2Fliveview-client-swiftui%2Fblob%2Fmain%2Flivebooks%2Ffilename.livemd)"
   end
 
   test "make_ex_doc_friendly/1 removes initial Kino boilerplate in smart cells" do
