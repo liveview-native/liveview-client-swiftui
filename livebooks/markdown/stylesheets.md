@@ -301,7 +301,7 @@ To create a new color go to the `Assets` folder in your iOS app and create a new
 
 <!-- livebook:{"break_markdown":true} -->
 
-![](https://github.com/liveview-native/documentation_assets/blob/main/asset-catalogue-create-new-color-set.png?raw=true)
+![](https://i.imgur.com/B3AOoeQ.png)
 
 <!-- livebook:{"break_markdown":true} -->
 
@@ -309,7 +309,7 @@ To create a color set, enter the RGB values or a hexcode as shown in the image b
 
 <!-- livebook:{"break_markdown":true} -->
 
-![](https://github.com/liveview-native/documentation_assets/blob/main/asset-catalogue-modify-my-color.png?raw=true)
+![](https://i.imgur.com/guTCLuC.png)
 
 <!-- livebook:{"break_markdown":true} -->
 
