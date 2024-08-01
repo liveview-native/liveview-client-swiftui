@@ -30,9 +30,9 @@ let package = Package(
         .package(url: "https://github.com/liveview-native/liveview-native-core-swift.git", exact: "0.2.1"),
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.2"),
-        .package(url: "https://github.com/apple/swift-markdown.git", from: "0.2.0"),
+        .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.2.0"),
         
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.2"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "509.0.2"),
         
         .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.13.0"),
     ],
