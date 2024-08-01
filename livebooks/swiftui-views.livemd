@@ -872,7 +872,7 @@ Follow this guide: https://developer.apple.com/documentation/xcode/managing-asse
 
 Then evaluate the following example and you should see this image in your simulator. For a convenient image, you can right-click and save the following LiveView Native logo.
 
-![LiveView Native Logo](https://i.imgur.com/zVg9mer.png)
+![LiveView Native Logo](https://github.com/liveview-native/documentation_assets/blob/main/logo.png?raw=true)
 
 You will need to **rebuild the native application** to pick up the changes to the assets catalogue.
 
