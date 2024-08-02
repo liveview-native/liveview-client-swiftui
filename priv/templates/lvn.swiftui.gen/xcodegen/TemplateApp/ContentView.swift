@@ -15,7 +15,7 @@ struct ContentView: View {
                 production: URL(string: "https://example.com")!
             ),
             addons: [<%= if @live_form? do %>
-                LiveFormRegistry<_>.self
+               .liveForm
             ]<% else %>]<% end %>
         ) {
             ConnectingView()
