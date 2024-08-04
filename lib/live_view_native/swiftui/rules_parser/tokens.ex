@@ -113,6 +113,19 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     combinator |> ignore(optional(whitespace(min: 1)))
   end
 
+  def expect_semicolon_or_warn(combinator) do
+    combinator
+    |> concat(
+      ignore(string(";"))
+      |> expect(
+        warning: :expect_semicolons?,
+        error_message: "Expected a ‘;’",
+        error_parser: empty(),
+        show_incorrect_text?: false
+      )
+    )
+  end
+
   # @tuple_children [
   #   parsec(:nested_attribute),
   #   atom(),
