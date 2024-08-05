@@ -4,7 +4,7 @@
 
 ## Overview
 
-LiveView Native aims to use minimal SwiftUI code. All patterns for building interactive UIs are the same as LiveView. However, unlike LiveView for the web, LiveView Native uses SwiftUI templates to build the native UI.
+LiveView Native aims to use minimal SwiftUI code and use the same patterns for building interactive UIs as LiveView. However, unlike LiveView for the web, LiveView Native uses SwiftUI templates to build the native UI.
 
 This lesson will teach you how to build SwiftUI templates using common SwiftUI views. We'll cover common uses of each view and give you practical examples you can use to build your own native UIs. This lesson is like a recipe book you can refer back to whenever you need an example of how to use a particular SwiftUI view. In addition, once you understand how to convert these views into the LiveView Native DSL, you should have the tools to convert essentially any SwiftUI View into the LiveView Native DSL.
 
