@@ -199,16 +199,6 @@ The specific plugins are subject to change. At the time of writing you need to e
 
 ![CasePathMacros macros was disabled because it recently changed. Enable it now?](https://github.com/liveview-native/documentation_assets/blob/main/create_a_swiftui_application/xcode-case-path-macros-was-disabled.png?raw=true)
 
-## Add the LiveView Live Form Package
-
-The [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form) provides forms for LiveView Native SwiftUI.
-
-To install LiveView Native Form, we need to add the [liveview-native-live-form](https://github.com/liveview-native/liveview-native-live-form) SwiftUI package to our iOS application. The steps will be mostly similar to what you have already setup with the `liveview-client-swiftui` package.
-
-Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#installation) on that project's README to add the `liveview-native-live-form` package to the SwiftUI application.
-
-Come back to this guide and continue after you have finished the installation process.
-
 ## Setup the SwiftUI LiveView
 
 The [ContentView](https://developer.apple.com/tutorials/swiftui-concepts/exploring-the-structure-of-a-swiftui-app#Content-view) contains the main view of our iOS application.
