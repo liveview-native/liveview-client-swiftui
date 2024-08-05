@@ -205,7 +205,7 @@ The [LiveView Native Live Form](https://github.com/liveview-native/liveview-nati
 
 To install LiveView Native Form, we need to add the [liveview-native-live-form](https://github.com/liveview-native/liveview-native-live-form) SwiftUI package to our iOS application. The steps will be mostly similar to what you have already setup with the `liveview-client-swiftui` package.
 
-Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#liveviewnativeliveform) on that project's README to add the `liveview-native-live-form` package to the SwiftUI application.
+Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#installation) on that project's README to add the `liveview-native-live-form` package to the SwiftUI application.
 
 Come back to this guide and continue after you have finished the installation process.
 
@@ -288,7 +288,7 @@ graph LR;
 
 ## Start the Active Scheme
 
-Click the run button <i class="ri-play-fill"></i> to build the project and run it on the iOS simulator. Alternatively you may go to `Product` in the top menu then press `Run`.
+Click the run button to build the project and run it on the iOS simulator. Alternatively you may go to `Product` in the top menu then press `Run`.
 
 > A [build scheme](https://developer.apple.com/documentation/xcode/build-system) contains a list of targets to build and any configuration and environment details that affect the selected action. When you build and run an app, the scheme tells Xcode what launch arguments to pass to the app.
 > 
@@ -308,7 +308,7 @@ If you encountered any issues with the native application, here are some trouble
 
 * **Reset Package Caches:** In the Xcode application go to **File -> Packages -> Reset Package Caches**.
 * **Update Packages:** In the Xcode application go to **File -> Packages -> Update to Latest Package Versions**.
-* **Rebuild the Active Scheme**: In the Xcode application, press the `start active scheme` button <i class="ri-play-fill"></i> to rebuild the active scheme and run it on the Xcode simulator.
+* **Rebuild the Active Scheme**: In the Xcode application, press the run button to rebuild the active scheme and run it on the Xcode simulator.
 * Update your [Xcode](https://developer.apple.com/xcode/) version if it is not already the latest version
 * Check for error messages in the Livebook smart cells.
 
