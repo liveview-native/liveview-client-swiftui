@@ -384,7 +384,3 @@ defmodule ServerWeb.ExampleLive do
   end
 end
 ```
-
-```elixir
-dle
-```

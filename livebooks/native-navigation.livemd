@@ -525,7 +525,3 @@ import Server.Livebook, only: []
 import Kernel
 :ok
 ```
-
-```elixir
-dle
-```

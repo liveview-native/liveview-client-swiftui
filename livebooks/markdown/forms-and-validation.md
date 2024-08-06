@@ -12,7 +12,7 @@ Getting the most out of this material requires some understanding of the [Ecto](
 
 To install LiveView Native Form, we need to add the `liveview-native-live-form` SwiftUI package to our iOS application.
 
-Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#liveviewnativeliveform) on that project's README and come back to this guide after you have finished the installation process.
+Follow the [LiveView Native Form Installation Guide](https://github.com/liveview-native/liveview-native-live-form?tab=readme-ov-file#installation) on that project's README and come back to this guide after you have finished the installation process.
 
 ## Creating a Basic Form
 
