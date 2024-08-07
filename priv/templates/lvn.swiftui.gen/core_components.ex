@@ -341,11 +341,9 @@ defmodule <%= inspect context.web_module %>.CoreComponents.<%= inspect context.m
       presented={msg != nil}
       id={@id}
       {@rest}
-      phx-change="lv:clear-flash"
-      phx-value-key={@kind}
     >
       <Text template="message"><%%= msg %></Text>
-      <Button template="actions">Ok</Button>
+      <Button template="actions" phx-click="lv:clear-flash" phx-value-key={@kind}>OK</Button>
     </VStack>
     """
   end
