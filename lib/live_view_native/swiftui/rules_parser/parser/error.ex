@@ -22,8 +22,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
         error_message,
         opts \\ []
       ) do
-    # IO.inspect({args, rest, error_message}, label: "error[0]")
-
     error = %__MODULE__{
       incorrect_text: List.first(args, ""),
       line: line,
@@ -48,10 +46,10 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
           # Never treat error as warning
           Context.put_new_error(context, rest, error)
 
-        warning ->
+        optional_warning_key ->
           # The error is an optional warning
           # Only log the warning if value in `context[<key>]` is true
-          if get_in(context, [Access.key(warning)]) == true do
+          if get_in(context, [Access.key(optional_warning_key)]) == true do
             Context.put_new_error(context, rest, %{error | is_warning?: true})
           else
             context
