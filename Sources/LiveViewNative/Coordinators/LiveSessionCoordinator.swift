@@ -39,7 +39,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     public private(set) var url: URL
     
     /// The current navigation path this live view is rendering.
-    @Published public private(set) var navigationPath = [LiveNavigationEntry<R>]()
+    @Published public internal(set) var navigationPath = [LiveNavigationEntry<R>]()
     
     internal let configuration: LiveSessionConfiguration
     
