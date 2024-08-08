@@ -144,21 +144,21 @@ public struct Event: DynamicProperty, Decodable {
             if let debounce = debounce {
                 handlerTask = Task { [weak didSendSubject] in
                     for await event in channel.debounce(for: .milliseconds(debounce)) {
-                        try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
                         didSendSubject?.send()
                     }
                 }
             } else if let throttle = throttle {
                 handlerTask = Task { [weak didSendSubject] in
                     for await event in channel.throttle(for: .milliseconds(throttle)) {
-                        try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
                         didSendSubject?.send()
                     }
                 }
             } else {
                 handlerTask = Task { [weak didSendSubject] in
                     for await event in channel {
-                        try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
                         didSendSubject?.send()
                     }
                 }
