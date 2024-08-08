@@ -55,7 +55,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
   end
 
   def log_warnings(warnings, file) do
-    for {message, {line, _}, _offset} <- warnings do
+    for {message, {line, _}, _offset} <- Enum.reverse(warnings) do
       IO.warn(message, line: line, file: file)
     end
   end
