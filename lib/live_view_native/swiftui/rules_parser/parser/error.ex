@@ -140,9 +140,19 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
 
     header =
       if error.is_warning? do
-        ""
+        "#{error_message}#{maybe_but_got}"
       else
         "Unsupported input:"
+      end
+
+    footer =
+      if error.is_warning? do
+        ""
+      else
+        """
+
+        #{error_message}#{maybe_but_got}
+        """
       end
 
     message = """
@@ -150,8 +160,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
     #{line_spacer} |
     #{lines}
     #{line_spacer} |
-
-    #{error_message}#{maybe_but_got}
+    #{footer}
     """
 
     {message, {source_line, 0}, error.byte_offset}

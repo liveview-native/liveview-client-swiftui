@@ -11,7 +11,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
     line = Keyword.get(opts, :line) || 1
     variable_context = Keyword.get(opts, :variable_context, Elixir)
     expect_semicolons? = Keyword.get(opts, :expect_semicolons?, false)
-    expect_semicolons? = true
 
     context =
       opts

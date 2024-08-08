@@ -32,7 +32,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       end
 
       test "parses modifier function definition with annotation (2)" do
-      {line, input} = {__ENV__.line,"""
+      {line, input} = {__ENV__.line + 1,"""
       font(.largeTitle)
       bold(true)
       italic(true)
@@ -467,24 +467,20 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert logs =~
                """
-               warning:#{" "}
+               warning: Expected a ‘;’
                  |
                1 | blue()‎ red()
                  |       ^
                  |
-
-               Expected a ‘;’
                """
 
       assert logs =~
                """
-               warning:#{" "}
+               warning: Expected a ‘;’
                  |
                1 | blue() red()‎
                  |             ^
                  |
-
-               Expected a ‘;’
                """
 
       input = """
@@ -500,34 +496,28 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       assert logs =~
                """
-               warning:#{" "}
+               warning: Expected a ‘;’
                  |
                1 | blue()‎
                  |       ^
                  |
-
-               Expected a ‘;’
                """
       assert logs =~
                """
-               warning:#{" "}
+               warning: Expected a ‘;’
                  |
                2 | red()‎
                  |      ^
                  |
-
-               Expected a ‘;’
                """
 
       assert logs =~
                """
-               warning:#{" "}
+               warning: Expected a ‘;’
                  |
                3 | green()‎
                  |        ^
                  |
-
-               Expected a ‘;’
                """
     end
 
