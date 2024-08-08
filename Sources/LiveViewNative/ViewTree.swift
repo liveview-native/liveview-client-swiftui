@@ -145,8 +145,9 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     @LiveElementIgnored
     var wrappedValue: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> {
         if _liveElement.isConstant {
-            let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
             var result = ArraySlice<BuiltinRegistry<Root>.BuiltinModifier>()
+            guard let sheet = overrideStylesheet ?? (stylesheet as? Stylesheet<Root>)
+            else { return result }
             if let style,
                !style.isEmpty
             {
@@ -167,8 +168,9 @@ struct ClassModifiers<Root: RootRegistry>: DynamicProperty {
     var resolvedModifiers: ArraySlice<BuiltinRegistry<Root>.BuiltinModifier> = .init()
     
     mutating func update() {
-        let sheet = overrideStylesheet ?? (stylesheet as! Stylesheet<Root>)
         resolvedModifiers.removeAll()
+        guard let sheet = overrideStylesheet ?? (stylesheet as? Stylesheet<Root>)
+        else { return }
         if let style,
            !style.isEmpty
         {

@@ -327,15 +327,15 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
     public var wrappedValue: Value {
         Value(
             coordinatorEnvironment: coordinatorEnvironment,
-            context: context.storage,
-            stylesheet: stylesheet as! Stylesheet<R>,
+            context: LiveContext(storage: context.storage),
+            stylesheet: stylesheet as? Stylesheet<R>,
             resolvedStylesheet: stylesheetResolver.resolvedStylesheet
         )
     }
     
     public struct Value {
         let coordinatorEnvironment: CoordinatorEnvironment?
-        let context: LiveContextStorage<R>
+        public let context: LiveContext<R>
         let stylesheet: Stylesheet<R>?
         
         let resolvedStylesheet: [String:[BuilderModifierContainer<Builder>]]
@@ -545,7 +545,7 @@ public extension ContentBuilder {
     ) -> some View where C.Element == Node, C.Index == Int {
         ViewTreeBuilder().fromNodes(
             nodes,
-            context: context.context
+            context: context.context.storage
         )
         .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
         .environment(\.anyLiveContextStorage, context.context)
@@ -570,7 +570,7 @@ public extension ContentBuilder {
             ViewTreeBuilder().fromNodes(
                 element.children()
                     .filter({ $0.attributes.contains(where: { $0.name == "template" && $0.value == template }) }),
-                context: context.context
+                context: context.context.storage
             )
                 .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
                 .environment(\.anyLiveContextStorage, context.context)
@@ -578,7 +578,7 @@ public extension ContentBuilder {
             ViewTreeBuilder().fromNodes(
                 element.children()
                     .filter({ !$0.attributes.contains(where: { $0.name == "template" }) }),
-                context: context.context
+                context: context.context.storage
             )
                 .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
                 .environment(\.anyLiveContextStorage, context.context)
@@ -594,7 +594,7 @@ public extension ContentBuilder {
         ViewTreeBuilder().fromNodes(
             element.children()
                 .filter({ $0.attributes.contains(where: { $0.name == "template" && template.value.contains($0.value ?? "") }) }),
-            context: context.context
+            context: context.context.storage
         )
             .environment(\.coordinatorEnvironment, context.coordinatorEnvironment)
             .environment(\.anyLiveContextStorage, context.context)

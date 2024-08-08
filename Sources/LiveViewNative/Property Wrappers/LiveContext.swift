@@ -32,8 +32,9 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         overrideGestureState ?? environmentGestureState
     }
     
+    internal let overrideStorage: LiveContextStorage<R>?
     var storage: LiveContextStorage<R> {
-        anyStorage as! LiveContextStorage<R>
+        overrideStorage ?? (anyStorage as! LiveContextStorage<R>)
     }
     
     /// The coordinator corresponding to the live view in which thie view is being constructed.
@@ -51,6 +52,11 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     }
     
     public init() {
+        self.overrideStorage = nil
+    }
+    
+    init(storage: LiveContextStorage<R>) {
+        self.overrideStorage = storage
     }
     
     /// Add an ``overrideGestureState`` to the context.
