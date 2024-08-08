@@ -23,7 +23,7 @@ jobs:
           sudo xcode-select --switch /Applications/Xcode_15.4.app
       - uses: irgaly/xcode-cache@v1
         with:
-          key: xcode-cache-deriveddata-${{ github.workflow }}-${{ github.sha }}
+          key: xcode-cache-deriveddata-${{ github.workflow }}
           restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
       - name: Run tests on iOS Simulator
         shell: bash
