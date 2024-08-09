@@ -3,12 +3,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
 
   alias LiveViewNative.SwiftUI.RulesParser.Modifiers
   alias LiveViewNative.SwiftUI.RulesParser.Parser
+  require Logger
 
   def parse(rules, opts \\ []) do
     file = Keyword.get(opts, :file) || ""
     module = Keyword.get(opts, :module) || ""
     line = Keyword.get(opts, :line) || 1
     variable_context = Keyword.get(opts, :variable_context, Elixir)
+    expect_semicolons? = Keyword.get(opts, :expect_semicolons?, false)
 
     context =
       opts
@@ -16,6 +18,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
       |> Map.put_new(:file, file)
       |> Map.put_new(:source_line, line)
       |> Map.put_new(:module, module)
+      |> Map.put_new(:expect_semicolons?, expect_semicolons?)
       |> Map.put_new(
         :annotations,
         Application.get_env(:live_view_native_stylesheet, :annotations, false)
@@ -35,10 +38,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
       |> Parser.error_from_result()
 
     case result do
-      {:ok, [output], _unconsumed = "", _context, _current_line_and_offset, _} ->
+      {:ok, [output], warnings} ->
+        log_warnings(warnings, file)
         output
 
-      {:ok, output, _unconsumed = "", _context, _current_line_and_offset, _} ->
+      {:ok, output, warnings} ->
+        log_warnings(warnings, file)
         output
 
       {:error, message, _unconsumed, _context, {line, _}, _} ->
@@ -46,6 +51,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
           description: message,
           file: file,
           line: line
+    end
+  end
+
+  def log_warnings(warnings, file) do
+    for {message, {line, _}, _offset} <- Enum.reverse(warnings) do
+      IO.warn(message, line: line, file: file)
     end
   end
 end

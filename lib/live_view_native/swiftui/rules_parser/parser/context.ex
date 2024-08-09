@@ -8,6 +8,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Context do
     source: "",
     source_lines: [],
     errors: [],
+    warnings: [],
     highlight_error: true,
     # Where in the code does the input start?
     # Useful for localizing errors when parsing sigil text
@@ -45,14 +46,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Context do
     if is_frozen?(context) and not error.forced? do
       context
     else
-      path = [:context, Access.key(:errors)]
+      path =
+        if error.is_warning? do
+          [:context, Access.key(:warnings)]
+        else
+          [:context, Access.key(:errors)]
+        end
 
-      {_, context} =
-        get_and_update_in(context, path, fn
-          existing_errors -> {[error | existing_errors], [error | existing_errors]}
-        end)
-
-      context
+      update_in(context, path, &[error | &1])
     end
   end
 

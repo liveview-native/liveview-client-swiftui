@@ -35,8 +35,8 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser do
       choices ++
         if generate_error? do
           [
-            error_parser
-            |> put_error(
+            put_error(
+              error_parser,
               "Expected one of the following:\n" <>
                 label_from_named_choices(named_choices) <> "\n",
               show_incorrect_text?: show_incorrect_text?
@@ -49,16 +49,19 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser do
   end
 
   def expect(combinator \\ empty(), combinator_2, opts) do
-    error_parser = Keyword.get(opts, :error_parser, non_whitespace())
-    error_message = Keyword.get(opts, :error_message)
-    generate_error? = Keyword.get(opts, :generate_error?, true)
+    opts =
+      opts
+      |> Keyword.update(:error_parser, non_whitespace(), &(&1 || empty()))
+      |> Keyword.update(:error_message, "", & &1)
+      |> Keyword.update(:generate_error?, true, & &1)
+      |> Keyword.update(:warning, false, & &1)
 
     combinator
     |> concat(
-      if generate_error? do
+      if opts[:generate_error?] do
         choice([
           combinator_2,
-          put_error(error_parser, error_message, opts)
+          put_error(opts[:error_parser], opts[:error_message], opts)
         ])
       else
         combinator_2
@@ -150,8 +153,13 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser do
         {message, position, byte_offset} = Error.context_to_error_message(context)
         {:error, message, rest, context, position, byte_offset}
 
-      result ->
-        result
+      {:ok, output, _unconsumed = "", %{context: %Context{} = context}, _, _} ->
+        warnings =
+          Enum.map(context.warnings, fn warning ->
+            Error.context_to_error_message(context, warning)
+          end)
+
+        {:ok, output, warnings}
     end
   end
 end

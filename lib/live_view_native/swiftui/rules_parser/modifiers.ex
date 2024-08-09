@@ -283,6 +283,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     ignore_whitespace()
     |> concat(modifier_name())
     |> concat(modifier_brackets.(nested: false))
+    |> expect_semicolon_or_warn()
     |> post_traverse({PostProcessors, :to_function_call_ast, []}),
     export_combinator: true
   )
