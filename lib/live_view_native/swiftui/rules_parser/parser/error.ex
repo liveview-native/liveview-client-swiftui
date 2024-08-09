@@ -161,6 +161,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
     #{footer}
     """
 
-    {message, {source_line, 0}, error.byte_offset}
+    {String.trim(message), {source_line, 0}, error.byte_offset}
   end
 end
