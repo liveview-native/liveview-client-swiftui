@@ -19,7 +19,7 @@ you can manually add to an existing Xcode project.
 
 ### Both methods
 
-1. Add `{:live_view_native_swiftui, "~> 0.3.0-rc.3"}` to `mix.exs`
+1. Add `{:live_view_native_swiftui, "~> 0.3.0-rc.4"}` to `mix.exs`
 2. Add `LiveViewNative.SwiftUI` to the `plugins:` list of `config :live_view_native` in `config.exs`
 
 <!-- tabs-open -->
