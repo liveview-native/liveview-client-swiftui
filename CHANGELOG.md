@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- `Stylesheet` type made public
+- Code-generated modifiers updated for Xcode 15.4
 
 ## Fixed
 
