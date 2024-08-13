@@ -5,7 +5,10 @@ import OSLog
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "Stylesheet")
 
-struct Stylesheet<R: RootRegistry> {
+/// A type that stores a map between classes and an array of modifiers.
+///
+/// The raw content of the stylesheet is retained so it can re-parsed in a different context.
+public struct Stylesheet<R: RootRegistry> {
     let content: [String]
     let classes: [String:[BuiltinRegistry<R>.BuiltinModifier]]
     
@@ -25,7 +28,7 @@ struct Stylesheet<R: RootRegistry> {
 }
 
 extension Stylesheet: AttributeDecodable {
-    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
         do {
