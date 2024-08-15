@@ -9,70 +9,62 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
     :line,
     :byte_offset,
     :error_message,
-    forced?: false
+    forced?: false,
+    is_warning?: false
   ])
 
   def put_error(
         rest,
         args,
         context,
-        _,
-        _,
+        {line, _offset},
+        byte_offset,
         error_message,
         opts \\ []
-      )
-
-  def put_error(
-        rest,
-        [] = arg,
-        context,
-        {line, _offset},
-        byte_offset,
-        error_message,
-        opts
       ) do
-    # IO.inspect({[], rest, error_message}, label: "error[0]")
+    error = %__MODULE__{
+      incorrect_text: List.first(args, ""),
+      line: line,
+      byte_offset: byte_offset,
+      error_message: error_message,
+      show_incorrect_text?: Keyword.get(opts, :show_incorrect_text?, false),
+      forced?: Keyword.get(opts, :force_error?, false),
+      is_warning?: false
+    }
 
     context =
-      Context.put_new_error(context, rest, %__MODULE__{
-        incorrect_text: "",
-        line: line,
-        byte_offset: byte_offset,
-        error_message: error_message,
-        show_incorrect_text?: Keyword.get(opts, :show_incorrect_text?, false),
-        forced?: Keyword.get(opts, :force_error?, false)
-      })
+      case opts[:warning] do
+        true ->
+          # Always treat error as warning
+          Context.put_new_error(context, rest, %{error | is_warning?: true})
 
-    {rest, arg, context}
-  end
+        false ->
+          # Never treat error as warning
+          Context.put_new_error(context, rest, error)
 
-  def put_error(
-        rest,
-        [matched_text | _] = args,
-        context,
-        {line, _offset},
-        byte_offset,
-        error_message,
-        opts
-      ) do
-    # IO.inspect({matched_text, rest, error_message}, label: "error[0]")
+        nil ->
+          # Never treat error as warning
+          Context.put_new_error(context, rest, error)
 
-    context =
-      Context.put_new_error(context, rest, %__MODULE__{
-        incorrect_text: matched_text,
-        line: line,
-        byte_offset: byte_offset,
-        error_message: error_message,
-        show_incorrect_text?: Keyword.get(opts, :show_incorrect_text?, false),
-        forced?: Keyword.get(opts, :force_error?, false)
-      })
+        optional_warning_key ->
+          # The error is an optional warning
+          # Only log the warning if value in `context[<key>]` is true
+          if get_in(context, [Access.key(optional_warning_key)]) == true do
+            Context.put_new_error(context, rest, %{error | is_warning?: true})
+          else
+            context
+          end
+      end
 
     {rest, args, context}
   end
 
   def context_to_error_message(context) do
     [%__MODULE__{} = error | _] = Enum.reverse(context.errors)
+    context_to_error_message(context, error)
+  end
 
+  def context_to_error_message(context, %__MODULE__{} = error) do
     error_message = error.error_message
     line = error.line
     incorrect_text = error.incorrect_text
@@ -144,15 +136,31 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Parser.Error do
         ""
       end
 
+    header =
+      if error.is_warning? do
+        "#{error_message}#{maybe_but_got}"
+      else
+        "Unsupported input:"
+      end
+
+    footer =
+      if error.is_warning? do
+        ""
+      else
+        """
+
+        #{error_message}#{maybe_but_got}
+        """
+      end
+
     message = """
-    Unsupported input:
+    #{header}
     #{line_spacer} |
     #{lines}
     #{line_spacer} |
-
-    #{error_message}#{maybe_but_got}
+    #{footer}
     """
 
-    {message, {source_line, 0}, error.byte_offset}
+    {String.trim(message), {source_line, 0}, error.byte_offset}
   end
 end

@@ -1,5 +1,6 @@
 defmodule LiveViewNative.SwiftUI.RulesParserTest do
   use ExUnit.Case
+  import ExUnit.CaptureIO
   alias LiveViewNative.SwiftUI.RulesParser
 
   def parse(input, opts \\ []) do
@@ -7,6 +8,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       file: Keyword.get(opts, :file),
       module: Keyword.get(opts, :module),
       line: Keyword.get(opts, :line),
+      expect_semicolons?: Keyword.get(opts, :expect_semicolons?, false),
       context: %{
         annotations: Keyword.get(opts, :annotations, false)
       }
@@ -30,7 +32,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
       end
 
       test "parses modifier function definition with annotation (2)" do
-      {line, input} = {__ENV__.line,"""
+      {line, input} = {__ENV__.line + 1,"""
       font(.largeTitle)
       bold(true)
       italic(true)
@@ -382,6 +384,7 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
 
       input = ~s{rotationEffect(gesture_state(:rotate, .rotation, defaultValue: .zero))}
       output = {:rotationEffect, [], [{:__gesture_state__, [], [:rotate, {:., [], [nil, :rotation]}, [defaultValue: {:., [], [nil, :zero]}]]}]}
+      assert parse(input) == output
     end
   end
 
@@ -452,6 +455,70 @@ defmodule LiveViewNative.SwiftUI.RulesParserTest do
         |> String.trim()
 
       assert String.trim(error.description) == error_prefix
+    end
+
+    test "warn when missing semicolons" do
+      input = "blue() red()"
+
+      logs =
+        capture_io(:stderr, fn ->
+          assert parse(input, expect_semicolons?: true)
+        end)
+
+      assert logs =~
+               """
+               warning: Expected a ‘;’
+                 |
+               1 | blue()‎ red()
+                 |       ^
+                 |
+               """
+
+      assert logs =~
+               """
+               warning: Expected a ‘;’
+                 |
+               1 | blue() red()‎
+                 |             ^
+                 |
+               """
+
+      input = """
+      blue()
+      red()
+      green()
+      """
+
+      logs =
+        capture_io(:stderr, fn ->
+          assert parse(input, expect_semicolons?: true)
+        end)
+
+      assert logs =~
+               """
+               warning: Expected a ‘;’
+                 |
+               1 | blue()‎
+                 |       ^
+                 |
+               """
+      assert logs =~
+               """
+               warning: Expected a ‘;’
+                 |
+               2 | red()‎
+                 |      ^
+                 |
+               """
+
+      assert logs =~
+               """
+               warning: Expected a ‘;’
+                 |
+               3 | green()‎
+                 |        ^
+                 |
+               """
     end
 
     test "invalid modifier name" do
