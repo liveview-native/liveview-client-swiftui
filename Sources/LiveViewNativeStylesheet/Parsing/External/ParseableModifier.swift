@@ -29,6 +29,22 @@ public struct _ErrorParse<Input, Output, Parsers: Parser>: Parser where Parsers.
     }
 }
 
+public extension Parser {
+    func fail<Output, ErrorType: Error>(outputType _: Output.Type = Output.self, _ makeError: @escaping (Self.Output) -> ErrorType) -> some Parser<Input, Output> {
+        MapFailParser<Self, Output, ErrorType>(parser: self, makeError: makeError)
+    }
+    
+}
+struct MapFailParser<ParserType: Parser, Output, ErrorType: Error>: Parser {
+    let parser: ParserType
+    let makeError: (ParserType.Output) -> ErrorType
+    
+    func parse(_ input: inout ParserType.Input) throws -> Output {
+        let error = try parser.parse(&input)
+        throw makeError(error)
+    }
+}
+
 public enum ArgumentParseError: LocalizedError {
     case unknownArgument(String)
     

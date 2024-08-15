@@ -298,7 +298,6 @@ extension ModifierGenerator {
                                         ? AvailabilityArgumentListSyntax([])
                                         : memberAvailability
                                     return #"""
-                                    ConstantAtomLiteral("\#(`case`)").map({ () -> Self in
                                     \#(
                                         memberAvailability.isEmpty
                                         ? ""
@@ -312,15 +311,17 @@ extension ModifierGenerator {
                                                 .joined(separator: " || "))
                                         """
                                     )
+                                    ConstantAtomLiteral("\#(`case`)").map({ () -> Self in
                                     \#(availability.isEmpty ? "" : "if #available(\(availability), *) {")
                                         return Self.\#(`case`)
                                     \#(availability.isEmpty ? "" : #"} else { fatalError("'\#(`case`)' is not available in this OS version") }"#)
-                                    \#(memberAvailability.isEmpty ? "" : "#else")
-                                    \#(memberAvailability.isEmpty ? "" : #"fatalError("'\#(`case`)' is not available on this OS")"#)
-                                    \#(memberAvailability.isEmpty ? "" : "#endif")
                                     })
+                                    \#(memberAvailability.isEmpty ? "" : "#endif")
                                     """#
                                 }).joined(separator: "\n"))
+                                    AtomLiteral().fail(outputType: \(type).self) {
+                                        ModifierParseError(error: .unknownArgument($0), metadata: context.metadata)
+                                    }
                                 }
                             }
                         }

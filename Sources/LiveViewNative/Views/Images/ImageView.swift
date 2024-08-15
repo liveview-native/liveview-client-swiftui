@@ -131,7 +131,7 @@ struct ImageView<Root: RootRegistry>: View {
         if let labelNode = $liveElement.childNodes.first {
             switch labelNode.data {
             case let .element(element):
-                return Text<Root>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: nil).body
+                return Text<Root>(element: ElementNode(node: labelNode, data: element), overrideStylesheet: _modifiers.overrideStylesheet).body
             case let .leaf(label):
                 return .init(label)
             case .root:
