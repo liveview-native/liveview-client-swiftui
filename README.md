@@ -14,15 +14,22 @@ The LiveViewNative Swift package lets you use Phoenix LiveView to build native i
 
 ## Installation
 
+### Elixir
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+by adding `live_view_native_swiftui` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:live_view_native_swiftui, "~> 0.3.0"}
+  ]
+end
+```
+
+### SwiftUI
+
 You can install the client either by running the generator from Elixir or
 you can manually add to an existing Xcode project.
-
-### Both methods
-
-1. Add `{:live_view_native_swiftui, "~> 0.3.0-rc.4"}` to `mix.exs`
-2. Add `LiveViewNative.SwiftUI` to the `plugins:` list of `config :live_view_native` in `config.exs`
-
-<!-- tabs-open -->
 
 ### Generate Project
 
