@@ -13,7 +13,7 @@ import LiveViewNativeCore
 /// The value of this control is an Elixir-style ISO 8601 date or datetime string (i.e., the result of `DateTime.to_iso8601`).
 ///
 /// ```html
-/// <DatePicker value="2023-03-14T15:19:26.535Z">
+/// <DatePicker selection="2023-03-14T15:19:26.535Z">
 ///     <Text>Pick a date</Text>
 /// </DatePicker>
 /// ```
@@ -24,81 +24,55 @@ import LiveViewNativeCore
 /// You can optionally specify a start and/or end date to limit the selectable range of the date picker.
 ///
 /// ## Attributes
+/// - ``selection``
 /// - ``start``
 /// - ``end``
 /// - ``components``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
-struct DatePicker<R: RootRegistry>: View {
-    @LiveContext<R> private var context
-    @ObservedElement private var element
-    @FormState(default: CodableDate()) private var value: CodableDate
+@LiveElement
+struct DatePicker<Root: RootRegistry>: View {
+    @FormState("selection", default: CodableDate()) private var selection: CodableDate
+    
     ///The start date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("start") private var start: Date?
+    private var start: Date?
+    
     ///The end date (inclusive) of the valid date range. Encoded as an ISO 8601 date or datetime string.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("end") private var end: Date?
+    private var end: Date?
+    
     ///Which components of the date to display in the picker. Defaults to all.
     ///
     ///Possible values:
-    ///- `hour-and-minute`
+    ///- `hourAndMinute`
     ///- `date`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute(
-        "displayed-components",
-        transform: {
-            #if os(iOS) || os(macOS)
-            switch $0?.value {
-            case "hour-and-minute":
-                return .hourAndMinute
-            case "date":
-                return .date
-            default:
-                return [.hourAndMinute, .date]
-            }
-            #else
-            fatalError()
-            #endif
-        }
-    ) private var components: DatePickerComponents
-    #if !os(iOS) && !os(macOS)
-    typealias DatePickerComponents = Never
-    #endif
+    private var displayedComponents: String?
     
-    private var dateBinding: Binding<Date> {
-        Binding {
-            value.date
-        } set: { newValue in
-            value.date = newValue
-        }
+    #if os(iOS) || os(macOS)
+    private var datePickerComponents: DatePickerComponents {
+        displayedComponents.flatMap({ DatePickerComponents.init(from: $0) }) ?? [.hourAndMinute, .date]
     }
+    #endif
     
     var body: some View {
 #if os(iOS) || os(macOS)
         if let start, let end {
-            SwiftUI.DatePicker(selection: dateBinding, in: start...end, displayedComponents: components) {
-                context.buildChildren(of: element)
+            SwiftUI.DatePicker(selection: $selection.date, in: start...end, displayedComponents: datePickerComponents) {
+                $liveElement.children()
             }
         } else if let start {
-            SwiftUI.DatePicker(selection: dateBinding, in: start..., displayedComponents: components) {
-                context.buildChildren(of: element)
+            SwiftUI.DatePicker(selection: $selection.date, in: start..., displayedComponents: datePickerComponents) {
+                $liveElement.children()
             }
         } else if let end {
-            SwiftUI.DatePicker(selection: dateBinding, in: ...end, displayedComponents: components) {
-                context.buildChildren(of: element)
+            SwiftUI.DatePicker(selection: $selection.date, in: ...end, displayedComponents: datePickerComponents) {
+                $liveElement.children()
             }
         } else {
-            SwiftUI.DatePicker(selection: dateBinding, displayedComponents: components) {
-                context.buildChildren(of: element)
+            SwiftUI.DatePicker(selection: $selection.date, displayedComponents: datePickerComponents) {
+                $liveElement.children()
             }
         }
 #endif
@@ -113,7 +87,7 @@ private struct CodableDate: FormValue, AttributeDecodable {
         self.date = Date()
     }
     
-    init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else {
             throw AttributeDecodingError.missingAttribute(CodableDate.self)
         }
@@ -130,5 +104,29 @@ private struct CodableDate: FormValue, AttributeDecodable {
         var container = encoder.singleValueContainer()
         try container.encode(date.formatted(.elixirDateTime))
     }
+    
+    func formQueryEncoded() throws -> String {
+        ElixirDateTimeFormat().format(self.date)
+    }
 }
 
+#if !os(iOS) && !os(macOS)
+typealias DatePickerComponents = Never
+#else
+extension DatePickerComponents {
+    public init(from string: String) {
+        #if os(iOS) || os(macOS)
+        switch string {
+        case "hourAndMinute":
+            self = .hourAndMinute
+        case "date":
+            self = .date
+        default:
+            self = [.hourAndMinute, .date]
+        }
+        #else
+        fatalError()
+        #endif
+    }
+}
+#endif

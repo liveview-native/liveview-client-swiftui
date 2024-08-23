@@ -14,39 +14,32 @@ import SwiftUI
 /// Use the `content` children to specify the options for the picker, and the `label` children to provide a label.
 ///
 /// ```html
-/// <Picker value-binding="transport">
+/// <Picker selection={@transport} phx-change="transport-changed">
 ///     <Text template={:label}>Transportation</Text>
 ///     <Group template={:content}>
-///         <Label system-image="car" modifiers={tag(@native, tag: "car")}>Car</Label>
-///         <Label system-image="bus" modifiers={tag(@native, tag: "bus")}>Bus</Label>
-///         <Label system-image="tram" modifiers={tag(@native, tag: "tram")}>Tram</Label>
+///         <Label systemImage="car" tag="car">Car</Label>
+///         <Label systemImage="bus" tag="bus">Bus</Label>
+///         <Label systemImage="tram" tag="tram">Tram</Label>
 ///     </Group>
 /// </Picker>
 /// ```
 ///
-/// ```elixir
-/// defmodule MyAppWeb.PickerLive do
-///     native_binding :transport, String, "tram"
-/// end
-/// ```
+/// ## Attributes
+/// - ``selection``
 ///
 /// ## Children
 /// - `content`
 /// - `label`
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct Picker<R: RootRegistry>: View {
-    @LiveContext<R> private var context
-    @ObservedElement private var element
-    @FormState private var value: String?
+@LiveElement
+struct Picker<Root: RootRegistry>: View {
+    @FormState("selection") private var selection: String?
     
     var body: some View {
-        SwiftUI.Picker(selection: $value) {
-            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: false)
+        SwiftUI.Picker(selection: $selection) {
+            $liveElement.children(in: "content", default: true)
         } label: {
-            context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: false)
+            $liveElement.children(in: "label")
         }
     }
-    
 }

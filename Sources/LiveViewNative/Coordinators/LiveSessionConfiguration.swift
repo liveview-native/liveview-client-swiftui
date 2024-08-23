@@ -9,10 +9,6 @@ import SwiftUI
 
 /// An object that configures the behavior of a ``LiveSessionCoordinator``.
 public struct LiveSessionConfiguration {
-    /// Whether this session allows its live view to navigate.
-    ///
-    /// By default, navigation is ``NavigationMode-swift.enum/disabled``.
-    public var navigationMode: NavigationMode = .disabled
     /// A closure that is invoked by the coordinator to get the parameters that should be sent to the server when the live view connects.
     ///
     /// The closure receives the URL of the live view being connected to. If live navigation is performed, it will be invoked multiple times with different URLs.
@@ -20,59 +16,75 @@ public struct LiveSessionConfiguration {
     /// By default, no connection params are provided.
     public var connectParams: ((URL) -> [String: Any])? = nil
     
-    /// The URL session the coordinator will use for performing HTTP and socket requests. By default, this is the shared session.
-    public var urlSession: URLSession = .shared
+    /// The URL session configuration the coordinator will use for performing HTTP and socket requests.
+    /// 
+    /// By default, this is the `default` configuration.
+    /// 
+    /// Some properties of the configuration (such as the `httpCookieStorage`) will be overridden by the session coordinator.
+    public var urlSessionConfiguration: URLSessionConfiguration = .default
+    
+    /// The transition used when the live view changes connects.
+    public var transition: AnyTransition?
+    
+    public var reconnectBehavior: ReconnectBehavior = .exponential
     
     /// Constructs a default, empty configuration.
     public init() {
     }
     
     public init(
-        navigationMode: NavigationMode = .disabled,
         connectParams: ((URL) -> [String: Any])? = nil,
-        urlSession: URLSession = .shared
+        urlSessionConfiguration: URLSessionConfiguration = .default,
+        transition: AnyTransition? = nil,
+        reconnectBehavior: ReconnectBehavior = .exponential
     ) {
-        self.navigationMode = navigationMode
         self.connectParams = connectParams
-        self.urlSession = urlSession
+        self.urlSessionConfiguration = urlSessionConfiguration
+        self.transition = transition
+        self.reconnectBehavior = reconnectBehavior
     }
     
-    /// Possible modes for live view navigation.
-    public enum NavigationMode {
-        /// Navigation is entirely disabled. The live view will stay on the URL it was initially connected to.
-        case disabled
-        /// Only live redirects with `replace: true` are allowed.
-        case replaceOnly
-        /// Navigation is fully enabled. Both replace and push redirects are allowed.
-        case enabled
-        /// Navigation is fully enabled and uses a `NavigationSplitView` for the UI.
-        case splitView
-        /// Navigation is fully enabled and uses a `TabView` with the given tabs at the top level.
-        ///
-        /// Within each tab, navigation is fully enabled.
-        case tabView(tabs: [Tab])
+    public struct ReconnectBehavior {
+        let delay: ((_ tries: Int) -> TimeInterval)?
         
-        /// A top level tab for use with the `.tabView` navigation mode.
-        public struct Tab: Identifiable {
-            let label: SwiftUI.Label<SwiftUI.Text, SwiftUI.Image>
-            let url: URL
-            
-            public var id: URL { url }
-            
-            /// Create a tab with the given label and URL.
-            public init(label: SwiftUI.Label<SwiftUI.Text, SwiftUI.Image>, url: URL) {
-                self.label = label
-                self.url = url
+        public init(_ delay: @escaping (_ tries: Int) -> TimeInterval) {
+            self.delay = delay
+        }
+        
+        private init() {
+            self.delay = nil
+        }
+        
+        /// Attempt to reconnect at an exponential rate.
+        public static func exponential(
+            upTo maxDelay: TimeInterval = 32,
+            step: TimeInterval = 1,
+            jitter: ClosedRange<TimeInterval> = 0...0.25
+        ) -> Self {
+            .init { attempt in
+                let delay = pow(2, Double(attempt)) * step
+                let jitter = TimeInterval.random(in: jitter)
+                return min(delay, maxDelay) + jitter
             }
         }
         
-        var permitsRedirects: Bool {
-            switch self {
-            case .disabled:
-                return false
-            default:
-                return true
+        /// Attempt to reconnect at an exponential rate.
+        public static let exponential: Self = .exponential()
+        
+        /// Attempt to reconnect at a constant rate.
+        public static func constant(
+            _ delay: TimeInterval = 3,
+            jitter: ClosedRange<TimeInterval> = 0...0.25
+        ) -> Self {
+            .init { _ in
+                delay + TimeInterval.random(in: jitter)
             }
         }
+        
+        /// Attempt to reconnect at a constant rate.
+        public static let constant: Self = .constant()
+        
+        /// Never automatically reconnect.
+        public static let never: Self = .init()
     }
 }

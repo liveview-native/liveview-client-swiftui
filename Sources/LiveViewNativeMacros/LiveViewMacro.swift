@@ -19,34 +19,35 @@ extension LiveViewMacro: ExpressionMacro {
     ) throws -> ExprSyntax where Node : FreestandingMacroExpansionSyntax, Context : MacroExpansionContext {
         let registryName = context.makeUniqueName("Registry")
         
-        guard let addons = try node.argumentList.last?
+        // CustomRegistries
+        let addons = try node.argumentList.first(where: { $0.label?.text == "addons" })?
             .expression.as(ArrayExprSyntax.self)?
             .elements.map(transformAddon(_:))
-        else { throw LiveViewMacroError.invalidAddonsSyntax }
+        ?? []
         
         let registries: DeclSyntax
         switch addons.count {
         case 0:
-            throw LiveViewMacroError.missingAddons
+            registries = "typealias Registries = _SpecializedEmptyRegistry<Self>"
         case 1:
             registries = "typealias Registries = \(addons.first!)"
         default:
-            func multiRegistry(_ addons: some RandomAccessCollection<SimpleTypeIdentifierSyntax>) -> SimpleTypeIdentifierSyntax {
+            func multiRegistry(_ addons: some RandomAccessCollection<TypeSyntax>) -> IdentifierTypeSyntax {
                 switch addons.count {
                 case 2:
-                    return SimpleTypeIdentifierSyntax(
+                    return IdentifierTypeSyntax(
                         name: "_MultiRegistry",
                         genericArgumentClause: .init(arguments: .init([
-                            .init(argumentType: addons.first!, trailingComma: .commaToken()),
-                            .init(argumentType: addons.last!)
+                            .init(argument: addons.first!, trailingComma: .commaToken()),
+                            .init(argument: addons.last!)
                         ]))
                     )
                 default:
-                    return SimpleTypeIdentifierSyntax(
+                    return IdentifierTypeSyntax(
                         name: "_MultiRegistry",
                         genericArgumentClause: .init(arguments: .init([
-                            .init(argumentType: addons.first!, trailingComma: .commaToken()),
-                            .init(argumentType: multiRegistry(addons.dropFirst()))
+                            .init(argument: addons.first!, trailingComma: .commaToken()),
+                            .init(argument: multiRegistry(addons.dropFirst()))
                         ]))
                     )
                 }
@@ -54,9 +55,17 @@ extension LiveViewMacro: ExpressionMacro {
             registries = "typealias Registries = \(multiRegistry(addons))"
         }
         
-        let liveViewArguments = node.argumentList
-            .removingLast()
-            .replacing(childAt: node.argumentList.count - 2, with: node.argumentList.removingLast().last!.with(\.trailingComma, nil))
+        // Other arguments
+        var liveViewArguments = node.argumentList
+        liveViewArguments = liveViewArguments.filter({
+            switch $0.label?.text {
+            case "addons":
+                return false
+            default:
+                return true
+            }
+        })
+        liveViewArguments = liveViewArguments.with(\.[liveViewArguments.index(before: liveViewArguments.endIndex)].trailingComma, nil)
         
         return """
         { () -> AnyView in
@@ -64,26 +73,35 @@ extension LiveViewMacro: ExpressionMacro {
                 \(registries)
             }
         
-            return AnyView(LiveView<\(registryName)>(\(liveViewArguments)))
+            return AnyView(LiveView(registry: \(registryName).self, \(liveViewArguments))\(raw: node.trailingClosure?.description ?? "")\(node.additionalTrailingClosures))
         }()
         """
     }
     
-    private static func transformAddon(_ element: ArrayElementSyntax) throws -> SimpleTypeIdentifierSyntax {
-        guard let registry = element.expression.as(MemberAccessExprSyntax.self)?.base?.as(SpecializeExprSyntax.self),
-              let name = registry.expression.as(IdentifierExprSyntax.self)
-        else { throw LiveViewMacroError.invalidAddonElement }
-        return SimpleTypeIdentifierSyntax(
-            name: name.identifier,
-            genericArgumentClause: .init(.init(arguments: .init([.init(argumentType: SimpleTypeIdentifierSyntax(name: .identifier("Self")))])))
-        )
+    private static func transformAddon(_ element: ArrayElementSyntax) throws -> TypeSyntax {
+        let genericArgumentClause = GenericArgumentClauseSyntax(arguments: .init([.init(argument: IdentifierTypeSyntax(name: .identifier("Self")))]))
+        
+        if let registry = element.expression.as(MemberAccessExprSyntax.self)?.base?.as(GenericSpecializationExprSyntax.self) {
+            return TypeSyntax(#"\#(registry.expression)\#(genericArgumentClause)"#)
+        } else if let member = element.expression.as(MemberAccessExprSyntax.self),
+                  member.base == nil
+        {
+            let name = member.declName.baseName.text
+            return TypeSyntax(MemberTypeSyntax(
+                baseType: MemberTypeSyntax(baseType: IdentifierTypeSyntax(name: .identifier("LiveViewNative")), name: .identifier("Addons")),
+                // transform camelCase name back to registry type name. See ``AddonMacro`` for the inverse transformation.
+                name: .identifier(name.prefix(1).uppercased() + name.dropFirst()),
+                genericArgumentClause: genericArgumentClause
+            ))
+        } else {
+            throw LiveViewMacroError.invalidAddonElement
+        }
     }
 }
 
 enum LiveViewMacroError: Error, CustomStringConvertible {
     case invalidAddonsSyntax
     case invalidAddonElement
-    case missingAddons
     
     var description: String {
         switch self {
@@ -91,8 +109,6 @@ enum LiveViewMacroError: Error, CustomStringConvertible {
             return "Invalid value specified for 'addons'. Expected a static array literal."
         case .invalidAddonElement:
             return "Invalid addon provided. Expected a specialized registry type, such as 'AddonRegistry<Self>.self'"
-        case .missingAddons:
-            return "'addons' must not be empty."
         }
     }
 }

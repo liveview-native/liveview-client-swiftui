@@ -51,97 +51,135 @@ import Combine
 /// ```
 @propertyWrapper
 public struct ObservedElement {
-    @Environment(\.element.nodeRef) private var nodeRef: NodeRef?
     @Environment(\.coordinatorEnvironment) private var coordinator: CoordinatorEnvironment?
-    @StateObject private var observer: Observer
+    @EnvironmentObject private var observer: Observer
+    
+    private let observeChildren: Bool
     
     private let overrideElement: ElementNode?
+    /// Indicates whether the element value was overridden.
+    /// When true, assume this element is not mounted in the View tree, and is instead being processed as a nested element.
+    var isConstant: Bool {
+        overrideElement != nil
+    }
     
     /// Creates an `ObservedElement` that observes changes to the view's element.
     public init(observeChildren: Bool = false) {
         self.overrideElement = nil
-        self._observer = .init(wrappedValue: .init(observeChildren: observeChildren))
+        self.observeChildren = observeChildren
     }
     
     public init(element: ElementNode, observeChildren: Bool = false) {
         self.overrideElement = element
-        self._observer = .init(wrappedValue: .init(observeChildren: observeChildren))
+        self.observeChildren = observeChildren
     }
     
     public init() {
         self.overrideElement = nil
-        self._observer = .init(wrappedValue: .init(observeChildren: false))
+        self.observeChildren = false
     }
     
     /// The observed element in the document, with all current data.
     public var wrappedValue: ElementNode {
-        if let overrideElement {
-            return overrideElement
-        }
-        
-        guard let nodeRef,
-              let coordinator else {
-            fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
-        }
-        guard let element = coordinator.document[nodeRef].asElement() else {
-            preconditionFailure("@ObservedElement ref turned into a non-element node, this should not be possible")
-        }
-        return element
+        overrideElement ?? observer.resolvedElement
     }
     
     /// A publisher that publishes when the observed element changes.
-    public var projectedValue: some Publisher<Void, Never> {
-        observer.objectWillChange
+    public var projectedValue: some Publisher<NodeRef, Never> {
+        observer.elementChangedPublisher
     }
+    
+    var children: [Node] { overrideElement.flatMap({ Array($0.children()) }) ?? observer.resolvedChildren }
 }
 
 extension ObservedElement: DynamicProperty {
-    public func update() {
-        guard let nodeRef,
-              let coordinator else {
+    public mutating func update() {
+        guard let coordinator else {
             fatalError("Cannot use @ObservedElement on view that does not have an element and coordinator in the environment")
         }
+        
         self.observer.update(
-            ref: nodeRef,
-            children: self.observer.observeChildren ? coordinator.document[nodeRef].children().map(\.id) : nil,
-            elementChanged: coordinator.elementChanged
+            coordinator,
+            observeChildren: observeChildren
         )
     }
 }
 
 extension ObservedElement {
-    private class Observer: ObservableObject {
+    final class Observer: ObservableObject {
         private var cancellable: AnyCancellable?
-        fileprivate var observeChildren = false
         
-        let objectWillChange = ObjectWillChangePublisher()
+        let id: NodeRef
+        var observedChildIDs: Set<NodeRef> = []
         
-        init(observeChildren: Bool) {
-            self.observeChildren = observeChildren
-        }
-        
-        fileprivate func update(ref: NodeRef, children: [NodeRef]?, elementChanged: AnyPublisher<NodeRef, Never>) {
-            if cancellable == nil {
-                cancellable = elementChanged
-                    .filter { [weak self] in
-                        if $0 == ref {
-                            return true
-                        } else if self?.observeChildren == true {
-                            return children?.contains($0) ?? false
-                        } else {
-                            return false
-                        }
-                    }
-                    .sink { [unowned self] _ in
-                        self.objectWillChange.send()
-                    }
+        var resolvedElement: ElementNode!
+        var resolvedChildren: [Node]!
+        private var _resolvedChildIDs: Set<NodeRef>?
+        var resolvedChildIDs: Set<NodeRef> {
+            if let _resolvedChildIDs {
+                return _resolvedChildIDs
+            } else {
+                let result = Set(self.resolvedChildren.map(\.id))
+                _resolvedChildIDs = result
+                return result
             }
         }
-    }
-}
-
-private extension Optional where Wrapped == ElementNode {
-    var nodeRef: NodeRef? {
-        self?.node.id
+        
+        var objectWillChange = ObjectWillChangePublisher()
+        
+        var elementChangedPublisher: AnyPublisher<NodeRef, Never>!
+        
+        init(_ id: NodeRef) {
+            self.id = id
+        }
+        
+        @MainActor
+        fileprivate func update(
+            _ context: CoordinatorEnvironment,
+            observeChildren: Bool
+        ) {
+            guard cancellable == nil || (observeChildren && self.observedChildIDs != self.resolvedChildIDs) else { return }
+            self.resolvedElement = context.document[id].asElement()
+            self.resolvedChildren = Array(self.resolvedElement.children())
+            self._resolvedChildIDs = nil
+            
+            let id = self.id
+            
+            if observeChildren {
+                self.elementChangedPublisher = Publishers.MergeMany(
+                    [context.elementChanged(id).map({ id })] + self.resolvedChildIDs.map({ id in
+                        context.elementChanged(id).map({ id })
+                    })
+                )
+                .eraseToAnyPublisher()
+                self.observedChildIDs = self.resolvedChildIDs
+            } else {
+                self.elementChangedPublisher = context.elementChanged(id).map({ id }).eraseToAnyPublisher()
+            }
+            
+            cancellable = self.elementChangedPublisher
+                .sink { [weak self] _ in
+                    guard let self else { return }
+                    self.resolvedElement = context.document[id].asElement()
+                    self.resolvedChildren = Array(self.resolvedElement.children())
+                    self._resolvedChildIDs = nil
+                    self.objectWillChange.send()
+                }
+        }
+        
+        struct Applicator<Content: View>: View {
+            @StateObject private var observer: Observer
+            let content: Content
+            
+            init(_ id: NodeRef, @ViewBuilder content: () -> Content) {
+                self._observer = .init(wrappedValue: .init(id))
+                self.content = content()
+            }
+            
+            var body: some View {
+                content
+                    .environmentObject(observer)
+            }
+        }
     }
 }

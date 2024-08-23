@@ -18,10 +18,10 @@ final class DecodeUnitPointTests: XCTestCase {
         XCTAssertEqual(try UnitPoint(from: "trailing"), .trailing)
         XCTAssertEqual(try UnitPoint(from: "top"), .top)
         XCTAssertEqual(try UnitPoint(from: "bottom"), .bottom)
-        XCTAssertEqual(try UnitPoint(from: "top-leading"), .topLeading)
-        XCTAssertEqual(try UnitPoint(from: "top-trailing"), .topTrailing)
-        XCTAssertEqual(try UnitPoint(from: "bottom-leading"), .bottomLeading)
-        XCTAssertEqual(try UnitPoint(from: "bottom-trailing"), .bottomTrailing)
+        XCTAssertEqual(try UnitPoint(from: "topLeading"), .topLeading)
+        XCTAssertEqual(try UnitPoint(from: "topTrailing"), .topTrailing)
+        XCTAssertEqual(try UnitPoint(from: "bottomLeading"), .bottomLeading)
+        XCTAssertEqual(try UnitPoint(from: "bottomTrailing"), .bottomTrailing)
     }
     
     func testInteger() throws {

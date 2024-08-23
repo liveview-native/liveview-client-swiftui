@@ -21,7 +21,7 @@ final class LinkTests: XCTestCase {
         try assertMatch(#"""
 <Link destination="https://apple.com">
     <HStack>
-        <Image system-name="link" />
+        <Image systemName="link" />
         <Text>Click the link</Text>
     </HStack>
 </Link>

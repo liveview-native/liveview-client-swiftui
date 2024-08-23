@@ -10,50 +10,40 @@ import SwiftUI
 /// A control that allows the user to pick multiple dates (not datetimes).
 ///
 /// ```html
-/// <MultiDatePicker value-binding="dates" start="2023-01-01" end="2023-02-01">
+/// <MultiDatePicker selection={@dates} phx-change="dates-changed" start="2023-01-01" end="2023-02-01">
 ///     <Text>Pick as many dates as you like!</Text>
 /// </MultiDatePicker>
 /// ```
 ///
 /// The element's children are used as the control's label.
 ///
-/// ```elixir
-/// defmodule MyAppWeb.DatesLive do
-///     native_binding :dates, List, ["2023-01-15"]
-/// end
-/// ```
-///
 /// The value is a list of date strings of the form "yyyy-MM-dd".
 ///
-/// - Note: This control does not support reading the intial value from the `value` attribute on the element.
+/// - Note: This control does not support reading the intial value from the `selection` attribute on the element.
 ///
 /// ## Attributes
+/// - ``selection``
 /// - ``start``
 /// - ``end``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, *)
-struct MultiDatePicker<R: RootRegistry>: View {
-    @LiveContext<R> private var context
-    @ObservedElement private var element
+@LiveElement
+struct MultiDatePicker<Root: RootRegistry>: View {
     /// The start date (inclusive) of the picker's range.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("start") private var start: Date?
+    private var start: Date?
+    
     /// The end date (**exclusive**) of the picker's range.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("end") private var end: Date?
-    @FormState(default: []) private var dates: Set<SelectedDate>
+    private var end: Date?
+    
+    @FormState(.init(name: "selection"), default: []) private var selection: Set<SelectedDate>
     
     private var dateComponents: Binding<Set<DateComponents>> {
         Binding {
-            Set(self.dates.map(\.dateComponents))
+            Set(self.selection.map(\.dateComponents))
         } set: {
-            self.dates = Set($0.map(SelectedDate.init(dateComponents:)))
+            self.selection = Set($0.map(SelectedDate.init(dateComponents:)))
         }
     }
     
@@ -61,19 +51,19 @@ struct MultiDatePicker<R: RootRegistry>: View {
         #if os(iOS)
         if let start, let end {
             SwiftUI.MultiDatePicker(selection: dateComponents, in: start..<end) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         } else if let start {
             SwiftUI.MultiDatePicker(selection: dateComponents, in: start...) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         } else if let end {
             SwiftUI.MultiDatePicker(selection: dateComponents, in: ..<end) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         } else {
             SwiftUI.MultiDatePicker(selection: dateComponents) {
-                context.buildChildren(of: element)
+                $liveElement.children()
             }
         }
         #endif

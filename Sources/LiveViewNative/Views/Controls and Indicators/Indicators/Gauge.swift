@@ -5,7 +5,6 @@
 //  Created by Carson Katri on 1/26/23.
 //
 
-#if !os(tvOS)
 import SwiftUI
 
 /// Displays a value within a range.
@@ -14,10 +13,10 @@ import SwiftUI
 ///
 /// ```html
 /// <Gauge value="0.5">
-///     <Text template={:label}>50%</Text>
-///     <Text template={:"current-value-label"}>0.5</Text>
-///     <Text template={:"minimum-value-label"}>0</Text>
-///     <Text template={:"maximum-value-label"}>1</Text>
+///     <Text template="label">50%</Text>
+///     <Text template="currentValueLabel">0.5</Text>
+///     <Text template="minimumValueLabel">0</Text>
+///     <Text template="maximumValueLabel">1</Text>
 /// </Gauge>
 /// ```
 ///
@@ -27,63 +26,50 @@ import SwiftUI
 /// * ``upperBound``
 ///
 /// ## Children
-/// * `current-value-label` - Describes the current value.
-/// * `minimum-value-label` - Describes the lowest possible value.
-/// * `maximum-value-label` - Describes the highest possible value.
-#if swift(>=5.8)
+/// * `currentValueLabel` - Describes the current value.
+/// * `minimumValueLabel` - Describes the lowest possible value.
+/// * `maximumValueLabel` - Describes the highest possible value.
 @_documentation(visibility: public)
-#endif
-struct Gauge<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Gauge<Root: RootRegistry>: View {
     /// The current value of the gauge.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("value") private var value: Double = 0
+    private var value: Double = 0
     /// The lowest possible value of the gauge.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("lower-bound") private var lowerBound: Double = 0
+    private var lowerBound: Double = 0
     /// The highest possible value of the gauge.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("upper-bound") private var upperBound: Double = 1
+    private var upperBound: Double = 1
     
     public var body: some View {
+        #if !os(tvOS)
         SwiftUI.Group {
-            if context.hasTemplate(of: element, withName: "current-value-label") ||
-               context.hasTemplate(of: element, withName: "minimum-value-label") ||
-               context.hasTemplate(of: element, withName: "maximum-value-label")
+            if $liveElement.hasTemplate("currentValueLabel") ||
+                $liveElement.hasTemplate("minimumValueLabel") ||
+                $liveElement.hasTemplate("maximumValueLabel")
             {
                 SwiftUI.Gauge(
                     value: self.value,
                     in: self.lowerBound...self.upperBound
                 ) {
-                    label
+                    $liveElement.children(in: "label", default: true)
                 } currentValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "current-value-label")
+                    $liveElement.children(in: "currentValueLabel")
                 } minimumValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "minimum-value-label")
+                    $liveElement.children(in: "minimumValueLabel")
                 } maximumValueLabel: {
-                    context.buildChildren(of: element, forTemplate: "maximum-value-label")
+                    $liveElement.children(in: "maximumValueLabel")
                 }
             } else {
                 SwiftUI.Gauge(
                     value: value,
                     in: lowerBound...upperBound
                 ) {
-                    label
+                    $liveElement.children(in: "label", default: true)
                 }
             }
         }
-    }
-    
-    private var label: some View {
-        context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
+        #endif
     }
 }
-#endif

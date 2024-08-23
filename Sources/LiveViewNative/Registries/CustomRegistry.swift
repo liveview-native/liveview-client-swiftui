@@ -7,19 +7,54 @@
 
 import SwiftUI
 import LiveViewNativeCore
+import LiveViewNativeStylesheet
+
+/// A container type for all `CustomRegistry` static members.
+///
+/// Use the ``Addon()`` macro to add an addon to this container type.
+///
+/// ```swift
+/// public extension Addons {
+///     @Addon
+///     struct MyAddon<Root: RootRegistry> {}
+/// }
+/// ```
+public enum Addons {}
+
+/// Registers a new addon within the ``Addons`` container.
+///
+/// Use this macro to create an addon for LiveView Native.
+/// Create a public extension on ``Addons``, and nest your addon struct within it.
+///
+/// ```swift
+/// public extension Addons {
+///     @Addon
+///     struct MyAddon<Root: RootRegistry> {
+///         // ...
+///     }
+/// }
+/// ```
+///
+/// This will allow developers to reference your addon with a static member from ``LiveView(_:configuration:addons:connecting:disconnected:reconnecting:error:)-8xlc4``
+///
+/// ```swift
+/// #LiveView(
+///     .localhost,
+///     addons: [.myAddon]
+/// )
+/// ```
+///
+/// Your addon type will be given a conformance to ``CustomRegistry``.
+/// See ``CustomRegistry`` for more information on creating your addon.
+@attached(peer, names: arbitrary)
+@attached(extension, conformances: CustomRegistry)
+public macro Addon() = #externalMacro(module: "LiveViewNativeMacros", type: "AddonMacro")
 
 /// A custom registry allows clients to include custom view types in the LiveView DOM.
 ///
-/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method. To customize the loading view, implement the ``loadingView(for:state:)-6jd3b`` method.
+/// To add a custom element or attribute, define an enum for the type alias for the tag/attribute name and implement the appropriate method.
 ///
-/// To use a single registry, implement the ``RootRegistry`` protocol and implement the inherited `CustomRegistry` requirements. If you want to combine multiple registries, see ``AggregateRegistry``.
-/// To use your registry, provide it as the generic parameter for the ``LiveSessionCoordinator`` you construct:
-///
-/// ```swift
-/// struct ContentView: View {
-///     @State var coordinator = LiveSessionCoordinator<MyRegistry>(...)
-/// }
-/// ```
+/// - Warning: You don't typically conform to this protocol yourself. The ``Addon()`` macro adds the conformance for you.
 ///
 /// ## Topics
 /// ### Custom Tags
@@ -27,12 +62,8 @@ import LiveViewNativeCore
 /// - ``lookup(_:element:context:)-5bvqg``
 /// - ``CustomView``
 /// ### Custom View Modifiers
-/// - ``ModifierType``
-/// - ``decodeModifier(_:from:context:)-4cqvs``
 /// - ``CustomModifier``
-/// ### Customizing the Loading View
-/// - ``loadingView(for:state:)-6jd3b``
-/// - ``LoadingView``
+/// - ``parseModifier(_:in:)-tj5n``
 /// ### Composing Registries
 /// - ``AggregateRegistry``
 /// - ``RootRegistry``
@@ -50,83 +81,111 @@ public protocol CustomRegistry<Root> {
     
     /// A type representing the tag names that this registry type can provide views for.
     ///
-    /// The tag name type must be `RawRepresentable` and its raw values must be strings. All raw value strings must be lowercased, otherwise the framework will not be able to construct your tag types from strings in the DOM.
+    /// The tag name type must be `RawRepresentable` and its raw values must be strings.
     ///
     /// Generally, this is an enum which declares variants for the supported tags:
     /// ```swift
-    /// struct MyRegistry: RootRegistry {
+    /// @Addon
+    /// struct MyAddon<Root: RootRegistry> {
     ///     enum TagName: String {
+    ///         /// The `<foo>` element
     ///         case foo
-    ///         case barBaz = "bar-baz"
+    ///         /// The `<BarBaz>` element
+    ///         case barBaz = "BarBaz"
     ///     }
     /// }
     /// ```
     ///
     /// This will default to the ``EmptyRegistry/None`` type if you don't support any custom tags.
+    ///
+    /// Implement the ``lookup(_:element:)-795ez`` function to render SwiftUI Views for your custom tags.
     associatedtype TagName: RawRepresentable = EmptyRegistry.None where TagName.RawValue == String
-    /// A type represnting the custom modifier types that this registry can handle.
+    /// The type of view this registry returns from the `lookup` method.
     ///
-    /// This type must be `RawRepresentable` and its raw values must be strings.
+    /// - Warning: Generally, implementors will use an opaque return type on their ``lookup(_:element:)-795ez`` implementations and this will be inferred automatically.
+    associatedtype CustomView: View = Never
+    /// The type of view modifier this registry can parse.
     ///
-    /// Generally, this is an enum which declares variants for the support attributes:
+    /// Use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser for a modifier from its `init` clauses.
+    ///
     /// ```swift
-    /// struct MyRegistry: RootRegistry {
-    ///     enum AttributeName: String {
-    ///         case foo
-    ///         case barBaz
+    /// @ParseableExpression
+    /// struct MyCustomModifier: ViewModifier {
+    ///     static let name = "myCustomModifier"
+    ///
+    ///     let size: CGSize
+    ///
+    ///     // use as `myCustomModifier(5, 10)`
+    ///     init(_ width: Double, _ height: Double) {
+    ///         size = .init(width: width, height: height)
+    ///     }
+    ///
+    ///     // use as `myCustomModifier(width: 5, height: 10)`
+    ///     init(width: Double, height: Double) {
+    ///         size = .init(width: width, height: height)
+    ///     }
+    ///
+    ///     func body(content: Content) -> some View {
+    ///         content.frame(width: size.width, height: size.height)
     ///     }
     /// }
     /// ```
     ///
-    /// This will default to the ``EmptyRegistry/None`` type if you don't support any custom modifiers.
-    associatedtype ModifierType: RawRepresentable = EmptyRegistry.None where ModifierType.RawValue == String
-    /// The type of view this registry returns from the `lookup` method.
+    /// To support multiple modifiers in a registry, use an enum type with the `OneOf` parser.
     ///
-    /// Generally, implementors will use an opaque return type on their ``lookup(_:element:context:)-5bvqg`` implementations and this will be inferred automatically.
-    associatedtype CustomView: View = Never
-    /// The type of view modifier this registry returns from the `decodeModifiers` method.
+    /// ```swift
+    /// enum CustomModifier: ViewModifier, ParseableModifierValue {
+    ///     case modifierA(MyModifierA)
+    ///     case modifierB(MyModifierB)
+    ///     case modifierC(MyModifierC)
     ///
-    /// Generally, implementors will use an opaque return type on their ``decodeModifier(_:from:context:)-4cqvs`` implementations and this will be inferred automatically.
-    associatedtype CustomModifier: ViewModifier = EmptyModifier
-    /// The type of view this registry produces for loading views.
+    ///     static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+    ///         OneOf {
+    ///             MyModifierA.parser(in: context).map(Self.modifierA)
+    ///             MyModifierB.parser(in: context).map(Self.modifierB)
+    ///             MyModifierC.parser(in: context).map(Self.modifierC)
+    ///         }
+    ///     }
     ///
-    /// Generally, implementors will use an opaque return type on their ``loadingView(for:state:)-6jd3b`` implementations and this will be inferred automatically.
-    associatedtype LoadingView: View = Never
+    ///     func body(content: Content) -> some View {
+    ///         switch content {
+    ///         case let .modifierA(modifier):
+    ///             content.modifier(modifier)
+    ///         case let .modifierB(modifier):
+    ///             content.modifier(modifier)
+    ///         case let .modifierC(modifier):
+    ///             content.modifier(modifier)
+    ///         }
+    ///     }
+    /// }
+    /// ```
+    associatedtype CustomModifier: ViewModifier & ParseableModifierValue = EmptyModifier
     /// The type of view this registry produces for error views.
     ///
-    /// Generally, implementors will use an opaque return type on their ``errorView(for:)`` implementations and this will be inferred automatically.
+    /// - Warning: Generally, implementors will use an opaque return type on their ``errorView(for:)`` implementations and this will be inferred automatically.
     associatedtype ErrorView: View = Never
     
     /// This method is called by LiveView Native when it needs to construct a custom view.
     ///
-    /// If your custom registry does not support any elements, you can set the `TagName` type alias to ``EmptyRegistry/None`` and omit this method.
+    /// - Note: If your custom registry does not support any elements, you can set the `TagName` type alias to ``EmptyRegistry/None`` and omit this method.
     ///
-    /// - Parameter name: The name of the tag.
+    /// When using an enum for ``TagName``, switch over the `name` to provide a different View for each tag.
+    ///
+    /// ```swift
+    /// func lookup(_ name: TagName, element: ElementNode) -> some View {
+    ///     switch name {
+    ///     case .foo:
+    ///         FooView()
+    ///     case .barBaz:
+    ///         BarBazView()
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// - Parameter name: The custom ``TagName`` that matched this element.
     /// - Parameter element: The element that a view should be created for.
-    /// - Parameter context: The live context in which the view is being created.
     @ViewBuilder
     static func lookup(_ name: TagName, element: ElementNode) -> CustomView
-    
-    /// This method is called by LiveView Native when it encounters a view modifier your registry has declared support for.
-    ///
-    /// If your custom registry does not support any custom modifiers, you can set the `ModifierType` type alias to ``EmptyRegistry/None`` and omit this method.
-    ///
-    /// - Parameter type: The type of the modifier.
-    /// - Parameter decoder: The decoder representing the JSON object of the modifier. Implement `Decodable` on your modifier type and call `MyModifier(from: decoder)` to use it.
-    /// - Parameter context: The live context in which the view is being built.
-    /// - Returns: A struct that implements the `SwiftUI.ViewModifier` protocol.
-    /// - Throws: If decoding the modifier fails.
-    @ViewModifierBuilder
-    static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> CustomModifier
-    
-    /// This method is called when it needs a view to display while connecting to the live view.
-    ///
-    /// If you do not implement this method, the framework provides a loading view which displays a simple text representation of the state.
-    ///
-    /// - Parameter url: The URL of the view being connected to.
-    /// - Parameter state: The current state of the coordinator. This method is never called with ``LiveSessionState/connected``.
-    @ViewBuilder
-    static func loadingView(for url: URL, state: LiveSessionState) -> LoadingView
     
     /// This method is called when it needs a view to display when an error occurs in the View hierarchy.
     ///
@@ -136,38 +195,30 @@ public protocol CustomRegistry<Root> {
     @ViewBuilder
     static func errorView(for error: Error) -> ErrorView
     
-    static func setBindingValue(_ value: Any, forKey key: String, in scope: String?) throws
-    static func bindingValue(forKey key: String, in scope: String?) -> Any?
-    static var globalBindings: Set<String> { get }
-    static func registerGlobalBinding(_ key: String)
-}
-
-extension CustomRegistry where LoadingView == Never {
-    /// A default  implementation that falls back to the default framework loading view.
-    public static func loadingView(for url: URL, state: LiveSessionState) -> Never {
-        fatalError()
-    }
+    /// Parse the ``CustomModifier`` from ``input``.
+    ///
+    /// - Note: It is recommended to use the ``LiveViewNativeStylesheet/ParseableExpression`` macro to generate a parser.
+    /// The generated parser can then be called inside this function.
+    static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> CustomModifier
 }
 
 extension CustomRegistry where ErrorView == Never {
-    /// A default  implementation that falls back to the default framework error view.
+    /// A default implementation that falls back to the default framework error view.
     public static func errorView(for error: Error) -> Never {
         fatalError()
     }
 }
 
 extension CustomRegistry {
-    public static func setBindingValue(_ value: Any, forKey key: String, in scope: String?) throws {
-        UserDefaults(suiteName: scope)?.setValue(value, forKey: key)
-    }
-    public static func bindingValue(forKey key: String, in scope: String?) -> Any? {
-        UserDefaults(suiteName: scope)?.value(forKey: key)
-    }
-    public static var globalBindings: Set<String> {
-        Set(UserDefaults.standard.stringArray(forKey: "_lvn_global_bindings") ?? [])
-    }
-    public static func registerGlobalBinding(_ key: String) {
-        UserDefaults.standard.setValue(Array<String>(globalBindings.union([key])), forKey: "_lvn_global_bindings")
+    /// A default implementation that uses ``CustomModifier/parser(in:)``.
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> CustomModifier {
+        try Self.CustomModifier.parser(in: context).parse(&input)
     }
 }
 
@@ -184,9 +235,6 @@ extension EmptyRegistry: RootRegistry {
             return nil
         }
     }
-    
-    public typealias TagName = None
-    public typealias ModifierType = None
 }
 extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Never {
     /// A default implementation that does not provide any custom elements. If you omit the ``CustomRegistry/TagName`` type alias, this implementation will be used.
@@ -194,13 +242,79 @@ extension CustomRegistry where TagName == EmptyRegistry.None, CustomView == Neve
         fatalError()
     }
 }
-extension CustomRegistry where ModifierType == EmptyRegistry.None, CustomModifier == EmptyModifier {
-    /// A default implementation that does not provide any custom modifiers. If you omit the ``CustomRegistry/ModifierType`` type alias, this implementation will be used.
-    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder) -> EmptyModifier {
-        EmptyModifier()
-    }
-}
 
 /// A root registry is a ``CustomRegistry`` type that can be used directly as the registry for a ``LiveSessionCoordinator``.
 public protocol RootRegistry: CustomRegistry where Root == Self {
+}
+
+public struct CustomModifierGroupParser<Output, P: Parser>: Parser where P.Input == Substring.UTF8View, P.Output == Output {
+    public let parser: P
+    
+    @inlinable
+    public init(
+        output outputType: Output.Type = Output.self,
+        @CustomModifierGroupParserBuilder<Substring.UTF8View, Output> _ build: () -> P
+    ) {
+        self.parser = build()
+    }
+    
+    public func parse(_ input: inout Substring.UTF8View) throws -> P.Output {
+        var copy = input
+        let (modifierName, metadata) = try Parse {
+            "{".utf8
+            Whitespace()
+            AtomLiteral()
+            Whitespace()
+            ",".utf8
+            Whitespace()
+            Metadata.parser()
+        }.parse(&copy)
+        
+        do {
+            return try parser.parse(&input)
+        } catch let error as ModifierParseError {
+            throw error
+        } catch {
+            throw ModifierParseError(error: .unknownModifier(modifierName), metadata: metadata)
+        }
+    }
+}
+
+@resultBuilder
+public struct CustomModifierGroupParserBuilder<Input, Output> {
+    public static func buildPartialBlock(first: some Parser<Input, Output>) -> some Parser<Input, Output> {
+        first
+    }
+    public static func buildPartialBlock(accumulated: some Parser<Input, Output>, next: some Parser<Input, Output>) -> some Parser<Input, Output> {
+        Accumulator(accumulated: accumulated, next: next)
+    }
+    
+    struct Accumulator<A: Parser, B: Parser>: Parser where A.Input == Input, B.Input == Input, A.Output == Output, B.Output == Output {
+        let accumulated: A
+        let next: B
+        
+        func parse(_ input: inout Input) throws -> Output {
+            let copy = input
+            let firstError: ModifierParseError?
+            do {
+                return try accumulated.parse(&input)
+            } catch let error as ModifierParseError {
+                firstError = error
+            } catch {
+                firstError = nil
+            }
+            input = copy
+            do {
+                return try next.parse(&input)
+            } catch let error as ModifierParseError {
+                throw error
+            } catch {
+                if let firstError {
+                    throw firstError
+                } else {
+                    throw error
+                }
+            }
+        }
+    }
 }

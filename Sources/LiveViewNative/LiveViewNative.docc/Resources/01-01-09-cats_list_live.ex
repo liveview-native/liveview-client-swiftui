@@ -24,11 +24,11 @@ defmodule LvnTutorialWeb.CatsListLive do
     {:ok, assign(socket, cats: @cats)}
   end
 
-  def render(%{platform_id: :web} = assigns) do
+  def render(%{format: :html} = assigns) do
     ~H""
   end
 
-  def render(%{platform_id: :swiftui} = assigns) do
+  def render(%{format: :swiftui} = assigns) do
     ~SWIFTUI"""
     <Text>Hello, world!</Text>
     """

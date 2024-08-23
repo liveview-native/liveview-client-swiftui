@@ -1,0 +1,65 @@
+name: Bug Report - Swift
+description: File a bug report for the Swift relate code
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees:
+  - carson-katri
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! Using this form will allow us to triage and respond to your issue more quickly. In some cases issues may not be device specific but to help us reproduce your problem giving us detailed information helps save time. If you are running from `main` please ensure you have updated your pacakges: `Packages` > `Update to Latest Package Versions` before reporting any issues.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
+    validations:
+      required: true
+  - type: input
+    id: lib_version
+    attributes:
+      label: Library Version
+      description: What version of our library is being used? Please include branch or commit ref if you aren't pinned to a tagged release version.
+    validations:
+      required: true
+  - type: input
+    id: xcode_version
+    attributes:
+      label: Xcode Version
+      description: What version of Xcode are you using? (Xcode -> About Xcode to get the version)
+    validations:
+      required: true
+  - type: input
+    id: swift_version
+    attributes:
+      label: Swift Version
+      description: What version of Swift are you using? (`swift --version`)
+  - type: dropdown
+    id: device_target
+    attributes:
+      label: On which device or simulator are you running into the problem?
+      multiple: true
+      options:
+        - iPhone
+        - iPad
+        - Apple Watch
+        - Apple TV
+        - MacOS
+    validations:
+      required: true
+  - type: input
+    id: target_os
+    attributes:
+      label: "Target Device Operating System Version"
+      description: What operating system version are you running for the target device?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell

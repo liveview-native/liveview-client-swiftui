@@ -12,7 +12,7 @@ import SwiftUI
 /// Any children of the field will be used as the label.
 ///
 /// ```html
-/// <TextField value-binding="first_name">
+/// <TextField text="first_name">
 ///     First Name
 /// </TextField>
 /// ```
@@ -20,24 +20,27 @@ import SwiftUI
 /// You can style the label by using elements inside.
 ///
 /// ```html
-/// <TextField value-binding="last_name">
-///     <Text font-weight="bold" font="caption">Last Name</Text>
+/// <TextField text="last_name">
+///     <Text fontWeight="bold" font="caption">Last Name</Text>
 /// </TextField>
 /// ```
 ///
 /// ### Input Configuration
 /// Use modifiers to configure how text is input.
 ///
+/// ```elixir
+/// "search-field" do
+///   autocorrectDisabled(true)
+///   textInputAutocapitalization(.words)
+///   keyboardType(.webSearch)
+///   submitLabel(.search)
+/// end
+/// ```
+///
 /// ```html
 /// <TextField
-///     value-binding="value"
-///     modifiers={
-///         @native
-///         |> autocorrection_disabled(disable: true)
-///         |> text_input_autocapitalization(autocapitalization: :words)
-///         |> keyboard_type(keyboard_type: :web_search)
-///         |> submit_label(submit_label: :search)
-///     }
+///     text="value"
+///     class="search-field"
 /// >
 ///     Enter Search Text
 /// </TextField>
@@ -49,16 +52,16 @@ import SwiftUI
 /// ```html
 /// <VStack>
 ///     <TextField
-///         value-binding="amount"
+///         text="amount"
 ///         format="currency"
-///         currency-code="usd"
-///         modifier={@native |> keyboard_type(keyboard_type: :decimal_pad)}
+///         currencyCode="usd"
+///         class="decimal-pad"
 ///     >
 ///         Enter Amount
 ///     </TextField>
 ///
 ///     <TextField
-///         value-binding="bank_address"
+///         text="bank_address"
 ///         axis="vertical"
 ///     >
 ///         Enter Bank Address
@@ -70,6 +73,7 @@ import SwiftUI
 /// To input private text, such as a password, use ``SecureField``.
 ///
 /// ## Attributes
+/// * ``text``
 /// * ``format``
 /// * ``currencyCode``
 /// * ``nameStyle``
@@ -82,24 +86,29 @@ import SwiftUI
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct TextField<R: RootRegistry>: TextFieldProtocol {
-    @ObservedElement var element: ElementNode
-    @LiveContext<R> var context
-    @FormState var value: String?
+@LiveElement
+struct TextField<Root: RootRegistry>: TextFieldProtocol {
+    @FormState("text", default: "") var text: String?
+    
+    @LiveElementIgnored
     @FocusState private var isFocused: Bool
     
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Event("phx-focus", type: "focus") var focusEvent
+    @Event(.init(name: "phx-focus"), type: "focus") var focusEvent
     
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Event("phx-blur", type: "blur") var blurEvent
+    @Event(.init(name: "phx-blur"), type: "blur") var blurEvent
+    
+    /// The axis to scroll when the content doesn't fit.
+    ///
+    /// Possible values:
+    /// * `horizontal`
+    /// * `vertical`
+    var axis: Axis = .horizontal
+    
+    /// Additional guidance on what to enter.
+    var prompt: String?
 
     /// Possible values:
     /// * `date-time`
@@ -109,18 +118,14 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     /// * `percent`
     /// * `currency`
     /// * `name`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("format") private var format: String?
+    private var format: String?
     
     /// The currency code for the locale.
     ///
     /// Example currency codes include `USD`, `EUR`, and `JPY`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("currency-code") private var currencyCode: String?
+    private var currencyCode: String?
     
     /// A type used to format a person’s name with a style appropriate for the given locale.
     /// 
@@ -129,43 +134,41 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     /// * `medium`
     /// * `long`
     /// * `abbreviated`
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute(
-        "name-style",
-        transform: {
-            switch $0?.value {
-            case "short":
-                return .short
-            case "medium":
-                return .medium
-            case "long":
-                return .long
-            case "abbreviated":
-                return .abbreviated
-            default:
-                return nil
-            }
-        }
-    ) private var nameStyle: PersonNameComponents.FormatStyle.Style?
+    private var nameStyle: PersonNameComponents.FormatStyle.Style?
     
     var body: some View {
         field
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .preference(key: _ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+            .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
+    }
+    
+    @MainActor
+    func handleFocus(_ isFocused: Bool) {
+        if isFocused {
+            focusEvent(value:
+                $liveElement.element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            )
+        } else {
+            blurEvent(value:
+                $liveElement.element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            )
+            Task { try await _text.handleBlur() }
+        }
     }
     
     @ViewBuilder
     private var field: some View {
         if let format {
             switch format {
-            case "date-time":
+            case "dateTime":
                 SwiftUI.TextField(
                     value: valueBinding(format: .dateTime),
                     format: .dateTime,
-                    prompt: prompt
+                    prompt: prompt.flatMap(SwiftUI.Text.init)
                 ) {
                     label
                 }
@@ -173,7 +176,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                 SwiftUI.TextField(
                     value: valueBinding(format: .url),
                     format: .url,
-                    prompt: prompt
+                    prompt: prompt.flatMap(SwiftUI.Text.init)
                 ) {
                     label
                 }
@@ -181,7 +184,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                 SwiftUI.TextField(
                     value: valueBinding(format: .iso8601),
                     format: .iso8601,
-                    prompt: prompt
+                    prompt: prompt.flatMap(SwiftUI.Text.init)
                 ) {
                     label
                 }
@@ -189,7 +192,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                 SwiftUI.TextField(
                     value: valueBinding(format: .number),
                     format: .number,
-                    prompt: prompt
+                    prompt: prompt.flatMap(SwiftUI.Text.init)
                 ) {
                     label
                 }
@@ -197,7 +200,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                 SwiftUI.TextField(
                     value: valueBinding(format: .percent),
                     format: .percent,
-                    prompt: prompt
+                    prompt: prompt.flatMap(SwiftUI.Text.init)
                 ) {
                     label
                 }
@@ -206,14 +209,14 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                     SwiftUI.TextField(
                         value: valueBinding(format: .currency(code: currencyCode)),
                         format: .currency(code: currencyCode),
-                        prompt: prompt
+                        prompt: prompt.flatMap(SwiftUI.Text.init)
                     ) {
                         label
                     }
                 } else {
                     SwiftUI.TextField(
                         text: textBinding,
-                        prompt: prompt,
+                        prompt: prompt.flatMap(SwiftUI.Text.init),
                         axis: axis
                     ) {
                         label
@@ -224,14 +227,14 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
                     SwiftUI.TextField(
                         value: valueBinding(format: .name(style: nameStyle)),
                         format: .name(style: nameStyle),
-                        prompt: prompt
+                        prompt: prompt.flatMap(SwiftUI.Text.init)
                     ) {
                         label
                     }
                 } else {
                     SwiftUI.TextField(
                         text: textBinding,
-                        prompt: prompt,
+                        prompt: prompt.flatMap(SwiftUI.Text.init),
                         axis: axis
                     ) {
                         label
@@ -240,7 +243,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
             default:
                 SwiftUI.TextField(
                     text: textBinding,
-                    prompt: prompt,
+                    prompt: prompt.flatMap(SwiftUI.Text.init),
                     axis: axis
                 ) {
                     label
@@ -249,7 +252,7 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
         } else {
             SwiftUI.TextField(
                 text: textBinding,
-                prompt: prompt,
+                prompt: prompt.flatMap(SwiftUI.Text.init),
                 axis: axis
             ) {
                 label
@@ -258,6 +261,6 @@ struct TextField<R: RootRegistry>: TextFieldProtocol {
     }
     
     var label: some View {
-        context.buildChildren(of: element)
+        $liveElement.children()
     }
 }

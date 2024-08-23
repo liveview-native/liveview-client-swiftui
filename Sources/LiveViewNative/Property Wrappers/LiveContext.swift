@@ -23,8 +23,18 @@ import LiveViewNativeCore
 @propertyWrapper
 public struct LiveContext<R: RootRegistry>: DynamicProperty {
     @Environment(\.anyLiveContextStorage) private var anyStorage
+    
+    @Environment(\.gestureState) private var environmentGestureState
+    internal var overrideGestureState: GestureState<[String:Any]>?
+    /// The `GestureState` value in the environment.
+    /// Uses the ``overrideGestureState`` if present.
+    var gestureState: GestureState<[String:Any]> {
+        overrideGestureState ?? environmentGestureState
+    }
+    
+    internal let overrideStorage: LiveContextStorage<R>?
     var storage: LiveContextStorage<R> {
-        anyStorage as! LiveContextStorage<R>
+        overrideStorage ?? (anyStorage as! LiveContextStorage<R>)
     }
     
     /// The coordinator corresponding to the live view in which thie view is being constructed.
@@ -42,6 +52,19 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
     }
     
     public init() {
+        self.overrideStorage = nil
+    }
+    
+    init(storage: LiveContextStorage<R>) {
+        self.overrideStorage = storage
+    }
+    
+    /// Add an ``overrideGestureState`` to the context.
+    /// This will take precedence over the environment value.
+    internal func withGestureState(_ state: GestureState<[String:Any]>) -> Self {
+        var copy = self
+        copy.overrideGestureState = state
+        return copy
     }
     
     /// Builds a view representing the given element in the current context.
@@ -80,12 +103,27 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         }
     }
     
+    private static func hasTemplateAttribute(_ child: NodeChildrenSequence.Element) -> Bool {
+        if case let .element(element) = child.data,
+           element.attributes.contains(where: { $0.name == "template" })
+        {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     /// Checks whether the element has any children with the given tag.
     public func hasTemplate(
         of element: ElementNode,
         withName name: String
     ) -> Bool {
         element.children().contains(where: Self.isTemplateElement(name))
+    }
+    
+    /// Checks whether the element has any children without a `template` attribute.
+    public func hasDefaultSlot(of element: ElementNode) -> Bool {
+        element.children().contains(where: { !Self.hasTemplateAttribute($0) })
     }
     
     /// Builds a view representing only the children of the element which have the given template attribute.
@@ -124,6 +162,22 @@ public struct LiveContext<R: RootRegistry>: DynamicProperty {
         } else {
             return coordinator.builder.fromNodes(namedSlotChildren, context: storage)
         }
+    }
+    
+    public func hasTemplate(
+        of element: ElementNode,
+        withName name: String,
+        value: String
+    ) -> Bool {
+        hasTemplate(of: element, withName: "\(name).\(value)")
+    }
+    
+    public func buildChildren(
+        of element: ElementNode,
+        forTemplate template: String,
+        withValue value: String
+    ) -> some View {
+        buildChildren(of: element, forTemplate: "\(template).\(value)")
     }
     
     /// Get the children of an element with the correct template attribute.

@@ -53,7 +53,7 @@ public enum LiveConnectionError: Error, LocalizedError {
             case .document:
                 return "document"
             case .csrfToken:
-                return #"<meta name="csrf-token">"#
+                return #"<.csrf_token />"#
             case .phxMain:
                 return #"<div data-phx-main="...">"#
             }

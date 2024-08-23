@@ -7,6 +7,9 @@
 
 import SwiftUI
 import Combine
+import OSLog
+
+private let logger = Logger(subsystem: "LiveViewNative", category: "NavigationLink")
 
 /// A control users can tap to navigate to another live view.
 ///
@@ -21,35 +24,30 @@ import Combine
 /// ## Attributes
 /// - ``destination``
 /// - ``disabled``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, *)
-struct NavigationLink<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct NavigationLink<Root: RootRegistry>: View {
     /// The URL of the destination live view, relative to the current live view's URL.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("destination") private var destination: String
-    /// Whether the link is disabled.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("disabled") private var disabled: Bool
+    private var destination: String?
     
     @ViewBuilder
     public var body: some View {
-        SwiftUI.NavigationLink(
-            value: LiveNavigationEntry(
-                url: URL(string: destination, relativeTo: context.coordinator.url)!.appending(path: "").absoluteURL,
-                coordinator: context.coordinator
-            )
-        ) {
-            context.buildChildren(of: element)
+        if let url = destination.flatMap({ URL(string: $0, relativeTo: $liveElement.context.coordinator.url) })?.appending(path: "").absoluteURL {
+            SwiftUI.NavigationLink(
+                value: LiveNavigationEntry(
+                    url: url,
+                    coordinator: LiveViewCoordinator(session: $liveElement.context.coordinator.session, url: url)
+                )
+            ) {
+                $liveElement.children()
+            }
+        } else {
+            $liveElement.children()
+                .task {
+                    logger.error("Missing or invalid `destination` on `<NavigationLink>\($liveElement.element.innerText())</NavigationLink>`")
+                }
         }
-        .disabled(disabled)
     }
 }

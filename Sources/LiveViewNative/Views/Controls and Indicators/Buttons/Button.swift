@@ -22,42 +22,38 @@ import SwiftUI
 /// ```
 /// 
 /// ## Attributes
-/// * ``disabled``
-/// 
+/// * ``role``
+///
 /// ## Events
 /// * ``click``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @_spi(LiveForm)
-public struct Button<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
+@LiveElement
+public struct Button<Root: RootRegistry>: View {
     // used internaly by PhxSubmitButton
     private let action: (() -> Void)?
     
     /// Event triggered when tapped.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-click", type: "click") private var click
     
-    /// Boolean attribute that indicates whether the button is tappable.
-    #if swift(>=5.8)
+    /// The semantic role of the button.
+    ///
+    /// Possible values:
+    /// * `destructive`
+    /// * `cancel`
     @_documentation(visibility: public)
-    #endif
-    @Attribute("disabled") private var disabled: Bool
+    private var role: ButtonRole?
     
     @_spi(LiveForm) public init(action: (() -> Void)? = nil) {
         self.action = action
     }
     
     public var body: some View {
-        SwiftUI.Button(action: self.handleClick) {
-            context.buildChildren(of: element)
+        SwiftUI.Button(role: role, action: self.handleClick) {
+            $liveElement.children()
         }
-        .disabled(disabled)
-        .preference(key: _ProvidedBindingsKey.self, value: ["phx-click"])
+        .preference(key: _ProvidedBindingsKey.self, value: [.click])
     }
     
     private func handleClick() {
@@ -65,6 +61,6 @@ public struct Button<R: RootRegistry>: View {
             action()
             return
         }
-        click(value: element.buildPhxValuePayload()) {}
+        click(value: $liveElement.element.buildPhxValuePayload()) {}
     }
 }

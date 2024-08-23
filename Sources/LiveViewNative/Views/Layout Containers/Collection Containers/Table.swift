@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// A container organized by rows and columns.
 ///
@@ -43,10 +44,10 @@ import SwiftUI
 /// ```
 ///
 /// ### Sorting Tables
-/// Use the ``sortOrder`` binding to handle changes in the sorting options.
+/// Use the ``sortOrder`` attribute to handle changes in the sorting options.
 ///
 /// ```html
-/// <Table sort-order="sports_sort_order">
+/// <Table sortOrder={@sports_sort_order} phx-change="sort-changed">
 ///     ...
 ///     <Group template={:rows}>
 ///         <%= for sport <- Enum.sort_by(
@@ -64,25 +65,13 @@ import SwiftUI
 /// </Table>
 /// ```
 ///
-/// ```elixir
-/// defmodule MyAppWeb.SportsLive do
-///   native_binding :sports_sort_order, List, []
-/// end
-/// ```
-///
 /// ### Selecting Rows
-/// Use the ``selection`` binding to synchronize the selected row(s) with the LiveView.
+/// Use the ``selection`` attribute to synchronize the selected row(s) with the LiveView.
 ///
 /// ```html
-/// <Table selection="selected_sports">
+/// <Table selection={@selected_sports} phx-change="selection-changed">
 ///     ...
 /// </Table>
-/// ```
-///
-/// ```elixir
-/// defmodule MyAppWeb.SportsLive do
-///   native_binding :selected_sports, List, []
-/// end
 /// ```
 ///
 /// ## Bindings
@@ -99,58 +88,38 @@ import SwiftUI
 ///
 /// ### Selecting Rows
 /// * ``selection``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
-struct Table<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
+@LiveElement
+struct Table<Root: RootRegistry>: View {
+    @LiveElementIgnored
+    @Environment(\.coordinatorEnvironment)
+    private var coordinatorEnvironment
     
     /// Synchronizes the selected rows with the server.
     ///
-    /// To allow an arbitrary number of rows to be selected, use the `List` type for the binding.
+    /// To allow an arbitrary number of rows to be selected, provide a `List` value.
     /// Use an empty list as the default value to start with no selection.
     ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///   native_binding :selected_sports, List, []
-    /// end
-    /// ```
-    ///
-    /// To only allow a single selection, use the `String` type for the binding.
+    /// To only allow a single selection, use the `String` type for the value.
     /// Use `nil` as the default value to start with no selection.
-    ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///   native_binding :selected_sport, String, nil
-    /// end
-    /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @LiveBinding(attribute: "selection") private var selection = Selection.none
+    @ChangeTracked(attribute: "selection") private var selection = Selection.none
     /// Synchronizes the columns to sort by with the server.
     ///
     /// The order is serialized as a list of maps with an `id` and `order` property.
     ///
-    /// ```json
+    /// ```elixir
     /// [
-    ///     {
-    ///         "id": string,
-    ///         "order": boolean
-    ///     },
+    ///     %{ id: <string>, order: <boolean> },
     ///     ...
     /// ]
     /// ```
     ///
     /// The value of `id` matches the `id` attribute of the `<TableColumn>`, or its index if there is no `id` attribute.
     /// The value of `order` matches [`Foundation.SortOrder`](https://developer.apple.com/documentation/Foundation/SortOrder).
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @LiveBinding(attribute: "sort-order") private var sortOrder = [TableColumnSort]()
+    @ChangeTracked(attribute: "sortOrder") private var sortOrder = TableColumnSortContainer(value: [])
     
     public var body: some View {
         #if os(iOS) || os(macOS)
@@ -165,29 +134,29 @@ struct Table<R: RootRegistry>: View {
     private func table(rows: [TableRow], columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>]) -> some View {
         switch columns.count {
         case 1:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
             }
         case 2:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
             }
         case 3:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
             }
         case 4:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
                 columns[3]
             }
         case 5:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -195,7 +164,7 @@ struct Table<R: RootRegistry>: View {
                 columns[4]
             }
         case 6:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -204,7 +173,7 @@ struct Table<R: RootRegistry>: View {
                 columns[5]
             }
         case 7:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -214,7 +183,7 @@ struct Table<R: RootRegistry>: View {
                 columns[6]
             }
         case 8:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -225,7 +194,7 @@ struct Table<R: RootRegistry>: View {
                 columns[7]
             }
         case 9:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -237,7 +206,7 @@ struct Table<R: RootRegistry>: View {
                 columns[8]
             }
         case 10:
-            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder) {
+            SwiftUI.Table(rows: rows, selection: $selection, sortOrder: $sortOrder.value) {
                 columns[0]
                 columns[1]
                 columns[2]
@@ -250,19 +219,21 @@ struct Table<R: RootRegistry>: View {
                 columns[9]
             }
         default:
-            ErrorView<R>(TableError.badColumnCount(columns.count))
+            AnyErrorView<Root>(TableError.badColumnCount(columns.count))
         }
     }
     
     private var rows: [TableRow] {
-        element.elementChildren()
+        $liveElement.childNodes
+            .compactMap { $0.asElement() }
             .filter { $0.attributeValue(for: "template") == "rows" }
             .flatMap { $0.elementChildren() }
             .compactMap { $0.tag == "TableRow" && $0.attribute(named: "id") != nil ? TableRow(element: $0) : nil }
     }
     
     private var columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>] {
-        let columnElements = element.elementChildren()
+        let columnElements = $liveElement.childNodes
+            .compactMap { $0.asElement() }
             .filter { $0.attributeValue(for: "template") == "columns" }
             .flatMap { $0.elementChildren() }
             .filter { $0.tag == "TableColumn" }
@@ -270,18 +241,18 @@ struct Table<R: RootRegistry>: View {
             TableColumn(item.element.innerText(), sortUsing: TableColumnSort(id: item.element.attributeValue(for: "id") ?? String(item.offset), order: .forward)) { (row: TableRow) in
                 let rowChildren = row.element.children()
                 if rowChildren.indices.contains(item.offset) {
-                    context.coordinator.builder.fromNodes(
+                    $liveElement.context.coordinator.builder.fromNodes(
                         [rowChildren[item.offset]],
-                        context: context.storage
+                        context: $liveElement.context.storage
                     )
                     .environment(\.coordinatorEnvironment, coordinatorEnvironment)
                 }
             }
             .width(item.element.attributeValue(for: "width").flatMap(Double.init(_:)).flatMap(CGFloat.init))
             .width(
-                min: item.element.attributeValue(for: "min-width").flatMap(Double.init(_:)).flatMap(CGFloat.init),
-                ideal: item.element.attributeValue(for: "ideal-width").flatMap(Double.init(_:)).flatMap(CGFloat.init),
-                max: item.element.attributeValue(for: "max-width").flatMap(Double.init(_:)).flatMap(CGFloat.init)
+                min: item.element.attributeValue(for: "minWidth").flatMap(Double.init(_:)).flatMap(CGFloat.init),
+                ideal: item.element.attributeValue(for: "idealWidth").flatMap(Double.init(_:)).flatMap(CGFloat.init),
+                max: item.element.attributeValue(for: "maxWidth").flatMap(Double.init(_:)).flatMap(CGFloat.init)
             )
         }
     }
@@ -318,6 +289,20 @@ fileprivate struct TableColumnSort: SortComparator, Codable, Equatable {
     
     func compare(_ lhs: TableRow, _ rhs: TableRow) -> ComparisonResult {
         .orderedSame
+    }
+}
+
+fileprivate struct TableColumnSortContainer: Codable, Equatable, AttributeDecodable {
+    var value: [TableColumnSort]
+    
+    init(value: [TableColumnSort]) {
+        self.value = value
+    }
+    
+    init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value
+        else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        self.value = try JSONDecoder().decode([TableColumnSort].self, from: Data(value.utf8))
     }
 }
 

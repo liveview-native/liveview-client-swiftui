@@ -8,32 +8,38 @@
 import SwiftUI
 import LiveViewNativeCore
 
+public enum _EventBinding: String {
+    case windowFocus = "phx-window-focus"
+    case windowBlur = "phx-window-blur"
+    case focus = "phx-focus"
+    case blur = "phx-blur"
+    case click = "phx-click"
+}
+
 extension BuiltinRegistry {
     @ViewBuilder
     static func applyBinding(
-        _ binding: AttributeName,
+        _ binding: _EventBinding,
         event: String,
         value: Payload,
         to view: some View,
         element: ElementNode
     ) -> some View {
         ProvidedBindingsReader(
-            binding: binding.rawValue,
+            binding: binding,
             content: view
         ) {
             switch binding {
-            case "phx-window-focus":
+            case .windowFocus:
                 ScenePhaseObserver(content: view, target: .active, type: "focus", event: event, value: value)
-            case "phx-window-blur":
+            case .windowBlur:
                 ScenePhaseObserver(content: view, target: .background, type: "blur", event: event, value: value)
-            case "phx-focus":
+            case .focus:
                 FocusObserver(content: view, target: true, type: "focus", event: event, value: value)
-            case "phx-blur":
+            case .blur:
                 FocusObserver(content: view, target: false, type: "blur", event: event, value: value)
-            case "phx-click":
+            case .click:
                 TapGestureView(content: view, type: "click", event: event, value: value)
-            default:
-                view
             }
         }
     }
@@ -41,14 +47,17 @@ extension BuiltinRegistry {
 
 /// A preference key that specifies what bindings the View handles internally.
 public enum _ProvidedBindingsKey: PreferenceKey {
-    public static var defaultValue: Set<String> { [] }
-    public static func reduce(value: inout Set<String>, nextValue: () -> Set<String>) {
+    public static var defaultValue: Set<_EventBinding> { [] }
+    public static func reduce(
+        value: inout Set<_EventBinding>,
+        nextValue: () -> Set<_EventBinding>
+    ) {
         value = nextValue()
     }
 }
 
 fileprivate struct ProvidedBindingsReader<Content: View, ApplyBinding: View>: View {
-    let binding: String
+    let binding: _EventBinding
     let content: Content
     @ViewBuilder let applyBinding: () -> ApplyBinding
     @State private var providesBinding: Bool = false

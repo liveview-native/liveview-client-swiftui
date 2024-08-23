@@ -12,30 +12,21 @@ import SwiftUI
 /// Add elements within the toggle to provide a label.
 ///
 /// ```html
-/// <Toggle value-binding="is_on">
+/// <Toggle isOn={@lights_on} phx-change="toggled-lights">
 ///     Lights On
 /// </Toggle>
 /// ```
 ///
-/// > Booleans in Elixir are atoms, so bindings can be declared with
-/// > ```elixir
-/// > native_binding :is_on, Atom, false
-/// > ```
-///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct Toggle<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
-    @FormState(default: false) var value: Bool
+@LiveElement
+struct Toggle<Root: RootRegistry>: View {
+    @FormState("isOn", default: false) var value: Bool
     
     public var body: some View {
         SwiftUI.Toggle(isOn: $value) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

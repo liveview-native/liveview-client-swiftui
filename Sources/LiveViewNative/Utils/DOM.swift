@@ -23,14 +23,16 @@ import LiveViewNativeCore
 /// - ``depthFirstChildren()``
 /// - ``elementChildren()``
 /// - ``innerText()``
-public struct ElementNode {
-    let node: Node
-    let data: ElementData
+public struct ElementNode: Identifiable {
+    public let node: Node
+    public let data: ElementData
     
     init(node: Node, data: ElementData) {
         self.node = node
         self.data = data
     }
+    
+    public var id: NodeRef { node.id }
     
     /// A sequence representing this element's direct children.
     public func children() -> NodeChildrenSequence { node.children() }
@@ -69,7 +71,7 @@ public struct ElementNode {
     ///
     /// The attribute is decoded to the type ``T``, which must conform to the ``AttributeDecodable`` protocol.
     public func attributeValue<T: AttributeDecodable>(_: T.Type, for name: AttributeName) throws -> T {
-        try T.init(from: attribute(named: name))
+        try T.init(from: attribute(named: name), on: self)
     }
     
     /// Checks for a [boolean attribute](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes).
@@ -80,7 +82,9 @@ public struct ElementNode {
     /// > The strings `"true"`/`"false"` are ignored, and only the presence of the attribute is considered.
     /// > A value of `"false"` would still return `true`.
     public func attributeBoolean(for name: AttributeName) -> Bool {
-        attribute(named: name) != nil
+        guard let attribute = attribute(named: name)
+        else { return false }
+        return attribute.value != "false"
     }
     
     /// The text of this element.
@@ -110,7 +114,7 @@ public struct ElementNode {
 }
 
 extension Node {
-    func asElement() -> ElementNode? {
+    public func asElement() -> ElementNode? {
         if case .element(let data) = self.data {
             return ElementNode(node: self, data: data)
         } else {

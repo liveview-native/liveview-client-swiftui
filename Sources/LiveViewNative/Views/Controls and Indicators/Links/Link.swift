@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import OSLog
+
+private let logger = Logger(subsystem: "LiveViewNative", category: "Link")
 
 /// Opens a URL when tapped.
 ///
@@ -13,30 +16,31 @@ import SwiftUI
 ///
 /// ```html
 /// <Link destination="https://native.live">
-///     Go to <Text modifiers={font_weight(:bold)}>LiveView Native</Text>
+///     Go to <Text class="bold">LiveView Native</Text>
 /// </Link>
 /// ```
 ///
 /// ## Attributes
 /// * ``destination``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct Link<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Link<Root: RootRegistry>: View {
     /// A valid URL to open when tapped.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("destination", transform: { $0?.value.flatMap(URL.init(string:)) }) private var destination: URL?
+    private var destination: String?
     
     public var body: some View {
-        SwiftUI.Link(
-            destination: destination!
-        ) {
-            context.buildChildren(of: element)
+        if let destination = destination.flatMap({ URL(string: $0, relativeTo: $liveElement.context.coordinator.url) })?.appending(path: "").absoluteURL {
+            SwiftUI.Link(
+                destination: destination
+            ) {
+                $liveElement.children()
+            }
+        } else {
+            $liveElement.children()
+                .task {
+                    logger.error("Missing or invalid `destination` on `<Link>\($liveElement.element.innerText())</Link>`")
+                }
         }
     }
 }

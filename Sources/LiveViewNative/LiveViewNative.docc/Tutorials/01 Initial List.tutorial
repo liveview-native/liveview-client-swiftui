@@ -41,7 +41,7 @@
            }
                
            @Step {
-               Next, add the `live_view_native` and `live_view_native_swift_ui` libraries as dependencies. 
+               Next, add the `live_view_native` and `live_view_native_swiftui` libraries as dependencies. 
                
                These packages provide supporting functions for applying SwiftUI modifiers to elements from within HEEx templates.
                
@@ -140,7 +140,7 @@
             }
             
             @Step {
-                Add a new Swift package dependency by selecting File -> Add Packages…, and in the search field, enter `https://github.com/liveviewnative/liveview-client-swiftui`, and click Add Package.
+                Add a new Swift package dependency by selecting File -> Add Packages…, and in the search field, enter `https://github.com/liveview-native/liveview-client-swiftui`, and click Add Package.
                 
                 Xcode may prompt you to sign in with GitHub. If so, follow its instructions to login and create an access token.
                 

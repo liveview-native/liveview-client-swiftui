@@ -7,8 +7,8 @@
 
 import Foundation
 import SwiftUI
+import LiveViewNativeStylesheet
 
-#if swift(>=5.9)
 /// A macro that combines multiple registries together.
 ///
 /// ```swift
@@ -22,7 +22,6 @@ import SwiftUI
 /// ```
 @freestanding(declaration, names: named(Registries))
 public macro Registries() = #externalMacro(module: "LiveViewNativeMacros", type: "RegistriesMacro")
-#endif
 
 /// An aggregate registry combines multiple other registries together, allowing you to use tags/modifiers declared by any of them.
 ///
@@ -72,13 +71,6 @@ public macro Registries() = #externalMacro(module: "LiveViewNativeMacros", type:
 /// }
 /// ```
 ///
-/// ### Loading Views
-/// Whereas tags and modifiers can be composed from multiple registry types without conflict, only one loading view implementation can be used.
-/// The aggregate registry will use the loading view from the first concrete registry type that is provided.
-/// In the above example, `AppRegistries` would use `MyRegistry`'s loading view by default.
-///
-/// If you don't want this behavior, you can override ``CustomRegistry/loadingView(for:state:)-6jd3b`` on your aggregate registry and provide another view.
-///
 /// ## Topics
 /// ### Protocol Requirements
 /// - ``Registries``
@@ -97,17 +89,16 @@ extension AggregateRegistry {
     public static func lookup(_ name: Registries.TagName, element: ElementNode) -> some View {
         return Registries.lookup(name, element: element)
     }
-
-    public static func decodeModifier(_ type: Registries.ModifierType, from decoder: Decoder) throws -> some ViewModifier {
-        return try Registries.decodeModifier(type, from: decoder)
-    }
-
-    public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
-        return Registries.loadingView(for: url, state: state)
-    }
     
     public static func errorView(for error: Error) -> some View {
         return Registries.errorView(for: error)
+    }
+    
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> some (ViewModifier & ParseableModifierValue) {
+        return try Registries.parseModifier(&input, in: context)
     }
 }
 
@@ -136,8 +127,75 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
     }
 }
 
+public enum _EitherCustomModifier<First: CustomRegistry, Second: CustomRegistry>: ViewModifier & ParseableModifierValue {
+    case first(First.CustomModifier)
+    case second(Second.CustomModifier)
+    
+    public static func parser(in context: ParseableModifierContext) -> _ParserType {
+        _ParserType(context: context)
+    }
+    
+    public struct _ParserType: Parser {
+        let context: ParseableModifierContext
+        
+        public func parse(_ input: inout Substring.UTF8View) throws -> _EitherCustomModifier<First, Second> {
+            let copy = input
+            let firstError: ModifierParseError?
+            do {
+                return .first(try First.parseModifier(&input, in: context))
+            } catch let error as ModifierParseError {
+                firstError = error
+            } catch {
+                firstError = nil
+            }
+            
+            // backtrack and try second
+            input = copy
+            do {
+                return .second(try Second.parseModifier(&input, in: context))
+            } catch let error as ModifierParseError {
+                if let firstError {
+                    let firstFailures = if case let .multiRegistryFailure(failures) = firstError.error {
+                        failures
+                    } else {
+                        [(First.self, firstError.error)]
+                    }
+                    let secondFailures = if case let .multiRegistryFailure(failures) = error.error {
+                        failures
+                    } else {
+                        [(Second.self, error.error)]
+                    }
+                    throw ModifierParseError(
+                        error: .multiRegistryFailure(
+                            firstFailures + secondFailures
+                        ),
+                        metadata: error.metadata
+                    )
+                } else {
+                    throw error
+                }
+            } catch {
+                if let firstError {
+                    throw firstError
+                } else {
+                    throw error
+                }
+            }
+        }
+    }
+    
+    public func body(content: Content) -> some View {
+        switch self {
+        case .first(let first):
+            content.modifier(first)
+        case .second(let second):
+            content.modifier(second)
+        }
+    }
+}
+
 /// A registry implementation that combines two registries. Use the `Registry2`/etc. typealiases rather than using this type directly.
-@frozen public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: CustomRegistry where First.Root == Second.Root {
+public struct _MultiRegistry<First: CustomRegistry, Second: CustomRegistry>: CustomRegistry where First.Root == Second.Root {
     public typealias Root = First.Root
     
     public typealias TagName = _EitherRawString<First.TagName, Second.TagName>
@@ -150,24 +208,16 @@ public enum _EitherRawString<First: RawRepresentable<String>, Second: RawReprese
             Second.lookup(name, element: element)
         }
     }
-
-    public typealias ModifierType = _EitherRawString<First.ModifierType, Second.ModifierType>
-
-    public static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
-        switch type {
-        case .first(let type):
-            try First.decodeModifier(type, from: decoder)
-        case .second(let type):
-            try Second.decodeModifier(type, from: decoder)
-        }
-    }
-
-    public static func loadingView(for url: URL, state: LiveSessionState) -> some View {
-        return First.loadingView(for: url, state: state)
-    }
     
     public static func errorView(for error: Error) -> some View {
         return First.errorView(for: error)
+    }
+    
+    public static func parseModifier(
+        _ input: inout Substring.UTF8View,
+        in context: ParseableModifierContext
+    ) throws -> _EitherCustomModifier<First, Second> {
+        return try _EitherCustomModifier<First, Second>.parser(in: context).parse(&input)
     }
 }
 
@@ -183,3 +233,5 @@ public typealias Registry3<T0: CustomRegistry, T1: CustomRegistry, T2: CustomReg
 public typealias Registry4<T0: CustomRegistry, T1: CustomRegistry, T2: CustomRegistry, T3: CustomRegistry>
     = _MultiRegistry<_MultiRegistry<T0, T1>, _MultiRegistry<T2, T3>>
     where T0.Root == T1.Root, T0.Root == T2.Root, T0.Root == T3.Root
+
+public struct _SpecializedEmptyRegistry<Root: RootRegistry>: CustomRegistry {}

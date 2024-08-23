@@ -38,7 +38,7 @@ extension RegistriesMacro: DeclarationMacro {
     ) throws -> [DeclSyntax]
         where Node: FreestandingMacroExpansionSyntax, Context: MacroExpansionContext
     {
-        guard let registries = node.genericArguments?.arguments
+        guard let registries = node.genericArgumentClause?.arguments
         else { throw RegistriesMacroError.missingArguments }
         
         switch registries.count {
@@ -47,19 +47,19 @@ extension RegistriesMacro: DeclarationMacro {
         case 1:
             return ["typealias Registries = \(registries.first!)"]
         default:
-            func multiRegistry(_ registries: GenericArgumentListSyntax) -> SimpleTypeIdentifierSyntax {
+            func multiRegistry(_ registries: GenericArgumentListSyntax) -> IdentifierTypeSyntax {
                 switch registries.count {
                 case 2:
-                    return SimpleTypeIdentifierSyntax(
+                    return IdentifierTypeSyntax(
                         name: "_MultiRegistry",
                         genericArgumentClause: .init(arguments: registries)
                     )
                 default:
-                    return SimpleTypeIdentifierSyntax(
+                    return IdentifierTypeSyntax(
                         name: "_MultiRegistry",
                         genericArgumentClause: .init(arguments: .init([
                             registries.first!,
-                            .init(argumentType: multiRegistry(registries.removingFirst()))
+                            .init(argument: multiRegistry(.init(registries.dropFirst())))
                         ]))
                     )
                 }

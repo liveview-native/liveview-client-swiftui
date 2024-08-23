@@ -45,7 +45,7 @@ defmodule LvnTutorial.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:live_view_native, "~> 0.0.8"},
-      {:live_view_native_swift_ui, "~> 0.0.8"}
+      {:live_view_native_swiftui, "~> 0.0.8"}
     ]
   end
 

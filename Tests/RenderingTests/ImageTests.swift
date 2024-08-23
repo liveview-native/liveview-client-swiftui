@@ -14,7 +14,7 @@ final class ImageTests: XCTestCase {
     func testSystemImage() throws {
         try assertMatch(
             #"""
-            <Image system-name="person.crop.circle.fill" />
+            <Image systemName="person.crop.circle.fill" />
             """#
         ) {
             Image(systemName: "person.crop.circle.fill")

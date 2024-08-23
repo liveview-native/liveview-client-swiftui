@@ -2,7 +2,7 @@ import SwiftUI
 import LiveViewNative
 
 struct CatRatingView: View {
-    @Attribute("score") private var score: Int
+    @Attribute(.init(name: "score") private var score: Int
     @LiveContext<MyRegistry> private var context
     @State var editedScore: Int?
     @State var width: CGFloat = 0

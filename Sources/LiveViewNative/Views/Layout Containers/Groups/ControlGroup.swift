@@ -32,20 +32,16 @@ import SwiftUI
 /// ## Topics
 /// ### Supporting Types
 /// - ``ControlGroupStyle``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
-struct ControlGroup<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-
+@LiveElement
+struct ControlGroup<Root: RootRegistry>: View {
     public var body: some View {
         #if os(iOS) || os(macOS)
         SwiftUI.ControlGroup {
-            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+            $liveElement.children(in: "content", default: true)
         } label: {
-            context.buildChildren(of: element, forTemplate: "label")
+            $liveElement.children(in: "label")
         }
         #endif
     }

@@ -8,11 +8,9 @@
 import Foundation
 
 func makeJSONDecoder() -> JSONDecoder {
-    snakeCaseDecoder
+    decoder
 }
 
-fileprivate let snakeCaseDecoder: JSONDecoder = {
-    let decoder = Foundation.JSONDecoder()
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
-    return decoder
+fileprivate let decoder: JSONDecoder = {
+    return Foundation.JSONDecoder()
 }()

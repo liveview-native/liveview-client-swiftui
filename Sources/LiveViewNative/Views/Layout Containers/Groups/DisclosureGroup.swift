@@ -22,18 +22,12 @@ import SwiftUI
 /// </DisclosureGroup>
 /// ```
 ///
-/// To synchronize the expansion state with the server, use the ``isExpanded`` binding.
+/// To synchronize the expansion state with the server, use the ``isExpanded`` attribute.
 ///
 /// ```html
-/// <DisclosureGroup is-expanded="actions_option">
+/// <DisclosureGroup isExpanded={@actions_open} phx-change="actions-group-changed">
 ///     ...
 /// </DisclosureGroup>
-/// ```
-///
-/// ```elixir
-/// defmodule MyAppWeb.EditorLive do
-///     native_binding :actions_open, Atom, true
-/// end
 /// ```
 ///
 /// ## Bindings
@@ -46,26 +40,20 @@ import SwiftUI
 /// ## Topics
 /// ### Supporting Types
 /// - ``DisclosureGroupStyle``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
-struct DisclosureGroup<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct DisclosureGroup<Root: RootRegistry>: View {
     /// Synchronizes the expansion state with the server.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @LiveBinding(attribute: "is-expanded") private var isExpanded = false
+    @ChangeTracked(attribute: "isExpanded") private var isExpanded = false
 
     public var body: some View {
 #if os(iOS) || os(macOS)
         SwiftUI.DisclosureGroup(isExpanded: $isExpanded) {
-            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+            $liveElement.children(in: "content", default: true)
         } label: {
-            context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: false)
+            $liveElement.children(in: "label")
         }
 #endif
     }

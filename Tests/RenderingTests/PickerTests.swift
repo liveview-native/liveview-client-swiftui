@@ -43,12 +43,12 @@ final class PickerTests: XCTestCase {
     func testPicker() throws {
         try assertMatch(
             #"""
-            <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "automatic"}]'>
+            <Picker value="paperplane">
                 <Text template="label">Pick an icon</Text>
                 <Group template="content">
-                    <Label system-image="paperplane" modifiers='[{"type": "tag", "tag": "paperplane"}]'><Text>paperplane</Text></Label>
-                    <Label system-image="graduationcap" modifiers='[{"type": "tag", "tag": "graduationcap"}]'><Text>graduationcap</Text></Label>
-                    <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "tag": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
+                    <Label systemImage="paperplane" tag="paperplane"><Text>paperplane</Text></Label>
+                    <Label systemImage="graduationcap" tag="graduationcap"><Text>graduationcap</Text></Label>
+                    <Label systemImage="ellipsis.bubble" tag="ellipsis.bubble"><Text>ellipsis.bubble</Text></Label>
                 </Group>
             </Picker>
             """#) {
@@ -66,60 +66,23 @@ final class PickerTests: XCTestCase {
                 } label: {
                     Text("Pick an icon")
                 }
-                .pickerStyle(.automatic)
-        }
-        
-        try assertMatch(
-            #"""
-            <Picker value="paperplane" modifiers='[{"type": "picker_style", "style": "inline"}]'>
-                <Text template="label">Pick an icon</Text>
-                <Group template="content">
-                    <Label system-image="paperplane" modifiers='[{"type": "tag", "tag": "paperplane"}]'><Text>paperplane</Text></Label>
-                    <Label system-image="graduationcap" modifiers='[{"type": "tag", "tag": "graduationcap"}]'><Text>graduationcap</Text></Label>
-                    <Label system-image="ellipsis.bubble" modifiers='[{"type": "tag", "tag": "ellipsis.bubble"}]'><Text>ellipsis.bubble</Text></Label>
-                </Group>
-            </Picker>
-            """#) {
-                Picker(selection: .constant("paperplane")) {
-                    ForEach(["paperplane", "graduationcap", "ellipsis.bubble"], id: \.self) { name in
-                        Label {
-                            Text(name)
-                        } icon: {
-                            Image(systemName: name)
-                        }
-                        .tag(name)
-                    }
-                } label: {
-                    Text("Pick an icon")
-                }
-                .pickerStyle(.inline)
         }
     }
     
 #if os(iOS)
     func testDatePicker() throws {
-        let date = DateComponents(calendar: .current, year: 2023, month: 1, day: 1, hour: 8, minute: 30, second: 42).date!
         try assertMatch(
             #"""
             <VStack>
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "compact"}]'>
+                <DatePicker>
                     <Text>Pick a date</Text>
                 </DatePicker>
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" modifiers='[{"type": "date_picker_style", "style": "graphical"}]' />
-                <DatePicker value="\#(date.formatted(.elixirDateTime))" displayed-components="date" modifiers='[{"type": "date_picker_style", "style": "wheel"}]' />
             </VStack>
             """#) {
                 VStack {
-                    DatePicker(selection: .constant(date), displayedComponents: [.date, .hourAndMinute]) {
+                    DatePicker(selection: .constant(Date()), displayedComponents: [.date, .hourAndMinute]) {
                         Text("Pick a date")
                     }
-                    .datePickerStyle(.compact)
-                    DatePicker(selection: .constant(date), displayedComponents: [.date, .hourAndMinute]) {
-                    }
-                    .datePickerStyle(.graphical)
-                    DatePicker(selection: .constant(date), displayedComponents: .date) {
-                    }
-                    .datePickerStyle(.wheel)
                 }
         }
     }

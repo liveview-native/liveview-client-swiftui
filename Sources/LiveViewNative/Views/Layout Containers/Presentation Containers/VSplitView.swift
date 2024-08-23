@@ -15,22 +15,18 @@ import SwiftUI
 ///
 /// ```html
 /// <VSplitView>
-///     <Rectangle fill-color="system-red" />
-///     <Rectangle fill-color="system-blue" />
+///     <Rectangle fillColor="system-red" />
+///     <Rectangle fillColor="system-blue" />
 /// </VSplitView>
 /// ```
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(macOS 13.0, *)
-struct VSplitView<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct VSplitView<Root: RootRegistry>: View {
     var body: some View {
 #if os(macOS)
         SwiftUI.VSplitView {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
 #endif
     }

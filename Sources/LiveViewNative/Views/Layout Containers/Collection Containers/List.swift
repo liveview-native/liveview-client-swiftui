@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LiveViewNativeCore
 
 /// Presents rows of elements.
 ///
@@ -30,18 +31,12 @@ import SwiftUI
 /// ```
 ///
 /// ### Selecting Rows
-/// Use the ``selection`` binding to synchronize the selected row(s) with the LiveView.
+/// Use the ``selection`` attribute to set the selected row(s).
 ///
 /// ```html
-/// <List selection="selected_sports">
+/// <List selection={@selected_sports} phx-change="selection-changed">
 ///     ...
 /// </List>
-/// ```
-///
-/// ```elixir
-/// defmodule MyAppWeb.SportsLive do
-///   native_binding :selected_sports, List, []
-/// end
 /// ```
 ///
 /// ### Deleting and Moving Rows
@@ -89,13 +84,11 @@ import SwiftUI
 /// ## Events
 /// * ``delete``
 /// * ``move``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct List<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
+@LiveElement
+struct List<Root: RootRegistry>: View {
     #if os(iOS) || os(tvOS)
+    @LiveElementIgnored
     @Environment(\.editMode) var editMode
     #endif
     
@@ -116,9 +109,7 @@ struct List<R: RootRegistry>: View {
     ///     end
     /// end
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-delete", type: "click") private var delete
     /// Event sent when a row is moved.
     ///
@@ -139,60 +130,121 @@ struct List<R: RootRegistry>: View {
     ///     end
     /// end
     /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-move", type: "click") private var move
     
     /// Synchronizes the selected rows with the server.
     ///
-    /// To allow an arbitrary number of rows to be selected, use the `List` type for the binding.
+    /// To allow an arbitrary number of rows to be selected, use the `List` type for the value.
     /// Use an empty list as the default value to start with no selection.
     ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///   native_binding :selected_sports, List, []
-    /// end
-    /// ```
-    ///
-    /// To only allow a single selection, use the `String` type for the binding.
+    /// To only allow a single selection, use the `String` type for the value.
     /// Use `nil` as the default value to start with no selection.
-    ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///   native_binding :selected_sport, String, nil
-    /// end
-    /// ```
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @LiveBinding(attribute: "selection") private var selection = Selection.none
+    @ChangeTracked(attribute: "selection") private var selection = Selection.none
+    
+    @LiveAttribute(.init(name: "phx-change")) var phxChange: String?
+    
+    private var id: String?
+    
+    @LiveElementIgnored
+    @State
+    private var didAttemptRestoration = false
     
     public var body: some View {
-        #if os(watchOS)
-        SwiftUI.List {
-            content
+        ScrollViewReader { scrollProxy in
+            SwiftUI.Group {
+                #if os(watchOS)
+                SwiftUI.List {
+                    content
+                }
+                #else
+                switch selection {
+                case .multiple:
+                    SwiftUI.List(selection: $selection.multiple) {
+                        content
+                    }
+                case .single,
+                    _ where phxChange != nil:
+                    SwiftUI.List(selection: $selection.single) {
+                        content
+                    }
+                case .none:
+                    SwiftUI.List {
+                        content
+                    }
+                }
+                #endif
+            }
+            .backgroundPreferenceValue(ListItemScrollOffsetPreferenceKey.self) { value in
+                GeometryReader { proxy in
+                    Rectangle()
+                        .hidden()
+                        .onChange(of: value) { newValue in
+                            guard let id else { return }
+                            // don't update the value until we first attempt restoring the existing value.
+                            guard didAttemptRestoration else { return }
+                            
+                            let offset = proxy.frame(in: .global).minY
+                            
+                            guard let closestItem = newValue
+                                .sorted(by: { abs($0.value - offset) < abs($1.value - offset) })
+                                .first
+                            else {
+                                $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]].removeValue(forKey: id)
+                                return
+                            }
+                            
+                            if let lowestY = newValue.sorted(by: { $0.value < $1.value }).first?.value,
+                               lowestY > offset
+                            {
+                                // if the element with the lowest Y value is still below the top of the List, we are at the top.
+                                // store nil so we don't restore and stay at the top.
+                                $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]].removeValue(forKey: id)
+                            } else {
+                                // update the stored scrollPosition in the ``LiveSessionCoordinator``
+                                $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]][id] = .id(closestItem.key)
+                            }
+                        }
+                }
+            }
+            .task {
+                defer { didAttemptRestoration = true }
+                
+                guard let id,
+                      case let .id(restoreID) = $liveElement.context.coordinator.session.scrollPositions[$liveElement.context.coordinator.session.navigationPath.count, default: [:]][id]
+                else { return }
+                
+                scrollProxy.scrollTo(restoreID, anchor: .top)
+            }
         }
-        #else
-        switch selection {
-        case .none:
-            SwiftUI.List {
-                content
-            }
-        case .single:
-            SwiftUI.List(selection: $selection.single) {
-                content
-            }
-        case .multiple:
-            SwiftUI.List(selection: $selection.multiple) {
-                content
-            }
-        }
-        #endif
     }
     
     private var content: some View {
-        forEach(nodes: context.children(of: element), context: context.storage)
+        let elements = $liveElement.childNodes
+            .filter {
+                !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+            }
+            .map { (node) -> ForEachElement in
+                if let element = node.asElement(),
+                   let id = element.attributeValue(for: .init(name: "id"))
+                {
+                    return .keyed(node, id: id)
+                } else {
+                    return .unkeyed(node)
+                }
+            }
+        return ForEach(elements) { childNode in
+            if case let .element(element) = childNode.node.data,
+               element.tag == "Section"
+            {
+                // `Section` will apply tracking to its own children
+                ViewTreeBuilder<Root>.NodeView(node: childNode.node, context: $liveElement.context.storage)
+            } else {
+                ViewTreeBuilder<Root>.NodeView(node: childNode.node, context: $liveElement.context.storage)
+                    .trackListItemScrollOffset(id: childNode.id)
+            }
+        }
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }
@@ -200,7 +252,7 @@ struct List<R: RootRegistry>: View {
     private var onDeleteHandler: ((IndexSet) -> Void)? {
         guard delete.event != nil else { return nil }
         return { indices in
-            var meta = element.buildPhxValuePayload()
+            var meta = $liveElement.element.buildPhxValuePayload()
             // todo: what about multiple indicies?
             meta["index"] = indices.first!
             delete(value: meta) {}
@@ -210,12 +262,12 @@ struct List<R: RootRegistry>: View {
     private var onMoveHandler: ((IndexSet, Int) -> Void)? {
         guard move.event != nil else { return nil }
         return { indices, index in
-            var meta = element.buildPhxValuePayload()
+            var meta = $liveElement.element.buildPhxValuePayload()
             meta["index"] = indices.first!
             meta["destination"] = index
             move(value: meta) {
                 Task {
-#if os(iOS) || os(tvOS)
+                    #if os(iOS) || os(tvOS)
                     // Workaround to fix items not following the order from the backend when changed during edit mode.
                     // Toggling edit modes forces it to follow the backend ordering.
                     // Toggles between `active`/`transient` instead of `active`/`inactive` so no transitions play.
@@ -225,9 +277,42 @@ struct List<R: RootRegistry>: View {
                             editMode?.wrappedValue = initial
                         }
                     }
-#endif
+                    #endif
                 }
             }
         }
+    }
+}
+
+private struct ListItemScrollOffsetPreferenceKey: PreferenceKey {
+    typealias Value = [String:CGFloat]
+    
+    static let defaultValue: Value = [:]
+    
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value.merge(nextValue()) { $1 }
+    }
+}
+
+struct TrackListItemScrollOffsetModifier: ViewModifier {
+    let id: String
+    
+    func body(content: Content) -> some View {
+        content
+            .background {
+                GeometryReader { proxy in
+                    Rectangle()
+                        .hidden()
+                        .transformPreference(ListItemScrollOffsetPreferenceKey.self) { value in
+                            value[id] = proxy.frame(in: .global).minY
+                        }
+                }
+            }
+    }
+}
+
+extension View {
+    func trackListItemScrollOffset(id: String) -> some View {
+        self.modifier(TrackListItemScrollOffsetModifier(id: id))
     }
 }

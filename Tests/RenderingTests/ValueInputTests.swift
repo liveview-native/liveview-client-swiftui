@@ -13,6 +13,7 @@ import LiveViewNative
 final class ValueInputTests: XCTestCase {
     // MARK: Slider
     
+    #if !os(tvOS)
     func testSliderSimple() throws {
         try assertMatch(#"<Slider />"#, size: .init(width: 100, height: 100)) {
             Slider(value: .constant(0))
@@ -23,8 +24,8 @@ final class ValueInputTests: XCTestCase {
         try assertMatch(#"""
 <Slider>
     <Text template="label">Label</Text>
-    <Text template="minimum-value-label">Min</Text>
-    <Text template="maximum-value-label">Max</Text>
+    <Text template="minimumValueLabel">Min</Text>
+    <Text template="maximumValueLabel">Max</Text>
 </Slider>
 """#, size: .init(width: 300, height: 100)) {
             Slider(value: .constant(0)) {
@@ -36,6 +37,7 @@ final class ValueInputTests: XCTestCase {
             }
         }
     }
+    #endif
     
     // MARK: Toggle
     
@@ -46,7 +48,7 @@ final class ValueInputTests: XCTestCase {
     }
     
     // MARK: Stepper
-    
+    #if !os(tvOS)
     func testStepperSimple() throws {
         try assertMatch(#"<Stepper>Stepper Label</Stepper>"#) {
             Stepper(value: .constant(0)) {
@@ -54,4 +56,5 @@ final class ValueInputTests: XCTestCase {
             }
         }
     }
+    #endif
 }

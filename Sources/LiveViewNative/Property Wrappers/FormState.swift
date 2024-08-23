@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import OSLog
+import LiveViewNativeCore
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 
@@ -17,8 +18,8 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 /// Additional data that's tied to the form element, but is not the primary value should use SwiftUI's `@State` property wrapper.
 ///
 /// ### Value Storage
-/// When a `value-binding` attribute is provided on the element, the value of that attributed is treated as the name of a ``LiveBinding`` to use as the value storage.
-/// ``LiveBinding`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
+/// When an attribute with the `bindingName` is provided on the element, the value of that attribute is treated as the name of a ``ChangeTracked`` to use as the value storage.
+/// ``ChangeTracked`` is a mechanism for sharing mutable state between the client and server, see the docs for more information about how it works.
 ///
 /// When the element this properrty wrapper is placed on is located of inside a `<LiveForm>` (see [LiveViewNativeLiveForm](https://github.com/liveview-native/liveview-native-live-form))
 /// and it has a `name` attribute, the value will be stored on that form's ``FormModel``.
@@ -30,7 +31,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 /// See those docs for more information about how the element is obtained.
 ///
 /// ### Default Value
-/// If the value is using a ``LiveBinding``, the default value of the binding will be provided by the server outside of the element.
+/// If the value is using a ``ChangeTracked``, the default value of the binding will be provided by the server outside of the element.
 ///
 /// If the element has a `value` attribute, and the `Value` type conforms to ``AttributeDecodable``, the framework
 /// will try to construct the default value from the attribute. If those conditions are not satisfied, or ``AttributeDecodable/init(from:)`` fails,
@@ -58,15 +59,18 @@ public struct FormState<Value: FormValue> {
     private let defaultValue: Value
     private let sendChangeEvents: Bool
     @StateObject private var data = FormStateData<Value>()
-    // non-nil iff data.mode == .bound
-    @LiveBinding(attribute: "value-binding") private var boundValue: Value
+    
+    let valueAttribute: AttributeName
     
     @ObservedElement private var element: ElementNode
     @Environment(\.formModel) private var formModel: FormModel?
     @Environment(\.coordinatorEnvironment) private var coordinator
     
+    @Event("phx-change", type: "form") private var changeEvent
+    
     /// Creates a `FormState` property wrapper with a default value that will be used when no other value is present.
     ///
+    /// - Parameter bindingName: The name of the optional live binding storage value.
     /// - Parameter default: The default value of this property wrapper. See ``FormState`` for a discussion of how the default value is used.
     /// - Parameter sendChangeEvents: If `true`, changes to the form state's value will send an event to the server if the element has a `phx-change` attribute.
     ///
@@ -82,13 +86,15 @@ public struct FormState<Value: FormValue> {
     ///     }
     /// }
     /// ```
-    public init(default: Value, sendChangeEvents: Bool = true) {
+    public init(_ valueAttribute: AttributeName, default: Value, sendChangeEvents: Bool = true) {
+        self.valueAttribute = valueAttribute
         self.defaultValue = `default`
         self.sendChangeEvents = sendChangeEvents
     }
     
     /// Convenience initializer that creates a `FormState` property wrapper with `nil` as its default value.
     ///
+    /// - Parameter bindingName: The name of the optional live binding storage value.
     /// - Parameter sendChangeEvents: If `true`, changes to the form state's value will send an event to the server if the element has a `phx-change` attribute.
     /// 
     /// ## Example
@@ -103,8 +109,8 @@ public struct FormState<Value: FormValue> {
     ///     }
     /// }
     /// ```
-    public init(sendChangeEvents: Bool = true) where Value: ExpressibleByNilLiteral {
-        self.init(default: nil, sendChangeEvents: sendChangeEvents)
+    public init(_ bindingName: AttributeName, sendChangeEvents: Bool = true) where Value: ExpressibleByNilLiteral {
+        self.init(bindingName, default: nil, sendChangeEvents: sendChangeEvents)
     }
     
     /// The value for this form element.
@@ -113,12 +119,8 @@ public struct FormState<Value: FormValue> {
             switch data.mode {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
-            case .bound:
-                return boundValue
-            case .localInitial:
-                return initialValue
-            case .local(let value):
-                return value
+            case .local:
+                return defaultValue
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
@@ -134,28 +136,23 @@ public struct FormState<Value: FormValue> {
         }
         nonmutating set {
             resolveMode()
-            let oldValue = wrappedValue
             switch data.mode {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
-            case .bound:
-                boundValue = newValue
-            case .localInitial:
-                data.mode = .local(newValue)
-                data.objectWillChange.send()
             case .local:
-                data.mode = .local(newValue)
-                data.objectWillChange.send()
+                break
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
                     return
                 }
-                formModel[elementName] = newValue
-                // todo: this will send a change event for both the form and the input if the input has one, check if that matches web
-            }
-            if oldValue != newValue {
-                sendChangeEventIfNecessary()
+                formModel.setValue(
+                    newValue,
+                    forName: elementName,
+                    changeEvent: sendChangeEvents
+                        ? (element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil)
+                        : nil
+                )
             }
         }
     }
@@ -173,41 +170,45 @@ public struct FormState<Value: FormValue> {
     
     // the initial value converts the element's `value` attribute if possible, otherwise uses the default value
     private var initialValue: Value {
-        return element.attribute(named: "value").flatMap(Value.fromAttribute(_:)) ?? defaultValue
+        return element.attribute(named: valueAttribute).flatMap({ Value.fromAttribute($0, on: element) }) ?? defaultValue
     }
     
     private func resolveMode() {
         if case .unknown = data.mode {
-            if _boundValue.isBound {
-                data.mode = .bound
-            } else if let formModel {
+            if let formModel {
                 if let elementName = element.attributeValue(for: "name") {
                     data.setFormModel(formModel, elementName: elementName)
+                    formModel.setInitialValue(initialValue, forName: elementName)
                     data.mode = .form(formModel)
                 } else {
-                    print("Warning: @FormState used on a name-less element inside of a <live-form>. This may not behave as expected.")
-                    data.mode = .localInitial
+                    logger.warning("@FormState used on a name-less element inside of a <LiveForm>. This may not behave as expected.")
+                    data.mode = .local
                 }
             } else {
-                data.mode = .localInitial
+                logger.warning("Form element used outside of a <LiveForm>. This may not behave as expected.")
+                data.mode = .local
             }
         }
     }
     
-    private func sendChangeEventIfNecessary() {
-        guard sendChangeEvents,
-              let changeEvent = element.attributeValue(for: "phx-change") else {
-            return
-        }
-        let name = element.attributeValue(for: "name") ?? "value"
-        let encoder = FragmentEncoder()
-        try! wrappedValue.encode(to: encoder)
-        let value = encoder.unwrap() as Any
-        Task {
-            try? await coordinator!.pushEvent("native-form", changeEvent, [name: value], nil)
+    /// Call this function when the form control loses focus.
+    public func handleBlur() async throws {
+        switch data.mode {
+        case .unknown:
+            break
+        case .local:
+            break
+        case .form(let formModel):
+            guard let elementName = element.attributeValue(for: "name"),
+                  let value = formModel[elementName]
+            else { return }
+            try await formModel.sendChangeEvent(
+                value,
+                for: elementName,
+                event: element.attributes.contains(where: { $0.name == .init(namespace: nil, name: "phx-change") }) ? _changeEvent : nil
+            )
         }
     }
-    
 }
 
 extension FormState: DynamicProperty {
@@ -231,12 +232,8 @@ private class FormStateData<Value: FormValue>: ObservableObject {
     enum Mode {
         // the mode has not yet been resolved
         case unknown
-        // use the LiveBinding
-        case bound
         // local mode, but the value has not been updated, so always return the initial value when reading
-        case localInitial
-        // local mode, has been set
-        case local(Value)
+        case local
         // managed by a form model, the initial value will be read when when the form model doesn't yet have a stored value
         case form(FormModel)
     }

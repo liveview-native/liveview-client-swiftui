@@ -11,8 +11,8 @@ import LiveViewNativeCore
 /// Configuration used to pin section headers/footers in lazy containers.
 ///
 /// Possible values:
-/// * `section-headers`
-/// * `section-footers`
+/// * `sectionHeaders`
+/// * `sectionFooters`
 /// * `all`
 ///
 /// In this example, the current section header will always be visible on the leading edge of the screen, up until the next section is scrolled past the left edge.
@@ -21,7 +21,7 @@ import LiveViewNativeCore
 /// <ScrollView axes="horizontal">
 ///     <LazyHGrid
 ///         rows={...}
-///         pinned-views="section-headers"
+///         pinnedViews="sectionHeaders"
 ///     >
 ///         <Section>
 ///             <Section:header>1-50</Section:header>
@@ -42,18 +42,12 @@ import LiveViewNativeCore
 ///     </LazyHGrid>
 /// </ScrollView>
 /// ```
-extension PinnedScrollableViews: Decodable, AttributeDecodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        self = Self(string: string)
-    }
-    
+extension PinnedScrollableViews: AttributeDecodable {
     init(string: String) {
         switch string {
-        case "section-headers":
+        case "sectionHeaders":
             self = .sectionHeaders
-        case "section-footers":
+        case "sectionFooters":
             self = .sectionFooters
         case "all":
             self = [.sectionHeaders, .sectionFooters]
@@ -62,7 +56,7 @@ extension PinnedScrollableViews: Decodable, AttributeDecodable {
         }
     }
     
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         self.init(string: value)
     }

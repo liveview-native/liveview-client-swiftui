@@ -14,45 +14,39 @@ import SwiftUI
 /// ```html
 /// <Label>
 ///     <Text template={:title}>John Doe</Text>
-///     <Image template={:icon} system-name="person.crop.circle.fill" />
+///     <Image template={:icon} systemName="person.crop.circle.fill" />
 /// </Label>
 /// ```
 ///
 /// When using a symbol as the icon, use the ``systemImage`` attribute.
 ///
 /// ```html
-/// <Label system-image="person.crop.circle.fill">
+/// <Label systemImage="person.crop.circle.fill">
 ///     <Text>John Doe</Text>
 /// </Label>
 /// ```
 ///
 /// ## Attributes
 /// * ``systemImage``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct Label<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Label<Root: RootRegistry>: View {
     /// A symbol to use for the `icon`.
     ///
     /// This attribute takes precedence over the `icon` child.
     ///
-    /// This is equivalent to the `system-name` attribute on ``Image``.
-    #if swift(>=5.8)
+    /// This is equivalent to the `systemName` attribute on ``Image``.
     @_documentation(visibility: public)
-    #endif
-    @Attribute("system-image") private var systemImage: String?
+    private var systemImage: String?
     
     public var body: some View {
         SwiftUI.Label {
-            context.buildChildren(of: element, forTemplate: "title", includeDefaultSlot: true)
+            $liveElement.children(in: "title", default: true)
         } icon: {
             if let systemImage {
                 SwiftUI.Image(systemName: systemImage)
             } else {
-                context.buildChildren(of: element, forTemplate: "icon")
+                $liveElement.children(in: "icon")
             }
         }
     }

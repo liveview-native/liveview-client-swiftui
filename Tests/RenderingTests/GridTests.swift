@@ -17,20 +17,20 @@ final class GridTests: XCTestCase {
             <Grid>
                 <GridRow alignment="top">
                     <Text>Row 1</Text>
-                    <Rectangle fill-color="system-red" />
+                    <Rectangle />
                 </GridRow>
                 <Divider />
                 <GridRow>
                     <Text>Row 2</Text>
-                    <Rectangle fill-color="system-green" />
-                    <Rectangle fill-color="system-green" />
+                    <Rectangle />
+                    <Rectangle />
                 </GridRow>
                 <Divider />
                 <GridRow alignment="bottom">
                     <Text>Row 3</Text>
-                    <Rectangle fill-color="system-blue" />
-                    <Rectangle fill-color="system-blue" />
-                    <Rectangle fill-color="system-blue" />
+                    <Rectangle />
+                    <Rectangle />
+                    <Rectangle />
                 </GridRow>
             </Grid>
             """#,
@@ -39,20 +39,20 @@ final class GridTests: XCTestCase {
             Grid {
                 GridRow(alignment: .top) {
                     Text("Row 1")
-                    Rectangle().fill(.red)
+                    Rectangle()
                 }
                 Divider()
                 GridRow {
                     Text("Row 2")
-                    Rectangle().fill(.green)
-                    Rectangle().fill(.green)
+                    Rectangle()
+                    Rectangle()
                 }
                 Divider()
                 GridRow(alignment: .bottom) {
                     Text("Row 3")
-                    Rectangle().fill(.blue)
-                    Rectangle().fill(.blue)
-                    Rectangle().fill(.blue)
+                    Rectangle()
+                    Rectangle()
+                    Rectangle()
                 }
             }
         }
@@ -60,9 +60,16 @@ final class GridTests: XCTestCase {
     
     // MARK: Lazy Grids
     func testLazyVGrid() throws {
+        let fixed = "{\"size\":{\"fixed\":30},\"alignment\":\"topLeading\",\"spacing\":3}"
+        let flexible = "{\"size\":{\"flexible\":{\"maximum\":100,\"minimum\":0}},\"alignment\":\"center\",\"spacing\":1}"
+        let staticFlexible = "{\"size\":\"flexible\",\"alignment\":\"bottomTrailing\"}"
+        let adaptive = "{\"size\":{\"adaptive\":{\"minimum\":10}}}"
+        
+        let columns = "[\(fixed),\(flexible),\(staticFlexible),\(adaptive)]".replacingOccurrences(of: "\"", with: "&quot;")
+        
         try assertMatch(
             #"""
-            <LazyVGrid columns="[{&quot;fixed&quot;:null,&quot;adaptive&quot;:null,&quot;flexible&quot;:{&quot;minimum&quot;:10,&quot;maximum&quot;:100},&quot;spacing&quot;:8,&quot;alignment&quot;:&quot;center&quot;},{&quot;flexible&quot;:null,&quot;adaptive&quot;:null,&quot;fixed&quot;:50,&quot;spacing&quot;:16,&quot;alignment&quot;:&quot;trailing&quot;}]">
+            <LazyVGrid columns="\#(columns)">
                 <Rectangle />
                 <Rectangle />
                 <Rectangle />
@@ -74,8 +81,10 @@ final class GridTests: XCTestCase {
             size: .init(width: 500, height: 500)
         ) {
             LazyVGrid(columns: [
-                .init(.flexible(minimum: 10, maximum: 100), spacing: 8, alignment: .center),
-                .init(.fixed(50), spacing: 16, alignment: .trailing),
+                .init(.fixed(30), spacing: 3, alignment: .topLeading),
+                .init(.flexible(minimum: 0, maximum: 100), spacing: 1, alignment: .center),
+                .init(.flexible(), alignment: .bottomTrailing),
+                .init(.adaptive(minimum: 10)),
             ]) {
                 Rectangle()
                 Rectangle()
@@ -88,9 +97,16 @@ final class GridTests: XCTestCase {
     }
     
     func testLazyHGrid() throws {
+        let fixed = "{\"size\":{\"fixed\":30},\"alignment\":\"topLeading\",\"spacing\":3}"
+        let flexible = "{\"size\":{\"flexible\":{\"maximum\":100,\"minimum\":0}},\"alignment\":\"center\",\"spacing\":1}"
+        let staticFlexible = "{\"size\":\"flexible\",\"alignment\":\"bottomTrailing\"}"
+        let adaptive = "{\"size\":{\"adaptive\":{\"minimum\":10}}}"
+        
+        let rows = "[\(fixed),\(flexible),\(staticFlexible),\(adaptive)]".replacingOccurrences(of: "\"", with: "&quot;")
+        
         try assertMatch(
             #"""
-            <LazyHGrid rows="[{&quot;fixed&quot;:null,&quot;adaptive&quot;:null,&quot;flexible&quot;:{&quot;minimum&quot;:10,&quot;maximum&quot;:100},&quot;spacing&quot;:8,&quot;alignment&quot;:&quot;center&quot;},{&quot;flexible&quot;:null,&quot;adaptive&quot;:null,&quot;fixed&quot;:50,&quot;spacing&quot;:16,&quot;alignment&quot;:&quot;trailing&quot;}]">
+            <LazyHGrid rows="\#(rows)">
                 <Rectangle />
                 <Rectangle />
                 <Rectangle />
@@ -102,8 +118,10 @@ final class GridTests: XCTestCase {
             size: .init(width: 500, height: 500)
         ) {
             LazyHGrid(rows: [
-                .init(.flexible(minimum: 10, maximum: 100), spacing: 8, alignment: .center),
-                .init(.fixed(50), spacing: 16, alignment: .trailing),
+                .init(.fixed(30), spacing: 3, alignment: .topLeading),
+                .init(.flexible(minimum: 0, maximum: 100), spacing: 1, alignment: .center),
+                .init(.flexible(), alignment: .bottomTrailing),
+                .init(.adaptive(minimum: 10)),
             ]) {
                 Rectangle()
                 Rectangle()

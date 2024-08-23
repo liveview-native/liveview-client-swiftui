@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LiveRedirect {
+struct LiveRedirect: Hashable {
     let kind: Kind
     let to: URL
     let mode: Mode
@@ -32,38 +32,24 @@ struct LiveRedirect {
         /// the top-most ``LiveViewCoordinator/url`` is changed to the new top-most destination.
         case replaceTop
         
-        /// Connects to a separate Phoenix channel with a fresh ``LiveViewCoordinator`` over the same WebSocket.
+        /// A `live_patch` style redirect.
         ///
-        /// This works with `NavigationSplitView`. It can also be used with `NavigationStack` to keep the previous pages loaded in the background.
-        ///
-        /// You must send the `native_redirect` event to use this mode:
-        /// ```ex
-        /// push_event(
-        ///   socket,
-        ///   "native_redirect",
-        ///   %{
-        ///     to: "destination",
-        ///     kind: :push,
-        ///     mode: :multiplex
-        ///   }
-        /// )
-        /// ```
-        ///
-        /// When a redirect is received with this mode, the following takes place:
-        ///
-        /// 1. If the kind is ``LiveRedirect/Kind/push``, a new ``LiveViewCoordinator`` is created for the redirect destination.
-        /// A separate Phoenix channel is connected for each coordinator.
-        /// 2. If the kind is ``LiveRedirect/Kind/redirect`` and the destination is the same as the previous path, the current entry is popped and no new ``LiveViewCoordinator`` is connected.
-        /// Otherwise a new ``LiveViewCoordinator`` is created in place of the top-most entry.
-        case multiplex
+        /// This replaces the URL of the page without reloading anything. It can be a push or replace kind.
+        case patch
     }
     
-    init?(from payload: Payload, relativeTo rootURL: URL) {
+    init(kind: Kind, to: URL, mode: Mode) {
+        self.kind = kind
+        self.to = to
+        self.mode = mode
+    }
+    
+    init?(from payload: Payload, relativeTo rootURL: URL, mode: Mode = .replaceTop) {
         guard let kind = (payload["kind"] as? String).flatMap(Kind.init),
               let to = (payload["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: rootURL) })
         else { return nil }
         self.kind = kind
         self.to = to.appending(path: "").absoluteURL
-        self.mode = (payload["mode"] as? String).flatMap(Mode.init) ?? .replaceTop
+        self.mode = (payload["mode"] as? String).flatMap(Mode.init) ?? mode
     }
 }

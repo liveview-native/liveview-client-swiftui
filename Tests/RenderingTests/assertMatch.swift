@@ -96,13 +96,13 @@ extension XCTestCase {
         #else
         let session = LiveSessionCoordinator(URL(string: "http://localhost")!)
         let document = try LiveViewNativeCore.Document.parse(markup)
-        let viewTree = session.rootCoordinator.builder.fromNodes(
+        let viewTree = session.navigationPath.first!.coordinator.builder.fromNodes(
             document[document.root()].children(),
-            coordinator: session.rootCoordinator,
+            coordinator: session.navigationPath.first!.coordinator,
             url: session.url
         )
-            .environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.rootCoordinator, document: document))
-            .environmentObject(LiveViewModel(bindingValue: EmptyRegistry.bindingValue, setBindingValue: EmptyRegistry.setBindingValue, globalBindings: { EmptyRegistry.globalBindings }, registerGlobalBinding: EmptyRegistry.registerGlobalBinding))
+            .environment(\.coordinatorEnvironment, CoordinatorEnvironment(session.navigationPath.first!.coordinator, document: document))
+            .environmentObject(LiveViewModel())
         
         let modifyViewForRender: (any View) -> any View = {
             if useDrawingGroup {

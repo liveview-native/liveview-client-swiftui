@@ -14,7 +14,7 @@ import SwiftUI
 /// ```html
 /// <ViewThatFits>
 ///     <Text>Long text content ... </Text>
-///     <Image system-name="doc.text" />
+///     <Image systemName="doc.text" />
 /// </ViewThatFits>
 /// ```
 ///
@@ -22,26 +22,20 @@ import SwiftUI
 ///
 /// ## Attributes
 /// * ``axes``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct ViewThatFits<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct ViewThatFits<Root: RootRegistry>: View {
     /// The axes to check each child's size along. Defaults to `all`.
     ///
     /// See ``LiveViewNative/SwiftUI/Axis/Set``
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("axes") private var axes: Axis.Set = [.horizontal, .vertical]
+    private var axes: Axis.Set = [.horizontal, .vertical]
     
     public var body: some View {
         SwiftUI.ViewThatFits(
             in: axes
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

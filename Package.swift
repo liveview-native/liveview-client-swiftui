@@ -1,13 +1,8 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
-
-#if swift(>=5.8)
-let swiftSettings = [SwiftSetting.unsafeFlags(["-emit-extension-block-symbols"])]
-#else
-let swiftSettings = [SwiftSetting]()
-#endif
+import CompilerPluginSupport
 
 let package = Package(
     name: "LiveViewNative",
@@ -15,21 +10,31 @@ let package = Package(
         .iOS("16.0"),
         .macOS("13.0"),
         .watchOS("9.0"),
+        .tvOS("16.0"),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "LiveViewNative",
             targets: ["LiveViewNative"]),
+        .library(
+            name: "LiveViewNativeStylesheet",
+            targets: ["LiveViewNativeStylesheet"]),
+        .executable(name: "ModifierGenerator", targets: ["ModifierGenerator"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.3.2"),
-        .package(url: "https://github.com/davidstump/SwiftPhoenixClient.git", .upToNextMinor(from: "5.0.0")),
-        .package(url: "https://github.com/liveviewnative/liveview-native-core-swift.git", branch: "main"),
+        .package(url: "https://github.com/davidstump/SwiftPhoenixClient.git", .upToNextMinor(from: "5.3.2")),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "0.1.0"),
+        .package(url: "https://github.com/liveview-native/liveview-native-core-swift.git", exact: "0.2.1"),
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.2"),
-        .package(url: "https://github.com/apple/swift-markdown.git", branch: "main"),
+        .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.2.0"),
+        
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "509.0.2"),
+        
+        .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.13.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -39,9 +44,11 @@ let package = Package(
             dependencies: [
                 "SwiftSoup",
                 "SwiftPhoenixClient",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
+                "LiveViewNativeMacros",
+                "LiveViewNativeStylesheet"
             ],
-            swiftSettings: swiftSettings,
             plugins: [
                 .plugin(name: "BuiltinRegistryGeneratorPlugin")
             ]
@@ -55,6 +62,16 @@ let package = Package(
             dependencies: ["LiveViewNative"]
         ),
         
+        .executableTarget(
+            name: "ModifierGenerator",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+            ]
+        ),
+
         .executableTarget(
             name: "BuiltinRegistryGenerator",
             dependencies: [
@@ -102,15 +119,47 @@ let package = Package(
                 .product(name: "Markdown", package: "swift-markdown"),
             ]
         ),
-        // .plugin(
-        //     name: "TutorialRepoGeneratorPlugin",
-        //     capability: .command(
-        //         intent: .custom(verb: "generate-tutorial-repo", description: ""),
-        //         permissions: [
-        //             .writeToPackageDirectory(reason: "This command generates a repo for the tutorial that has a commit for each step")
-        //         ]
-        //     ),
-        //     dependencies: [.target(name: "TutorialRepoGenerator")]
-        // )
+        
+        .macro(
+            name: "LiveViewNativeMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
+        .testTarget(
+            name: "LiveViewNativeMacrosTests",
+            dependencies: [
+                "LiveViewNativeMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
+        
+        .macro(
+            name: "LiveViewNativeStylesheetMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
+        .target(
+            name: "LiveViewNativeStylesheet",
+            dependencies: [
+                "LiveViewNativeStylesheetMacros",
+                .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
+                .product(name: "Parsing", package: "swift-parsing"),
+            ]
+        ),
+        .testTarget(
+            name: "LiveViewNativeStylesheetTests",
+            dependencies: ["LiveViewNativeStylesheet", "LiveViewNative"]
+        ),
+        .testTarget(
+            name: "LiveViewNativeStylesheetMacrosTests",
+            dependencies: [
+                "LiveViewNativeStylesheetMacros",
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+            ]
+        ),
     ]
 )

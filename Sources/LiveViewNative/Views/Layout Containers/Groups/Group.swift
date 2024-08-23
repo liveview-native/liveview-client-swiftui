@@ -12,7 +12,7 @@ import SwiftUI
 /// You can use groups to apply modifiers to multiple elements without code duplication.
 ///
 /// ```html
-/// <Group modifiers={@native |> tint(color: :orange)}>
+/// <Group class="tint-orange">
 ///     <Button>Orange Button</Button>
 ///     <Toggle>Orange Toggle</Toggle>
 ///     <Slider>Orange Slider</Slider>
@@ -38,16 +38,12 @@ import SwiftUI
 ///     <Text>11</Text>
 /// </VStack>
 /// ```
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct Group<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Group<Root: RootRegistry>: View {
     public var body: some View {
         SwiftUI.Group {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }

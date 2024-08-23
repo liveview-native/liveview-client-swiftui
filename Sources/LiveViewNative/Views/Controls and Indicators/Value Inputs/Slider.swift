@@ -12,16 +12,16 @@ import SwiftUI
 /// By default, sliders choose values in the range 0-1.
 ///
 /// ```html
-/// <Slider value-binding="progress" />
+/// <Slider value="progress" />
 /// ```
 ///
 /// Use ``lowerBound`` and ``upperBound`` to specify the range of possible values.
 ///
 /// ```html
 /// <Slider
-///     value-binding="progress"
-///     lower-bound={-1}
-///     upper-bound={2}
+///     value="progress"
+///     lowerBound={-1}
+///     upperBound={2}
 /// />
 /// ```
 ///
@@ -29,9 +29,9 @@ import SwiftUI
 ///
 /// ```html
 /// <Slider
-///     value-binding="progress"
-///     lower-bound={0}
-///     upper-bound={10}
+///     value="progress"
+///     lowerBound={0}
+///     upperBound={10}
 ///     step={1}
 /// />
 /// ```
@@ -39,74 +39,70 @@ import SwiftUI
 /// Customize the appearance of the slider with the children `label`, `minimum-value-label` and `maximum-value-label`.
 ///
 /// ```html
-/// <Slider value-binding="value">
-///     <Text template={:label}>Percent Completed</Text>
-///     <Text template={:"minimum-value-label"}>0%</Text>
-///     <Text template={:"maximum-value-label"}>100%</Text>
+/// <Slider value="value">
+///     <Text template="label">Percent Completed</Text>
+///     <Text template="minimumValueLabel">0%</Text>
+///     <Text template="maximumValueLabel">100%</Text>
 /// </Slider>
 /// ```
 ///
 /// ## Attributes
+/// * ``value``
 /// * ``lowerBound``
 /// * ``upperBound``
 /// * ``step``
 ///
 /// ## Children
 /// * `label`
-/// * `minimum-value-label`
-/// * `maximum-value-label`
+/// * `minimumValueLabel`
+/// * `maximumValueLabel`
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct Slider<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
-    @FormState(default: 0) var value: Double
+@available(iOS 13.0, macOS 10.15, watchOS 6.0, *)
+@LiveElement
+struct Slider<Root: RootRegistry>: View {
+    @FormState("value", default: 0) var value: Double
     
     /// The lowest allowed value.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("lower-bound") private var lowerBound: Double = 0
+    private var lowerBound: Double = 0
+    
     /// The highest allowed value.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("upper-bound") private var upperBound: Double = 1
+    private var upperBound: Double = 1
+    
     /// The distance between allowed values.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("step") private var step: Double.Stride?
+    private var step: Double.Stride?
     
     public var body: some View {
+        #if !os(tvOS)
         if let step {
             SwiftUI.Slider(
                 value: $value,
                 in: lowerBound...upperBound,
                 step: step
             ) {
-                context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
+                $liveElement.children(in: "label", default: true)
             } minimumValueLabel: {
-                context.buildChildren(of: element, forTemplate: "minimum-value-label")
+                $liveElement.children(in: "minimumValueLabel")
             } maximumValueLabel: {
-                context.buildChildren(of: element, forTemplate: "maximum-value-label")
+                $liveElement.children(in: "maximumValueLabel")
             }
         } else {
             SwiftUI.Slider(
                 value: $value,
                 in: lowerBound...upperBound
             ) {
-                context.buildChildren(of: element, forTemplate: "label", includeDefaultSlot: true)
+                $liveElement.children(in: "label", default: true)
             } minimumValueLabel: {
-                context.buildChildren(of: element, forTemplate: "minimum-value-label")
+                $liveElement.children(in: "minimumValueLabel")
             } maximumValueLabel: {
-                context.buildChildren(of: element, forTemplate: "maximum-value-label")
+                $liveElement.children(in: "maximumValueLabel")
             }
         }
+        #endif
     }
 }

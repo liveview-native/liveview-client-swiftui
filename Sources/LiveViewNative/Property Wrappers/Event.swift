@@ -8,8 +8,31 @@
 import SwiftUI
 import Combine
 import LiveViewNativeCore
+import AsyncAlgorithms
 
 /// A property wrapper that handles sending events to the server, with automatic debounce and throttle handling.
+///
+/// ## Stylesheets
+/// Use the `event` helper to reference an event from a modifier.
+///
+/// ```swift
+/// event("my-event-name")
+/// ```
+///
+/// Handle this event from your LiveView.
+///
+/// ```elixir
+/// def handle_event("my-event-name", _params, socket), do: ...
+/// ```
+///
+/// You can also provide options for `debounce` and `throttle` (in milliseconds).
+///
+/// ```swift
+/// event("my-event-name", debounce: 1000)
+/// event("my-event-name", throttle: 500)
+/// ```
+///
+/// ## Custom Elements
 ///
 /// Specify the attribute that contains the event name and an event type to create the wrapper.
 /// Then, call the wrapped value with a payload and optionally a completion handler.
@@ -46,82 +69,99 @@ import LiveViewNativeCore
 public struct Event: DynamicProperty, Decodable {
     @ObservedElement private var element: ElementNode
     @Environment(\.coordinatorEnvironment) private var coordinatorEnvironment
-    @StateObject private var handler = Handler()
+    @StateObject var handler = Handler()
     /// The name of the event to send.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let event: String?
     private let name: AttributeName?
     /// The type of event, such as `click` or `focus`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let type: String
     /// The target `LiveView` or `LiveComponent`.
     ///
     /// Pass `@myself` in a component to send the event to the component instead of its parent `LiveView`.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let target: Int?
     /// A duration in milliseconds for the debounce interval.
     ///
     /// - Note: ``debounce`` takes precedence over ``throttle``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let debounce: Double?
     /// A duration in milliseconds for the throttle interval.
     ///
     /// - Note: ``debounce`` takes precedence over ``throttle``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let throttle: Double?
     /// Custom values to send with the event.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     private let params: Any?
     
-    @Attribute("phx-debounce") private var debounceAttribute: Double?
-    @Attribute("phx-throttle") private var throttleAttribute: Double?
+    var debounceAttribute: Debounce? {
+        try? element.attributeValue(Debounce.self, for: "phx-debounce")
+    }
+    private var throttleAttribute: Double? {
+        try? element.attributeValue(Double.self, for: "phx-throttle")
+    }
+    
+    enum Debounce: AttributeDecodable, Equatable {
+        /// Only send when the input loses focus.
+        /// Handled by `@FormState` and `@ChangeTracked`, with the individual form controls indicating when they lose focus.
+        case blur
+        case milliseconds(Double)
+        
+        init(from attribute: Attribute?, on element: ElementNode) throws {
+            if attribute?.value == "blur" {
+                self = .blur
+            } else {
+                self = .milliseconds(try Double(from: attribute, on: element))
+            }
+        }
+        
+        var milliseconds: Double? {
+            guard case let .milliseconds(milliseconds) = self else { return nil }
+            return milliseconds
+        }
+    }
     
     final class Handler: ObservableObject {
-        let currentEvent = PassthroughSubject<(() -> ())?, Never>()
+        let channel = AsyncChannel<(String, String, Any, Int?)>()
         
-        private var cancellable: AnyCancellable?
-
-        private var cancellables = Set<AnyCancellable>()
+        private var handlerTask: Task<(), Error>?
         
         private var debounce: Double?
         var throttle: Double?
         
+        let didSendSubject = PassthroughSubject<Void, Never>()
+        
         init() {}
         
-        func update(debounce: Double?, throttle: Double?) {
-            guard cancellable == nil || debounce != self.debounce || throttle != self.throttle
+        func update(coordinator: CoordinatorEnvironment?, debounce: Double?, throttle: Double?) {
+            guard handlerTask == nil || debounce != self.debounce || throttle != self.throttle
             else { return }
+            handlerTask?.cancel()
             self.debounce = debounce
             self.throttle = throttle
             if let debounce = debounce {
-                cancellable = currentEvent
-                    .debounce(for: .init(debounce / 1000), scheduler: RunLoop.main)
-                    .sink(receiveValue: { value in
-                        value?()
-                    })
+                handlerTask = Task { [weak didSendSubject] in
+                    for await event in channel.debounce(for: .milliseconds(debounce)) {
+                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        didSendSubject?.send()
+                    }
+                }
             } else if let throttle = throttle {
-                cancellable = currentEvent
-                    .throttle(for: .init(throttle / 1000), scheduler: RunLoop.main, latest: true)
-                    .sink(receiveValue: { value in
-                        value?()
-                    })
+                handlerTask = Task { [weak didSendSubject] in
+                    for await event in channel.throttle(for: .milliseconds(throttle)) {
+                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        didSendSubject?.send()
+                    }
+                }
             } else {
-                cancellable = currentEvent
-                    .sink(receiveValue: { value in
-                        value?()
-                    })
+                handlerTask = Task { [weak didSendSubject] in
+                    for await event in channel {
+                        _ = try await coordinator?.pushEvent(event.0, event.1, event.2, event.3)
+                        didSendSubject?.send()
+                    }
+                }
             }
         }
     }
@@ -153,10 +193,22 @@ public struct Event: DynamicProperty, Decodable {
     /// @Event(event: "my_event_name", type: "click") private var click
     /// ```
     /// The event name is no longer defined by the client, but instead uses the value passed in here.
-    public init(event: String, type: String) {
+    public init(event: String, type: String, debounce: Double? = nil, throttle: Double? = nil, element: ElementNode? = nil) {
         self.event = event
         self.name = nil
         self.type = type
+        self.target = nil
+        self.debounce = debounce
+        self.throttle = throttle
+        self.params = nil
+        self._element = element.flatMap({ .init(element: $0) }) ?? .init()
+    }
+    
+    /// Create a `nil` event.
+    public init() {
+        self.event = nil
+        self.name = nil
+        self.type = "click"
         self.target = nil
         self.debounce = nil
         self.throttle = nil
@@ -252,7 +304,7 @@ public struct Event: DynamicProperty, Decodable {
     }
     
     public func update() {
-        handler.update(debounce: debounce ?? debounceAttribute, throttle: throttle ?? throttleAttribute)
+        handler.update(coordinator: coordinatorEnvironment, debounce: debounce ?? debounceAttribute?.milliseconds, throttle: throttle ?? throttleAttribute)
     }
     
     /// An action that you invoke to send an event to the server.
@@ -275,18 +327,20 @@ public struct Event: DynamicProperty, Decodable {
             guard let event else {
                 return
             }
-            try await withCheckedThrowingContinuation { continuation in
-                owner.handler.currentEvent.send({
-                    Task {
-                        do {
-                            try await owner.coordinatorEnvironment?.pushEvent(owner.type, event, owner.params ?? value, owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init))
-                            continuation.resume()
-                        } catch {
-                            continuation.resume(with: .failure(error))
-                        }
-                    }
-                })
+            await owner.handler.channel.send((owner.type, event, owner.params ?? value, owner.target ?? owner.element.attributeValue(for: "phx-target").flatMap(Int.init)))
+        }
+        
+        public func callAsFunction<R: RootRegistry>(value: Any = [String:String](), in context: LiveContext<R>) async throws {
+            guard let event else {
+                return
             }
+            let handler = Handler()
+            handler.update(
+                coordinator: CoordinatorEnvironment(context.coordinator, document: context.coordinator.document!),
+                debounce: owner.debounce,
+                throttle: owner.throttle
+            )
+            await handler.channel.send((owner.type, event, owner.params ?? value, owner.target))
         }
     }
 }

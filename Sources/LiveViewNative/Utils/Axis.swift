@@ -14,17 +14,7 @@ import LiveViewNativeCore
 /// * `horizontal`
 /// * `vertical`
 /// * `all` - both `horizontal` and `vertical`
-extension Axis.Set: Decodable, AttributeDecodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let string = try container.decode(String.self)
-        if let alignment = Self(string: string) {
-            self = alignment
-        } else {
-            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Axis.Set"))
-        }
-    }
-    
+extension Axis.Set: AttributeDecodable {
     init?(string: String) {
         switch string {
         case "horizontal":
@@ -38,28 +28,28 @@ extension Axis.Set: Decodable, AttributeDecodable {
         }
     }
     
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
         self = result
     }
 }
 
-/// A horizontal or vertical dimension.
-///
-/// Possible values:
-/// * `horizontal`
-/// * `vertical`
-extension Axis: Decodable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        switch try container.decode(String.self) {
+extension Axis: AttributeDecodable {
+    init?(string: String) {
+        switch string {
         case "horizontal":
             self = .horizontal
         case "vertical":
             self = .vertical
         default:
-            throw DecodingError.dataCorrupted(.init(codingPath: container.codingPath, debugDescription: "expected valid value for Axis"))
+            return nil
         }
+    }
+    
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
+        guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
+        guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
+        self = result
     }
 }

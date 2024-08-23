@@ -11,17 +11,17 @@ import LiveViewNativeCore
 /// Decodes a 2-axis alignment from a string.
 ///
 /// Possible values:
-/// - `top-leading`
+/// - `topLeading`
 /// - `top`
-/// - `top-trailing`
+/// - `topTrailing`
 /// - `leading`
 /// - `center`
 /// - `trailing`
-/// - `bottom-leading`
+/// - `bottomLeading`
 /// - `bottom`
-/// - `bottom-trailing`
-/// - `leading-last-text-baseline`
-/// - `trailing-last-text-baseline`
+/// - `bottomTrailing`
+/// - `leadingLastTextBaseline`
+/// - `trailingLastTextBaseline`
 extension Alignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -35,11 +35,11 @@ extension Alignment: Decodable, AttributeDecodable {
     
     init?(string: String) {
         switch string {
-        case "top-leading", "top_leading":
+        case "topLeading":
             self = .topLeading
         case "top":
             self = .top
-        case "top-trailing", "top_trailing":
+        case "topTrailing":
             self = .topTrailing
         case "leading":
             self = .leading
@@ -47,22 +47,22 @@ extension Alignment: Decodable, AttributeDecodable {
             self = .center
         case "trailing":
             self = .trailing
-        case "bottom-leading", "bottom_leading":
+        case "bottomLeading":
             self = .bottomTrailing
         case "bottom":
             self = .bottom
-        case "bottom-trailing", "bottom_trailing":
+        case "bottomTrailing":
             self = .bottomTrailing
-        case "leading-last-text-baseline", "leading_last_text_baseline":
+        case "leadingLastTextBaseline":
             self = .leadingLastTextBaseline
-        case "trailing-last-text-baseline", "trailing_last_text_baseline":
+        case "trailingLastTextBaseline":
             self = .trailingLastTextBaseline
         default:
             return nil
         }
     }
     
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
         self = result
@@ -75,6 +75,8 @@ extension Alignment: Decodable, AttributeDecodable {
 /// - `leading`
 /// - `center`
 /// - `trailing`
+/// - `listRowSeparatorLeading`
+/// - `listRowSeparatorTrailing`
 extension HorizontalAlignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -94,12 +96,18 @@ extension HorizontalAlignment: Decodable, AttributeDecodable {
             self = .leading
         case "trailing":
             self = .trailing
+        #if os(iOS) || os(macOS)
+        case "listRowSeparatorLeading":
+            self = .listRowSeparatorLeading
+        case "listRowSeparatorTrailing":
+            self = .listRowSeparatorTrailing
+        #endif
         default:
             return nil
         }
     }
     
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
         self = result
@@ -112,6 +120,8 @@ extension HorizontalAlignment: Decodable, AttributeDecodable {
 /// - `top`
 /// - `center`
 /// - `bottom`
+/// - `firstTextBaseline`
+/// - `lastTextBaseline`
 extension VerticalAlignment: Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -131,12 +141,16 @@ extension VerticalAlignment: Decodable, AttributeDecodable {
             self = .top
         case "bottom":
             self = .bottom
+        case "firstTextBaseline":
+            self = .firstTextBaseline
+        case "lastTextBaseline":
+            self = .lastTextBaseline
         default:
             return nil
         }
     }
     
-    public init(from attribute: LiveViewNativeCore.Attribute?) throws {
+    public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value else { throw AttributeDecodingError.missingAttribute(Self.self) }
         guard let result = Self(string: value) else { throw AttributeDecodingError.badValue(Self.self) }
         self = result

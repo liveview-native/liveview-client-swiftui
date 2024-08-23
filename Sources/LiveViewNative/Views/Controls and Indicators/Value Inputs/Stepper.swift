@@ -13,7 +13,7 @@ import SwiftUI
 ///
 ///
 /// ```html
-/// <Stepper value-binding="attendees">
+/// <Stepper value="attendees">
 ///     Attendees
 /// </Stepper>
 /// ```
@@ -23,9 +23,9 @@ import SwiftUI
 ///
 /// ```html
 /// <Stepper
-///     value-binding="attendees"
-///     lower-bound={0}
-///     upper-bound={16}
+///     value="attendees"
+///     lowerBound={0}
+///     upperBound={16}
 ///     step={2}
 /// >
 ///     Attendees
@@ -33,38 +33,33 @@ import SwiftUI
 /// ```
 ///
 /// ## Attributes
+/// * ``value``
 /// * ``step``
 /// * ``lowerBound``
 /// * ``upperBound``
 ///
 /// ## See Also
 /// * [LiveView Native Live Form](https://github.com/liveview-native/liveview-native-live-form)
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct Stepper<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
-    @FormState(default: 0) var value: Double
+@available(iOS 13.0, macOS 10.15, watchOS 9.0, *)
+@LiveElement
+struct Stepper<Root: RootRegistry>: View {
+    @FormState("value", default: 0) var value: Double
     
     /// The amount to increment/decrement the value by.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("step") private var step: Double = 1
+    private var step: Double = 1
+    
     /// The lowest allowed value.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("lower-bound") private var lowerBound: Double?
+    private var lowerBound: Double?
+    
     /// The highest allowed value.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("upper-bound") private var upperBound: Double?
+    private var upperBound: Double?
     
     public var body: some View {
+        #if !os(tvOS)
         if let lowerBound,
            let upperBound
         {
@@ -76,9 +71,10 @@ struct Stepper<R: RootRegistry>: View {
                 label
             }
         }
+        #endif
     }
     
     private var label: some View {
-        context.buildChildren(of: element)
+        $liveElement.children()
     }
 }

@@ -13,8 +13,8 @@ import SwiftUI
 ///
 /// ```html
 /// <LabeledContent>
-///     <Text template={:label}>Price</Text>
-///     <Text template={:content}>$100.00</Text>
+///     <Text template="label">Price</Text>
+///     <Text template="content">$100.00</Text>
 /// </LabeledContent>
 /// ```
 ///
@@ -25,14 +25,13 @@ import SwiftUI
 /// For more details on formatting options, see ``Text``.
 ///
 /// ```html
-/// <LabeledContent value={100} format="currency" currency-code="usd">
+/// <LabeledContent value={100} format="currency" currencyCode="usd">
 ///     Price
 /// </LabeledContent>
 /// ```
 ///
 /// ## Attributes
 /// * ``format``
-/// * ``style``
 ///
 /// ## Children
 /// * `content` - The element to label.
@@ -41,65 +40,30 @@ import SwiftUI
 /// ## See Also
 /// ### Formatting Values
 /// * ``Text``
-///
-/// ## Topics
-/// ### Supporting Types
-/// - ``LabeledContentStyle``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct LabeledContent<R: RootRegistry>: View {
-    @ObservedElement private var element
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct LabeledContent<Root: RootRegistry>: View {
     /// Automatically formats the value of the `value` attribute.
     ///
     /// For more details on formatting options, see ``Text``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("format") private var format: String?
-    /// The style to use for this labeled content.
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    @Attribute("labeled-content-style") private var style: LabeledContentStyle = .automatic
+    private var format: String?
     
     var body: some View {
         SwiftUI.Group {
             if format != nil {
                 SwiftUI.LabeledContent {
-                    Text<R>()
+                    Text<Root>()
                 } label: {
-                    context.buildChildren(of: element)
+                    $liveElement.children()
                 }
             } else {
                 SwiftUI.LabeledContent {
-                    context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+                    $liveElement.children(in: "content", default: true)
                 } label: {
-                    context.buildChildren(of: element, forTemplate: "label")
+                    $liveElement.children(in: "label")
                 }
             }
-        }
-        .applyLabeledContentStyle(style)
-    }
-}
-
-#if swift(>=5.8)
-@_documentation(visibility: public)
-#endif
-private enum LabeledContentStyle: String, AttributeDecodable {
-    #if swift(>=5.8)
-    @_documentation(visibility: public)
-    #endif
-    case automatic
-}
-
-private extension View {
-    @ViewBuilder
-    func applyLabeledContentStyle(_ style: LabeledContentStyle) -> some View {
-        switch style {
-        case .automatic: self.labeledContentStyle(.automatic)
         }
     }
 }

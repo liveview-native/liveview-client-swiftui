@@ -10,38 +10,52 @@ import SwiftUI
 /// A multi-line, long-form text editor.
 ///
 /// ```html
-/// <TextEditor value-binding="my_text" phx-focus="editor_focused" />
+/// <TextEditor text="my_text" phx-focus="editor_focused" />
 /// ```
 ///
 /// ## Events
 /// - ``focusEvent``
 /// - ``blurEvent``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
 @available(iOS 16.0, macOS 13.0, *)
-struct TextEditor: TextFieldProtocol {
-    @ObservedElement var element: ElementNode
-    @FormState var value: String?
+@LiveElement
+struct TextEditor<Root: RootRegistry>: TextFieldProtocol {
+    @FormState("text", default: "") var text: String?
+    @LiveElementIgnored
     @FocusState private var isFocused: Bool
     
     /// An event that fires when the text editor is focused.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-focus", type: "focus") var focusEvent
     /// An event that fires when the text editor is unfocused.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
     @Event("phx-blur", type: "blur") var blurEvent
+    
+    var axis: Axis = .horizontal
+    var prompt: String?
     
     var body: some View {
 #if os(iOS) || os(macOS)
         SwiftUI.TextEditor(text: textBinding)
             .focused($isFocused)
             .onChange(of: isFocused, perform: handleFocus)
-            .preference(key: _ProvidedBindingsKey.self, value: ["phx-focus", "phx-blur"])
+            .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
 #endif
+    }
+    
+    @MainActor
+    func handleFocus(_ isFocused: Bool) {
+        if isFocused {
+            focusEvent(value:
+                $liveElement.element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            )
+        } else {
+            blurEvent(value:
+                $liveElement.element.buildPhxValuePayload()
+                    .merging(["value": textBinding.wrappedValue], uniquingKeysWith: { a, _ in a })
+            )
+            Task { try await _text.handleBlur() }
+        }
     }
 }

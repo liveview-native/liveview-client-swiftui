@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 6/6/23.
 //
 
+#if os(macOS)
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
@@ -96,3 +97,4 @@ final class LiveViewNativeMacrosTests: XCTestCase {
         )
     }
 }
+#endif

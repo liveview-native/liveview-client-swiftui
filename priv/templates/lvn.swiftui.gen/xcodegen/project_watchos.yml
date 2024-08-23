@@ -1,0 +1,11 @@
+targets:
+  "${LVN_APP_NAME} Watch App":
+    type: application
+    platform: watchOS
+    sources:
+      - ${LVN_APP_NAME}
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: ${LVN_BUNDLE_IDENTIFIER}.watchkit
+    dependencies:
+      - package: LiveViewNative<%= if @live_form? do %>
+      - package: LiveViewNativeLiveForm<% end %>

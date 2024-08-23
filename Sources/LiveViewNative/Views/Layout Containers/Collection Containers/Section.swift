@@ -52,29 +52,37 @@ import SwiftUI
 /// * `content` - The main body of the section.
 /// * `header` - Describes the content of the section.
 /// * `footer` - Elements displayed at the end of the section.
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct Section<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct Section<Root: RootRegistry>: View {
     /// Enables this section to be collapsed in sidebar lists on macOS.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("collapsible") private var collapsible: Bool
+    private var collapsible: Bool = false
     
     public var body: some View {
         SwiftUI.Section {
-            context.buildChildren(of: element, forTemplate: "content", includeDefaultSlot: true)
+            let elements = $liveElement.childNodes(in: "content", default: true)
+                .map { (node) -> ForEachElement in
+                    if let element = node.asElement(),
+                       let id = element.attributeValue(for: .init(name: "id"))
+                    {
+                        return .keyed(node, id: id)
+                    } else {
+                        return .unkeyed(node)
+                    }
+                }
+            ForEach(elements) { childNode in
+                ViewTreeBuilder<Root>.NodeView(node: childNode.node, context: $liveElement.context.storage)
+                    .trackListItemScrollOffset(id: childNode.id)
+            }
         } header: {
-            context.buildChildren(of: element, forTemplate: "header")
+            $liveElement.children(in: "header")
         } footer: {
-            context.buildChildren(of: element, forTemplate: "footer")
+            $liveElement.children(in: "footer")
         }
         #if os(macOS)
             .collapsible(collapsible)
         #endif
+        
     }
 }

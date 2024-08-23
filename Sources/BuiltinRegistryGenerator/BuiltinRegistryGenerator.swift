@@ -23,12 +23,13 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "ToolbarItem",
         "ToolbarItemGroup",
         "ToolbarTitleMenu",
+        "ColorView",
     ]
     
     static let additionalViews = [
-        "Capsule": "Shape(shape: Capsule(from: element))",
-        "Circle": "Shape(shape: Circle())",
-        "ContainerRelativeShape": "Shape(shape: ContainerRelativeShape())",
+        "Capsule": "Shape<R, Capsule>(shape: Capsule(from: element))",
+        "Circle": "Shape<R, Circle>(shape: Circle())",
+        "ContainerRelativeShape": "Shape<R, ContainerRelativeShape>(shape: ContainerRelativeShape())",
         "Divider": "Divider()",
         "EditButton": """
         #if os(iOS)
@@ -37,9 +38,12 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         """,
         "Ellipse": "Ellipse()",
         "NamespaceContext": "NamespaceContext<R>()",
-        "Rectangle": "Shape(shape: Rectangle())",
+        "Rectangle": "Shape<R, Rectangle>(shape: Rectangle())",
         "RenameButton": "RenameButton()",
-        "RoundedRectangle": "Shape(shape: RoundedRectangle(from: element))",
+        "RoundedRectangle": "Shape<R, RoundedRectangle>(shape: RoundedRectangle(from: element))",
+        "Color": "ColorView<R>()",
+        "Image": "ImageView<R>()",
+        "phx-main": "PhxMain<R>()"
     ]
     
     var platformFamilyName: String? {
@@ -59,18 +63,9 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             .map(viewCase(path:))
             .joined(separator: "\n")
         
-        let modifiers = modifiers
-            .map(URL.init(fileURLWithPath:))
-            .filter(isAllowed(path:))
-        let modifierCases = try modifiers
-            .map(modifierCase(path:))
-            .joined(separator: "\n")
-        let modifierSwitchCases = try modifiers
-            .map(modifierSwitchCase(path:))
-            .joined(separator: "\n")
-        
         let generated = """
         import SwiftUI
+        import LiveViewNativeStylesheet
         
         // This switch can't be inlined into BuiltinRegistry.lookup because it results in that method's return type
         // being a massive pile of nested _ConditionalContents. Instead, lift it out into a separate View type
@@ -86,19 +81,6 @@ struct BuiltinRegistryGenerator: ParsableCommand {
                 default:
                     // log here that view type cannot be found
                     EmptyView()
-                }
-            }
-        }
-        
-        extension BuiltinRegistry {
-            enum ModifierType: String {
-        \(modifierCases)
-            }
-        
-            @ViewModifierBuilder
-            static func decodeModifier(_ type: ModifierType, from decoder: Decoder) throws -> some ViewModifier {
-                switch type {
-        \(modifierSwitchCases)
                 }
             }
         }
@@ -150,21 +132,24 @@ struct BuiltinRegistryGenerator: ParsableCommand {
             // [platform] [version], ...
             let platform = Reference(Substring.self)
             let version = Reference(Double?.self)
-            let expression = Regex {
-                Capture(as: platform) {
-                    OneOrMore(.word)
+            let platformExpr = Capture(as: platform) {
+                OneOrMore(.word)
+            }
+            let versionExpr = Capture(as: version) {
+                OneOrMore(.digit)
+                Optionally {
+                    "."
+                    OneOrMore(.digit)
                 }
+            } transform: {
+                Double($0)
+            }
+            
+            let expression = Regex {
+                platformExpr
                 Optionally {
                     OneOrMore(.whitespace)
-                    Capture(as: version) {
-                        OneOrMore(.digit)
-                        Optionally {
-                            "."
-                            OneOrMore(.digit)
-                        }
-                    } transform: {
-                        Double($0)
-                    }
+                    versionExpr
                 }
             }
             let availability = String(match[availability])
@@ -206,40 +191,6 @@ struct BuiltinRegistryGenerator: ParsableCommand {
                 case "\(name)":
                     \(initializer)
         """
-    }
-    
-    func modifierCase(path: URL) throws -> String {
-        let name = path.deletingPathExtension().lastPathComponent.firstMatch(of: Regex {
-            Capture {
-                OneOrMore(.any)
-            }
-            "Modifier"
-        }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
-        return """
-                case \(name.toCamelCase()) = "\(name.toSnakeCase())"
-        """
-    }
-    
-    func modifierSwitchCase(path: URL) throws -> String {
-        let name = path.deletingPathExtension().lastPathComponent.firstMatch(of: Regex {
-            Capture {
-                OneOrMore(.any)
-            }
-            "Modifier"
-        }).flatMap({ String($0.output.1) }) ?? path.deletingPathExtension().lastPathComponent
-        if let availability = try availability(path: path) {
-            return """
-                    case .\(name.toCamelCase()):
-                        if #available(\(availability)) {
-                            try \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "")(from: decoder)
-                        }
-            """
-        } else {
-            return """
-                    case .\(name.toCamelCase()):
-                        try \(name)Modifier\(try isGeneric(path: path) ? "<R>" : "")(from: decoder)
-            """
-        }
     }
 }
 

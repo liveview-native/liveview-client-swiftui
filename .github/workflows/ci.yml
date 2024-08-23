@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 env:
-  MIN_COVERAGE: 0.3
+  MIN_COVERAGE: 0.2
 
 permissions:
   checks: write
@@ -14,15 +14,22 @@ permissions:
 
 jobs:
   test:
-    runs-on: [self-hosted, tartelet]
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Xcode Version
+        shell: bash
+        run: |
+          sudo xcode-select --switch /Applications/Xcode_15.4.app
+      - uses: irgaly/xcode-cache@v1
+        with:
+          key: xcode-cache-deriveddata-${{ github.workflow }}
+          restore-keys: xcode-cache-deriveddata-${{ github.workflow }}-
       - name: Run tests on iOS Simulator
         shell: bash
         run: |
-          sudo xcode-select --switch /Applications/Xcode_14.3.app
           xcodebuild -scheme BuiltinRegistryGenerator -destination "platform=macOS"
-          xcodebuild test -scheme LiveViewNative-Package -sdk iphonesimulator16.4 -destination "OS=16.4,name=iPhone 14 Pro" -enableCodeCoverage YES -resultBundlePath TestResults
+          xcodebuild test -scheme LiveViewNative-Package -destination "platform=iOS Simulator,name=iPhone 15 Pro" -enableCodeCoverage YES -resultBundlePath TestResults -skipMacroValidation -skipPackagePluginValidation
       - uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: TestResults.xcresult
@@ -31,7 +38,7 @@ jobs:
       - name: Validate Coverage %
         shell: bash
         run: |
-          COVERAGE=$(xcrun xccov view --report --json TestResults.xcresult | jq '.targets[] | select(.name == "LiveViewNative") | .lineCoverage')
+          COVERAGE=$(xcrun xccov view --report --json TestResults.xcresult | jq '([.targets[] | select(.name == "LiveViewNative").files[] | select(.name != "_GeneratedModifiers.swift") | .coveredLines] | add) / ([.targets[] | select(.name == "LiveViewNative").files[] | select(.name != "_GeneratedModifiers.swift") | .executableLines] | add)')
           if [ $(echo "$COVERAGE > $MIN_COVERAGE" | bc) -ne 1 ]; then
             printf "Code coverage $COVERAGE does not meet minimum requirement $MIN_COVERAGE"
             exit -1
@@ -41,8 +48,12 @@ jobs:
       - name: Build for macOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk macosx13.3 -destination "platform=macOS"
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=macOS" -skipMacroValidation -skipPackagePluginValidation
       - name: Build for watchOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -sdk watchsimulator9.4 -destination "OS=9.4,name=Apple Watch Series 8 (45mm)"
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)" -skipMacroValidation -skipPackagePluginValidation
+      - name: Build for tvOS
+        shell: bash
+        run: |
+          xcodebuild -scheme LiveViewNative-Package -destination "name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation

@@ -31,40 +31,30 @@ import SwiftUI
 /// ## See Also
 /// ### Stacks
 /// * ``HStack``
-#if swift(>=5.8)
 @_documentation(visibility: public)
-#endif
-struct LazyHStack<R: RootRegistry>: View {
-    @ObservedElement private var element: ElementNode
-    @LiveContext<R> private var context
-    
+@LiveElement
+struct LazyHStack<Root: RootRegistry>: View {
     /// The vertical alignment of views within the stack. Defaults to center-aligned.
     ///
     /// See ``LiveViewNative/SwiftUI/VerticalAlignment``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("alignment") private var alignment: VerticalAlignment = .center
+    private var alignment: VerticalAlignment = .center
     /// The spacing between views in the stack. If not provided, the stack uses the system spacing.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("spacing") private var spacing: Double?
+    private var spacing: CGFloat?
     /// Pins section headers/footers.
     ///
     /// See ``LiveViewNative/SwiftUI/PinnedScrollableViews``.
-    #if swift(>=5.8)
     @_documentation(visibility: public)
-    #endif
-    @Attribute("pinned-views") private var pinnedViews: PinnedScrollableViews = []
+    private var pinnedViews: PinnedScrollableViews = []
     
     public var body: some View {
         SwiftUI.LazyHStack(
             alignment: alignment,
-            spacing: spacing.flatMap(CGFloat.init),
+            spacing: spacing,
             pinnedViews: pinnedViews
         ) {
-            context.buildChildren(of: element)
+            $liveElement.children()
         }
     }
 }
