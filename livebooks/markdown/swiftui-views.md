@@ -88,7 +88,7 @@ LiveView Native uses the following syntax to represent the view above.
 <Text>Hamlet</Text>
 ```
 
-SwiftUI provides a wide range of Views that can be used in native templates. You can find a full reference of these views in the SwiftUI Documentation at https://developer.apple.com/documentation/swiftui/. You can also find a shorthand on how to convert SwiftUI syntax into the LiveView Native DLS in the [LiveView Native Syntax Conversion Cheatsheet](https://hexdocs.pm/live_view_native/cheatsheet.cheatmd).
+SwiftUI provides a wide range of Views that can be used in native templates. You can find a full reference of these views in the SwiftUI Documentation at https://developer.apple.com/documentation/swiftui/. You can also find a shorthand on how to convert SwiftUI syntax into the LiveView Native DLS in the [LiveView Native Syntax Conversion Cheatsheet](https://hexdocs.pm/live_view_native_swiftui/syntax_conversion.html).
 
 ## Text
 
