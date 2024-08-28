@@ -18,12 +18,26 @@ public struct Stylesheet<R: RootRegistry> {
     }
     
     init(from data: String, in context: ParseableModifierContext) throws {
+        print("parsing again")
         self.content = [data]
         self.classes = try StylesheetParser<BuiltinRegistry<R>.BuiltinModifier>(context: context).parse(data.utf8)
     }
     
     func merge(with other: Stylesheet<R>) -> Stylesheet<R> {
         .init(content: self.content + other.content, classes: classes.merging(other.classes, uniquingKeysWith: { $1 }))
+    }
+}
+
+enum StylesheetCache {
+    static var cache = [URL:Any]()
+    
+    static subscript<R: RootRegistry>(for url: URL, registry _: R.Type = R.self) -> Stylesheet<R>? {
+        get {
+            Self.cache[url.absoluteURL] as? Stylesheet<R>
+        }
+        set {
+            Self.cache[url.absoluteURL] = newValue as Any
+        }
     }
 }
 

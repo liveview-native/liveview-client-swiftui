@@ -16,6 +16,9 @@ import LiveViewNativeStylesheet
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "LiveSessionCoordinator")
 
+//let signposter = OSSignposter(subsystem: Bundle.main.bundleIdentifier ?? "unknown", category: .pointsOfInterest)
+let signposter = OSSignposter(logger: logger)
+
 /// The session coordinator object handles the initial connection, as well as navigation.
 ///
 /// ## Topics
@@ -176,6 +179,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter httpMethod: The HTTP method to use for the dead render. Defaults to `GET`.
     /// - Parameter httpBody: The HTTP body to send when requesting the dead render.
     public func connect(httpMethod: String? = nil, httpBody: Data? = nil) async {
+        let signpostState = signposter.beginInterval("connect start", id: signpostID)
+        let connectStartDate = Date()
+        var lastLogDate = connectStartDate
+        func logDelay(_ label: String) {
+            let now = Date()
+            print("[SIGNPOST] \(label) at \(now.distance(to: connectStartDate)) (to prev: \(now.distance(to: lastLogDate)))")
+            lastLogDate = now
+        }
+        
+        logDelay("connect start")
+        
         switch state {
         case .setup, .disconnected, .connectionFailed:
             break
@@ -193,7 +207,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             var request = URLRequest(url: originalURL)
             request.httpMethod = httpMethod
             request.httpBody = httpBody
+            logDelay("dead render start")
             let (html, response) = try await deadRender(for: request)
+            logDelay("dead render fetched")
             // update the URL if redirects happened.
             let url: URL
             if let responseURL = response.url {
@@ -215,29 +231,51 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             // extract the root layout, removing anything within the `<div data-phx-main>`.
             let mainDiv = try doc.select("div[data-phx-main]")[0]
             try mainDiv.replaceWith(doc.createElement("phx-main"))
-            async let stylesheet = withThrowingTaskGroup(of: (Data, URLResponse).self) { group in
+            signposter.emitEvent("dom values extracted", id: signpostID)
+            logDelay("dom values extracted")
+            async let stylesheet = withThrowingTaskGroup(of: Stylesheet<R>.self) { group in
                 for style in try doc.select("Style") {
                     guard let url = URL(string: try style.attr("url"), relativeTo: url)
                     else { continue }
-                    group.addTask { try await self.urlSession.data(from: url) }
+                    group.addTask {
+                        if let cachedStylesheet = StylesheetCache[for: url, registry: R.self] {
+                            return cachedStylesheet
+                        } else {
+                            let (data, response) = try await self.urlSession.data(from: url)
+                            guard let contents = String(data: data, encoding: .utf8)
+                            else { return Stylesheet<R>(content: [], classes: [:]) }
+                            let stylesheet = try Stylesheet<R>(from: contents, in: .init())
+                            StylesheetCache[for: url, registry: R.self] = stylesheet
+                            return stylesheet
+                        }
+                    }
                 }
                 return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
-                    guard let contents = String(data: next.0, encoding: .utf8)
-                    else { return result }
-                    return result.merge(with: try Stylesheet<R>(from: contents, in: .init()))
+                    return result.merge(with: next)
                 }
             }
+            signposter.emitEvent("stylesheet start", id: signpostID)
+            logDelay("stylesheet start")
             self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
+            signposter.emitEvent("root layout extracted", id: signpostID)
+            logDelay("root layout extracted")
             
             self.domValues = domValues
             
             if socket == nil {
+                logDelay("socket connect start")
                 try await self.connectSocket(domValues)
+                logDelay("socket connect finish")
             }
             
             self.stylesheet = try await stylesheet
+            logDelay("stylesheet finish")
             
+            signposter.emitEvent("connecting viewcoordinator socket", id: signpostID)
+            logDelay("connecting viewcoordinator socket")
             try await navigationPath.last!.coordinator.connect(domValues: domValues, redirect: false)
+            signposter.emitEvent("viewcoordinator socket connected", id: signpostID)
+            logDelay("viewcoordinator socket connected")
             
             reconnectAttempts = 0
         } catch {
@@ -256,6 +294,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             }
             return
         }
+        
+        signposter.endInterval("connection done", signpostState)
+        logDelay("connection done")
     }
     
     private func disconnect(preserveNavigationPath: Bool = false) async {
@@ -317,10 +358,15 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             .store(in: &eventHandlers)
     }
     
+    let signpostID = signposter.makeSignpostID()
+    
     /// Request the dead render with the given `request`.
     ///
     /// Returns the dead render HTML and the HTTP response information (including the final URL after redirects).
     func deadRender(for request: URLRequest) async throws -> (String, HTTPURLResponse) {
+        
+        signposter.emitEvent("dead render start", id: signpostID)
+        
         var request = request
         request.url = request.url!.appendingLiveViewItems(R.self)
         if domValues != nil {
@@ -334,6 +380,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         } catch {
             throw LiveConnectionError.initialFetchError(error)
         }
+        
+        signposter.emitEvent("dead render fetched", id: signpostID)
         
         guard let response = response as? HTTPURLResponse,
               response.statusCode == 200,
@@ -349,6 +397,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 throw LiveConnectionError.initialFetchUnexpectedResponse(response)
             }
         }
+        signposter.emitEvent("live reload socket connected", id: signpostID)
         return (html, response)
     }
     

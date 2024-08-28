@@ -36,8 +36,8 @@ struct NavStackEntryView<R: RootRegistry>: View {
             return .connecting
         case .connectionFailed(let error):
             return .error(error)
-        case .disconnected:
-            return .disconnected
+        case .disconnected: // disconnected phase is only for the LiveSessionCoordinator (handled in `LiveView`)
+            return .connecting
         case .reconnecting, .connected: // these phases should always be handled internally
             fatalError()
         }
