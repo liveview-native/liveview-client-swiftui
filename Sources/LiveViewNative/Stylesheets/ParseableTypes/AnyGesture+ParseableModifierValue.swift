@@ -208,9 +208,13 @@ struct _AnyGesture: ParseableModifierValue {
             case .onEnded(let onEnded):
                 return AnyGesture<Any>(gesture.onEnded({ value in
                     Task {
-                        var eventValue: [String:Any]
+                        func sendEventValue(_ eventValue: [String:Any]) async throws {
+                            let eventValue = eventValue.merging(element.buildPhxValuePayload(), uniquingKeysWith: { $1 })
+                            try await onEnded.action(value: eventValue, in: context)
+                        }
+                        #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
                         if let drag = value as? DragGesture.Value {
-                            eventValue = [
+                            return try await sendEventValue([
                                 "translation": [
                                     "width": drag.translation.width,
                                     "height": drag.translation.height
@@ -235,44 +239,46 @@ struct _AnyGesture: ParseableModifierValue {
                                     "width": drag.velocity.width,
                                     "height": drag.velocity.height
                                 ]
-                            ]
-                        } else if let spatialTap = value as? SpatialTapGesture.Value {
-                            eventValue = [
+                            ])
+                        }
+                        #endif
+                        #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
+                        if let spatialTap = value as? SpatialTapGesture.Value {
+                            return try await sendEventValue([
                                 "location": [
                                     "x": spatialTap.location.x,
                                     "y": spatialTap.location.y
                                 ]
-                            ]
-                        } else {
-                            eventValue = [:]
-                            #if os(iOS) || os(macOS) || os(visionOS)
-                            if #available(iOS 17, macOS 14, *),
-                                      let magnify = value as? MagnifyGesture.Value
-                            {
-                                eventValue = [
-                                    "magnification": magnify.magnification,
-                                    "startLocation": [
-                                        "x": magnify.startLocation.x,
-                                        "y": magnify.startLocation.y
-                                    ],
-                                    "velocity": magnify.velocity
-                                ]
-                            } else if #available(iOS 17, macOS 14, *),
-                                      let rotate = value as? RotateGesture.Value
-                            {
-                                eventValue = [
-                                    "rotation": rotate.rotation.radians,
-                                    "startLocation": [
-                                        "x": rotate.startLocation.x,
-                                        "y": rotate.startLocation.y
-                                    ],
-                                    "velocity": rotate.velocity
-                                ]
-                            }
-                            #endif
+                            ])
                         }
-                        eventValue.merge(element.buildPhxValuePayload(), uniquingKeysWith: { $1 })
-                        try await onEnded.action(value: eventValue, in: context)
+                        #endif
+                        
+                        #if os(iOS) || os(macOS) || os(visionOS)
+                        if #available(iOS 17, macOS 14, *),
+                                  let magnify = value as? MagnifyGesture.Value
+                        {
+                            return try await sendEventValue([
+                                "magnification": magnify.magnification,
+                                "startLocation": [
+                                    "x": magnify.startLocation.x,
+                                    "y": magnify.startLocation.y
+                                ],
+                                "velocity": magnify.velocity
+                            ])
+                        } else if #available(iOS 17, macOS 14, *),
+                                  let rotate = value as? RotateGesture.Value
+                        {
+                            return try await sendEventValue([
+                                "rotation": rotate.rotation.radians,
+                                "startLocation": [
+                                    "x": rotate.startLocation.x,
+                                    "y": rotate.startLocation.y
+                                ],
+                                "velocity": rotate.velocity
+                            ])
+                        }
+                        #endif
+                        return try await sendEventValue([:])
                     }
                 }).map({ $0 as Any }))
             case .exclusively(let exclusively):
