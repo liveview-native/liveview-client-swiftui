@@ -26,7 +26,11 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 /// - ``handleEvent(_:handler:)``
 @MainActor
 public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
-    @Published internal private(set) var internalState: LiveSessionState = .setup
+    @Published internal private(set) var internalState: LiveSessionState = .setup {
+        didSet {
+            print("State changed to: \(internalState)")
+        }
+    }
     
     var state: LiveSessionState {
         internalState
@@ -56,7 +60,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-    init(session: LiveSessionCoordinator<R>, url: URL) {
+    init(
+        session: LiveSessionCoordinator<R>,
+        url: URL
+    ) {
         self.session = session
         self.url = url
         
@@ -228,6 +235,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     func connect(domValues: LiveSessionCoordinator<R>.DOMValues, redirect: Bool) async throws {
+        print("State changed to: connect()")
         await self.disconnect()
         
         self.internalState = .connecting
@@ -238,7 +246,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         connectParams["_mounts"] = 0
         connectParams["_format"] = "swiftui"
         connectParams["_csrf_token"] = domValues.phxCSRFToken
-        connectParams["_interface"] = LiveSessionCoordinator<R>.platformParams
+        connectParams["_interface"] = LiveSessionParameters.platformParams
 
         let params: Payload = [
             "session": domValues.phxSession,
@@ -290,6 +298,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         channel.on("phx_close") { [weak self, weak channel] message in
             Task { @MainActor in
                 guard channel === self?.channel else { return }
+                print("State changed to: phx_close")
                 self?.internalState = .disconnected
             }
         }
@@ -324,10 +333,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         continuation.resume()
                     }
             }
-        }
-        await MainActor.run { [weak self] in
-            self?.channel = nil
-            self?.internalState = .disconnected
+            await MainActor.run { [weak self] in
+                self?.channel = nil
+                self?.internalState = .disconnected
+            }
         }
     }
     
@@ -371,6 +380,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         case "unauthorized", "stale":
                             await self.session.reconnect()
                         default:
+                            print("State changed to: join() -> error \(message.payload["reason"])")
                             await self.disconnect()
                         }
 
