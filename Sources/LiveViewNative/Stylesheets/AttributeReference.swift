@@ -87,6 +87,7 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
             
             switch body.base {
             case .translation:
+                #if os(iOS) || os(macOS) || os(watchOS) || os(visionOS)
                 guard let value = value as? DragGesture.Value,
                       let member = body.member
                 else { return defaultValue }
@@ -98,6 +99,9 @@ public struct AttributeReference<Value: ParseableModifierValue & AttributeDecoda
                 default:
                     return defaultValue
                 }
+                #else
+                return defaultValue
+                #endif
             case .magnification:
                 #if os(iOS) || os(macOS)
                 if #available(iOS 17.0, macOS 14.0, *) {
