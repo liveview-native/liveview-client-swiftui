@@ -39,25 +39,27 @@ public struct LiveErrorView<Fallback: View>: View {
                 }
                 .padding()
                 #else
-                SwiftUI.Menu {
-                    SwiftUI.Button {
-                        Task {
-                            await reconnectLiveView(.automatic)
+                if #available(iOS 14, macOS 11, tvOS 17, visionOS 1, *) {
+                    SwiftUI.Menu {
+                        SwiftUI.Button {
+                            Task {
+                                await reconnectLiveView(.automatic)
+                            }
+                        } label: {
+                            SwiftUI.Label("Reconnect this page", systemImage: "arrow.2.circlepath")
+                        }
+                        SwiftUI.Button {
+                            Task {
+                                await reconnectLiveView(.restart)
+                            }
+                        } label: {
+                            SwiftUI.Label("Restart from root", systemImage: "arrow.circlepath")
                         }
                     } label: {
-                        SwiftUI.Label("Reconnect this page", systemImage: "arrow.2.circlepath")
+                        SwiftUI.Label("Reconnect", systemImage: "arrow.2.circlepath")
                     }
-                    SwiftUI.Button {
-                        Task {
-                            await reconnectLiveView(.restart)
-                        }
-                    } label: {
-                        SwiftUI.Label("Restart from root", systemImage: "arrow.circlepath")
-                    }
-                } label: {
-                    SwiftUI.Label("Reconnect", systemImage: "arrow.2.circlepath")
+                    .padding()
                 }
-                .padding()
                 #endif
             }
         } else {
