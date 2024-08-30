@@ -350,7 +350,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         
         @MainActor
         public var document: Document? {
-            context.coordinator.document
+            context.coordinator.document?.0
         }
         
         func value<OtherBuilder: ContentBuilder>(for _: OtherBuilder.Type = OtherBuilder.self) -> ContentBuilderContext<R, OtherBuilder>.Value {

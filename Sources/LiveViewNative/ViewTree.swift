@@ -303,18 +303,18 @@ enum ForEachElement: Identifiable {
     }
 }
 // not fileprivate because List needs to use it so it has access to ForEach modifiers
-func forEach<R: CustomRegistry>(nodes: some Collection<Node>, context: LiveContextStorage<R>) -> some DynamicViewContent {
-    let elements = nodes.map { (node) -> ForEachElement in
-        if let element = node.asElement(),
-           let id = element.attributeValue(for: .init(name: "id"))
-        {
-            return .keyed(node, id: id)
-        } else {
-            return .unkeyed(node)
-        }
-    }
-    return ForEach(elements) {
-        ViewTreeBuilder<R>.NodeView(node: $0.node, context: context)
+func forEach<R: CustomRegistry>(nodes: some RandomAccessCollection<Node>, context: LiveContextStorage<R>) -> some DynamicViewContent {
+//    let elements = nodes.map { (node) -> ForEachElement in
+//        if let element = node.asElement(),
+//           let id = element.attributeValue(for: .init(name: "id"))
+//        {
+//            return .keyed(node, id: id)
+//        } else {
+//            return .unkeyed(node)
+//        }
+//    }
+    return ForEach(nodes, id: \.id) { node in
+        ViewTreeBuilder<R>.NodeView(node: node, context: context)
     }
 }
 

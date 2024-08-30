@@ -89,7 +89,31 @@ public struct ObservedElement {
         observer.elementChangedPublisher
     }
     
-    var children: [Node] { overrideElement.flatMap({ Array($0.children()) }) ?? observer.resolvedChildren }
+    var children: [Node] {
+        overrideElement.flatMap({ Array($0.children()) }) ?? observer.resolvedChildren
+    }
+    
+    var defaultChildren: [Node] {
+        overrideElement.flatMap({
+            $0
+                .children()
+                .filter({
+                    !($0.asElement()?.attributes.contains(where: { $0.name == "template" }) ?? false)
+                })
+        })
+            ?? observer.resolvedDefaultChildren
+    }
+    var templateChildren: [Template:[Node]] {
+        overrideElement.flatMap({
+            $0.children()
+                .reduce(into: [Template:[Node]]()) { partialResult, next in
+                    if let template = next.asElement()?.attributes.first(where: { $0.name == "template" })?.value {
+                        partialResult[Template(rawValue: template), default: []].append(next)
+                    }
+                }
+        })
+            ?? observer.resolvedTemplateChildren
+    }
 }
 
 extension ObservedElement: DynamicProperty {
@@ -113,8 +137,13 @@ extension ObservedElement {
         var observedChildIDs: Set<NodeRef> = []
         
         var resolvedElement: ElementNode!
+        
         var resolvedChildren: [Node]!
+        var resolvedDefaultChildren: [Node]!
+        var resolvedTemplateChildren: [Template:[Node]]!
+        
         private var _resolvedChildIDs: Set<NodeRef>?
+        
         var resolvedChildIDs: Set<NodeRef> {
             if let _resolvedChildIDs {
                 return _resolvedChildIDs
@@ -141,30 +170,59 @@ extension ObservedElement {
             guard cancellable == nil || (observeChildren && self.observedChildIDs != self.resolvedChildIDs) else { return }
             self.resolvedElement = context.document[id].asElement()
             self.resolvedChildren = Array(self.resolvedElement.children())
+            (self.resolvedDefaultChildren, self.resolvedTemplateChildren) = self.resolvedChildren
+                .reduce(into: ([Node](), [Template:[Node]]()), { partialResult, next in
+                    switch next.data {
+                    case let .element(element):
+                        if let template = element.attributes.first(where: { $0.name == "template" })?.value {
+                            partialResult.1[Template(rawValue: template), default: []].append(next)
+                        } else {
+                            partialResult.0.append(next)
+                        }
+                    default:
+                        partialResult.0.append(next)
+                    }
+                })
             self._resolvedChildIDs = nil
             
             let id = self.id
             
             if observeChildren {
                 self.elementChangedPublisher = Publishers.MergeMany(
-                    [context.elementChanged(id).map({ id })] + self.resolvedChildIDs.map({ id in
-                        context.elementChanged(id).map({ id })
+                    [context.elementChanged(id)] + self.resolvedChildIDs.map({ id in
+                        context.elementChanged(id)
                     })
                 )
                 .eraseToAnyPublisher()
                 self.observedChildIDs = self.resolvedChildIDs
             } else {
-                self.elementChangedPublisher = context.elementChanged(id).map({ id }).eraseToAnyPublisher()
+                self.elementChangedPublisher = context.elementChanged(id).eraseToAnyPublisher()
             }
             
             cancellable = self.elementChangedPublisher
-                .sink { [weak self] _ in
-                    guard let self else { return }
-                    self.resolvedElement = context.document[id].asElement()
-                    self.resolvedChildren = Array(self.resolvedElement.children())
-                    self._resolvedChildIDs = nil
-                    self.objectWillChange.send()
+                .sink { _ in
+                    self.resolveElement(context: context, id: id)
                 }
+        }
+        
+        func resolveElement(context: CoordinatorEnvironment, id: NodeRef) {
+            self.resolvedElement = context.document[id].asElement()
+            self.resolvedChildren = Array(self.resolvedElement.children())
+            (self.resolvedDefaultChildren, self.resolvedTemplateChildren) = self.resolvedChildren
+                .reduce(into: ([Node](), [Template:[Node]]()), { partialResult, next in
+                    switch next.data {
+                    case let .element(element):
+                        if let template = element.attributes.first(where: { $0.name == "template" })?.value {
+                            partialResult.1[Template(rawValue: template), default: []].append(next)
+                        } else {
+                            partialResult.0.append(next)
+                        }
+                    default:
+                        partialResult.0.append(next)
+                    }
+                })
+            self._resolvedChildIDs = nil
+            self.objectWillChange.send()
         }
         
         struct Applicator<Content: View>: View {

@@ -29,7 +29,7 @@ public struct ViewReference: ParseableModifierValue {
                 environment.anyLiveContextStorage = context.storage
             }
             if environment.coordinatorEnvironment == nil {
-                environment.coordinatorEnvironment = .init(context.coordinator, document: context.coordinator.document!)
+                environment.coordinatorEnvironment = .init(context.coordinator, document: context.coordinator.document!.0)
             }
         }
     }

@@ -150,6 +150,35 @@ struct Text<Root: RootRegistry>: View {
     private var text: SwiftUI.Text {
         if let overrideText {
             return overrideText
+        } else if !$liveElement.childNodes.isEmpty {
+            return $liveElement.childNodes.reduce(into: SwiftUI.Text("")) { prev, next in
+                switch next.data {
+                case let .element(data):
+                    let element = ElementNode(node: next, data: data)
+                    
+                    switch data.tag {
+                    case "Text":
+                        prev = prev + Self(
+                            element: element,
+                            overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<Root>)
+                        ).body
+                    case "Link":
+                        prev = prev + SwiftUI.Text(
+                            .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
+                        )
+                    case "Image":
+                        if let image = ImageView<Root>(element: element, overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<Root>)).body {
+                            prev = prev + SwiftUI.Text(image)
+                        }
+                    default:
+                        break
+                    }
+                case let .leaf(text):
+                    prev = prev + SwiftUI.Text(text)
+                case .root:
+                    break
+                }
+            }
         } else if let content {
             return SwiftUI.Text(content)
         } else if let verbatim {
@@ -212,37 +241,7 @@ struct Text<Root: RootRegistry>: View {
                 return SwiftUI.Text(innerText)
             }
         } else {
-            return $liveElement.childNodes.reduce(into: SwiftUI.Text("")) { prev, next in
-                switch next.data {
-                case let .element(data):
-                    guard !data.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
-                    else { return }
-                    
-                    let element = ElementNode(node: next, data: data)
-                    
-                    switch data.tag {
-                    case "Text":
-                        prev = prev + Self(
-                            element: element,
-                            overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<Root>)
-                        ).body
-                    case "Link":
-                        prev = prev + SwiftUI.Text(
-                            .init("[\(element.innerText())](\(element.attributeValue(for: "destination")!))")
-                        )
-                    case "Image":
-                        if let image = ImageView<Root>(element: element, overrideStylesheet: _modifiers.overrideStylesheet ?? (_modifiers.stylesheet as! Stylesheet<Root>)).body {
-                            prev = prev + SwiftUI.Text(image)
-                        }
-                    default:
-                        break
-                    }
-                case let .leaf(text):
-                    prev = prev + SwiftUI.Text(text)
-                case .root:
-                    break
-                }
-            }
+            return SwiftUI.Text("")
         }
     }
 }

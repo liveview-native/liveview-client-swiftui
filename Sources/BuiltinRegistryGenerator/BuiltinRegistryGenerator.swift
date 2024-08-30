@@ -15,6 +15,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
     @Argument(transform: { URL(filePath: $0) }) private var output: URL
     @Option(name: .customLong("view")) private var views: [String] = []
     @Option(name: .customLong("modifier")) private var modifiers: [String] = []
+//    @Option(name: .customLong("chunk-size")) private var chunkSize: Int = 10
     
     static let denylist = [
         "Shape",
@@ -43,7 +44,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "RoundedRectangle": "Shape<R, RoundedRectangle>(shape: RoundedRectangle(from: element))",
         "Color": "ColorView<R>()",
         "Image": "ImageView<R>()",
-        "phx-main": "PhxMain<R>()"
+        "div": "PhxMain<R>()"
     ]
     
     var platformFamilyName: String? {

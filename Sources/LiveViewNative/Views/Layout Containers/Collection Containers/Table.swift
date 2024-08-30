@@ -224,17 +224,15 @@ struct Table<Root: RootRegistry>: View {
     }
     
     private var rows: [TableRow] {
-        $liveElement.childNodes
+        $liveElement.childNodes(in: "rows")
             .compactMap { $0.asElement() }
-            .filter { $0.attributeValue(for: "template") == "rows" }
             .flatMap { $0.elementChildren() }
             .compactMap { $0.tag == "TableRow" && $0.attribute(named: "id") != nil ? TableRow(element: $0) : nil }
     }
     
     private var columns: [TableColumn<TableRow, TableColumnSort, some View, SwiftUI.Text>] {
-        let columnElements = $liveElement.childNodes
+        let columnElements = $liveElement.childNodes(in: "columns")
             .compactMap { $0.asElement() }
-            .filter { $0.attributeValue(for: "template") == "columns" }
             .flatMap { $0.elementChildren() }
             .filter { $0.tag == "TableColumn" }
         return columnElements.enumerated().map { item in
