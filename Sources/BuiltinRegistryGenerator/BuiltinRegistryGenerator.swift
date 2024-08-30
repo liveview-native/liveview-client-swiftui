@@ -15,7 +15,7 @@ struct BuiltinRegistryGenerator: ParsableCommand {
     @Argument(transform: { URL(filePath: $0) }) private var output: URL
     @Option(name: .customLong("view")) private var views: [String] = []
     @Option(name: .customLong("modifier")) private var modifiers: [String] = []
-//    @Option(name: .customLong("chunk-size")) private var chunkSize: Int = 10
+    @Option(name: .customLong("chunk-size")) private var chunkSize: Int = 10
     
     static let denylist = [
         "Shape",
@@ -27,24 +27,20 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         "ColorView",
     ]
     
-    static let additionalViews = [
-        "Capsule": "Shape<R, Capsule>(shape: Capsule(from: element))",
-        "Circle": "Shape<R, Circle>(shape: Circle())",
-        "ContainerRelativeShape": "Shape<R, ContainerRelativeShape>(shape: ContainerRelativeShape())",
-        "Divider": "Divider()",
-        "EditButton": """
-        #if os(iOS)
-        EditButton()
-        #endif
-        """,
-        "Ellipse": "Ellipse()",
-        "NamespaceContext": "NamespaceContext<R>()",
-        "Rectangle": "Shape<R, Rectangle>(shape: Rectangle())",
-        "RenameButton": "RenameButton()",
-        "RoundedRectangle": "Shape<R, RoundedRectangle>(shape: RoundedRectangle(from: element))",
-        "Color": "ColorView<R>()",
-        "Image": "ImageView<R>()",
-        "div": "PhxMain<R>()"
+    static let additionalViews: [String: (String, String)] = [
+        "Capsule": ("Shape<R, Capsule>", "Shape<R, Capsule>(shape: Capsule(from: element))"),
+        "Circle": ("Shape<R, Circle>", "Shape<R, Circle>(shape: Circle())"),
+        "ContainerRelativeShape": ("Shape<R, ContainerRelativeShape>", "Shape<R, ContainerRelativeShape>(shape: ContainerRelativeShape())"),
+        "Divider": ("Divider", "Divider()"),
+        "EditButton": ("EditButton", "EditButton()"),
+        "Ellipse": ("Ellipse", "Ellipse()"),
+        "NamespaceContext": ("NamespaceContext<R>", "NamespaceContext<R>()"),
+        "Rectangle": ("Shape<R, Rectangle>", "Shape<R, Rectangle>(shape: Rectangle())"),
+        "RenameButton": ("RenameButton<SwiftUI.Label<SwiftUI.Text, SwiftUI.Image>>", "RenameButton()"),
+        "RoundedRectangle": ("Shape<R, RoundedRectangle>", "Shape<R, RoundedRectangle>(shape: RoundedRectangle(from: element))"),
+        "Color": ("ColorView<R>", "ColorView<R>()"),
+        "Image": ("ImageView<R>", "ImageView<R>()"),
+        "div": ("PhxMain<R>", "PhxMain<R>()")
     ]
     
     var platformFamilyName: String? {
@@ -61,10 +57,12 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         let views = try views
             .map(URL.init(fileURLWithPath:))
             .filter(isAllowed(path:))
-            .map(viewCase(path:))
-            .joined(separator: "\n")
         
-        let generated = """
+//        let chunks: [[String]] = stride(from: 0, to: views.count, by: chunkSize).map {
+//            Array(views[$0..<min($0 + chunkSize, views.count)])
+//        }
+        
+        var result = """
         import SwiftUI
         import LiveViewNativeStylesheet
         
@@ -72,21 +70,53 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         // being a massive pile of nested _ConditionalContents. Instead, lift it out into a separate View type
         // that lookup can return, so it doesn't blow up the stack.
         // See #806 for more details.
-        struct BuiltinElement<R: RootRegistry>: View {
-            let name: String
-            let element: ElementNode
-            var body: some View {
+        enum BuiltinElement<R: RootRegistry>: View {
+            \(try views.map(viewCaseDefinition(path:)).joined(separator: "\n"))
+            \(try Self.additionalViews.map(additionalViewCaseDefinition).joined(separator: "\n"))
+            case unknown
+        
+            init(name: String, element: ElementNode) {
                 switch name {
-        \(views)
-        \(Self.additionalViews.map(additionalViewCase(name:initializer:)).joined(separator: "\n"))
+                \(try views.map(viewCaseInit(path:)).joined(separator: "\n"))
+                \(try Self.additionalViews.map(additionalViewCaseInit).joined(separator: "\n"))
                 default:
+                    self = .unknown
+                }
+            }
+        
+            var body: some View {
+                switch self {
+                \(try views.map(viewCase(path:)).joined(separator: "\n"))
+                \(try Self.additionalViews.map(additionalViewCase).joined(separator: "\n"))
+                case .unknown:
                     // log here that view type cannot be found
                     EmptyView()
                 }
             }
         }
         """
-        try generated.write(to: output, atomically: true, encoding: .utf8)
+        
+//        for (i, chunk) in chunks.enumerated() {
+//            FileHandle.standardOutput.write(Data(#"""
+//            
+//            extension BuiltinElement {
+//                enum _BuiltinViewChunk\#(i): View {
+//                    func body(content: Content) -> some View {
+//                        switch self {
+//                        \#(chunk.map({
+//                            """
+//                            case let .\($0)(modifier):
+//                                content.modifier(modifier)
+//                            """
+//                        }).joined(separator: "\n"))
+//                        }
+//                    }
+//                }
+//            }
+//            """#.utf8))
+//        }
+        
+        try result.write(to: output, atomically: true, encoding: .utf8)
     }
     
     func isAllowed(path: URL) -> Bool {
@@ -170,27 +200,53 @@ struct BuiltinRegistryGenerator: ParsableCommand {
         return nil
     }
     
+    func viewCaseDefinition(path: URL) throws -> String {
+        let name = path.deletingPathExtension().lastPathComponent
+        return "case \(name.lowercased())(\(name)\(try isGeneric(path: path) ? "<R>" : ""))"
+    }
+    
+    func viewCaseInit(path: URL) throws -> String {
+        let name = path.deletingPathExtension().lastPathComponent
+        return """
+        case "\(name)":
+            self = .\(name.lowercased())(\(name)\(try isGeneric(path: path) ? "<R>" : "")())
+        """
+    }
+    
     func viewCase(path: URL) throws -> String {
         let name = path.deletingPathExtension().lastPathComponent
         if let availability = try availability(path: path) {
             return """
-                    case "\(name)":
+                    case let .\(name.lowercased())(view):
                         if #available(\(availability)) {
-                            \(name)\(try isGeneric(path: path) ? "<R>" : "")()
+                            view
                         }
             """
         } else {
             return """
-                    case "\(name)":
-                        \(name)\(try isGeneric(path: path) ? "<R>" : "")()
+                    case let .\(name.lowercased())(view):
+                        view
             """
         }
     }
     
-    func additionalViewCase(name: String, initializer: String) -> String {
+    func additionalViewCaseDefinition(name: String, initializer: (String, String)) -> String {
         """
-                case "\(name)":
-                    \(initializer)
+        case \(name.lowercased())(\(initializer.0))
+        """
+    }
+    
+    func additionalViewCaseInit(name: String, initializer: (String, String)) -> String {
+        """
+        case "\(name)":
+            self = .\(name.lowercased())(\(initializer.1))
+        """
+    }
+    
+    func additionalViewCase(name: String, initializer: (String, String)) -> String {
+        """
+                case let .\(name.lowercased())(view):
+                    view
         """
     }
 }
