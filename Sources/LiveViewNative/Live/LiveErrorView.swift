@@ -59,6 +59,15 @@ public struct LiveErrorView<Fallback: View>: View {
                         SwiftUI.Label("Reconnect", systemImage: "arrow.2.circlepath")
                     }
                     .padding()
+                } else {
+                    SwiftUI.Button {
+                        Task {
+                            await reconnectLiveView(.restart)
+                        }
+                    } label: {
+                        SwiftUI.Label("Restart from root", systemImage: "arrow.circlepath")
+                    }
+                    .padding()
                 }
                 #endif
             }

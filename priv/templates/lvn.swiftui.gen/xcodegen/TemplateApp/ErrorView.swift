@@ -87,6 +87,15 @@ struct ErrorView: View {
                 Label("Reconnect", systemImage: "arrow.2.circlepath")
             }
             .padding()
+        } else {
+            Button {
+                Task {
+                    await reconnectLiveView(.restart)
+                }
+            } label: {
+                Label("Restart from root", systemImage: "arrow.circlepath")
+            }
+            .padding()
         }
         #endif
     }
