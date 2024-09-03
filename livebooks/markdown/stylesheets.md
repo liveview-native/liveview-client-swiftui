@@ -225,8 +225,8 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
 
   def render(assigns) do
     ~LVN"""
-    <Text style="background(.orange);padding()">Hello, from LiveView Native!</Text>
-    <Text style="padding();background(.orange)">Hello, from LiveView Native!</Text>
+    <Text style="background(.orange); padding();">Hello, from LiveView Native!</Text>
+    <Text style="padding(); background(.orange);">Hello, from LiveView Native!</Text>
     """
   end
 end
@@ -350,8 +350,8 @@ We group modifiers together within a class that can be applied to an element. He
 ```elixir
 ~SHEET"""
   "red-title" do
-    foregroundColor(.red);
-    font(.title);
+    foregroundColor(.red)
+    font(.title)
   end
 """
 ```
@@ -367,8 +367,8 @@ defmodule ServerWeb.Styles.App.SwiftUI do
 
   ~SHEET"""
     "red-title" do
-      foregroundColor(.red);
-      font(.title);
+      foregroundColor(.red)
+      font(.title)
     end
   """
 end

@@ -455,8 +455,8 @@ We group modifiers together within a class that can be applied to an element. He
 ```elixir
 ~SHEET"""
   "red-title" do
-    foregroundColor(.red);
-    font(.title);
+    foregroundColor(.red)
+    font(.title)
   end
 """
 ```
