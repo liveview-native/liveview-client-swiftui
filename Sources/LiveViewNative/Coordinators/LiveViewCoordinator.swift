@@ -25,11 +25,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoor
 /// - ``handleEvent(_:handler:)``
 @MainActor
 public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
-    @Published internal private(set) var internalState: LiveSessionState = .setup {
-        didSet {
-            print("State changed to: \(internalState)")
-        }
-    }
+    @Published internal private(set) var internalState: LiveSessionState = .setup
     
     var state: LiveSessionState {
         internalState
@@ -230,7 +226,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     func connect(domValues: LiveSessionCoordinator<R>.DOMValues, redirect: Bool) async throws {
-        print("State changed to: connect()")
         await self.disconnect()
         
         self.internalState = .connecting
@@ -291,7 +286,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             }
         }
         channel.on("phx_close") { [weak self, weak channel] message in
-            print("State changed to: phx_close")
             Task { @MainActor in
                 guard channel === self?.channel else { return }
                 self?.internalState = .disconnected
@@ -375,7 +369,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         case "unauthorized", "stale":
                             await self.session.reconnect()
                         default:
-                            print("State changed to: join() -> error \(message.payload["reason"])")
                             await self.disconnect()
                         }
 

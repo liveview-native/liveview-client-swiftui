@@ -18,7 +18,6 @@ public struct Stylesheet<R: RootRegistry> {
     }
     
     init(from data: String, in context: ParseableModifierContext) throws {
-        print("parsing again")
         self.content = [data]
         self.classes = try StylesheetParser<BuiltinRegistry<R>.BuiltinModifier>(context: context).parse(data.utf8)
     }
