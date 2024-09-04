@@ -27,7 +27,7 @@ let package = Package(
         .package(url: "https://github.com/scinfu/SwiftSoup.git", from: "2.3.2"),
         .package(url: "https://github.com/davidstump/SwiftPhoenixClient.git", .upToNextMinor(from: "5.3.2")),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "0.1.0"),
-        .package(url: "https://github.com/liveview-native/liveview-native-core-swift.git", exact: "0.2.1"),
+        .package(url: "https://github.com/liveview-native/liveview-native-core", exact: "0.4.0-alpha-4"),
         
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.2.0"),
@@ -45,7 +45,7 @@ let package = Package(
                 "SwiftSoup",
                 "SwiftPhoenixClient",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
-                .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
+                .product(name: "LiveViewNativeCore", package: "liveview-native-core"),
                 "LiveViewNativeMacros",
                 "LiveViewNativeStylesheet"
             ],
@@ -136,7 +136,7 @@ let package = Package(
             name: "LiveViewNativeStylesheet",
             dependencies: [
                 "LiveViewNativeStylesheetMacros",
-                .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
+                .product(name: "LiveViewNativeCore", package: "liveview-native-core"),
                 .product(name: "Parsing", package: "swift-parsing"),
             ]
         ),
