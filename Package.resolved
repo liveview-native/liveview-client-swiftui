@@ -2,12 +2,12 @@
   "originHash" : "0c8c0017d472c5597b7cc8792d28815383d1ad3b06694e0f377e0c0261862bd4",
   "pins" : [
     {
-      "identity" : "liveview-native-core-swift",
+      "identity" : "liveview-native-core",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/liveview-native/liveview-native-core-swift.git",
+      "location" : "https://github.com/liveview-native/liveview-native-core",
       "state" : {
-        "revision" : "339594b395938e38f1fb2216a31c8791030ec9ba",
-        "version" : "0.2.1"
+        "revision" : "36882f9dba00185f950a13e81f79481d3fee977a",
+        "version" : "0.4.0-alpha-4"
       }
     },
     {
