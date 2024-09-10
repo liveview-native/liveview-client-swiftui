@@ -8,7 +8,6 @@
 import Foundation
 import SwiftSoup
 import SwiftUI
-import SwiftPhoenixClient
 import Combine
 import OSLog
 import LiveViewNativeCore
@@ -47,28 +46,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     @Published private(set) var stylesheet: Stylesheet<R>?
 
     // Socket connection
-    var socket: SwiftPhoenixClient.Socket?
+    var liveSocket: LiveViewNativeCore.LiveSocket?
+    var socket: LiveViewNativeCore.Socket?
 
-    private var domValues: DOMValues!
-
-    private var liveReloadSocket: SwiftPhoenixClient.Socket?
-    private var liveReloadChannel: SwiftPhoenixClient.Channel?
+    private var liveReloadSocket: LiveViewNativeCore.Socket?
+    private var liveReloadChannel: LiveViewNativeCore.Channel?
 
     private var cancellables = Set<AnyCancellable>()
 
     private var mergedEventSubjects: AnyCancellable?
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
-
-    /// Delegate for the ``urlSession``.
-    ///
-    /// This delegate will add the `_format` and other necessary query params to any redirects.
-    private var urlSessionDelegate: LiveSessionURLSessionDelegate<R>
-
-    /// The ``URLSession`` instance to use for all HTTP requests.
-    ///
-    /// This session is created using the ``LiveSessionConfiguration/urlSessionConfiguration``.
-    private var urlSession: URLSession
     
     private var reconnectAttempts = 0
     
@@ -103,15 +91,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.configuration = config
 
         config.urlSessionConfiguration.httpCookieStorage = .shared
-        self.urlSessionDelegate = .init()
-        self.urlSession = .init(
-            configuration: config.urlSessionConfiguration,
-            delegate: self.urlSessionDelegate,
-            delegateQueue: nil
-        )
         
         self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url), navigationTransition: nil, pendingView: nil)]
-        
+
         self.mergedEventSubjects = self.navigationPath.first!.coordinator.eventSubject.compactMap({ [weak self] value in
             self.map({ ($0.navigationPath.first!.coordinator, value) })
         })
@@ -128,21 +110,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 false
             }
             if next.last!.coordinator.url != next.last!.url || isDisconnected {
-                if prev.count > next.count {
-                    // back navigation
-                    Task(priority: .userInitiated) {
-                        try await next.last!.coordinator.connect(domValues: self.domValues, redirect: true)
-                    }
-                } else if next.count > prev.count && prev.count > 0 {
-                    // forward navigation (from `redirect` or `<NavigationLink>`)
-                    Task {
-                        await prev.last?.coordinator.disconnect()
-                    }
-                    Task(priority: .userInitiated) {
-                        try await next.last?.coordinator.connect(domValues: self.domValues, redirect: true)
-                        // reset the scroll positions for a freshly navigated route.
-                        // scroll restoration should only happen on back navigation.
-                        self.scrollPositions[next.count] = [:]
+                Task {
+                    if prev.count > next.count {
+                        // back navigation
+//                        try await next.last!.coordinator.connect(redirect: true)
+                    } else if next.count > prev.count && prev.count > 0 {
+                        // forward navigation (from `redirect` or `<NavigationLink>`)
+//                        await prev.last?.coordinator.disconnect()
+//                        try await next.last?.coordinator.connect(redirect: true)
                     }
                 }
             }
@@ -296,7 +271,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             self.navigationPath = [self.navigationPath.first!]
         }
-        self.socket?.disconnect()
+        try! await self.socket?.disconnect()
         self.socket = nil
         self.state = .disconnected
     }
@@ -541,9 +516,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         self.url = redirect.to
                     }
                     coordinator.document = navigationPath.last!.coordinator.document
-                    await navigationPath.last?.coordinator.disconnect()
+//                    await navigationPath.last?.coordinator.disconnect()
                     navigationPath[navigationPath.count - 1] = entry
-                    try await coordinator.connect(domValues: self.domValues, redirect: true)
+//                    try await coordinator.connect(domValues: self.domValues, redirect: true)
                 }
             }
         case .patch:
@@ -563,35 +538,20 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
 }
 
-/// A delegate that adds the `_format` query parameter to any redirects.
-final class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDelegate {
-    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest) async -> URLRequest? {
-        guard let url = request.url else {
-            return request
-        }
-        
-        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-
-        var newRequest = request
-        newRequest.url = await url.appendingLiveViewItems()
-        return newRequest
-    }
-}
-
 @MainActor
 enum LiveSessionParameters {
     static var platform: String { "swiftui" }
-    static var platformParams: [String:Any] {
-        [
-            "app_version": getAppVersion(),
-            "app_build": getAppBuild(),
-            "bundle_id": getBundleID(),
-            "os": getOSName(),
-            "os_version": getOSVersion(),
-            "target": getTarget(),
+    static var platformParams: LiveViewNativeCore.Json {
+        .object(object: [
+            "app_version": .str(string: getAppVersion()),
+            "app_build": .str(string: getAppBuild()),
+            "bundle_id": .str(string: getBundleID()),
+            "os": .str(string: getOSName()),
+            "os_version": .str(string: getOSVersion()),
+            "target": .str(string: getTarget()),
             "l10n": getLocalization(),
             "i18n": getInternationalization()
-        ]
+        ])
     }
 
     private static func getAppVersion() -> String {
@@ -670,16 +630,16 @@ enum LiveSessionParameters {
         #endif
     }
     
-    private static func getLocalization() -> [String:Any] {
-        [
-            "locale": Locale.autoupdatingCurrent.identifier,
-        ]
+    private static func getLocalization() -> Json {
+        .object(object: [
+            "locale": .str(string: Locale.autoupdatingCurrent.identifier),
+        ])
     }
     
-    private static func getInternationalization() -> [String:Any] {
-        [
-            "time_zone": TimeZone.autoupdatingCurrent.identifier,
-        ]
+    private static func getInternationalization() -> Json {
+        .object(object: [
+            "time_zone": .str(string: TimeZone.autoupdatingCurrent.identifier),
+        ])
     }
     
     static var queryItems: [URLQueryItem] = {
