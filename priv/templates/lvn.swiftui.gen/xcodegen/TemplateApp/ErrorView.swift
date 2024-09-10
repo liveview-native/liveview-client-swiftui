@@ -67,14 +67,27 @@ struct ErrorView: View {
         }
         .padding()
         #else
-        Menu {
-            Button {
-                Task {
-                    await reconnectLiveView(.automatic)
+        if #available(iOS 14, macOS 11, tvOS 17, visionOS 1, *) {
+            Menu {
+                Button {
+                    Task {
+                        await reconnectLiveView(.automatic)
+                    }
+                } label: {
+                    Label("Reconnect this page", systemImage: "arrow.2.circlepath")
+                }
+                Button {
+                    Task {
+                        await reconnectLiveView(.restart)
+                    }
+                } label: {
+                    Label("Restart from root", systemImage: "arrow.circlepath")
                 }
             } label: {
-                Label("Reconnect this page", systemImage: "arrow.2.circlepath")
+                Label("Reconnect", systemImage: "arrow.2.circlepath")
             }
+            .padding()
+        } else {
             Button {
                 Task {
                     await reconnectLiveView(.restart)
@@ -82,10 +95,8 @@ struct ErrorView: View {
             } label: {
                 Label("Restart from root", systemImage: "arrow.circlepath")
             }
-        } label: {
-            Label("Reconnect", systemImage: "arrow.2.circlepath")
+            .padding()
         }
-        .padding()
         #endif
     }
 }
