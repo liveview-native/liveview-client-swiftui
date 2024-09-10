@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import LiveViewNativeCore
 
 struct LiveRedirect: Hashable {
     let kind: Kind
@@ -44,12 +45,21 @@ struct LiveRedirect: Hashable {
         self.mode = mode
     }
     
-    init?(from payload: Payload, relativeTo rootURL: URL, mode: Mode = .replaceTop) {
-        guard let kind = (payload["kind"] as? String).flatMap(Kind.init),
-              let to = (payload["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: rootURL) })
+    init?(from object: [String:LiveViewNativeCore.Json], relativeTo rootURL: URL, mode: Mode = .replaceTop) {
+        guard case .str(string: let kindString) = object["kind"],
+              let kind = Kind(rawValue: kindString),
+              case .str(string: let toString) = object["to"],
+              let to = URL(string: toString, relativeTo: rootURL)
         else { return nil }
         self.kind = kind
         self.to = to.appending(path: "").absoluteURL
-        self.mode = (payload["mode"] as? String).flatMap(Mode.init) ?? mode
+        self.mode = if
+            case let .str(string: modeString) = object["mode"],
+            let mode = Mode(rawValue: modeString)
+        {
+            mode
+        } else {
+            mode
+        }
     }
 }

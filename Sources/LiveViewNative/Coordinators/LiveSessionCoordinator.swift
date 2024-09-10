@@ -8,7 +8,6 @@
 import Foundation
 import SwiftSoup
 import SwiftUI
-import SwiftPhoenixClient
 import Combine
 import OSLog
 import LiveViewNativeCore
@@ -47,28 +46,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     @Published private(set) var stylesheet: Stylesheet<R>?
 
     // Socket connection
-    var socket: SwiftPhoenixClient.Socket?
+    var liveSocket: LiveViewNativeCore.LiveSocket?
+    var socket: LiveViewNativeCore.Socket?
 
-    private var domValues: DOMValues!
-
-    private var liveReloadSocket: SwiftPhoenixClient.Socket?
-    private var liveReloadChannel: SwiftPhoenixClient.Channel?
+    private var liveReloadSocket: LiveViewNativeCore.Socket?
+    private var liveReloadChannel: LiveViewNativeCore.Channel?
 
     private var cancellables = Set<AnyCancellable>()
 
     private var mergedEventSubjects: AnyCancellable?
     private var eventSubject = PassthroughSubject<(LiveViewCoordinator<R>, (String, Payload)), Never>()
     private var eventHandlers = Set<AnyCancellable>()
-
-    /// Delegate for the ``urlSession``.
-    ///
-    /// This delegate will add the `_format` and other necessary query params to any redirects.
-    private var urlSessionDelegate: LiveSessionURLSessionDelegate<R>
-
-    /// The ``URLSession`` instance to use for all HTTP requests.
-    ///
-    /// This session is created using the ``LiveSessionConfiguration/urlSessionConfiguration``.
-    private var urlSession: URLSession
     
     private var reconnectAttempts = 0
     
@@ -103,15 +91,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.configuration = config
 
         config.urlSessionConfiguration.httpCookieStorage = .shared
-        self.urlSessionDelegate = .init()
-        self.urlSession = .init(
-            configuration: config.urlSessionConfiguration,
-            delegate: self.urlSessionDelegate,
-            delegateQueue: nil
-        )
-
-        self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url), navigationTransition: nil)]
         
+        self.navigationPath = [.init(url: url, coordinator: .init(session: self, url: self.url), navigationTransition: nil)]
+
         self.mergedEventSubjects = self.navigationPath.first!.coordinator.eventSubject.compactMap({ [weak self] value in
             self.map({ ($0.navigationPath.first!.coordinator, value) })
         })
@@ -128,21 +110,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 false
             }
             if next.last!.coordinator.url != next.last!.url || isDisconnected {
-                if prev.count > next.count {
-                    // back navigation
-                    Task(priority: .userInitiated) {
-                        try await next.last!.coordinator.connect(domValues: self.domValues, redirect: true)
-                    }
-                } else if next.count > prev.count && prev.count > 0 {
-                    // forward navigation (from `redirect` or `<NavigationLink>`)
-                    Task {
-                        await prev.last?.coordinator.disconnect()
-                    }
-                    Task(priority: .userInitiated) {
-                        try await next.last?.coordinator.connect(domValues: self.domValues, redirect: true)
-                        // reset the scroll positions for a freshly navigated route.
-                        // scroll restoration should only happen on back navigation.
-                        self.scrollPositions[next.count] = [:]
+                Task {
+                    if prev.count > next.count {
+                        // back navigation
+//                        try await next.last!.coordinator.connect(redirect: true)
+                    } else if next.count > prev.count && prev.count > 0 {
+                        // forward navigation (from `redirect` or `<NavigationLink>`)
+//                        await prev.last?.coordinator.disconnect()
+//                        try await next.last?.coordinator.connect(redirect: true)
                     }
                 }
             }
@@ -291,7 +266,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             self.navigationPath = [self.navigationPath.first!]
         }
-        self.socket?.disconnect()
+        try! await self.socket?.disconnect()
         self.socket = nil
         self.state = .disconnected
     }
@@ -340,179 +315,6 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             .store(in: &eventHandlers)
     }
 
-    /// Request the dead render with the given `request`.
-    ///
-    /// Returns the dead render HTML and the HTTP response information (including the final URL after redirects).
-    func deadRender(
-        for request: URLRequest,
-        domValues: DOMValues?
-    ) async throws -> (String, HTTPURLResponse) {
-        
-        var request = request
-        request.url = request.url!.appendingLiveViewItems()
-        request.allHTTPHeaderFields = configuration.headers
-        
-        if let domValues {
-            request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
-        }
-
-        let data: Data
-        let response: URLResponse
-        do {
-            (data, response) = try await urlSession.data(for: request)
-        } catch {
-            throw LiveConnectionError.initialFetchError(error)
-        }
-
-        guard let response = response as? HTTPURLResponse,
-              response.statusCode == 200,
-              let html = String(data: data, encoding: .utf8)
-        else {
-            if let html = String(data: data, encoding: .utf8)
-            {
-                if try extractLiveReloadFrame(SwiftSoup.parse(html)) {
-                    await connectLiveReloadSocket(urlSessionConfiguration: urlSession.configuration)
-                }
-                throw LiveConnectionError.initialFetchUnexpectedResponse(response, html)
-            } else {
-                throw LiveConnectionError.initialFetchUnexpectedResponse(response)
-            }
-        }
-        return (html, response)
-    }
-
-    struct DOMValues {
-        let phxCSRFToken: String
-        let phxSession: String
-        let phxStatic: String
-        let phxView: String
-        let phxID: String
-        let liveReloadEnabled: Bool
-    }
-    
-    nonisolated private func extractLiveReloadFrame(_ doc: SwiftSoup.Document) throws -> Bool {
-        !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
-    }
-
-    private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> DOMValues {
-        let csrfToken = try doc.select("csrf-token")
-        guard !csrfToken.isEmpty() else {
-            throw LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken)
-        }
-
-        let mainDivRes = try doc.select("div[data-phx-main]")
-        guard !mainDivRes.isEmpty() else {
-            throw LiveConnectionError.initialParseError(missingOrInvalid: .phxMain)
-        }
-        let mainDiv = mainDivRes[0]
-        return .init(
-            phxCSRFToken: try csrfToken[0].attr("value"),
-            phxSession: try mainDiv.attr("data-phx-session"),
-            phxStatic: try mainDiv.attr("data-phx-static"),
-            phxView: try mainDiv.attr("data-phx-view"),
-            phxID: try mainDiv.attr("id"),
-            liveReloadEnabled: try extractLiveReloadFrame(doc)
-        )
-    }
-
-    private nonisolated func connectSocket(_ domValues: DOMValues) async throws {
-        var wsEndpoint = await URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
-        wsEndpoint.scheme = await self.url.scheme == "https" ? "wss" : "ws"
-        wsEndpoint.path = "/live/websocket"
-        let configuration = await self.urlSession.configuration
-        let socket = Socket(
-            endPoint: wsEndpoint.string!,
-            transport: {
-                URLSessionTransport(url: $0, configuration: configuration)
-            },
-            paramsClosure: {
-                [
-                    "_csrf_token": domValues.phxCSRFToken,
-                    "_format": "swiftui"
-                ]
-            }
-        )
-        
-        socket.onClose { @Sendable in logger.debug("[Socket] Closed") }
-        socket.logger = { @Sendable message in logger.debug("[Socket] \(message)") }
-        
-        try await withCheckedThrowingContinuation { [weak self] (continuation: CheckedContinuation<Void, any Error>) in
-            guard let self else {
-                return continuation.resume(throwing: LiveConnectionError.sessionCoordinatorReleased)
-            }
-            
-            // set to `reconnecting` when the socket asks for the delay duration.
-            socket.reconnectAfter = { @Sendable [weak self] tries in
-                Task { @MainActor [weak self] in
-                    self?.state = .reconnecting
-                }
-                return Defaults.reconnectSteppedBackOff(tries)
-            }
-            socket.onOpen { [weak self] in
-                Task { @MainActor [weak self] in
-                    guard case .reconnecting = await self?.state else { return }
-                    self?.state = .connected
-                }
-            }
-
-            var refs = [String]()
-
-            refs.append(socket.onOpen { [weak self, weak socket] in
-                guard let socket else { return }
-                guard self != nil else {
-                    socket.disconnect()
-                    return
-                }
-                logger.debug("[Socket] Opened")
-                socket.off(refs)
-                continuation.resume()
-            })
-            refs.append(socket.onError { [weak self, weak socket, refs] (error, response) in
-                guard let socket else { return }
-                guard self != nil else {
-                    socket.disconnect()
-                    return
-                logger.error("[Socket] Error: \(String(describing: error))")
-                socket.off(refs)
-        self.socket?.onClose { logger.debug("[Socket] Closed") }
-        self.socket?.logger = { message in logger.debug("[Socket] \(message)") }
-
-        self.state = .connected
-
-        if domValues.liveReloadEnabled {
-            await self.connectLiveReloadSocket(urlSessionConfiguration: urlSession.configuration)
-        }
-    }
-    
-    private nonisolated func connectLiveReloadSocket(urlSessionConfiguration: URLSessionConfiguration) async {
-        await MainActor.run {
-            if let liveReloadSocket = self.liveReloadSocket {
-                liveReloadSocket.disconnect()
-                self.liveReloadSocket = nil
-            }
-
-        var liveReloadEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
-        liveReloadEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
-        liveReloadEndpoint.path = "/phoenix/live_reload/socket"
-        self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
-            URLSessionTransport(url: $0, configuration: urlSessionConfiguration)
-        })
-        liveReloadSocket!.connect()
-        self.liveReloadChannel = liveReloadSocket!.channel("phoenix:live_reload")
-        self.liveReloadChannel!.join().receive("ok") { msg in
-            logger.debug("[LiveReload] connected to channel")
-        }.receive("error") { msg in
-            logger.debug("[LiveReload] error connecting to channel: \(msg.payload)")
-        }
-        self.liveReloadChannel!.on("assets_change") { [weak self] _ in
-            logger.debug("[LiveReload] assets changed, reloading")
-            Task {
-                await StylesheetCache.shared.removeAll()
-                // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
-                await self?.reconnect()
-            }
-        }
-
     func redirect(_ redirect: LiveRedirect) async throws {
         switch redirect.mode {
         case .replaceTop:
@@ -527,9 +329,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         self.url = redirect.to
                     }
                     coordinator.document = navigationPath.last!.coordinator.document
-                    await navigationPath.last?.coordinator.disconnect()
+//                    await navigationPath.last?.coordinator.disconnect()
                     navigationPath[navigationPath.count - 1] = entry
-                    try await coordinator.connect(domValues: self.domValues, redirect: true)
+//                    try await coordinator.connect(domValues: self.domValues, redirect: true)
                 }
             }
         case .patch:
@@ -549,35 +351,20 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
 }
 
-/// A delegate that adds the `_format` query parameter to any redirects.
-final class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDelegate {
-    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest) async -> URLRequest? {
-        guard let url = request.url else {
-            return request
-        }
-        
-        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-
-        var newRequest = request
-        newRequest.url = await url.appendingLiveViewItems()
-        return newRequest
-    }
-}
-
 @MainActor
 enum LiveSessionParameters {
     static var platform: String { "swiftui" }
-    static var platformParams: [String:Any] {
-        [
-            "app_version": getAppVersion(),
-            "app_build": getAppBuild(),
-            "bundle_id": getBundleID(),
-            "os": getOSName(),
-            "os_version": getOSVersion(),
-            "target": getTarget(),
+    static var platformParams: LiveViewNativeCore.Json {
+        .object(object: [
+            "app_version": .str(string: getAppVersion()),
+            "app_build": .str(string: getAppBuild()),
+            "bundle_id": .str(string: getBundleID()),
+            "os": .str(string: getOSName()),
+            "os_version": .str(string: getOSVersion()),
+            "target": .str(string: getTarget()),
             "l10n": getLocalization(),
             "i18n": getInternationalization()
-        ]
+        ])
     }
 
     private static func getAppVersion() -> String {
@@ -656,16 +443,16 @@ enum LiveSessionParameters {
         #endif
     }
     
-    private static func getLocalization() -> [String:Any] {
-        [
-            "locale": Locale.autoupdatingCurrent.identifier,
-        ]
+    private static func getLocalization() -> Json {
+        .object(object: [
+            "locale": .str(string: Locale.autoupdatingCurrent.identifier),
+        ])
     }
     
-    private static func getInternationalization() -> [String:Any] {
-        [
-            "time_zone": TimeZone.autoupdatingCurrent.identifier,
-        ]
+    private static func getInternationalization() -> Json {
+        .object(object: [
+            "time_zone": .str(string: TimeZone.autoupdatingCurrent.identifier),
+        ])
     }
     
     static var queryItems: [URLQueryItem] = {
