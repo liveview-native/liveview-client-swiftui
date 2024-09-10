@@ -6,11 +6,11 @@
 //
 
 import Foundation
-@preconcurrency import SwiftPhoenixClient
 import SwiftSoup
 import SwiftUI
 import Combine
 import LiveViewNativeCore
+import AsyncAlgorithms
 import OSLog
 
 private let PUSH_TIMEOUT: Double = 30000
@@ -36,7 +36,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
 
     var url: URL
 
-    private var channel: SwiftPhoenixClient.Channel?
+    private var liveChannel: LiveViewNativeCore.LiveChannel?
+    private var channel: LiveViewNativeCore.Channel?
 
     @Published var document: LiveViewNativeCore.Document?
     private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
@@ -50,30 +51,17 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     internal let builder = ViewTreeBuilder<R>()
 
-    private var currentConnectionToken: ConnectionAttemptToken?
-    private var currentConnectionTask: Task<Void, Error>?
-
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
+    private var eventListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
+    private var eventListenerLoop: Task<(), any Error>?
+
     private(set) internal var liveViewModel = LiveViewModel()
-    
-    init(
-        session: LiveSessionCoordinator<R>,
-        url: URL
-    ) {
+
+    init(session: LiveSessionCoordinator<R>, url: URL) {
         self.session = session
         self.url = url
-
-        self.handleEvent("native_redirect") { [weak self] payload in
-            guard let self,
-                  let redirect = LiveRedirect(from: payload, relativeTo: self.url),
-                  let session = self.session
-            else { return }
-            Task {
-                try await session.redirect(redirect)
-            }
-        }
     }
 
     /// Pushes a LiveView event with the given name and payload to the server.
@@ -87,25 +75,23 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter target: The value of the `phx-target` attribute.
     /// - Throws: ``LiveConnectionError/eventError(_:)`` if an error is encountered sending the event or processing it on the backend, `CancellationError` if the coordinator navigates to a different page while the event is being handled
     @discardableResult
-    public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> [String:Any]? {
-        // isValidJSONObject only accepts objects, but we want to check that the value can be serialized as a field of an object
-        precondition(JSONSerialization.isValidJSONObject(["a": value]))
-        return try await doPushEvent("event", payload: [
-            "type": type,
-            "event": event,
-            "value": value,
-            "cid": target as Any
-        ])
+    public func pushEvent(type: String, event: String, value: some Encodable, target: Int? = nil) async throws -> [String:Any]? {
+        return try await doPushEvent("event", payload: .jsonPayload(json: .object(object: [
+            "type": .str(string: type),
+            "event": .str(string: event),
+            "value": try JSONDecoder().decode(Json.self, from: JSONEncoder().encode(value)),
+            "cid": target.flatMap({ .numb(number: .posInt(pos: UInt64($0))) }) ?? .null
+        ])))
     }
     
     @discardableResult
-    public func pushEvent(type: String, event: String, value: some Encodable, target: Int? = nil) async throws -> [String:Any]? {
-        try await pushEvent(
-            type: type,
-            event: event,
-            value: try JSONSerialization.jsonObject(with: JSONEncoder().encode(value)),
-            target: target
-        )
+    public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> [String:Any]? {
+        return try await doPushEvent("event", payload: .jsonPayload(json: .object(object: [
+            "type": .str(string: type),
+            "event": .str(string: event),
+            "value": try JSONDecoder().decode(Json.self, from: JSONSerialization.data(withJSONObject: value)),
+            "cid": target.flatMap({ .numb(number: .posInt(pos: UInt64($0))) }) ?? .null
+        ])))
     }
     
     struct ReplyPayload: @unchecked Sendable {
@@ -113,42 +99,43 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     @discardableResult
-    internal func doPushEvent(_ event: String, payload: Payload) async throws -> [String:Any]? {
+    internal func doPushEvent(_ event: String, payload: LiveViewNativeCore.Payload) async throws -> [String:Any]? {
         guard let channel = channel else {
             return nil
         }
-
-        let token = self.currentConnectionToken
-
-        let replyPayload: ReplyPayload = try await withCheckedThrowingContinuation({ [weak channel] continuation in
-            guard channel?.isJoined == true else {
-                return continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
-            }
-            channel?.push(event, payload: payload, timeout: PUSH_TIMEOUT)
-                .receive("ok") { @Sendable reply in
-                    continuation.resume(returning: ReplyPayload(payload: reply.payload))
-                }
-                .receive("error") { @Sendable message in
-                    continuation.resume(throwing: LiveConnectionError.eventError(message))
-                }
-        })
-
-        guard currentConnectionToken === token else {
-            // TODO: maybe this should just silently fail?
-            throw CancellationError()
+        
+        guard case .joined = channel.status() else {
+            throw LiveConnectionError.viewCoordinatorReleased
         }
+        
+        let replyPayload = try await channel.call(event: .user(user: event), payload: payload, timeout: PUSH_TIMEOUT)
 
-        if let diffPayload = replyPayload.payload["diff"] as? Payload {
-            try self.handleDiff(payload: diffPayload, baseURL: self.url)
-            if let reply = diffPayload["r"] as? [String:Any] {
-                return reply
+        switch replyPayload {
+        case let .jsonPayload(json):
+            switch json {
+            case let .object(object):
+                if case let .object(diff) = object["diff"] {
+                    try self.handleDiff(payload: .object(object: diff), baseURL: self.url)
+                    if case let .object(reply) = diff["r"] {
+                        return reply
+                    }
+                } else if case let .object(redirectObject) = object["live_redirect"],
+                          let redirect = LiveRedirect(from: redirectObject, relativeTo: self.url)
+                {
+                    try await session.redirect(redirect)
+                } else if case let .object(redirectObject) = object["redirect"],
+                          case let .str(destinationString) = redirectObject["to"],
+                          let destination = URL(string: destinationString, relativeTo: self.url)
+                {
+                    try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
+                } else {
+                    return nil
+                }
+            default:
+                fatalError("unsupported message type \(replyPayload)")
             }
-        } else if let redirect = (replyPayload.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
-            try await session.redirect(redirect)
-        } else if let redirect = (replyPayload.payload["redirect"] as? Payload),
-                  let destination = (redirect["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
-        {
-            try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
+        default:
+            fatalError("unsupported message type \(replyPayload)")
         }
         return nil
     }
@@ -212,16 +199,18 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             .store(in: &eventHandlers)
     }
 
-    private func handleDiff(payload: Payload, baseURL: URL) throws {
-        handleEvents(payload: payload)
-        try self.document?.mergeFragmentJson(payload)
+    private func handleDiff(payload: LiveViewNativeCore.Json, baseURL: URL) throws {
+        handleEvents(payload)
+        try self.document?.mergeFragmentJson(String(data: try JSONEncoder().encode(payload), encoding: .utf8)!)
     }
 
-    private func handleEvents(payload: Payload) {
-        guard let events = payload["e"] as? [[Any]] else {
+    private func handleEvents(_ json: LiveViewNativeCore.Json) {
+        guard case let .object(object) = json,
+              case let .array(array: events) = object["e"]
+        else {
             return
         }
-        for event in events {
+        for case let .array(event) in events {
             guard let name = event[0] as? String,
                   let value = event[1] as? Payload else {
                 continue
@@ -230,179 +219,75 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
 
-    private nonisolated func parseDOM(html: String, baseURL: URL) throws -> Elements {
-        let document = try Parser.htmlParser().parseInput(html, baseURL.absoluteString)
-        return document.children()
-    }
-
-    func connect(domValues: LiveSessionCoordinator<R>.DOMValues, redirect: Bool) async throws {
-        await self.disconnect()
-
-        self.internalState = .connecting
-
-        guard let socket = session.socket else { return }
-
-        var connectParams = session.configuration.connectParams?(self.url) ?? [:]
-        connectParams["_mounts"] = 0
-        connectParams["_format"] = "swiftui"
-        connectParams["_csrf_token"] = domValues.phxCSRFToken
-        connectParams["_interface"] = LiveSessionParameters.platformParams
-
-        let params: Payload = [
-            "session": domValues.phxSession,
-            "static": domValues.phxStatic,
-            (redirect ? "redirect": "url"): self.url.absoluteString,
-            "params": connectParams,
-        ]
-
-        let channel = socket.channel("lv:\(domValues.phxID)", params: params)
-        self.channel = channel
-        channel.onError { message in
-            logger.error("[Channel] Error: \(String(describing: message))")
-        }
-        channel.onClose { message in
-            logger.info("[Channel] Closed")
-        }
-        channel.on("diff") { [weak self, weak channel] message in
-            Task { @MainActor in
-                guard let self,
-                      channel === self.channel
-                else { return }
-                try! self.handleDiff(payload: message.payload, baseURL: self.url)
-            }
-        }
-        channel.on("live_redirect") { [weak self] message in
-            Task {
-                guard let self,
-                      let redirect = LiveRedirect(from: message.payload, relativeTo: self.url)
-                else { return }
-                try await self.session.redirect(redirect)
-            }
-        }
-        channel.on("live_patch") { [weak self] message in
-            Task {
-                guard let self,
-                      let redirect = LiveRedirect(from: message.payload, relativeTo: self.url, mode: .patch)
-                else { return }
-                try await self.session.redirect(redirect)
-            }
-        }
-        channel.on("redirect") { [weak self] message in
-            Task {
-                guard let self,
-                      let destination = (message.payload["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
-                else { return }
-                try await self.session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
-            }
-        }
-        channel.on("phx_close") { [weak self, weak channel] message in
-            Task { @MainActor in
-                guard channel === self?.channel else { return }
-                self?.internalState = .disconnected
-            }
-        }
-
-        let joinTask = Task {
-            for try await joinResult in join(channel: channel) {
-                switch joinResult {
-                case .rendered(let payload):
-                    await MainActor.run {
-                        self.handleJoinPayload(renderedPayload: payload)
-                        self.internalState = .connected
+    func bindEventListener() {
+        self.eventListener = self.channel!.eventStream()
+        self.eventListenerLoop = Task {
+            print("event loop start")
+            for try await event in self.eventListener! {
+                print(event)
+                do {
+                    switch event.event {
+                    case .user(user: "diff"):
+                        switch event.payload {
+                        case let .jsonPayload(json):
+                            try! self.handleDiff(payload: json, baseURL: self.url)
+                        case .binary:
+                            fatalError()
+                        }
+                    case .user(user: "live_redirect"):
+                        guard case let .jsonPayload(json) = event.payload,
+                              case let .object(payload) = json,
+                              let redirect = LiveRedirect(from: payload, relativeTo: self.url)
+                        else { break }
+                        try await self.session.redirect(redirect)
+                    case .user(user: "live_patch"):
+                        guard case let .jsonPayload(json) = event.payload,
+                              case let .object(payload) = json,
+                              let redirect = LiveRedirect(from: payload, relativeTo: self.url, mode: .patch)
+                        else { return }
+                        try await self.session.redirect(redirect)
+                    case .user(user: "redirect"):
+                        guard case let .jsonPayload(json) = event.payload,
+                              case let .object(payload) = json,
+                              let destination = (payload["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
+                        else { return }
+                        try await self.session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
+                    default:
+                        print("Unhandled event: \(event)")
                     }
-                case .redirect(let liveRedirect):
-                    self.url = liveRedirect.to
-                    try await self.connect(domValues: domValues, redirect: true)
+                } catch {
+                    print("Event handling error: \(error)")
                 }
             }
-        }
-
-        channel.onClose { _ in
-            joinTask.cancel()
+            print("event loop end")
         }
     }
 
-    func disconnect() async {
-        if let channel,
-           !channel.isClosed
-        {
-            await withCheckedContinuation { continuation in
-                channel.leave()
-                    .receive("ok") { _ in
-                        continuation.resume()
-                    }
-            }
-            await MainActor.run { [weak self] in
-                self?.channel = nil
-                self?.internalState = .disconnected
-            }
+
+    func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
+        self.liveChannel = liveChannel
+        self.channel = liveChannel.channel()
+        
+        self.bindEventListener()
+        
+        switch liveChannel.joinPayload() {
+        case let .jsonPayload(.object(payload)):
+            handleJoinPayload(renderedPayload: payload["rendered"]!)
+        default:
+            fatalError()
         }
-    }
-    
-    enum JoinResult: @unchecked Sendable {
-        case rendered(Payload)
-        case redirect(LiveRedirect)
+        
+        self.internalState = .connected
     }
 
-    private nonisolated func join(channel: Channel) -> AsyncThrowingStream<JoinResult, Error> {
-        return AsyncThrowingStream<JoinResult, Error> { [weak channel] (continuation: AsyncThrowingStream<JoinResult, Error>.Continuation) -> Void in
-            channel?.join()
-                .receive("ok") { [weak self, weak channel] message in
-                    guard let channel else {
-                        continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
-                        return
-                    }
-                    guard self != nil else {
-                        // leave the channel so we don't get any more messages/automatic rejoins
-                        if channel.isJoined {
-                            channel.leave()
-                        }
-                        continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
-                        return
-                    }
-                    let renderedPayload = (message.payload["rendered"] as! Payload)
-                    continuation.yield(.rendered(renderedPayload))
-                }
-                .receive("error") { [weak self, weak channel] message in
-                    guard channel != nil else {
-                        continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
-                        return
-                    }
-                    
-                    Task { @Sendable [weak self] in
-                        guard let self else {
-                            continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
-                            return
-                        }
-
-                        switch message.payload["reason"] as? String {
-                        case "unauthorized", "stale":
-                            await self.session.reconnect()
-                        default:
-                            await self.disconnect()
-                        }
-                        
-                        let url = await self.url
-                        
-                        if let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: url) }) {
-                            continuation.yield(.redirect(redirect))
-                        } else {
-                            continuation.finish(throwing: LiveConnectionError.joinError(message))
-                        }
-                    }
-                }
-            channel?.onClose { _ in
-                continuation.finish()
-            }
-            continuation.onTermination = { [weak channel] termination in
-                channel?.leave()
-            }
-        }
-    }
-
-    private func handleJoinPayload(renderedPayload: Payload) {
+    private func handleJoinPayload(renderedPayload: LiveViewNativeCore.Json) {
         // todo: what should happen if decoding or parsing fails?
-        self.document = try! LiveViewNativeCore.Document.parseFragmentJson(payload: renderedPayload)
+        self.document = try! LiveViewNativeCore.Document.parseFragmentJson(
+            String(
+                data: JSONEncoder().encode(renderedPayload),
+                encoding: .utf8
+            )!
+        )
         self.document?.on(.changed) { [unowned self] nodeRef, nodeData, parent in
             switch nodeData {
             case .root:
@@ -420,21 +305,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 self.elementChanged(nodeRef).send()
             }
         }
-        self.handleEvents(payload: renderedPayload)
+        self.handleEvents(renderedPayload)
     }
-}
-
-extension LiveViewCoordinator {
-    /// This token represents an individual attempt at connecting to a particular Live View.
-    ///
-    /// If a new navigation/connection attempt interrupts an in-progress one, the token allows
-    /// dangling completion handlers to detect that they've been preempted and cancel themselves.
-    ///
-    /// The URL cannot be used for this purpose, because the previous and new URLs may be the same
-    /// (e.g., due to live reload).
-    ///
-    /// This class deliberately does not implement `Equatable` and reference equality (`===`) is used to
-    /// check token validatity. A token is constructed at the beginning of a connection attempt, set as the coordinator's
-    /// current token, and compared to the then-current one in asynchronous callbacks.
-    class ConnectionAttemptToken {}
 }

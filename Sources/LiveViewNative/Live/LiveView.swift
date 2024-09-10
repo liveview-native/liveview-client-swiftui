@@ -228,10 +228,12 @@ public struct LiveView<
             await session.connect()
         }
         .onChange(of: scenePhase) { newValue in
-            guard case .active = newValue,
-                  session.socket?.isConnected == false
+            guard case .active = newValue
             else { return }
-            Task(priority: .userInitiated) {
+            if case .connected = session.socket?.status() {
+                return
+            }
+            Task {
                 await session.connect()
             }
         }
