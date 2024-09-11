@@ -17,13 +17,11 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
 
   @shortdoc "Generates ex doc files for all SwiftUI views"
   def run(args) do
-    dbg args
     {kwargs, [], []} = OptionParser.parse(args, strict: [doc_path: :string, no_generate_docc: :boolean])
 
     # Using a temporary folder outside of the project avoids ElixirLS file watching issues
     doc_path = Keyword.get(kwargs, :doc_path, Path.join(System.tmp_dir!(), "temp_swiftui_docs"))
       |> Path.absname()
-    dbg doc_path
 
     Logger.info("Locating Xcode installation")
     xcode_path = :os.cmd(@xcode_select_print_path) |> to_string() |> String.trim()
