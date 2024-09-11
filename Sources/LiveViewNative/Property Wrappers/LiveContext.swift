@@ -24,13 +24,12 @@ import LiveViewNativeCore
 public struct LiveContext<R: RootRegistry>: DynamicProperty {
     @Environment(\.anyLiveContextStorage) private var anyStorage
     
-//    @Environment(\.gestureState) private var environmentGestureState
+    @Environment(\.gestureState) private var environmentGestureState
     internal var overrideGestureState: GestureState<[String:Any]>?
     /// The `GestureState` value in the environment.
     /// Uses the ``overrideGestureState`` if present.
     var gestureState: GestureState<[String:Any]> {
-//        overrideGestureState ?? environmentGestureState
-        overrideGestureState ?? GestureState(initialValue: [:])
+        overrideGestureState ?? environmentGestureState
     }
     
     internal let overrideStorage: LiveContextStorage<R>?
