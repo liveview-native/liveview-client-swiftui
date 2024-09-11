@@ -170,92 +170,38 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         logger.debug("Connecting to \(originalURL.absoluteString)")
 
         state = .connecting
-
-        do {
-            var request = URLRequest(url: originalURL)
-            request.httpMethod = httpMethod
-            request.httpBody = httpBody
-            let (html, response) = try await deadRender(for: request, domValues: self.domValues)
-            
-            // update the URL if redirects happened.
-            let url: URL
-            if let responseURL = response.url {
-                if self.navigationPath.count == 1 {
-                    self.url = responseURL
-                }
-                self.navigationPath.last!.coordinator.url = responseURL
-                self.navigationPath[self.navigationPath.endIndex - 1] = .init(
-                    url: responseURL,
-                    coordinator: self.navigationPath.last!.coordinator,
-                    navigationTransition: nil,
-                    pendingView: nil
-                )
-                url = responseURL
-            } else {
-                url = originalURL
-            }
-
-            let doc = try SwiftSoup.parse(html, url.absoluteString, SwiftSoup.Parser.xmlParser().settings(.init(true, true)))
-            self.domValues = try self.extractDOMValues(doc)
-            
-            // extract the root layout, removing anything within the `<div data-phx-main>`.
-            let mainDiv = try doc.select("div[data-phx-main]")[0]
-            try mainDiv.replaceWith(doc.createElement("phx-main"))
-            
-            self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
-
-            let styleURLs = try doc.select("Style").compactMap {
-                URL(string: try $0.attr("url"), relativeTo: url)
-            }
-            async let stylesheet = withThrowingTaskGroup(of: Stylesheet<R>.self) { group in
-                for url in styleURLs {
-                    group.addTask {
-                        if let cachedStylesheet = await StylesheetCache.shared.read(for: url, registry: R.self) {
-                            return cachedStylesheet
-                        } else {
-                            let (data, response) = try await self.urlSession.data(from: url)
-                            if let response = response as? HTTPURLResponse,
-                               !(200...299).contains(response.statusCode) {
-                                throw AnyLocalizedError(errorDescription: "Downloading stylesheet '\(url.absoluteString)' failed with status code \(response.statusCode)")
-                            }
-                            guard let contents = String(data: data, encoding: .utf8)
-                            else { return await Stylesheet<R>(content: [], classes: [:]) }
-                            let stylesheet = try await Stylesheet<R>(from: contents, in: .init())
-                            await StylesheetCache.shared.write(stylesheet, for: url, registry: R.self)
-                            return stylesheet
-                        }
-                    }
-                }
-                return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
-                    return await result.merge(with: next)
+        
+        self.liveSocket = try! await LiveSocket(originalURL.absoluteString, 10, LiveSessionParameters.platform)
+        self.socket = self.liveSocket?.socket()
+        
+        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(.some([
+            "_format": .str(string: LiveSessionParameters.platform),
+            "_interface": LiveSessionParameters.platformParams
+        ]))
+        
+        self.rootLayout = self.liveSocket!.deadRender()
+        let styleURLs = self.liveSocket!.styleUrls()
+        
+        self.stylesheet = try! await withThrowingTaskGroup(of: Stylesheet<R>.self) { group in
+            for style in styleURLs {
+                guard let url = await URL(string: style, relativeTo: self.url)
+                else { continue }
+                group.addTask {
+                    let (data, _) = try await URLSession.shared.data(from: url)
+                    guard let contents = String(data: data, encoding: .utf8)
+                    else { return await Stylesheet<R>(content: [], classes: [:]) }
+                    return try await Stylesheet<R>(from: contents, in: .init())
                 }
             }
             
-            if socket == nil {
-                try await self.connectSocket(domValues)
+            return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
+                return result.merge(with: next)
             }
-
-            self.stylesheet = try await stylesheet
-
-            try await navigationPath.last!.coordinator.connect(domValues: domValues, redirect: false)
-            
-            reconnectAttempts = 0
-        } catch {
-            self.state = .connectionFailed(error)
-            logger.log(level: .error, "\(error.localizedDescription)")
-            if let delay = configuration.reconnectBehavior.delay?(reconnectAttempts) {
-                logger.log(level: .debug, "Reconnecting in \(delay) seconds")
-                Task { [weak self] in
-                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-                    guard let self,
-                          case .connectionFailed = self.state
-                    else { return } // already connected
-                    reconnectAttempts += 1
-                    await self.connect(httpMethod: httpMethod, httpBody: httpBody)
-                }
-            }
-            return
         }
+        
+        self.navigationPath.last!.coordinator.join(liveChannel)
+        
+        self.state = .connected
     }
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
