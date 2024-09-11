@@ -179,26 +179,29 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             "_interface": Self.platformParams
         ]))
         
-        // FIXME: Mock for the root layout until available in core.
-        self.rootLayout = try! .parse("<NavigationStack><phx-main></phx-main></NavigationStack>")
+        self.rootLayout = self.liveSocket!.deadRender()
+        let styleURLs = self.liveSocket!.styleUrls()
+        
+        self.stylesheet = try! await withThrowingTaskGroup(of: Stylesheet<R>.self) { group in
+            for style in styleURLs {
+                guard let url = await URL(string: style, relativeTo: self.url)
+                else { continue }
+                group.addTask {
+                    let (data, _) = try await URLSession.shared.data(from: url)
+                    guard let contents = String(data: data, encoding: .utf8)
+                    else { return Stylesheet<R>(content: [], classes: [:]) }
+                    return try Stylesheet<R>(from: contents, in: .init())
+                }
+            }
+            
+            return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
+                return result.merge(with: next)
+            }
+        }
         
         self.navigationPath.last!.coordinator.join(liveChannel)
         
         self.state = .connected
-        
-//        async let stylesheet = withThrowingTaskGroup(of: (Data, URLResponse).self) { group in
-//            for style in try doc.select("Style") {
-//                guard let url = URL(string: try style.attr("url"), relativeTo: url)
-//                else { continue }
-//                group.addTask { try await self.urlSession.data(from: url) }
-//            }
-//            return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
-//                guard let contents = String(data: next.0, encoding: .utf8)
-//                else { return result }
-//                return result.merge(with: try Stylesheet<R>(from: contents, in: .init()))
-//            }
-//        }
-//        self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
     }
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
