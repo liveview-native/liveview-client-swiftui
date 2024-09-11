@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftSoup
 import SwiftUI
 import SwiftPhoenixClient
 import Combine
@@ -213,26 +214,19 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             } else {
                 url = originalURL
             }
-            
-            let doc = try LiveViewNativeCore.Document.parse(html)
-            let (mainDiv, domValues) = try self.extractDOMValues(doc)
-            self.domValues = domValues
+
+            let doc = try SwiftSoup.parse(html, url.absoluteString, SwiftSoup.Parser.xmlParser().settings(.init(true, true)))
+            self.domValues = try self.extractDOMValues(doc)
             
             // extract the root layout, removing anything within the `<div data-phx-main>`.
-            self.rootLayout = doc
+            let mainDiv = try doc.select("div[data-phx-main]")[0]
+            try mainDiv.replaceWith(doc.createElement("phx-main"))
             
-            // This will display the dead render. Currently, merging back into the dead render doesn't work properly,
-            // so displaying this just slows the render performance down.
-//            await MainActor.run {
-//                self.navigationPath.last!.coordinator.document = (doc, mainDiv.id)
-//            }
-            
+            self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
+
             async let stylesheet = withThrowingTaskGroup(of: Stylesheet<R>.self) { group in
-                for style in try doc[doc.root()].depthFirstChildren().filter({
-                    guard case let .element(element) = $0.data else { return false }
-                    return element.tag == "Style"
-                }) {
-                    guard let url = URL(string: try style.attributes.first(where: { $0.name.name == "url" })!.value!, relativeTo: url)
+                for style in try doc.select("Style") {
+                    guard let url = URL(string: try style.attr("url"), relativeTo: url)
                     else { continue }
                     group.addTask {
                         if let cachedStylesheet = StylesheetCache[for: url, registry: R.self] {
@@ -373,7 +367,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         else {
             if let html = String(data: data, encoding: .utf8)
             {
-                if try extractLiveReloadFrame(LiveViewNativeCore.Document.parse(html)) {
+                if try extractLiveReloadFrame(SwiftSoup.parse(html)) {
                     await connectLiveReloadSocket(urlSessionConfiguration: urlSession.configuration)
                 }
                 throw LiveConnectionError.initialFetchUnexpectedResponse(response, html)
@@ -393,42 +387,28 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let liveReloadEnabled: Bool
     }
     
-    nonisolated private func extractLiveReloadFrame(_ doc: LiveViewNativeCore.Document) throws -> Bool {
-        doc[doc.root()].depthFirstChildren().contains(where: {
-            guard case let .element(element) = $0.data,
-                  element.tag == "iframe",
-                  element.attributes.contains(where: { $0.name.name == "src" && $0.value == "/phoenix/live_reload/frame" })
-            else { return false }
-            return true
-        })
+    nonisolated private func extractLiveReloadFrame(_ doc: SwiftSoup.Document) throws -> Bool {
+        !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
     }
     
-    private func extractDOMValues(_ doc: LiveViewNativeCore.Document) throws -> (LiveViewNativeCore.Node, DOMValues) {
-        guard let csrfToken = doc[doc.root()].depthFirstChildren().first(where: {
-            guard case let .element(element) = $0.data else { return false }
-            return element.tag == "csrf-token"
-        })
-        else {
+    private func extractDOMValues(_ doc: SwiftSoup.Document) throws -> DOMValues {
+        let csrfToken = try doc.select("csrf-token")
+        guard !csrfToken.isEmpty() else {
             throw LiveConnectionError.initialParseError(missingOrInvalid: .csrfToken)
         }
         
-        guard let mainDiv = try doc[doc.root()].depthFirstChildren().first(where: {
-            guard case let .element(element) = $0.data else { return false }
-            return element.tag == "div" && element.attributes.contains(where: { $0.name.name == "data-phx-main" })
-        })
-        else {
+        let mainDivRes = try doc.select("div[data-phx-main]")
+        guard !mainDivRes.isEmpty() else {
             throw LiveConnectionError.initialParseError(missingOrInvalid: .phxMain)
         }
-        return (
-            mainDiv,
-            .init(
-                phxCSRFToken: try csrfToken.attributes.first(where: { $0.name.name == "value" })?.value ?? "",
-                phxSession: try mainDiv.attributes.first(where: { $0.name.name == "data-phx-session" })?.value ?? "",
-                phxStatic: try mainDiv.attributes.first(where: { $0.name.name == "data-phx-static" })?.value ?? "",
-                phxView: try mainDiv.attributes.first(where: { $0.name.name == "data-phx-view" })?.value ?? "",
-                phxID: try mainDiv.attributes.first(where: { $0.name.name == "id" })?.value ?? "",
-                liveReloadEnabled: try extractLiveReloadFrame(doc)
-            )
+        let mainDiv = mainDivRes[0]
+        return .init(
+            phxCSRFToken: try csrfToken[0].attr("value"),
+            phxSession: try mainDiv.attr("data-phx-session"),
+            phxStatic: try mainDiv.attr("data-phx-static"),
+            phxView: try mainDiv.attr("data-phx-view"),
+            phxID: try mainDiv.attr("id"),
+            liveReloadEnabled: try extractLiveReloadFrame(doc)
         )
     }
 

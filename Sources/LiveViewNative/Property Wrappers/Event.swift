@@ -336,7 +336,7 @@ public struct Event: DynamicProperty, Decodable {
             }
             let handler = Handler()
             handler.update(
-                coordinator: CoordinatorEnvironment(context.coordinator, document: context.coordinator.document!.0),
+                coordinator: CoordinatorEnvironment(context.coordinator, document: context.coordinator.document!),
                 debounce: owner.debounce,
                 throttle: owner.throttle
             )

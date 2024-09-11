@@ -125,7 +125,11 @@ public extension _LiveElementTracked {
     /// - Parameter template: The ``Template`` used to filter child elements. A String literal can be provided for simple template values.
     /// - Parameter includeDefault: Whether elements without a `template` attribute should be included in the filter. Defaults to `false`.
     func children(in template: Template, default includeDefault: Bool = false) -> some View {
-        context.coordinator.builder.fromNodes(childNodes(in: template, default: includeDefault), context: context.storage)
+        children {
+            $0.attributes.contains(where: {
+                $0 == template
+            }) || (includeDefault && !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" }))
+        }
     }
     
     /// Check whether one or more children have a matching `template` attribute.
@@ -154,19 +158,11 @@ public extension _LiveElementTracked {
         _element.children
     }
     
-    var defaultChildren: [LiveViewNativeCore.Node] {
-        _element.defaultChildren
-    }
-    
-    var templateChildNodes: [Template:[LiveViewNativeCore.Node]] {
-        _element.templateChildren
-    }
-    
     func childNodes(in template: Template, default includeDefault: Bool = false) -> [LiveViewNativeCore.Node] {
-        if includeDefault {
-            return defaultChildren + (_element.templateChildren[template] ?? [])
-        } else {
-            return _element.templateChildren[template] ?? []
+        _element.children.filter {
+            $0.attributes.contains(where: {
+                $0 == template
+            }) || (includeDefault && !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" }))
         }
     }
 }
@@ -192,7 +188,7 @@ public extension _LiveElementTracked {
 /// ```html
 /// <Element template="phase.success" />
 /// ```
-public struct Template: Hashable, RawRepresentable, ExpressibleByStringLiteral {
+public struct Template: RawRepresentable, ExpressibleByStringLiteral {
     let name: String
     let value: String?
     

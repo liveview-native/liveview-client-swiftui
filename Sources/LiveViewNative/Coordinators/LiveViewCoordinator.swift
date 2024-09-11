@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftPhoenixClient
+import SwiftSoup
 import SwiftUI
 import Combine
 import LiveViewNativeCore
@@ -36,12 +37,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     private var channel: Channel?
     
-    @Published var document: (LiveViewNativeCore.Document, NodeRef?)?
-    
-    private var elementChangedSubjects = [NodeRef:PassthroughSubject<NodeRef, Never>]()
-    func elementChanged(_ ref: NodeRef) -> PassthroughSubject<NodeRef, Never> {
+    @Published var document: LiveViewNativeCore.Document?
+    private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
+    func elementChanged(_ ref: NodeRef) -> ObjectWillChangePublisher {
         guard let subject = elementChangedSubjects[ref] else {
-            let newSubject = PassthroughSubject<NodeRef, Never>()
+            let newSubject = ObjectWillChangePublisher()
             elementChangedSubjects[ref] = newSubject
             return newSubject
         }
@@ -209,7 +209,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         handleEvents(payload: payload)
         let diff = try RootDiff(from: FragmentDecoder(data: payload))
         self.rendered = try self.rendered.merge(with: diff)
-        self.document?.0.merge(with: try Document.parse(self.rendered.buildString()))
+        self.document?.merge(with: try Document.parse(self.rendered.buildString()))
     }
     
     private func handleEvents(payload: Payload) {
@@ -223,6 +223,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             }
             eventSubject.send((name, value))
         }
+    }
+    
+    private nonisolated func parseDOM(html: String, baseURL: URL) throws -> Elements {
+        let document = try Parser.htmlParser().parseInput(html, baseURL.absoluteString)
+        return document.children()
     }
     
     func connect(domValues: LiveSessionCoordinator<R>.DOMValues, redirect: Bool) async throws {
@@ -288,6 +293,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         channel.on("phx_close") { [weak self, weak channel] message in
             Task { @MainActor in
                 guard channel === self?.channel else { return }
+                print("State changed to: phx_close")
                 self?.internalState = .disconnected
             }
         }
@@ -391,9 +397,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
-        let newDocument = try! LiveViewNativeCore.Document.parse(rendered.buildString())
-        self.document = (newDocument, nil)
-        newDocument.on(.changed) { [unowned self] doc, nodeRef in
+        self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
+        self.document?.on(.changed) { [unowned self] doc, nodeRef in
             switch doc[nodeRef].data {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
@@ -401,13 +406,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             case .leaf:
                 // text nodes don't have their own views, changes to them need to be handled by the parent Text view
                 if let parent = doc.getParent(nodeRef) {
-                    self.elementChanged(nodeRef).send(nodeRef)
+                    self.elementChanged(nodeRef).send()
                 } else {
-                    self.elementChanged(nodeRef).send(nodeRef)
+                    self.elementChanged(nodeRef).send()
                 }
             case .element:
                 // when a single element changes, send an update only to that element.
-                self.elementChanged(nodeRef).send(nodeRef)
+                self.elementChanged(nodeRef).send()
             }
         }
         self.handleEvents(payload: renderedPayload)

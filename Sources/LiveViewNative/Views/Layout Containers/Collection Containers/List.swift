@@ -222,6 +222,9 @@ struct List<Root: RootRegistry>: View {
     
     private var content: some View {
         let elements = $liveElement.childNodes
+            .filter {
+                !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+            }
             .map { (node) -> ForEachElement in
                 if let element = node.asElement(),
                    let id = element.attributeValue(for: .init(name: "id"))
