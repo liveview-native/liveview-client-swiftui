@@ -6,13 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/liveview-native/liveview-native-core",
       "state" : {
-<<<<<<< HEAD
         "revision" : "13976e2d1eabae8b98994ea12f9e1f934b592930",
         "version" : "0.4.0-rc-2"
-=======
-        "revision" : "8e28921d3e825cd4b7c7e582efbf38df72f10a0b",
-        "version" : "0.4.0-alpha-8"
->>>>>>> a3623aa0 (Working LiveSocket/LiveChannel usage)
       }
     },
     {
