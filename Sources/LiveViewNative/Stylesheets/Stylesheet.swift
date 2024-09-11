@@ -28,7 +28,7 @@ public struct Stylesheet<R: RootRegistry> {
 }
 
 enum StylesheetCache {
-    static var cache = [URL:Any]()
+    private static var cache = [URL:Any]()
     
     static subscript<R: RootRegistry>(for url: URL, registry _: R.Type = R.self) -> Stylesheet<R>? {
         get {
@@ -37,6 +37,10 @@ enum StylesheetCache {
         set {
             Self.cache[url.absoluteURL] = newValue as Any
         }
+    }
+    
+    static func removeAll() {
+        cache.removeAll()
     }
 }
 
