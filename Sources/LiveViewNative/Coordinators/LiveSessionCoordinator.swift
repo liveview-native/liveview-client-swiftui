@@ -113,10 +113,15 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 Task {
                     if prev.count > next.count {
                         // back navigation
-//                        try await next.last!.coordinator.connect(redirect: true)
+                        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(.some([
+                            "_format": .str(string: Self.platform),
+                            "_interface": Self.platformParams
+                        ]))
+                        try await next.last!.coordinator.join(liveChannel)
                     } else if next.count > prev.count && prev.count > 0 {
+                        print("Forward navigation to \(next.last!.url)")
                         // forward navigation (from `redirect` or `<NavigationLink>`)
-//                        await prev.last?.coordinator.disconnect()
+                        try await prev.last?.coordinator.disconnect()
 //                        try await next.last?.coordinator.connect(redirect: true)
                     }
                 }
@@ -206,7 +211,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
         for entry in self.navigationPath {
-//            await entry.coordinator.disconnect()
+            try! await entry.coordinator.disconnect()
             if !preserveNavigationPath {
                 entry.coordinator.document = nil
             }
