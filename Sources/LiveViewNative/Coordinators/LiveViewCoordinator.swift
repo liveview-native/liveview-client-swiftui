@@ -110,8 +110,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         let replyPayload = try await channel.call(event: .user(user: event), payload: payload, timeout: PUSH_TIMEOUT)
         
-        print(replyPayload)
-        
         switch replyPayload {
         case let .jsonPayload(json):
             switch json {
@@ -224,9 +222,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     func bindEventListener() {
         self.eventListener = self.channel!.eventStream()
         self.eventListenerLoop = Task {
-            print("event loop start")
             for try await event in self.eventListener! {
-                print(event)
                 do {
                     switch event.event {
                     case .user(user: "diff"):
@@ -261,7 +257,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                     print("Event handling error: \(error)")
                 }
             }
-            print("event loop end")
         }
     }
     

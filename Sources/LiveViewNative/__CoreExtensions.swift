@@ -934,3 +934,740 @@ extension JsonEncoder : @unchecked Sendable {}
 private protocol _JsonStringDictionaryEncodableMarker { }
 
 extension Dictionary : _JsonStringDictionaryEncodableMarker where Key == String, Value: Encodable { }
+
+
+// MARK: JsonDecoder
+
+/// A type that decodes `Json` to a `Decodable` type.
+open class JsonDecoder {
+    open var userInfo: [CodingUserInfoKey : Any] {
+        get { options.userInfo }
+        set { options.userInfo = newValue }
+    }
+    
+    open var dateEncodingStrategy: JSONDecoder.DateDecodingStrategy {
+        get { self.options.dateDecodingStrategy }
+        set { self.options.dateDecodingStrategy = newValue }
+    }
+    
+    open var dataEncodingStrategy: JSONDecoder.DataDecodingStrategy {
+        get { self.options.dataDecodingStrategy }
+        set { self.options.dataDecodingStrategy = newValue }
+    }
+    
+    var options = Options()
+    
+    struct Options {
+        var userInfo: [CodingUserInfoKey : Any] = [:]
+        var dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate
+        var dataDecodingStrategy: JSONDecoder.DataDecodingStrategy = .deferredToData
+    }
+
+    public init() {}
+    
+    open func decode<T: Decodable>(_ type: T.Type, from json: Json) throws -> T {
+        let decoder = __JsonDecoder(userInfo: userInfo, from: json, codingPath: [], options: self.options)
+        return try type.init(from: decoder)
+    }
+}
+
+final class __JsonDecoder: Decoder {
+    var values: [Json]
+    
+    var json: Json {
+        values.last!
+    }
+    
+    let userInfo: [CodingUserInfoKey:Any]
+    let options: JsonDecoder.Options
+    
+    public var codingPath: [CodingKey]
+    
+    init(userInfo: [CodingUserInfoKey:Any], from json: Json, codingPath: [CodingKey], options: JsonDecoder.Options) {
+        self.userInfo = userInfo
+        self.codingPath = codingPath
+        self.values = [json]
+        self.options = options
+    }
+    
+    func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key : CodingKey {
+        switch json {
+        case let .object(object):
+            return KeyedDecodingContainer(KeyedContainer<Key>(decoder: self, for: object, codingPath: codingPath))
+        case .null:
+            throw DecodingError.valueNotFound(
+                [String:Json].self,
+                .init(
+                    codingPath: codingPath,
+                    debugDescription: "Cannot get keyed decoding container -- found null value instead"
+                )
+            )
+        default:
+            throw DecodingError.makeTypeMismatchError(
+                type: [String:Json].self,
+                for: codingPath,
+                value: json
+            )
+        }
+    }
+    
+    func unkeyedContainer() throws -> any UnkeyedDecodingContainer {
+        switch json {
+        case let .array(array):
+            return UnkeyedContainer(decoder: self, for: array, codingPath: codingPath)
+        case .null:
+            throw DecodingError.valueNotFound(
+                [String:Json].self,
+                .init(
+                    codingPath: codingPath,
+                    debugDescription: "Cannot get unkeyed decoding container -- found null value instead"
+                )
+            )
+        default:
+            throw DecodingError.makeTypeMismatchError(
+                type: [Json].self,
+                for: codingPath,
+                value: json
+            )
+        }
+    }
+    
+    func singleValueContainer() throws -> any SingleValueDecodingContainer {
+        self
+    }
+}
+
+extension __JsonDecoder: SingleValueDecodingContainer {
+    func decodeNil() -> Bool {
+        switch json {
+        case .null:
+            true
+        default:
+            false
+        }
+    }
+    
+    func decode(_ type: Bool.Type) throws -> Bool {
+        guard case let .bool(bool) = json else {
+            throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: json)
+        }
+        return bool
+    }
+    
+    func decode(_ type: String.Type) throws -> String {
+        guard case let .str(string) = json else {
+            throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: json)
+        }
+        return string
+    }
+    
+    func decode(_ type: Double.Type) throws -> Double {
+        guard case let .numb(.float(float)) = json else {
+            throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: json)
+        }
+        return float
+    }
+    
+    func decode(_ type: Float.Type) throws -> Float {
+        guard case let .numb(.float(float)) = json else {
+            throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: json)
+        }
+        return Float(float)
+    }
+    
+    func decode(_ type: Int.Type) throws -> Int {
+        guard case let .numb(number) = json else {
+            throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: json)
+        }
+        switch number {
+        case .posInt(let pos):
+            return Int(pos)
+        case .negInt(let neg):
+            return Int(neg)
+        case .float:
+            throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: json)
+        }
+    }
+    
+    func decode(_ type: Int8.Type) throws -> Int8 {
+        Int8(try decode(Int.self))
+    }
+    
+    func decode(_ type: Int16.Type) throws -> Int16 {
+        Int16(try decode(Int.self))
+    }
+    
+    func decode(_ type: Int32.Type) throws -> Int32 {
+        Int32(try decode(Int.self))
+    }
+    
+    func decode(_ type: Int64.Type) throws -> Int64 {
+        Int64(try decode(Int.self))
+    }
+    
+    func decode(_ type: UInt.Type) throws -> UInt {
+        guard case let .numb(.posInt(pos)) = json else {
+            throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: json)
+        }
+        return UInt(pos)
+    }
+    
+    func decode(_ type: UInt8.Type) throws -> UInt8 {
+        UInt8(try decode(UInt.self))
+    }
+    
+    func decode(_ type: UInt16.Type) throws -> UInt16 {
+        UInt16(try decode(UInt.self))
+    }
+    
+    func decode(_ type: UInt32.Type) throws -> UInt32 {
+        UInt32(try decode(UInt.self))
+    }
+    
+    func decode(_ type: UInt64.Type) throws -> UInt64 {
+        UInt64(try decode(UInt.self))
+    }
+    
+    func decode<T>(_ type: T.Type) throws -> T where T : Decodable {
+        try self.unwrap(json, as: type, for: codingPath)
+    }
+}
+
+extension __JsonDecoder {
+    @inline(__always)
+    func with<T>(value: Json, path: [CodingKey]?, perform closure: () throws -> T) rethrows -> T {
+        let oldPath = self.codingPath
+        if let path {
+            self.codingPath = path
+        }
+        self.values.append(value)
+        
+        defer {
+            if path != nil {
+                self.codingPath = oldPath
+            }
+            self.values.removeLast()
+        }
+        
+        return try closure()
+    }
+    
+    func unwrap<T: Decodable>(_ value: Json, as type: T.Type, for codingPath: [CodingKey], _ additionalKey: (some CodingKey)? = AnyCodingKey?.none) throws -> T {
+        if type == Date.self {
+            return try self.unwrapDate(from: value, for: codingPath, additionalKey) as! T
+        }
+        if type == Data.self {
+            return try self.unwrapData(from: value, for: codingPath, additionalKey) as! T
+        }
+        if type == URL.self {
+            return try self.unwrapURL(from: value, for: codingPath, additionalKey) as! T
+        }
+        if type == Decimal.self {
+            return Decimal(try self.unwrap(value, as: Double.self, for: codingPath, additionalKey)) as! T
+        }
+        
+        return try with(value: value, path: codingPath) {
+            try type.init(from: self)
+        }
+    }
+    
+    func unwrapDate<K: CodingKey>(from value: Json, for codingPath: [CodingKey], _ additionalKey: K? = nil) throws -> Date {
+        switch self.options.dateDecodingStrategy {
+        case .deferredToDate:
+            return try with(value: value, path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
+                try Date(from: self)
+            }
+        case .secondsSince1970:
+            let double = try self.unwrap(value, as: Double.self, for: codingPath, additionalKey)
+            return Date(timeIntervalSince1970: double)
+        case .millisecondsSince1970:
+            let double = try self.unwrap(value, as: Double.self, for: codingPath, additionalKey)
+            return Date(timeIntervalSince1970: double / 1000.0)
+        case .iso8601:
+            let string = try self.unwrap(value, as: String.self, for: codingPath, additionalKey)
+            guard let date = try? Date.ISO8601FormatStyle().parse(string)
+            else {
+                throw DecodingError.dataCorrupted(.init(
+                    codingPath: codingPath,
+                    debugDescription: "Expected date string to be ISO8601-formatted."
+                ))
+            }
+            return date
+        case .formatted(let formatter):
+            let string = try self.unwrap(value, as: String.self, for: codingPath, additionalKey)
+            guard let date = formatter.date(from: string)
+            else {
+                throw DecodingError.dataCorrupted(.init(
+                    codingPath: codingPath + (additionalKey.map({ [$0] }) ?? []),
+                    debugDescription: "Date string does not match format expected by formatter."
+                ))
+            }
+            return date
+        case .custom(let closure):
+            return try with(value: value, path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
+                try closure(self)
+            }
+        }
+    }
+    
+    func unwrapData<K: CodingKey>(from value: Json, for codingPath: [CodingKey], _ additionalKey: K? = nil) throws -> Data {
+        switch self.options.dataDecodingStrategy {
+        case .deferredToData:
+            return try with(value: value, path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
+                try Data(from: self)
+            }
+        case .base64:
+            let string = try self.unwrap(value, as: String.self, for: codingPath, additionalKey)
+            guard let data = Data(base64Encoded: string)
+            else {
+                throw DecodingError.dataCorrupted(.init(
+                    codingPath: codingPath + (additionalKey.map({ [$0] }) ?? []),
+                    debugDescription: "Encountered Data is not valid Base64."
+                ))
+            }
+            return data
+        case .custom(let closure):
+            return try with(value: value, path: codingPath + (additionalKey.map({ [$0] }) ?? [])) {
+                try closure(self)
+            }
+        }
+    }
+    
+    func unwrapURL<K: CodingKey>(from value: Json, for codingPath: [CodingKey], _ additionalKey: K? = nil) throws -> URL {
+        let string = try self.unwrap(value, as: String.self, for: codingPath, additionalKey)
+        guard let url = URL(string: string)
+        else {
+            throw DecodingError.dataCorrupted(.init(
+                codingPath: codingPath + (additionalKey.map({ [$0] }) ?? []),
+                debugDescription: "Invalid URL string."
+            ))
+        }
+        return url
+    }
+}
+
+extension __JsonDecoder {
+    struct KeyedContainer<Key: CodingKey>: KeyedDecodingContainerProtocol {
+        let decoder: __JsonDecoder
+        let object: [String:Json]
+        var allKeys: [Key] {
+            object.keys.compactMap(Key.init(stringValue:))
+        }
+        var codingPath: [any CodingKey]
+        
+        init(
+            decoder: __JsonDecoder,
+            for object: [String:Json],
+            codingPath: [any CodingKey]
+        ) {
+            self.decoder = decoder
+            self.object = object
+            self.codingPath = codingPath
+        }
+        
+        @inline(__always)
+        func value(forKey key: some CodingKey) throws -> Json {
+            guard let value = object[key.stringValue]
+            else {
+                throw DecodingError.keyNotFound(
+                    key,
+                    .init(codingPath: codingPath, debugDescription: #"No value associated with key \#(key) ("\#(key.stringValue)")"#)
+                )
+            }
+            return value
+        }
+        
+        func contains(_ key: Key) -> Bool {
+            object.keys.contains(key.stringValue)
+        }
+        
+        func decodeNil(forKey key: Key) throws -> Bool {
+            guard case .null = try value(forKey: key)
+            else { return false }
+            return true
+        }
+        
+        func decode(_ type: Bool.Type, forKey key: Key) throws -> Bool {
+            let value = try value(forKey: key)
+            guard case let .bool(bool) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return bool
+        }
+        
+        func decode(_ type: String.Type, forKey key: Key) throws -> String {
+            let value = try value(forKey: key)
+            guard case let .str(string) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return string
+        }
+        
+        func decode(_ type: Double.Type, forKey key: Key) throws -> Double {
+            let value = try value(forKey: key)
+            guard case let .numb(.float(float)) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return float
+        }
+        
+        func decode(_ type: Float.Type, forKey key: Key) throws -> Float {
+            let value = try value(forKey: key)
+            guard case let .numb(.float(float)) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return Float(float)
+        }
+        
+        func decode(_ type: Int.Type, forKey key: Key) throws -> Int {
+            let value = try value(forKey: key)
+            if case let .numb(.posInt(pos)) = value {
+                return Int(pos)
+            } else if case let .numb(.negInt(neg)) = value {
+                return Int(neg)
+            } else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value)
+            }
+        }
+        
+        func decode(_ type: Int8.Type, forKey key: Key) throws -> Int8 {
+            let value = try value(forKey: key)
+            if case let .numb(.posInt(pos)) = value {
+                return Int8(pos)
+            } else if case let .numb(.negInt(neg)) = value {
+                return Int8(neg)
+            } else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value)
+            }
+        }
+        
+        func decode(_ type: Int16.Type, forKey key: Key) throws -> Int16 {
+            let value = try value(forKey: key)
+            if case let .numb(.posInt(pos)) = value {
+                return Int16(pos)
+            } else if case let .numb(.negInt(neg)) = value {
+                return Int16(neg)
+            } else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value)
+            }
+        }
+        
+        func decode(_ type: Int32.Type, forKey key: Key) throws -> Int32 {
+            let value = try value(forKey: key)
+            if case let .numb(.posInt(pos)) = value {
+                return Int32(pos)
+            } else if case let .numb(.negInt(neg)) = value {
+                return Int32(neg)
+            } else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value)
+            }
+        }
+        
+        func decode(_ type: Int64.Type, forKey key: Key) throws -> Int64 {
+            let value = try value(forKey: key)
+            if case let .numb(.posInt(pos)) = value {
+                return Int64(pos)
+            } else if case let .numb(.negInt(neg)) = value {
+                return Int64(neg)
+            } else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value)
+            }
+        }
+        
+        func decode(_ type: UInt.Type, forKey key: Key) throws -> UInt {
+            let value = try value(forKey: key)
+            guard case let .numb(.posInt(int)) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return UInt(int)
+        }
+        
+        func decode(_ type: UInt8.Type, forKey key: Key) throws -> UInt8 {
+            let value = try value(forKey: key)
+            guard case let .numb(.posInt(int)) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return UInt8(int)
+        }
+        
+        func decode(_ type: UInt16.Type, forKey key: Key) throws -> UInt16 {
+            let value = try value(forKey: key)
+            guard case let .numb(.posInt(int)) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return UInt16(int)
+        }
+        
+        func decode(_ type: UInt32.Type, forKey key: Key) throws -> UInt32 {
+            let value = try value(forKey: key)
+            guard case let .numb(.posInt(int)) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return UInt32(int)
+        }
+        
+        func decode(_ type: UInt64.Type, forKey key: Key) throws -> UInt64 {
+            let value = try value(forKey: key)
+            guard case let .numb(.posInt(int)) = value
+            else { throw DecodingError.makeTypeMismatchError(type: type, for: codingPath, value: value) }
+            return UInt64(int)
+        }
+        
+        func decode<T>(_ type: T.Type, forKey key: Key) throws -> T where T : Decodable {
+            try self.decoder.unwrap(try value(forKey: key), as: type, for: codingPath, key)
+        }
+        
+        func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type, forKey key: Key) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
+            let value = try value(forKey: key)
+            return try decoder.with(value: value, path: codingPath + [key]) {
+                try decoder.container(keyedBy: type)
+            }
+        }
+        
+        func nestedUnkeyedContainer(forKey key: Key) throws -> any UnkeyedDecodingContainer {
+            let value = try value(forKey: key)
+            return try decoder.with(value: value, path: codingPath + [key]) {
+                try decoder.unkeyedContainer()
+            }
+        }
+        
+        func superDecoder() throws -> any Decoder {
+            let value = (try? value(forKey: AnyCodingKey(stringValue: "super"))) ?? .null
+            let decoder = __JsonDecoder(userInfo: self.decoder.userInfo, from: self.decoder.values.first!, codingPath: codingPath + [AnyCodingKey(stringValue: "super")], options: self.decoder.options)
+            decoder.values.append(value)
+            return decoder
+        }
+        
+        func superDecoder(forKey key: Key) throws -> any Decoder {
+            let value = (try? value(forKey: key)) ?? .null
+            let decoder = __JsonDecoder(userInfo: self.decoder.userInfo, from: self.decoder.values.first!, codingPath: codingPath + [key], options: self.decoder.options)
+            decoder.values.append(value)
+            return decoder
+        }
+    }
+}
+
+extension __JsonDecoder {
+    struct UnkeyedContainer: UnkeyedDecodingContainer {
+        let decoder: __JsonDecoder
+        private var iterator: Array<Json>.Iterator
+        private var peekedValue: Json?
+        
+        let count: Int?
+        var currentIndex: Int = 0
+        var isAtEnd: Bool {
+            self.currentIndex >= self.count!
+        }
+        
+        var codingPath: [any CodingKey]
+        
+        @inline(__always)
+        private var currentIndexKey: AnyCodingKey {
+            .init(index: currentIndex)
+        }
+        
+        @inline(__always)
+        private var currentCodingPath: [any CodingKey] {
+            codingPath + [currentIndexKey]
+        }
+        
+        init(
+            decoder: __JsonDecoder,
+            for array: [Json],
+            codingPath: [CodingKey]
+        ) {
+            self.decoder = decoder
+            self.iterator = array.makeIterator()
+            self.count = array.count
+            self.codingPath = codingPath
+        }
+        
+        @inline(__always)
+        mutating func peek<T>(_ type: T.Type) throws -> Json {
+            if let value = peekedValue {
+                return value
+            }
+            guard let nextValue = iterator.next()
+            else {
+                var message = "Unkeyed container is at end."
+                if T.self == UnkeyedContainer.self {
+                    message = "Cannot get nested unkeyed container -- unkeyed container is at end."
+                }
+                if T.self == Decoder.self {
+                    message = "Cannot get superDecoder() -- unkeyed container is at end."
+                }
+                
+                throw DecodingError.valueNotFound(
+                    type,
+                    .init(
+                        codingPath: currentCodingPath,
+                        debugDescription: message
+                    )
+                )
+            }
+            peekedValue = nextValue
+            return nextValue
+        }
+        
+        mutating func advance() {
+            currentIndex += 1
+            peekedValue = nil
+        }
+        
+        mutating func decodeNil() throws -> Bool {
+            let value = try self.peek(Never.self)
+            switch value {
+            case .null:
+                advance()
+                return true
+            default:
+                return false
+            }
+        }
+        
+        mutating func decode(_ type: Bool.Type) throws -> Bool {
+            let value = try peek(type)
+            guard case .bool(let bool) = value else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: currentCodingPath, value: value)
+            }
+            advance()
+            return bool
+        }
+        
+        mutating func decode(_ type: String.Type) throws -> String {
+            let value = try peek(type)
+            guard case .str(let string) = value else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: currentCodingPath, value: value)
+            }
+            advance()
+            return string
+        }
+        
+        mutating func decode(_ type: Double.Type) throws -> Double {
+            let value = try peek(type)
+            guard case let .numb(.float(float)) = value else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: currentCodingPath, value: value)
+            }
+            advance()
+            return float
+        }
+        
+        mutating func decode(_ type: Float.Type) throws -> Float {
+            let value = try peek(type)
+            guard case let .numb(.float(float)) = value else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: currentCodingPath, value: value)
+            }
+            advance()
+            return Float(float)
+        }
+        
+        mutating func decode(_ type: Int.Type) throws -> Int {
+            let value = try peek(type)
+            guard case let .numb(number) = value else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: currentCodingPath, value: value)
+            }
+            switch number {
+            case .posInt(let pos):
+                advance()
+                return Int(pos)
+            case .negInt(let neg):
+                advance()
+                return Int(neg)
+            case .float:
+                throw DecodingError.makeTypeMismatchError(type: type, for: currentCodingPath, value: value)
+            }
+        }
+        
+        mutating func decode(_ type: Int8.Type) throws -> Int8 {
+            return try type.init(decode(Int.self))
+        }
+        
+        mutating func decode(_ type: Int16.Type) throws -> Int16 {
+            return try type.init(decode(Int.self))
+        }
+        
+        mutating func decode(_ type: Int32.Type) throws -> Int32 {
+            return try type.init(decode(Int.self))
+        }
+        
+        mutating func decode(_ type: Int64.Type) throws -> Int64 {
+            return try type.init(decode(Int.self))
+        }
+        
+        mutating func decode(_ type: UInt.Type) throws -> UInt {
+            let value = try peek(type)
+            guard case let .numb(number) = value else {
+                throw DecodingError.makeTypeMismatchError(type: type, for: currentCodingPath, value: value)
+            }
+            switch number {
+            case .posInt(let pos):
+                advance()
+                return UInt(pos)
+            default:
+                throw DecodingError.makeTypeMismatchError(type: type, for: currentCodingPath, value: value)
+            }
+        }
+        
+        mutating func decode(_ type: UInt8.Type) throws -> UInt8 {
+            return try type.init(decode(UInt.self))
+        }
+        
+        mutating func decode(_ type: UInt16.Type) throws -> UInt16 {
+            return try type.init(decode(UInt.self))
+        }
+        
+        mutating func decode(_ type: UInt32.Type) throws -> UInt32 {
+            return try type.init(decode(UInt.self))
+        }
+        
+        mutating func decode(_ type: UInt64.Type) throws -> UInt64 {
+            return try type.init(decode(UInt.self))
+        }
+        
+        mutating func decode<T>(_ type: T.Type) throws -> T where T : Decodable {
+            let value = try peek(type)
+            let result = try decoder.unwrap(value, as: type, for: codingPath, currentIndexKey)
+            
+            advance()
+            return result
+        }
+        
+        mutating func nestedContainer<NestedKey>(keyedBy type: NestedKey.Type) throws -> KeyedDecodingContainer<NestedKey> where NestedKey : CodingKey {
+            let value = try peek(KeyedDecodingContainer<NestedKey>.self)
+            let container = try decoder.with(value: value, path: currentCodingPath) {
+                try decoder.container(keyedBy: type)
+            }
+            advance()
+            return container
+        }
+        
+        mutating func nestedUnkeyedContainer() throws -> any UnkeyedDecodingContainer {
+            let value = try peek(UnkeyedDecodingContainer.self)
+            let container = try decoder.with(value: value, path: currentCodingPath) {
+                try decoder.unkeyedContainer()
+            }
+            advance()
+            return container
+        }
+        
+        mutating func superDecoder() throws -> any Decoder {
+            let value = try peek(Decoder.self)
+            
+            let decoder = __JsonDecoder(
+                userInfo: decoder.userInfo,
+                from: decoder.values.first!,
+                codingPath: currentCodingPath,
+                options: decoder.options
+            )
+            
+            decoder.values.append(value)
+            
+            advance()
+            return decoder
+        }
+    }
+}
+
+private extension DecodingError {
+    static func makeTypeMismatchError(type: Any.Type, for path: [CodingKey], value: Json) -> DecodingError {
+        return DecodingError.typeMismatch(
+            type,
+            .init(
+                codingPath: path,
+                debugDescription: "Expected to decode \(type) but found \(value) instead."
+            )
+        )
+    }
+}
