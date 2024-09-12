@@ -4,9 +4,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   use Mix.Task
   require Logger
 
-  # Using a temporary folder outside of the project avoids ElixirLS file watching issues
-  defp temp_doc_folder, do: Path.join(System.tmp_dir!(), "temp_swiftui_docs")
-  defp generate_swift_lvn_docs_command, do: ~c"xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath #{temp_doc_folder()} -skipMacroValidation -skipPackagePluginValidation"
+  defp generate_swift_lvn_docs_command(doc_path), do: ~c"xcrun xcodebuild docbuild -scheme LiveViewNative -destination generic/platform=iOS -derivedDataPath #{doc_path} -skipMacroValidation -skipPackagePluginValidation"
   @swiftui_interface_path "Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface"
   defp generate_modifier_documentation_extensions(xcode_path), do: ~c(xcrun swift run ModifierGenerator documentation-extensions --interface "#{Path.join(xcode_path, @swiftui_interface_path)}" --output Sources/LiveViewNative/LiveViewNative.docc/DocumentationExtensions)
   @generate_documentation_extensions ~c(xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions)
@@ -14,78 +12,107 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   @xcode_select_print_path ~c(xcode-select --print-path)
   @allow_writing_to_package_dir_command ~c"xcrun swift package plugin --allow-writing-to-package-directory generate-documentation-extensions"
   @doc_folder "generated_docs"
-  @cheatsheet_path "#{@doc_folder}/view-index.cheatmd"
+  @cheatsheet_path "#{@doc_folder}/view-index.md"
   @modifier_cheatsheet_path "#{@doc_folder}/modifier-index.md"
 
   @shortdoc "Generates ex doc files for all SwiftUI views"
-  def run(_) do
+  def run(args) do
+    {kwargs, [], []} = OptionParser.parse(args, strict: [doc_path: :string, no_generate_docc: :boolean])
+
+    # Using a temporary folder outside of the project avoids ElixirLS file watching issues
+    doc_path = Keyword.get(kwargs, :doc_path, Path.join(System.tmp_dir!(), "temp_swiftui_docs"))
+      |> Path.absname()
+
     Logger.info("Locating Xcode installation")
     xcode_path = :os.cmd(@xcode_select_print_path) |> to_string() |> String.trim()
 
-    Logger.info("Enabling writing to package...")
-    :os.cmd(@allow_writing_to_package_dir_command)
+    if not Keyword.get(kwargs, :no_generate_docc, false) do
+      Logger.info("Enabling writing to package...")
+      :os.cmd(@allow_writing_to_package_dir_command)
 
-    Logger.info("Generating documentation extensions")
-    :os.cmd(@generate_documentation_extensions)
-    Logger.info("Generating modifier documentation extensions")
-    :os.cmd(generate_modifier_documentation_extensions(xcode_path))
+      Logger.info("Generating documentation extensions")
+      :os.cmd(@generate_documentation_extensions)
 
-    Logger.info("Generating SwiftUI documentation files...")
-    :os.cmd(generate_swift_lvn_docs_command())
+      Logger.info("Generating modifier documentation extensions")
+      :os.cmd(generate_modifier_documentation_extensions(xcode_path))
+
+      Logger.info("Generating SwiftUI documentation files...")
+      :os.cmd(generate_swift_lvn_docs_command(doc_path))
+    end
 
     Logger.info("Generating LiveView Native documentation files...")
     # Ensure generated_docs folder exists
     File.mkdir("generated_docs")
 
-    # clear cheatsheet
-    File.write!(@cheatsheet_path, "# View Index\n")
-
     # generate documentation and cheatsheat
-    for {category, views} <- categorized_views() do
-      # build cheatsheet sections
-      File.write!(@cheatsheet_path, "## #{category}\n{: .col-2}\n", [:append])
-
-      for view <- views do
-        with {:ok, data} <-
-               File.read(
-                 "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}.json"
-               ) do
-          docs = Jason.decode!(data)
-          path = "#{@doc_folder}/#{category}/#{view}.md"
-          File.mkdir_p!(Path.dirname(path))
-          File.write!(path, markdown(docs, docs))
-
-          # build cheatsheet entries
-          File.write!(@cheatsheet_path, cheatsheet(docs, docs) <> "\n", [:append])
-        end
-      end
-    end
+    views = Path.wildcard("Sources/LiveViewNative/Views/**/*.swift")
+      |> Enum.map(fn view -> Path.basename(view, ".swift") end)
+      |> Enum.sort()
+      |> Enum.map(fn view ->
+        {
+          "`<#{view}>`",
+          "#{doc_path}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{view}.json"
+        }
+      end)
+    write_cheatsheet(
+      "View Index",
+      doc_path,
+      views,
+      @cheatsheet_path
+    )
 
     Logger.info("Generating LiveView Native modifier documentation files...")
+    modifiers = System.shell(modifier_list(xcode_path))
+      |> elem(0)
+      |> String.split("\n")
+      |> Enum.map(fn modifier ->
+        {
+          modifier,
+          "#{doc_path}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/_#{modifier}Modifier.json"
+        }
+      end)
+    write_cheatsheet(
+      "Modifier Index",
+      doc_path,
+      modifiers,
+      @modifier_cheatsheet_path,
+      true
+    )
 
-    modifiers = System.shell(modifier_list(xcode_path)) |> elem(0) |> String.split("\n")
+    if Keyword.get(kwargs, :doc_path) == nil do
+      Logger.info("Cleaning up temporary files...")
+      File.rm_rf(doc_path)
+    end
+  end
 
+  defp write_cheatsheet(title, doc_path, paths, output_path, use_tabs \\ false) do
     # clear cheatsheet
-    File.write!(@modifier_cheatsheet_path, "# Modifier Index\n")
+    File.write!(output_path, "# #{title}\n")
 
-    all_modifier_references = MapSet.new()
-    for modifier <- modifiers do
-      with {:ok, data} <-
-              File.read(
-                "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/_#{modifier}Modifier.json"
-              ) do
+    references = MapSet.new()
+    for {name, path} <- paths do
+      with {:ok, data} <- File.read(path) do
         docs = Jason.decode!(data)
-        File.write!(@modifier_cheatsheet_path, "## #{modifier}\n", [:append])
-        File.write!(@modifier_cheatsheet_path, "<!-- tabs-open -->\n", [:append])
-        File.write!(@modifier_cheatsheet_path, modifier_cheatsheet(docs, docs) <> "\n", [:append])
-        File.write!(@modifier_cheatsheet_path, "<!-- tabs-close -->\n", [:append])
-        reduce_references(docs, all_modifier_references)
+        File.write!(output_path, "## #{name}\n", [:append])
+        if use_tabs do
+          File.write!(output_path, "<!-- tabs-open -->\n", [:append])
+        end
+        ctx = if use_tabs do
+          docs
+        else
+          docs |> Map.put("inlineHeadings", true)
+        end
+        File.write!(output_path, modifier_cheatsheet(docs, ctx) <> "\n", [:append])
+        if use_tabs do
+          File.write!(output_path, "<!-- tabs-close -->\n", [:append])
+        end
+        reduce_references(docs, references)
       end
     end
 
-    all_modifier_references = modifiers
-    |> Enum.reduce(MapSet.new(), fn modifier, acc ->
-      with {:ok, data} <- File.read("#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/_#{modifier}Modifier.json")
+    references = paths
+    |> Enum.reduce(MapSet.new(), fn {_, path}, acc ->
+      with {:ok, data} <- File.read(path)
       do
         docs = Jason.decode!(data)
         reduce_references(docs, acc)
@@ -95,9 +122,9 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
     end)
 
     # collect references made in references
-    all_modifier_references = Enum.reduce(all_modifier_references, all_modifier_references, fn reference, acc ->
+    references = Enum.reduce(references, references, fn reference, acc ->
       path = String.trim_leading(reference, "doc://LiveViewNative/documentation/LiveViewNative/")
-      with {:ok, data} <- File.read("#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{path}.json")
+      with {:ok, data} <- File.read("#{doc_path}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{path}.json")
       do
         docs = Jason.decode!(data)
         reduce_references(docs, acc)
@@ -107,13 +134,10 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
     end)
 
     # write references to end of modifier index
-    File.write!(@modifier_cheatsheet_path, "## Types\n", [:append])
-    for reference <- Enum.sort(all_modifier_references) do
-      File.write!(@modifier_cheatsheet_path, attribute_details(String.trim_leading(reference, "doc://LiveViewNative/documentation/LiveViewNative/")) <> "\n", [:append])
+    File.write!(output_path, "## Types\n", [:append])
+    for reference <- Enum.sort(references) do
+      File.write!(output_path, attribute_details(String.trim_leading(reference, "doc://LiveViewNative/documentation/LiveViewNative/"), doc_path) <> "\n", [:append])
     end
-
-    Logger.info("Cleaning up temporary files...")
-    File.rm_rf(temp_doc_folder())
   end
 
   ### Cheatsheet
@@ -184,7 +208,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
     <!-- attribute list -->
     # References
 
-    #{Enum.map(attributes, &attribute_details(Path.basename(url), &1))}
+    #{Enum.map(attributes, &attribute_details(Path.basename(url), &1, ctx.doc_path))}
 
     <!-- end attribute list -->
     """
@@ -249,7 +273,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
     %{"references" => references, "includeAllReferences" => true}
   ) do
     %{"title" => title} = Map.get(references, identifier)
-    hash = "#{title |> String.replace("<", "") |> String.replace(">", "")}/1"
+    hash = "#{identifier}/1"
     "[`#{title}`](##{hash})"
   end
 
@@ -258,7 +282,7 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
     %{"references" => references, "identifier" => %{"url" => base_url}}
   ) do
     %{"title" => title, "url" => url} = Map.get(references, identifier)
-    hash = "#{title |> String.replace("<", "") |> String.replace(">", "")}/1"
+    hash = "#{url}/1"
 
     resolved_url =
       case url do
@@ -278,23 +302,24 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
 
   def markdown(_data, _ctx), do: ""
 
-  defp attribute_details(view, identifier) do
-    attribute_details("#{view}/#{Path.basename(identifier)}")
+  defp attribute_details(view, identifier, doc_path) do
+    attribute_details("#{view}/#{Path.basename(identifier)}", doc_path)
   end
 
-  defp attribute_details(path) do
-    "#{temp_doc_folder()}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{path}.json"
+  defp attribute_details(path, doc_path) do
+    "#{doc_path}/Build/Products/Debug-iphoneos/LiveViewNative.doccarchive/data/documentation/liveviewnative/#{path}.json"
     |> File.read()
     |> case do
       {:ok, data} ->
         docs = Jason.decode!(data)
 
         title = Map.get(docs, "metadata", %{}) |> Map.get("title", "")
+        url = Map.get(docs, "identifier", %{}) |> Map.get("url", "")
         abstract = Map.get(docs, "abstract", [])
         content = Map.get(docs, "primaryContentSections", [])
 
         docs = Map.put(docs, "inlineHeadings", true) |> Map.put("includeAllReferences", true)
-        hash = "#{title}/1"
+        hash = "#{url}/1"
 
         """
         <section id="#{hash}" class="detail">
@@ -349,13 +374,4 @@ defmodule Mix.Tasks.Lvn.Swiftui.Gen.Docs do
   ), do: items |> Enum.reduce(acc, fn %{"content" => content}, acc -> reduce_references(content, acc) end)
 
   defp reduce_references(_markdown, acc), do: acc
-
-  @spec categorized_views() :: %{String.t() => [String.t()]}
-  defp categorized_views do
-    Path.wildcard("Sources/LiveViewNative/Views/**/*.swift")
-    |> Enum.group_by(
-      &Path.basename(Path.dirname(&1)),
-      &Path.basename(&1, ".swift")
-    )
-  end
 end
