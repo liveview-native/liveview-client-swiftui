@@ -55,6 +55,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
     private var eventListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
+    private var mergeDiffLoop: Task<(), any Error>?
     private var eventListenerLoop: Task<(), any Error>?
 
     private(set) internal var liveViewModel = LiveViewModel()
@@ -230,7 +231,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                     case .user(user: "diff"):
                         switch event.payload {
                         case let .jsonPayload(json):
-                            try! self.handleDiff(payload: json, baseURL: self.url)
+                            try self.handleDiff(payload: json, baseURL: self.url)
                         case .binary:
                             fatalError()
                         }
@@ -262,32 +263,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             print("event loop end")
         }
     }
-
-
-    func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
-        self.liveChannel = liveChannel
-        self.channel = liveChannel.channel()
-        
-        self.bindEventListener()
-        
-        switch liveChannel.joinPayload() {
-        case let .jsonPayload(.object(payload)):
-            handleJoinPayload(renderedPayload: payload["rendered"]!)
-        default:
-            fatalError()
-        }
-        
-        self.internalState = .connected
-    }
-
-    private func handleJoinPayload(renderedPayload: LiveViewNativeCore.Json) {
-        // todo: what should happen if decoding or parsing fails?
-        self.document = try! LiveViewNativeCore.Document.parseFragmentJson(
-            String(
-                data: JSONEncoder().encode(renderedPayload),
-                encoding: .utf8
-            )!
-        )
+    
+    func bindDocumentListener() {
         self.document?.on(.changed) { [unowned self] nodeRef, nodeData, parent in
             switch nodeData {
             case .root:
@@ -305,6 +282,30 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 self.elementChanged(nodeRef).send()
             }
         }
-        self.handleEvents(renderedPayload)
+    }
+
+    func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
+        self.liveChannel = liveChannel
+        self.channel = liveChannel.channel()
+        
+        self.bindEventListener()
+        
+        self.document = liveChannel.document()
+        self.bindDocumentListener()
+        
+        switch liveChannel.joinPayload() {
+        case let .jsonPayload(.object(payload)):
+            self.handleEvents(payload["rendered"]!)
+        default:
+            fatalError()
+        }
+        
+        self.internalState = .connected
+    }
+    
+    func disconnect() async throws {
+        try await self.liveChannel?.channel().leave()
+        
+        self.internalState = .setup
     }
 }
