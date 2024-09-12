@@ -55,7 +55,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
     private var eventListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
-    private var mergeDiffLoop: Task<(), any Error>?
     private var eventListenerLoop: Task<(), any Error>?
 
     private(set) internal var liveViewModel = LiveViewModel()
@@ -80,7 +79,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         return try await doPushEvent("event", payload: .jsonPayload(json: .object(object: [
             "type": .str(string: type),
             "event": .str(string: event),
-            "value": try JSONDecoder().decode(Json.self, from: JSONEncoder().encode(value)),
+            "value": try JsonEncoder().encode(value),
             "cid": target.flatMap({ .numb(number: .posInt(pos: UInt64($0))) }) ?? .null
         ])))
     }
@@ -110,7 +109,9 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
         
         let replyPayload = try await channel.call(event: .user(user: event), payload: payload, timeout: PUSH_TIMEOUT)
-
+        
+        print(replyPayload)
+        
         switch replyPayload {
         case let .jsonPayload(json):
             switch json {
