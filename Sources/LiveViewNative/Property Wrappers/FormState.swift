@@ -180,6 +180,7 @@ public struct FormState<Value: FormValue> {
                     data.setFormModel(formModel, elementName: elementName)
                     formModel.setInitialValue(initialValue, forName: elementName)
                     data.mode = .form(formModel)
+                    data.bind(to: _element, elementName: elementName, attribute: valueAttribute, defaultValue: defaultValue)
                 } else {
                     logger.warning("@FormState used on a name-less element inside of a <LiveForm>. This may not behave as expected.")
                     data.mode = .local
@@ -222,11 +223,26 @@ extension FormState: DynamicProperty {
 private class FormStateData<Value: FormValue>: ObservableObject {
     var mode: Mode = .unknown
     private var cancellable: AnyCancellable?
+    private var elementCancellable: AnyCancellable?
     
     func setFormModel(_ formModel: FormModel, elementName: String) {
         cancellable = formModel.formFieldWillChange
             .filter { $0 == elementName }
             .sink { [unowned self] _ in self.objectWillChange.send() }
+    }
+    
+    func bind(to element: ObservedElement, elementName: String, attribute: AttributeName, defaultValue: Value) {
+        // When the element updates from the server, sync the new value into the form.
+        elementCancellable = element.projectedValue
+            .sink { [weak self] _ in
+                guard case .form(let formModel) = self?.mode else { return }
+                formModel.setServerValue(
+                    element.wrappedValue.attribute(named: attribute)
+                        .flatMap { Value.fromAttribute($0, on: element.wrappedValue) }
+                        ?? defaultValue,
+                    forName: elementName
+                )
+            }
     }
     
     enum Mode {

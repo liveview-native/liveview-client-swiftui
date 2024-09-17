@@ -30,6 +30,10 @@ public class LiveViewModel: ObservableObject {
             return model
         }
     }
+    
+    func clearForms() {
+        self.forms.removeAll()
+    }
 }
 
 /// A form model stores the working copy of the data for a specific `<form>` element.
@@ -188,6 +192,11 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                 try await sendChangeEvent(value, for: name, event: changeEvent)
             }
         }
+    }
+    
+    /// Set a value into the form's `data` without triggered change events.
+    public func setServerValue(_ value: (some FormValue)?, forName name: String) {
+        data[name] = value
     }
     
     /// Sets the value in ``data`` if there is no value currently present.
