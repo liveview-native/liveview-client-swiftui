@@ -219,11 +219,11 @@ struct List<Root: RootRegistry>: View {
             }
         }
     }
-    
+
     private var content: some View {
         let elements = $liveElement.childNodes
             .filter {
-                !$0.attributes.contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
+                !$0.attributes().contains(where: { $0.name.namespace == nil && $0.name.name == "template" })
             }
             .map { (node) -> ForEachElement in
                 if let element = node.asElement(),
@@ -235,8 +235,8 @@ struct List<Root: RootRegistry>: View {
                 }
             }
         return ForEach(elements) { childNode in
-            if case let .element(element) = childNode.node.data,
-               element.tag == "Section"
+            if case let .nodeElement(element) = childNode.node.data(),
+               element.name.name == "Section"
             {
                 // `Section` will apply tracking to its own children
                 ViewTreeBuilder<Root>.NodeView(node: childNode.node, context: $liveElement.context.storage)
@@ -248,7 +248,7 @@ struct List<Root: RootRegistry>: View {
             .onDelete(perform: onDeleteHandler)
             .onMove(perform: onMoveHandler)
     }
-    
+
     private var onDeleteHandler: ((IndexSet) -> Void)? {
         guard delete.event != nil else { return nil }
         return { indices in
