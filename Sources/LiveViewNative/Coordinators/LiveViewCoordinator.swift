@@ -293,7 +293,6 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         channel.on("phx_close") { [weak self, weak channel] message in
             Task { @MainActor in
                 guard channel === self?.channel else { return }
-                print("State changed to: phx_close")
                 self?.internalState = .disconnected
             }
         }
