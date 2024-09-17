@@ -93,7 +93,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     /// Create a URL encoded body from the data in the form.
     public func buildFormQuery() throws -> String {
-        return try buildFormURLComponents().query!
+        return try buildFormURLComponents().formEncodedQuery!
     }
     
     private func sendChangeEventForFormElement(_ value: any FormValue, for name: String, _ sendEvent: ((Any) async throws -> ())?) -> (() async throws -> Void)? {
@@ -113,7 +113,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                 .init(name: "_target", value: name)
             ]
             
-            try await event(components.query!)
+            try await event(components.formEncodedQuery!)
         }
     }
     
@@ -124,7 +124,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             var components = try self.buildFormURLComponents()
             components.queryItems?.append(.init(name: "_target", value: name))
             
-            try await event(components.query!)
+            try await event(components.formEncodedQuery!)
         }
     }
     
@@ -205,4 +205,14 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         data = [:]
     }
     
+}
+
+private extension URLComponents {
+    var formEncodedQuery: String? {
+        guard let query = self.percentEncodedQuery
+        else { return nil }
+        // `+` is converted to a space, so query encode it.
+        // Spaces are already converted to %20 by `percentEncodedQuery`
+        return query.replacingOccurrences(of: "+", with: "%2B")
+    }
 }
