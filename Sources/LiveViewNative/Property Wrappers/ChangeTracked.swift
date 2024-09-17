@@ -102,8 +102,10 @@ extension ChangeTracked where Value: AttributeDecodable {
                 self.previousValue = value
             }
             cancellable = localValueChanged
-                .sink(receiveValue: { @MainActor [weak self] localValue in
-                    self?.objectWillChange.send()
+                .sink(receiveValue: { [weak self] localValue in
+                    Task { @MainActor [weak self] in
+                        self?.objectWillChange.send()
+                    }
                     self?.value = localValue
                     Task { [weak self] in
                         guard let self,
@@ -116,11 +118,13 @@ extension ChangeTracked where Value: AttributeDecodable {
             // set current value to previousValue and trigger update to sync with attribute value
             // (may be delayed from localValueChanged due to debounce/throttle)
             didSendCancellable = changeTracked.event.owner.handler.didSendSubject
-                .sink { @MainActor [weak self] _ in
+                .sink { [weak self] _ in
                     guard let self
                     else { return }
                     self.previousValue = self.value
-                    self.objectWillChange.send()
+                    Task { @MainActor [weak self] in
+                        self?.objectWillChange.send()
+                    }
                 }
         }
     }
@@ -167,10 +171,10 @@ extension ChangeTracked where Value: FormValue {
             }
             
             cancellable = localValueChanged
-                .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
-                .compactMap(\.last)
                 .sink(receiveValue: { [weak self] localValue in
-                    self?.objectWillChange.send()
+                    Task { @MainActor [weak self] in
+                        self?.objectWillChange.send()
+                    }
                     self?.value = localValue
                     if changeTracked._event.debounceAttribute != .blur { // the input element should call `pushChangeEvent` when it loses focus.
                         Task { [weak self] in
@@ -185,12 +189,13 @@ extension ChangeTracked where Value: FormValue {
             // set current value to previousValue and trigger update to sync with attribute value
             // (may be delayed from localValueChanged due to debounce/throttle)
             didSendCancellable = changeTracked.event.owner.handler.didSendSubject
-                .collect(.byTime(RunLoop.current, RunLoop.current.minimumTolerance))
-                .sink { [weak self] _ in
+                .sink { @MainActor [weak self] _ in
                     guard let self
                     else { return }
                     self.previousValue = self.value
-                    self.objectWillChange.send()
+                    Task { @MainActor [weak self] in
+                        self?.objectWillChange.send()
+                    }
                 }
         }
         
