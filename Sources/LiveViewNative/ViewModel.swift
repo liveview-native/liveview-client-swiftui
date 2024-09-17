@@ -213,6 +213,6 @@ private extension URLComponents {
         else { return nil }
         // `+` is converted to a space, so query encode it.
         // Spaces are already converted to %20 by `percentEncodedQuery`
-        return query.replacingOccurrences(of: "+", with: "%2B")
+        return query.replacing("+", with: "%2B")
     }
 }
