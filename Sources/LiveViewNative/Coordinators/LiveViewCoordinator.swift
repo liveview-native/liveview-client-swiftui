@@ -56,6 +56,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     private var eventListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
     private var eventListenerLoop: Task<(), any Error>?
+    private var statusListenerLoop: Task<(), any Error>?
 
     private(set) internal var liveViewModel = LiveViewModel()
 
@@ -283,6 +284,21 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
         self.liveChannel = liveChannel
         self.channel = liveChannel.channel()
+        
+        statusListenerLoop = Task {
+            for try await status in self.channel!.statusStream() {
+                self.internalState = switch status {
+                case .joined:
+                    .connected
+                case .joining, .waitingForSocketToConnect, .waitingToJoin:
+                    .connecting
+                case .waitingToRejoin:
+                    .reconnecting
+                case .leaving, .left, .shuttingDown, .shutDown:
+                    .disconnected
+                }
+            }
+        }
         
         self.bindEventListener()
         
