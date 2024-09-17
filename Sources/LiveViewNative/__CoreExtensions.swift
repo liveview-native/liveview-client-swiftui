@@ -11,8 +11,15 @@ import Foundation
 extension Channel {
     func eventStream() -> AsyncThrowingStream<EventPayload, any Error> {
         let events = self.events()
-        return AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>(unfolding: {
+        return AsyncThrowingStream(unfolding: {
             return try await events.event()
+        })
+    }
+    
+    func statusStream() -> AsyncThrowingStream<ChannelStatus, any Error> {
+        let statuses = self.statuses()
+        return AsyncThrowingStream(unfolding: {
+            return try await statuses.status()
         })
     }
 }
