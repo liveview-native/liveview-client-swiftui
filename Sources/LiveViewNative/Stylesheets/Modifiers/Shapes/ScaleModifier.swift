@@ -46,6 +46,7 @@ struct _ScaleModifier<Root: RootRegistry>: ShapeModifier {
         self.value = ._1(scale: scale, anchor: anchor)
     }
 
+    @MainActor
     func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         switch value {
         case let ._0(x, y, anchor):

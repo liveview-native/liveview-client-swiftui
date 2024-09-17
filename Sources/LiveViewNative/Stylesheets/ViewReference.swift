@@ -162,6 +162,7 @@ struct _TextReferenceObserver: ViewModifier {
 struct ToolbarContentReference: ParseableModifierValue {
     let value: [String]
     
+    @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some ToolbarContent {
         ToolbarTreeBuilder<R>().fromNodes(
             value.reduce(into: [LiveViewNativeCore.Node]()) {
@@ -204,6 +205,7 @@ struct ToolbarContentReference: ParseableModifierValue {
 struct CustomizableToolbarContentReference: ParseableModifierValue {
     let value: [String]
     
+    @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> some CustomizableToolbarContent {
         CustomizableToolbarTreeBuilder<R>().fromNodes(
             value.reduce(into: [LiveViewNativeCore.Node]()) {

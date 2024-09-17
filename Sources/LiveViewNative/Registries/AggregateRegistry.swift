@@ -78,6 +78,7 @@ public macro Registries() = #externalMacro(module: "LiveViewNativeMacros", type:
 /// - ``Registry2``
 /// - ``Registry3``
 /// - ``Registry4``
+@MainActor
 public protocol AggregateRegistry: RootRegistry {
     /// The combined registry type.
     ///
@@ -138,6 +139,7 @@ public enum _EitherCustomModifier<First: CustomRegistry, Second: CustomRegistry>
     public struct _ParserType: Parser {
         let context: ParseableModifierContext
         
+        @MainActor
         public func parse(_ input: inout Substring.UTF8View) throws -> _EitherCustomModifier<First, Second> {
             let copy = input
             let firstError: ModifierParseError?

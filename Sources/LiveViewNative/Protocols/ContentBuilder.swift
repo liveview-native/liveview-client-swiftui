@@ -215,6 +215,7 @@ import LiveViewNativeStylesheet
 ///     }
 /// }
 /// ```
+@MainActor
 public protocol ContentBuilder {
     /// An enum with the supported element names.
     associatedtype TagName: RawRepresentable<String>
@@ -333,6 +334,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         )
     }
     
+    @MainActor
     public struct Value {
         let coordinatorEnvironment: CoordinatorEnvironment?
         public let context: LiveContext<R>
@@ -352,7 +354,8 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         public var document: Document? {
             context.coordinator.document
         }
-        
+      
+        @MainActor
         func value<OtherBuilder: ContentBuilder>(for _: OtherBuilder.Type = OtherBuilder.self) -> ContentBuilderContext<R, OtherBuilder>.Value {
             return .init(
                 coordinatorEnvironment: coordinatorEnvironment,
@@ -373,6 +376,7 @@ public struct ContentBuilderContext<R: RootRegistry, Builder: ContentBuilder>: D
         stylesheetResolver.resolvedStylesheet = stylesheet.flatMap({ try? Self.resolveStylesheet($0) }) ?? [:]
     }
     
+    @MainActor
     static func resolveStylesheet(
         _ stylesheet: Stylesheet<R>
     ) throws -> [String:[BuilderModifierContainer<Builder>]] {

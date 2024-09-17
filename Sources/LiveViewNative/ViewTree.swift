@@ -10,6 +10,7 @@ import SwiftUI
 import LiveViewNativeCore
 import LiveViewNativeStylesheet
 
+@MainActor
 struct ViewTreeBuilder<R: RootRegistry> {
     func fromNodes(_ nodes: NodeChildrenSequence, coordinator: LiveViewCoordinator<R>, url: URL) -> some View {
         let context = LiveContextStorage(coordinator: coordinator, url: url)

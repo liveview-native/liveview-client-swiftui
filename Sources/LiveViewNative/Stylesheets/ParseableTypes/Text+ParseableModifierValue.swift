@@ -97,6 +97,7 @@ enum _AnyTextLineStyle: ParseableModifierValue {
         }
     }
     
+    @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Text.LineStyle {
         switch self {
         case .single:
