@@ -224,14 +224,14 @@ public struct LiveView<
         .environment(\.reconnectLiveView, .init(baseURL: session.url, action: session.reconnect))
         .environmentObject(session)
         .environmentObject(liveViewModel)
-        .task {
+        .task(priority: .userInitiated) {
             await session.connect()
         }
         .onChange(of: scenePhase) { newValue in
             guard case .active = newValue,
                   session.socket?.isConnected == false
             else { return }
-            Task {
+            Task(priority: .userInitiated) {
                 await session.connect()
             }
         }
