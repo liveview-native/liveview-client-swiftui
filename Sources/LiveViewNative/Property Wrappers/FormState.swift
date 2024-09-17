@@ -66,6 +66,8 @@ public struct FormState<Value: FormValue> {
     @Environment(\.formModel) private var formModel: FormModel?
     @Environment(\.coordinatorEnvironment) private var coordinator
     
+    @FocusState public var isFocused: Bool
+    
     @Event("phx-change", type: "form") private var changeEvent
     
     /// Creates a `FormState` property wrapper with a default value that will be used when no other value is present.
@@ -174,13 +176,13 @@ public struct FormState<Value: FormValue> {
     }
     
     private func resolveMode() {
+        let elementName = element.attributeValue(for: "name")
         if case .unknown = data.mode {
             if let formModel {
-                if let elementName = element.attributeValue(for: "name") {
+                if let elementName {
                     data.setFormModel(formModel, elementName: elementName)
                     formModel.setInitialValue(initialValue, forName: elementName)
                     data.mode = .form(formModel)
-                    data.bind(to: _element, elementName: elementName, attribute: valueAttribute, defaultValue: defaultValue)
                 } else {
                     logger.warning("@FormState used on a name-less element inside of a <LiveForm>. This may not behave as expected.")
                     data.mode = .local
@@ -189,6 +191,15 @@ public struct FormState<Value: FormValue> {
                 logger.warning("Form element used outside of a <LiveForm>. This may not behave as expected.")
                 data.mode = .local
             }
+        }
+        if let elementName {
+            data.bind(
+                to: _element,
+                elementName: elementName,
+                attribute: valueAttribute,
+                defaultValue: defaultValue,
+                isFocused: _isFocused
+            )
         }
     }
     
@@ -231,10 +242,17 @@ private class FormStateData<Value: FormValue>: ObservableObject {
             .sink { [unowned self] _ in self.objectWillChange.send() }
     }
     
-    func bind(to element: ObservedElement, elementName: String, attribute: AttributeName, defaultValue: Value) {
+    func bind(
+        to element: ObservedElement,
+        elementName: String,
+        attribute: AttributeName,
+        defaultValue: Value,
+        isFocused: FocusState<Bool>
+    ) {
         // When the element updates from the server, sync the new value into the form.
         elementCancellable = element.projectedValue
             .sink { [weak self] _ in
+                guard !isFocused.wrappedValue else { return }
                 guard case .form(let formModel) = self?.mode else { return }
                 formModel.setServerValue(
                     element.wrappedValue.attribute(named: attribute)

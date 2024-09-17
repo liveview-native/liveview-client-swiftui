@@ -91,9 +91,6 @@ import SwiftUI
 struct TextField<Root: RootRegistry>: TextFieldProtocol {
     @FormState("text", default: "") var text: String?
     
-    @LiveElementIgnored
-    @FocusState private var isFocused: Bool
-    
     @_documentation(visibility: public)
     @Event(.init(name: "phx-focus"), type: "focus") var focusEvent
     
@@ -139,8 +136,8 @@ struct TextField<Root: RootRegistry>: TextFieldProtocol {
     
     var body: some View {
         field
-            .focused($isFocused)
-            .onChange(of: isFocused, perform: handleFocus)
+            .focused(_text.$isFocused)
+            .onChange(of: _text.isFocused, perform: handleFocus)
             .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
     }
     
