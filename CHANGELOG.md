@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 
 ## Fixed
-- `+` values are properly encoded as `%2B` in form events
+- `+` characters are properly encoded as `%2B` in form events
 
 ## [0.3.0] 2024-08-21
 
