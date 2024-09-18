@@ -12,8 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `LiveViewNative.SwiftUI.normalize_app_version/1`
 
 ## Changed
+- Submitting a form will remove focus from all fields
 
 ## Fixed
+- Form elements will apply updates from a diff
 
 ## [0.3.0] 2024-08-21
 
