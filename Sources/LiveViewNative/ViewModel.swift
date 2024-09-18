@@ -209,10 +209,13 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
 
 private extension URLComponents {
     var formEncodedQuery: String? {
-        guard let query = self.percentEncodedQuery
-        else { return nil }
-        // `+` is converted to a space, so query encode it.
-        // Spaces are already converted to %20 by `percentEncodedQuery`
-        return query.replacing("+", with: "%2B")
+        var components = self
+        components.queryItems = components.queryItems?.map({
+            .init(
+                name: $0.name,
+                value: $0.value.flatMap({ $0.addingPercentEncoding(withAllowedCharacters: .alphanumerics) })
+            )
+        })
+        return components.query!
     }
 }
