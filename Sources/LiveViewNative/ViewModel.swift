@@ -54,6 +54,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     @Published internal private(set) var data = [String: any FormValue]()
     var formFieldWillChange = PassthroughSubject<String, Never>()
     
+    /// A publisher that emits a value before sending the form submission event.
+    var formWillSubmit = PassthroughSubject<(), Never>()
+    
     init(elementID: String) {
         self.elementID = elementID
     }
@@ -88,6 +91,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
     @MainActor
     public func sendSubmitEvent() async throws {
+        formWillSubmit.send(())
         if let submitEvent = submitEvent {
             try await pushFormEvent(submitEvent)
         } else if let submitAction {
@@ -194,7 +198,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
     }
     
-    /// Set a value into the form's `data` without triggered change events.
+    /// Set a value into the form's `data` without triggering change events.
     public func setServerValue(_ value: (some FormValue)?, forName name: String) {
         data[name] = value
     }

@@ -66,7 +66,13 @@ public struct FormState<Value: FormValue> {
     @Environment(\.formModel) private var formModel: FormModel?
     @Environment(\.coordinatorEnvironment) private var coordinator
     
+    /// Use this with the ``SwiftUI/View/focused(_:)`` modifier to prevent server-side updates while editing.
     @FocusState public var isFocused: Bool
+    
+    /// Use this with `onEditingChanged` callbacks to prevent server-side updates while editing.
+    ///
+    /// Prefer ``isFocused`` for elements that can be focused.
+    @State public var isEditing: Bool = false
     
     @Event("phx-change", type: "form") private var changeEvent
     
@@ -180,7 +186,15 @@ public struct FormState<Value: FormValue> {
         if case .unknown = data.mode {
             if let formModel {
                 if let elementName {
-                    data.setFormModel(formModel, elementName: elementName)
+                    data.bind(
+                        formModel,
+                        to: _element,
+                        elementName: elementName,
+                        attribute: valueAttribute,
+                        defaultValue: defaultValue,
+                        isFocused: $isFocused,
+                        isEditing: $isEditing
+                    )
                     formModel.setInitialValue(initialValue, forName: elementName)
                     data.mode = .form(formModel)
                 } else {
@@ -191,15 +205,6 @@ public struct FormState<Value: FormValue> {
                 logger.warning("Form element used outside of a <LiveForm>. This may not behave as expected.")
                 data.mode = .local
             }
-        }
-        if let elementName {
-            data.bind(
-                to: _element,
-                elementName: elementName,
-                attribute: valueAttribute,
-                defaultValue: defaultValue,
-                isFocused: _isFocused
-            )
         }
     }
     
@@ -235,31 +240,40 @@ private class FormStateData<Value: FormValue>: ObservableObject {
     var mode: Mode = .unknown
     private var cancellable: AnyCancellable?
     private var elementCancellable: AnyCancellable?
-    
-    func setFormModel(_ formModel: FormModel, elementName: String) {
-        cancellable = formModel.formFieldWillChange
-            .filter { $0 == elementName }
-            .sink { [unowned self] _ in self.objectWillChange.send() }
-    }
+    private var focusCancellable: AnyCancellable?
     
     func bind(
+        _ formModel: FormModel,
         to element: ObservedElement,
         elementName: String,
         attribute: AttributeName,
         defaultValue: Value,
-        isFocused: FocusState<Bool>
+        isFocused: FocusState<Bool>.Binding,
+        isEditing: Binding<Bool>
     ) {
+        // Trigger a View update when the field's value changes.
+        cancellable = formModel.formFieldWillChange
+            .filter { $0 == elementName }
+            .sink { [unowned self] _ in self.objectWillChange.send() }
+        
         // When the element updates from the server, sync the new value into the form.
         elementCancellable = element.projectedValue
             .sink { [weak self] _ in
-                guard !isFocused.wrappedValue else { return }
-                guard case .form(let formModel) = self?.mode else { return }
+                // ignore server updates if the field is focused.
+                guard !isFocused.wrappedValue && !isEditing.wrappedValue else { return }
                 formModel.setServerValue(
                     element.wrappedValue.attribute(named: attribute)
                         .flatMap { Value.fromAttribute($0, on: element.wrappedValue) }
                         ?? defaultValue,
                     forName: elementName
                 )
+            }
+        
+        // Remove all focus from form fields when the form is submitted.
+        focusCancellable = formModel.formWillSubmit
+            .sink { _ in
+                isFocused.wrappedValue = false
+                isEditing.wrappedValue = false
             }
     }
     

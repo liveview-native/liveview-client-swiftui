@@ -32,7 +32,6 @@ import SwiftUI
 struct SecureField<Root: RootRegistry>: TextFieldProtocol {
     @FormState("text", default: "") var text: String?
     @LiveElementIgnored
-    @FocusState private var isFocused: Bool
     
     /// Sends an event when the field gains focus.
     @_documentation(visibility: public)
@@ -51,8 +50,8 @@ struct SecureField<Root: RootRegistry>: TextFieldProtocol {
         ) {
             $liveElement.children()
         }
-            .focused($isFocused)
-            .onChange(of: isFocused, perform: handleFocus)
+            .focused(_text.$isFocused)
+            .onChange(of: _text.isFocused, perform: handleFocus)
             .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
     }
     

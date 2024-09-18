@@ -36,7 +36,7 @@ struct Picker<Root: RootRegistry>: View {
     @FormState("selection") private var selection: String?
     
     var body: some View {
-        SwiftUI.Picker.init(selection: $selection) {
+        SwiftUI.Picker(selection: $selection) {
             ForEach($liveElement.childNodes(in: "content", default: true), id: \.id) { node in
                 if let element = node.asElement() {
                     // For simple Text elements, we can skip the slow element conversion, and convert directly to Text.
@@ -57,5 +57,6 @@ struct Picker<Root: RootRegistry>: View {
         } label: {
             $liveElement.children(in: "label")
         }
+        .focused(_selection.$isFocused)
     }
 }

@@ -65,11 +65,17 @@ struct Stepper<Root: RootRegistry>: View {
         {
             SwiftUI.Stepper(value: $value, in: lowerBound...upperBound, step: step) {
                 label
+            } onEditingChanged: { isEditing in
+                _value.isEditing = isEditing
             }
+            .focused(_value.$isFocused)
         } else {
             SwiftUI.Stepper(value: $value, step: step) {
                 label
+            } onEditingChanged: { isEditing in
+                _value.isEditing = isEditing
             }
+            .focused(_value.$isFocused)
         }
         #endif
     }
