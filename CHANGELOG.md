@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed
 
 ## Fixed
+- Updates to change-tracked properties no longer occur on the next RunLoop, fixing modal dismissal on macOS
 
 ## [0.3.0] 2024-08-21
 
