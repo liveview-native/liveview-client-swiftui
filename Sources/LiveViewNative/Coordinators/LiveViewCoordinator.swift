@@ -32,7 +32,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         internalState
     }
     
-    @_spi(LiveForm) public weak var session: LiveSessionCoordinator<R>!
+    @_spi(LiveForm) public private(set) weak var session: LiveSessionCoordinator<R>!
     var url: URL
     
     private var channel: Channel?
