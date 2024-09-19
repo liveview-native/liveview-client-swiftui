@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - `LiveViewNative.SwiftUI.normalize_os_version/1`
 - `LiveViewNative.SwiftUI.normalize_app_version/1`
+- Optional `LiveSessionConfiguration.headers`, sent when fetching the dead render (#1456)
 
 ## Changed
 - Submitting a form will remove focus from all fields (#1451)
