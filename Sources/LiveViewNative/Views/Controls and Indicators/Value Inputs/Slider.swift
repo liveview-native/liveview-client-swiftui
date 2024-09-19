@@ -90,7 +90,10 @@ struct Slider<Root: RootRegistry>: View {
                 $liveElement.children(in: "minimumValueLabel")
             } maximumValueLabel: {
                 $liveElement.children(in: "maximumValueLabel")
+            } onEditingChanged: { isEditing in
+                _value.isEditing = isEditing
             }
+            .focused(_value.$isFocused)
         } else {
             SwiftUI.Slider(
                 value: $value,
@@ -101,7 +104,10 @@ struct Slider<Root: RootRegistry>: View {
                 $liveElement.children(in: "minimumValueLabel")
             } maximumValueLabel: {
                 $liveElement.children(in: "maximumValueLabel")
+            } onEditingChanged: { isEditing in
+                _value.isEditing = isEditing
             }
+            .focused(_value.$isFocused)
         }
         #endif
     }

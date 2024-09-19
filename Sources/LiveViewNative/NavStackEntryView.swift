@@ -11,7 +11,6 @@ import LiveViewNativeCore
 struct NavStackEntryView<R: RootRegistry>: View {
     private let entry: LiveNavigationEntry<R>
     @ObservedObject private var coordinator: LiveViewCoordinator<R>
-    @StateObject private var liveViewModel = LiveViewModel()
     @Environment(\.liveViewStateViews) private var liveViewStateViews
     
     init(_ entry: LiveNavigationEntry<R>) {
@@ -21,7 +20,7 @@ struct NavStackEntryView<R: RootRegistry>: View {
     
     var body: some View {
         elementTree
-            .environmentObject(liveViewModel)
+            .environmentObject(coordinator.liveViewModel)
     }
     
     private func buildPhaseView(_ phase: LiveViewPhase<R>) -> some View {

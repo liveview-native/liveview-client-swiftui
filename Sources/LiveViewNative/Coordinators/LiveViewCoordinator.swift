@@ -56,6 +56,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
+    private(set) internal var liveViewModel = LiveViewModel()
+    
     init(
         session: LiveSessionCoordinator<R>,
         url: URL
@@ -396,7 +398,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
+        
+        // FIXME: LiveForm should send change event when restored from `liveViewModel`.
+        // For now, we just clear the forms whenever the page reconnects.
+        self.liveViewModel.clearForms()
+        
         self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
+        
         self.document?.on(.changed) { [unowned self] doc, nodeRef in
             switch doc[nodeRef].data {
             case .root:

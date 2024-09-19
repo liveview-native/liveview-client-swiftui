@@ -12,8 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `LiveViewNative.SwiftUI.normalize_app_version/1`
 
 ## Changed
+- Submitting a form will remove focus from all fields (#1451)
 
 ## Fixed
+- Form elements will apply updates from a diff (#1451)
 - Updates to change-tracked properties no longer occur on the next RunLoop, fixing modal dismissal on macOS (#1450)
 - `+` characters are properly encoded as `%2B` in form events (#1449)
 

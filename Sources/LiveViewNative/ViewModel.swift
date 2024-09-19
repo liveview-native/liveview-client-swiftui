@@ -30,6 +30,10 @@ public class LiveViewModel: ObservableObject {
             return model
         }
     }
+    
+    func clearForms() {
+        self.forms.removeAll()
+    }
 }
 
 /// A form model stores the working copy of the data for a specific `<form>` element.
@@ -49,6 +53,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// The form data for this form.
     @Published internal private(set) var data = [String: any FormValue]()
     var formFieldWillChange = PassthroughSubject<String, Never>()
+    
+    /// A publisher that emits a value before sending the form submission event.
+    var formWillSubmit = PassthroughSubject<(), Never>()
     
     init(elementID: String) {
         self.elementID = elementID
@@ -84,6 +91,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
     @MainActor
     public func sendSubmitEvent() async throws {
+        formWillSubmit.send(())
         if let submitEvent = submitEvent {
             try await pushFormEvent(submitEvent)
         } else if let submitAction {
@@ -188,6 +196,11 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                 try await sendChangeEvent(value, for: name, event: changeEvent)
             }
         }
+    }
+    
+    /// Set a value into the form's `data` without triggering change events.
+    public func setServerValue(_ value: (some FormValue)?, forName name: String) {
+        data[name] = value
     }
     
     /// Sets the value in ``data`` if there is no value currently present.

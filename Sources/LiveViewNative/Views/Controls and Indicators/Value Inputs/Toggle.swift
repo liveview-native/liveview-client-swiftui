@@ -28,5 +28,6 @@ struct Toggle<Root: RootRegistry>: View {
         SwiftUI.Toggle(isOn: $value) {
             $liveElement.children()
         }
+        .focused(_value.$isFocused)
     }
 }
