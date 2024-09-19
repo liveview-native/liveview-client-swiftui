@@ -33,11 +33,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     @_spi(LiveForm) public private(set) weak var session: LiveSessionCoordinator<R>!
-
+    
     var url: URL
 
-    private var liveChannel: LiveViewNativeCore.LiveChannel?
-    private var channel: LiveViewNativeCore.Channel?
+    private weak var liveChannel: LiveViewNativeCore.LiveChannel?
+    private weak var channel: LiveViewNativeCore.Channel?
 
     @Published var document: LiveViewNativeCore.Document?
     private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
@@ -90,7 +90,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         return try await doPushEvent("event", payload: .jsonPayload(json: .object(object: [
             "type": .str(string: type),
             "event": .str(string: event),
-            "value": try JSONDecoder().decode(Json.self, from: JSONSerialization.data(withJSONObject: value)),
+            "value": try JSONDecoder().decode(Json.self, from: JSONSerialization.data(withJSONObject: value, options: .fragmentsAllowed)),
             "cid": target.flatMap({ .numb(number: .posInt(pos: UInt64($0))) }) ?? .null
         ])))
     }
@@ -221,9 +221,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     func bindEventListener() {
-        self.eventListener = self.channel!.eventStream()
-        self.eventListenerLoop = Task {
-            for try await event in self.eventListener! {
+        let eventListener = self.channel!.eventStream()
+        self.eventListener = eventListener
+        self.eventListenerLoop = Task { [weak self] in
+            for try await event in eventListener {
+                guard let self else { return }
                 do {
                     switch event.event {
                     case .user(user: "diff"):
@@ -262,7 +264,8 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     func bindDocumentListener() {
-        self.document?.on(.changed) { [unowned self] nodeRef, nodeData, parent in
+        self.document?.on(.changed) { [weak self] nodeRef, nodeData, parent in
+            guard let self else { return }
             switch nodeData {
             case .root:
                 // when the root changes, update the `NavStackEntry` itself.
@@ -283,10 +286,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
 
     func join(_ liveChannel: LiveViewNativeCore.LiveChannel) {
         self.liveChannel = liveChannel
-        self.channel = liveChannel.channel()
+        let channel = liveChannel.channel()
+        self.channel = channel
         
-        statusListenerLoop = Task {
-            for try await status in self.channel!.statusStream() {
+        statusListenerLoop = Task { [weak self] in
+            for try await status in channel.statusStream() {
+                guard let self else { return }
                 self.internalState = switch status {
                 case .joined:
                     .connected
@@ -316,7 +321,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     func disconnect() async throws {
-        try await self.liveChannel?.channel().leave()
+        try await self.channel?.leave()
+        self.eventListenerLoop = nil
+        self.statusListenerLoop = nil
+        self.liveChannel = nil
+        self.channel = nil
         
         self.internalState = .setup
     }
