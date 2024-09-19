@@ -113,16 +113,28 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 Task {
                     if prev.count > next.count {
                         // back navigation
-                        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(.some([
-                            "_format": .str(string: Self.platform),
-                            "_interface": Self.platformParams
-                        ]))
+                        print("Back navigate", next.last!.url)
+                        try await prev.last?.coordinator.disconnect()
+                        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
+                            .some([
+                                "_format": .str(string: Self.platform),
+                                "_interface": Self.platformParams
+                            ]),
+                            next.last!.url.absoluteString
+                        )
                         try await next.last!.coordinator.join(liveChannel)
                     } else if next.count > prev.count && prev.count > 0 {
                         print("Forward navigation to \(next.last!.url)")
                         // forward navigation (from `redirect` or `<NavigationLink>`)
                         try await prev.last?.coordinator.disconnect()
-//                        try await next.last?.coordinator.connect(redirect: true)
+                        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
+                            .some([
+                                "_format": .str(string: Self.platform),
+                                "_interface": Self.platformParams
+                            ]),
+                            next.last!.url.absoluteString
+                        )
+                        try await next.last?.coordinator.join(liveChannel)
                     }
                 }
             }
@@ -179,10 +191,13 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.liveSocket = try! await LiveSocket(originalURL.absoluteString, 10, LiveSessionParameters.platform)
         self.socket = self.liveSocket?.socket()
         
-        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(.some([
-            "_format": .str(string: LiveSessionParameters.platform),
-            "_interface": LiveSessionParameters.platformParams
-        ]))
+        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
+            .some([
+                "_format": .str(string: LiveSessionParameters.platform),
+                "_interface": LiveSessionParameters.platformParams
+            ]),
+            nil
+        )
         
         self.rootLayout = self.liveSocket!.deadRender()
         let styleURLs = self.liveSocket!.styleUrls()
