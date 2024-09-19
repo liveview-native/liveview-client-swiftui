@@ -323,11 +323,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     func deadRender(for request: URLRequest) async throws -> (String, HTTPURLResponse) {
         var request = request
         request.url = request.url!.appendingLiveViewItems(R.self)
+        request.allHTTPHeaderFields = configuration.headers
+        
         if domValues != nil {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
-        }
-        for (header, value) in configuration.headers {
-            request.setValue(value, forHTTPHeaderField: header)
         }
         
         let data: Data
