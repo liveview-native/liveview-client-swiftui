@@ -101,7 +101,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     /// Create a URL encoded body from the data in the form.
     public func buildFormQuery() throws -> String {
-        return try buildFormURLComponents().query!
+        return try buildFormURLComponents().formEncodedQuery!
     }
     
     private func sendChangeEventForFormElement(_ value: any FormValue, for name: String, _ sendEvent: ((Any) async throws -> ())?) -> (() async throws -> Void)? {
@@ -121,7 +121,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                 .init(name: "_target", value: name)
             ]
             
-            try await event(components.query!)
+            try await event(components.formEncodedQuery!)
         }
     }
     
@@ -132,7 +132,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             var components = try self.buildFormURLComponents()
             components.queryItems?.append(.init(name: "_target", value: name))
             
-            try await event(components.query!)
+            try await event(components.formEncodedQuery!)
         }
     }
     
@@ -218,4 +218,17 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         data = [:]
     }
     
+}
+
+private extension URLComponents {
+    var formEncodedQuery: String? {
+        var components = self
+        components.queryItems = components.queryItems?.map({
+            .init(
+                name: $0.name,
+                value: $0.value.flatMap({ $0.addingPercentEncoding(withAllowedCharacters: .alphanumerics) })
+            )
+        })
+        return components.query!
+    }
 }

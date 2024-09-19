@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Fixed
 - Form elements will apply updates from a diff (#1451)
+- Updates to change-tracked properties no longer occur on the next RunLoop, fixing modal dismissal on macOS (#1450)
+- `+` characters are properly encoded as `%2B` in form events (#1449)
 
 ## [0.3.0] 2024-08-21
 
