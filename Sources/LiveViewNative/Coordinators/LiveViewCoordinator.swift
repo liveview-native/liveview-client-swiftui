@@ -32,7 +32,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         internalState
     }
     
-    @_spi(LiveForm) public let session: LiveSessionCoordinator<R>
+    @_spi(LiveForm) public weak var session: LiveSessionCoordinator<R>!
     var url: URL
     
     private var channel: Channel?
@@ -62,10 +62,11 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         self.handleEvent("native_redirect") { [weak self] payload in
             guard let self,
-                  let redirect = LiveRedirect(from: payload, relativeTo: self.url)
+                  let redirect = LiveRedirect(from: payload, relativeTo: self.url),
+                  let session = self.session
             else { return }
-            Task { [weak session] in
-                try await session?.redirect(redirect)
+            Task {
+                try await session.redirect(redirect)
             }
         }
     }
