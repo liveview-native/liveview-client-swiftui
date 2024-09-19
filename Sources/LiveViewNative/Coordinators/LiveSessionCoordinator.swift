@@ -349,6 +349,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         
         var request = request
         request.url = request.url!.appendingLiveViewItems()
+        request.allHTTPHeaderFields = configuration.headers
+        
         if let domValues {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
         }
