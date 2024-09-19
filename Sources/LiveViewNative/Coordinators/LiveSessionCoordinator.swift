@@ -479,11 +479,11 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }.receive("error") { msg in
             logger.debug("[LiveReload] error connecting to channel: \(msg.payload)")
         }
-        self.liveReloadChannel!.on("assets_change") { [unowned self] _ in
+        self.liveReloadChannel!.on("assets_change") { [weak self] _ in
             logger.debug("[LiveReload] assets changed, reloading")
             Task {
                 // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
-                await self.reconnect()
+                await self?.reconnect()
             }
         }
     }
