@@ -141,8 +141,6 @@ public struct LiveView<
 >: View {
     @StateObject var session: LiveSessionCoordinator<R>
     
-    @StateObject private var liveViewModel = LiveViewModel()
-    
     @Environment(\.scenePhase) private var scenePhase
     
     let phaseView: (LiveViewPhase<R>) -> PhaseView
@@ -223,15 +221,14 @@ public struct LiveView<
         .environment(\.stylesheet, session.stylesheet ?? .init(content: [], classes: [:]))
         .environment(\.reconnectLiveView, .init(baseURL: session.url, action: session.reconnect))
         .environmentObject(session)
-        .environmentObject(liveViewModel)
-        .task {
+        .task(priority: .userInitiated) {
             await session.connect()
         }
         .onChange(of: scenePhase) { newValue in
             guard case .active = newValue,
                   session.socket?.isConnected == false
             else { return }
-            Task {
+            Task(priority: .userInitiated) {
                 await session.connect()
             }
         }

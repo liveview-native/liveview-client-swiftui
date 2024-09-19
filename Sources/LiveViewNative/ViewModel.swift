@@ -30,6 +30,10 @@ public class LiveViewModel: ObservableObject {
             return model
         }
     }
+    
+    func clearForms() {
+        self.forms.removeAll()
+    }
 }
 
 /// A form model stores the working copy of the data for a specific `<form>` element.
@@ -49,6 +53,9 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// The form data for this form.
     @Published internal private(set) var data = [String: any FormValue]()
     var formFieldWillChange = PassthroughSubject<String, Never>()
+    
+    /// A publisher that emits a value before sending the form submission event.
+    var formWillSubmit = PassthroughSubject<(), Never>()
     
     init(elementID: String) {
         self.elementID = elementID
@@ -84,6 +91,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     /// See ``LiveViewCoordinator/pushEvent(type:event:value:target:)`` for more information.
     @MainActor
     public func sendSubmitEvent() async throws {
+        formWillSubmit.send(())
         if let submitEvent = submitEvent {
             try await pushFormEvent(submitEvent)
         } else if let submitAction {
@@ -93,7 +101,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     
     /// Create a URL encoded body from the data in the form.
     public func buildFormQuery() throws -> String {
-        return try buildFormURLComponents().query!
+        return try buildFormURLComponents().formEncodedQuery!
     }
     
     private func sendChangeEventForFormElement(_ value: any FormValue, for name: String, _ sendEvent: ((Any) async throws -> ())?) -> (() async throws -> Void)? {
@@ -113,7 +121,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                 .init(name: "_target", value: name)
             ]
             
-            try await event(components.query!)
+            try await event(components.formEncodedQuery!)
         }
     }
     
@@ -124,7 +132,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             var components = try self.buildFormURLComponents()
             components.queryItems?.append(.init(name: "_target", value: name))
             
-            try await event(components.query!)
+            try await event(components.formEncodedQuery!)
         }
     }
     
@@ -190,6 +198,11 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
     }
     
+    /// Set a value into the form's `data` without triggering change events.
+    public func setServerValue(_ value: (some FormValue)?, forName name: String) {
+        data[name] = value
+    }
+    
     /// Sets the value in ``data`` if there is no value currently present.
     func setInitialValue(_ value: any FormValue, forName name: String) {
         guard !data.keys.contains(name)
@@ -205,4 +218,17 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         data = [:]
     }
     
+}
+
+private extension URLComponents {
+    var formEncodedQuery: String? {
+        var components = self
+        components.queryItems = components.queryItems?.map({
+            .init(
+                name: $0.name,
+                value: $0.value.flatMap({ $0.addingPercentEncoding(withAllowedCharacters: .alphanumerics) })
+            )
+        })
+        return components.query!
+    }
 }

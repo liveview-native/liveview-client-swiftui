@@ -22,7 +22,6 @@ import SwiftUI
 struct TextEditor<Root: RootRegistry>: TextFieldProtocol {
     @FormState("text", default: "") var text: String?
     @LiveElementIgnored
-    @FocusState private var isFocused: Bool
     
     /// An event that fires when the text editor is focused.
     @_documentation(visibility: public)
@@ -37,8 +36,8 @@ struct TextEditor<Root: RootRegistry>: TextFieldProtocol {
     var body: some View {
 #if os(iOS) || os(macOS)
         SwiftUI.TextEditor(text: textBinding)
-            .focused($isFocused)
-            .onChange(of: isFocused, perform: handleFocus)
+            .focused(_text.$isFocused)
+            .onChange(of: _text.isFocused, perform: handleFocus)
             .preference(key: _ProvidedBindingsKey.self, value: [.focus, .blur])
 #endif
     }

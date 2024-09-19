@@ -27,6 +27,23 @@ public struct Stylesheet<R: RootRegistry> {
     }
 }
 
+enum StylesheetCache {
+    private static var cache = [URL:Any]()
+    
+    static subscript<R: RootRegistry>(for url: URL, registry _: R.Type = R.self) -> Stylesheet<R>? {
+        get {
+            Self.cache[url.absoluteURL] as? Stylesheet<R>
+        }
+        set {
+            Self.cache[url.absoluteURL] = newValue as Any
+        }
+    }
+    
+    static func removeAll() {
+        cache.removeAll()
+    }
+}
+
 extension Stylesheet: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
