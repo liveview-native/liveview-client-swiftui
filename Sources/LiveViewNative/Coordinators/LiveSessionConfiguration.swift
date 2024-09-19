@@ -16,7 +16,7 @@ public struct LiveSessionConfiguration {
     /// By default, no connection params are provided.
     public var connectParams: ((URL) -> [String: Any])? = nil
   
-    /// Optional headers that are passed along with estabilishing the initial connection.
+    /// Optional headers that are sent when fetching the dead render.
     ///
     /// By default, no addtional headers are provided.
     public var headers: [String: String] = [:]
