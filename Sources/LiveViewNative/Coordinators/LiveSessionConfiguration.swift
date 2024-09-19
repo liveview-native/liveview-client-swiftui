@@ -18,8 +18,8 @@ public struct LiveSessionConfiguration {
   
     /// Optional headers that are sent when fetching the dead render.
     ///
-    /// By default, no addtional headers are provided.
-    public var headers: [String: String] = [:]
+    /// By default, no additional headers are provided.
+    public var headers: [String: String]? = nil
     
     /// The URL session configuration the coordinator will use for performing HTTP and socket requests.
     /// 
@@ -39,7 +39,7 @@ public struct LiveSessionConfiguration {
     
     public init(
         connectParams: ((URL) -> [String: Any])? = nil,
-        headers: [String: String] = [:],
+        headers: [String: String]? = nil,
         urlSessionConfiguration: URLSessionConfiguration = .default,
         transition: AnyTransition? = nil,
         reconnectBehavior: ReconnectBehavior = .exponential
