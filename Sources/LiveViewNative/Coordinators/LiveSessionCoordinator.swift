@@ -326,6 +326,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         if domValues != nil {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
         }
+        for (header, value) in configuration.headers {
+            request.setValue(value, forHTTPHeaderField: header)
+        }
         
         let data: Data
         let response: URLResponse
