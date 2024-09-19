@@ -16,7 +16,7 @@ import SwiftUI
 ///     <Button phx-click="edit">Edit</Button>
 ///     <Button phx-click="save">Save</Button>
 ///     <Button phx-click="open">Open</Button>
-/// </ToolbarItemMenu>
+/// </ToolbarTitleMenu>
 /// ```
 ///
 /// ## See Also

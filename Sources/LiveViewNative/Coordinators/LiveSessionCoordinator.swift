@@ -128,13 +128,17 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 false
             }
             if next.last!.coordinator.url != next.last!.url || isDisconnected {
-                Task {
-                    if prev.count > next.count {
-                        // back navigation
+                if prev.count > next.count {
+                    // back navigation
+                    Task(priority: .userInitiated) {
                         try await next.last!.coordinator.connect(domValues: self.domValues, redirect: true)
-                    } else if next.count > prev.count && prev.count > 0 {
-                        // forward navigation (from `redirect` or `<NavigationLink>`)
+                    }
+                } else if next.count > prev.count && prev.count > 0 {
+                    // forward navigation (from `redirect` or `<NavigationLink>`)
+                    Task {
                         await prev.last?.coordinator.disconnect()
+                    }
+                    Task(priority: .userInitiated) {
                         try await next.last?.coordinator.connect(domValues: self.domValues, redirect: true)
                     }
                 }
@@ -193,7 +197,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             var request = URLRequest(url: originalURL)
             request.httpMethod = httpMethod
             request.httpBody = httpBody
-            let (html, response) = try await deadRender(for: request)
+            let (html, response) = try await deadRender(for: request, domValues: self.domValues)
+            
             // update the URL if redirects happened.
             let url: URL
             if let responseURL = response.url {
@@ -209,27 +214,37 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             } else {
                 url = originalURL
             }
-            
+
             let doc = try SwiftSoup.parse(html, url.absoluteString, SwiftSoup.Parser.xmlParser().settings(.init(true, true)))
-            let domValues = try self.extractDOMValues(doc)
+            self.domValues = try self.extractDOMValues(doc)
+            
             // extract the root layout, removing anything within the `<div data-phx-main>`.
             let mainDiv = try doc.select("div[data-phx-main]")[0]
             try mainDiv.replaceWith(doc.createElement("phx-main"))
-            async let stylesheet = withThrowingTaskGroup(of: (Data, URLResponse).self) { group in
+            
+            self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
+
+            async let stylesheet = withThrowingTaskGroup(of: Stylesheet<R>.self) { group in
                 for style in try doc.select("Style") {
                     guard let url = URL(string: try style.attr("url"), relativeTo: url)
                     else { continue }
-                    group.addTask { try await self.urlSession.data(from: url) }
+                    group.addTask {
+                        if let cachedStylesheet = StylesheetCache[for: url, registry: R.self] {
+                            return cachedStylesheet
+                        } else {
+                            let (data, response) = try await self.urlSession.data(from: url)
+                            guard let contents = String(data: data, encoding: .utf8)
+                            else { return Stylesheet<R>(content: [], classes: [:]) }
+                            let stylesheet = try Stylesheet<R>(from: contents, in: .init())
+                            StylesheetCache[for: url, registry: R.self] = stylesheet
+                            return stylesheet
+                        }
+                    }
                 }
                 return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
-                    guard let contents = String(data: next.0, encoding: .utf8)
-                    else { return result }
-                    return result.merge(with: try Stylesheet<R>(from: contents, in: .init()))
+                    return result.merge(with: next)
                 }
             }
-            self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
-            
-            self.domValues = domValues
             
             if socket == nil {
                 try await self.connectSocket(domValues)
@@ -259,13 +274,20 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
     
     private func disconnect(preserveNavigationPath: Bool = false) async {
-        for entry in self.navigationPath {
-            await entry.coordinator.disconnect()
-            if !preserveNavigationPath {
-                entry.coordinator.document = nil
+        // disconnect all views
+        await withTaskGroup(of: Void.self) { group in
+            for entry in self.navigationPath {
+                group.addTask {
+                    await entry.coordinator.disconnect()
+                }
             }
         }
+        // reset all documents if navigation path is being reset.
         if !preserveNavigationPath {
+            for entry in self.navigationPath {
+                entry.coordinator.document = nil
+            }
+            
             self.navigationPath = [self.navigationPath.first!]
         }
         self.socket?.disconnect()
@@ -320,12 +342,16 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// Request the dead render with the given `request`.
     ///
     /// Returns the dead render HTML and the HTTP response information (including the final URL after redirects).
-    func deadRender(for request: URLRequest) async throws -> (String, HTTPURLResponse) {
+    nonisolated func deadRender(
+        for request: URLRequest,
+        domValues: DOMValues?
+    ) async throws -> (String, HTTPURLResponse) {
+        
         var request = request
-        request.url = request.url!.appendingLiveViewItems(R.self)
+        request.url = request.url!.appendingLiveViewItems()
         request.allHTTPHeaderFields = configuration.headers
         
-        if domValues != nil {
+        if let domValues {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
         }
         
@@ -363,7 +389,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         let liveReloadEnabled: Bool
     }
     
-    private func extractLiveReloadFrame(_ doc: SwiftSoup.Document) throws -> Bool {
+    nonisolated private func extractLiveReloadFrame(_ doc: SwiftSoup.Document) throws -> Bool {
         !(try doc.select("iframe[src=\"/phoenix/live_reload/frame\"]").isEmpty())
     }
     
@@ -484,6 +510,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.liveReloadChannel!.on("assets_change") { [unowned self] _ in
             logger.debug("[LiveReload] assets changed, reloading")
             Task {
+                StylesheetCache.removeAll()
                 // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
                 await self.reconnect()
             }
@@ -534,12 +561,12 @@ class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDe
         }
         
         var newRequest = request
-        newRequest.url = await url.appendingLiveViewItems(R.self)
+        newRequest.url = await url.appendingLiveViewItems()
         return newRequest
     }
 }
 
-extension LiveSessionCoordinator {
+enum LiveSessionParameters {
     static var platform: String { "swiftui" }
     static var platformParams: [String:Any] {
         [
@@ -641,18 +668,8 @@ extension LiveSessionCoordinator {
             "time_zone": TimeZone.autoupdatingCurrent.identifier,
         ]
     }
-}
-
-fileprivate extension URL {
-    @MainActor
-    func appendingLiveViewItems<R: RootRegistry>(_: R.Type = R.self) -> Self {
-        var result = self
-        let components = URLComponents(url: self, resolvingAgainstBaseURL: false)
-        if !(components?.queryItems?.contains(where: { $0.name == "_format" }) ?? false) {
-            result.append(queryItems: [
-                .init(name: "_format", value: LiveSessionCoordinator<R>.platform)
-            ])
-        }
+    
+    static var queryItems: [URLQueryItem] = {
         /// Create a nested structure of query items.
         ///
         /// `_root[key][nested_key]=value`
@@ -667,12 +684,24 @@ fileprivate extension URL {
                 }
             }
         }
-        for queryItem in queryParameters(for: LiveSessionCoordinator<R>.platformParams) {
-            let name = "_interface\(queryItem.name)"
-            if !(components?.queryItems?.contains(where: { $0.name == name }) ?? false) {
-                result.append(queryItems: [.init(name: name, value: queryItem.value)])
+        
+        return queryParameters(for: platformParams)
+            .map { queryItem in
+                URLQueryItem(name: "_interface\(queryItem.name)", value: queryItem.value)
             }
-        }
+            + [.init(name: "_format", value: platform)]
+    }()
+}
+
+fileprivate extension URL {
+    nonisolated func appendingLiveViewItems() -> Self {
+        var result = self
+        let components = URLComponents(url: self, resolvingAgainstBaseURL: false)
+        let existingQueryItems = (components?.queryItems ?? []).reduce(into: Set<String>()) { $0.insert($1) }
+        result.append(
+            queryItems: LiveSessionParameters.queryItems
+                .filter({ !existingQueryItems.contains($0.name) })
+        )
         return result
     }
 }

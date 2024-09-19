@@ -62,18 +62,22 @@ struct DatePicker<Root: RootRegistry>: View {
             SwiftUI.DatePicker(selection: $selection.date, in: start...end, displayedComponents: datePickerComponents) {
                 $liveElement.children()
             }
+            .focused(_selection.$isFocused)
         } else if let start {
             SwiftUI.DatePicker(selection: $selection.date, in: start..., displayedComponents: datePickerComponents) {
                 $liveElement.children()
             }
+            .focused(_selection.$isFocused)
         } else if let end {
             SwiftUI.DatePicker(selection: $selection.date, in: ...end, displayedComponents: datePickerComponents) {
                 $liveElement.children()
             }
+            .focused(_selection.$isFocused)
         } else {
             SwiftUI.DatePicker(selection: $selection.date, displayedComponents: datePickerComponents) {
                 $liveElement.children()
             }
+            .focused(_selection.$isFocused)
         }
 #endif
     }
