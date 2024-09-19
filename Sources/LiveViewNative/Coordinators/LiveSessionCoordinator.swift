@@ -421,9 +421,12 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             var wsEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
             wsEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
             wsEndpoint.path = "/live/websocket"
+            let configuration = self.urlSession.configuration
             let socket = Socket(
                 endPoint: wsEndpoint.string!,
-                transport: { [unowned self] in URLSessionTransport(url: $0, configuration: self.urlSession.configuration) },
+                transport: {
+                    URLSessionTransport(url: $0, configuration: configuration)
+                },
                 paramsClosure: {
                     [
                         "_csrf_token": domValues.phxCSRFToken,
@@ -505,12 +508,12 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         }.receive("error") { msg in
             logger.debug("[LiveReload] error connecting to channel: \(msg.payload)")
         }
-        self.liveReloadChannel!.on("assets_change") { [unowned self] _ in
+        self.liveReloadChannel!.on("assets_change") { [weak self] _ in
             logger.debug("[LiveReload] assets changed, reloading")
             Task {
                 StylesheetCache.removeAll()
                 // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
-                await self.reconnect()
+                await self?.reconnect()
             }
         }
     }
