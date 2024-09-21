@@ -35,9 +35,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser do
       |> Parser.error_from_result()
 
     case result do
-      {:ok, [output], _unconsumed = "", _context, _current_line_and_offset, _} ->
-        output
-
       {:ok, output, _unconsumed = "", _context, _current_line_and_offset, _} ->
         output
 

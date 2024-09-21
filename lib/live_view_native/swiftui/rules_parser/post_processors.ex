@@ -2,6 +2,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   @moduledoc false
 
   import LiveViewNative.SwiftUI.RulesParser.Parser.Annotations
+  alias LiveViewNative.SwiftUI.RulesParser.Parser.Annotations
 
   if Mix.env() == :test do
     @doc """
@@ -31,31 +32,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
 
   def wrap_in_tuple(rest, args, context, {_line, _}, _byte_offset) do
     {rest, [List.to_tuple(Enum.reverse(args))], context}
-  end
-
-  def block_open_with_variable_to_ast(rest, [variable, string], context, {line, _}, _byte_offset) do
-    {rest,
-     [
-       {:<>,
-        context_to_annotation(context.context, line) ++ [context: Elixir, imports: [{2, Kernel}]],
-        [string, variable]}
-     ], context}
-  end
-
-  def tag_as_elixir_code(rest, [quotable], context, {line, _}, _byte_offset) do
-    {rest,
-     [
-       {Elixir, context_to_annotation(context.context, line), quotable}
-     ], context}
-  end
-
-  def to_elixir_variable_ast(rest, [variable_name], context, {line, _}, _byte_offset) do
-    {rest,
-     [
-       {Elixir, context_to_annotation(context.context, line),
-        {String.to_atom(variable_name), context_to_annotation(context.context, line),
-         context.variable_context}}
-     ], context}
   end
 
   def to_dotted_ime_ast(rest, [args, variable_name], context, {line, _}, _offset, is_initial) do
@@ -96,14 +72,14 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
 
   defp combine_chain_ast_parts(outer, inner) when is_atom(outer) do
     if Regex.match?(~r/^[A-Z]/, Atom.to_string(outer)) do
-      {:., [], [outer, inner]}
+      {:., Annotations.empty(), [outer, inner]}
     else
       case outer do
         {:., annotations, [nil, part]} ->
           {:., annotations, [nil, {:., annotations, [part, inner]}]}
 
         _ ->
-          {:., [], [outer, inner]}
+          {:., Annotations.empty(), [outer, inner]}
       end
     end
   end
@@ -113,7 +89,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   end
 
   defp combine_chain_ast_parts(outer, inner) do
-    {:., [], [outer, inner]}
+    {:., Annotations.empty(), [outer, inner]}
   end
 
   def chain_ast(rest, sections, context, {_line, _}, _byte_offset) do

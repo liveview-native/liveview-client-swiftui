@@ -207,10 +207,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       {
         frozen(parsec(:nested_modifier)),
         "a modifier eg ‘bold()’"
-      },
-      {
-        variable(generate_error?: false),
-        ~s'a variable defined in the class header eg ‘color_name’'
       }
     ]
     |> Enum.flat_map(fn
