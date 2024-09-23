@@ -464,7 +464,7 @@ Then use the `template` attribute on the view to be injected into the stylesheet
 
 ```heex
 <Image style="overlay-circle">
-  <Circle template="circle" style="stroke(.red, lineWidth: 4)"></Circle>
+  <Circle template="circle" style="stroke(.red, lineWidth: 4)" />
 </Image>
 ```
 
