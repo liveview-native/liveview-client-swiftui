@@ -161,7 +161,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> replace(:__gesture_state__)
     |> post_traverse({PostProcessors, :add_annotations, []})
     |> concat(wrap(modifier_brackets.(nested: true)))
-    |> post_traverse({PostProcessors, :wrap_in_tuple, []})
+    |> wrap()
   )
 
   @modifier_arguments fn inside_key_value_pair? ->
