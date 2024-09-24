@@ -27,19 +27,20 @@ public struct Stylesheet<R: RootRegistry> {
     }
 }
 
-enum StylesheetCache {
-    private static var cache = [URL:Any]()
+actor StylesheetCache {
+    static let shared = StylesheetCache()
     
-    static subscript<R: RootRegistry>(for url: URL, registry _: R.Type = R.self) -> Stylesheet<R>? {
-        get {
-            Self.cache[url.absoluteURL] as? Stylesheet<R>
-        }
-        set {
-            Self.cache[url.absoluteURL] = newValue as Any
-        }
+    private var cache = [URL:Any]()
+    
+    func read<R: RootRegistry>(for url: URL, registry _: R.Type = R.self) -> Stylesheet<R>? {
+        cache[url.absoluteURL] as? Stylesheet<R>
+    }
+
+    func write<R: RootRegistry>(_ value: Stylesheet<R>, for url: URL, registry _: R.Type = R.self) {
+        cache[url.absoluteURL] = value
     }
     
-    static func removeAll() {
+    func removeAll() {
         cache.removeAll()
     }
 }

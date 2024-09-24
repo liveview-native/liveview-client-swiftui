@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updates to change-tracked properties no longer occur on the next RunLoop, fixing modal dismissal on macOS (#1450)
 - `+` characters are properly encoded as `%2B` in form events (#1449)
 - Fixed retain cycle in `LiveViewCoordinator` (#1455)
+- Made `StylesheetCache` thread-safe, fixing occasional crashes (#1461)
 
 ## [0.3.0] 2024-08-21
 
