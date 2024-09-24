@@ -229,14 +229,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                     guard let url = URL(string: try style.attr("url"), relativeTo: url)
                     else { continue }
                     group.addTask {
-                        if let cachedStylesheet = StylesheetCache[for: url, registry: R.self] {
+                        if let cachedStylesheet = await StylesheetCache.shared.read(for: url, registry: R.self) {
                             return cachedStylesheet
                         } else {
-                            let (data, response) = try await self.urlSession.data(from: url)
+                            let (data, _) = try await self.urlSession.data(from: url)
                             guard let contents = String(data: data, encoding: .utf8)
                             else { return Stylesheet<R>(content: [], classes: [:]) }
                             let stylesheet = try Stylesheet<R>(from: contents, in: .init())
-                            StylesheetCache[for: url, registry: R.self] = stylesheet
+                            await StylesheetCache.shared.write(stylesheet, for: url, registry: R.self)
                             return stylesheet
                         }
                     }
@@ -513,7 +513,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.liveReloadChannel!.on("assets_change") { [weak self] _ in
             logger.debug("[LiveReload] assets changed, reloading")
             Task {
-                StylesheetCache.removeAll()
+                await StylesheetCache.shared.removeAll()
                 // need to fully reconnect (rather than just re-join channel) because the elixir code reloader only triggers on http reqs
                 await self?.reconnect()
             }
