@@ -2,6 +2,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   @moduledoc false
 
   import LiveViewNative.SwiftUI.RulesParser.Parser.Annotations
+  alias LiveViewNative.SwiftUI.RulesParser.Parser.Annotations
 
   if Mix.env() == :test do
     @doc """
@@ -26,36 +27,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   end
 
   def to_attr_ast(rest, [attr, "attr"], context, {line, _}, _byte_offset) when is_binary(attr) do
-    {rest, [{:__attr__, context_to_annotation(context.context, line), attr}], context}
-  end
-
-  def wrap_in_tuple(rest, args, context, {_line, _}, _byte_offset) do
-    {rest, [List.to_tuple(Enum.reverse(args))], context}
-  end
-
-  def block_open_with_variable_to_ast(rest, [variable, string], context, {line, _}, _byte_offset) do
-    {rest,
-     [
-       {:<>,
-        context_to_annotation(context.context, line) ++ [context: Elixir, imports: [{2, Kernel}]],
-        [string, variable]}
-     ], context}
-  end
-
-  def tag_as_elixir_code(rest, [quotable], context, {line, _}, _byte_offset) do
-    {rest,
-     [
-       {Elixir, context_to_annotation(context.context, line), quotable}
-     ], context}
-  end
-
-  def to_elixir_variable_ast(rest, [variable_name], context, {line, _}, _byte_offset) do
-    {rest,
-     [
-       {Elixir, context_to_annotation(context.context, line),
-        {String.to_atom(variable_name), context_to_annotation(context.context, line),
-         context.variable_context}}
-     ], context}
+    {rest, [[:__attr__, context_to_annotation(context.context, line), attr]], context}
   end
 
   def to_dotted_ime_ast(rest, [args, variable_name], context, {line, _}, _offset, is_initial) do
@@ -63,12 +35,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
       if args == [] do
         String.to_atom(variable_name)
       else
-        {String.to_atom(variable_name), context_to_annotation(context.context, line), args}
+        [String.to_atom(variable_name), context_to_annotation(context.context, line), args]
       end
 
     wrapped_ime =
       if is_initial do
-        [{:., context_to_annotation(context.context, line), [nil, ime]}]
+        [[:., context_to_annotation(context.context, line), [nil, ime]]]
       else
         [ime]
       end
@@ -96,24 +68,24 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
 
   defp combine_chain_ast_parts(outer, inner) when is_atom(outer) do
     if Regex.match?(~r/^[A-Z]/, Atom.to_string(outer)) do
-      {:., [], [outer, inner]}
+      [:., Annotations.empty(), [outer, inner]]
     else
       case outer do
-        {:., annotations, [nil, part]} ->
-          {:., annotations, [nil, {:., annotations, [part, inner]}]}
+        [:., annotations, [nil, part]] ->
+          [:., annotations, [nil, [:., annotations, [part, inner]]]]
 
         _ ->
-          {:., [], [outer, inner]}
+          [:., Annotations.empty(), [outer, inner]]
       end
     end
   end
 
-  defp combine_chain_ast_parts({:., annotations, [nil, part]}, inner) do
-    {:., annotations, [nil, {:., annotations, [part, inner]}]}
+  defp combine_chain_ast_parts([:., annotations, [nil, part]], inner) do
+    [:., annotations, [nil, [:., annotations, [part, inner]]]]
   end
 
   defp combine_chain_ast_parts(outer, inner) do
-    {:., [], [outer, inner]}
+    [:., Annotations.empty(), [outer, inner]]
   end
 
   def chain_ast(rest, sections, context, {_line, _}, _byte_offset) do
@@ -126,7 +98,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
     [ast_name | other_args] = Enum.reverse(args)
     annotations = context_to_annotation(context.context, line)
 
-    {rest, [{String.to_atom(ast_name), annotations, other_args}], context}
+    {rest, [[String.to_atom(ast_name), annotations, other_args]], context}
   end
 
   def to_keyword_tuple_ast(rest, [arg1, arg2], context, {_line, _}, _byte_offset) do
@@ -149,12 +121,12 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
   def event_to_ast(rest, [name], context, {line, _}, _byte_offset) do
     annotations = context_to_annotation(context.context, line)
 
-    {rest, [{:__event__, annotations, [name]}], context}
+    {rest, [[:__event__, annotations, [name]]], context}
   end
 
   def event_to_ast(rest, [opts, name], context, {line, _}, _byte_offset) do
     annotations = context_to_annotation(context.context, line)
-    {rest, [{:__event__, annotations, [name, opts]}], context}
+    {rest, [[:__event__, annotations, [name, opts]]], context}
   end
 
   def add_annotations(rest, parts, context, {line, _}, _byte_offset) do
@@ -164,11 +136,11 @@ defmodule LiveViewNative.SwiftUI.RulesParser.PostProcessors do
 
   def to_scoped_atom(rest, [variable_name, scope], context, {line, _}, _byte_offset) do
     annotations = context_to_annotation(context.context, line)
-    {rest, [{:., annotations, [String.to_atom(scope), String.to_atom(variable_name)]}], context}
+    {rest, [[:., annotations, [String.to_atom(scope), String.to_atom(variable_name)]]], context}
   end
 
   def to_swift_range_ast(rest, [end_, range, start], context, {line, _}, _byte_offset) do
     annotations = context_to_annotation(context.context, line)
-    {rest, [{String.to_atom(range), annotations, [start, end_]}], context}
+    {rest, [[String.to_atom(range), annotations, [start, end_]]], context}
   end
 end

@@ -3,7 +3,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
 
   import NimbleParsec
   import LiveViewNative.SwiftUI.RulesParser.Parser
-  alias LiveViewNative.SwiftUI.RulesParser.PostProcessors
 
   def comment() do
     ignore_whitespace()
@@ -155,17 +154,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Tokens do
     ascii_string([?a..?z, ?A..?Z, ?_], 1)
     |> ascii_string([?a..?z, ?A..?Z, ?0..?9, ?_], min: 0)
     |> reduce({Enum, :join, [""]})
-  end
-
-  def variable(opts \\ []) do
-    variable_name()
-    |> post_traverse({PostProcessors, :to_elixir_variable_ast, []})
-    |> expect(
-      Keyword.merge(
-        opts,
-        error_message: "expected a variable"
-      )
-    )
   end
 
   def modifier_name() do

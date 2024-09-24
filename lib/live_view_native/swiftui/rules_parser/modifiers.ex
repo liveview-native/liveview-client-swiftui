@@ -161,7 +161,7 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
     |> replace(:__gesture_state__)
     |> post_traverse({PostProcessors, :add_annotations, []})
     |> concat(wrap(modifier_brackets.(nested: true)))
-    |> post_traverse({PostProcessors, :wrap_in_tuple, []})
+    |> wrap()
   )
 
   @modifier_arguments fn inside_key_value_pair? ->
@@ -207,10 +207,6 @@ defmodule LiveViewNative.SwiftUI.RulesParser.Modifiers do
       {
         frozen(parsec(:nested_modifier)),
         "a modifier eg ‘bold()’"
-      },
-      {
-        variable(generate_error?: false),
-        ~s'a variable defined in the class header eg ‘color_name’'
       }
     ]
     |> Enum.flat_map(fn
