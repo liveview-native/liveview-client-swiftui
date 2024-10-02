@@ -58,7 +58,7 @@ private let logger = Logger(subsystem: "LiveViewNative", category: "FormState")
 public struct FormState<Value: FormValue> {
     private let defaultValue: Value
     private let sendChangeEvents: Bool
-    @StateObject private var data = FormStateData<Value>()
+    @StateObject private var data: FormStateData<Value>
     
     let valueAttribute: AttributeName
     
@@ -98,6 +98,7 @@ public struct FormState<Value: FormValue> {
         self.valueAttribute = valueAttribute
         self.defaultValue = `default`
         self.sendChangeEvents = sendChangeEvents
+        self._data = StateObject(wrappedValue: FormStateData<Value>(default: `default`))
     }
     
     /// Convenience initializer that creates a `FormState` property wrapper with `nil` as its default value.
@@ -128,7 +129,7 @@ public struct FormState<Value: FormValue> {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .local:
-                return defaultValue
+                return data.localValue
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
@@ -148,7 +149,7 @@ public struct FormState<Value: FormValue> {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .local:
-                break
+                data.localValue = newValue
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
@@ -183,7 +184,8 @@ public struct FormState<Value: FormValue> {
     
     private func resolveMode() {
         let elementName = element.attributeValue(for: "name")
-        if case .unknown = data.mode {
+        switch data.mode {
+        case .unknown:
             if let formModel {
                 if let elementName {
                     data.bind(
@@ -204,7 +206,13 @@ public struct FormState<Value: FormValue> {
             } else {
                 logger.warning("Form element used outside of a <LiveForm>. This may not behave as expected.")
                 data.mode = .local
+                data.localValue = initialValue
             }
+        case .local:
+            guard !isFocused && !isEditing else { return }
+            data.localValue = initialValue
+        default:
+            break
         }
     }
     
@@ -238,9 +246,16 @@ extension FormState: DynamicProperty {
 // It also serves to notify SwiftUI when this @FormState's particular field has changed (as opposed to updates for other fields).
 private class FormStateData<Value: FormValue>: ObservableObject {
     var mode: Mode = .unknown
+    
+    var localValue: Value
+    
     private var cancellable: AnyCancellable?
     private var elementCancellable: AnyCancellable?
     private var focusCancellable: AnyCancellable?
+    
+    init(default localValue: Value) {
+        self.localValue = localValue
+    }
     
     func bind(
         _ formModel: FormModel,

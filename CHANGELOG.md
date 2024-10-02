@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `+` characters are properly encoded as `%2B` in form events (#1449)
 - Fixed retain cycle in `LiveViewCoordinator` (#1455)
 - Made `StylesheetCache` thread-safe, fixing occasional crashes (#1461)
+- Form elements outside of a `LiveForm` will show the value provided in the template (#1464)
 
 ## [0.3.0] 2024-08-21
 
