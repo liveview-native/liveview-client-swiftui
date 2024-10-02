@@ -128,7 +128,9 @@ public struct FormState<Value: FormValue> {
             case .unknown:
                 fatalError("@FormState cannot be accessed before being installed in a view")
             case .local:
-                return defaultValue
+                return element.attribute(named: valueAttribute)
+                    .flatMap({ Value.fromAttribute($0, on: element) })
+                    ?? defaultValue
             case .form(let formModel):
                 guard let elementName = element.attributeValue(for: "name") else {
                     logger.log(level: .error, "Expected @FormState in form mode to have element with name")
