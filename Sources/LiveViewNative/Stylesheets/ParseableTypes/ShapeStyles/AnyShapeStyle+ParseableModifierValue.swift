@@ -139,7 +139,7 @@ import LiveViewNativeStylesheet
 /// ```
 @_documentation(visibility: public)
 public extension AnyShapeStyle {
-    struct Resolvable: ParseableModifierValue {
+    struct Resolvable: Decodable {
         enum Storage {
             case value(AnyShapeStyle)
             case color(Color.Resolvable)
@@ -206,29 +206,6 @@ public extension AnyShapeStyle {
             self.modifiers = modifiers
         }
         
-        public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-            OneOf {
-                _ColorParser(context: context) {
-                    StyleModifier.parser(in: context)
-                }
-                .map({ (base: Color.Resolvable, members: [StyleModifier]) in
-                    Self(storage: .color(base), modifiers: members)
-                })
-                ChainedMemberExpression {
-                    baseParser(in: context)
-                } member: {
-                    StyleModifier.parser(in: context)
-                }
-                .map({ (base: Storage, members: [StyleModifier]) in
-                    Self(storage: base, modifiers: members)
-                })
-            }
-        }
-        
-        static func baseParser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Storage> {
-            BaseParser(context: context)
-        }
-        
         private struct BaseParser: Parser {
             let context: ParseableModifierContext
             
@@ -287,10 +264,8 @@ public extension AnyShapeStyle {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("angularGradient")
         enum _angularGradient {
-            static let name = "angularGradient"
-            
             case anyGradient(gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
             case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
             case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startAngle: AttributeReference<Angle>, endAngle: AttributeReference<Angle>)
@@ -346,10 +321,8 @@ public extension AnyShapeStyle {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("conicGradient")
         enum _conicGradient {
-            static let name = "conicGradient"
-            
             case anyGradient(gradient: AnyGradient.Resolvable, center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
             case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
             case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, angle: AttributeReference<Angle>)
@@ -385,10 +358,8 @@ public extension AnyShapeStyle {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("ellipticalGradient")
         enum _ellipticalGradient {
-            static let name = "ellipticalGradient"
-            
             case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
             case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
             case stops(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, startRadiusFraction: AttributeReference<CGFloat>, endRadiusFraction: AttributeReference<CGFloat>)
@@ -424,10 +395,8 @@ public extension AnyShapeStyle {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("linearGradient")
         enum _linearGradient {
-            static let name = "linearGradient"
-            
             case gradient(gradient: Gradient.Resolvable, startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
             case colors(colors: [Color.Resolvable], startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
             case stops(stops: [Gradient.Stop.Resolvable], startPoint: AttributeReference<UnitPoint>, endPoint: AttributeReference<UnitPoint>)
@@ -463,10 +432,8 @@ public extension AnyShapeStyle {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("radialGradient")
         enum _radialGradient {
-            static let name = "radialGradient"
-            
             case gradient(gradient: Gradient.Resolvable, center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
             case colors(colors: [Color.Resolvable], center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
             case stops(stops: [Gradient.Stop.Resolvable], center: AttributeReference<UnitPoint>, startRadius: AttributeReference<CGFloat>, endRadius: AttributeReference<CGFloat>)
@@ -542,10 +509,8 @@ public extension AnyShapeStyle {
             }
         }
         
-        @ParseableExpression
+        @ASTDecodable("image")
         struct _image {
-            static let name = "image"
-            
             let value: any ShapeStyle
             
             init(_ image: Image, sourceRect: CGRect = .init(x: 0, y: 0, width: 1, height: 1), scale: CGFloat = 1) {
@@ -553,7 +518,7 @@ public extension AnyShapeStyle {
             }
         }
         
-        enum StyleModifier: ParseableModifierValue {
+        enum StyleModifier: Decodable {
             case blendMode(_blendMode)
             case opacity(_opacity)
             case shadow(_shadow)
@@ -568,10 +533,8 @@ public extension AnyShapeStyle {
                 }
             }
             
-            @ParseableExpression
+            @ASTDecodable("blendMode")
             struct _blendMode {
-                static let name = "blendMode"
-                
                 let value: BlendMode
                 
                 init(_ value: BlendMode) {
@@ -579,10 +542,8 @@ public extension AnyShapeStyle {
                 }
             }
             
-            @ParseableExpression
+            @ASTDecodable("opacity")
             struct _opacity {
-                static let name = "opacity"
-                
                 let value: AttributeReference<Double>
                 
                 init(_ value: AttributeReference<Double>) {
@@ -590,10 +551,8 @@ public extension AnyShapeStyle {
                 }
             }
             
-            @ParseableExpression
+            @ASTDecodable("shadow")
             struct _shadow {
-                static let name = "shadow"
-                
                 let value: _ShadowStyle
                 
                 init(_ value: _ShadowStyle) {
@@ -601,13 +560,7 @@ public extension AnyShapeStyle {
                 }
             }
             
-            enum HierarchicalLevel: String, CaseIterable, ParseableModifierValue {
-                typealias _ParserType = EnumParser<Self>
-                
-                static func parser(in context: ParseableModifierContext) -> EnumParser<Self> {
-                    .init(Dictionary(uniqueKeysWithValues: Self.allCases.map({ ($0.rawValue, $0) })))
-                }
-                
+            enum HierarchicalLevel: String, CaseIterable, Decodable {
                 case secondary
                 case tertiary
                 case quaternary
@@ -671,21 +624,16 @@ public extension AnyShapeStyle {
     }
 }
 
-extension HierarchicalShapeStyle: ParseableModifierValue {
-    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
-        OneOf {
-            ConstantAtomLiteral("primary").map({ Self.primary })
-            ConstantAtomLiteral("secondary").map({ Self.secondary })
-            ConstantAtomLiteral("tertiary").map({ Self.tertiary })
-            ConstantAtomLiteral("quaternary").map({ Self.quaternary })
-            if #available(tvOS 17, watchOS 10, *) {
-                ConstantAtomLiteral("quinary").map({ Self.quinary })
-            }
-        }
-    }
-}
+@StaticMemberDecodable(
+    .primary,
+    .secondary,
+    .tertiary,
+    .quaternary,
+    .quinary
+)
+extension HierarchicalShapeStyle {}
 
-extension Material: ParseableModifierValue {
+extension Material: Decodable {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             if #available(iOS 15, macOS 12, tvOS 15, watchOS 10, *) {

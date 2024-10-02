@@ -33,8 +33,6 @@ let package = Package(
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.2.0"),
         
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "509.0.2"),
-        
-        .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.13.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -147,7 +145,6 @@ let package = Package(
             dependencies: [
                 "LiveViewNativeStylesheetMacros",
                 .product(name: "LiveViewNativeCore", package: "liveview-native-core-swift"),
-                .product(name: "Parsing", package: "swift-parsing"),
             ]
         ),
         .testTarget(

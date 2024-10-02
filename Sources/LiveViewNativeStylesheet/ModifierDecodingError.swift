@@ -1,5 +1,5 @@
 //
-//  ModifierParseError.swift
+//  ModifierDecodingError.swift
 //
 //
 //  Created by Carson Katri on 11/7/23.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct ModifierParseError: Error, CustomDebugStringConvertible {
+public struct ModifierDecodingError: Error, CustomDebugStringConvertible {
     public let error: ErrorType
-    public let metadata: Metadata
+    public let annotations: Annotations
     
-    public init(error: ErrorType, metadata: Metadata) {
+    public init(error: ErrorType, annotations: Annotations) {
         self.error = error
-        self.metadata = metadata
+        self.annotations = annotations
     }
     
     public indirect enum ErrorType {
@@ -112,30 +112,13 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
     }
     
     public var localizedDescription: String {
-        let indentation = String(repeating: " ", count: String(metadata.line).count)
+        let indentation = String(repeating: " ", count: String(annotations.line ?? 0).count)
         return """
         \(indentation) |
-        \(metadata.line) | \(metadata.source)
+        \(annotations.line ?? 0) | \(annotations.source ?? "")
         \(indentation) | ^ \(error.localizedDescription.split(separator: "\n").joined(separator: "\n\(indentation) |   "))
         
-        in \(metadata.module) (\(metadata.file):\(metadata.line))
+        in \(annotations.module ?? "") (\(annotations.file ?? ""):\(annotations.line ?? 0))
         """
-    }
-}
-
-public struct _ThrowingParse<Input, Parsers: Parser, Output>: Parser where Parsers.Input == Input {
-    let parsers: Parsers
-    let transform: (Parsers.Output) throws -> Output
-    
-    public init(
-        _ transform: @escaping (Parsers.Output) throws -> Output,
-        @ParserBuilder<Input> with build: () -> Parsers
-    ) {
-        self.transform = transform
-        self.parsers = build()
-    }
-    
-    public func parse(_ input: inout Input) throws -> Output {
-        try transform(try parsers.parse(&input))
     }
 }
