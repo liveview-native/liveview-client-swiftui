@@ -610,7 +610,7 @@ The `Image` element is best for system images such as the built in [SF Symbols](
 
 ### System Images
 
-You can use the `system-image` attribute to provide the name of system images to the `Image` element.
+You can use the `systemName` attribute to provide the name of system images to the `Image` element.
 
 For the full list of SF Symbols you can download Apple's [Symbols 5](https://developer.apple.com/sf-symbols/) application.
 
@@ -625,7 +625,7 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
 
   def render(assigns, _interface) do
     ~LVN"""
-    <Image system-name="square.and.arrow.up" />
+    <Image systemName="square.and.arrow.up" />
     """
   end
 end
@@ -683,7 +683,7 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
   def render(assigns, _interface) do
     ~LVN"""
     <Button><Text>Text Button</Text></Button>
-    <Button><Label system-image="bolt.fill">Icon Button</Label></Button>
+    <Button><Label systemImage="bolt.fill">Icon Button</Label></Button>
     """
   end
 end

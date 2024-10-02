@@ -569,7 +569,7 @@ Then use the `template` attribute on the view to be injected into the stylesheet
 
 ```heex
 <Image style="overlay-circle">
-  <Circle template="circle" style="stroke(.red, lineWidth: 4)" >
+  <Circle template="circle" style="stroke(.red, lineWidth: 4)" />
 </Image>
 ```
 
@@ -626,7 +626,6 @@ defmodule ServerWeb.ExampleLive.SwiftUI do
 
   def render(assigns) do
     ~LVN"""
-    <VStack>
     <VStack alignment="leading" style="padding()">
       <Text style="font(.title)">Turtle Rock</Text>
       <HStack style="font(.subheadline)">
