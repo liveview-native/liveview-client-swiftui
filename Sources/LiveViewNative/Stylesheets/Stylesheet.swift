@@ -27,6 +27,24 @@ public struct Stylesheet<R: RootRegistry> {
     }
 }
 
+actor StylesheetCache {
+    static let shared = StylesheetCache()
+    
+    private var cache = [URL:Any]()
+    
+    func read<R: RootRegistry>(for url: URL, registry _: R.Type = R.self) -> Stylesheet<R>? {
+        cache[url.absoluteURL] as? Stylesheet<R>
+    }
+
+    func write<R: RootRegistry>(_ value: Stylesheet<R>, for url: URL, registry _: R.Type = R.self) {
+        cache[url.absoluteURL] = value
+    }
+    
+    func removeAll() {
+        cache.removeAll()
+    }
+}
+
 extension Stylesheet: AttributeDecodable {
     public init(from attribute: LiveViewNativeCore.Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value

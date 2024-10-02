@@ -32,7 +32,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         internalState
     }
     
-    @_spi(LiveForm) public let session: LiveSessionCoordinator<R>
+    @_spi(LiveForm) public private(set) weak var session: LiveSessionCoordinator<R>!
     var url: URL
     
     private var channel: Channel?
@@ -56,16 +56,22 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private(set) internal var eventSubject = PassthroughSubject<(String, Payload), Never>()
     private(set) internal var eventHandlers = Set<AnyCancellable>()
     
-    init(session: LiveSessionCoordinator<R>, url: URL) {
+    private(set) internal var liveViewModel = LiveViewModel()
+    
+    init(
+        session: LiveSessionCoordinator<R>,
+        url: URL
+    ) {
         self.session = session
         self.url = url
         
         self.handleEvent("native_redirect") { [weak self] payload in
             guard let self,
-                  let redirect = LiveRedirect(from: payload, relativeTo: self.url)
+                  let redirect = LiveRedirect(from: payload, relativeTo: self.url),
+                  let session = self.session
             else { return }
-            Task { [weak session] in
-                try await session?.redirect(redirect)
+            Task {
+                try await session.redirect(redirect)
             }
         }
     }
@@ -238,7 +244,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         connectParams["_mounts"] = 0
         connectParams["_format"] = "swiftui"
         connectParams["_csrf_token"] = domValues.phxCSRFToken
-        connectParams["_interface"] = LiveSessionCoordinator<R>.platformParams
+        connectParams["_interface"] = LiveSessionParameters.platformParams
 
         let params: Payload = [
             "session": domValues.phxSession,
@@ -324,10 +330,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         continuation.resume()
                     }
             }
-        }
-        await MainActor.run { [weak self] in
-            self?.channel = nil
-            self?.internalState = .disconnected
+            await MainActor.run { [weak self] in
+                self?.channel = nil
+                self?.internalState = .disconnected
+            }
         }
     }
     
@@ -393,7 +399,13 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     private func handleJoinPayload(renderedPayload: Payload) {
         // todo: what should happen if decoding or parsing fails?
         self.rendered = try! Root(from: FragmentDecoder(data: renderedPayload))
+        
+        // FIXME: LiveForm should send change event when restored from `liveViewModel`.
+        // For now, we just clear the forms whenever the page reconnects.
+        self.liveViewModel.clearForms()
+        
         self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
+        
         self.document?.on(.changed) { [unowned self] doc, nodeRef in
             switch doc[nodeRef].data {
             case .root:

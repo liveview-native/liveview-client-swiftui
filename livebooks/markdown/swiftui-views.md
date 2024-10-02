@@ -88,7 +88,7 @@ LiveView Native uses the following syntax to represent the view above.
 <Text>Hamlet</Text>
 ```
 
-SwiftUI provides a wide range of Views that can be used in native templates. You can find a full reference of these views in the SwiftUI Documentation at https://developer.apple.com/documentation/swiftui/. You can also find a shorthand on how to convert SwiftUI syntax into the LiveView Native DLS in the [LiveView Native Syntax Conversion Cheatsheet](https://hexdocs.pm/live_view_native/cheatsheet.cheatmd).
+SwiftUI provides a wide range of Views that can be used in native templates. You can find a full reference of these views in the SwiftUI Documentation at https://developer.apple.com/documentation/swiftui/. You can also find a shorthand on how to convert SwiftUI syntax into the LiveView Native DLS in the [LiveView Native Syntax Conversion Cheatsheet](https://hexdocs.pm/live_view_native_swiftui/syntax_conversion.html).
 
 ## Text
 
@@ -379,7 +379,7 @@ While `ScrollView` also works with typical `VStack` and `HStack` views, they are
 
 ### ScrollView with VStack
 
-Here's an example using a `ScrollView` and a `HStack` to create scrollable text arranged horizontally.
+Here's an example using a `ScrollView` and a `VStack` to create scrollable text arranged vertically.
 
 <!-- livebook:{"attrs":"eyJjb2RlIjoiZGVmbW9kdWxlIFNlcnZlcldlYi5FeGFtcGxlTGl2ZS5Td2lmdFVJIGRvXG4gIHVzZSBMaXZlVmlld05hdGl2ZS5Db21wb25lbnQsXG4gICAgZm9ybWF0OiA6c3dpZnR1aVxuXG4gIGRlZiByZW5kZXIoYXNzaWducywgX2ludGVyZmFjZSkgZG9cbiAgICB+TFZOXCJcIlwiXG4gICAgPFNjcm9sbFZpZXc+XG4gICAgICA8VlN0YWNrPlxuICAgICAgICA8VGV4dCA6Zm9yPXtuIDwtIDEuLjEwMH0+SXRlbSA8JT0gbiAlPjwvVGV4dD5cbiAgICAgIDwvVlN0YWNrPlxuICAgIDwvU2Nyb2xsVmlldz5cbiAgICBcIlwiXCJcbiAgZW5kXG5lbmQifQ","chunks":[[0,85],[87,283],[372,47],[421,51]],"kind":"Elixir.Server.SmartCells.RenderComponent","livebook_object":"smart_cell"} -->
 

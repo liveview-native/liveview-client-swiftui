@@ -30,13 +30,10 @@ Provide the `content` and `label` children to create a menu.
     </Group>
 </Menu>
 ```
-Menus can be nested by including another [`<Menu>`](menu.html#Menu/1) in the `content`.
+Menus can be nested by including another [`<Menu>`](menu.html#/documentation/liveviewnative/menu/1) in the `content`.
 ## Children
 * `label` - Describes the content of the menu.
 * `content` - Elements displayed when expanded.
 
 ## SwiftUI Documentation
 See [`SwiftUI.Menu`](https://developer.apple.com/documentation/swiftui/Menu) for more details on this View.
-
-
-

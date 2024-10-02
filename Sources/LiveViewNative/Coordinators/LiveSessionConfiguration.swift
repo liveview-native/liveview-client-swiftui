@@ -15,6 +15,11 @@ public struct LiveSessionConfiguration {
     ///
     /// By default, no connection params are provided.
     public var connectParams: ((URL) -> [String: Any])? = nil
+  
+    /// Optional headers that are sent when fetching the dead render.
+    ///
+    /// By default, no additional headers are provided.
+    public var headers: [String: String]? = nil
     
     /// The URL session configuration the coordinator will use for performing HTTP and socket requests.
     /// 
@@ -34,10 +39,12 @@ public struct LiveSessionConfiguration {
     
     public init(
         connectParams: ((URL) -> [String: Any])? = nil,
+        headers: [String: String]? = nil,
         urlSessionConfiguration: URLSessionConfiguration = .default,
         transition: AnyTransition? = nil,
         reconnectBehavior: ReconnectBehavior = .exponential
     ) {
+        self.headers = headers
         self.connectParams = connectParams
         self.urlSessionConfiguration = urlSessionConfiguration
         self.transition = transition
