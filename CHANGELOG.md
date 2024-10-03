@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-## [0.3.1]
+## [0.3.1] 2024-10-02
 
 ### Added
 - `LiveViewNative.SwiftUI.normalize_os_version/1`
