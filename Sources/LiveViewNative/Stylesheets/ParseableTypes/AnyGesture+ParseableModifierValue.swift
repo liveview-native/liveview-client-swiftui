@@ -8,8 +8,6 @@
 import SwiftUI
 import LiveViewNativeStylesheet
 
-public typealias AnyUIGestureRecognizerRepresentable = AnyGesture<Any>
-
 /// See [`SwiftUI.Gesture`](https://developer.apple.com/documentation/swiftui/Gesture) for more details.
 ///
 /// ## Gestures

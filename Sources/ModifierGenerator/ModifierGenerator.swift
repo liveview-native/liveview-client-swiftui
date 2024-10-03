@@ -91,6 +91,9 @@ struct ModifierGenerator: ParsableCommand {
         "VerticalDirection",
         "FrameResizePosition",
         "FrameResizeDirection",
+        "WritingToolsBehavior",
+        "ScrollInputBehavior",
+        "WindowToolbarFullScreenVisibility"
     ]
 
     static let denylist: Set<String> = [
@@ -232,6 +235,7 @@ struct ModifierGenerator: ParsableCommand {
         "presentedWindowToolbarStyle",
         "onScrollTargetVisibilityChange",
         "matchedTransitionSource",
+        "scrollInputBehavior",
     ]
 
     static func isValid(_ signature: FunctionDeclSyntax) -> Bool {
@@ -261,6 +265,10 @@ struct ModifierGenerator: ParsableCommand {
             }
             
             if parameter.isScrollPositionBinding {
+                return false
+            }
+            
+            if parameter.isUIGestureRecognizerRepresentable {
                 return false
             }
         }

@@ -57,4 +57,8 @@ extension FunctionParameterSyntax {
         self.type.as(MemberTypeSyntax.self)?.name.text == "Binding"
             && self.type.as(MemberTypeSyntax.self)?.genericArgumentClause?.arguments.first?.argument.as(MemberTypeSyntax.self)?.name.text == "ScrollPosition"
     }
+    
+    var isUIGestureRecognizerRepresentable: Bool {
+        self.type.as(SomeOrAnyTypeSyntax.self)?.constraint.as(IdentifierTypeSyntax.self)?.name.text == "UIGestureRecognizerRepresentable"
+    }
 }
