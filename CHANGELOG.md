@@ -7,15 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-## Added
+### Added
+
+### Changed
+
+### Fixed
+
+## [0.3.1]
+
+### Added
 - `LiveViewNative.SwiftUI.normalize_os_version/1`
 - `LiveViewNative.SwiftUI.normalize_app_version/1`
 - Optional `LiveSessionConfiguration.headers`, sent when fetching the dead render (#1456)
 
-## Changed
+### Changed
 - Submitting a form will remove focus from all fields (#1451)
 
-## Fixed
+### Fixed
 - Form elements will apply updates from a diff (#1451)
 - Updates to change-tracked properties no longer occur on the next RunLoop, fixing modal dismissal on macOS (#1450)
 - `+` characters are properly encoded as `%2B` in form events (#1449)
@@ -31,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Code-generated modifiers updated for Xcode 15.4
 
-## Fixed
+### Fixed
 
 ## [0.2]
 
