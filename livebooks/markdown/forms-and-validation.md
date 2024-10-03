@@ -16,7 +16,7 @@ Follow the [LiveView Native Form Installation Guide](https://github.com/liveview
 
 ## Creating a Basic Form
 
-The LiveView Native `mix lvn.install` task generates a [core_components.swiftui.ex](https://github.com/liveview-native/liveview-client-swiftui/blob/main/priv/templates/lvn.swiftui.gen/core_components.ex) file for native SwiftUI function components similar to the [core_components.ex](https://github.com/phoenixframework/phoenix/blob/main/priv/templates/phx.gen.live/core_components.ex) file generated in a traditional phoenix application for web function components.
+The LiveView Native `mix lvn.setup.gen` task generates a [core_components.swiftui.ex](https://github.com/liveview-native/liveview-client-swiftui/blob/main/priv/templates/lvn.swiftui.gen/core_components.ex) file for native SwiftUI function components similar to the [core_components.ex](https://github.com/phoenixframework/phoenix/blob/main/priv/templates/phx.gen.live/core_components.ex) file generated in a traditional phoenix application for web function components.
 
 See Phoenix's [Components and HEEx](https://hexdocs.pm/phoenix/components.html) HexDoc documentation if you need a primer on function components.
 

@@ -66,7 +66,7 @@ Mix.install(
 
 This guide will teach you how to set up a SwiftUI Application for LiveView Native.
 
-Typically, we recommend using the `mix lvn.install` task as described in [Getting Started](https://hexdocs.pm/live_view_native/readme.html#getting-started) to add LiveView Native to a Phoenix project. However, we will walk through the steps of manually setting up an Xcode iOS project to learn how the iOS side of a LiveView Native application works.
+Typically, we recommend using the `mix lvn.setup` task as described in [Getting Started](https://hexdocs.pm/live_view_native/readme.html#getting-started) to add LiveView Native to a Phoenix project. However, we will walk through the steps of manually setting up an Xcode iOS project to learn how the iOS side of a LiveView Native application works.
 
 In future lessons, you'll use this iOS application to view iOS examples in the Xcode simulator (or a physical device if you prefer.)
 
