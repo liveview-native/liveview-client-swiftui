@@ -27,6 +27,7 @@ struct ModifierGenerator: ParsableCommand {
         "_PresentationDetentsModifier",
         "_FocusScopeModifier<R>",
         "_PrefersDefaultFocusModifier<R>",
+        "_OnDeleteModifier",
     ]
 
     static let requiredTypes: Set<String> = [
