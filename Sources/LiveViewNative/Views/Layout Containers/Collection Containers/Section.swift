@@ -59,6 +59,10 @@ struct Section<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     private var collapsible: Bool = false
     
+    @LiveElementIgnored
+    @Environment(\.onDeleteAction)
+    private var onDeleteAction: ((IndexSet) -> Void)?
+    
     public var body: some View {
         SwiftUI.Section {
             let elements = $liveElement.childNodes(in: "content", default: true)
@@ -75,6 +79,7 @@ struct Section<Root: RootRegistry>: View {
                 ViewTreeBuilder<Root>.NodeView(node: childNode.node, context: $liveElement.context.storage)
                     .trackListItemScrollOffset(id: childNode.id)
             }
+            .onDelete(perform: onDeleteAction)
         } header: {
             $liveElement.children(in: "header")
         } footer: {

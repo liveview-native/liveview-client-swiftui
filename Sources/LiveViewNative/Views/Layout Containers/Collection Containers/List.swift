@@ -92,25 +92,10 @@ struct List<Root: RootRegistry>: View {
     @Environment(\.editMode) var editMode
     #endif
     
-    /// Event sent when a row is deleted.
-    ///
-    /// An event is sent with the `index` of the item to delete.
-    ///
-    /// ```html
-    /// <List phx-delete="on_delete">
-    ///     ...
-    /// </List>
-    /// ```
-    ///
-    /// ```elixir
-    /// defmodule MyAppWeb.SportsLive do
-    ///     def handle_event("on_delete", %{ "index" => index }, socket) do
-    ///         {:noreply, assign(socket, :items, List.delete_at(socket.assigns.items, index))}
-    ///     end
-    /// end
-    /// ```
-    @_documentation(visibility: public)
-    @Event("phx-delete", type: "click") private var delete
+    @LiveElementIgnored
+    @Environment(\.onDeleteAction)
+    private var onDeleteAction: ((IndexSet) -> Void)?
+    
     /// Event sent when a row is moved.
     ///
     /// An event is sent with the `index` of the item to move and its `destination` index.
@@ -245,18 +230,8 @@ struct List<Root: RootRegistry>: View {
                     .trackListItemScrollOffset(id: childNode.id)
             }
         }
-            .onDelete(perform: onDeleteHandler)
+            .onDelete(perform: onDeleteAction)
             .onMove(perform: onMoveHandler)
-    }
-    
-    private var onDeleteHandler: ((IndexSet) -> Void)? {
-        guard delete.event != nil else { return nil }
-        return { indices in
-            var meta = $liveElement.element.buildPhxValuePayload()
-            // todo: what about multiple indicies?
-            meta["index"] = indices.first!
-            delete(value: meta) {}
-        }
     }
     
     private var onMoveHandler: ((IndexSet, Int) -> Void)? {
