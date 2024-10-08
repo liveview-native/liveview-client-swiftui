@@ -115,7 +115,7 @@ extension PointerStyle: @retroactive ParseableModifierValue {
 #endif
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension HorizontalDirection.Set: @retroactive ParseableModifierValue {
+extension HorizontalDirection.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             Array<Self.Element>.parser(in: context).map({ Self.init($0) })
@@ -129,7 +129,7 @@ extension HorizontalDirection.Set: @retroactive ParseableModifierValue {
 }
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
-extension VerticalDirection.Set: @retroactive ParseableModifierValue {
+extension VerticalDirection.Set: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             Array<Self.Element>.parser(in: context).map({ Self.init($0) })

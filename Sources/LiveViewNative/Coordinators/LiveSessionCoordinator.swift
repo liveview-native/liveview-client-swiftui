@@ -350,7 +350,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         
         var request = request
         request.url = request.url!.appendingLiveViewItems()
-        request.allHTTPHeaderFields = configuration.headers
+        request.allHTTPHeaderFields = await configuration.headers
         
         if let domValues {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
@@ -565,7 +565,7 @@ class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDe
         }
         
         var newRequest = request
-        newRequest.url = await url.appendingLiveViewItems()
+        newRequest.url = url.appendingLiveViewItems()
         return newRequest
     }
 }

@@ -55,7 +55,7 @@ private struct CodableTransaction: Decodable {
 /// ```elixir
 /// %{ timingCurve: [0.1, 0.75, 0.85, 0.35] }
 /// ```
-extension Animation: Decodable {
+extension Animation: @retroactive Decodable {
     public init(from decoder: any Decoder) throws {
         if let standard = try? decoder.singleValueContainer().decode(String.self) {
             switch standard {

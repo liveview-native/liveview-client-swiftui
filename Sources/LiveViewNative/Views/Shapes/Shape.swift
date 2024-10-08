@@ -94,7 +94,7 @@ extension Capsule {
 /// * `circular`
 /// * `continuous`
 @_documentation(visibility: public)
-extension RoundedCornerStyle: Decodable, AttributeDecodable {
+extension RoundedCornerStyle: @retroactive Decodable, AttributeDecodable {
     init?(string: String) {
         switch string {
         case "circular":

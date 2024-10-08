@@ -17,7 +17,7 @@ import LiveViewNativeStylesheet
 /// - `.matchWindow`
 @_documentation(visibility: public)
 @available(iOS 18, macOS 15.0, tvOS 18, visionOS 2, watchOS 11, *)
-extension MaterialActiveAppearance: @retroactive ParseableModifierValue {
+extension MaterialActiveAppearance: ParseableModifierValue {
     public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         ImplicitStaticMember {
             OneOf {

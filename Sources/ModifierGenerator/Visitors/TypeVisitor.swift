@@ -20,9 +20,8 @@ final class EnumTypeVisitor: SyntaxVisitor {
         guard typeNames.contains(name)
         else { return .skipChildren }
         
-        if !availability.keys.contains(name) {
-            availability[name] = ModifierVisitor.availability(node.attributes, node.attributes)
-        }
+        // the declaration will overwrite any extension availability attributes.
+        availability[name] = ModifierVisitor.availability(node.attributes, node.attributes)
         
         for member in node.memberBlock.members {
             guard let decl = member.decl.as(VariableDeclSyntax.self),
@@ -44,6 +43,7 @@ final class EnumTypeVisitor: SyntaxVisitor {
         guard typeNames.contains(name)
         else { return .skipChildren }
         
+        // only store the availability if the decl didn't set it already.
         if !availability.keys.contains(name) {
             availability[name] = ModifierVisitor.availability(node.attributes, node.attributes)
         }
@@ -66,9 +66,8 @@ final class EnumTypeVisitor: SyntaxVisitor {
         guard typeNames.contains(name)
         else { return .skipChildren }
 
-        if !availability.keys.contains(name) {
-            availability[name] = ModifierVisitor.availability(node.attributes, node.attributes)
-        }
+        // the declaration will overwrite any extension availability attributes.
+        availability[name] = ModifierVisitor.availability(node.attributes, node.attributes)
 
         for member in node.memberBlock.members {
             guard let `case` = member.decl.as(EnumCaseDeclSyntax.self),
