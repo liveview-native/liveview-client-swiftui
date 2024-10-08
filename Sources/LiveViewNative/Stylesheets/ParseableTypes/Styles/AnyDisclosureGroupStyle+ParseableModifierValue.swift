@@ -5,6 +5,7 @@
 //  Created by Carson Katri on 6/20/24.
 //
 
+#if os(iOS) || os(macOS) || os(visionOS)
 import SwiftUI
 import LiveViewNativeStylesheet
 
@@ -31,3 +32,4 @@ enum AnyDisclosureGroupStyle: String, CaseIterable, ParseableModifierValue, Disc
         }
     }
 }
+#endif
