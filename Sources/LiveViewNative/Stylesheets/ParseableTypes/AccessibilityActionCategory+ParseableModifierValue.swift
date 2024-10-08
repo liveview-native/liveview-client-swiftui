@@ -10,7 +10,7 @@ import LiveViewNativeStylesheet
 
 @available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)
 extension AccessibilityActionCategory: ParseableModifierValue {
-    static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
+    public static func parser(in context: ParseableModifierContext) -> some Parser<Substring.UTF8View, Self> {
         OneOf {
             ImplicitStaticMember([
                 "default": Self.default,
@@ -22,6 +22,8 @@ extension AccessibilityActionCategory: ParseableModifierValue {
     
     @ParseableExpression
     struct ParseableAccessibilityActionCategory {
+        static let name: String = "AccessibilityActionCategory"
+        
         let value: AccessibilityActionCategory
         
         init(_ name: String) {
