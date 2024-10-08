@@ -1,6 +1,6 @@
 import SwiftSyntax
 
-extension VersionTupleSyntax: Comparable {
+extension VersionTupleSyntax: @retroactive Comparable {
     public static func < (lhs: Self, rhs: Self) -> Bool {
         guard let lhsMajor = Int(lhs.major.text),
               let rhsMajor = Int(rhs.major.text)

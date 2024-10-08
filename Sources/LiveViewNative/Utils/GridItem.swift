@@ -18,7 +18,7 @@ import LiveViewNativeCore
 /// %{ size: %{ flexible: %{ minimum: 0, maximum: 100 } }, spacing: 1, alignment: :topLeading }
 /// %{ size: %{ adaptive: %{ minimum: 10 } } }
 /// ```
-extension GridItem: Decodable, AttributeDecodable {
+extension GridItem: @retroactive Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
@@ -48,7 +48,7 @@ extension GridItem: Decodable, AttributeDecodable {
 /// * `:flexible`
 /// * `%{ flexible: %{ minimum: <optional value>, maximum: <optional value> } }`
 /// * `%{ adaptive: %{ minimum: <value>, maximum: <optional value> } }`
-extension GridItem.Size: Decodable {
+extension GridItem.Size: @retroactive Decodable {
     public init(from decoder: Decoder) throws {
         if let container = try? decoder.container(keyedBy: CodingKeys.self) {
             if container.contains(.fixed) {

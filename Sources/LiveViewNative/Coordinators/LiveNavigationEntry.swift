@@ -10,6 +10,7 @@ import Foundation
 public struct LiveNavigationEntry<R: RootRegistry>: Hashable {
     public let url: URL
     public let coordinator: LiveViewCoordinator<R>
+    let navigationTransition: Any?
     
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.url == rhs.url && lhs.coordinator === rhs.coordinator

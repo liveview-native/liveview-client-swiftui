@@ -192,10 +192,10 @@ public enum ParseableExpressionMacro: ExtensionMacro {
             try WhileStmtSyntax("while !input.isEmpty {") {
                 // switch over the argument name to parse the correct type
                 "try Whitespace().parse(&input)"
-                "let name = try Identifier().parse(&input)"
+                "let __name = try Identifier().parse(&input)"
                 #"try ":".utf8.parse(&input)"#
                 "try Whitespace().parse(&input)"
-                SwitchExprSyntax(subject: ExprSyntax("name")) {
+                SwitchExprSyntax(subject: ExprSyntax("__name")) {
                     for argument in labelledArguments {
                         // if parsing fails, add to `failures` and continue.
                         SwitchCaseSyntax("case \(StringLiteralExprSyntax(content: argument.firstName.text)):") {
@@ -216,7 +216,7 @@ public enum ParseableExpressionMacro: ExtensionMacro {
                     SwitchCaseSyntax("default:") {
                         """
                         _ = try _AnyNodeParser.AnyArgument(context: context).parse(&input)
-                        failures.append(.unknownArgument(name))
+                        failures.append(.unknownArgument(__name))
                         """
                     }
                 }

@@ -412,12 +412,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                 // when the root changes, update the `NavStackEntry` itself.
                 self.objectWillChange.send()
             case .leaf:
-                // text nodes don't have their own views, changes to them need to be handled by the parent Text view
-                if let parent = doc.getParent(nodeRef) {
-                    self.elementChanged(nodeRef).send()
-                } else {
-                    self.elementChanged(nodeRef).send()
-                }
+                self.elementChanged(nodeRef).send()
             case .element:
                 // when a single element changes, send an update only to that element.
                 self.elementChanged(nodeRef).send()

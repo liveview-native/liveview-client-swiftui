@@ -88,7 +88,7 @@ extension UnitPoint {
     }
 }
 
-extension UnitPoint: Decodable {
+extension UnitPoint: @retroactive Decodable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         if let named = try container.decodeIfPresent(String.self, forKey: .named) {

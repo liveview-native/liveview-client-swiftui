@@ -68,9 +68,11 @@ final class ModifierVisitor: SyntaxVisitor {
     }
 
     override func visit(_ node: ExtensionDeclSyntax) -> SyntaxVisitorContinueKind {
-        guard node.extendedType.trimmedDescription == "SwiftUI.View" else { return .skipChildren }
+        guard node.extendedType.trimmedDescription == "SwiftUI.View"
+                || node.extendedType.trimmedDescription == "SwiftUICore.View"
+        else { return .skipChildren }
         guard let extendedType = node.extendedType.as(MemberTypeSyntax.self),
-              extendedType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
+              [.identifier("SwiftUI"), .identifier("SwiftUICore")].contains(extendedType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind),
               extendedType.name.tokenKind == .identifier("View"),
               node.genericWhereClause == nil
         else { return .skipChildren }
@@ -95,7 +97,7 @@ final class ModifierVisitor: SyntaxVisitor {
             guard let decl = member.decl.as(FunctionDeclSyntax.self),
                   decl.modifiers.contains(where: { $0.name.tokenKind == .keyword(.public) }),
                   let returnType = decl.signature.returnClause?.type.as(SomeOrAnyTypeSyntax.self)?.constraint.as(MemberTypeSyntax.self),
-                  returnType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
+                  [.identifier("SwiftUI"), .identifier("SwiftUICore")].contains(returnType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind),
                   returnType.name.tokenKind == .identifier("View")
             else { continue }
             let memberAvailabilityAttributes = decl.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })

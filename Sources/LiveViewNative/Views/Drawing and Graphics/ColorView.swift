@@ -92,7 +92,7 @@ struct ColorView<Root: RootRegistry>: View {
     }
 }
 
-extension SwiftUI.Color.RGBColorSpace: AttributeDecodable, Decodable {
+extension SwiftUI.Color.RGBColorSpace: @retroactive Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
@@ -123,7 +123,7 @@ extension SwiftUI.Color.RGBColorSpace: AttributeDecodable, Decodable {
 }
 
 /// Helpers for creating a SwiftUI `Color`.
-extension SwiftUI.Color: Decodable {
+extension SwiftUI.Color: @retroactive Decodable {
     /// Decodes a color from one of several possible formats.
     ///
     /// The encoded value may be a dictionary containing an RGB color space (one of `srgb`, `srgb-linear`, or `display-p3`) in the `rgb_color_space_key`.

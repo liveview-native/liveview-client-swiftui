@@ -22,7 +22,7 @@ import LiveViewNativeCore
 /// - `bottomTrailing`
 /// - `leadingLastTextBaseline`
 /// - `trailingLastTextBaseline`
-extension Alignment: Decodable, AttributeDecodable {
+extension Alignment: @retroactive Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
@@ -77,7 +77,7 @@ extension Alignment: Decodable, AttributeDecodable {
 /// - `trailing`
 /// - `listRowSeparatorLeading`
 /// - `listRowSeparatorTrailing`
-extension HorizontalAlignment: Decodable, AttributeDecodable {
+extension HorizontalAlignment: @retroactive Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)
@@ -122,7 +122,7 @@ extension HorizontalAlignment: Decodable, AttributeDecodable {
 /// - `bottom`
 /// - `firstTextBaseline`
 /// - `lastTextBaseline`
-extension VerticalAlignment: Decodable, AttributeDecodable {
+extension VerticalAlignment: @retroactive Decodable, AttributeDecodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let string = try container.decode(String.self)

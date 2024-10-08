@@ -156,7 +156,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     @MainActor
     private func pushFormEvent(_ event: String) async throws {
         // the `form` event type expects a URL encoded payload (e.g., `a=b&c=d`)
-        try await pushEventImpl("form", event, try buildFormQuery(), nil)
+        _ = try await pushEventImpl("form", event, try buildFormQuery(), nil)
     }
     
     public var debugDescription: String {

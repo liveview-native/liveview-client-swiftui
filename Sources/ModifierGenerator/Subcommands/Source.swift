@@ -12,7 +12,7 @@ extension ModifierGenerator {
             help: "The `.swiftinterface` file from `/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface`",
             transform: { URL(filePath: $0) }
         )
-        var interface: URL
+        var interface: [URL]
         
         @Option(
             help: "The number of modifiers included in each chunk. Chunks are used to reduce the size of switch statements in SwiftUI. Only applicable when using `--generate-source`"
@@ -20,12 +20,12 @@ extension ModifierGenerator {
         private var chunkSize: Int = 14
 
         func run() throws {
-            let source = try String(contentsOf: interface, encoding: .utf8)
+            let source = try interface.map { try String(contentsOf: $0, encoding: .utf8) }.joined(separator: "\n")
             let sourceFile = Parser.parse(source: source)
             
             FileHandle.standardOutput.write(Data(
                 #"""
-                // File generated with `swift run ModifierGenerator source "/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-xros.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
+                // File generated with `swift run ModifierGenerator source "/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64e-apple-xros.swiftinterface" "/Applications/Xcode.app/Contents/Developer/Platforms/XROS.platform/Developer/SDKs/XROS.sdk/System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule/arm64e-apple-xros.swiftinterface" > Sources/LiveViewNative/_GeneratedModifiers.swift`
                 
                 import SwiftUI
                 import Symbols

@@ -13,6 +13,10 @@ struct NavigationStack<Root: RootRegistry>: View {
     @EnvironmentObject
     private var session: LiveSessionCoordinator<Root>
     
+    @LiveElementIgnored
+    @Environment(\.namespaces)
+    private var namespaces
+    
     var body: some View {
         SwiftUI.NavigationStack(path: Binding {
             session.navigationPath.dropFirst()
@@ -23,7 +27,14 @@ struct NavigationStack<Root: RootRegistry>: View {
                 $liveElement.children()
             }
             .navigationDestination(for: LiveNavigationEntry<Root>.self) { destination in
-                NavStackEntryView(destination)
+                if #available(iOS 18.0, watchOS 11.0, tvOS 18.0, macOS 15.0, visionOS 2.0, *),
+                   let transition = destination.navigationTransition as? _AnyNavigationTransition
+                {
+                    NavStackEntryView(destination)
+                        .navigationTransition(transition)
+                } else {
+                    NavStackEntryView(destination)
+                }
             }
         }
     }

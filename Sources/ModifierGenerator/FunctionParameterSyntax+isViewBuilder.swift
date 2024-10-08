@@ -4,7 +4,7 @@ extension FunctionParameterSyntax {
     var isViewBuilder: Bool {
         attributes.contains(where: {
             guard let attributeType = $0.as(AttributeSyntax.self)?.attributeName.as(MemberTypeSyntax.self),
-                  attributeType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
+                  [.identifier("SwiftUI"), .identifier("SwiftUICore")].contains(attributeType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind),
                   attributeType.name.tokenKind == .identifier("ViewBuilder")
             else { return false }
             return true
@@ -14,7 +14,7 @@ extension FunctionParameterSyntax {
     var isToolbarContentBuilder: Bool {
         attributes.contains(where: {
             guard let attributeType = $0.as(AttributeSyntax.self)?.attributeName.as(MemberTypeSyntax.self),
-                  attributeType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind == .identifier("SwiftUI"),
+                  [.identifier("SwiftUI"), .identifier("SwiftUICore")].contains(attributeType.baseType.as(IdentifierTypeSyntax.self)?.name.tokenKind),
                   attributeType.name.tokenKind == .identifier("ToolbarContentBuilder")
             else { return false }
             return true
@@ -47,5 +47,18 @@ extension FunctionParameterSyntax {
         } else {
             return false
         }
+    }
+    
+    var isCustomHoverEffect: Bool {
+        self.type.as(SomeOrAnyTypeSyntax.self)?.constraint.as(IdentifierTypeSyntax.self)?.name.text == "CustomHoverEffect"
+    }
+    
+    var isScrollPositionBinding: Bool {
+        self.type.as(MemberTypeSyntax.self)?.name.text == "Binding"
+            && self.type.as(MemberTypeSyntax.self)?.genericArgumentClause?.arguments.first?.argument.as(MemberTypeSyntax.self)?.name.text == "ScrollPosition"
+    }
+    
+    var isUIGestureRecognizerRepresentable: Bool {
+        self.type.as(SomeOrAnyTypeSyntax.self)?.constraint.as(IdentifierTypeSyntax.self)?.name.text == "UIGestureRecognizerRepresentable"
     }
 }

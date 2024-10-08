@@ -59,7 +59,18 @@ struct Signature {
         self.`init` = #"""
             \#(platformAvailability)
             \#(availability.isEmpty ? "" : "@available(\(availability), *)")
-            init(\#(FunctionParameterListSyntax(parameters).description)) {
+            init(\#(FunctionParameterListSyntax(parameters.reduce(into: [FunctionParameterSyntax]()) { result, parameter in
+                if parameter.firstName.tokenKind == .wildcard,
+                    result.last != nil && result.last?.firstName.tokenKind != .wildcard
+                {
+                    // if a wildcard parameter appears after named arguments, add a label for it
+                    result.append(parameter.with(\.firstName, parameter.secondName.flatMap({
+                        .identifier(String($0.text.split(separator: "_").first!), leadingTrivia: parameter.firstName.leadingTrivia, trailingTrivia: parameter.firstName.trailingTrivia)
+                    }) ?? parameter.firstName))
+                } else {
+                    result.append(parameter)
+                }
+            }).description)) {
                 \#(boundParameters.isEmpty ? "self.value = ._\(offset)" : #"self.value = ._\#(offset)\#(boundParameters.isEmpty ? "" : "(")\#(boundParameters.map({ "\($0.firstName.trimmed): \($0.firstName.trimmed)" }).joined(separator: ", "))\#(caseParameters.isEmpty ? "" : ")")"#)
                 \#((changeTracked + events)
                     .map({
@@ -252,7 +263,7 @@ extension FunctionParameterSyntax {
         } else if let genericBaseType {
             self = parameter.with(\.type, genericBaseType.resolveGenericType())
         } else if let memberType = parameter.type.as(MemberTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self),
-                  memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
+                  ["SwiftUI", "SwiftUICore"].contains(memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text)
                     && memberType.name.text == "Color"
         {
             self = parameter
@@ -273,7 +284,7 @@ extension FunctionParameterSyntax {
                     )
                 }))
         } else if let memberType = parameter.type.as(MemberTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self),
-                  memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
+                  ["SwiftUI", "SwiftUICore"].contains(memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text)
                     && memberType.name.text == "ListItemTint"
         {
             self = parameter.with(
@@ -283,13 +294,13 @@ extension FunctionParameterSyntax {
                     .with(\.trailingTrivia, memberType.trailingTrivia)
             )
         } else if let memberType = parameter.type.as(MemberTypeSyntax.self) ?? parameter.type.as(OptionalTypeSyntax.self)?.wrappedType.as(MemberTypeSyntax.self),
-                  memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
+                  ["SwiftUI", "SwiftUICore"].contains(memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text)
                     && memberType.name.text == "Text"
         {
             // nested Text is replaced with a `TextReference`
             self = parameter.with(\.type, TypeSyntax("TextReference\(raw: parameter.type.is(OptionalTypeSyntax.self) ? "? " : "")"))
         } else if let memberType = parameter.type.as(MemberTypeSyntax.self),
-                  memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text == "SwiftUI"
+                  ["SwiftUI", "SwiftUICore"].contains(memberType.baseType.as(IdentifierTypeSyntax.self)?.name.text)
                     && memberType.name.text == "Binding"
         {
             let bindingConstraint = memberType.genericArgumentClause?.arguments.first?.argument
