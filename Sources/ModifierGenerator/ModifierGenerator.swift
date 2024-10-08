@@ -137,6 +137,8 @@ struct ModifierGenerator: ParsableCommand {
         "textRenderer",
         
         "tabViewCustomization",
+        
+        "menuButtonStyle",
 
         // manually implemented due to argument order edge cases
         "searchScopes",
