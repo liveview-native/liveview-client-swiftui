@@ -52,8 +52,8 @@ jobs:
       - name: Build for watchOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "platform=watchOS Simulator,name=Apple Watch Series 9 (45mm)" -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=watchOS Simulator,name=Apple Watch Series 10 (46mm)" -skipMacroValidation -skipPackagePluginValidation
       - name: Build for tvOS
         shell: bash
         run: |
-          xcodebuild -scheme LiveViewNative-Package -destination "platform=tvOS Simulator,name=Any tvOS Device" -skipMacroValidation -skipPackagePluginValidation
+          xcodebuild -scheme LiveViewNative-Package -destination "platform=tvOS Simulator,name=Apple TV" -skipMacroValidation -skipPackagePluginValidation
