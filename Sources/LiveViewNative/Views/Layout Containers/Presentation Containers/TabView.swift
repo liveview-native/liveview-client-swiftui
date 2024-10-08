@@ -164,9 +164,9 @@ struct Tab<Root: RootRegistry, TabValue: Hashable>: TabContent {
         }
     }
     
-    var title: String? { try? element.attributeValue(for: "title") }
-    var image: String? { try? element.attributeValue(for: "image") }
-    var systemImage: String? { try? element.attributeValue(for: "systemImage") }
+    var title: String? { element.attributeValue(for: "title") }
+    var image: String? { element.attributeValue(for: "image") }
+    var systemImage: String? { element.attributeValue(for: "systemImage") }
     var role: TabRole? { try? element.attributeValue(TabRole.self, for: "role") }
     
     var content: some View {

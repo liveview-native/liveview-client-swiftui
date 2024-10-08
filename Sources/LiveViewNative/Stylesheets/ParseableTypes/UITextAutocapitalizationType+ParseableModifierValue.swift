@@ -2,9 +2,10 @@
 //  UITextAutocapitalizationType+ParseableModifierValue.swift
 //  
 //
-//  Created by Carson.Katri on 6/20/24.
+//  Created by Carson Katri on 6/20/24.
 //
 
+#if os(iOS) || os(tvOS) || os(visionOS)
 import SwiftUI
 import LiveViewNativeStylesheet
 
@@ -18,3 +19,4 @@ extension UITextAutocapitalizationType: ParseableModifierValue {
         ])
     }
 }
+#endif
