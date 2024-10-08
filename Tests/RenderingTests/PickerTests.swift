@@ -43,7 +43,7 @@ final class PickerTests: XCTestCase {
     func testPicker() throws {
         try assertMatch(
             #"""
-            <Picker value="paperplane">
+            <Picker selection="paperplane">
                 <Text template="label">Pick an icon</Text>
                 <Group template="content">
                     <Label systemImage="paperplane" tag="paperplane"><Text>paperplane</Text></Label>
