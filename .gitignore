@@ -40,3 +40,4 @@ live_view_native_swiftui-*.tar
 /tmp/
 
 .vscode
+/livebooks/markdown/
