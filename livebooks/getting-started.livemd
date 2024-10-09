@@ -144,7 +144,6 @@ Some common issues you may encounter are:
 * Another server is already running on port 4000.
 * Your version of Livebook needs to be updated.
 * Your version of Elixir/Erlang needs to be updated.
-* Your version of Xcode needs to be updated.
 * This Livebook has cached outdated versions of dependencies
 
 Ensure you have the latest versions of all necessary software installed, and ensure no other servers are running on port 4000.
