@@ -137,6 +137,8 @@ struct ModifierGenerator: ParsableCommand {
         "textRenderer",
         
         "tabViewCustomization",
+        
+        "menuButtonStyle",
 
         // manually implemented due to argument order edge cases
         "searchScopes",
@@ -269,6 +271,14 @@ struct ModifierGenerator: ParsableCommand {
             }
             
             if parameter.isUIGestureRecognizerRepresentable {
+                return false
+            }
+            
+            if parameter.isContextMenu {
+                return false
+            }
+            
+            if parameter.isCoordinateSpace {
                 return false
             }
         }
