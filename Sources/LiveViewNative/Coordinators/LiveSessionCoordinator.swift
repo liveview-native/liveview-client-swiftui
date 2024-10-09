@@ -221,6 +221,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             // extract the root layout, removing anything within the `<div data-phx-main>`.
             let mainDiv = try doc.select("div[data-phx-main]")[0]
+            
+            /// The document inside the `data-phx-main` provided in the dead render.
+            let deadRenderDocument = try LiveViewNativeCore.Document.parse(mainDiv.html())
+            
             try mainDiv.replaceWith(doc.createElement("phx-main"))
             
             self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
@@ -247,11 +251,13 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
             }
             
+            self.stylesheet = try await stylesheet
+            
+            navigationPath.last!.coordinator.document = deadRenderDocument
+            
             if socket == nil {
                 try await self.connectSocket(domValues)
             }
-            
-            self.stylesheet = try await stylesheet
             
             try await navigationPath.last!.coordinator.connect(domValues: domValues, redirect: false)
             
