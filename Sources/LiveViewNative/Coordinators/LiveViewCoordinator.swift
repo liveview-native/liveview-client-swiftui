@@ -37,7 +37,22 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
     
     private var channel: Channel?
     
-    @Published var document: LiveViewNativeCore.Document?
+    @Published var document: LiveViewNativeCore.Document? {
+        didSet {
+            self.document?.on(.changed) { [unowned self] doc, nodeRef in
+                switch doc[nodeRef].data {
+                case .root:
+                    // when the root changes, update the `NavStackEntry` itself.
+                    self.objectWillChange.send()
+                case .leaf:
+                    self.elementChanged(nodeRef).send()
+                case .element:
+                    // when a single element changes, send an update only to that element.
+                    self.elementChanged(nodeRef).send()
+                }
+            }
+        }
+    }
     private var elementChangedSubjects = [NodeRef:ObjectWillChangePublisher]()
     func elementChanged(_ ref: NodeRef) -> ObjectWillChangePublisher {
         guard let subject = elementChangedSubjects[ref] else {
@@ -404,20 +419,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         // For now, we just clear the forms whenever the page reconnects.
         self.liveViewModel.clearForms()
         
-        self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
-        
-        self.document?.on(.changed) { [unowned self] doc, nodeRef in
-            switch doc[nodeRef].data {
-            case .root:
-                // when the root changes, update the `NavStackEntry` itself.
-                self.objectWillChange.send()
-            case .leaf:
-                self.elementChanged(nodeRef).send()
-            case .element:
-                // when a single element changes, send an update only to that element.
-                self.elementChanged(nodeRef).send()
-            }
+        if let document = self.document {
+            try! document.merge(with: LiveViewNativeCore.Document.parse(rendered.buildString()))
+        } else {
+            self.document = try! LiveViewNativeCore.Document.parse(rendered.buildString())
         }
+        
         self.handleEvents(payload: renderedPayload)
     }
 }
