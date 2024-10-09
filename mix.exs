@@ -114,7 +114,6 @@ defmodule LiveViewNative.SwiftUI.MixProject do
     livebooks =
         [
           "livebooks/markdown/getting-started.md",
-          "livebooks/markdown/create-a-swiftui-application.md",
           "livebooks/markdown/swiftui-views.md",
           "livebooks/markdown/interactive-swiftui-views.md",
           "livebooks/markdown/stylesheets.md",
