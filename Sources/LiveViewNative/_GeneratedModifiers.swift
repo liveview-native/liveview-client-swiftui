@@ -15808,6 +15808,7 @@ case let ._MaskModifier(modifier):
             
             let context: ParseableModifierContext
             
+            @MainActor
             func parse(_ input: inout Substring.UTF8View) throws -> Output {
                 let parsers = [
                     _accessibilityActionModifier<R>.name: _accessibilityActionModifier<R>.parser(in: context).map({ Output.chunk0(.accessibilityAction($0)) }).eraseToAnyParser(),

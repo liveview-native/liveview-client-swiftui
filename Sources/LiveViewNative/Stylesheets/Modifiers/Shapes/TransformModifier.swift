@@ -34,6 +34,7 @@ struct _TransformModifier<Root: RootRegistry>: ShapeModifier {
         self.transform = transform
     }
 
+    @MainActor
     func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         return shape.transform(transform)
     }

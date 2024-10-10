@@ -110,6 +110,7 @@ struct _AnyGesture: ParseableModifierValue {
     let gesture: AnyGesture<Any>
     let members: [Member]
     
+    @MainActor
     func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyGesture<Any> {
         members.reduce(gesture) { gesture, member in
             return member.apply(to: gesture, on: element, in: context)
@@ -199,6 +200,7 @@ struct _AnyGesture: ParseableModifierValue {
             }
         }
         
+        @MainActor
         func apply<R: RootRegistry>(to gesture: AnyGesture<Any>, on element: ElementNode, in context: LiveContext<R>) -> AnyGesture<Any> {
             switch self {
             case .sequenced(let sequenced):
