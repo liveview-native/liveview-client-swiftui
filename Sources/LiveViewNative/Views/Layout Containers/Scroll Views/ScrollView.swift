@@ -47,6 +47,8 @@ struct ScrollView<Root: RootRegistry>: View {
     @_documentation(visibility: public)
     private var scrollPositionAnchor: UnitPoint?
     
+    private var id: String?
+    
     public var body: some View {
         SwiftUI.ScrollViewReader { proxy in
             SwiftUI.ScrollView(
@@ -55,6 +57,7 @@ struct ScrollView<Root: RootRegistry>: View {
             ) {
                 $liveElement.children()
             }
+            .scrollRestoration(Root.self, id: id)
             .onAppear {
                 guard let scrollPosition else { return }
                 proxy.scrollTo(scrollPosition, anchor: scrollPositionAnchor)
@@ -63,6 +66,55 @@ struct ScrollView<Root: RootRegistry>: View {
                 guard let newValue else { return }
                 proxy.scrollTo(newValue, anchor: scrollPositionAnchor)
             }
+        }
+    }
+}
+
+/// A modifier that tracks the scroll position and restores it on back navigation.
+///
+/// The scroll position is stored in the ``LiveSessionCoordinator``.
+@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, *)
+struct ScrollRestorationModifier<R: RootRegistry>: ViewModifier {
+    let id: String
+    
+    @LiveContext<R> private var context
+    
+    @State private var position = ScrollPosition()
+    @State private var didAttemptRestoration = false
+    
+    func body(content: Content) -> some View {
+        content
+            .onScrollGeometryChange(for: CGPoint.self, of: { geometry in
+                CGPoint(
+                    x: geometry.contentOffset.x + geometry.contentInsets.leading,
+                    y: geometry.contentOffset.y + geometry.contentInsets.top
+                )
+            }, action: { _, newValue in
+                guard didAttemptRestoration else { return }
+                // update the stored scrollPosition in the ``LiveSessionCoordinator``
+                context.coordinator.session.scrollPositions[context.coordinator.session.navigationPath.count, default: [:]][id] = .offset(newValue)
+            })
+            .scrollPosition($position)
+            .task {
+                // restore the scroll position from the ``LiveSessionCoordinator``
+                defer { didAttemptRestoration = true }
+                guard case let .offset(restoredValue) = context.coordinator.session.scrollPositions[context.coordinator.session.navigationPath.count, default: [:]][id]
+                else { return }
+                position = .init(x: restoredValue.x, y: restoredValue.y)
+            }
+    }
+}
+
+extension View {
+    /// Apply the ``ScrollRestorationModifier``.
+    @ViewBuilder
+    func scrollRestoration<R: RootRegistry>(_: R.Type = R.self, id: String?) -> some View {
+        if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, *),
+           let id
+        {
+            self.modifier(ScrollRestorationModifier<R>(id: id))
+        } else {
+            self
         }
     }
 }
