@@ -43,8 +43,8 @@ struct TabView<Root: RootRegistry>: View {
     var body: some View {
         if #available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *),
            $liveElement.childNodes.contains(where: {
-               guard case let .element(element) = $0.data else { return false }
-               return element.tag == "Tab"
+               guard case let .nodeElement(element) = $0.data() else { return false }
+               return element.name.namespace == nil && element.name.name == "Tab"
            })
         {
             if selectionAttribute != nil || changeAttribute != nil {
@@ -81,7 +81,7 @@ struct TabTreeBuilder<Root: RootRegistry, TabValue: Hashable> {
     @TabContentBuilder<TabValue>
     fileprivate func fromNode(_ node: Node, context: LiveContextStorage<Root>) -> some TabContent<TabValue> {
         // ToolbarTreeBuilder.fromNode may not be called with a root or leaf node
-        if case .element(let element) = node.data {
+        if case .nodeElement(let element) = node.data() {
             Self.lookup(ElementNode(node: node, data: element))
         }
     }
