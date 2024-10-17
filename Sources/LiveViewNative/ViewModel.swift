@@ -63,7 +63,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         self.elementID = elementID
     }
 
-    @_spi(LiveForm) public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
+    @_spi(LiveForm) @preconcurrency public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
         let pushEventImpl = pushEventImpl!
         self.changeEvent = element.attributeValue(for: .init(name: "phx-change")).flatMap({ event in
             { value in
@@ -161,7 +161,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         // the `form` event type expects a URL encoded payload (e.g., `a=b&c=d`)
         _ = try await pushEventImpl("form", event, try buildFormQuery(), nil)
     }
-
+    
     public nonisolated var debugDescription: String {
         return "FormModel(element: #\(elementID), id: \(ObjectIdentifier(self))"
     }

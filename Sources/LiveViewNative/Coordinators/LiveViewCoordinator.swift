@@ -85,6 +85,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         ])))
     }
     
+    struct ReplyPayload: @unchecked Sendable {
+        let payload: [String: Any]
+    }
+    
     @discardableResult
     public func pushEvent(type: String, event: String, value: Any, target: Int? = nil) async throws -> [String:Any]? {
         return try await doPushEvent("event", payload: .jsonPayload(json: .object(object: [
