@@ -9,6 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 /// A `ViewModifier` that can be applied directly to `Shape`.
+@MainActor
 protocol ShapeModifier<Root> {
     associatedtype Root: RootRegistry
     associatedtype ModifiedShape: SwiftUI.Shape
@@ -17,6 +18,7 @@ protocol ShapeModifier<Root> {
 }
 
 /// A `ViewModifier` that can be applied directly to `Shape`.
+@MainActor
 protocol ShapeFinalizerModifier<Root> {
     associatedtype Root: RootRegistry
     associatedtype FinalizedShape: SwiftUI.View

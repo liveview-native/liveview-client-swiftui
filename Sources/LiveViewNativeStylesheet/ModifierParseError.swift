@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct ModifierParseError: Error, CustomDebugStringConvertible {
+@MainActor
+public struct ModifierParseError: Error, @preconcurrency CustomDebugStringConvertible {
     public let error: ErrorType
     public let metadata: Metadata
     
@@ -107,10 +108,12 @@ public struct ModifierParseError: Error, CustomDebugStringConvertible {
         }
     }
     
+    @MainActor
     public var debugDescription: String {
         localizedDescription
     }
     
+    @MainActor
     public var localizedDescription: String {
         let indentation = String(repeating: " ", count: String(metadata.line).count)
         return """

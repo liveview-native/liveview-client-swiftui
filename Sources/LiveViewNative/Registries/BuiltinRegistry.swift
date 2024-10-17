@@ -15,6 +15,7 @@ protocol BuiltinRegistryProtocol {
     associatedtype BuiltinModifier: ViewModifier & ParseableModifierValue
 }
 
+@MainActor
 struct BuiltinRegistry<R: RootRegistry>: BuiltinRegistryProtocol {
     static func lookup(_ name: String, _ element: ElementNode) -> some View {
         return BuiltinElement<R>(name: name, element: element)

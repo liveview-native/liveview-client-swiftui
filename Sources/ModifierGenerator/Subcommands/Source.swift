@@ -142,7 +142,8 @@ extension ModifierGenerator {
                         .init(context: context)
                     }
             
-                    struct _ParserType: Parser {
+                    @MainActor
+                    struct _ParserType: @preconcurrency Parser {
                         typealias Input = Substring.UTF8View
                         typealias Output = BuiltinModifier
                         

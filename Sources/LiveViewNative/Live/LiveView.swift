@@ -131,6 +131,7 @@ public macro LiveView<
 /// - ``body``
 /// ### See Also
 /// - ``LiveViewModel``
+@MainActor
 public struct LiveView<
     R: RootRegistry,
     PhaseView: View,
@@ -149,6 +150,7 @@ public struct LiveView<
     let reconnectingView: (_ConnectedContent<R>, Bool) -> ReconnectingView
     let errorView: (Error) -> ErrorView
     
+    @MainActor
     @ViewBuilder
     func buildPhaseView(_ phase: LiveViewPhase<R>) -> some View {
         if PhaseView.self != Never.self {
@@ -208,6 +210,7 @@ public struct LiveView<
         }
     }
     
+    @MainActor
     public var body: some View {
         SwiftUI.Group {
             buildPhaseView(phase)
@@ -267,10 +270,10 @@ public struct _ConnectedContent<R: RootRegistry>: View {
 
 extension EnvironmentValues {
     enum LiveViewStateViewsKey: EnvironmentKey {
-        static let defaultValue: [ObjectIdentifier:(Any) -> AnyView] = [:]
+        static let defaultValue: [ObjectIdentifier: @MainActor (Any) -> AnyView] = [:]
     }
     
-    var liveViewStateViews: [ObjectIdentifier:(Any) -> AnyView] {
+    var liveViewStateViews: [ObjectIdentifier: @MainActor (Any) -> AnyView] {
         get { self[LiveViewStateViewsKey.self] }
         set { self[LiveViewStateViewsKey.self] = newValue }
     }

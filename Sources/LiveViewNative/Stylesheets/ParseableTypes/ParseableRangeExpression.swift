@@ -45,7 +45,7 @@ import LiveViewNativeStylesheet
 /// 1..<10
 /// ```
 @_documentation(visibility: public)
-struct ParseableRangeExpression<Bound: Comparable & ParseableModifierValue>: RangeExpression, ParseableModifierValue {
+struct ParseableRangeExpression<Bound: Comparable & ParseableModifierValue>: @preconcurrency RangeExpression, ParseableModifierValue {
     let value: any RangeExpression<Bound>
     
     func relative<C>(to collection: C) -> Range<Bound> where C : Collection, Bound == C.Index {

@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -29,10 +29,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "0.1.0"),
         .package(url: "https://github.com/liveview-native/liveview-native-core-swift.git", exact: "0.2.1"),
         
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.2.2"),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.5.0"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.2.0"),
         
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "509.0.2"),
+        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.1"),
         
         .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.13.0"),
     ],

@@ -6,14 +6,14 @@
 //
 
 import Foundation
-import SwiftPhoenixClient
+@preconcurrency import SwiftPhoenixClient
 import SwiftSoup
 import SwiftUI
 import Combine
 import LiveViewNativeCore
 import OSLog
 
-private var PUSH_TIMEOUT: Double = 30000
+private let PUSH_TIMEOUT: Double = 30000
 
 private let logger = Logger(subsystem: "LiveViewNative", category: "LiveViewCoordinator")
 
@@ -108,6 +108,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         )
     }
     
+    struct ReplyPayload: @unchecked Sendable {
+        let payload: [String: Any]
+    }
+    
     @discardableResult
     internal func doPushEvent(_ event: String, payload: Payload) async throws -> [String:Any]? {
         guard let channel = channel else {
@@ -116,15 +120,15 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         
         let token = self.currentConnectionToken
 
-        let replyPayload: [String:Any] = try await withCheckedThrowingContinuation({ [weak channel] continuation in
+        let replyPayload: ReplyPayload = try await withCheckedThrowingContinuation({ [weak channel] continuation in
             guard channel?.isJoined == true else {
                 return continuation.resume(throwing: LiveConnectionError.viewCoordinatorReleased)
             }
             channel?.push(event, payload: payload, timeout: PUSH_TIMEOUT)
-                .receive("ok") { reply in
-                    continuation.resume(returning: reply.payload)
+                .receive("ok") { @Sendable reply in
+                    continuation.resume(returning: ReplyPayload(payload: reply.payload))
                 }
-                .receive("error") { message in
+                .receive("error") { @Sendable message in
                     continuation.resume(throwing: LiveConnectionError.eventError(message))
                 }
         })
@@ -134,14 +138,14 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
             throw CancellationError()
         }
         
-        if let diffPayload = replyPayload["diff"] as? Payload {
+        if let diffPayload = replyPayload.payload["diff"] as? Payload {
             try self.handleDiff(payload: diffPayload, baseURL: self.url)
             if let reply = diffPayload["r"] as? [String:Any] {
                 return reply
             }
-        } else if let redirect = (replyPayload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
+        } else if let redirect = (replyPayload.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
             try await session.redirect(redirect)
-        } else if let redirect = (replyPayload["redirect"] as? Payload),
+        } else if let redirect = (replyPayload.payload["redirect"] as? Payload),
                   let destination = (redirect["to"] as? String).flatMap({ URL.init(string: $0, relativeTo: self.url) })
         {
             try await session.redirect(.init(kind: .push, to: destination, mode: .replaceTop))
@@ -337,12 +341,12 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
         }
     }
     
-    enum JoinResult {
+    enum JoinResult: @unchecked Sendable {
         case rendered(Payload)
         case redirect(LiveRedirect)
     }
 
-    private func join(channel: Channel) -> AsyncThrowingStream<JoinResult, Error> {
+    private nonisolated func join(channel: Channel) -> AsyncThrowingStream<JoinResult, Error> {
         return AsyncThrowingStream<JoinResult, Error> { [weak channel] (continuation: AsyncThrowingStream<JoinResult, Error>.Continuation) -> Void in
             channel?.join()
                 .receive("ok") { [weak self, weak channel] message in
@@ -367,7 +371,7 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         return
                     }
                     
-                    Task { [weak self] in
+                    Task { @Sendable [weak self] in
                         guard let self else {
                             continuation.finish(throwing: LiveConnectionError.viewCoordinatorReleased)
                             return
@@ -379,8 +383,10 @@ public class LiveViewCoordinator<R: RootRegistry>: ObservableObject {
                         default:
                             await self.disconnect()
                         }
-
-                        if let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: self.url) }) {
+                        
+                        let url = await self.url
+                        
+                        if let redirect = (message.payload["live_redirect"] as? Payload).flatMap({ LiveRedirect(from: $0, relativeTo: url) }) {
                             continuation.yield(.redirect(redirect))
                         } else {
                             continuation.finish(throwing: LiveConnectionError.joinError(message))

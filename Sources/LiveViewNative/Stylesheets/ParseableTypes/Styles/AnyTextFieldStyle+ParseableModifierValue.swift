@@ -15,7 +15,8 @@ import LiveViewNativeStylesheet
 /// - `.roundedBorder`
 /// - `.plain`
 @_documentation(visibility: public)
-enum AnyTextFieldStyle: String, CaseIterable, ParseableModifierValue, TextFieldStyle {
+@MainActor
+enum AnyTextFieldStyle: String, CaseIterable, ParseableModifierValue, @preconcurrency TextFieldStyle {
     typealias _ParserType = ImplicitStaticMember<Self, EnumParser<Self>>
     
     case automatic
