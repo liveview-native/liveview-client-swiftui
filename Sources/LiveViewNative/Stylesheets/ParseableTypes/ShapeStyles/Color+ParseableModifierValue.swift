@@ -103,6 +103,7 @@ public extension SwiftUI.Color {
             self.modifiers = modifiers
         }
         
+        @MainActor
         public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> SwiftUI.Color {
             let base = switch storage {
             case let .reference(name):
@@ -341,6 +342,7 @@ enum ColorModifier {
         }
     }
     
+    @MainActor
     func apply(to color: SwiftUI.Color, on element: ElementNode, in context: LiveContext<some RootRegistry>) -> SwiftUI.Color {
         switch self {
         case let .opacity(opacity):

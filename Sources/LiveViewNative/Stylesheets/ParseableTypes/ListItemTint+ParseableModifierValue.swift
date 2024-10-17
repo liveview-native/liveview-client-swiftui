@@ -35,6 +35,7 @@ extension ListItemTint {
         
         let storage: Storage
         
+        @MainActor
         func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> ListItemTint {
             switch storage {
             case .monochrome:

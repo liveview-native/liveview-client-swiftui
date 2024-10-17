@@ -75,6 +75,7 @@ struct _UnionModifier<Root: RootRegistry>: ShapeModifier {
         self.eoFill = eoFill
     }
 
+    @MainActor
     func apply(to shape: AnyShape, on element: ElementNode, in context: LiveContext<Root>) -> some SwiftUI.Shape {
         if #available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *) {
             return AnyShape(shape.union(other, eoFill: eoFill.resolve(on: element, in: context)))

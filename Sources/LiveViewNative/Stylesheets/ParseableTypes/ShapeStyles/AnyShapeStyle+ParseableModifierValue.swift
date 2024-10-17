@@ -163,6 +163,7 @@ public extension AnyShapeStyle {
         let storage: Storage
         let modifiers: [StyleModifier]
         
+        @MainActor
         public func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> AnyShapeStyle {
             let base: any ShapeStyle = switch storage {
             case .value(let value):
@@ -332,6 +333,7 @@ public extension AnyShapeStyle {
                 self = .stops(stops: stops, center: center, startAngle: startAngle, endAngle: endAngle)
             }
             
+            @MainActor
             func resolve<R: RootRegistry>(on element: ElementNode, in context: LiveContext<R>) -> any ShapeStyle {
                 switch self {
                 case .anyGradient(let gradient, let center, let startAngle, let endAngle):
@@ -371,6 +373,7 @@ public extension AnyShapeStyle {
                 self = .stops(stops: stops, center: center, angle: angle)
             }
             
+            @MainActor
             func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case .anyGradient(let gradient, let center, let angle):
@@ -410,6 +413,7 @@ public extension AnyShapeStyle {
                 self = .anyGradient(gradient: gradient, center: center, startRadiusFraction: startRadiusFraction, endRadiusFraction: endRadiusFraction)
             }
             
+            @MainActor
             func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case .gradient(let gradient, let center, let startRadiusFraction, let endRadiusFraction):
@@ -449,6 +453,7 @@ public extension AnyShapeStyle {
                 self = .anyGradient(gradient: gradient, startPoint: startPoint, endPoint: endPoint)
             }
             
+            @MainActor
             func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case .gradient(let gradient, let startPoint, let endPoint):
@@ -508,6 +513,7 @@ public extension AnyShapeStyle {
                 self = .anyGradient(gradient: gradient, center: center, startRadius: startRadius, endRadius: endRadius)
             }
             
+            @MainActor
             func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case .gradient(let gradient, let center, let startRadius, let endRadius):
@@ -615,6 +621,7 @@ public extension AnyShapeStyle {
             }
             
             /// Apply this modifier to an existing `ShapeStyle`.
+            @MainActor
             func apply(to style: some ShapeStyle, on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case let .blendMode(blendMode):
@@ -642,6 +649,7 @@ public extension AnyShapeStyle {
             }
             
             /// Use this modifier itself as a `ShapeStyle`. SwiftUI will apply it to the foreground style.
+            @MainActor
             func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> any ShapeStyle {
                 switch self {
                 case let .blendMode(blendMode):

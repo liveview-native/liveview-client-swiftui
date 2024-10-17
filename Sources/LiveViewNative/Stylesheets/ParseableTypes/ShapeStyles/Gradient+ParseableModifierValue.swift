@@ -34,6 +34,7 @@ extension AnyGradient {
             }
         }
         
+        @MainActor
         func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> AnyGradient {
             color.resolve(on: element, in: context).gradient
         }
@@ -73,6 +74,7 @@ extension Gradient {
             }
         }
         
+        @MainActor
         func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> Gradient {
             switch self {
             case .colors(let colors):
@@ -120,6 +122,7 @@ extension Gradient.Stop {
             }
         }
         
+        @MainActor
         func resolve(on element: ElementNode, in context: LiveContext<some RootRegistry>) -> Gradient.Stop {
             .init(color: color.resolve(on: element, in: context), location: location.resolve(on: element, in: context))
         }
