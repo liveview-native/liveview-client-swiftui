@@ -15,9 +15,9 @@ import LiveViewNativeCore
 /// In a view in the LiveView tree, a model can be obtained using `@EnvironmentObject`.
 public class LiveViewModel: ObservableObject {
     private var forms = [String: FormModel]()
-    
+
     init() {}
-    
+
     /// Get or create a ``FormModel`` for the given `<live-form>`.
     ///
     /// - Important: The element parameter must be the form element. To get the form model for an element within a form, use the ``LiveContext`` or the `\.formModel` environment value.
@@ -49,7 +49,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     ///
     /// This typically performs a HTTP request and reconnects the LiveView.
     var submitAction: (() -> ())?
-    
+
     /// The form data for this form.
     @Published internal private(set) var data = [String: any FormValue]()
     var formFieldWillChange = PassthroughSubject<String, Never>()
@@ -60,7 +60,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
     init(elementID: String) {
         self.elementID = elementID
     }
-    
+
     @_spi(LiveForm) public func updateFromElement(_ element: ElementNode, submitAction: @escaping () -> ()) {
         self.changeEvent = element.attributeValue(for: .init(name: "phx-change")).flatMap({ event in
             { value in
@@ -70,7 +70,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         self.submitEvent = element.attributeValue(for: .init(name: "phx-submit"))
         self.submitAction = submitAction
     }
-    
+
     /// Sends a phx-change event (if configured) to the server with the current form data.
     ///
     /// This method has no effect if the `<form>` does not have a `phx-change` event configured.
@@ -83,7 +83,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         
         try await event()
     }
-    
+
     /// Sends a phx-submit event (if configured) to the server with the current form data.
     ///
     /// This method has no effect if the `<form>` does not have a `phx-submit` event configured.
@@ -98,7 +98,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
             submitAction()
         }
     }
-    
+
     /// Create a URL encoded body from the data in the form.
     public func buildFormQuery() throws -> String {
         return try buildFormURLComponents().formEncodedQuery!
@@ -144,7 +144,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
                 return try value.formQueryEncoded()
             }
         }
-        
+
         var components = URLComponents()
         components.queryItems = data.map {
             URLQueryItem(name: $0.key, value: $0.value)
@@ -152,17 +152,17 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         
         return components
     }
-    
+
     @MainActor
     private func pushFormEvent(_ event: String) async throws {
         // the `form` event type expects a URL encoded payload (e.g., `a=b&c=d`)
         _ = try await pushEventImpl("form", event, try buildFormQuery(), nil)
     }
-    
+
     public var debugDescription: String {
         return "FormModel(element: #\(elementID), id: \(ObjectIdentifier(self))"
     }
-    
+
     /// Access the stored value, if there is one, for the form field of the given name.
     ///
     /// Setting a field to `nil` removes it.
@@ -209,7 +209,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         else { return }
         data[name] = value
     }
-    
+
     /// Clears all data in this form.
     public func clear() {
         for field in data.keys {
@@ -217,7 +217,7 @@ public class FormModel: ObservableObject, CustomDebugStringConvertible {
         }
         data = [:]
     }
-    
+
 }
 
 private extension URLComponents {
