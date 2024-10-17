@@ -8,6 +8,12 @@
 import LiveViewNativeCore
 import Foundation
 
+extension Node: Identifiable {
+    public var id: NodeRef {
+        self.id()
+    }
+}
+
 extension Channel {
     func eventStream() -> AsyncThrowingStream<EventPayload, any Error> {
         let events = self.events()
