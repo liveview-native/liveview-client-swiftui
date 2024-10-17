@@ -49,9 +49,10 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     var liveSocket: LiveViewNativeCore.LiveSocket?
     var socket: LiveViewNativeCore.Socket?
 
-    private var liveReloadSocket: LiveViewNativeCore.Socket?
-    private var liveReloadChannel: LiveViewNativeCore.Channel?
-
+    private var liveReloadChannel: LiveViewNativeCore.LiveChannel?
+    private var liveReloadListener: AsyncThrowingStream<LiveViewNativeCore.EventPayload, any Error>?
+    private var liveReloadListenerLoop: Task<(), any Error>?
+    
     private var cancellables = Set<AnyCancellable>()
 
     private var mergedEventSubjects: AnyCancellable?
@@ -222,6 +223,27 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         self.navigationPath.last!.coordinator.join(liveChannel)
         
         self.state = .connected
+        
+        if self.liveSocket!.hasLiveReload() {
+            self.liveReloadChannel = try! await self.liveSocket!.joinLivereloadChannel()
+            bindLiveReloadListener()
+        }
+    }
+    
+    func bindLiveReloadListener() {
+        let eventListener = self.liveReloadChannel!.channel().eventStream()
+        self.liveReloadListener = eventListener
+        self.liveReloadListenerLoop = Task { [weak self] in
+            for try await event in eventListener {
+                guard let self else { return }
+                switch event.event {
+                case .user(user: "assets_change"):
+                    try await self.reconnect()
+                default:
+                    continue
+                }
+            }
+        }
     }
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
