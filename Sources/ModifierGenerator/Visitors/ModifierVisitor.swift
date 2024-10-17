@@ -79,7 +79,6 @@ final class ModifierVisitor: SyntaxVisitor {
 
         let nodeAvailabilityAttributes = node.attributes.compactMap({ $0.as(AttributeSyntax.self)?.arguments?.as(AvailabilityArgumentListSyntax.self) })
 
-        // if all platforms mark this symbol as deprecated, exclude it.
         let isDeprecated = !nodeAvailabilityAttributes.isEmpty && nodeAvailabilityAttributes.allSatisfy({
             $0.contains(where: {
                 $0.argument.as(AvailabilityLabeledArgumentSyntax.self)?.label.tokenKind == .keyword(.deprecated)
@@ -106,6 +105,7 @@ final class ModifierVisitor: SyntaxVisitor {
                     $0.argument.as(AvailabilityLabeledArgumentSyntax.self)?.label.tokenKind == .keyword(.deprecated)
                 })
             })
+            self.modifiers[decl.name.trimmed.text, default: []].append((decl, availability: Self.availability(node.attributes, decl.attributes)))
             if isMemberDeprecated || isDeprecated {
                 // extract the deprecation message.
                 self.deprecations[decl.name.trimmed.text] = (isMemberDeprecated ? memberAvailabilityAttributes : nodeAvailabilityAttributes)
@@ -128,8 +128,6 @@ final class ModifierVisitor: SyntaxVisitor {
                             }
                         }).first
                     }).first ?? #""This symbol is unavailable and will have no effect""#
-            } else {
-                self.modifiers[decl.name.trimmed.text, default: []].append((decl, availability: Self.availability(node.attributes, decl.attributes)))
             }
         }
 

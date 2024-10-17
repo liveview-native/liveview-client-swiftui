@@ -61,4 +61,12 @@ extension FunctionParameterSyntax {
     var isUIGestureRecognizerRepresentable: Bool {
         self.type.as(SomeOrAnyTypeSyntax.self)?.constraint.as(IdentifierTypeSyntax.self)?.name.text == "UIGestureRecognizerRepresentable"
     }
+    
+    var isContextMenu: Bool {
+        (self.type.as(OptionalTypeSyntax.self)?.wrappedType ?? self.type).as(MemberTypeSyntax.self)?.name.text == "ContextMenu"
+    }
+    
+    var isCoordinateSpace: Bool {
+        (self.type.as(OptionalTypeSyntax.self)?.wrappedType ?? self.type).as(MemberTypeSyntax.self)?.name.text == "CoordinateSpace"
+    }
 }
