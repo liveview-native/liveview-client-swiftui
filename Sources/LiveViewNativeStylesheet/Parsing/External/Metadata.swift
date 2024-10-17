@@ -1,6 +1,6 @@
 import Parsing
 
-public struct Metadata: Equatable {
+public struct Metadata: Equatable, Sendable {
     public let file: String
     public let line: Int
     public let module: String

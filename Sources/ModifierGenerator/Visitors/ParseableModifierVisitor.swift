@@ -11,7 +11,7 @@ final class ParseableModifierVisitor: SyntaxVisitor {
         guard node.attributes.contains(where: { $0.as(AttributeSyntax.self)?.attributeName.as(IdentifierTypeSyntax.self)?.name.text == "ParseableExpression" }),
               let name: String = node.memberBlock.members.lazy.compactMap({
                   guard let decl: VariableDeclSyntax = $0.decl.as(VariableDeclSyntax.self),
-                        let binding: PatternBindingSyntax = decl.bindings.first?.as(PatternBindingSyntax.self),
+                        let binding: PatternBindingSyntax = decl.bindings.first,
                         binding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text == "name",
                         let name = (
                             binding.initializer?.value.as(StringLiteralExprSyntax.self)

@@ -7,7 +7,8 @@
 
 import Parsing
 
-public struct _AnyNodeParser: Parser {
+@MainActor
+public struct _AnyNodeParser: @preconcurrency Parser {
     let context: ParseableModifierContext
     
     public init(context: ParseableModifierContext) {
@@ -33,7 +34,8 @@ public struct _AnyNodeParser: Parser {
         "}".utf8
     }
     
-    public struct AnyArgument: Parser {
+    @MainActor
+    public struct AnyArgument: @preconcurrency Parser {
         let context: ParseableModifierContext
         
         public init(context: ParseableModifierContext) {

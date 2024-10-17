@@ -9,7 +9,7 @@ import SwiftUI
 import LiveViewNativeStylesheet
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, *)
-extension AnyCoordinateSpaceProtocol: CoordinateSpaceProtocol {}
+extension AnyCoordinateSpaceProtocol: @preconcurrency CoordinateSpaceProtocol {}
 
 /// See [`SwiftUI.CoordinateSpaceProtocol`](https://developer.apple.com/documentation/swiftui/CoordinateSpaceProtocol) for more details.
 ///
@@ -30,6 +30,7 @@ extension AnyCoordinateSpaceProtocol: CoordinateSpaceProtocol {}
 /// .scrollView(axis: .horizontal)
 /// ```
 @_documentation(visibility: public)
+@MainActor
 struct AnyCoordinateSpaceProtocol: ParseableModifierValue {
     let coordinateSpace: CoordinateSpace
     

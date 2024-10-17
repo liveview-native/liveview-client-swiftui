@@ -228,25 +228,26 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             
             self.rootLayout = try LiveViewNativeCore.Document.parse(doc.outerHtml())
 
+            let styleURLs = try doc.select("Style").compactMap {
+                URL(string: try $0.attr("url"), relativeTo: url)
+            }
             async let stylesheet = withThrowingTaskGroup(of: Stylesheet<R>.self) { group in
-                for style in try doc.select("Style") {
-                    guard let url = URL(string: try style.attr("url"), relativeTo: url)
-                    else { continue }
+                for url in styleURLs {
                     group.addTask {
                         if let cachedStylesheet = await StylesheetCache.shared.read(for: url, registry: R.self) {
                             return cachedStylesheet
                         } else {
                             let (data, _) = try await self.urlSession.data(from: url)
                             guard let contents = String(data: data, encoding: .utf8)
-                            else { return Stylesheet<R>(content: [], classes: [:]) }
-                            let stylesheet = try Stylesheet<R>(from: contents, in: .init())
+                            else { return await Stylesheet<R>(content: [], classes: [:]) }
+                            let stylesheet = try await Stylesheet<R>(from: contents, in: .init())
                             await StylesheetCache.shared.write(stylesheet, for: url, registry: R.self)
                             return stylesheet
                         }
                     }
                 }
                 return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
-                    return result.merge(with: next)
+                    return await result.merge(with: next)
                 }
             }
             
@@ -279,12 +280,8 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     
     private func disconnect(preserveNavigationPath: Bool = false) async {
         // disconnect all views
-        await withTaskGroup(of: Void.self) { group in
-            for entry in self.navigationPath {
-                group.addTask {
-                    await entry.coordinator.disconnect()
-                }
-            }
+        for entry in navigationPath {
+            await entry.coordinator.disconnect()
         }
         // reset all documents if navigation path is being reset.
         if !preserveNavigationPath {
@@ -346,14 +343,14 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// Request the dead render with the given `request`.
     ///
     /// Returns the dead render HTML and the HTTP response information (including the final URL after redirects).
-    nonisolated func deadRender(
+    func deadRender(
         for request: URLRequest,
         domValues: DOMValues?
     ) async throws -> (String, HTTPURLResponse) {
         
         var request = request
         request.url = request.url!.appendingLiveViewItems()
-        request.allHTTPHeaderFields = await configuration.headers
+        request.allHTTPHeaderFields = configuration.headers
         
         if let domValues {
             request.setValue(domValues.phxCSRFToken, forHTTPHeaderField: "x-csrf-token")
@@ -418,50 +415,49 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
         )
     }
 
-    private func connectSocket(_ domValues: DOMValues) async throws {
-        self.socket = try await withCheckedThrowingContinuation { [weak self] continuation in
+    private nonisolated func connectSocket(_ domValues: DOMValues) async throws {
+        var wsEndpoint = await URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
+        wsEndpoint.scheme = await self.url.scheme == "https" ? "wss" : "ws"
+        wsEndpoint.path = "/live/websocket"
+        let configuration = await self.urlSession.configuration
+        let socket = Socket(
+            endPoint: wsEndpoint.string!,
+            transport: {
+                URLSessionTransport(url: $0, configuration: configuration)
+            },
+            paramsClosure: {
+                [
+                    "_csrf_token": domValues.phxCSRFToken,
+                    "_format": "swiftui"
+                ]
+            }
+        )
+        
+        socket.onClose { @Sendable in logger.debug("[Socket] Closed") }
+        socket.logger = { @Sendable message in logger.debug("[Socket] \(message)") }
+        
+        try await withCheckedThrowingContinuation { [weak self] (continuation: CheckedContinuation<Void, any Error>) in
             guard let self else {
                 return continuation.resume(throwing: LiveConnectionError.sessionCoordinatorReleased)
             }
             
-            var wsEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
-            wsEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
-            wsEndpoint.path = "/live/websocket"
-            let configuration = self.urlSession.configuration
-            let socket = Socket(
-                endPoint: wsEndpoint.string!,
-                transport: {
-                    URLSessionTransport(url: $0, configuration: configuration)
-                },
-                paramsClosure: {
-                    [
-                        "_csrf_token": domValues.phxCSRFToken,
-                        "_format": "swiftui"
-                    ]
-                }
-            )
-            
             // set to `reconnecting` when the socket asks for the delay duration.
-            socket.reconnectAfter = { [weak self] tries in
-                Task {
-                    await MainActor.run {
-                        self?.state = .reconnecting
-                    }
+            socket.reconnectAfter = { @Sendable [weak self] tries in
+                Task { @MainActor [weak self] in
+                    self?.state = .reconnecting
                 }
                 return Defaults.reconnectSteppedBackOff(tries)
             }
             socket.onOpen { [weak self] in
-                guard case .reconnecting = self?.state else { return }
-                Task {
-                    await MainActor.run {
-                        self?.state = .connected
-                    }
+                Task { @MainActor [weak self] in
+                    guard case .reconnecting = await self?.state else { return }
+                    self?.state = .connected
                 }
             }
             
             var refs = [String]()
             
-            refs.append(socket.onOpen { [weak self, weak socket] in
+            refs.append(socket.onOpen { [weak self, weak socket, refs] in
                 guard let socket else { return }
                 guard self != nil else {
                     socket.disconnect()
@@ -469,9 +465,9 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                 }
                 logger.debug("[Socket] Opened")
                 socket.off(refs)
-                continuation.resume(returning: socket)
+                continuation.resume()
             })
-            refs.append(socket.onError { [weak self, weak socket] (error, response) in
+            refs.append(socket.onError { [weak self, weak socket, refs] (error, response) in
                 guard let socket else { return }
                 guard self != nil else {
                     socket.disconnect()
@@ -483,38 +479,44 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
             })
             socket.connect()
         }
-        self.socket?.onClose { logger.debug("[Socket] Closed") }
-        self.socket?.logger = { message in logger.debug("[Socket] \(message)") }
-        
-        self.state = .connected
+        await MainActor.run {
+            self.socket = socket
+            self.state = .connected
+        }
         
         if domValues.liveReloadEnabled {
             await self.connectLiveReloadSocket(urlSessionConfiguration: urlSession.configuration)
         }
     }
     
-    private func connectLiveReloadSocket(urlSessionConfiguration: URLSessionConfiguration) async {
-        if let liveReloadSocket = self.liveReloadSocket {
-            liveReloadSocket.disconnect()
-            self.liveReloadSocket = nil
+    private nonisolated func connectLiveReloadSocket(urlSessionConfiguration: URLSessionConfiguration) async {
+        await MainActor.run {
+            if let liveReloadSocket = self.liveReloadSocket {
+                liveReloadSocket.disconnect()
+                self.liveReloadSocket = nil
+            }
+            
+            logger.debug("[LiveReload] attempting to connect...")
+            
+            var liveReloadEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
+            liveReloadEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
+            liveReloadEndpoint.path = "/phoenix/live_reload/socket"
+            self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
+                URLSessionTransport(url: $0, configuration: urlSessionConfiguration)
+            })
+            liveReloadSocket!.connect()
+            self.liveReloadChannel = liveReloadSocket!.channel("phoenix:live_reload")
         }
         
-        logger.debug("[LiveReload] attempting to connect...")
-
-        var liveReloadEndpoint = URLComponents(url: self.url, resolvingAgainstBaseURL: true)!
-        liveReloadEndpoint.scheme = self.url.scheme == "https" ? "wss" : "ws"
-        liveReloadEndpoint.path = "/phoenix/live_reload/socket"
-        self.liveReloadSocket = Socket(endPoint: liveReloadEndpoint.string!, transport: {
-            URLSessionTransport(url: $0, configuration: urlSessionConfiguration)
-        })
-        liveReloadSocket!.connect()
-        self.liveReloadChannel = liveReloadSocket!.channel("phoenix:live_reload")
-        self.liveReloadChannel!.join().receive("ok") { msg in
-            logger.debug("[LiveReload] connected to channel")
-        }.receive("error") { msg in
-            logger.debug("[LiveReload] error connecting to channel: \(msg.payload)")
-        }
-        self.liveReloadChannel!.on("assets_change") { [weak self] _ in
+        await self.liveReloadChannel!.join()
+            .receive("ok") { @Sendable msg in
+                logger.debug("[LiveReload] connected to channel")
+            }
+            .receive("error") { @Sendable msg in
+                logger.debug("[LiveReload] error connecting to channel: \(msg.payload)")
+            }
+        
+        await self.liveReloadChannel!.on("assets_change") { @Sendable [weak self] _ in
             logger.debug("[LiveReload] assets changed, reloading")
             Task {
                 await StylesheetCache.shared.removeAll()
@@ -561,18 +563,19 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
 }
 
 /// A delegate that adds the `_format` query parameter to any redirects.
-class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDelegate {
+final class LiveSessionURLSessionDelegate<R: RootRegistry>: NSObject, URLSessionTaskDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest) async -> URLRequest? {
         guard let url = request.url else {
             return request
         }
         
         var newRequest = request
-        newRequest.url = url.appendingLiveViewItems()
+        newRequest.url = await url.appendingLiveViewItems()
         return newRequest
     }
 }
 
+@MainActor
 enum LiveSessionParameters {
     static var platform: String { "swiftui" }
     static var platformParams: [String:Any] {
@@ -701,7 +704,8 @@ enum LiveSessionParameters {
 }
 
 fileprivate extension URL {
-    nonisolated func appendingLiveViewItems() -> Self {
+    @MainActor
+    func appendingLiveViewItems() -> Self {
         var result = self
         let components = URLComponents(url: self, resolvingAgainstBaseURL: false)
         let existingQueryItems = (components?.queryItems ?? []).reduce(into: Set<String>()) { $0.insert($1) }
@@ -712,3 +716,6 @@ fileprivate extension URL {
         return result
     }
 }
+
+extension Socket: @unchecked Sendable {}
+extension Channel: @unchecked Sendable {}

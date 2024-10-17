@@ -330,32 +330,34 @@ struct ModifierGenerator: ParsableCommand {
                     else { return true }
                     return !$0.parameters.contains(where: { $0.type.as(IdentifierTypeSyntax.self)?.name.text == "ViewReference" })
                 })
-            let requiresContext = signatures.contains(where: {
-                $0.parameters.contains(where: {
-                    ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference", "AnyShapeStyle", "Color", "ListItemTint", "_AnyGesture"].contains(
-                        $0.type.as(IdentifierTypeSyntax.self)?.name.text
-                            ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
-                            ?? $0.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
-                            ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType
-                                .as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
-                    )
+            let contextRequiredTypes: Set<String> = ["ViewReference", "TextReference", "AttributeReference", "InlineViewReference", "AnyShapeStyle", "Color", "ListItemTint", "_AnyGesture"]
+            let typeNames: [String] = signatures.flatMap({
+                $0.parameters.compactMap({
+                    $0.type.identifierType?.name.text
                 })
             })
+            let requiresContext = typeNames.contains(where: { contextRequiredTypes.contains($0) })
             
-            let requiresGestureState = signatures.contains(where: {
-                $0.parameters.contains(where: {
-                    ["_AnyGesture"].contains(
-                        $0.type.as(IdentifierTypeSyntax.self)?.name.text
-                            ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType.as(IdentifierTypeSyntax.self)?.name.text
-                            ?? $0.type.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
-                            ?? $0.type.as(OptionalTypeSyntax.self)?.wrappedType
-                                .as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self)?.name.text
-                    )
-                })
-            })
+            let gestureStateRequiredTypes: [String?] = ["_AnyGesture"]
+            let requiresGestureState = typeNames.contains(where: { gestureStateRequiredTypes.contains($0) })
             
             modifierList[modifier] = (signatures, requiresContext: requiresContext, requiresGestureState: requiresGestureState)
         }
         return (modifiers: modifierList, deprecations: visitor.deprecations)
+    }
+}
+
+fileprivate extension TypeSyntaxProtocol {
+    var identifierType: IdentifierTypeSyntax? {
+        if let identifierType = self.as(IdentifierTypeSyntax.self) {
+            return identifierType
+        }
+        if let memberIdentifierType = self.as(MemberTypeSyntax.self)?.baseType.as(IdentifierTypeSyntax.self) {
+            return memberIdentifierType
+        }
+        if let optionalIdentifierType = self.as(OptionalTypeSyntax.self)?.wrappedType.identifierType {
+            return optionalIdentifierType
+        }
+        return nil
     }
 }
