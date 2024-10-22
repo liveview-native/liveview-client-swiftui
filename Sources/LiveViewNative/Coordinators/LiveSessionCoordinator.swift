@@ -116,7 +116,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         // back navigation
                         print("Back navigate", next.last!.url)
                         try await prev.last?.coordinator.disconnect()
-                        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
+                        let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
                             .some([
                                 "_format": .str(string: LiveSessionParameters.platform),
                                 "_interface": .object(object: LiveSessionParameters.platformParams)
@@ -128,7 +128,7 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
                         print("Forward navigation to \(next.last!.url)")
                         // forward navigation (from `redirect` or `<NavigationLink>`)
                         try await prev.last?.coordinator.disconnect()
-                        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
+                        let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
                             .some([
                                 "_format": .str(string: LiveSessionParameters.platform),
                                 "_interface": .object(object: LiveSessionParameters.platformParams)
@@ -176,57 +176,61 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     /// - Parameter httpMethod: The HTTP method to use for the dead render. Defaults to `GET`.
     /// - Parameter httpBody: The HTTP body to send when requesting the dead render.
     public func connect(httpMethod: String? = nil, httpBody: Data? = nil) async {
-        switch state {
-        case .setup, .disconnected, .connectionFailed:
-            break
-        default:
-            return
-        }
-
-        let originalURL = self.navigationPath.last!.url
-
-        logger.debug("Connecting to \(originalURL.absoluteString)")
-
-        state = .connecting
-        
-        self.liveSocket = try! await LiveSocket(originalURL.absoluteString, 10, LiveSessionParameters.platform)
-        self.socket = self.liveSocket?.socket()
-        
-        let liveChannel = try! await self.liveSocket!.joinLiveviewChannel(
-            .some([
-                "_format": .str(string: LiveSessionParameters.platform),
-                "_interface": .object(object: LiveSessionParameters.platformParams)
-            ]),
-            nil
-        )
-        
-        self.rootLayout = self.liveSocket!.deadRender()
-        let styleURLs = self.liveSocket!.styleUrls()
-        
-        self.stylesheet = try! await withThrowingTaskGroup(of: Stylesheet<R>.self) { @Sendable group in
-            for style in styleURLs {
-                guard let url = await URL(string: style, relativeTo: self.url)
-                else { continue }
-                group.addTask {
-                    let (data, _) = try await URLSession.shared.data(from: url)
-                    guard let contents = String(data: data, encoding: .utf8)
-                    else { return await Stylesheet<R>(content: [], classes: [:]) }
-                    return try await Stylesheet<R>(from: contents, in: .init())
+        do {
+            switch state {
+            case .setup, .disconnected, .connectionFailed:
+                break
+            default:
+                return
+            }
+            
+            let originalURL = self.navigationPath.last!.url
+            
+            logger.debug("Connecting to \(originalURL.absoluteString)")
+            
+            state = .connecting
+            
+            self.liveSocket = try await LiveSocket(originalURL.absoluteString, 10, LiveSessionParameters.platform)
+            self.socket = self.liveSocket?.socket()
+            
+            let liveChannel = try await self.liveSocket!.joinLiveviewChannel(
+                .some([
+                    "_format": .str(string: LiveSessionParameters.platform),
+                    "_interface": .object(object: LiveSessionParameters.platformParams)
+                ]),
+                nil
+            )
+            
+            self.rootLayout = self.liveSocket!.deadRender()
+            let styleURLs = self.liveSocket!.styleUrls()
+            
+            self.stylesheet = try await withThrowingTaskGroup(of: Stylesheet<R>.self) { @Sendable group in
+                for style in styleURLs {
+                    guard let url = await URL(string: style, relativeTo: self.url)
+                    else { continue }
+                    group.addTask {
+                        let (data, _) = try await URLSession.shared.data(from: url)
+                        guard let contents = String(data: data, encoding: .utf8)
+                        else { return await Stylesheet<R>(content: [], classes: [:]) }
+                        return try await Stylesheet<R>(from: contents, in: .init())
+                    }
+                }
+                
+                return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
+                    return await result.merge(with: next)
                 }
             }
             
-            return try await group.reduce(Stylesheet<R>(content: [], classes: [:])) { result, next in
-                return await result.merge(with: next)
+            self.navigationPath.last!.coordinator.join(liveChannel)
+            
+            self.state = .connected
+            
+            if self.liveSocket!.hasLiveReload() {
+                self.liveReloadChannel = try await self.liveSocket!.joinLivereloadChannel()
+                bindLiveReloadListener()
             }
-        }
-        
-        self.navigationPath.last!.coordinator.join(liveChannel)
-        
-        self.state = .connected
-        
-        if self.liveSocket!.hasLiveReload() {
-            self.liveReloadChannel = try! await self.liveSocket!.joinLivereloadChannel()
-            bindLiveReloadListener()
+        } catch {
+            self.state = .connectionFailed(error)
         }
     }
     
@@ -247,23 +251,27 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     }
 
     private func disconnect(preserveNavigationPath: Bool = false) async {
-        for entry in self.navigationPath {
-            try! await entry.coordinator.disconnect()
-            if !preserveNavigationPath {
-                entry.coordinator.document = nil
-            }
-        }
-        // reset all documents if navigation path is being reset.
-        if !preserveNavigationPath {
+        do {
             for entry in self.navigationPath {
-                entry.coordinator.document = nil
+                try await entry.coordinator.disconnect()
+                if !preserveNavigationPath {
+                    entry.coordinator.document = nil
+                }
             }
-            
-            self.navigationPath = [self.navigationPath.first!]
+            // reset all documents if navigation path is being reset.
+            if !preserveNavigationPath {
+                for entry in self.navigationPath {
+                    entry.coordinator.document = nil
+                }
+                
+                self.navigationPath = [self.navigationPath.first!]
+            }
+            try await self.socket?.disconnect()
+            self.socket = nil
+            self.state = .disconnected
+        } catch {
+            self.state = .connectionFailed(error)
         }
-        try! await self.socket?.disconnect()
-        self.socket = nil
-        self.state = .disconnected
     }
 
     /// Forces the session to disconnect then connect.
@@ -272,14 +280,18 @@ public class LiveSessionCoordinator<R: RootRegistry>: ObservableObject {
     ///
     /// This can be used to force the LiveView to reset, for example after an unrecoverable error occurs.
     public func reconnect(url: URL? = nil, httpMethod: String? = nil, httpBody: Data? = nil) async {
-        if let url {
-            await self.disconnect(preserveNavigationPath: false)
-            self.url = url
-            self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil)]
-        } else {
-            await self.disconnect(preserveNavigationPath: true)
+        do {
+            if let url {
+                try await self.disconnect(preserveNavigationPath: false)
+                self.url = url
+                self.navigationPath = [.init(url: self.url, coordinator: self.navigationPath.first!.coordinator, navigationTransition: nil)]
+            } else {
+                try await self.disconnect(preserveNavigationPath: true)
+            }
+            try await self.connect(httpMethod: httpMethod, httpBody: httpBody)
+        } catch {
+            self.state = .connectionFailed(error)
         }
-        await self.connect(httpMethod: httpMethod, httpBody: httpBody)
     }
 
     /// Creates a publisher that can be used to listen for server-sent LiveView events.
